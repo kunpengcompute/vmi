@@ -1,0 +1,32 @@
+Note. When encount build error like this:
+
+>>> ./gradlew clean assembleDebug
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+> Configure project :app
+useNewCruncher has been deprecated. It will be removed in a future version of the gradle plugin. New cruncher is now always enabled.
+IOException: https://dl.google.com/android/repository/addons_list-3.xml
+java.net.ConnectException: Connection timed out (Connection timed out)
+IOException: https://dl.google.com/android/repository/addons_list-2.xml
+java.net.ConnectException: Connection timed out (Connection timed out)
+IOException: https://dl.google.com/android/repository/addons_list-1.xml
+java.net.ConnectException: Connection timed out (Connection timed out)
+Failed to download any source lists!
+java.net.ConnectException: Connection timed out (Connection timed out)
+
+
+FAILURE: Build failed with an exception.
+
+---
+
+Make sure to update Android SDK eg via android-studio. Update SDK to get support for below 4 items.
+
+- Android SDK Platform 27
+- Sources for Android 27
+- Android SDK Platform 26
+- Sources for Android 26
+
+---
+
+Enjoy.

@@ -1,0 +1,16 @@
+-keep class android.** { *; }
+-keep class junit.** { *; }
+-keep class me.** { *; }
+-keep class org.** { *; }
+-keep class com.squareup.** { *; }
+-keep class javax.annotation.** { *; }
+-keep class java.nio.** { *; }
+-keep class android.support.** { *; }
+-keep class butterknife.** { *; }
+-keep class com.bumptech.** { *; }
+-keep class com.google.** { *; }
+-keep class okhttp3.** { *; }
+-keep class okio.** { *; }
+-keep class com.danikula.** { *; }
+-keep class com.huawei.** { *; }
+-dontwarn ***

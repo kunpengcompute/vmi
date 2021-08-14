@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_connect">开始连接</string>
+    <string name="cloud_phone_ip">云手机IP</string>
+    <string name="cloud_phone_port">云手机port</string>
+    <string name="retry_connection">重连中 .... 请稍候 ...</string>
+    <string name="failed_instruction">初始化指令流引擎失败</string>
+    <string name="net_error">网络异常断开，重连或者退出云手机？</string>
+    <string name="reconnect_phone">重连云手机</string>
+    <string name="exit">退出云手机</string>
+    <string name="phone">云手机</string>
+    <string name="server_error">连接云手机服务器失败，请稍后重试</string>
+    <string name="sure">确定</string>
+    <string name="msg_audio">没有授权录音功能，将无法进行语音消息等功能.</string>
+    <string name="error_ip_port">输入的ip或者port端口不合法</string>
+    <string name="warning">提示</string>
+    <string name="hint">提示</string>
+    <string name="server_and_client_not_match">指令流引擎服务端和客户端版本号不匹配！</string>
+</resources>
