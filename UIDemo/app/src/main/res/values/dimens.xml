@@ -1,0 +1,32 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="ic_radius">40dp</dimen>
+    <dimen name="settings_tag_textsize">16sp</dimen>
+    <dimen name="settings_item_height">40dp</dimen>
+    <dimen name="settings_margin_right">16dp</dimen>
+    <dimen name="settings_margin_left">24dp</dimen>
+    <dimen name="new_device_margin_ver">24dp</dimen>
+    <dimen name="title_size">18sp</dimen>
+    <dimen name="title_right_size">18sp</dimen>
+    <dimen name="dialog_title">20sp</dimen>
+    <dimen name="dialog_padding">16dp</dimen>
+    <dimen name="login_input_image_width">24dp</dimen>
+    <dimen name="background_btn_radius">8dp</dimen>
+    <dimen name="setings_item_margin_hor">24dp</dimen>
+    <dimen name="setttings_item_padding_ver">8dp</dimen>
+    <dimen name="title_margin_top">30dp</dimen>
+    <dimen name="encode_parmas_item_height">48dp</dimen>
+    <dimen name="edittext_padding">5dp</dimen>
+    <dimen name="encode_modify_edittext_margin_left">8dp</dimen>
+    <dimen name="encode_params_item_textsize">16sp</dimen>
+    <dimen name="menu_width">56dp</dimen>
+    <dimen name="menu_heigth">56dp</dimen>
+    <dimen name="menu_icon_margin">16dp</dimen>
+    <dimen name="menu_icon_size">24dp</dimen>
+    <dimen name="menu_icon_between">80dp</dimen>
+    <dimen name="common_navigator_height">60dp</dimen>
+    <dimen name="common_dialog_min_with">250dp</dimen>
+    <dimen name="indicatory_between_with">6dp</dimen>
+    <dimen name="floating_width">40dp</dimen>
+    <dimen name="floating_radius">80dp</dimen>
+</resources>

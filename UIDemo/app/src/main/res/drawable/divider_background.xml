@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">>
+    <item
+        android:left="@dimen/dialog_padding"
+        android:right="@dimen/dialog_padding">
+        <shape>
+            <solid android:color="@color/divider_color" />
+        </shape>
+    </item>
+</layer-list>
