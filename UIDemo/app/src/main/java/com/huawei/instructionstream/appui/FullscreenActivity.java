@@ -777,7 +777,6 @@ public class FullscreenActivity extends FragmentActivity implements NativeListen
     public void onVmiInstructionEngineEvent(int event, int reserved0, int reserved1, int reserved2, int reserved3) {
         switch (event) {
             case InstructionEngine.VMI_INSTRUCTION_ENGINE_EVENT_SOCK_DISCONN:
-                engine.stop();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
