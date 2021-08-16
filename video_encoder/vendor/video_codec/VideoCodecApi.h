@@ -26,7 +26,7 @@ public:
      * @返回值: VIDEO_ENCODER_SUCCESS 成功
      *          VIDEO_ENCODER_INIT_FAIL 初始化编码器失败
      */
-    virtual EncoderRetCode InitEncoder(const EncoderParams &encParams) = 0;
+    virtual EncoderRetCode InitEncoder(const EncodeParams &encParams) = 0;
 
     /**
      * @功能描述: 启动编码器
@@ -58,6 +58,28 @@ public:
      * @功能描述: 销毁编码器，释放编码资源
      */
     virtual void DestroyEncoder() = 0;
+
+    /**
+     * @功能描述: 重置编码器
+     * @返回值: VIDEO_ENCODER_SUCCESS 成功
+     *          VIDEO_ENCODER_RESET_FAIL 重置编码器失败
+     */
+    virtual EncoderRetCode ResetEncoder() = 0;
+
+    /**
+     * @功能描述: 强制I帧
+     * @返回值: VIDEO_ENCODER_SUCCESS 成功
+     *          VIDEO_ENCODER_FORCE_KEY_FRAME_FAIL 强制I帧失败
+     */
+    virtual EncoderRetCode ForceKeyFrame() = 0;
+
+    /**
+     * @功能描述: 设置编码参数
+     * @参数 [in] encParams: 编码参数结构体
+     * @返回值: VIDEO_ENCODER_SUCCESS 成功
+     *          VIDEO_ENCODER_SET_ENCODE_PARAMS_FAIL 设置编码参数失败
+     */
+    virtual EncoderRetCode SetEncodeParams(const EncodeParams &encParams) = 0;
 };
 
 extern "C" {
