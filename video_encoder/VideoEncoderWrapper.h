@@ -68,7 +68,7 @@ VmiEncoderRetCode VencStartEncoder(uint32_t encHandle);
  *          VMI_ENCODER_ENCODE_FAIL 编码一帧失败
  */
 VmiEncoderRetCode VencEncodeOneFrame(uint32_t encHandle, const uint8_t *inputData, uint32_t inputSize,
-    uint8_t **outputData, uint32_t * outputSize);
+    uint8_t **outputData, uint32_t *outputSize);
 
 /**
  * @功能描述: 停止编码器
