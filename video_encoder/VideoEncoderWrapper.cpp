@@ -131,7 +131,7 @@ VmiEncoderRetCode VencCreateEncoder(uint32_t *encHandle)
             PROP_ENCODER_TYPE.c_str(), prop);
         return VMI_ENCODER_CREATE_FAIL;
     }
-    uint32_t encType = static_cast<uint32_t>(result);
+    auto encType = static_cast<uint32_t>(result);
     VideoEncoder *encoder = nullptr;
     if (!LoadVideoCodecSharedLib()) {
         ERR("VencCreateEncoder failed: load video codec shared lib failed");
@@ -213,7 +213,7 @@ VmiEncoderRetCode VencStartEncoder(uint32_t encHandle)
  *          VMI_ENCODER_ENCODE_FAIL 编码一帧失败
  */
 VmiEncoderRetCode VencEncodeOneFrame(uint32_t encHandle, const uint8_t *inputData, uint32_t inputSize,
-    uint8_t **outputData, uint32_t * outputSize)
+    uint8_t **outputData, uint32_t *outputSize)
 {
     if (g_vencHandleMap.find(encHandle) == g_vencHandleMap.end()) {
         ERR("VencEncodeOneFrame failed: encoder handle %#x does not exist.", encHandle);
