@@ -31,7 +31,7 @@ setup_env()
     export TOP=${AN_AOSPDIR}
     export OUT_DIR=${AN_AOSPDIR}/out
     export ANDROID_BUILD_TOP=${AN_AOSPDIR}
-    cd ../..
+    cd ${cur_file_path}/../..
     root_dir=$(pwd)
     for link_dir in ${link_dirs[*]}
     do
