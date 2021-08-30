@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
+#include <atomic>
+#include <mutex>
 #include <dlfcn.h>
 #include <cinttypes>
 #include <sys/system_properties.h>
@@ -16,7 +18,7 @@
 
 namespace {
     constexpr uint32_t INVALID_ENCODER_HANDLE = 0;
-    uint32_t g_encHandle = INVALID_ENCODER_HANDLE;
+    std::atomic<uint32_t> g_encHandle = { INVALID_ENCODER_HANDLE };
     struct EncoderObject {
         uint32_t encType = 0;
         VideoEncoder *encoder = nullptr;
@@ -36,6 +38,8 @@ namespace {
     CreateVideoEncoderFuncPtr g_createVideoEncoder = nullptr;
     DestroyVideoEncoderFuncPtr g_destroyVideoEncoder = nullptr;
     void *g_libHandle = nullptr;
+    std::atomic<bool> g_isVideoCodecLoaded = { false };
+    std::mutex g_instanceLock = {};
 
     std::unordered_map<int, int> g_logLevelMap = {
         { LOG_LEVEL_DEBUG, ANDROID_LOG_DEBUG },
@@ -58,6 +62,7 @@ void UnloadVideoCodecSharedLib()
     g_registerMediaLogCallback = nullptr;
     g_createVideoEncoder = nullptr;
     g_destroyVideoEncoder = nullptr;
+    g_isVideoCodecLoaded = false;
 }
 
 bool LoadVideoCodecSharedLib()
@@ -93,6 +98,7 @@ bool LoadVideoCodecSharedLib()
         UnloadVideoCodecSharedLib();
         return false;
     }
+    g_isVideoCodecLoaded = true;
     return true;
 }
 
@@ -132,8 +138,9 @@ VmiEncoderRetCode VencCreateEncoder(uint32_t *encHandle)
         return VMI_ENCODER_CREATE_FAIL;
     }
     auto encType = static_cast<uint32_t>(result);
+    std::unique_lock<std::mutex> lck(g_instanceLock);
     VideoEncoder *encoder = nullptr;
-    if (!LoadVideoCodecSharedLib()) {
+    if (!g_isVideoCodecLoaded && !LoadVideoCodecSharedLib()) {
         ERR("VencCreateEncoder failed: load video codec shared lib failed");
         return VMI_ENCODER_CREATE_FAIL;
     }
@@ -166,6 +173,7 @@ VmiEncoderRetCode VencCreateEncoder(uint32_t *encHandle)
  */
 VmiEncoderRetCode VencInitEncoder(uint32_t encHandle, const VmiEncodeParams encParams)
 {
+    std::unique_lock<std::mutex> lck(g_instanceLock);
     if (g_vencHandleMap.find(encHandle) == g_vencHandleMap.end()) {
         ERR("VencInitEncoder failed: encoder handle %#x does not exist.", encHandle);
         return VMI_ENCODER_INIT_FAIL;
@@ -190,6 +198,7 @@ VmiEncoderRetCode VencInitEncoder(uint32_t encHandle, const VmiEncodeParams encP
  */
 VmiEncoderRetCode VencStartEncoder(uint32_t encHandle)
 {
+    std::unique_lock<std::mutex> lck(g_instanceLock);
     if (g_vencHandleMap.find(encHandle) == g_vencHandleMap.end()) {
         ERR("VencStartEncoder failed: encoder handle %#x does not exist.", encHandle);
         return VMI_ENCODER_START_FAIL;
@@ -215,6 +224,7 @@ VmiEncoderRetCode VencStartEncoder(uint32_t encHandle)
 VmiEncoderRetCode VencEncodeOneFrame(uint32_t encHandle, const uint8_t *inputData, uint32_t inputSize,
     uint8_t **outputData, uint32_t *outputSize)
 {
+    std::unique_lock<std::mutex> lck(g_instanceLock);
     if (g_vencHandleMap.find(encHandle) == g_vencHandleMap.end()) {
         ERR("VencEncodeOneFrame failed: encoder handle %#x does not exist.", encHandle);
         return VMI_ENCODER_ENCODE_FAIL;
@@ -236,6 +246,7 @@ VmiEncoderRetCode VencEncodeOneFrame(uint32_t encHandle, const uint8_t *inputDat
  */
 VmiEncoderRetCode VencStopEncoder(uint32_t encHandle)
 {
+    std::unique_lock<std::mutex> lck(g_instanceLock);
     if (g_vencHandleMap.find(encHandle) == g_vencHandleMap.end()) {
         ERR("VencStopEncoder failed: encoder handle %#x does not exist.", encHandle);
         return VMI_ENCODER_STOP_FAIL;
@@ -256,6 +267,7 @@ VmiEncoderRetCode VencStopEncoder(uint32_t encHandle)
  */
 VmiEncoderRetCode VencDestroyEncoder(uint32_t encHandle)
 {
+    std::unique_lock<std::mutex> lck(g_instanceLock);
     if (g_vencHandleMap.find(encHandle) == g_vencHandleMap.end()) {
         ERR("VencDestroyEncoder failed: encoder handle %#x does not exist.", encHandle);
         return VMI_ENCODER_DESTROY_FAIL;
@@ -263,6 +275,8 @@ VmiEncoderRetCode VencDestroyEncoder(uint32_t encHandle)
     g_vencHandleMap[encHandle].encoder->DestroyEncoder();
     (void) (*g_destroyVideoEncoder)(g_vencHandleMap[encHandle].encType, g_vencHandleMap[encHandle].encoder);
     (void) g_vencHandleMap.erase(encHandle);
-    UnloadVideoCodecSharedLib();
+    if (g_vencHandleMap.empty()) {
+        UnloadVideoCodecSharedLib();
+    }
     return VMI_ENCODER_SUCCESS;
 }
