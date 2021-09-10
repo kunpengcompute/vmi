@@ -31,7 +31,7 @@ namespace {
     const std::string REGISTER_MEDIA_LOG_CALLBACK = "RegisterMediaLogCallback";
     const std::string CREATE_VIDEO_ENCODER = "CreateVideoEncoder";
     const std::string DESTROY_VIDEO_ENCODER = "DestroyVideoEncoder";
-    using RegisterMediaLogCallbackFuncPtr = bool (*)(const MediaLogCallbackFunc logCallback);
+    using RegisterMediaLogCallbackFuncPtr = void (*)(const MediaLogCallbackFunc logCallback);
     using CreateVideoEncoderFuncPtr = EncoderRetCode (*)(uint32_t encType, VideoEncoder** encoder);
     using DestroyVideoEncoderFuncPtr = EncoderRetCode (*)(uint32_t encType, VideoEncoder* encoder);
     RegisterMediaLogCallbackFuncPtr g_registerMediaLogCallback = nullptr;
@@ -140,13 +140,12 @@ VmiEncoderRetCode VencCreateEncoder(uint32_t *encHandle)
     auto encType = static_cast<uint32_t>(result);
     std::unique_lock<std::mutex> lck(g_instanceLock);
     VideoEncoder *encoder = nullptr;
-    if (!g_isVideoCodecLoaded && !LoadVideoCodecSharedLib()) {
-        ERR("VencCreateEncoder failed: load video codec shared lib failed");
-        return VMI_ENCODER_CREATE_FAIL;
-    }
-    if (!(*g_registerMediaLogCallback)(MediaLogCallback)) {
-        ERR("VencCreateEncoder failed: register media log callback failed");
-        return VMI_ENCODER_CREATE_FAIL;
+    if (!g_isVideoCodecLoaded) {
+        if (!LoadVideoCodecSharedLib()) {
+            ERR("VencCreateEncoder failed: load video codec shared lib failed");
+            return VMI_ENCODER_CREATE_FAIL;
+        }
+        (*g_registerMediaLogCallback)(MediaLogCallback);
     }
     auto createRet = (*g_createVideoEncoder)(encType, &encoder);
     if (createRet != VIDEO_ENCODER_SUCCESS || encoder == nullptr) {

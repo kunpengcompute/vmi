@@ -85,12 +85,12 @@ public:
 extern "C" {
 
 /**
- * @功能描述: 注册日志回调函数
+ * @功能描述: 注册日志回调函数，注意该接口不支持多线程调用
+ *            若注册的日志回调函数为空则关闭媒体日志功能
+ *            若此接口不被调用则启用默认日志打印方式
  * @参数 [in] logCallback: 日志处理函数指针
- * @返回值: true 成功
- *          false 注册函数失败
  */
-bool RegisterMediaLogCallback(const MediaLogCallbackFunc logCallback);
+void RegisterMediaLogCallback(const MediaLogCallbackFunc logCallback);
 
 /**
  * @功能描述: 创建编码器实例
