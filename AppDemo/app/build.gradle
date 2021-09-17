@@ -1,0 +1,91 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.huawei.baseuidemo"
+        minSdk 24
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi-v7a"
+            moduleName "libdrco"
+            moduleName "libGLESv2_dec"
+            moduleName "libopus"
+            moduleName "libOpenglRender"
+            moduleName "libzstd"
+            moduleName "libcomm"
+            moduleName "libemugl_common"
+            moduleName "libOpenglCodecCommon"
+            moduleName "libGLESv1_dec"
+            moduleName "libvncmain"
+            moduleName "libGLSnapshot"
+            moduleName "libOpenGLESDispatch"
+            moduleName "librenderControl"
+            moduleName "libhandshake"
+        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++1z  -fPIC -fno-rtti -Werror -Wreturn-type -Wformat -fexceptions"
+                cppFlags "-DBUILD_UNITY_PLUGIN"
+                arguments "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
+                arguments "-DANDROID_STL=c++_static"
+                arguments "-DVMI_BINARY_DIR="+file(".")+"/jniLibs"
+            }
+
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+        packagingOptions {
+            pickFirst "lib/armeabi-v7a/libVmiLog.so"
+            pickFirst "lib/armeabi-v7a/libVmiHWSecure.so"
+            pickFirst "lib/armeabi-v7a/libVmiInstrCommon.so"
+            pickFirst "lib/armeabi-v7a/libVmiInstructionCommon.so"
+            pickFirst "lib/armeabi-v7a/libInstructionEngineClient.so"
+            pickFirst "lib/armeabi-v7a/libc++_shared.so"
+            pickFirst '/lib/armeabi-v7a/libCommunication.so'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.10.2'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    lintOptions
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', includes: ['*.jar', '*.aar'])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
