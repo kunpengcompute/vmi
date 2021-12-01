@@ -1,6 +1,5 @@
 #!/bin/bash
 # libVideoEncoder的构建脚本
-# 版权所有 (c) 华为技术有限公司 2021-2021
 
 cur_file_path=$(cd $(dirname "${0}");pwd)
 
