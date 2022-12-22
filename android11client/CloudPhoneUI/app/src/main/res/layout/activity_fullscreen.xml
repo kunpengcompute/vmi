@@ -6,10 +6,23 @@
     android:keepScreenOn="true"
     tools:context="com.huawei.cloudphone.FullscreenActivity">
 
-    <com.huawei.cloudphone.VmiSurfaceView
+    <com.huawei.cloudphone.view.VmiSurfaceView
         android:id="@+id/vmi_surfaceView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/frameRate"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="#55555555"
+        android:fontFamily="monospace"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/flashNormal"

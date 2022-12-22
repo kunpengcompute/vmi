@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.TrafficStats;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,9 +22,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.cloudphoneui.R;
 import com.huawei.cloudgame.touch.VmiTouch;
+import com.huawei.cloudphone.dialog.ExitDialog;
+import com.huawei.cloudphone.view.VmiSurfaceView;
+import com.huawei.cloudphone.helper.FloatingHelper;
 import com.huawei.cloudphonesdk.audio.play.AudioPlayerCallback;
 import com.huawei.cloudphonesdk.maincontrol.DataPipe;
 import com.huawei.cloudphonesdk.maincontrol.NativeListener;
@@ -31,6 +36,8 @@ import com.huawei.cloudphonesdk.maincontrol.NetConfig;
 import com.huawei.cloudphonesdk.maincontrol.OpenGLJniCallback;
 import com.huawei.cloudphonesdk.maincontrol.OpenGLJniWrapper;
 import com.huawei.cloudphonesdk.maincontrol.UpstreamReceiveDispatcher;
+import com.huawei.utils.LogUtil;
+import com.huawei.utils.Utils;
 
 import java.lang.ref.WeakReference;
 
@@ -46,6 +53,7 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
     private static final int WHAT_RECONNECT_FAILED = 5;
     private static final int SOCKET_DISCONNECTION = -2;
     private static final int ORIENTATION_CHANGE = -6;
+    public static final String IS_SHOW_FLOAT_VIEW = "is_show_float_view";
     private VideoConf mVideoConf;
     private VmiSurfaceView mSurfaceView;
     private ImageView flashNormal;
@@ -61,14 +69,29 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
     int engineOrientation;
     private int orientation = -1;
     private boolean stopHandlerFlag = false;
+    private TextView frameRateTextView;
+    private long lastRxBytes;
+    private long lastTxBytes;
+    private FloatingHelper floatingHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LogUtil.startLogs(LogUtil.CLIENT_LOG);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Utils.setNavigationBarVisible(this, true);
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         setFullScreen();
         setContentView(R.layout.activity_fullscreen);
         mThreadHandler = new ThreadHandler(this);
         initView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Utils.setNavigationBarVisible(this, true);
     }
 
     private void setFullScreen() {
@@ -90,6 +113,8 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
     }
 
     private void setupFloatingButton() {
+        floatingHelper = new FloatingHelper(this);
+        floatingHelper.init();
     }
 
     private void setupSurfaceHolder() {
@@ -125,7 +150,7 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
     }
 
     private void startConnect() {
-        stopHandlerFlag =false;
+        stopHandlerFlag = false;
         setupMediaCodec();
         setupJniConf();
         mThreadPool.submit(new Runnable() {
@@ -151,6 +176,10 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
                 }
             }
         });
+    }
+
+    public View getFrameRateView() {
+        return frameRateTextView;
     }
 
     static class ThreadHandler extends Handler {
@@ -236,7 +265,55 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
     }
 
     private void checkConnectStatus() {
+        refreshFrameRate();
+        mThreadHandler.sendEmptyMessageDelayed(WHAT_CHECK_CONNECT_STATUS, 1000);
+    }
 
+    private void refreshFrameRate() {
+        int uid = getApplicationInfo().uid;
+        long currentRxBytes = TrafficStats.getUidRxBytes(uid);
+        long currentTxBytes = TrafficStats.getUidTxBytes(uid);
+        long totalBytes = currentRxBytes + currentTxBytes;
+        if (lastRxBytes == 0 && lastTxBytes == 0) {
+            lastRxBytes = currentRxBytes;
+            lastTxBytes = currentTxBytes;
+        }
+        long bandWidthBytes = currentRxBytes + currentRxBytes - lastTxBytes - lastRxBytes;
+        int bandWidth = (int) (bandWidthBytes / 1024);
+        int trafficSum = (int) (totalBytes / 1024 / 1024);
+        String stat = OpenGLJniWrapper.getStatistics();
+        int lag = 0;
+        if (!stat.isEmpty()) {
+            String receiveFps = stat.substring(stat.indexOf("接受帧率"));
+            String lagString = stat.substring(stat.indexOf("LAG:") + 4, stat.indexOf("ms"));
+            if (lagString.length() > 9) {
+                lag = -1;
+
+            } else {
+                final int lagFromNative = Integer.parseInt(lagString.trim());
+                lag = lagFromNative / 1000;
+            }
+            String statString = "LAG:" + lag + "ms" + System.lineSeparator() + receiveFps
+                    + "带宽：" + bandWidth + "KB" + System.lineSeparator()
+                    + "流量：" + totalBytes / 1024 / 1024 + "MB";
+            frameRateTextView.setText(statString);
+            updateFloater(lag);
+        }
+        lastRxBytes = currentRxBytes;
+        lastTxBytes = currentTxBytes;
+
+    }
+
+    private void updateFloater(int lag) {
+        if (lag < 0) {
+            floatingHelper.setMainImage(R.drawable.image_menu_red);
+        } else if (lag < 80) {
+            floatingHelper.setMainImage(R.drawable.image_menu_green);
+        } else if (lag < 180) {
+            floatingHelper.setMainImage(R.drawable.image_menu_yellow);
+        } else {
+            floatingHelper.setMainImage(R.drawable.image_menu_red);
+        }
     }
 
     private void setupJniConf() {
@@ -284,6 +361,7 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 VmiTouch.getInstance().onTouch(v, event);
+                floatingHelper.closeFloatButton();
                 return true;
             }
         });
@@ -292,6 +370,12 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
     private void setupView() {
         mSurfaceView = findViewById(R.id.vmi_surfaceView);
         flashNormal = findViewById(R.id.flashNormal);
+        frameRateTextView = findViewById(R.id.frameRate);
+        if (Utils.getBoolean("show_frameRate", false)) {
+            frameRateTextView.setVisibility(View.VISIBLE);
+        } else {
+            frameRateTextView.setVisibility(View.GONE);
+        }
     }
 
     private void initView() {
@@ -300,10 +384,9 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
         setupTouch();
         initDataPipe();
         checkSimulator();
-        setupSurfaceHolder();
         setupFloatingButton();
+        setupSurfaceHolder();
         setListener();
-
     }
 
     private void setListener() {
@@ -317,24 +400,38 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
         showExitDialog();
     }
 
-    private void showExitDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(FullscreenActivity.this);
-        builder.setMessage("是否退出云手机？");
-        builder.setTitle("warning");
-        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+    public void showExitDialog() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(FullscreenActivity.this);
+//        builder.setMessage("是否退出云手机？");
+//        builder.setTitle("warning");
+//        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                finish();
+//
+//            }
+//        });
+//        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//            }
+//        });
+//        builder.setCancelable(false);
+//        builder.create().show();
+        ExitDialog exitDialog = new ExitDialog(this);
+        exitDialog.setPositiveButton(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View view) {
+                exitDialog.dismiss();
+            }
+        });
+        exitDialog.setNegativeButton(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 finish();
-
             }
         });
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setCancelable(false);
-        builder.create().show();
+        exitDialog.show();
     }
 
     private void setupConfig() {
@@ -356,7 +453,6 @@ public class FullscreenActivity extends AppCompatActivity implements NativeListe
         bytes[2] = (byte) action;
         bytes[3] = (byte) (action >> 8);
         OpenGLJniWrapper.sendKeyEvent(bytes, 4);
-
     }
 
     @Override
