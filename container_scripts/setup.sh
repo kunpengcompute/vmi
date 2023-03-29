@@ -103,8 +103,8 @@ build_ubuntu_image()
        --build-arg BASE_DIST=ubuntu20.04 \
        --build-arg CUDA_VERSION=11.7.0 \
        --file dockerfile .
-    [ $? -eq 0 ] $$ echo "Build ubuntu image success" && cd - && return 0
-    echo "Create container failed" && exit
+    [ $? -eq 0 ] && echo "Build ubuntu image success" && cd - && return 0
+    echo "Build ubuntu image failed" && exit
 }
 
 create_container()
@@ -118,7 +118,7 @@ create_container()
 	-v /etc/vulkan/icd.d/nvidia_icd.json:/etc/vulkan/icd.d/nvidia_icd.json \
 	-v /etc/vulkan/implicit_layer.d/nvidia_layers.json:/etc/vulkan/implicit_layer.d/nvidia_layers.json \
 	-v /usr/share/glvnd/egl_vendor.d/10_nvidia.json:/usr/share/glvnd/egl_vendor.d/10_nvidia.json -itd container:2004
-    [ $? -eq 0 ] $$ echo "Create container success" && return 0
+    [ $? -eq 0 ] && echo "Create container success" && return 0
     echo "Create container failed" && exit
 }
 
