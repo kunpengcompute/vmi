@@ -3,7 +3,7 @@
 
 import matplotlib.pyplot as plt
 
-def extractData():
+def ExtractData():
     startDate = []
     util = []
     mclk = []
@@ -21,7 +21,7 @@ def extractData():
             continue
         # remove spaces and get clear data
         else:
-            cur = removeSpace(cur)
+            cur = RemoveSpace(cur)
             startDate.append(cur[0])
             util.append(int(cur[6]))
             mclk.append(int(cur[10]))
@@ -31,12 +31,12 @@ def extractData():
 
     return (startDate, util, mclk, pclk, rxpci, txpci)
         
-def removeSpace(charlist):
+def RemoveSpace(charlist):
     while '' in charlist:
         charlist.remove('')
     return charlist
     
-def multiPlots(meta):
+def MultiPlots(meta):
     startDate = meta[0][0]
     util = meta[1]
     mclk = meta[2]
@@ -67,5 +67,5 @@ def multiPlots(meta):
     plt.show()
     
 if __name__ == '__main__':
-    data = extractData()
-    multiPlots(data)
+    data = ExtractData()
+    MultiPlots(data)
