@@ -18,49 +18,49 @@ ARGS=$(getopt -o hn:c:m:d:i: -l help,name:,cores:,memory:,disk:,img:,ks:,node:,p
 eval set -- "${ARGS}"
 while true; do
 	case "$1" in
-		-h|--help)
-			usage
-			exit 0
-			;;
-		-n|--name)
-			name="$2"
-			shift 2
-			;;
-		-c|--cores)
-			cores="$2"
-			shift 2
-			;;
-		-m|--memory)
-			ram="$2"
-			shift 2
-			;;
-		-d|--disk)
-			disk="$2"
-			shift 2
-			;;
-		-i|--img)
-			img="$2"
-			shift 2
-			;;
-		--ks)
-			ks="$2"
-			shift 2
-			;;
-		--node)
-			node="$2"
-			shift 2
-			;;
-		--pin)
-			pin="$2"
-			shift 2
-			;;
-		--)
-			shift
-			break
-			;;
-		*)
-			usage
-			exit 1
+	-h|--help)
+		usage
+		exit 0
+		;;
+	-n|--name)
+		name="$2"
+		shift 2
+		;;
+	-c|--cores)
+		cores="$2"
+		shift 2
+		;;
+	-m|--memory)
+		ram="$2"
+		shift 2
+		;;
+	-d|--disk)
+		disk="$2"
+		shift 2
+		;;
+	-i|--img)
+		img="$2"
+		shift 2
+		;;
+	--ks)
+		ks="$2"
+		shift 2
+		;;
+	--node)
+		node="$2"
+		shift 2
+		;;
+	--pin)
+		pin="$2"
+		shift 2
+		;;
+	--)
+		shift
+		break
+		;;
+	*)
+		usage
+		exit 1
 	esac
 done
 
@@ -100,7 +100,7 @@ function generate_band_cpu_cmds()
 		BAND_CPU_CMDS="${BAND_CPU_CMDS},vcpupin${i}.vcpu=${i},vcpupin${i}.cpuset=$((i+start))"
 	done
 	echo ""
-	echo "cmd = ${BAND_CPU_CMDS}"
+	# echo "cmd = ${BAND_CPU_CMDS}"
 }
 
 function install()
