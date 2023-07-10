@@ -1,68 +1,136 @@
 #!/bin/bash
+set -e
+
+# 收集性能数据的后台进程
+declare -a RECORD_PID_ARRAY
+# unity 应用后台进程
+declare UNITY_APP_PID
 
 function usage()
 {
-    printf "usage: %s [options]" "$0"
-    printf "\n\t-h 显示帮助"
-    printf "\n\t-r"
-    printf "\n\t\tpcie: 记录显卡的相关数据"
-    printf "\n\t\tperf: 记录测试程序的调用栈和 cache miss 率"
-    printf "\n\t-t\trun_time: 每个 unity demo 的运行时长, 默认为60s"
-    printf "\n\t-d\tdst_dir: 输出文件夹, 默认为 %s" "/tmp/$(date +%m%d)/unity"
-    printf "\n\t-s\tsrc_dir: unity demo 文件夹, 默认为 %s" "$(cd $(dirname $0) && pwd)"
-    printf "\n"
+    echo "usage: $0 -path=... -quittime=... [options]"
+    echo -e "\t" "-p|-path: 指定citypark应用的路径"
+    echo -e "\t" "-t|-quittime: 指定运行时长"
+    echo -e "\t" "-N 绑NUMA或绑核, -C 选项指定绑核"
+    echo -e "\t" "-C 绑核"
+    echo -e "\t" "-record 记录性能数据"
+    echo -e "\t\t" "perf 记录 perf 数据"
+    echo -e "\t\t" "pcie 记录 pcie 数据"
+    echo -e "\t\t" "nmon 记录 nmon 数据"
+    echo -e "\t\t" "thread 记录 top thread 数据"
+    echo -e "\t\t" "示例,记录perf和pcie数据: -record perf,pcie"
 }
 
-while getopts 'hr:t:d:s:' opt; do
-    case "$opt" in
-    h)
-        usage "$0"
-        exit 0
-        ;;
-    r)
-        [[ "${OPTARG}" == "pcie" ]] && pcie="yes"
-        [[ "${OPTARG}" == "perf" ]] && perf="yes"
-        ;;
-    t)
-        time="${OPTARG}"
-        ;;
-    d)
-        dst_dir="${OPTARG}"
-        ;;
-    s)
-        src_dir="${OPTARG}"
-        ;;
-    ?)
-        usage "$0"
-        exit 1
+ARGS=$(getopt -a \
+    --options "hp:t:N:C:o:r:" \
+    --longoptions "help,path:,quittime:,node:,cpus:,output-dir:,record:,debug" \
+    -n "$0" -- "$@")
+eval set -- $ARGS
+
+while true; do
+    case "$1" in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -p|--path)
+            UNITY_APP_PATH="$2"
+            shift 2
+            ;;
+        -t|--quittime)
+            QUIT_TIME="$2"
+            shift 2
+            ;;
+        -N|--node)
+            NODE="$2"
+            shift 2
+            ;;
+        -C|--cpus)
+            CPUS="$2"
+            shift 2
+            ;;
+        -o|--output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        -r|--record)
+            RECORD="$2"
+            shift 2
+            ;;
+        --debug)
+            DEBUG="yes"
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            echo "invalid args"
+            usage
+            exit 1
+            ;;
     esac
 done
 
-default_dst_dir="/tmp/$(date +%m%d)/unity"
-default_src_dir="$(dirname $0)"
-
-dst_dir="${dst_dir-${default_dst_dir}}"
-src_dir="${src_dir-${default_src_dir}}"
-pcie=${pcie-"no"}
-perf=${perf-"no"}
-time=${time-60}
-
-if [ ! -d "${dst_dir}" ]; then
-	mkdir -p "${dst_dir}"
+# 确认 unity app 路径和输出路径
+if [ x"$UNITY_APP_PATH" == "x" -o x"$QUIT_TIME" == "x" ]; then
+    usage
+    exit 1
 fi
-if [ ! -d "${src_dir}" ]; then
-	mkdir -p "${src_dir}"
+OUTPUT_DIR="${OUTPUT_DIR-/tmp/$(date +%m%d)/unity}"
+
+# 绑核或绑NUMA
+if [ x"$NODE" == "x" ]; then
+    CPUS="null"
+else
+    CPUS="${CPUS-null}"
 fi
+NODE="${NODE-null}"
 
-dst_dir="$(cd ${dst_dir} && pwd)"
-src_dir="$(cd ${src_dir} && pwd)"
+# 记录相关性能数据
+if [ x"$RECORD" != "x" ]; then
+    for item in $(echo "$RECORD" | tr -s "," " "); do
+        [[ $item == perf ]] && PERF="yes"
+        [[ $item == pcie ]] && PCIE="yes"
+        [[ $item == nmon ]] && NMON="yes"
+        [[ $item == thread ]] && THREAD="yes"
+    done
+fi
+PERF="${PERF-no}"
+PCIE="${PCIE-no}"
+NMON="${NMON-no}"
+THREAD="${THREAD-no}"
 
-echo "输出文件夹: ${dst_dir}"
-echo "unity demo 所在文件夹: ${src_dir}"
-echo "运行时长: ${time}s"
-echo "是否记录 pcie: ${pcie}"
-echo "是否记录 perf: ${perf}"
-echo ""
+# 打印到控制台, 方便开发者调试
+if [ x"$DEBUG" == "xyes" ]; then
+    # print unity app and output dir
+    echo "unity app path: $UNITY_APP_PATH"
+    echo "output dir: $OUTPUT_DIR"
+    # print record items
+    echo -n "record: "
+    if [ "${PERF}" == "yes" ]; then
+        echo -n "perf "
+    fi
+    if [ "${PCIE}" == "yes" ]; then
+        echo -n "pcie "
+    fi
+    if [ "${NMON}" == "yes" ]; then
+        echo -n "nmon "
+    fi
+    if [ "${THREAD}" == "yes" ]; then
+        echo -n "thread"
+    fi
+    echo ""
+    # print band cpus or band numa
+    if [ $NODE != null ]; then
+        if [ $CPUS != null ]; then
+            echo "band cpus: $CPUS"
+        else
+            echo "band numa: $NODE"
+        fi
+    fi
+fi
 
 function get_base_name()
 {
@@ -71,14 +139,60 @@ function get_base_name()
     base_name=${base_name%.zip}
 }
 
-function get_pid_by_name()
+function run()
 {
-    local cmd="$1"
-    local pids=$(ps u | grep "${cmd}" | grep -v "grep" | awk '{print $11,$2}' 2>/dev/null)
-    pid=$(echo "${pids}" | sed -n '/^perf/! p' | awk '{print $2}')
+    get_base_name "$UNITY_APP_PATH"
+    EXTRA_DIR="/tmp/unity/$base_name"
+    if [ ! -d $EXTRA_DIR ]; then
+        mkdir -p $EXTRA_DIR
+        unzip -o "$UNITY_APP_PATH" -d "$EXTRA_DIR" > /dev/null
+    fi
+    local exec="$(find "$EXTRA_DIR" -type f -name "*.x86_64")"
+    chmod +x "$exec"
+
+    CMD=""
+    if [ $NODE != null -a $CPUS != null ]; then
+        CMD="numactl -C $CPUS -m $NODE"
+    elif [ $NODE != null ]; then
+        CMD="numactl -N $NODE -m $NODE"
+    fi
+    CMD="$CMD $exec -force-vulkan -logFile $OUTPUT_DIR/${base_name}.log"
+    echo "cmd: $CMD"
+
+    eval $CMD >/dev/null &
+    sleep 1
+    UNITY_APP_PID=$(pstree -p $! | head -1 | tr -s "(" " " | tr -s ")" " " | awk '{print $4}')
+    if [ x"$DEBUG" == "xyes" ]; then
+        echo "unity app pid: $UNITY_APP_PID"
+    fi
 }
 
-function wait()
+function record()
+{
+    local index=0
+
+    if [ $NMON == yes ]; then
+        nmon -f -t -m "${OUTPUT_DIR}" -s 1 -c "$((QUIT_TIME-3))" &
+    fi
+
+    if [ $PCIE == yes ]; then
+        nvidia-smi dmon -i 0 -s pcut -f "${OUTPUT_DIR}"/pcie.log &
+        RECORD_PID_ARRAY[$index]=$!
+        index=$((index+1))
+    fi
+
+    if [ $PERF == yes ]; then
+        perf record -g -o "${OUTPUT_DIR}"/perf.data -p $UNITY_APP_PID -F 99 2>/dev/null &
+    fi
+
+    if [ $THREAD == yes ]; then
+        top -b -H -p $UNITY_APP_PID >"${OUTPUT_DIR}"/threads.log &
+        RECORD_PID_ARRAY[$index]=$!
+        index=$((index+1))
+    fi
+}
+
+function mywait()
 {
     local cur=0
     while [ $cur -lt $1 ]; do
@@ -88,80 +202,13 @@ function wait()
             cur=$(($cur+1))
     done
     echo ""
-}
+} 
 
-function run()
-{
-    local pcie_log_file="$1"
-    local perf_log_file="$2"
-    local exec="$3"
-    shift 3
-    local args="$@"
+run
+record
 
-    echo "pcie_log_file = ${pcie_log_file}"
-    echo "perf_log_file = ${perf_log_file}"
-    echo "exec = ${exec}"
-    echo "args = ${args[@]}"
-
-    if [ "${pcie}" == "yes" ]; then
-        nvidia-smi dmon -i 0 -s pcut -f "${pcie_log_file}" &
-    fi
-
-    if [ "${perf}" == "yes" ]; then
-        perf record -g -o "${perf_log_file}" numactl -N0 -m0 "${exec}" "${args}" > /dev/null &
-    else
-        numactl -N0 -m0 "${exec}" "${args}" > /dev/null &
-    fi
-
-    wait "${time}"
-    get_pid_by_name "${exec}"
-    kill -2 "${pid}"
-
-    if [ "${pcie}" == "yes" ]; then
-        get_pid_by_name "nvidia-smi dmon -i 0 -s pcut -f ${pcie_log_file}"
-
-        kill -2 "${pid}"
-    fi
-}
-
-function main()
-{
-    local dst_dir="$1"
-    local src_dir="$2"
-	
-    local demos=$(find "${src_dir}" -type f -name "*.zip" | sort)
-    echo "运行的 demo 有: "
-    echo "${demos[@]}"
-    echo ""
-
-	rm -rf ~/.config/unity3d
-
-    for demo in ${demos[@]}; do
-        echo "运行 ${demo} ..."
-
-        echo "解压 ${demo} ..."
-        get_base_name "${demo}"
-        unzip -o "${demo}" -d "/tmp/${base_name}" > /dev/null
-
-        echo "赋予执行权限 ..."
-        local executable=$(find "/tmp/${base_name}" -type f -name "*.x86_64")
-        chmod +x "${executable}"
-
-        echo "执行 ..."
-		rm -rf "${dst_dir}/${base_name}"
-		mkdir -p "${dst_dir}/${base_name}"
-        run \
-          "${dst_dir}/${base_name}/pcie.log"  \
-          "${dst_dir}/${base_name}/perf.data" \
-          "${executable}"        \
-          "-force-vulkan"
-
-        echo ""
-    done
-
-	rm -rf "${dst_dir}/unity3d"
-    cp -r ~/.config/unity3d "${dst_dir}"
-}
-
-main "${dst_dir}" "${src_dir}"
-
+mywait $QUIT_TIME
+kill -2 $UNITY_APP_PID
+for p in ${RECORD_PID_ARRAY[@]}; do
+    kill -2 $p
+done

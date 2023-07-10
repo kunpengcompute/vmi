@@ -1,153 +1,211 @@
 #!/bin/bash
+set -e
+
+# 收集性能数据的后台进程
+declare -a RECORD_PID_ARRAY
+# citypark 进程
+declare CITYPARK_PID_PARENTS
+declare CITYPARK_PID
 
 function usage()
 {
-	printf "usage: $0 [options] -c cnt"
-	printf "\n-c cnt: 摄像机镜头数"
-	printf "\noptions:"
-	printf "\n\t-h 显示帮助"
-	printf "\n\t-r"
-	printf "\n\t\tpcie: 记录显卡的相关数据"
-	printf "\n\t\tperf: 记录测试程序的调用栈和cache miss率"
-	printf "\n\t\tnmon: 记录系统的性能数据"
-	printf "\n\t-t\tquit_time: 运行时长, 默认为100"
-	printf "\n\t-R\t在屏渲染"
-	printf "\n\t-d\tdst_dir: 输出文件夹, 默认为 %s" "tmp/$(date +%m%d)/citypark"
-	printf "\n\t-s\tcitypark_path: citypark 的路径, 默认为 %s" "$(cd $(dirname $0) && pwd)/citypark.tar.gz"
-	printf "\n"
+    echo "usage: $0 -path=... -cameras=... -quittime=... [-renderoffscreen] [options]"
+    echo -e "\t" "-p|-path: 指定citypark应用的路径"
+    echo -e "\t" "-cameras: 指定镜头数"
+    echo -e "\t" "-t|-quittime: 指定运行时长"
+    echo -e "\t" "-renderoffscreen: 指定应用是否使用离屏渲染模式"
+    echo -e "\t" "-N 绑NUMA或绑核, -C 选项指定绑核"
+    echo -e "\t" "-C 绑核"
+    echo -e "\t" "-record 记录性能数据"
+    echo -e "\t\t" "perf 记录 perf 数据"
+    echo -e "\t\t" "pcie 记录 pcie 数据"
+    echo -e "\t\t" "nmon 记录 nmon 数据"
+    echo -e "\t\t" "thread 记录 top thread 数据"
+    echo -e "\t\t" "示例,记录perf和pcie数据: -record perf,pcie"
 }
 
-while getopts 'hr:c:t:Rd:s:' opt; do
-	case "$opt" in
-	h)
-		usage
-		exit 0
-		;;
-	r)
-		[[ "${OPTARG}" == "pcie" ]] && pcie="yes"
-		[[ "${OPTARG}" == "perf" ]] && perf="yes"
-		[[ "${OPTARG}" == "nmon" ]] && nmon="yes"
-		;;
-	c)
-		cnt="${OPTARG}"
-		;;
-	t)
-		quit_time="${OPTARG}"
-		;;
-	R)
-		render_off_screen="no"
-		;;
-	d)
-		dst_dir="${OPTARG}"
-		;;
-	s)
-		citypark_path="${OPTARG}"
-		;;
-	?)
-		usage
-		exit 1
-	esac
+ARGS=$(getopt -a \
+    --options "hp:t:N:C:o:r:" \
+    --longoptions "help,path:,quittime:,node:,cpus:,output-dir:,record:,debug,cameras:,renderoffscreen" \
+    -n "$0" -- "$@")
+eval set -- $ARGS
+
+while true; do
+    case "$1" in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -p|--path)
+            CITYPARK_PATH="$2"
+            shift 2
+            ;;
+        -t|--quittime)
+            QUIT_TIME="$2"
+            shift 2
+            ;;
+        -N|--node)
+            NODE="$2"
+            shift 2
+            ;;
+        -C|--cpus)
+            CPUS="$2"
+            shift 2
+            ;;
+        -o|--output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        -r|--record)
+            RECORD="$2"
+            shift 2
+            ;;
+        --debug)
+            DEBUG="yes"
+            shift
+            ;;
+        --cameras)
+            CAMERAS="$2"
+            shift 2
+            ;;
+        --renderoffscreen)
+            RENDER_OFF_SCREEN="yes"
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            echo "invalid args"
+            usage
+            exit 1
+            ;;
+    esac
 done
 
-[[ -z "${cnt}" ]] && usage && exit 1
-
-default_quit_time=100
-default_dst_dir="/tmp/$(date +%m%d)/citypark"
-default_citypark_path="$(cd $(dirname $0) && pwd)/citypark.tar.gz"
-
-pcie="${pcie-"no"}"
-perf="${perf-"no"}"
-nmon="${nmon-"no"}"
-quit_time="${quit_time-${default_quit_time}}"
-render_off_screen="${render_off_screen-"yes"}"
-dst_dir="${dst_dir-${default_dst_dir}}"
-citypark_path="${citypark_path-${default_citypark_path}}"
-
-if [ ! -d "${dst_dir}" ]; then
-	mkdir -p "${dst_dir}"
+if [ x"$CITYPARK_PATH" == "x" -o x"$QUIT_TIME" == "x" -o x"$CAMERAS" == "x" ]; then
+    usage
+    exit 1
 fi
-dst_dir="$(cd ${dst_dir} && pwd)"
+RENDER_OFF_SCREEN="${RENDER_OFF_SCREEN-no}"
+OUTPUT_DIR="${OUTPUT_DIR-/tmp/$(date +%m%d)/unity}"
 
-echo "镜头数: ${cnt}"
-echo "运行时长: ${quit_time}s"
-echo "是否是离屏渲染: ${render_off_screen}"
-echo "输出目录: ${dst_dir}"
-echo "citypark 路径: ${citypark_path}"
-echo "是否记录 pcie: ${pcie}"
-echo "是否记录 perf: ${perf}"
-echo "是否记录 nmon: ${nmon}"
-echo ""
+# band core or band numa
+if [ x"$NODE" == "x" ]; then
+    CPUS="null"
+else
+    CPUS="${CPUS-null}"
+fi
+NODE="${NODE-null}"
 
-function get_pid_by_name()
+# 记录相关性能数据
+if [ x"$RECORD" != "x" ]; then
+    for item in $(echo "$RECORD" | tr -s "," " "); do
+        [[ $item == perf ]] && PERF="yes"
+        [[ $item == pcie ]] && PCIE="yes"
+        [[ $item == nmon ]] && NMON="yes"
+        [[ $item == thread ]] && THREAD="yes"
+    done
+fi
+PERF="${PERF-no}"
+PCIE="${PCIE-no}"
+NMON="${NMON-no}"
+THREAD="${THREAD-no}"
+
+# 打印到控制台, 方便开发者调试
+if [ x"$DEBUG" == "xyes" ]; then
+    # print unity app and output dir
+    echo "render off screen: $RENDER_OFF_SCREEN"
+    echo "citypark path: $CITYPARK_PATH, cameras: $CAMERAS, run time: $QUIT_TIME"
+    echo "output dir: $OUTPUT_DIR"
+    # print record items
+    echo -n "record: "
+    if [ "${PERF}" == "yes" ]; then
+        echo -n "perf "
+    fi
+    if [ "${PCIE}" == "yes" ]; then
+        echo -n "pcie "
+    fi
+    if [ "${NMON}" == "yes" ]; then
+        echo -n "nmon "
+    fi
+    if [ "${THREAD}" == "yes" ]; then
+        echo -n "thread"
+    fi
+    echo ""
+    # print band cpus or band numa
+    if [ $NODE != null ]; then
+        if [ $CPUS != null ]; then
+            echo "band cpus: $CPUS"
+        else
+            echo "band numa: $NODE"
+        fi
+    fi
+fi
+
+function record()
 {
-	local cmd="$1"
-	local pids=$(ps u | grep "${cmd}" | grep -v "grep" | awk '{print $11,$2}' 2>/dev/null)
-
-	pid=$(echo "${pids}" | sed -n '/^perf/! p' | awk '{print $2}')
+    local index=0
+    if [ $NMON == yes ]; then
+        nmon -f -t -m "${OUTPUT_DIR}" -s 1 -c "$((QUIT_TIME-3))" &
+    fi
+    if [ $PCIE == yes ]; then
+        nvidia-smi dmon -i 0 -s pcut -f "${OUTPUT_DIR}"/pcie.log &
+        RECORD_PID_ARRAY[$index]=$!
+        index=$((index+1))
+    fi
+    if [ $PERF == yes ]; then
+        perf record -g -o "${OUTPUT_DIR}"/perf.data -p $CITYPARK_PID -F 99 2>/dev/null &
+    fi
+    if [ $THREAD == yes ]; then
+        top -b -H -p $CITYPARK_PID >"${OUTPUT_DIR}"/threads.log &
+        RECORD_PID_ARRAY[$index]=$!
+        index=$((index+1))
+    fi
 }
 
-function get_prefix()
+function run()
 {
-	prefix="${dst_dir}"
+    local extra_dir=/tmp/citypark
+    if [ ! -d $extra_dir ]; then
+        mkdir -p $extra_dir
+        tar xf $CITYPARK_PATH -C $extra_dir
+    fi
+    local exec=$(find $extra_dir -type f -name "*.sh")
+    chmod +x $exec
+    
+    CMD=""
+    if [ $NODE != null -a $CPUS != null ]; then
+        CMD="numactl -C $CPUS -m $NODE"
+    elif [ $NODE != null ]; then
+        CMD="numactl -N $NODE -m $NODE"
+    fi
+    CMD="$CMD $exec -ResX=1920 -ResY=1080 -ForceRes -cameras=$CAMERAS -quittime=$QUIT_TIME"
+    if [ $RENDER_OFF_SCREEN == yes ]; then
+        CMD="$CMD -renderoffscreen"
+    fi
+    echo "cmd: $CMD"
 
-	if [ "${render_off_screen}" == "yes" ]; then
-		prefix="${prefix}/off"
-	else
-		prefix="${prefix}/on"
-	fi
+    if [ ! -d "${OUTPUT_DIR}" ]; then
+        mkdir -p "${OUTPUT_DIR}"
+    fi
 
-	prefix="${prefix}/${cnt}"
-	echo "prefix = ${prefix}"
+    eval $CMD >${OUTPUT_DIR}/citypark.log  2>/dev/null &
+    CITYPARK_PID_PARENTS=$!
 }
 
-function get_args()
-{
-	args="-cameras=${cnt} -quittime=${quit_time}"
-	if [ "${render_off_screen}" == "yes" ]; then
-		args="${args} -renderoffscreen"
-	fi
-	args="-ResX=1920 -ResY=1080 -ForceRes ${args}"
-	echo "args = ${args}"
-}
+run
 
-function main()
-{
-	echo "解压 ${citypark_path} ..."
-	if [ ! -d /tmp/citypark ]; then
-		mkdir /tmp/citypark
-		tar xf "${citypark_path}" -C "/tmp/citypark" > /dev/null 2>&1
-	fi
+sleep 2
+CITYPARK_PID=$(pstree -p $CITYPARK_PID_PARENTS | head -1 | tr -s "(" " " | tr -s ")" " " | awk '{print $6}')
+if [ x"$DEBUG" == "xyes" ]; then
+    echo "citypark pid parent: $CITYPARK_PID_PARENTS"
+    echo "citypark pid: $CITYPARK_PID"
+fi
+record
 
-	echo "添加执行权限 ..."
-	local executable=$(find /tmp/citypark -type f -name "*.sh")
-	echo "executable = ${executable}"
-	chmod +x "${executable}"
-
-	echo "运行 ..."
-	get_prefix
-	mkdir -p "${prefix}"
-	get_args
-
-	if [ "${pcie}" == "yes" ]; then
-		nvidia-smi dmon -i 0 -s pcut -f "${prefix}/pcie.log" &
-	fi
-
-	if [ "${nmon}" == "yes" ]; then
-		nmon -f -t -m "${prefix}" -s 1 -c "${quittime}" &
-	fi
-
-	if [ "${perf}" == "yes" ]; then
-		perf record -g -o "${prefix}/perf.data" numactl -N0 -m0 "${executable}" ${args} > "${prefix}/citypark.log" 
-	else
-		numactl -N0 -m0 "${executable}" ${args} > "${prefix}/citypark.log" 
-	fi
-
-	if [ "${pcie}" == "yes" ]; then
-		get_pid_by_name "nvidia-smi dmon -i 0 -s pcut -f ${prefix}/pcie.log"
-		kill -2 "${pid}"
-	fi
-
-	echo ""
-}
-
-main
+wait $CITYPARK_PID_PARENTS
+for p in ${RECORD_PID_ARRAY[@]}; do
+    kill -2 $p
+done
