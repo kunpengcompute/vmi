@@ -4,14 +4,13 @@ set -e
 # 收集性能数据的后台进程
 declare -a RECORD_PID_ARRAY
 # citypark 进程
-declare CITYPARK_PID_PARENTS
-declare CITYPARK_PID
+declare UE4_PID_PARENTS
+declare UE4_PID
 
 function usage()
 {
-    echo "usage: $0 -path=... -cameras=... -quittime=... [-renderoffscreen] [options]"
-    echo -e "\t" "-p|-path: 指定citypark应用的路径"
-    echo -e "\t" "-cameras: 指定镜头数"
+    echo "usage: $0 -path=... -quittime=... [-renderoffscreen] [options] -- [args]"
+    echo -e "\t" "-p|-path: 指定 ue4 应用的路径"
     echo -e "\t" "-t|-quittime: 指定运行时长"
     echo -e "\t" "-renderoffscreen: 指定应用是否使用离屏渲染模式"
     echo -e "\t" "-N 绑NUMA或绑核, -C 选项指定绑核"
@@ -22,11 +21,12 @@ function usage()
     echo -e "\t\t" "nmon 记录 nmon 数据"
     echo -e "\t\t" "thread 记录 top thread 数据"
     echo -e "\t\t" "示例,记录perf和pcie数据: -record perf,pcie"
+    echo -e "\t" "args ue4 应用的其他参数"
 }
 
 ARGS=$(getopt -a \
     --options "hp:t:N:C:o:r:" \
-    --longoptions "help,path:,quittime:,node:,cpus:,output-dir:,record:,debug,cameras:,renderoffscreen" \
+    --longoptions "help,path:,quittime:,node:,cpus:,output-dir:,record:,debug,renderoffscreen" \
     -n "$0" -- "$@")
 eval set -- $ARGS
 
@@ -37,7 +37,7 @@ while true; do
             exit 0
             ;;
         -p|--path)
-            CITYPARK_PATH="$2"
+            UE4_PATH="$2"
             shift 2
             ;;
         -t|--quittime)
@@ -64,10 +64,6 @@ while true; do
             DEBUG="yes"
             shift
             ;;
-        --cameras)
-            CAMERAS="$2"
-            shift 2
-            ;;
         --renderoffscreen)
             RENDER_OFF_SCREEN="yes"
             shift
@@ -84,7 +80,7 @@ while true; do
     esac
 done
 
-if [ x"$CITYPARK_PATH" == "x" -o x"$QUIT_TIME" == "x" -o x"$CAMERAS" == "x" ]; then
+if [ x"$UE4_PATH" == "x" -o x"$QUIT_TIME" == "x" ]; then
     usage
     exit 1
 fi
@@ -117,7 +113,7 @@ THREAD="${THREAD-no}"
 if [ x"$DEBUG" == "xyes" ]; then
     # print unity app and output dir
     echo "render off screen: $RENDER_OFF_SCREEN"
-    echo "citypark path: $CITYPARK_PATH, cameras: $CAMERAS, run time: $QUIT_TIME"
+    echo "ue4 path: $UE4_PATH, cameras: $CAMERAS, run time: $QUIT_TIME"
     echo "output dir: $OUTPUT_DIR"
     # print record items
     echo -n "record: "
@@ -156,24 +152,44 @@ function record()
         index=$((index+1))
     fi
     if [ $PERF == yes ]; then
-        perf record -g -o "${OUTPUT_DIR}"/perf.data -p $CITYPARK_PID -F 99 2>/dev/null &
+        perf record -g -o "${OUTPUT_DIR}"/perf.data -p $UE4_PID -F 99 2>/dev/null &
     fi
     if [ $THREAD == yes ]; then
-        top -b -H -p $CITYPARK_PID >"${OUTPUT_DIR}"/threads.log &
+        top -b -H -p $UE4_PID >"${OUTPUT_DIR}"/threads.log &
         RECORD_PID_ARRAY[$index]=$!
         index=$((index+1))
     fi
 }
 
+function extra()
+{
+    local dst="$1"
+    local archive="$2"
+    if [ ! -d "$dst" ]; then
+        echo "\"$dst\" not exist"
+        return 1
+    fi
+
+    if [ ! -z "$(echo "$archive" | sed -n '/.tar.gz$/ p')" ]; then
+        tar xf "$archive" -C "$dst"
+    elif [ ! -z "$(echo "$archive" | sed -n '/.zip$/ p')" ]; then
+        unzip -o "$archive" -d "$dst" >/dev/null
+    else
+        echo "\"$archive\" is not a archvie"
+        return 1
+    fi
+}
+
 function run()
 {
-    local extra_dir=/tmp/citypark
-    if [ ! -d $extra_dir ]; then
-        mkdir -p $extra_dir
-        tar xf $CITYPARK_PATH -C $extra_dir
+    local basename="$(echo "${UE4_PATH##*/}" | sed 's@.tar.gz$@@' | sed 's@.zip$@@')"
+    local extra_dir="/tmp/$basename"
+    if [ ! -d "$extra_dir" ]; then
+        mkdir -p "$extra_dir"
+        extra "$extra_dir" "$UE4_PATH"
     fi
-    local exec=$(find $extra_dir -type f -name "*.sh")
-    chmod +x $exec
+    local exec="$(find $extra_dir -type f -name *.sh)"
+    chmod +x "$exec"
     
     CMD=""
     if [ $NODE != null -a $CPUS != null ]; then
@@ -181,31 +197,34 @@ function run()
     elif [ $NODE != null ]; then
         CMD="numactl -N $NODE -m $NODE"
     fi
-    CMD="$CMD $exec -ResX=1920 -ResY=1080 -ForceRes -cameras=$CAMERAS -quittime=$QUIT_TIME"
+
+    CMD="$CMD \"$exec\" -ResX=1920 -ResY=1080 -ForceRes -quittime=$QUIT_TIME"
     if [ $RENDER_OFF_SCREEN == yes ]; then
         CMD="$CMD -renderoffscreen"
     fi
+
+    CMD="$CMD $@"
     echo "cmd: $CMD"
 
     if [ ! -d "${OUTPUT_DIR}" ]; then
         mkdir -p "${OUTPUT_DIR}"
     fi
 
-    eval $CMD >${OUTPUT_DIR}/citypark.log  2>/dev/null &
-    CITYPARK_PID_PARENTS=$!
+    eval $CMD >${OUTPUT_DIR}/"$basename".log  2>/dev/null &
+    UE4_PID_PARENTS=$!
 }
 
-run
+run $@
 
 sleep 2
-CITYPARK_PID=$(pstree -p $CITYPARK_PID_PARENTS | head -1 | tr -s "(" " " | tr -s ")" " " | awk '{print $6}')
+UE4_PID=$(pstree -p $UE4_PID_PARENTS | head -1 | tr -s "(" " " | tr -s ")" " " | awk '{print $6}')
 if [ x"$DEBUG" == "xyes" ]; then
-    echo "citypark pid parent: $CITYPARK_PID_PARENTS"
-    echo "citypark pid: $CITYPARK_PID"
+    echo "ue4 pid parent: $UE4_PID_PARENTS"
+    echo "ue4 pid: $UE4_PID"
 fi
 record
 
-wait $CITYPARK_PID_PARENTS
+wait $UE4_PID_PARENTS
 for p in ${RECORD_PID_ARRAY[@]}; do
     kill -2 $p
 done
