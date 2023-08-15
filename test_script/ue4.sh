@@ -188,7 +188,7 @@ function run()
         mkdir -p "$extra_dir"
         extra "$extra_dir" "$UE4_PATH"
     fi
-    local exec="$(find $extra_dir -type f -name *.sh)"
+    local exec="$(find $extra_dir -type f -name '*.sh')"
     chmod +x "$exec"
     
     CMD=""
