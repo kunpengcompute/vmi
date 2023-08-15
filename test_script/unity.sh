@@ -147,7 +147,7 @@ function run()
         mkdir -p $EXTRA_DIR
         unzip -o "$UNITY_APP_PATH" -d "$EXTRA_DIR" > /dev/null
     fi
-    local exec="$(find "$EXTRA_DIR" -type f -name "*.x86_64")"
+    local exec="$(find "$EXTRA_DIR" -type f -name '*.x86_64')"
     chmod +x "$exec"
 
     CMD=""
