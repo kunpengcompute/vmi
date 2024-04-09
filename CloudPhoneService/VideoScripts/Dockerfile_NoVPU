@@ -1,0 +1,28 @@
+# 本文件将基于kbox基础云手机镜像和视频流云手机相关的二进制制作视频流云手机镜像
+# 本文件前提是保证已有kbox基础云手机镜像（如kbox:latest）
+# 在kbox基础云手机镜像的基础上将视频流云手机相关的二进制放入kbox基础云手机镜像中
+# 使用docker命令制作视频流云手机镜像（如video:latest），方便用户使用
+
+# ARG是定义参数名称
+# FROM是指定kbox基础云手机镜像
+# MAINTAINER是作者名
+ARG KBOX_IMAGE
+FROM ${KBOX_IMAGE}
+MAINTAINER root
+
+COPY ./DemoVideoEngine/system /DemoVideoEngine/system
+COPY ./DemoVideoEngine/vendor /DemoVideoEngine/vendor
+
+# 注意：
+# 因为每运行RUN一次就会创建一层镜像，容易产生非常臃肿、非常多层的镜像
+# 所以将视频流云手机相关的所有二进制整合在一起，保证只运行一次RUN
+RUN chmod -R 755 DemoVideoEngine \
+    && chown -R root:root DemoVideoEngine \
+    && chmod -R 444 DemoVideoEngine/vendor/etc/init/VmiAgentAndroidP.rc \
+    && chmod -R 444 DemoVideoEngine/system/etc/init/init.vmi.input.rc \
+    && chmod -R 400 DemoVideoEngine/vendor/etc/videoengine_version.txt \
+    && cp -pR DemoVideoEngine/vendor/* /system/vendor \
+    && cp -pR DemoVideoEngine/system/* /system \
+    && rm -rf DemoVideoEngine \
+    && sed -i 's/^ro.vmi.hardware.vpu=.*/ro.vmi.hardware.vpu=0/g' /system/build.prop \
+    && sed -i 's/^ro.vmi.hardware.vpu=.*/ro.vmi.hardware.vpu=0/g' /system/vendor/build.prop

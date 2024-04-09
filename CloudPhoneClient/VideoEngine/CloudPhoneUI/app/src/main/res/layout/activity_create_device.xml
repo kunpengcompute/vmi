@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".ui.activities.CreateDeviceActivity">
+
+    <com.huawei.cloudphone.widget.TopBar
+        android:id="@+id/tb_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tb_back="@drawable/ic_back"
+        app:tb_title="@string/apply_device" />
+
+    <EditText
+        android:id="@+id/et_device_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorTransparent"
+        android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890_"
+        android:hint="@string/create_device_hint"
+        android:inputType="text"
+        android:maxLength="20"
+        android:padding="15dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:id="@+id/ll_region"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area" />
+
+        <TextView
+            android:id="@+id/tv_region"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:gravity="end|center_vertical" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:id="@+id/ll_template"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/template" />
+
+        <TextView
+            android:id="@+id/tv_template"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:gravity="end|center_vertical" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/btn_apply_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/selector_btn_submit"
+        android:text="@string/apply_device"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+</LinearLayout>

@@ -1,0 +1,65 @@
+#
+# ADDITIONAL VENDOR DEFAULT PROPERTIES
+#
+#vsync优化，该容器vsync信号相比默认值的偏移量，单位ns
+ro.hardware.vsyncoffset=0
+ro.sys.vmi.cloudphone=video
+vmi.videostream.engine=true
+ro.vmi.loglevel=4
+###################################################
+ro.vndk.version=30
+ro.vndk.lite=true
+ro.zygote=zygote64_32
+ro.logd.size.stats=64K
+log.tag.stats_log=I
+ro.bionic.arch=arm64
+ro.bionic.cpu_variant=generic
+ro.bionic.2nd_arch=arm
+ro.bionic.2nd_cpu_variant=cortex-a15
+persist.sys.dalvik.vm.lib.2=libart.so
+dalvik.vm.isa.arm64.variant=generic
+dalvik.vm.isa.arm64.features=default
+dalvik.vm.isa.arm.variant=cortex-a15
+dalvik.vm.isa.arm.features=default
+vmi.moudle.lists=111100
+vmi.network.type=1
+#video config
+###################################################
+#编码器类型 0:CPU 1:VPU(默认编码卡) 2:GPU
+vmi.video.encodertype=1
+#视频输出格式 0:H264 1:YUV 2:RGB(暂不支持) 3:H265
+vmi.video.videoframetype=0
+#抓图分辨率
+vmi.video.frame.width=720
+vmi.video.frame.height=1280
+vmi.video.frame.widthaligned=720
+vmi.video.frame.heightaligned=1280
+vmi.video.frame.density=320
+#出流优化，默认开启
+vmi.video.renderoptimize=1
+#初始编码参数
+vmi.video.encode.bitrate=3000000
+vmi.video.encode.gopsize=30
+vmi.video.encode.profile=0
+vmi.video.encode.rcmode=2
+vmi.video.encode.forcekeyframe=0
+vmi.video.encode.interpolation=0
+
+#音频播放数据类型 0:OPUS 1:PCM
+vmi.audio.audiotype=0
+#初始音频编码参数
+#音频采样间隔 单位ms 支持 5 10 20
+vmi.audio.encode.sampleinterval=10
+#OPUS编码比特率 取值范围：[13200, 512000]
+vmi.audio.encode.bitrate=192000
+
+#麦克风数据类型 0:OPUS 1:PCM
+vmi.mic.audiotype=0
+#麦克风帧缓存大小：0 1 2 3
+vmi.mic.cachefactor=2
+
+# 群控
+vmi.crowd.control.master=false
+
+# 用于测试网络包预留字段大小，默认值为20，取值范围0 ~ 1024
+demo.data.offset=20

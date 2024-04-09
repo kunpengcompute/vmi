@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".ui.activities.SettingsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.huawei.cloudphone.widget.TopBar
+            android:id="@+id/tb_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00868B"
+            app:tb_back="@drawable/ic_back"
+            app:tb_menu="@drawable/ic_baseline_save_as_24"
+            app:tb_title="设置" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="视频模块"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_video_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_video_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:text="1.0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_encoder_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="编码器类型"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_encoder_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="@string/system_default" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_video_frame_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="视频输出格式"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_video_frame_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="@string/system_default" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_video_frame_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="帧率"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_video_frame_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="@string/system_default" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_video_frame_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分辨率"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_video_frame_size"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="@string/system_default" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_encode_parameter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/encode_parameter"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_parameter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="@string/encode_parameter" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_video_force_landscape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <CheckBox
+                android:id="@+id/cb_force_Landscape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@android:drawable/btn_radio"
+                android:paddingEnd="10dp"
+                android:text="强制横屏"
+                android:textColor="@color/colorBlack" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_video_render_optimize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <CheckBox
+                android:id="@+id/cb_render_optimize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="@android:drawable/btn_radio"
+                android:paddingEnd="10dp"
+                android:text="出流优化" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="音频播放模块"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_audio_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_audio_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:text="1.0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_audio_stream_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="音频流类型"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_audio_stream_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="@string/system_default" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_audio_sample_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="采样率"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_audio_sample_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+
+                android:gravity="end|center_vertical"
+                android:text="48000Hz" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_audio_play_params"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="音频播放参数设置"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_audio_play_params"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="@string/system_default" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="触控模块"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_touch_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_touch_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:text="1.0" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="麦克风模块"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_mic_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_mic_version"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:text="1.0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_mic_input_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="音频流类型"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_mic_input_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="@string/system_default" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_opus_bitrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="opus编码比特率："
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/tv_opus_bitrate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="192000" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:onClick="onClick"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="采样间隔(ms)："
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/tv_mic_sample_interval"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:hint="5/10/20"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:gravity="end|center_vertical"
+                android:text="10" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

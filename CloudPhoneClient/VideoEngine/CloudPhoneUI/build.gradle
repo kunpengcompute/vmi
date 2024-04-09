@@ -1,0 +1,46 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        maven { url 'https://cmc.centralrepo.rnd.huawei.com/artifactory/maven-central-repo/' }
+        maven { allowInsecureProtocol = true
+                url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/public/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/google/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/jcenter/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/central/' }
+        mavenLocal()
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://cmc.centralrepo.rnd.huawei.com/artifactory/maven-central-repo/' }
+        maven { allowInsecureProtocol = true
+                url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/public/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/google/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/jcenter/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/central/' }
+        mavenLocal()
+        mavenCentral()
+        google()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

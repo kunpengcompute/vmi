@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="iv_close" type="id" />
+    <item name="iv_frame" type="id" />
+    <item name="iv_video" type="id" />
+    <item name="iv_audio" type="id" />
+    <item name="iv_back" type="id" />
+    <item name="iv_home" type="id" />
+    <item name="iv_switch" type="id" />
+
+
+</resources>

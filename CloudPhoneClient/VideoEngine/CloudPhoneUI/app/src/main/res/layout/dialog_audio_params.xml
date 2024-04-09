@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parameter_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="音频编码参数配置"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_sample_Interval"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="采样间隔(ms)" />
+
+        <EditText
+            android:id="@+id/et_sample_Interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="仅支持5ms/10ms/20ms"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="12sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_bitrate_label"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="波特率(bps)" />
+
+        <EditText
+            android:id="@+id/et_bitrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="输入范围500~512000bps"
+            android:inputType="number"
+            android:maxLength="9"
+            android:textSize="12sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/selector_btn_submit"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/selector_btn_submit"
+            android:gravity="center"
+            android:text="发送"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>

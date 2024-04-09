@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parameter_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="16sp"
+    android:text="视频编码参数配置"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_bitrate_label"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/bitrate_label" />
+
+        <EditText
+            android:id="@+id/et_bitrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bitrate_value"
+            android:inputType="number"
+            android:maxLength="9"
+            android:textSize="12sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_profile_label"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/profile_label" />
+
+        <EditText
+            android:id="@+id/et_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/profile_value"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="12sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_gopsize_label"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/gop_size_label" />
+
+        <EditText
+            android:id="@+id/et_gopsize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/gop_size_value"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="12sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_rcmode_label"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="流控模式(rcMode)" />
+
+        <EditText
+            android:id="@+id/et_rcmode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ABR(0),CRF(1),CBR(2),CAPPED_CRF(3)"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textSize="12sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_force_key_frame"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="强制生成I帧" />
+
+        <EditText
+            android:id="@+id/et_force_key_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0表示关闭,1~3000表示开启"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="12sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_interpolation"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="补帧开关" />
+
+        <EditText
+            android:id="@+id/et_interpolation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0表示关闭,1开启"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textSize="12sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/selector_btn_submit"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/selector_btn_submit"
+            android:gravity="center"
+            android:text="发送"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>

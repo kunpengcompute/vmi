@@ -1,0 +1,6 @@
+service VmiAgent /vendor/bin/VmiAgent
+    class core
+    user root
+    group root
+    onrestart restart VmiInputFlinger
+    onrestart restart vendor.audio-hal

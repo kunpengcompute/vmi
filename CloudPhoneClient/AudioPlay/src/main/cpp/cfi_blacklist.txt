@@ -1,0 +1,2 @@
+fun:*opusDecode*
+src:*jni*

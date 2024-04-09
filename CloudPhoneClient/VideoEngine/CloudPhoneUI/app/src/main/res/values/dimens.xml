@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="floating_width">40dp</dimen>
+    <dimen name="floating_radius">100dp</dimen>
+    <dimen name="menu_width">56dp</dimen>
+    <dimen name="menu_heigth">56dp</dimen>
+    <dimen name="menu_icon_margin_back">6dp</dimen>
+    <dimen name="menu_icon_margin">16dp</dimen>
+</resources>
