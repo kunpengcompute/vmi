@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:descendantFocusability="blocksDescendants"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_name_label"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_name_label"
+            app:layout_constraintLeft_toRightOf="@+id/tv_name_label"
+            tools:text="DemoDev01" />
+
+        <TextView
+            android:id="@+id/tv_status_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_name_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_label" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_status_label"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_status_label"
+            app:layout_constraintLeft_toRightOf="@+id/tv_status_label"
+            tools:text="online - 22h05m49s" />
+
+        <TextView
+            android:id="@+id/tv_spec_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spec"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_status_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status_label" />
+
+        <TextView
+            android:id="@+id/tv_spec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_spec_label"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_spec_label"
+            app:layout_constraintLeft_toRightOf="@+id/tv_spec_label"
+            tools:text="2.2Ghz/8G/1280*720" />
+
+        <ImageButton
+            android:id="@+id/ib_reboot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_toStartOf="@+id/ib_delete"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_reboot"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_spec_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_spec"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/ib_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_clear"
+            app:layout_constraintLeft_toRightOf="@+id/ib_reboot"
+            app:layout_constraintTop_toTopOf="@+id/ib_reboot"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_snap"
+            android:layout_width="45dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_launcher_background" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.CardView>

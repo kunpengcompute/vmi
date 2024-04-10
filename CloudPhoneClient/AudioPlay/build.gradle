@@ -1,0 +1,127 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+allprojects {
+    repositories {
+        maven { url "https://cmc.centralrepo.rnd.huawei.com/artifactory/maven-central-repo/" }
+        maven { allowInsecureProtocol = true
+                url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/public/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/google/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/jcenter/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/central/' }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+buildscript {
+    repositories {
+        maven { url "https://cmc.centralrepo.rnd.huawei.com/artifactory/maven-central-repo/" }
+        maven { allowInsecureProtocol = true
+                url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/public/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/google/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/jcenter/' }
+        maven { allowInsecureProtocol = true
+                url 'https://maven.aliyun.com/repository/central/' }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+def branch_name = ""
+def git_hash = ""
+println "branch name :" + branch_name
+println "git hash:" + git_hash
+
+
+
+def versionPropsFile = file('version.properties')
+def code = 0
+if (versionPropsFile.canRead()) {
+    def Properties versionProps = new Properties()
+
+    versionProps.load(new FileInputStream(versionPropsFile))
+
+    code = versionProps['VERSION_CODE'].toInteger() + 1
+
+    versionProps['VERSION_CODE'] = code.toString()
+    versionProps.store(versionPropsFile.newWriter(), null)
+}
+
+def buildNumber = String.format("B%03d", code)
+def filename = ""
+def moduleName = "audioplay"
+
+android {
+    ndkVersion "25.1.8937393"
+    buildToolsVersion "33.0.1"
+    compileSdkVersion 33
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.1"
+        filename = "VMIClient." + versionName + "." + buildNumber + "-" + branch_name + "." + git_hash + "-" + moduleName
+        project.ext.set("archivesBaseName", filename)
+        if (project.hasProperty('enableAsan')){
+            project.ext.asan = project.getProperty('enableAsan')
+        } else {
+            project.ext.asan = "OFF"
+        }
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++14  -fPIC -fno-rtti -fno-exceptions "
+                cppFlags "-DBUILD_UNITY_PLUGIN"
+                arguments "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
+                //code compiled on different C++ lib may not work together, (in fact they don't)
+                arguments "-DVMI_BINARY_DIR="+file(".")+"/jniLibs"
+                arguments "-DENABLE_ASAN:BOOL=${project.ext.asan}"
+            }
+        }
+        ndk {
+            // Specifies the ABI configurations of your native
+            // libraries Gradle should build and package with your APK.
+            abiFilters 'arm64-v8a'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix "-" + branch_name
+        }
+        debug {
+            versionNameSuffix "-" + branch_name
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            version "3.25.3"
+            path "CMakeLists.txt"
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = [ 'jniLibs' ]
+        }
+    }
+    packagingOptions {
+        doNotStrip "*.so"
+        doNotStrip "*/x86/*.so"
+    }
+}

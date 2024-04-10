@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="floating_with">40dp</dimen>
-    <dimen name="floating_radius">80dp</dimen>
-    <dimen name="menu_with">56dp</dimen>
-    <dimen name="menu_height">56dp</dimen>
-    <dimen name="menu_icon_margin_back">6dp</dimen>
-    <dimen name="menu_icon_margin">16dp</dimen>
-</resources>

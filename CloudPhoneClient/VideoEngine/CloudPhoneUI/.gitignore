@@ -1,0 +1,12 @@
+.cxx
+build
+Libs
+app/libs/*.aar
+app/src/main/jniLibs/arm64-v8a/*.so
+app/src/main/cpp/VideoEngine.h
+app/src/main/cpp/VideoEngineCommon.h
+app/src/main/cpp/CloudPhoneController.h
+app/src/main/cpp/CloudPhoneConf.h
+app/src/main/cpp/Parser.h
+app/src/main/cpp/VideoEngineClient.h
+app/src/main/cpp/VmiEngine.h

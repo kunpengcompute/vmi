@@ -1,0 +1,121 @@
+<resources>
+    <string name="app_name">视频流手机</string>
+
+    <string name="page_device_list">设备列表页</string>
+    <string name="login">登录</string>
+    <string name="account_hint">请输入账号</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="new_user_register">新用户注册</string>
+    <string name="system_error">系统错误</string>
+    <string name="connect_time_out">请求超时</string>
+    <string name="connect_failed">连接失败</string>
+    <string name="register">注册</string>
+    <string name="device_list">设备列表</string>
+    <string name="name">名称</string>
+    <string name="status">状态</string>
+    <string name="spec">规格</string>
+    <string name="create_device_hint">请输入设备名称</string>
+    <string name="area">区域</string>
+    <string name="template">模板</string>
+    <string name="apply_device">申请设备</string>
+    <string name="user_info">个人中心</string>
+    <string name="high_setting">高级设置</string>
+    <string name="client_setting">客户端</string>
+    <string name="server_setting">服务端</string>
+    <string name="decode_method">解码方式</string>
+    <string name="decoder_type">解码器类型</string>
+    <string name="definition">清晰度</string>
+    <string name="system_default">系统默认</string>
+    <string name="video_frame_type">视频输出格式</string>
+    <string name="logout">退出登录</string>
+    <string name="empty_tip">这里啥也没有…</string>
+    <string name="another_user_login">用户已在其他地方登录</string>
+    <string name="input_ip">请输入自定义配置服IP</string>
+    <string name="cancel">取消</string>
+    <string name="ensure">确定</string>
+    <string name="exit_phone">退出手机</string>
+    <string name="invalid_ip_or_port">输入的ip或者port端口不合法</string>
+    <string name="invalid_ip">输入的ip不合法</string>
+    <string name="encode_mode">编码模式</string>
+    <string name="frame_rate">帧率</string>
+    <string name="audio_stream_type">音频流类型</string>
+    <string name="mic_stream_type">音频流类型</string>
+    <string name="encoder_type">编码器类型</string>
+    <string name="encode_parameter">编码参数</string>
+    <string name="version_name">v %s</string>
+
+    <string name="server_ip">服务器ip</string>
+    <string name="server_ip_hint">请输入服务器ip</string>
+    <string name="agent_port">Agent端口</string>
+    <string name="agent_port_hint">请输入agent端口号</string>
+    <string name="video_stream_port">视频流端口</string>
+    <string name="video_stream_port_hint">请输入视频流端口号</string>
+    <string name="enter">进入</string>
+    <string name="test">测试</string>
+    <string name="show_fps">显示帧率</string>
+    <string name="auto_update">自动更新</string>
+    <string name="start_log">抓取日志</string>
+    <string name="frame_rate_label">帧率(framerate) :</string>
+    <string name="frame_rate_value">30或60</string>
+    <string name="bitrate_label">码率(bitrate) :</string>
+    <string name="bitrate_value">1M~10M</string>
+    <string name="profile_label">编码profile :</string>
+    <string name="profile_value">base(0),main(1),high(2)</string>
+    <string name="gop_size_label">I帧间隔(gopsize) :</string>
+    <string name="gop_size_value">30~3000</string>
+    <string name="is_root">该手机已开启root权限，请谨慎使用!</string>
+    <string name="setting">设置:</string>
+    <string name="is_display_frame_rate">显示帧率：</string>
+    <string name="net_error">网络异常断开，重连或者退出云手机？</string>
+    <string name="reconnect_phone">重连云手机</string>
+    <string name="exit">退出云手机</string>
+    <string name="warning">提示</string>
+    <string name="setting_underline"><u>设置</u></string>
+
+    <string-array name="array_resolution">
+        <item>720*1280</item>
+        <item>1080*1920</item>
+    </string-array>
+
+    <string-array name="array_frame_rate">
+        <item>30fps</item>
+        <item>60fps</item>
+    </string-array>
+
+    <string-array name="ip">
+        <item>10.67.164.74</item>
+        <item>10.67.164.85</item>
+        <item>10.67.164.86</item>
+    </string-array>
+
+    <string-array name="array_video_encoder_type">
+        <item>CPU</item>
+        <item>VPU</item>
+        <item>GPU</item>
+    </string-array>
+
+    <string-array name="array_video_encode_mode">
+        <item>ABR</item>
+        <item>CRF</item>
+        <item>CBR</item>
+        <item>CAPPED_CRF</item>
+    </string-array>
+
+    <string-array name="array_video_frame_type">
+        <item>H264</item>
+        <item>YUV</item>
+        <item>RGB</item>
+        <item>H265</item>
+    </string-array>
+
+    <string-array name="array_video_encode_level">
+        <item>BASELINE</item>
+        <item>MAIN</item>
+        <item>HIGH</item>
+    </string-array>
+
+    <string-array name="array_audio_stream_type">
+        <item>OPUS</item>
+        <item>PCM</item>
+    </string-array>
+</resources>

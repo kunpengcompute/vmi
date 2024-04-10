@@ -1,0 +1,47 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/total_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    tools:context=".ui.activities.FullscreenActivity">
+
+    <com.huawei.cloudphone.widget.VmiSurfaceView
+        android:id="@+id/vmi_surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--显示统计信息-->
+    <com.huawei.cloudphone.widget.StatisticLayout
+        android:id="@+id/statistic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="#55555555"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/white"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <ImageView
+            android:id="@+id/flashLandscape"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/vmi_splash_screen_landscapenew" />
+
+    <ImageView
+            android:id="@+id/flashNormal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/vmi_splash_screen_normalnew" />
+</FrameLayout>

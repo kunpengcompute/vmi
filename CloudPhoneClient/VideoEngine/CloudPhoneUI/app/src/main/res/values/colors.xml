@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00868B</color>
+    <color name="colorPrimaryDark">#00868B</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorDarkGray">#aaaaaa</color>
+
+    <color name="vmi_colorPrimary">#3F51B5</color>
+    <color name="vmi_colorPrimaryDark">#303F9F</color>
+    <color name="vmi_colorAccent">#FF4081</color>
+
+    <color name="vmi_black_overlay">#66000000</color>
+    <color name="vmi_bg_color">#c0c0c0</color>
+
+    <color name="vmi_white">#FFFFFF</color>
+    <color name="vmi_black">#000000</color>
+    <color name="vmi_black_transparent">#70000000</color>
+    <color name="vmi_font_common_1">#424242</color>
+    <color name="vmi_font_common_2">#a1a1a1</color>
+    <color name="vmi_font_blue">#42369a</color>
+
+    <color name="vmi_font_green">#00cccc</color>
+    <color name="vmi_commom_background">#f3f3f3</color>
+    <color name="vmi_red">#FFF44336</color>
+
+    <color name="vmi_radio_button_selected_color">#ff33b5e5</color>
+    <color name="vmi_radio_button_unselected_color">#e0e0e0</color>
+
+    <color name="vmi_yellow">#FFFF00</color>
+    <color name="vmi_fuchsia">#FF00FF</color>
+    <color name="vmi_silver">#C0C0C0</color>
+    <color name="vmi_gray">#808080</color>
+    <color name="vmi_olive">#808000</color>
+    <color name="vmi_purple">#800080</color>
+    <color name="vmi_maroon">#800000</color>
+    <color name="vmi_aqua">#00FFFF</color>
+    <color name="vmi_lime">#00FF00</color>
+    <color name="vmi_teal">#008080</color>
+    <color name="vmi_green">#008000</color>
+    <color name="vmi_blue">#0000FF</color>
+    <color name="vmi_navy">#000080</color>
+    <color name="color_70_111111">#b2111111</color>
+    <color name="color_green">#1CF606</color>
+    <color name="red">#FF0000</color>
+    <color name="yellow">#FFFF00</color>
+</resources>

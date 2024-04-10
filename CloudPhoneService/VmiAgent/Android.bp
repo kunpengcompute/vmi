@@ -1,0 +1,116 @@
+cc_library_shared {
+    name: "libMediaEngine",
+    vendor: true,
+    srcs: [
+        "VmiApi.cpp"
+    ],
+    include_dirs: [
+        "VMIEngine-Demo/Common/Include"
+    ],
+    cflags: [
+        "-Werror",
+        "-Wformat",
+        "-Wall",
+        "-fstack-protector-strong",
+        "--param=ssp-buffer-size=4",
+        "-fPIE",
+        "-D_FORTIFY_SOURCE=2",
+        "-O2",
+        "-fPIC",
+    ],
+    cppflags: [
+        "-Werror",
+        "-Wformat",
+        "-Wall",
+        "-fstack-protector-strong",
+        "--param=ssp-buffer-size=4",
+        "-fPIE",
+        "-D_FORTIFY_SOURCE=2",
+        "-O2",
+        "-fPIC",
+        "-Wno-unused-parameter",
+    ],
+    ldflags: [
+        "-Wl",
+        "-s",
+        "-Wl",
+        "--param=build-id=none",
+        "-Wl,-z,relro",
+        "-fPIE",
+        "-Wl,-z,now",
+        "-Wformat"
+    ]
+}
+
+cc_binary {
+    name: "VmiAgent",
+    init_rc: ["VmiAgentAndroidP.rc"],
+    vendor: true,
+    srcs: [
+        "main.cpp",
+        "VmiAgent.cpp",
+        "MainLooper.cpp",
+        "NetworkComm/INetworkComm.cpp",
+        "NetworkComm/NetworkComm.cpp",
+        "NetworkComm/NetworkCommManager.cpp",
+        "NetworkComm/NetworkExport.cpp",
+        "ApiTest/ApiTest.cpp"
+    ],
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "libevent",
+        "libDemoUtils",
+        "libVmiCommunication",
+        "libhidlbase",
+        "libMediaEngine"
+    ],
+    include_dirs: [
+        "VMIEngine-Demo/Common/Include",
+        "VMIEngine-Demo/Common/Utils",
+        "VMIEngine-Demo/Common/Log",
+        "VMIEngine-Demo/Common",
+        "VMIEngine-Demo/Common/Communication",
+        "VMIEngine-Demo/CloudPhoneService/VmiAgent/NetworkComm",
+        "VMIEngine-Demo/CloudPhoneService/VmiAgent/ApiTest",
+        "frameworks/native/opengl/include",
+    ],
+    cflags: [
+        "-Werror",
+        "-Wformat",
+        "-Wall",
+        "-fstack-protector-strong",
+        "--param=ssp-buffer-size=4",
+        "-fPIE",
+        "-D_FORTIFY_SOURCE=2",
+        "-O2",
+        "-fPIC",
+    ],
+    cppflags: [
+        "-Werror",
+        "-Wformat",
+        "-Wall",
+        "-fstack-protector-strong",
+        "--param=ssp-buffer-size=4",
+        "-fPIE",
+        "-D_FORTIFY_SOURCE=2",
+        "-O2",
+        "-fPIC",   
+        "-fexceptions",
+        "-Wno-unused-const-variable",
+        "-Wno-unused-variable",
+        "-Wno-unused",
+        "-Wno-error",
+        "-Wno-unused-private-field"
+    ],
+    ldflags: [
+        "-Wl",
+        "-s",
+        "-Wl",
+        "--param=build-id=none",
+        "-Wl,-z,relro",
+        "-fPIE",
+        "-Wl,-z,now",
+        "-Wformat"
+    ]
+}
