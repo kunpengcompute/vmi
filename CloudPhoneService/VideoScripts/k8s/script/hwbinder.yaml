@@ -1,0 +1,1613 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ib-hwbinder
+  namespace: kube-system
+data:
+  config.json: |
+    {
+      "resourceName": "github.com/hwbinder",
+      "socketName": "everpeace-ib-hwbinder.sock",
+      "numDevices": 400,
+      "hostDevices": [{
+        "hostPath": "/dev/binderfs/1/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/2/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/3/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/4/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/5/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/6/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/7/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/8/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/9/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/10/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/11/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/12/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/13/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/14/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/15/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/16/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/17/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/18/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/19/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/20/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/21/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/22/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/23/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/24/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/25/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/26/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/27/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/28/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/29/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/30/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/31/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/32/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/33/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/34/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/35/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/36/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/37/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/38/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/39/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/40/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/41/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/42/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/43/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/44/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/45/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/46/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/47/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/48/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/49/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/50/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/51/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/52/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/53/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/54/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/55/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/56/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/57/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/58/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/59/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/60/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/61/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/62/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/63/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/64/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/65/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/66/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/67/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/68/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/69/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/70/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/71/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/72/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/73/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/74/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/75/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/76/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/77/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/78/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/79/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/80/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/81/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/82/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/83/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/84/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/85/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/86/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/87/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/88/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/89/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/90/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/91/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/92/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/93/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/94/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/95/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/96/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/97/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/98/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/99/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/100/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/101/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/102/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/103/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/104/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/105/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/106/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/107/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/108/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/109/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/110/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/111/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/112/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/113/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/114/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/115/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/116/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/117/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/118/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/119/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/120/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/121/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/122/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/123/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/124/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/125/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/126/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/127/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/128/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/129/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/130/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/131/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/132/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/133/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/134/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/135/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/136/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/137/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/138/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/139/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/140/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/141/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/142/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/143/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/144/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/145/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/146/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/147/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/148/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/149/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/150/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/151/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/152/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/153/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/154/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/155/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/156/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/157/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/158/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/159/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/160/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/161/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/162/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/163/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/164/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/165/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/166/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/167/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/168/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/169/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/170/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/171/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/172/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/173/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/174/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/175/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/176/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/177/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/178/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/179/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/180/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/181/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/182/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/183/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/184/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/185/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/186/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/187/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/188/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/189/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/190/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/191/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/192/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/193/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/194/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/195/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/196/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/197/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/198/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/199/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/200/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/201/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/202/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/203/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/204/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/205/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/206/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/207/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/208/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/209/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/210/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/211/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/212/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/213/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/214/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/215/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/216/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/217/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/218/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/219/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/220/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/221/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/222/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/223/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/224/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/225/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/226/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/227/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/228/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/229/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/230/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/231/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/232/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/233/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/234/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/235/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/236/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/237/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/238/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/239/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/240/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/241/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/242/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/243/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/244/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/245/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/246/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/247/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/248/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/249/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/250/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/251/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/252/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/253/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/254/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/255/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/256/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/257/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/258/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/259/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/260/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/261/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/262/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/263/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/264/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/265/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/266/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/267/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/268/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/269/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/270/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/271/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/272/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/273/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/274/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/275/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/276/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/277/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/278/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/279/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/280/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/281/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/282/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/283/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/284/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/285/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/286/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/287/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/288/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/289/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/290/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/291/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/292/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/293/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/294/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/295/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/296/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/297/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/298/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/299/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/300/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/301/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/302/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/303/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/304/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/305/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/306/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/307/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/308/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/309/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/310/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/311/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/312/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/313/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/314/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/315/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/316/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/317/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/318/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/319/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/320/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/321/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/322/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/323/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/324/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/325/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/326/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/327/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/328/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/329/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/330/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/331/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/332/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/333/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/334/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/335/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/336/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/337/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/338/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/339/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/340/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/341/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/342/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/343/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/344/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/345/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/346/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/347/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/348/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/349/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/350/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/351/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/352/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/353/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/354/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/355/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/356/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/357/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/358/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/359/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/360/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/361/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/362/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/363/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/364/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/365/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/366/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/367/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/368/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/369/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/370/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/371/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/372/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/373/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/374/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/375/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/376/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/377/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/378/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/379/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/380/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/381/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/382/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/383/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/384/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/385/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/386/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/387/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/388/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/389/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/390/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/391/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/392/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/393/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/394/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/395/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/396/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/397/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/398/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/399/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/400/hwbinder",
+        "containerPath": "/dev/binderfs/hwbinder",
+        "permission": "rwm"
+      }]
+    }

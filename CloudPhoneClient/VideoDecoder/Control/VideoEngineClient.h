@@ -33,9 +33,10 @@ uint32_t Initialize(OnVmiEngineEvent eventHandleFunc);
  * @参数 [in] width：设备屏幕的宽度，取值大于0
  * @参数 [in] height：设备屏幕的高度，取值大于0
  * @参数 [in] densityDpi：设备屏幕的像素密度，取值大于0
+ * @参数 [in] ipAndPort：当前服务端ip和容器号
  * @返回值：VMI_SUCCESS，初始化成功，其他返回值参考错误码定义
  */
-uint32_t Start(uint64_t surface, uint32_t width, uint32_t height, uint32_t densityDpi);
+uint32_t Start(uint64_t surface, uint32_t width, uint32_t height, uint32_t densityDpi, std::string &ipAndPort);
 
 /**
  * @功能描述：停止视频流引擎客户端，包括停止视频解码线程和网络连接等；该函数是阻塞式的，要等所有线程退出，资源被释放后才会返回

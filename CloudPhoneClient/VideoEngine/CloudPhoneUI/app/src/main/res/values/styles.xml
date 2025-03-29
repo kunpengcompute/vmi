@@ -17,6 +17,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="FullScreenTheme" parent="BaseTheme">
+        <item name="android:windowBackground">@drawable/vmi_splash_screen_normalnew</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
     <style name="TestTheme" parent="BaseTheme">
         <item name="colorPrimaryDark">#00868B</item>
     </style>
@@ -54,4 +59,15 @@
         <item name="android:paddingRight">5dp</item>
     </style>
 
+    <style name="SettingCard">
+        <item name="android:background">@drawable/setting_card_round_corner</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="NoRippleCheckBox">
+        <item name="android:background">@null</item>
+    </style>
 </resources>

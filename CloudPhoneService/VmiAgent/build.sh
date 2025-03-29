@@ -28,6 +28,8 @@ package()
 
     copy_lib_lib64_and_symbols_so ${cur_file_path}/libs ${output_dir} ${output_symbols_dir}
     [ ${?} != 0 ] && error "Failed to copy so" && return -1
+    find ${output_dir} -name libMediaEngine.so | xargs rm -rf
+    find ${output_symbols_dir} -name libMediaEngine.so | xargs rm -rf
 
     mkdir -p ${output_dir}/vendor/bin/
     cp ${cur_file_path}/libs/arm64-v8a/VmiAgent ${output_dir}/vendor/bin/

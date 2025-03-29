@@ -8,8 +8,6 @@
 # ./make_image.sh kbox:latest
 # ./make_image.sh kbox:latest video:latest
 
-set -e
-
 CUR_PATH=$(cd $(dirname "${0}");pwd)
 
 # kbox基础云手机和视频流云手机默认镜像名称，可根据需要自行修改
@@ -69,8 +67,6 @@ function check_vpu()
     if [ ! -f "${DOCKER_FILE_CANDIDATE}" ]; then
         echo -e "\033[1;31m[ERROR] ${DOCKER_FILE_CANDIDATE} is not exist. \033[0m" && return -1
     fi
-
-    cp ${DOCKER_FILE_CANDIDATE} ${DOCKER_FILE}
 }
 
 # 前置条件验证
@@ -89,7 +85,12 @@ function check_env()
         echo -e "\033[1;31m[ERROR] ${VIDEO_BINARY_PACKAGE} is more than 1!. \033[0m" && return -1
     fi
 
-    check_vpu
+    # 检查到有A卡，才去检查编码卡
+    local amd_gpus=$(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}' | wc -w)
+    if [ "$amd_gpus" -gt 0 ]; then
+        check_vpu
+    fi
+    cp ${DOCKER_FILE_CANDIDATE} ${DOCKER_FILE}
 
     # 判断视频流云手机原型包目录是否存在，若存在则删除重建
     if [ -d "${TMP_VIDEO_DEMO_DID}" ]; then

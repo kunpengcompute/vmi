@@ -49,11 +49,7 @@ LOCAL_CFLAGS += -DFIXED_POINT=1 -Werror -Wformat -Wall -fstack-protector-strong 
 LOCAL_CPPFLAGS += -Wformat -Wall -fstack-protector-strong --param=ssp-buffer-size=4 -fPIE -D_FORTIFY_SOURCE=2 -O2 -fPIC
 LOCAL_LDFLAGS += -Wl,--build-id=none -Wl,-z,relro -fPIE -Wl,-z,now,-z,noexecstack -Wformat
 
-ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
-    LOCAL_LDFLAGS += -L $(DEMOCOMMON_DIR)/libs/arm64-v8a
-else ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
-    LOCAL_LDFLAGS += -L $(DEMOCOMMON_DIR)/libs/armeabi-v7a
-endif
-LOCAL_LDLIBS := -llog -lCommunication
+LOCAL_LDLIBS := -llog
+LOCAL_SHARED_LIBRARIES := libCommunication
 
 include $(BUILD_SHARED_LIBRARY)

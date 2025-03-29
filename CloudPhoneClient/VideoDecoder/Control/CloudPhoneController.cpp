@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <chrono>
 #include <cstring>
+#include <iostream>
 #include "logging.h"
 #include "PacketManager/PacketManager.h"
 #include "PacketHandle/PacketHandle.h"
@@ -44,7 +45,8 @@ std::unordered_map<uint8_t, int32_t> g_orientationMap {
     {0, 0},
     {1, 270},
     {2, 180},
-    {3, 90}
+    {3, 90},
+    {4, 0}
 };
 }
 
@@ -106,9 +108,20 @@ bool CloudPhoneController::StripPacket(std::pair<uint8_t *, uint32_t> &packetPai
         return false;
     }
     std::pair<uint8_t *, uint32_t> subPacketPair = std::make_pair(buf + headerLen, length - headerLen);
-    if (m_isFirstFrame && !HandleDecoderType(subPacketPair)) {
-        return false;
-    }
+    #ifdef __ANDROID__
+        if (m_isFirstFrame && !HandleDecoderType(subPacketPair)) {
+            return false;
+        }
+    #else
+        if (!HandleDecoderType(subPacketPair))
+        {
+            if (m_isFirstFrame)
+            {
+                return false;
+            }
+        }
+    #endif
+    
     m_isFirstFrame = false;
     return HandlePacket(subPacketPair, extBuf.orientation);
 }
@@ -116,8 +129,10 @@ bool CloudPhoneController::StripPacket(std::pair<uint8_t *, uint32_t> &packetPai
 bool CloudPhoneController::HandleDecoderType(const std::pair<uint8_t *, uint32_t>& packetPair)
 {
     m_decoderType = ParseDecTypeFromFirstFrame(packetPair);
+    #ifndef __ANDROID__
+        WriteDataToFile(packetPair.first, packetPair.second, m_decoderType);
+    #endif
     if (m_decoderType == DecoderType::DEC_TYPE_UNKNOWN) {
-        ERR("Decoder type is unknown");
         return false;
     } else if (m_decoderType == DecoderType::DEC_TYPE_H264) {
         return true;
@@ -129,6 +144,29 @@ bool CloudPhoneController::HandleDecoderType(const std::pair<uint8_t *, uint32_t
         return false;
     }
     return true;
+}
+
+void CloudPhoneController::WriteDataToFile(uint8_t *data, uint32_t size, DecoderType type)
+{
+    std::string fname = "./screencap/"+ m_port;
+    if (type == DecoderType::DEC_TYPE_H264)
+    {
+        fname += ".h264";
+    }
+    else if (type == DecoderType::DEC_TYPE_H265)
+    {
+        fname += ".h265";
+    } else {
+        return;
+    }
+    FILE *file = fopen(fname.c_str(), "wb+");
+    if (file != nullptr){
+        (void)fwrite(data, sizeof(unsigned char), size, file);
+        (void)fclose(file);
+    } else {
+        ERR("FILE is null");
+    }
+    
 }
 
 DecoderType CloudPhoneController::ParseDecTypeFromFirstFrame(const std::pair<uint8_t *, uint32_t>& packetPair)
@@ -191,10 +229,16 @@ void CloudPhoneController::DecodeTask()
             int64_t nowTimeStamp =
                 std::chrono::duration_cast<std::chrono::microseconds>(currTime.time_since_epoch()).count();
             m_videoUtil.SetTimestamp(nowTimeStamp);
-            if ((m_surface != 0) && !CloudPhoneController::GetInstance().StripPacket(packetPair)) {
-                CloudPhoneController::GetInstance().SetState(CloudPhoneState::CLOUD_PHONE_DESTROYING);
-                usleep(static_cast<int>(CloudPhoneDelayTime::TIME_10_MS));
-            }
+            #ifdef __ANDROID__
+                if ((m_surface != 0) && !CloudPhoneController::GetInstance().StripPacket(packetPair)) {
+                    CloudPhoneController::GetInstance().SetState(CloudPhoneState::CLOUD_PHONE_DESTROYING);
+                    usleep(static_cast<int>(CloudPhoneDelayTime::TIME_10_MS));
+                }
+            #else
+                if (!CloudPhoneController::GetInstance().StripPacket(packetPair)) {
+                    usleep(static_cast<int>(CloudPhoneDelayTime::TIME_10_MS));
+                }
+            #endif
             free(packetPair.first);
             packetPair.first = nullptr;
         }
@@ -204,9 +248,10 @@ void CloudPhoneController::DecodeTask()
     return;
 }
 
-int CloudPhoneController::Start(uint64_t surface)
+int CloudPhoneController::Start(uint64_t surface, std::string &ipAndPort)
 {
     std::unique_lock<std::mutex> lk(m_lock);
+    m_port = ipAndPort;
     m_surface = surface;
     const std::string modelKbox = "Kbox";
     const std::string modelMonbox = "Monbox";
@@ -256,7 +301,7 @@ void CloudPhoneController::Stop()
         decodeController.Destroy();
     }
     m_surface = 0;
-    m_orientation = 0;
+    m_orientation = 4;
     m_isFirstFrame = true;
     m_state = CloudPhoneState::CLOUD_PHONE_EXITED;
     INFO("CloudPhoneController Stop complete");

@@ -36,6 +36,8 @@ enum EncodeParamIndex : uint32_t {
     ENCODE_PARAM_GOPSIZE,
     ENCODE_PARAM_PROFILE,
     ENCODE_PARAM_KEYFRAME,
+    ENCODE_PARAM_STREAM_WIDTH,
+    ENCODE_PARAM_STREAM_HEIGHT,
     ENCODE_PARAM_MAX
 };
 
@@ -72,6 +74,16 @@ struct EncodeParamProfile : public EncodeParamBase {
 struct EncodeParamKeyframe : public EncodeParamBase {
     EncodeParamKeyframe() : EncodeParamBase(ENCODE_PARAM_KEYFRAME) {}
     uint32_t n;
+};
+
+struct EncodeParamStreamWidth : public EncodeParamBase {
+    EncodeParamStreamWidth() : EncodeParamBase(ENCODE_PARAM_STREAM_WIDTH) {}
+    uint32_t streamWidth;
+};
+
+struct EncodeParamStreamHeight : public EncodeParamBase {
+    EncodeParamStreamHeight() : EncodeParamBase(ENCODE_PARAM_STREAM_HEIGHT) {}
+    uint32_t streamHeight;
 };
 
 using EncodeParamT = EncodeParamBase *;

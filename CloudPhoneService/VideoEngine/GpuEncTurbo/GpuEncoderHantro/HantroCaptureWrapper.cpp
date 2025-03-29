@@ -5,85 +5,101 @@
 
 #include <memory>
 #include "logging.h"
-#include "DisplayServer/DisplayServer.h"
+#include "DisplayServer/DisplayServerWrap.h"
 #include "HantroCaptureWrapperBase.h"
 
 namespace Vmi {
+namespace {
+    pDisplayServer g_capture { nullptr };
+    FrameComeCallback g_frameCallback { nullptr };
+}
 class HantroCaptureWrapper : public HantroCaptureWrapperBase {
 public:
     void SetFrameCallback(FrameComeCallback frameCome) override
     {
-        m_frameCallback = frameCome;
+        g_frameCallback = frameCome;
     }
 
     bool RefreshDisplay() override
     {
-        RefreshReq req;
-        return m_capture->RefreshDisplay(req);
+        RefreshReqWrapper req;
+        return DisplayServerRefreshDisplay(g_capture, req);
     }
 
-    bool GetDisplayInfo(unsigned int &width, unsigned int &height, unsigned int &density, unsigned int &fps)
+    bool GetDisplayInfo(unsigned int &width, unsigned int &height, unsigned int &density, unsigned int &fps) override
     {
-        return m_capture->GetDisplayInfo(&width, &height, &density, &fps);
+        return DisplayServerGetDisplayInfo(g_capture, &width, &height, &density, &fps);
     }
 
     HantroCaptureWrapper() = default;
     ~HantroCaptureWrapper() = default;
 
+    static int InitCallback(pVaGraphicBuffer buffer)
+    {
+        HantroCaptureBuffer* capBuff = new (std::nothrow) HantroCaptureBuffer();
+        if (capBuff == nullptr) {
+            ERR("Failed to handle hantro init callback, make hantro capture buffer failed!");
+            return -1;
+        }
+        capBuff->data = getPaddrWrap(getHandleWrap(buffer));
+        capBuff->tmpStreamHeight = getHeightWrap(getHandleWrap(buffer));
+        capBuff->tmpStreamWidth = getWidthWrap(getHandleWrap(buffer));
+        capBuff->rgbBuffer = buffer;
+        capBuff->acquireBufferCaller = std::bind(&HantroCaptureWrapper::AcquireBuffer,
+            std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+        capBuff->releaseBufferCaller = std::bind(&HantroCaptureWrapper::ReleaseBuffer, std::placeholders::_1);
+        capBuff->SetWmSizeCaller = std::bind(&HantroCaptureWrapper::SetWmSize, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+        int ret = g_frameCallback(capBuff);
+        if (ret != 0) {
+            ERR("Hantro capture try to import rgb buffer failed: %d", ret);
+            delete capBuff;
+        }
+        return ret;
+    }
+
     bool Init(bool sync) override
     {
-        DisplayServer::Mode mode;
+        DisplayServerMode mode;
         if (sync) {
-            mode = DisplayServer::Mode::Sync;
+            mode = DisplayServerMode::Sync;
         } else {
-            mode = DisplayServer::Mode::Async;
+            mode = DisplayServerMode::Async;
         }
-        m_capture = std::make_unique<DisplayServer>(mode);
-        auto callback = [this](android::GraphicBuffer *buffer) {
-            HantroCaptureBuffer* capBuff = new HantroCaptureBuffer();
-            capBuff->data = getPaddr(buffer->handle);
-            capBuff->rgbBuffer = buffer;
-            capBuff->acquireBufferCaller = std::bind(&HantroCaptureWrapper::AcquireBuffer, this,
-                std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-            capBuff->releaseBufferCaller = std::bind(&HantroCaptureWrapper::ReleaseBuffer, this, std::placeholders::_1);
-            int ret = m_frameCallback(capBuff);
-            if (ret != 0) {
-                ERR("Hantro capture try to import rgb buffer failed: %d", ret);
-                delete capBuff;
-            }
-            return ret;
-        };
-        return m_capture->Init(callback);
+        g_capture = CreateDisplayServer(mode);
+        return DisplayServerInit(g_capture, InitCallback, -1);
     }
 
     void DeInit() override
     {
-        m_capture = nullptr;
+        DestroyDisplayServer(g_capture);
+        g_capture = nullptr;
     }
 
     bool Start() override
     {
-        m_capture->Run();
+        DisplayServerRun(g_capture);
         return true;
     }
 
     void Stop() override
     {
-        m_capture->Stop();
+        DisplayServerStop(g_capture);
     }
 
-    void AcquireBuffer(android::GraphicBuffer *buffer, int *acquireFence, int *releaseFence)
+    static void AcquireBuffer(pVaGraphicBuffer buffer, int *acquireFence, int *releaseFence)
     {
-        m_capture->AcquireBuffer(buffer, acquireFence, releaseFence);
+        DisplayServerAcquireBuffer(g_capture, buffer, acquireFence, releaseFence);
     }
 
-    void ReleaseBuffer(android::GraphicBuffer *buffer)
+    static void ReleaseBuffer(pVaGraphicBuffer buffer)
     {
-        m_capture->ReleaseBuffer(buffer);
+        DisplayServerReleaseBuffer(g_capture, buffer);
     }
-private:
-    std::unique_ptr<DisplayServer> m_capture { nullptr };
-    FrameComeCallback m_frameCallback { nullptr };
+
+    static void SetWmSize(pVaGraphicBuffer buffer, unsigned int wmWidth, unsigned int wmHeight)
+    {
+        DisplayServerSetWmSize(g_capture, wmWidth, wmHeight);
+    }
 };
 }
 

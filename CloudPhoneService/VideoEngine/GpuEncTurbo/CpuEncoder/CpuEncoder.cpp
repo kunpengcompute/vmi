@@ -8,6 +8,27 @@
 #include "Rgb2Yuv/VmiRgb2Yuv.h"
 #include "CpuEncoder.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+void *CreateGpuTurbo(uint32_t type)
+{
+    void *ret = nullptr;
+    auto gpuType = static_cast<Vmi::GpuEncoder::GpuType>(type);
+    switch (gpuType) {
+        case Vmi::GpuEncoder::GpuType::GPU_SOFT:
+            ret = std::make_unique<Vmi::GpuEncoder::CpuEncoder>(gpuType).release();
+            break;
+        default:
+            INFO("Cannot create encoder, unsupport gpu type: %u", type);
+            return nullptr;
+    }
+    return ret;
+}
+#ifdef __cplusplus
+}
+#endif
+
 namespace {
 constexpr uint32_t MAX_WIDTH = 4096;
 constexpr uint32_t MAX_HEIGHT = 4096;
@@ -147,13 +168,13 @@ int32_t CpuEncoder::MapBuffer(GpuEncoderBufferT &buffer, uint32_t flag)
 {
     (void)buffer;
     (void)flag;
-    return ERR_UNSUPPORT_OPERATION;
+    return OK;
 }
 
 int32_t CpuEncoder::UnmapBuffer(GpuEncoderBufferT &buffer)
 {
     (void)buffer;
-    return ERR_UNSUPPORT_OPERATION;
+    return OK;
 }
 
 int32_t CpuEncoder::RetriveBufferData(GpuEncoderBufferT &buffer, uint8_t* data, uint32_t memLen, uint32_t& dataLen)

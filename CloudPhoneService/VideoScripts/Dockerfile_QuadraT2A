@@ -21,7 +21,6 @@ COPY ./NETINT/vendor /NETINT/vendor
 RUN chmod -R 755 DemoVideoEngine \
     && chown -R root:root DemoVideoEngine \
     && chmod -R 444 DemoVideoEngine/vendor/etc/init/VmiAgentAndroidP.rc \
-    && chmod -R 444 DemoVideoEngine/system/etc/init/init.vmi.input.rc \
     && chmod -R 400 DemoVideoEngine/vendor/etc/videoengine_version.txt \
     && cp -pR DemoVideoEngine/vendor/* /system/vendor \
     && cp -pR DemoVideoEngine/system/* /system \

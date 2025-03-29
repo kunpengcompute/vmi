@@ -44,12 +44,14 @@ enum IfbcPixelFormat : uint32_t {
 struct IfbcFrame {
     int x;
     int y;
+    int w;
+    int h;
     int width;
     int height;
     int stride;
-    int slot;
     IfbcPixelFormat pixelFormat;
-    uint64_t fd;
+    int fd;
+    void* buf;
 };
 
 using InnoConvertHandle = void *;

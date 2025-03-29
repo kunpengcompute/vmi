@@ -222,6 +222,18 @@ public class DataPipe implements TOUCHSENDHOOK, AUDIOSENDHOOK, AUDIOSAVEHOOK {
         }
     }
 
+    /**
+     * send sensor client data interface.
+     *
+     * @param data   byte[].
+     * @param length int lenth.
+     */
+    public void sensorSendData(byte[] data, int length) {
+        if (!OpenGLJniWrapper.sendSensorDataArray(data, length)) {
+            LogUtil.error(TAG, "sendSensorDataArray failed");
+        }
+    }
+
     private String getProperty(String key, String defaultValue) {
         String value = defaultValue;
         try {

@@ -8,15 +8,21 @@
 #include <string>
 #include <unordered_map>
 #include <atomic>
+#include <mutex>
 #include <libavutil/hwcontext.h>
 #include <libavcodec/avcodec.h>
 #include <libavutil/opt.h>
+#include <libavutil/log.h>
+#include <libavfilter/avfilter.h>
+#include <libavfilter/buffersrc.h>
 #include "VideoCodecApi.h"
 #include "VideoEncoderCommon.h"
 
 enum QuaCodecType : uint32_t {
     QUA_CODEC_TYPE_H264 = 0,
-    QUA_CODEC_TYPE_H265 = 1
+    QUA_CODEC_TYPE_H265 = 1,
+    T432_CODEC_TYPE_H264 = 2,
+    T432_CODEC_TYPE_H265 = 3
 };
 
 class VideoEncoderQuadra : public VideoEncoderCommon {
@@ -24,7 +30,7 @@ public:
     /**
      * @功能描述: 构造函数
      */
-    explicit VideoEncoderQuadra(QuaCodecType codecType, EncoderFormat codecFormat);
+    explicit VideoEncoderQuadra(QuaCodecType codecType);
 
     /**
      * @功能描述: 析构函数
@@ -149,18 +155,53 @@ private:
 
     /**
      * @功能描述: 发送一帧未编码的码流数据
+     * @参数 [in] swFrame: 编码输入帧
      * @返回值: true 成功
      *          false 发送一帧失败
      */
-    bool SendOneFrame();
+    bool SendOneFrame(AVFrame *swFrame);
+
+    /**
+     * @功能描述: 初始化缩放滤镜
+     * @返回值: true 成功
+     *          false 失败
+     */
+    bool InitFilter();
+
+    /**
+     * @功能描述: 发送一帧未编码的码流数据
+     * @返回值: true 成功
+     *          false 失败
+     */
+    bool FilterAndSendOneFrame();
+
+    /**
+     * @功能描述: 发送一帧未编码的码流数据
+     * @参数 [in] width: 帧编码宽度
+     * @参数 [in] height: 帧编码高度
+     * @返回值: VIDEO_ENCODER_SUCCESS 成功
+     */
+    EncoderRetCode FrameScaling(uint32_t width, uint32_t height);
 
     bool m_funPtrError = false;
     bool m_isInited = false;
     std::string m_codec = "h264_ni_quadra_enc";
+    std::string m_vpuType = "Quadra";
     AVCodec *m_encCodec = nullptr;
     AVCodecContext *m_encoderCtx = nullptr;
     AVPacket *m_encPkt = nullptr;
     AVFrame *m_swFrame = nullptr;
+    AVFrame *m_filtFrame = nullptr;
+    AVFilter *m_bufferSrc = nullptr;
+    AVFilter *m_bufferSink = nullptr;
+    AVFilterInOut *m_outputs = nullptr;
+    AVFilterInOut *m_inputs = nullptr;
+    AVFilterGraph *m_filterGraph = nullptr;
+    AVFilterContext *m_buffersinkCtx = nullptr;
+    AVFilterContext *m_buffersrcCtx = nullptr;
+
+    uint32_t m_frameHeight = 0;
+    uint32_t m_frameWidth = 0;
 };
 
 #endif  // VIDEO_ENCODER_Quadra_H

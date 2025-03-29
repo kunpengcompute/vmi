@@ -10,8 +10,7 @@
 #include <cstring>
 #include <string>
 #include <atomic>
-#include "MediaLog.h"
-#include "Property.h"
+#include "logging.h"
 
 namespace {
     constexpr int Y_INDEX = 0;
@@ -109,7 +108,7 @@ namespace {
     void *g_libHandle = nullptr;
 }
 
-VideoEncoderNetint::VideoEncoderNetint(NiCodecType codecType, EncoderFormat codecFormat)
+VideoEncoderNetint::VideoEncoderNetint(NiCodecType codecType)
 {
     if (codecType == NI_CODEC_TYPE_H264) {
         m_codec = EN_H264;
@@ -118,7 +117,6 @@ VideoEncoderNetint::VideoEncoderNetint(NiCodecType codecType, EncoderFormat code
         m_encParams.bitrate = static_cast<uint32_t>(BITRATE_DEFAULT_265);
         m_encParams.profile = ENCODE_PROFILE_MAIN;
     }
-    m_codecFormat = codecFormat;
     INFO("VideoEncoderNetint constructed %s", (m_codec == EN_H264) ? "h.264" : "h.265");
 }
 
@@ -130,14 +128,10 @@ VideoEncoderNetint::~VideoEncoderNetint()
 
 EncoderRetCode VideoEncoderNetint::InitEncoder()
 {
-    if ((!GetRoEncParam()) || (!GetPersistEncParam())) {
-        ERR("init encoder failed: GetEncParam failed");
-        return VIDEO_ENCODER_INIT_FAIL;
-    }
-    m_encParams = m_tmpEncParams;
+    m_encParams = m_videoParams;
     if (m_codec == EN_H265) {
         m_encParams.profile = ENCODE_PROFILE_MAIN;
-        m_tmpEncParams.profile = ENCODE_PROFILE_MAIN;
+        m_videoParams.profile = ENCODE_PROFILE_MAIN;
     }
     if (!LoadNetintSharedLib()) {
         ERR("init encoder failed: load NETINT so error");

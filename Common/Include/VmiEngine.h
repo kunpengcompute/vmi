@@ -24,7 +24,11 @@ enum VMIMsgType : uint8_t {
     VIDEO_RR, // video stream for remote render (from vmiAgent)
     SENSOR,
     MIC,
+    GPS,
     VIDEO_RR2 = 16, // video stream for remote render (to videoAgent)
+    FPS,
+    START,
+    CONFIG, // video stream for get params config(to videoAgent)
     END
 };
 
@@ -70,6 +74,12 @@ typedef struct EngineEvent {
     int para4 = 0;
     char additionInfo[4096] = {0};
 } EngineEvent;
+
+struct VmiFpsPerfData {
+    int fps;
+    int jank;
+    int bjank;
+} __attribute__((packed));
 
 // 参数值event是引擎的回调函数
 using OnVmiEngineEvent = void (*)(EngineEvent event);

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ib-uinput
+  namespace: kube-system
+data:
+  config.json: |
+    {
+      "resourceName": "github.com/uinput",
+      "socketName": "everpeace-ib-uinput.sock",
+      "numDevices": 400,
+      "hostDevices": [{
+        "hostPath": "/dev/uinput",
+        "containerPath": "/dev/uinput",
+        "permission": "rwm"
+      }]
+    }

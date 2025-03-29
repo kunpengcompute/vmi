@@ -19,7 +19,23 @@ int INetworkComm::SendWithReservedByte(VmiDataType type, uint8_t* data, uint32_t
     return 0;
 }
 
+int INetworkComm::SendWithReservedByte(VMIMsgType type, uint8_t* data, uint32_t size)
+{
+    (void) type;
+    (void) data;
+    (void) size;
+    return 0;
+}
+
 void INetworkComm::RegisterRecvDataCallback(VmiDataType type, RecvDataCallback callback, bool isSingleFragment)
+{
+    (void) type;
+    (void) callback;
+    (void) isSingleFragment;
+    return;
+}
+
+void INetworkComm::RegisterRecvDataCallback(VMIMsgType type, RecvDataCallback callback, bool isSingleFragment)
 {
     (void) type;
     (void) callback;

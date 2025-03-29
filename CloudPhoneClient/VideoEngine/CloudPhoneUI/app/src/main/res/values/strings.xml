@@ -24,6 +24,7 @@
     <string name="server_setting">服务端</string>
     <string name="decode_method">解码方式</string>
     <string name="decoder_type">解码器类型</string>
+    <string name="density">屏幕密度</string>
     <string name="definition">清晰度</string>
     <string name="system_default">系统默认</string>
     <string name="video_frame_type">视频输出格式</string>
@@ -58,9 +59,9 @@
     <string name="frame_rate_label">帧率(framerate) :</string>
     <string name="frame_rate_value">30或60</string>
     <string name="bitrate_label">码率(bitrate) :</string>
-    <string name="bitrate_value">1M~10M</string>
+    <string name="bitrate_hint">0.5M~50M</string>
     <string name="profile_label">编码profile :</string>
-    <string name="profile_value">base(0),main(1),high(2)</string>
+    <string name="profile_hint">baseline(0),main(1),high(2)</string>
     <string name="gop_size_label">I帧间隔(gopsize) :</string>
     <string name="gop_size_value">30~3000</string>
     <string name="is_root">该手机已开启root权限，请谨慎使用!</string>
@@ -71,6 +72,16 @@
     <string name="exit">退出云手机</string>
     <string name="warning">提示</string>
     <string name="setting_underline"><u>设置</u></string>
+    <string name="height_null_warning">高度不能为空</string>
+    <string name="width_null_warning">宽度不能为空</string>
+    <string name="adaptive_resolution">自适应分辨率</string>
+    <string name="video_encode_param_send_fail">视频编码参数发送失败</string>
+    <string name="video_encode_param_send_success">视频编码参数发送成功</string>
+    <string name="input_params_illegal">参数输入不合法</string>
+    <string name="rcmode_hint">ABR(0),CRF(1),CBR(2),CAPPED_CRF(3)</string>
+    <string name="max_crf_rate_hint">500000~100000000</string>
+    <string name="sample_interval">5/10/20</string>
+    <string name="audio_bitrate_hint">500~512000</string>
 
     <string-array name="array_resolution">
         <item>720*1280</item>

@@ -23,7 +23,7 @@ public:
     /**
      * @功能描述: 构造函数
      */
-    explicit VideoEncoderVastai(VACodecType CodeType, EncoderFormat codecFormat);
+    explicit VideoEncoderVastai(VACodecType CodeType);
 
     /**
      * @功能描述: 析构函数
@@ -35,7 +35,7 @@ public:
      * @返回值: VIDEO_ENCODER_SUCCESS 成功
      *          VIDEO_ENCODER_INIT_FAIL 初始化编码器失败
      */
-    EncoderRetCode InitEncoder();
+    EncoderRetCode InitEncoder() override;
 
     /**
      * @功能描述: 启动编码器

@@ -7,8 +7,9 @@
 #include <memory>
 #include <functional>
 #include "VmiDef.h"
+#include "VmiEngine.h"
 namespace Vmi {
-using RecvDataCallback = std::function<uint32_t(std::pair<uint8_t*, uint32_t> data)>;
+using RecvDataCallback = std::function<int(std::pair<uint8_t*, uint32_t> data)>;
 
 class INetworkComm {
 public:
@@ -30,6 +31,8 @@ public:
      */
     virtual int SendWithReservedByte(VmiDataType type, uint8_t* data, uint32_t size);
 
+    virtual int SendWithReservedByte(VMIMsgType type, uint8_t* data, uint32_t size);
+
     /**
      * @功能描述：注册接收网络数据的回调处理函数
      * @参数 [in] type：数据类型
@@ -37,6 +40,8 @@ public:
      * @参数 [in] isSingleFragment: 是否单包发送，既不分片，true是不分片，false是分片发送
      */
     virtual void RegisterRecvDataCallback(VmiDataType type, RecvDataCallback callback, bool isSingleFragment);
+
+    virtual void RegisterRecvDataCallback(VMIMsgType type, RecvDataCallback callback, bool isSingleFragment);
 
     /**
      * @功能描述：主动断开连接

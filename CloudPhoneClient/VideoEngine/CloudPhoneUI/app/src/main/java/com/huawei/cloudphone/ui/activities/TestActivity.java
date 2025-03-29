@@ -12,28 +12,29 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
-import com.huawei.cloudphonesdk.maincontrol.VideoConf;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.huawei.cloudphone.R;
 import com.huawei.cloudphone.util.ClickUtil;
 import com.huawei.cloudphone.util.CommonUtil;
 import com.huawei.cloudphone.util.SPUtil;
 import com.huawei.cloudphone.util.ToActivityUtil;
 import com.huawei.cloudphone.util.ToastUtil;
+import com.huawei.cloudphonesdk.maincontrol.VideoConf;
 import com.huawei.cloudphonesdk.utils.LogUtil;
 
 import java.io.File;
@@ -47,6 +48,8 @@ import java.io.File;
 public class TestActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
     private static final String TAG = TestActivity.class.getSimpleName();
     private static final long LOG_FILE_SIZE_LIMIT = 20 * 1024 * 1024;
+    public static final int REQUEST_CODE = 88;
+    public static final int REQUEST_BACKGROUND_LOCATION_CODE = 89;
     private EditText mServerIpEditText;
     private EditText mVmiPortEditText;
     private RadioGroup mDecodeRadioGroup;
@@ -54,6 +57,7 @@ public class TestActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private String ip;
     private String port;
     private ImageButton settingButting;
+    private DisplayMetrics metric = new DisplayMetrics();
 
     @Override
     protected int getLayoutRes() {
@@ -68,6 +72,19 @@ public class TestActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         mButton = findViewById(R.id.btn_startGame);
         settingButting = findViewById(R.id.imageBtSetting);
         confirmPermission();
+        getMetric();
+    }
+
+    private void getMetric() {
+        WindowManager wm = (WindowManager) getApplicationContext().getSystemService(WINDOW_SERVICE);
+        wm.getDefaultDisplay().getRealMetrics(metric);
+        LogUtil.info(TAG, "width pixels:" + metric.widthPixels + ", height pixels:" + metric.heightPixels
+                + ",densityDpi:" + metric.densityDpi);
+        SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT, metric.heightPixels);
+        SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH, metric.widthPixels);
+        SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT_ALIGNED, metric.heightPixels);
+        SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH_ALIGNED, metric.widthPixels);
+        SPUtil.putInt(SPUtil.VIDEO_DENSITY,metric.densityDpi);
     }
 
     @Override
@@ -96,13 +113,51 @@ public class TestActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     private void confirmPermission() {
-        boolean permission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        if (!permission) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE}, 88);
+        if (!checkSinglePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                !checkSinglePermission(Manifest.permission.ACCESS_FINE_LOCATION) ||
+                !checkSinglePermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_BACKGROUND_LOCATION_CODE);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_BACKGROUND_LOCATION_CODE) {
+            if (grantResults.length > 3 && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                applyBackgroundLocationPermission();
+            }
+        }
+    }
+
+    private void applyBackgroundLocationPermission() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TestActivity.this);
+        builder.setTitle("后台位置权限");
+        builder.setMessage("是否允许请求后台位置权限?");
+        builder.setPositiveButton("允许", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                requestPermissions(new String[]{
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_CODE);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    private boolean checkSinglePermission(String permission) {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
@@ -115,7 +170,7 @@ public class TestActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         }
         Bundle extras = intent.getExtras();
         if (extras == null) {
-	        inputIpAndPort();
+            inputIpAndPort();
             return;
         }
         if (extras.containsKey("ip") && extras.containsKey("vmi_port")) {

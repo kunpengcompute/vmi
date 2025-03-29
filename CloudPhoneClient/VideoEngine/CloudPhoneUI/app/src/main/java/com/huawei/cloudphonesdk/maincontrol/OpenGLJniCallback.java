@@ -86,7 +86,7 @@ public class OpenGLJniCallback implements NewPacketCallback {
     }
 
     /**
-     * 字节数组转int 大端模式
+     * 字节数组转int 大端模式 byte长度为4
      */
     public static int byteArrayToIntBigEndian(byte[] bytes) {
         int x = 0;
@@ -99,7 +99,7 @@ public class OpenGLJniCallback implements NewPacketCallback {
     }
 
     /**
-     * 字节数组转int 小端模式
+     * 字节数组转int 小端模式，byte长度为4
      */
     public static int byteArrayToIntLittleEndian(byte[] bytes) {
         int x = 0;

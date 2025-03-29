@@ -12,7 +12,7 @@ public class ADBBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(TAG)) {
             Bundle bundle = intent.getExtras();
-            Intent adbIntent = new Intent("receive_abb_data");
+            Intent adbIntent = new Intent("receive_adb_data");
             adbIntent.putExtras(bundle);
             context.sendBroadcast(adbIntent);
         }

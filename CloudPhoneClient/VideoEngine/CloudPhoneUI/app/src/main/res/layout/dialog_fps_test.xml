@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_ffffff_corner_10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="12dp"
+        android:text="卡顿率测试报告"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="测试开始时间：" />
+
+            <TextView
+                android:id="@+id/test_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="null" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="测试结束时间：" />
+
+            <TextView
+                android:id="@+id/test_stop_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="null" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="帧率平均值：" />
+
+            <TextView
+                android:id="@+id/average_fps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="null" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="jank/10min平均值：" />
+
+            <TextView
+                android:id="@+id/average_jank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="null" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="bjank/10min平均值：" />
+
+            <TextView
+                android:id="@+id/average_bjank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/vmi_black"
+                android:textSize="16sp"
+                android:text="null" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f3f3f3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/tv_positive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:gravity="center"
+            android:textColor="@color/selector_exit_button_text"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#f3f3f3" />
+
+        <Button
+            android:id="@+id/tv_negative"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:gravity="center"
+            android:text="关闭"
+            android:textColor="@color/selector_exit_button_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

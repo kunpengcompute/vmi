@@ -54,6 +54,10 @@ package()
     copy_lib_lib64_and_symbols_so ${cur_file_path}/libs ${output_dir} ${output_symbols_dir} "${system_so_list[@]}"
     [ ${?} != 0 ] && error "Failed to copy so" && return -1
 
+    # 删除本地编译的libDisplayServer.so，本地编译的是mock，实际使用的libDisplayServer.so在创建Kbox镜像时已存在
+    find ${output_dir} -name "libDisplayServer.so" | xargs rm -rf
+    find ${output_symbols_dir} -name "libDisplayServer.so" | xargs rm -rf
+
     if [ -z "${MODULE_OUTPUT_DIR}" ]; then
         cd ${output_dir}
         tar -zcvf GpuEncTurbo.tar.gz system vendor

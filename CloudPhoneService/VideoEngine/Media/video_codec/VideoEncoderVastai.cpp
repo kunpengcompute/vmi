@@ -3,6 +3,7 @@
  */
 
 #define CONFIG_VASTAPI 1
+#define CONFIG_NETINT 0
 #define LOG_TAG "VideoEncoderVastai"
 #include "VideoEncoderVastai.h"
 #include "dirent.h"
@@ -12,9 +13,8 @@
 #include <string>
 #include <atomic>
 #include <unistd.h>
-#include "MediaLog.h"
-#include "Property.h"
 #include <chrono>
+#include "logging.h"
 
 namespace {
     constexpr int NUM_OF_PLANES = 3;
@@ -129,7 +129,7 @@ namespace {
     void *g_libHandleAvutil = nullptr;
 }
 
-VideoEncoderVastai::VideoEncoderVastai(VACodecType codecType, EncoderFormat codecFormat)
+VideoEncoderVastai::VideoEncoderVastai(VACodecType codecType)
 {
     if (codecType == VA_CODEC_TYPE_H264) {
         m_codec = ENCODER_TYPE_VASTAI_H264;
@@ -138,7 +138,6 @@ VideoEncoderVastai::VideoEncoderVastai(VACodecType codecType, EncoderFormat code
         m_encParams.bitrate = static_cast<uint32_t>(BITRATE_DEFAULT_265);
         m_encParams.profile = ENCODE_PROFILE_MAIN;
     }
-    m_codecFormat = codecFormat;
     INFO("VideoEncoderVastai constructed %s", (m_codec == ENCODER_TYPE_VASTAI_H264) ? "h.264" : "h.265");
 }
  
@@ -275,14 +274,10 @@ EncoderRetCode VideoEncoderVastai::VastaiEncodeFrame(uint8_t **outputData, uint3
 
 EncoderRetCode VideoEncoderVastai::InitEncoder()
 {
-    if ((!GetRoEncParam()) || (!GetPersistEncParam())) {
-        ERR("init encoder failed: GetEncParam failed");
-        return VIDEO_ENCODER_INIT_FAIL;
-    }
-    m_encParams = m_tmpEncParams;
+    m_encParams = m_videoParams;
     if (m_codec == ENCODER_TYPE_VASTAI_H265) {
         m_encParams.profile = ENCODE_PROFILE_MAIN;
-        m_tmpEncParams.profile = ENCODE_PROFILE_MAIN;
+        m_videoParams.profile = ENCODE_PROFILE_MAIN;
     }
     if (!LoadVastaiSharedLib()) {
         ERR("init encoder failed: load Vastai so error");
@@ -421,9 +416,9 @@ bool VideoEncoderVastai:: InitCtxParams()
         ERR("Set EncodeParams error.Error code: %d",ret);
         return false;
     }
-    auto tmpProfile = StrToInt(g_transProfile[m_encParams.profile]);
+    auto tmpProfile = std::stoi(g_transProfile[m_encParams.profile]);
     if ((m_codec == ENCODER_TYPE_VASTAI_H265)) {
-        tmpProfile = StrToInt(g_transProfile_h265[m_encParams.profile]);
+        tmpProfile = std::stoi(g_transProfile_h265[m_encParams.profile]);
     } 
     auto avOptSetInt = reinterpret_cast<AvOptSetIntFunc>(g_funcMap_avutil[AV_OPT_SET_INT]);
     ret = avOptSetInt(m_encoderCtx->priv_data, "profile", tmpProfile , 0);

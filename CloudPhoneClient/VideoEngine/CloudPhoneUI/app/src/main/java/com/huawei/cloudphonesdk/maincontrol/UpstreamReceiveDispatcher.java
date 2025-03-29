@@ -4,6 +4,8 @@
 
 package com.huawei.cloudphonesdk.maincontrol;
 
+import static com.huawei.cloudphone.ui.activities.FullscreenActivity.FPS_TEST_FAIL_FLAG;
+
 import androidx.annotation.Keep;
 
 import java.lang.ref.WeakReference;
@@ -22,6 +24,7 @@ import com.huawei.cloudphonesdk.utils.LogUtil;
 @Keep
 public class UpstreamReceiveDispatcher {
     private static final String TAG = UpstreamReceiveDispatcher.class.getSimpleName();
+    public static final int MAX_TIME_INTERVAL = 5000;
     private Map<Byte, NewPacketCallback> mCallbackMap = new ConcurrentHashMap<>();
     private DefaultThread mDataThread;
 
@@ -71,12 +74,12 @@ public class UpstreamReceiveDispatcher {
         mDataThread.stopFlag = false;
         mDataThread.start();
     }
-
     static class DefaultThread extends Thread {
         // 1MB
         private static final int MAX_BUF_LEN = 1048576;
         WeakReference<UpstreamReceiveDispatcher> mWeakReference;
         private boolean stopFlag;
+        private long lastReceiveTime = 0;
 
         public DefaultThread(UpstreamReceiveDispatcher dispatcher) {
             mWeakReference = new WeakReference<>(dispatcher);
@@ -98,6 +101,16 @@ public class UpstreamReceiveDispatcher {
                         System.arraycopy(recvBuf, 0, copyData, 0, packetLen);
                         entry.getValue().onNewPacket(copyData);
                         hasData = true;
+                        if (entry.getKey() == OpenGLJniWrapper.FPS) {
+                            lastReceiveTime = System.currentTimeMillis();
+                        }
+                    }
+                    if (entry.getKey() == OpenGLJniWrapper.FPS && lastReceiveTime != 0) {
+                        long currentTime = System.currentTimeMillis();
+                        if (currentTime - lastReceiveTime > MAX_TIME_INTERVAL) {
+                            entry.getValue().onNewPacket(new byte[]{FPS_TEST_FAIL_FLAG});
+                            lastReceiveTime = 0;
+                        }
                     }
                 }
                 if (!hasData) {

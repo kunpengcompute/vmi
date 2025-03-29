@@ -9,6 +9,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -23,9 +24,9 @@ import com.huawei.cloudphone.util.CastUtil;
  * @since 2020-05-21
  */
 public final class ExitDialog extends AlertDialog implements RadioGroup.OnCheckedChangeListener {
-    private RadioGroup mDefinitionRadioGroup;
-    private TextView mNegativeTextView;
-    private TextView mPositionTextView;
+    private final Button reconnectButton;
+    private TextView negativeTextView;
+    private TextView positionTextView;
 
     /**
      * 构造方法
@@ -36,12 +37,11 @@ public final class ExitDialog extends AlertDialog implements RadioGroup.OnChecke
         super(context);
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_exit,
             new FrameLayout(getContext()));
-        mDefinitionRadioGroup = CastUtil.toRadioGroup(contentView.findViewById(R.id.rg_definition));
-        mNegativeTextView = CastUtil.toTextView(contentView.findViewById(R.id.tv_negative));
-        mPositionTextView = CastUtil.toTextView(contentView.findViewById(R.id.tv_positive));
+        negativeTextView = CastUtil.toTextView(contentView.findViewById(R.id.tv_negative));
+        positionTextView = CastUtil.toTextView(contentView.findViewById(R.id.tv_positive));
+        reconnectButton = contentView.findViewById(R.id.reconnectButton);
         setView(contentView);
         // add change listener
-        mDefinitionRadioGroup.setOnCheckedChangeListener(this);
     }
 
     /**
@@ -51,7 +51,7 @@ public final class ExitDialog extends AlertDialog implements RadioGroup.OnChecke
      * @return ExitDialog
      */
     public ExitDialog setPositiveButton(View.OnClickListener positiveButton) {
-        mPositionTextView.setOnClickListener(positiveButton);
+        positionTextView.setOnClickListener(positiveButton);
         return this;
     }
 
@@ -62,7 +62,12 @@ public final class ExitDialog extends AlertDialog implements RadioGroup.OnChecke
      * @return ExitDialog
      */
     public ExitDialog setNegativeButton(View.OnClickListener negativeButton) {
-        mNegativeTextView.setOnClickListener(negativeButton);
+        negativeTextView.setOnClickListener(negativeButton);
+        return this;
+    }
+
+    public ExitDialog setReconnectButton(View.OnClickListener reconnectButton) {
+        this.reconnectButton.setOnClickListener(reconnectButton);
         return this;
     }
 

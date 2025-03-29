@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ib-exagear
+  namespace: kube-system
+data:
+  config.json: |
+    {
+      "resourceName": "github.com/exagear",
+      "socketName": "everpeace-ib-exagear.sock",
+      "numDevices": 400,
+      "hostDevices": [{
+        "hostPath": "/dev/tango32",
+        "containerPath": "/dev/tango32",
+        "permission": "rwm"
+      }]
+    }

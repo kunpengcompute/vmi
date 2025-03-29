@@ -82,6 +82,12 @@ private:
     DecoderType m_decoderType = DecoderType::DEC_TYPE_UNKNOWN;
     mutable std::mutex m_lock = {};
     ItemQueue<int64_t> m_frameQueue {};
+    int64_t lastFrameUs = 0;
+    int64_t pre1FrameTime = 0;
+    int64_t pre2FrameTime = 0;
+    int64_t pre3FrameTime = 0;
+    uint32_t jank = 0;
+    uint32_t bigJank = 0;
 };
 }
 

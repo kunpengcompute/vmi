@@ -65,6 +65,9 @@ public class Constant {
 
     public static final int VMI_VIDEO_ENGINE_EVENT_SOCK_DISCONN = -2;
 
+    // 引擎渲染第一帧画面成功
+    public static final int VMI_ENGINE_EVENT_READY = -5;
+
     public static final int VMI_VIDEO_ENGINE_EVENT_ORIENTATION_CHANGED = -6;
 
     public static final int VMI_ENGINE_EVENT_GET_VERSION_TIMEOUT = -12;
@@ -72,4 +75,16 @@ public class Constant {
     public static final int VMI_ENGINE_EVENT_VERSION_MISMATCH = -13;
 
     public static final int VMI_ENGINE_EVENT_ENGINE_MISMATCH = -14;
+
+    public static final int VMI_360P_WIDTH = 360;
+    public static final int VMI_360P_HEIGHT = 640;
+    public static final int VMI_540P_WIDTH=540;
+    public static final int VMI_540P_HEIGHT=960;
+    public static final int VMI_720P_WIDTH = 720;
+    public static final int VMI_720P_HEIGHT = 1280;
+    public static final int VMI_1080P_WIDTH = 1080;
+    public static final int VMI_1080P_HEIGHT = 1980;
+
+    public static final boolean VMI_ADAPTIVE_RESOLUTION = true;
+    public static final int VIDEO_RESOLUTION_INDEX = 1;
 }

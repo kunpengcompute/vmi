@@ -41,34 +41,36 @@ function DownloadToolPkg()
 {
     LogInfo "Start download packages"
     if [ ! -f "${INSTALL_DIR}/android-ndk-r25b-linux.zip" ]; then
-        wget https://dl.google.com/android/repository/android-ndk-r25b-linux.zip
+        wget --no-check-certificate https://dl.google.com/android/repository/android-ndk-r25b-linux.zip
     fi
     if [ ! -f "${INSTALL_DIR}/build-tools_r33.0.1-linux.zip" ]; then
-        wget https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip
+        wget --no-check-certificate https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip
     fi
     if [ ! -f "${INSTALL_DIR}/gradle-8.4-bin.zip" ]; then
-        wget https://mirrors.cloud.tencent.com/gradle/gradle-8.4-bin.zip
+        wget --no-check-certificate https://mirrors.cloud.tencent.com/gradle/gradle-8.4-bin.zip
     fi
-    if [ ! -f "${INSTALL_DIR}/cmake-3.25.3-linux-x86_64.tar.gz" ]; then
-        wget https://cmake.org/files/v3.25/cmake-3.25.3-linux-x86_64.tar.gz
+    if [ ! -f "${INSTALL_DIR}/cmake-3.28.2-linux-x86_64.tar.gz" ]; then
+        wget --no-check-certificate https://cmake.org/files/v3.28/cmake-3.28.2-linux-x86_64.tar.gz
     fi
     if [ ! -f "${INSTALL_DIR}/openjdk-11+28_linux-x64_bin.tar.gz" ]; then
-        wget https://d6.injdk.cn/openjdk/openjdk/11/openjdk-11+28_linux-x64_bin.tar.gz
+        wget --no-check-certificate https://d6.injdk.cn/openjdk/openjdk/11/openjdk-11+28_linux-x64_bin.tar.gz
     fi
     if [ ! -f "${INSTALL_DIR}/ninja-linux.zip" ]; then
-        wget https://github.com/ninja-build/ninja/releases/download/v1.11.0/ninja-linux.zip
+        wget --no-check-certificate https://github.com/ninja-build/ninja/releases/download/v1.12.0/ninja-linux.zip
     fi
     if [ ! -f "${INSTALL_DIR}/platform-33_r02.zip" ]; then
-        wget https://dl.google.com/android/repository/platform-33_r02.zip
+        wget --no-check-certificate https://dl.google.com/android/repository/platform-33_r02.zip
     fi
     if [ ! -f "${INSTALL_DIR}/platform-tools_r33.0.3-linux.zip" ]; then
-        wget https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip
+        wget --no-check-certificate https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip
     fi
     LogInfo "Finish download packages"
 }
 
 function UnpackTools()
 {
+    rm -rf ${INSTALL_DIR}/android-sdk-linux/
+
     LogInfo "unpack Android NDK"
     mkdir -p ${INSTALL_DIR}/android-sdk-linux/ndk/25.1.8937393/
     unzip android-ndk-r25b-linux.zip
@@ -87,14 +89,14 @@ function UnpackTools()
 
     LogInfo "unpack cmake"
     mkdir -p ${INSTALL_DIR}/android-sdk-linux/cmake/
-    tar -zxvf cmake-3.25.3-linux-x86_64.tar.gz -C ${INSTALL_DIR}/android-sdk-linux/cmake/
+    tar -zxvf cmake-3.28.2-linux-x86_64.tar.gz -C ${INSTALL_DIR}/android-sdk-linux/cmake/
 
     LogInfo "unpack AdoptOpenJDK"
     tar -zxvf openjdk-11+28_linux-x64_bin.tar.gz -C ${INSTALL_DIR}/android-sdk-linux/
 
     LogInfo "unpack ninja"
     unzip ninja-linux.zip
-    mv ninja ${INSTALL_DIR}/android-sdk-linux/cmake/cmake-3.25.3-linux-x86_64/bin/
+    mv ninja ${INSTALL_DIR}/android-sdk-linux/cmake/cmake-3.28.2-linux-x86_64/bin/
 
     LogInfo "unpack SDK platform"
     mkdir -p ${INSTALL_DIR}/android-sdk-linux/platforms/
@@ -109,7 +111,7 @@ function UnpackTools()
 function DelOldEnv()
 {
     if [ ! -f "${ENV_BASHRC}" ]; then
-        Logwarn "找不到${ENV_BASHRC}"
+        LogError "找不到${ENV_BASHRC}"
         return 1
     fi
     
@@ -119,7 +121,7 @@ function DelOldEnv()
         return 0
     else
         if [ ${lineSt} -gt ${lineEnd} ]; then
-            Logwarn "自动部署工具起始行在结束行前面，请解决冲突"
+            LogError "自动部署工具起始行在结束行前面，请解决冲突"
 	        return 1
         else
             sed -i "${lineSt},${lineEnd}d" ${ENV_BASHRC}
@@ -147,7 +149,7 @@ function CheckEnvConflict()
     "
 
     if [ ! -f "${ENV_BASHRC}" ]; then
-        Logwarn "找不到${ENV_BASHRC}"
+        LogError "找不到${ENV_BASHRC}"
         return 1
     fi
     
@@ -165,7 +167,7 @@ function CheckEnvConflict()
                         continue
                     fi
                 fi
-                LogInfo "环境变量冲突: ${intxStr}行 ${envEle} 已被设置，请解决冲突"
+                LogError "环境变量冲突: ~/.bashrc ${intxStr}行 ${envEle} 已被设置，请解决冲突"
                 return 1
             done
         fi
@@ -188,7 +190,7 @@ export AN_SDKDIR=\${USER_LOCAL_PATH}/android-sdk-linux
 export AN_NDKDIR=\${AN_SDKDIR}/ndk/25.1.8937393
 export GRADLE_HOME=\${AN_SDKDIR}/gradle-8.4
 export AN_GRADLEDIR=\${GRADLE_HOME}
-export CMAKE_PATH=\${USER_LOCAL_PATH}/android-sdk-linux/cmake/cmake-3.25.3-linux-x86_64/bin
+export CMAKE_PATH=\${USER_LOCAL_PATH}/android-sdk-linux/cmake/cmake-3.28.2-linux-x86_64/bin
 export ANDROID_NDK_HOME=\${AN_NDKDIR}
 export ANDROID_NDK=\${AN_NDKDIR}
 export PATH=\${JAVA_HOME}/bin:\${AN_NDKDIR}:\${AN_SDKDIR}/platform-tools:\${GRADLE_HOME}/bin:\${CMAKE_PATH}:\$PATH
@@ -199,7 +201,7 @@ EOF
 function main()
 {
     if [ -z "${INSTALL_DIR}" ];then
-        LogInfo "未输入安装路径，使用默认路径${DEF_INSTALL_DIR}"
+        LogWarn "未输入安装路径，使用默认路径${DEF_INSTALL_DIR}"
         INSTALL_DIR=${DEF_INSTALL_DIR}
     fi
 
@@ -213,6 +215,7 @@ function main()
     [ $? != 0 ] && exit 0
     SetEnvConfig
     cd -
+    LogInfo "解压编译工具完成，请使用 source ~/.bashrc 命令使能环境变量"
 }
 
 main

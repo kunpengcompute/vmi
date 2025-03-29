@@ -1,6 +1,5 @@
 #! /bin/bash
-# Copyright Huawei Technologies Co., Ltd. 2022-2023. All rights reserved.
-
+# Copyright Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
 #===============================================================================
 # Variables
 #===============================================================================
@@ -10,7 +9,16 @@ THISDIR=$(readlink -ef $(dirname $0))
 CFCT_CFG=$THISDIR/cfct_config
 DEFAULT_PROP=$THISDIR/default.prop
 ENC_PACKAGE=$THISDIR/NETINT.tar.gz
-DOCKERCMD=docker
+CONTAINERD_CONFIG=$THISDIR/containerd_config
+if [ -f "$CONTAINERD_CONFIG" ]; then
+    DEFAULT_RUNTIME=containerd
+    RUNTIME_CMD=nerdctl
+    echo "Default container runtime selected: containerd"
+else
+    DEFAULT_RUNTIME=docker
+    RUNTIME_CMD=docker
+    echo "Default container runtime selected: docker"
+fi
 DOCKER_NAME_PREFIX="android_"  # must end with "_"
 
 VIDEO_CPU_MAP=()
@@ -72,7 +80,7 @@ function param_check_container_name() {
         LOG_ERROR "Container name is not specified!"
     elif ! echo "$container_name" | grep -q "$DOCKER_NAME_PREFIX" ; then
         LOG_ERROR "Container name does not start with '$DOCKER_NAME_PREFIX'"
-    elif ! $DOCKERCMD ps $opts | grep -w -q "$container_name" ; then
+    elif ! $RUNTIME_CMD ps $opts | grep -w -q "$container_name" ; then
         if [ "$status" == "RUNNING" ] ; then
             LOG_ERROR "Container named $container_name is not running!"
         else
@@ -82,7 +90,7 @@ function param_check_container_name() {
         return 0
     fi
     LOG_ERROR "Please specify container name below"
-    $DOCKERCMD ps $opts
+    $RUNTIME_CMD ps $opts
     exit 1
 }
 
@@ -92,15 +100,15 @@ function param_check_image_id_or_name() {
     local ver=${image#*:}
     if [ -z "$image" ] ; then
         LOG_ERROR "Container image ID is not specified!"
-    elif ! $DOCKERCMD images | grep -q "$name" ; then
+    elif ! $RUNTIME_CMD images | grep -q "$name" ; then
         LOG_ERROR "Container image $image doesn't exist"
-    elif ! $DOCKERCMD images | grep -q "$ver" ; then
+    elif ! $RUNTIME_CMD images | grep -q "$ver" ; then
         LOG_ERROR "Container image $image doesn't exist"
     else
         return 0
     fi
     LOG_ERROR "Please select the image below"
-    $DOCKERCMD images
+    $RUNTIME_CMD images
     exit 1
 }
 
@@ -167,7 +175,7 @@ function wait_cmd() {
     done
 }
 
-function docker_wait_container_ready() {
+function wait_container_ready() {
     local container_name=$1
     local timeout=${2:-100}
     local starttime=$(date +%s)
@@ -181,7 +189,7 @@ function docker_wait_container_ready() {
     while [ "$currenttime" -lt "$endtime" ] ; do
         printf "\r%03d/%03d" $(($currenttime-$starttime)) $timeout
         sleep 1
-        local cmd="$DOCKERCMD exec -i ${container_name} getprop sys.boot_completed | grep 1 > /dev/null 2>&1 &"
+        local cmd="$RUNTIME_CMD exec -i ${container_name} getprop sys.boot_completed | grep 1 > /dev/null 2>&1 &"
         local result=$(wait_cmd "${cmd}")
         if [ ${result} -eq 0 ]; then
             bash $THISDIR/base_box.sh chk_key_process ${container_name}
@@ -200,26 +208,13 @@ function docker_wait_container_ready() {
 }
 
 function init_quadra() {
+    # Quadra采用ni_rsrc_mon自启动，生命周期由编码卡厂家管理，此处仅打印返回值
     local container_name=$1
-    local starttime=$(date +%s)
-    local currenttime=$starttime
-    local cmd="$DOCKERCMD exec -i $container_name sh -c \"test -f /system/bin/ni_rsrc_mon\" > /dev/null 2>&1 &"
-    local result=$(wait_cmd "${cmd}")
-    if [ ${result} == 1 ]; then
-        LOG_WARN "${container_name} /system/bin/ni_rsrc_mon not exist"
-    elif [ ${result} -eq -1 ]; then
-        LOG_WARN "${container_name} wait_cmd timeout, continue"
-    else
-        $DOCKERCMD exec -itd $container_name system/bin/ni_rsrc_mon
-        local netint_nums=$($DOCKERCMD inspect --format='{{range .HostConfig.Devices}}{{.PathOnHost}} {{end}}' $container_name | grep -o 'nvme[0-9]n' | wc -l)
-        if [ $netint_nums -eq 0 ]; then
-            LOG_WARN "Netint device doesn't exist."
-            return
-        fi
-        sleep 2
-        $DOCKERCMD exec -itd $container_name chmod 666 /dev/nvm*n*
-        $DOCKERCMD exec -itd $container_name chmod 777 -R /dev/shm_netint
+    local ni_init_success=$($RUNTIME_CMD exec -i ${container_name} getprop ni_rsrc_init_completed)
+    if [ "${ni_init_success}" == "yes" ]; then
         LOG_INFO "$container_name netint devices ready"
+    else
+        LOG_WARN "ni_rsrc_init_completed is not ready"
     fi
 }
 
@@ -227,15 +222,20 @@ function init_netint() {
     local container_name=$1
     local starttime=$(date +%s)
     local currenttime=$starttime
-    local cmd="$DOCKERCMD exec -i $container_name sh -c \"test -f /system/vendor/bin/ni_rsrc_mon_logan\" > /dev/null 2>&1 &"
+    local cmd="$RUNTIME_CMD exec -d $container_name sh -c \"test -f /system/vendor/bin/ni_rsrc_mon_logan\" > /dev/null 2>&1 &"
     local result=$(wait_cmd "${cmd}")
     if [ ${result} == 1 ]; then
         LOG_WARN "${container_name} /system/vendor/bin/ni_rsrc_mon_logan not exist"
     elif [ ${result} -eq -1 ]; then
         LOG_WARN "${container_name} wait_cmd timeout, continue"
     else
-        $DOCKERCMD exec -itd $container_name /vendor/bin/ni_rsrc_mon_logan
-        local netint_nums=$($DOCKERCMD inspect --format='{{range .HostConfig.Devices}}{{.PathOnHost}} {{end}}' $container_name | grep -o 'nvme[0-9]n' | wc -l)
+        $RUNTIME_CMD exec -i $container_name /vendor/bin/ni_rsrc_mon_logan
+        if [ $DEFAULT_RUNTIME == "docker" ]; then
+            local netint_nums=$($RUNTIME_CMD inspect --format='{{range .HostConfig.Devices}}{{.PathOnHost}} {{end}}' $container_name | grep -o 'nvme[0-9]n' | wc -l)
+        else
+            # need config confirmation
+            local netint_nums=0
+        fi
         if [ $netint_nums -eq 0 ]; then
             LOG_WARN "Netint device doesn't exist."
             return
@@ -250,14 +250,14 @@ function init_netint() {
                 EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
                 exit
             fi
-            cmd="$DOCKERCMD exec -i $container_name sh -c \"test -f /dev/shm_netint/NI_LOGAN_lck_d${netint_nums}\" > /dev/null 2>&1 &"
+            cmd="$RUNTIME_CMD exec -i $container_name sh -c \"test -f /dev/shm_netint/NI_LOGAN_lck_d${netint_nums}\" > /dev/null 2>&1 &"
             result=$(wait_cmd "${cmd}")
             if [ ${result} == 1 ]; then
                 continue
             elif [ ${result} -eq -1 ]; then
                 EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
             fi
-            cmd="$DOCKERCMD exec -i $container_name sh -c \"test -f /dev/shm_netint/NI_LOGAN_lck_e${netint_nums}\" > /dev/null 2>&1 &"
+            cmd="$RUNTIME_CMD exec -i $container_name sh -c \"test -f /dev/shm_netint/NI_LOGAN_lck_e${netint_nums}\" > /dev/null 2>&1 &"
             result=$(wait_cmd "${cmd}")
             if [ ${result} == 1 ]; then
                 continue
@@ -266,8 +266,8 @@ function init_netint() {
             fi
             break
         done
-        $DOCKERCMD exec -itd $container_name chmod 666 /dev/nvm*n*
-        $DOCKERCMD exec -itd $container_name chmod 777 -R /dev/shm_netint
+        $RUNTIME_CMD exec -d $container_name chmod 666 /dev/nvm*n*
+        $RUNTIME_CMD exec -d $container_name chmod 777 -R /dev/shm_netint
         LOG_INFO "$container_name netint devices ready"
     fi
 }
@@ -276,7 +276,7 @@ function init_config() {
     local num_of_cpus=$(get_num_of_cpus)
     local xd_gpus=($(lspci -D | grep "1fe0:1010" | awk '{print $1}'))
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-    local hantro_gpus=($(lspci -D | grep "1ec6:0200" | awk '{print $1}'))
+    local hantro_gpus=($(lspci -D | grep ":0200" | awk '{print $1}'))
     if [ $num_of_cpus -eq 128 ]; then
         if [ ${CPU_BIND_MODE} -eq 0 ]; then
             VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_128CORE_MODE0[*]})
@@ -401,14 +401,16 @@ function init_config() {
     VIDEO_USERDATA_MAP=(${VIDEO_USERDATA_MAP_CORE[*]})
     VIDEO_ENC_MAP=(${VIDEO_ENC_MAP_CORE[*]})
 
-    local hanbo_encoders=($(lspci -d 1ec6:0100 | awk '{print $1}'))
-    if [ ${ENCODECARD} -eq 2 ]; then
-        if [ ${#hanbo_encoders[@]} -eq 2 ]; then
-            VIDEO_HANBO_MAP=(${VIDEO_HANBO_MAP_HANBO2[*]})
-        elif [ ${#hanbo_encoders[@]} -ne 0 ]; then
-            VIDEO_HANBO_MAP=(${VIDEO_HANBO_MAP_HANBO1[*]})
-        else
-            EXIT_ERROR "No hanboEncoders exists on the host"
+    if [ ${#amd_gpus[@]} -ne 0 ]; then
+        local hanbo_encoders=($(lspci -d 1ec6:0100 | awk '{print $1}'))
+        if [ ${ENCODECARD} -eq 2 ]; then
+            if [ ${#hanbo_encoders[@]} -eq 2 ]; then
+                VIDEO_HANBO_MAP=(${VIDEO_HANBO_MAP_HANBO2[*]})
+            elif [ ${#hanbo_encoders[@]} -ne 0 ]; then
+                VIDEO_HANBO_MAP=(${VIDEO_HANBO_MAP_HANBO1[*]})
+            else
+                EXIT_ERROR "No hanboEncoders exists on the host"
+            fi
         fi
     fi
 }
@@ -429,18 +431,52 @@ function check_parameters() {
             EXIT_ERROR "The ${VIDEO_GPU_MAP[i]} in VIDEO_GPU_MAP doesn't exist."
         fi
     done
-    for ((i=0; i<${#VIDEO_ENC_MAP[@]}; i++)); do
-        local encs=()
-        IFS=',' read -r -a encs <<< ${VIDEO_ENC_MAP[i]}
-        for ((j=0; j<${#encs[@]}; j++)); do
-            if [ ! -e ${encs[j]} ]; then
-                EXIT_ERROR "The ${encs[j]} in VIDEO_ENC_MAP doesn't exist."
-            fi
+    if [ ${#amd_gpus[@]} -ne 0 ]; then
+        for ((i=0; i<${#VIDEO_ENC_MAP[@]}; i++)); do
+            local encs=()
+            IFS=',' read -r -a encs <<< ${VIDEO_ENC_MAP[i]}
+            for ((j=0; j<${#encs[@]}; j++)); do
+                if [ ! -e ${encs[j]} ]; then
+                    EXIT_ERROR "The ${encs[j]} in VIDEO_ENC_MAP doesn't exist."
+                fi
+            done
         done
-    done
+    fi
 }
 
-docker_run() {
+function webrtc_conection_configure()
+{
+    local start_cmd="$1"
+    if [ -f $DEFAULT_PROP ]; then
+        local serverip=$(grep "vmi.webrtc.connection.serverip" $DEFAULT_PROP | awk -F= '{print $2}' | tr -d '\r')
+        if [ ${serverip} = "0.0.0.0" ]; then
+            EXIT_ERROR "Server IP is null in default.prop"
+        fi
+    else
+        EXIT_ERROR "No default.prop for webrtc connection configuration"
+    fi
+    local networktype=4
+    local map_http_port=$((8000+$container_id))
+    local udp_port_nums=2
+    local origin_udp_port=$(grep "vmi.webrtc.connection.udpbeginport" $DEFAULT_PROP | awk -F= '{print $2}' | tr -d '\r')
+    local min_udp_port=$(($origin_udp_port+($container_id-1)*$udp_port_nums+1))
+    local max_udp_port=$(($origin_udp_port+$container_id*$udp_port_nums))
+    sed -i 's/\(.*\)vmi.network.type=\(.*\)/vmi.network.type='"${networktype}"'/g' $DEFAULT_PROP
+    sed -i 's/\(.*\)vmi.webrtc.httpserver.port=\(.*\)/vmi.webrtc.httpserver.port='"${map_http_port}"'/g' $DEFAULT_PROP
+    sed -i 's/\(.*\)vmi.webrtc.connection.udpminport=\(.*\)/vmi.webrtc.connection.udpminport='"${min_udp_port}"'/g' $DEFAULT_PROP
+    sed -i 's/\(.*\)vmi.webrtc.connection.udpmaxport=\(.*\)/vmi.webrtc.connection.udpmaxport='"${max_udp_port}"'/g' $DEFAULT_PROP
+    if [ "$start_cmd" == "restart" ]; then
+        return
+    fi
+    local opt=""
+    opt+=" -p ${map_http_port}:8080/tcp"
+    for ((i=min_udp_port; i<=max_udp_port; i++)); do
+        opt+=" -p ${i}:${i}/udp"
+    done
+    echo $opt
+}
+
+container_run() {
     check_encode_card
 
     local image=$1
@@ -454,14 +490,19 @@ docker_run() {
     local adb_port=$(($container_id +8500))
     local container_name="${DOCKER_NAME_PREFIX}${container_id}"
     param_check_image_id_or_name $image
-    if [ ! "$($DOCKERCMD volume ls -q 2>/dev/null|grep -w android_base)" ]; then
+    if [ ! "$($RUNTIME_CMD volume ls -q 2>/dev/null|grep -w android_base)" ]; then
         LOG_INFO "create android_base"
-        $DOCKERCMD volume create --name android_base
+        $RUNTIME_CMD volume create android_base
     fi
     local opt=""
-    opt+=" -p ${port}:8888"
+    if [ ${ENABLE_WEBRTC_CONNECTION} -eq 1 ]; then
+        LOG_INFO "Starting on configure WEBRTC connection"
+        opt+=$(webrtc_conection_configure start)
+    else 
+        opt+=" -p ${port}:8888 "
+    fi
     LOG_INFO "Create container: $container_name"
-    $DOCKERCMD ps -f name=$container_name
+    $RUNTIME_CMD ps -f name=$container_name
 
     local cpus_string=${VIDEO_CPU_MAP[$((($container_id - 1) % ${#VIDEO_CPU_MAP[*]}))]}
     local cpus=()
@@ -472,7 +513,7 @@ docker_run() {
 
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     local xd_gpus=($(lspci -D | grep "1fe0:1010" | awk '{print $1}'))
-    local hantro_gpus=($(lspci -D | grep "1ec6:0200" | awk '{print $1}'))
+    local hantro_gpus=($(lspci -D | grep ":0200" | awk '{print $1}'))
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         LOG_INFO "Starting on A GPU"
         if [[ ${ENCODECARD} -eq 0 ]] || [[ ${ENCODECARD} -eq 1 ]]; then
@@ -498,14 +539,16 @@ docker_run() {
         opt+=" --device=${vpu_node}:/dev/vpu"
     elif [ ${#hantro_gpus[@]} -ne 0 ]; then
         LOG_INFO "Starting on HANTRO GPU"
+        opt+=" ENABLE_HARD_DECODE=${ENABLE_HARD_DECODE}"
     else
         EXIT_ERROR "No GPU exists on the host"
     fi
 
 
     local ram_size_mb=$(($RAM_SIZE_GB * 1024))
+    
 
-    # docker额外启动参数
+    # 额外启动参数
     local extra_run_option=$opt
     bash $THISDIR/base_box.sh start \
     --name "$container_name" \
@@ -517,7 +560,8 @@ docker_run() {
     --ports "${adb_port}:5555" \
     --extra_run_option "$extra_run_option" \
     --image "$image" \
-    --user_data_path "$userdata_dir"
+    --user_data_path "$userdata_dir" \
+    --enable_render_layer "$ENABLE_RENDER_LAYER"
     LOG_INFO "Initialize container ..."
 
     local basedata=${userdata_dir}/data/android_base/data
@@ -526,8 +570,12 @@ docker_run() {
         LOG_INFO "copy ${container_name} from android_base"
         cp -r -p $basedata/* $volumedata/ 2>/dev/null
     fi
-    CID=$($DOCKERCMD ps |grep -w $container_name|awk '{print $1}')
-    echo "c 13:* rwm" > $(ls -d /sys/fs/cgroup/devices/docker/$CID*/devices.allow)
+    CID=$($RUNTIME_CMD ps |grep -w $container_name|awk '{print $1}')
+    if [ $DEFAULT_RUNTIME == "docker" ]; then
+        echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/docker/$CID*/devices.allow)
+    else
+        echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/default/$CID*/devices.allow)
+    fi
     if [ -f $DEFAULT_PROP ]; then
         local tmp_default_prop=${DEFAULT_PROP}_$container_id
         cp $DEFAULT_PROP $tmp_default_prop
@@ -537,54 +585,57 @@ docker_run() {
             LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
             sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
         fi
-        cmd="$DOCKERCMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
+        cmd="$RUNTIME_CMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
         LOG_INFO "$cmd"
         $cmd
         rm -rf $tmp_default_prop
-        cmd="$DOCKERCMD exec -itd $container_name chmod 755 /system/vendor/default.prop"
+        cmd="$RUNTIME_CMD exec -i $container_name chmod 755 /system/vendor/default.prop"
         LOG_INFO "$cmd"
         $cmd
     fi
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -eq 1 ]; then
-                docker cp ${container_name}:/system/vendor/etc/media_codecs.xml .
+                $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
                 sed -i 's/media_codecs_google_video.xml/media_codecs_kbox_video.xml/g' media_codecs.xml
-                docker cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
-                docker exec -itd ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
+                $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
+                $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
         fi
     fi
 
     local prop_build_file="/system/vendor/build.prop /system/build.prop"
-    cmd="$DOCKERCMD exec -i $container_name sed -i \"s/^\(ro.hardware.width=\).*/\1${BUILD_WIDTH}/g\" ${prop_build_file} > /dev/null 2>&1 &"
+    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.width=\).*/\1${BUILD_WIDTH}/g\" ${prop_build_file} > /dev/null 2>&1 &"
     LOG_INFO "ro.hardware.width=${BUILD_WIDTH}"
     local result=$(wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
         EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
     fi
-    cmd="$DOCKERCMD exec -i $container_name sed -i \"s/^\(ro.hardware.height=\).*/\1${BUILD_HEIGHT}/g\" ${prop_build_file} > /dev/null 2>&1 &"
+    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.height=\).*/\1${BUILD_HEIGHT}/g\" ${prop_build_file} > /dev/null 2>&1 &"
     LOG_INFO "ro.hardware.height=${BUILD_HEIGHT}"
     result=$(wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
         EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
     fi
-    cmd="$DOCKERCMD exec -i $container_name sed -i \"s/^\(qemu.sf.lcd_density=\).*/\1${BUILD_DENSITY}/g\" ${prop_build_file} > /dev/null 2>&1 &"
+    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(qemu.sf.lcd_density=\).*/\1${BUILD_DENSITY}/g\" ${prop_build_file} > /dev/null 2>&1 &"
     LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
     result=$(wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
         EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
     fi
-    cmd="$DOCKERCMD exec -i $container_name sed -i \"s/^\(ro.hardware.fps=\).*/\1${BUILD_FPS}/g\" ${prop_build_file} > /dev/null 2>&1 &"
+    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.fps=\).*/\1${BUILD_FPS}/g\" ${prop_build_file} > /dev/null 2>&1 &"
     LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
     result=$(wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
         EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
     fi
-
-    cmd="$DOCKERCMD exec -itd $container_name /kbox-init.sh"
+    if [ $DEFAULT_RUNTIME == "docker" ]; then
+        cmd="$RUNTIME_CMD exec -itd $container_name /kbox-init.sh"
+    else
+        cmd="$RUNTIME_CMD exec -d $container_name /kbox-init.sh 1" 
+    fi
     LOG_INFO "$cmd"
     $cmd &
-    docker_wait_container_ready "$container_name"
+    wait_container_ready "$container_name"
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${ENCODECARD} -eq 0 ]; then
@@ -594,9 +645,26 @@ docker_run() {
         fi
     fi
     fi
+    if [[ $ENABLE_RENDER_LAYER == "1" ]]; then
+        # 渲染中间层
+        local isEnabled=0;
+        $RUNTIME_CMD exec -it ${container_name} sh -c "chmod 777 -R /vendor/shader_cache/"
+        $RUNTIME_CMD exec -it ${container_name} sh -c "mkdir -p /data/local/debug/gles"
+        $RUNTIME_CMD exec -it ${container_name} sh -c "chmod 755 -R /data/local/debug/"
+        $RUNTIME_CMD exec -it ${container_name} sh -c "cp /system/vendor/etc/kbox_render_accelerating_configuration.xml /data/local/tmp" > /dev/null 2>&1 || isEnabled=1
+        $RUNTIME_CMD exec -it ${container_name} sh -c "cp /system/vendor/lib64/hw/RenderAccLayer.kbox.so /data/local/debug/gles" > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            $RUNTIME_CMD exec -it ${container_name} sh -c "setprop debug.gles.layers RenderAccLayer.kbox.so"
+        else
+            isEnabled=1
+        fi
+        if [ $isEnabled -eq 1 ]; then
+            echo -e "\033[31mFailed to enabled render layer! kbox_render_accelerating_configuration.xml or RenderAccLayer.kbox.so may not exist\033[0m"
+        fi
+    fi
 }
 
-docker_restart() {
+container_restart() {
     check_encode_card
 
     local container_name=$1
@@ -604,8 +672,12 @@ docker_restart() {
     LOG_INFO "Restart container: $container_name"
     param_check_container_name "$container_name"
 
-    if [ -f $DEFAULT_PROP ] && $DOCKERCMD ps | grep -w -q "$container_name"
+    if [ -f $DEFAULT_PROP ] && $RUNTIME_CMD ps | grep -w -q "$container_name"
     then
+        if [ ${ENABLE_WEBRTC_CONNECTION} -eq 1 ]; then
+            LOG_INFO "Starting on configure WEBRTC connection"
+            webrtc_conection_configure restart
+        fi
         local container_id=`echo ${container_name:8}`
         local tmp_default_prop=${DEFAULT_PROP}_$container_id
         cp $DEFAULT_PROP $tmp_default_prop
@@ -617,20 +689,20 @@ docker_restart() {
             sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
         fi
 
-        local cmd="$DOCKERCMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
+        local cmd="$RUNTIME_CMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
         LOG_INFO "$cmd"
         local result=$(wait_cmd "${cmd}")
         if [ ${result} -eq -1 ]; then
             EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
         fi
-        cmd="$DOCKERCMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
+        cmd="$RUNTIME_CMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
         LOG_INFO "$cmd"
         $cmd
         rm -rf $tmp_default_prop
-        cmd="$DOCKERCMD exec -itd $container_name chmod 755 /system/vendor/default.prop"
+        cmd="$RUNTIME_CMD exec -i $container_name chmod 755 /system/vendor/default.prop"
         LOG_INFO "$cmd"
         $cmd
-        cmd="$DOCKERCMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
+        cmd="$RUNTIME_CMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
         LOG_INFO "$cmd"
         local result=$(wait_cmd "${cmd}")
         if [ ${result} -eq -1 ]; then
@@ -640,7 +712,7 @@ docker_restart() {
 
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3
+    bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE}
     [ ${?} -eq 1 ] && continue
 
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
@@ -652,9 +724,18 @@ docker_restart() {
         fi
     fi
     fi
+
+    if [[ $ENABLE_RENDER_LAYER == "1" ]]; then
+        $RUNTIME_CMD exec -it ${container_name} sh -c "cp /system/vendor/lib64/hw/RenderAccLayer.kbox.so /data/local/debug/gles" > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            $RUNTIME_CMD exec -it ${container_name} sh -c "setprop debug.gles.layers RenderAccLayer.kbox.so"
+        else
+            echo -e "\033[31mFailed to enabled render layer! kbox_render_accelerating_configuration.xml or RenderAccLayer.kbox.so may not exist\033[0m"
+        fi
+    fi
 }
 
-docker_delete() {
+container_delete() {
     local container_name=$1
     local delete_image=$2
     local keep_data=$3
@@ -663,15 +744,14 @@ docker_delete() {
     LOG_INFO "Remove container: $container_name"
     param_check_container_name "$container_name"
 
-    imageid="$($DOCKERCMD ps -a | grep $container_name | awk '{print $2}')"
-    $DOCKERCMD ps | grep -q "$container_name" && $DOCKERCMD stop -t 0 $container_name
-    $DOCKERCMD rm $container_name
+    imageid="$($RUNTIME_CMD ps -a | grep $container_name | awk '{print $2}')"
+    $RUNTIME_CMD ps | grep -q "$container_name" && $RUNTIME_CMD stop -t 0 $container_name
+    $RUNTIME_CMD rm $container_name
 
     if [ "$delete_image" == "--image" ] ; then
         LOG_INFO "Remove container image: $imageid"
-        $DOCKERCMD rmi $imageid
+        $RUNTIME_CMD rmi $imageid
     fi
-
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
     bash $THISDIR/base_box.sh delete $container_name ${userdata_dir} $keep_data
@@ -683,13 +763,13 @@ pushxd()
     local container_name=$2
     local container_id=`echo ${container_name:8}`
 
-    if [ ! "$($DOCKERCMD ps -a  2>/dev/null | grep -w $container_name)" ]
+    if [ ! "$($RUNTIME_CMD ps -a  2>/dev/null | grep -w $container_name)" ]
     then
         LOG_ERROR "$container_name doesn't exist!"
         return
     fi
 
-    local cmd="$DOCKERCMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
+    local cmd="$RUNTIME_CMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
     LOG_INFO "$cmd"
     result=$(wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
@@ -753,10 +833,10 @@ pushxd()
 
     chmod -R 755 ${tmp_xd_libs}/system
 
-    $DOCKERCMD cp ${tmp_xd_libs}/system $container_name:/
+    $RUNTIME_CMD cp ${tmp_xd_libs}/system $container_name:/
     rm -rf ${tmp_xd_libs}
 
-    cmd="$DOCKERCMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
+    cmd="$RUNTIME_CMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
     LOG_INFO "$cmd"
     result=$(wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
@@ -764,7 +844,7 @@ pushxd()
     fi
 
     LOG_INFO "restarting container: $container_name...."
-    cmd="docker_restart $container_name"
+    cmd="container_restart $container_name"
     LOG_INFO $cmd
     $cmd
 }
@@ -775,13 +855,13 @@ push()
     local container_name=$2
     local container_id=`echo ${container_name:8}`
 
-    if [ ! "$($DOCKERCMD ps -a  2>/dev/null | grep -w $container_name)" ]
+    if [ ! "$($RUNTIME_CMD ps -a  2>/dev/null | grep -w $container_name)" ]
     then
         LOG_ERROR "$container_name doesn't exist!"
         return
     fi
 
-    local cmd="$DOCKERCMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
+    local cmd="$RUNTIME_CMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
     LOG_INFO "$cmd"
     result=$(wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
@@ -793,14 +873,13 @@ push()
     tar -zxf $target -C ${tmp_demo_video_engine}
     chmod -R 755 ${tmp_demo_video_engine}
     chown -R root:root ${tmp_demo_video_engine}
-    chmod -R 444 ${tmp_demo_video_engine}/system/etc/init/init.vmi.input.rc
     chmod -R 444 ${tmp_demo_video_engine}/vendor/etc/init/VmiAgentAndroidP.rc
     chmod -R 400 ${tmp_demo_video_engine}/vendor/etc/videoengine_version.txt
-    $DOCKERCMD cp ${tmp_demo_video_engine}/vendor $container_name:/system
-    $DOCKERCMD cp ${tmp_demo_video_engine}/system $container_name:/
+    $RUNTIME_CMD cp ${tmp_demo_video_engine}/vendor $container_name:/system
+    $RUNTIME_CMD cp ${tmp_demo_video_engine}/system $container_name:/
     rm -rf ${tmp_demo_video_engine}
 
-    cmd="$DOCKERCMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
+    cmd="$RUNTIME_CMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
     LOG_INFO "$cmd"
     result=$(wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
@@ -808,7 +887,7 @@ push()
     fi
 
     LOG_INFO "restarting container: $container_name...."
-    cmd="docker_restart $container_name"
+    cmd="container_restart $container_name"
     LOG_INFO $cmd
     $cmd
 }
@@ -843,10 +922,10 @@ main() {
 
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            if [ -n "$($DOCKERCMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+            if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
                 LOG_WARN "android_$container_id exist!"
             else
-                docker_run $DOCKER_IMAGE $container_id
+                container_run $DOCKER_IMAGE $container_id
             fi
         done
     elif [ $1 = "push" ]; then
@@ -857,8 +936,8 @@ main() {
 
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($DOCKERCMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                docker_run $DOCKER_IMAGE $container_id
+            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+                container_run $DOCKER_IMAGE $container_id
             fi
             push $2 "android_$container_id"
         done
@@ -870,8 +949,8 @@ main() {
 
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($DOCKERCMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                docker_run $DOCKER_IMAGE $container_id
+            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+                container_run $DOCKER_IMAGE $container_id
             fi
             pushxd $2 "android_$container_id"
         done
@@ -883,10 +962,10 @@ main() {
 
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($DOCKERCMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
                 LOG_WARN "no container android_$container_id!"
             else
-                docker_delete "android_$container_id"
+                container_delete "android_$container_id"
             fi
         done
     elif [ $1 = "tstart" ]; then
@@ -896,10 +975,36 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            if [ -n "$($DOCKERCMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+            if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
                 LOG_WARN "android_$container_id exist!"
             else
-                docker_run $DOCKER_IMAGE $container_id 1
+                container_run $DOCKER_IMAGE $container_id 1
+            fi
+        done
+    elif [ $1 = "qtstart" ]; then
+        local MIN=$2 MAX=$3 COUNT=$4
+        if [ -z $3 ]; then
+            MAX=$2
+        fi
+        local container_id
+        local start_id=$MIN
+        local end_id=$((start_id + $COUNT - 1))
+        if [ $end_id -gt $MAX ]; then
+            end_id=$MAX
+        fi
+        while [ $start_id -le $MAX ];
+        do
+            for container_id in $(seq $start_id $end_id); do
+                cmd="$THISDIR/cfct_video tstart $container_id"
+                LOG_INFO $cmd
+                $cmd >/dev/null 2>&1 &
+                pids+=($!)
+            done
+            wait ${pids[@]}
+            start_id=$(($end_id + 1))
+            end_id=$(($start_id + $COUNT - 1))
+            if [ $end_id -gt $MAX ]; then
+                end_id=$MAX
             fi
         done
     elif [ $1 = "tdelete" ]; then
@@ -909,10 +1014,36 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($DOCKERCMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
                 LOG_WARN "no container android_$container_id!"
             else
-                docker_delete "android_$container_id" "" 1
+                container_delete "android_$container_id" "" 1
+            fi
+        done
+    elif [ $1 = "qtdelete" ]; then
+        local MIN=$2 MAX=$3 COUNT=$4
+        if [ -z $3 ]; then
+            MAX=$2
+        fi
+        local container_id
+        local start_id=$MIN
+        local end_id=$((start_id + $COUNT - 1))
+        if [ $end_id -gt $MAX ]; then
+            end_id=$MAX
+        fi
+        while [ $start_id -le $MAX ];
+        do
+            for container_id in $(seq $start_id $end_id); do
+                cmd="$THISDIR/cfct_video tdelete $container_id"
+                LOG_INFO $cmd
+                $cmd >/dev/null 2>&1 &
+                pids+=($!)
+            done
+            wait ${pids[@]}
+            start_id=$(($end_id + 1))
+            end_id=$(($start_id + $COUNT - 1))
+            if [ $end_id -gt $MAX ]; then
+                end_id=$MAX
             fi
         done
     elif [ $1 = "restart" ]; then
@@ -923,10 +1054,10 @@ main() {
 
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($DOCKERCMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
                 LOG_WARN "no container android_$container_id!"
             else
-                docker_restart "android_$container_id"
+                container_restart "android_$container_id"
             fi
         done
     elif [ $1 = "qstart" ]; then
@@ -967,18 +1098,6 @@ main() {
             nohup $cmd 2>&1 &
             sleep 1
         done
-    elif [ $1 = "set_prop" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$DOCKERCMD exec -itd android_$container_id setprop persist.sensors.mock.id 0"
-            LOG_INFO $cmd
-            $cmd
-            sleep 0.5
-        done
     elif [ $1 = "start_game_old" ]; then
         local MIN=$2 MAX=$3
         if [ -z $3 ]; then
@@ -986,7 +1105,7 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            cmd="$DOCKERCMD exec -itd android_$container_id am start -n com.kiloo.subwaysurf/com.idreamsky.messagechannel.MessageChannelMainActivity"
+            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.kiloo.subwaysurf/com.idreamsky.messagechannel.MessageChannelMainActivity"
             LOG_INFO $cmd
             $cmd
             sleep 5
@@ -998,7 +1117,7 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            cmd="$DOCKERCMD exec -itd android_$container_id am start -n com.kiloo.subwaysurf/com.sybogames.chili.multidex.ChiliMultidexSupportActivity"
+            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.kiloo.subwaysurf/com.sybogames.chili.multidex.ChiliMultidexSupportActivity"
             LOG_INFO $cmd
             $cmd
             sleep 10
@@ -1025,7 +1144,7 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            cmd="$DOCKERCMD exec -itd android_$container_id am start -n com.tencent.tmgp.sgame/.SGameActivity"
+            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.tencent.tmgp.sgame/.SGameActivity"
             LOG_INFO $cmd
             $cmd
             sleep 3
@@ -1052,7 +1171,7 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            cmd="$DOCKERCMD exec -itd android_$container_id am start -n com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity"
+            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity"
             LOG_INFO $cmd
             $cmd
             sleep 3
@@ -1079,7 +1198,7 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            cmd="$DOCKERCMD exec -itd android_$container_id am start -n com.miHoYo.enterprise.NGHSoDBak/com.miHoYo.overridenativeactivity.OverrideNativeActivity"
+            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.miHoYo.enterprise.NGHSoDBak/com.miHoYo.overridenativeactivity.OverrideNativeActivity"
             LOG_INFO $cmd
             $cmd
             sleep 2
@@ -1111,8 +1230,8 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            $DOCKERCMD exec -itd android_$container_id logcat -c
-            local count=`timeout 0.5 $DOCKERCMD exec android_$container_id logcat | grep -E "Capture latency" | wc -l`
+            $RUNTIME_CMD exec -i android_$container_id logcat -c
+            local count=`timeout 0.5 $RUNTIME_CMD exec android_$container_id logcat | grep -E "Capture latency" | wc -l`
             LOG_INFO "android_$container_id $count"
         done
     elif [ $1 = "check_res" ]; then
@@ -1122,7 +1241,11 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            $DOCKERCMD inspect --format='{{.Name}} CPU[{{.HostConfig.CpusetCpus}}] NUMA[{{.HostConfig.CpusetMems}}] Devices[ {{range .HostConfig.Devices}}{{.PathOnHost}} {{end}}]' android_$container_id
+            if [ $DEFAULT_RUNTIME == "docker" ]; then
+                $RUNTIME_CMD inspect --format='{{.Name}} CPU[{{.HostConfig.CpusetCpus}}] NUMA[{{.HostConfig.CpusetMems}}] Devices[ {{range .HostConfig.Devices}}{{.PathOnHost}} {{end}}]' android_$container_id
+            else
+                $RUNTIME_CMD inspect --mode=native --format='{{.Spec.hostname}} CPU[{{.Spec.linux.resources.cpu.cpus}}] NUMA[{{.Spec.linux.resources.cpu.mems}}] Devices[{{range .Spec.linux.devices}} {{.path}}{{end}}]' android_$container_id
+            fi
         done
     elif [ $1 = "screencap" ]; then
         local MIN=$2 MAX=$3
@@ -1135,17 +1258,43 @@ main() {
         fi
         local container_id
         for container_id in $(seq $MIN $MAX); do
-            cmd="$DOCKERCMD exec -itd android_$container_id screencap -p /data/android_${container_id}.png"
+            cmd="$RUNTIME_CMD exec -i android_$container_id screencap -p /data/android_${container_id}.png"
             LOG_INFO $cmd
             $cmd
             sleep 1
-            cmd="$DOCKERCMD cp android_${container_id}:/data/android_${container_id}.png ${screencap_dir}"
+            cmd="$RUNTIME_CMD cp android_${container_id}:/data/android_${container_id}.png ${screencap_dir}"
             LOG_INFO $cmd
             $cmd
 	        sleep 1
-            cmd="$DOCKERCMD exec -itd android_$container_id rm /android_${container_id}.png"
+            cmd="$RUNTIME_CMD exec -i android_$container_id rm /data/android_${container_id}.png"
             LOG_INFO $cmd
             $cmd
+        done
+    elif [ $1 = "qscreencap" ]; then
+        local MIN=$2 MAX=$3 COUNT=$4
+        if [ -z $3 ]; then
+            MAX=$2
+        fi
+        local container_id
+        local start_id=$MIN
+        local end_id=$((start_id + $COUNT - 1))
+        if [ $end_id -gt $MAX ]; then
+            end_id=$MAX
+        fi
+        while [ $start_id -le $MAX ];
+        do
+            for container_id in $(seq $start_id $end_id); do
+                cmd="$THISDIR/cfct_video screencap $container_id"
+                LOG_INFO $cmd
+                $cmd >/dev/null 2>&1 &
+                pids+=($!)
+            done
+            wait ${pids[@]}
+            start_id=$(($end_id + 1))
+            end_id=$(($start_id + $COUNT - 1))
+            if [ $end_id -gt $MAX ]; then
+                end_id=$MAX
+            fi
         done
     fi
 }

@@ -57,9 +57,9 @@ void PacketHandle::Handle(const std::pair<uint8_t*, size_t> &packet)
         return;
     }
     std::pair<uint8_t*, uint32_t> pairData = {reassemblePacket, dataLen};
-    uint32_t ret = m_hook(pairData);
+    int ret = m_hook(pairData);
     if (ret != 0) {
-        ERR("Failed to handle, call hook error, errno:%u", ret);
+        ERR("Failed to handle, call hook error, errno:%u, type:%u", ret, m_type);
     }
 }
 

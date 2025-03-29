@@ -1,0 +1,215 @@
+apiVersion: v1    #版本号
+kind: Pod   #Pod
+metadata:    # 元数据
+  name: ${POD_NAME}   # pod名称
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/${POD_NAME}: unconfined  #配置apparmor,kbox-demo为pod名称
+spec:      #pod中容器定义
+    containers:
+    - name: ${POD_NAME}    #视频流容器名称
+      image: docker.io/library/video:version #视频流容器镜像
+      command: [ "/bin/sh", "-c", "sh k8s-init.sh" ]
+      imagePullPolicy: IfNotPresent   #获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        capabilities:  #容器安全策略，权限配置 以下为视频流容器所需权限配置
+          drop:  #删除权限
+          - ALL
+          add:   #添加权限
+          - SETPCAP
+          - AUDIT_WRITE
+          - SYS_CHROOT
+          - CHOWN
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+          - SYSLOG
+          - SYS_ADMIN
+          - WAKE_ALARM
+          - SYS_PTRACE
+          - BLOCK_SUSPEND
+          - MKNOD
+          - KILL
+          - NET_RAW
+          - NET_BIND_SERVICE
+          - NET_ADMIN
+          - SYS_NICE
+          - AUDIT_CONTROL
+          - DAC_READ_SEARCH
+          - IPC_LOCK
+          - SYS_MODULE
+          - SYS_RESOURCE
+      ports: #添加pod端口映射
+      - containerPort: 5555 #容器需要映射出来的端口，此处kbox容器为固定5555端口
+        hostPort: ${HOSTPORT2} #宿主机端口，配置后通过 宿主机ip:端口即可访问容器。
+      - containerPort: 8888
+        hostPort: ${HOSTPORT}
+      env:  # 环境变量配置，以下为kbox所需环境变量
+      - name: PATH
+        value: /system/bin:/system/xbin
+      resources:
+        limits: #资源限制的设置
+          cpu: 2  #Cpu的限制，单位为core数
+          memory: 4096M #内存限制
+          github.com/ashmem: 1 # kbox device 设备插件
+          github.com/fuse: 1
+          github.com/uinput: 1
+          github.com/exagear: 1
+          vatech.com/vg: 1
+        requests: #资源请求的设置
+          cpu: 2 #Cpu请求，容器启动的初始可用数量
+          memory: 4096M #内存请求，容器启动的初始可用数量
+          github.com/ashmem: 1  # kbox device 设备插件
+          github.com/fuse: 1
+          github.com/uinput: 1
+          github.com/exagear: 1
+          vatech.com/vg: 1
+      volumeMounts: #挂载到容器内部的存储卷配置，以下为kbox容器配置
+      - mountPath: /sys/devices/system/cpu/modalias #引用pod定义的共享存储卷的名称，需用volumes[]部分定义的的卷名
+        name: modalias #存储卷在容器内mount的绝对路径，应少于512字符
+      - mountPath: /sys/devices/system/cpu/hotplug
+        name: hotplug
+      - mountPath: /sys/devices/system/cpu/offline
+        name: offline
+      - mountPath: /sys/devices/system/cpu/isolated
+        name: isolated
+      - mountPath: /sys/devices/system/cpu/cpufreq
+        name: cpufreq
+      - mountPath: /sys/devices/system/cpu/online
+        name: online
+      - mountPath: /sys/devices/system/cpu/uevent
+        name: uevent
+      - mountPath: /sys/devices/system/cpu/power
+        name: power
+      - mountPath: /sys/devices/system/cpu/cpuidle
+        name: cpuidle
+      - mountPath: /cache
+        name: cache
+      - mountPath: /data
+        name: data
+      - mountPath: /dev/input/event0
+        name: eventzero
+      - mountPath: /dev/input/event1
+        name: eventone
+      - mountPath: /proc/cpuinfo
+        name: cpuinfo
+      - mountPath: /proc/diskstats
+        name: diskstats
+      - mountPath: /proc/meminfo
+        name: meminfo
+      - mountPath: /proc/stat
+        name: stat
+      - mountPath: /proc/swaps
+        name: swaps
+      - mountPath: /proc/uptime
+        name: uptime
+      - mountPath: /sys/devices/system/cpu
+        name: cpusys
+      - mountPath: /sys/devices/system/cpu/cpu0
+        name: cpu0
+      - mountPath: /sys/devices/system/cpu/cpu1
+        name: cpu1
+      - mountPath: /sys/devices/system/cpu/cpu2
+        name: cpu2
+      - mountPath: /sys/devices/system/cpu/cpu3
+        name: cpu3
+      - mountPath: /sys/devices/system/cpu/cpu4
+        name: cpu4
+      - mountPath: /sys/devices/system/cpu/cpu5
+        name: cpu5
+      - mountPath: /sys/devices/system/cpu/cpu6
+        name: cpu6
+      - mountPath: /sys/devices/system/cpu/cpu7
+        name: cpu7
+      - mountPath: /storage_size
+        name: storagesize
+    volumes: #在该pod上定义共享存储卷列表，以下为kbox容器配置
+    - name: uevent #共享存储卷名称
+      hostPath:  #类型为hostPath的存储卷，表示挂载Pod所在宿主机的目录
+        path: /sys/devices/system/cpu/uevent #Pod所在宿主机的目录，将被用于同期中mount的目录
+    - name: cpufreq
+      hostPath:
+        path: /sys/devices/system/cpu/cpufreq
+    - name: isolated
+      hostPath:
+        path: /sys/devices/system/cpu/isolated
+    - name: offline
+      hostPath:
+        path: /sys/devices/system/cpu/offline
+    - name: hotplug
+      hostPath:
+        path: /sys/devices/system/cpu/hotplug
+    - name: online
+      hostPath:
+        path: /sys/devices/system/cpu/online
+    - name: power
+      hostPath:
+        path: /sys/devices/system/cpu/power
+    - name: modalias
+      hostPath:
+        path: /sys/devices/system/cpu/modalias
+    - name: cpuidle
+      hostPath:
+        path: /sys/devices/system/cpu/cpuidle
+    - name: cache
+      hostPath:
+        path: /home/mount/data/${POD_NAME}/cache
+    - name: data
+      hostPath:
+        path: /home/mount/data/${POD_NAME}/data
+    - name: eventzero
+      hostPath:
+        path: /var/run/${POD_NAME}/input/event0
+    - name: eventone
+      hostPath:
+        path: /var/run/${POD_NAME}/input/event1
+    - name: cpuinfo
+      hostPath:
+        path: /var/lib/lxc/lxcfs/proc/cpuinfo
+    - name: diskstats
+      hostPath:
+        path: /var/lib/lxc/lxcfs/proc/diskstats
+    - name: meminfo
+      hostPath:
+        path: /var/lib/lxc/lxcfs/proc/meminfo
+    - name: stat
+      hostPath:
+        path: /var/lib/lxc/lxcfs/proc/stat
+    - name: swaps
+      hostPath:
+        path: /var/lib/lxc/lxcfs/proc/swaps
+    - name: uptime
+      hostPath:
+        path: /var/lib/lxc/lxcfs/proc/uptime
+    - name: cpusys
+      hostPath:
+        path: /var/run/docker/cpus/${POD_NAME}
+    - name: cpu0
+      hostPath:
+        path: /sys/devices/system/cpu/cpu0
+    - name: cpu1
+      hostPath:
+        path: /sys/devices/system/cpu/cpu1
+    - name: cpu2
+      hostPath:
+        path: /sys/devices/system/cpu/cpu2
+    - name: cpu3
+      hostPath:
+        path: /sys/devices/system/cpu/cpu3
+    - name: cpu4
+      hostPath:
+        path: /sys/devices/system/cpu/cpu4
+    - name: cpu5
+      hostPath:
+        path: /sys/devices/system/cpu/cpu5
+    - name: cpu6
+      hostPath:
+        path: /sys/devices/system/cpu/cpu6
+    - name: cpu7
+      hostPath:
+        path: /sys/devices/system/cpu/cpu7
+    - name: storagesize
+      hostPath:
+        path: /home/mount/data/${POD_NAME}/storage_size

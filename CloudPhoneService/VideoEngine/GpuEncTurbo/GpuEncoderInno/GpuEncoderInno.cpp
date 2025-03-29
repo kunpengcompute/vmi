@@ -543,14 +543,14 @@ void GpuEncoderInno::ConvertThreadFunc()
 bool GpuEncoderInno::DoConvert(GpuEncoderBufferInnoT inBuffer, GpuEncoderBufferInnoT outBuffer)
 {
     std::unique_lock<std::mutex> lk(m_convertLock);
-    m_inFrame = { 0, 0, static_cast<int>(inBuffer->size.width),
+    m_inFrame = { 0, 0, 0, 0, static_cast<int>(inBuffer->size.width),
                           static_cast<int>(inBuffer->size.height),
                           static_cast<int>(inBuffer->size.widthAligned),
-                          0, FORMAT_ARGB8888, static_cast<uint64_t>(inBuffer->fd) };
-    m_outFrame = { 0, 0, static_cast<int>(outBuffer->size.width),
+                          FORMAT_ARGB8888, static_cast<int>(inBuffer->fd), nullptr};
+    m_outFrame = { 0, 0, 0, 0, static_cast<int>(outBuffer->size.width),
                            static_cast<int>(outBuffer->size.height),
                            static_cast<int>(outBuffer->size.widthAligned),
-                           0, FORMAT_NV12, static_cast<uint64_t>(outBuffer->fd) };
+                           FORMAT_NV12, static_cast<int>(outBuffer->fd), nullptr};
     m_hasNewFrame = true;
     m_convertTask = std::packaged_task<bool()>([this] {
         int ret = m_innoYuvLib.convert(m_convertHandle, &m_inFrame, &m_outFrame);

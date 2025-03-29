@@ -15,6 +15,7 @@ enum class NetworkType {
     VIDEO_SERVER,
     INSTRUCTION_SERVER,
     ELASTIC_GPU,
+    INVALID,
 };
 
 using NetworkChangeCallback = void(*)(bool isOnline, std::shared_ptr<Vmi::INetworkComm> netcomm);

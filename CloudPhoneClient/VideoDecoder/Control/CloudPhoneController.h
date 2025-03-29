@@ -23,7 +23,7 @@ enum class CloudPhoneState : uint32_t {
 class CloudPhoneController {
 public:
     static CloudPhoneController &GetInstance();
-    int Start(uint64_t surface);
+    int Start(uint64_t surface, std::string &ipAndPort);
     void Stop();
     uint32_t GetRecvFrameRate() const;
     uint32_t GetDecodeFrameRate();
@@ -51,6 +51,7 @@ private:
     bool ProcessVideoInfo265(std::pair<uint8_t *, uint32_t> &packetPair, uint8_t rotation);
 
     bool HandleDecoderType(const std::pair<uint8_t *, uint32_t>& packetPair);
+    void WriteDataToFile(uint8_t *data, uint32_t size, DecoderType type);
     DecoderType ParseDecTypeFromFirstFrame(const std::pair<uint8_t *, uint32_t>& packetPair);
 
     /*
@@ -74,8 +75,9 @@ private:
     bool m_isFirstFrame = true;
 
     uint64_t m_surface {0};
-    uint8_t m_orientation {0};
+    uint8_t m_orientation {4};
     bool m_isSimulator {false};
+    std::string m_port = "";
 
     // 统计项
     VideoUtil m_videoUtil {};

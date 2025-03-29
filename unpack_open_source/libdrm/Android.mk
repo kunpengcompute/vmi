@@ -1,10 +1,5 @@
 LIBDRM_ANDROID_COMMON_MK := $(call my-dir)/Android.common.mk
 LOCAL_PATH_MOCK := $(call my-dir)
-ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
-    INCLUDE_LD_DIR := $(LOCAL_PATH_MOCK)/libs/arm64-v8a
-else ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
-    INCLUDE_LD_DIR := $(LOCAL_PATH_MOCK)/libs/armeabi-v7a
-endif
 
 # for libInsDrm.so
 include $(CLEAR_VARS)
@@ -37,8 +32,7 @@ include $(CLEAR_VARS)
 LOCAL_PATH := $(LOCAL_PATH_MOCK)/codes/amdgpu
 LOCAL_MODULE := libInsDrm_amdgpu
 
-LOCAL_LDFLAGS += -L $(INCLUDE_LD_DIR)
-LOCAL_LDLIBS := -lInsDrm
+LOCAL_SHARED_LIBRARIES := libInsDrm
 LOCAL_VENDOR_MODULE := true
 
 LOCAL_SRC_FILES := \
@@ -69,8 +63,7 @@ include $(CLEAR_VARS)
 LOCAL_PATH := $(LOCAL_PATH_MOCK)/codes/radeon
 LOCAL_MODULE := libInsDrm_radeon
 
-LOCAL_LDFLAGS += -L $(INCLUDE_LD_DIR)
-LOCAL_LDLIBS := -lInsDrm
+LOCAL_SHARED_LIBRARIES := libInsDrm
 LOCAL_VENDOR_MODULE := true
 
 LOCAL_SRC_FILES := \
@@ -118,8 +111,7 @@ include $(CLEAR_VARS)
 LOCAL_PATH := $(LOCAL_PATH_MOCK)/codes/amdgpu
 LOCAL_MODULE := libvmidrm_amdgpu
 
-LOCAL_LDFLAGS += -L $(INCLUDE_LD_DIR)
-LOCAL_LDLIBS := -lvmidrm
+LOCAL_SHARED_LIBRARIES := libvmidrm
 
 LOCAL_SRC_FILES := \
     amdgpu_asic_id.c \
@@ -149,8 +141,7 @@ include $(CLEAR_VARS)
 LOCAL_PATH := $(LOCAL_PATH_MOCK)/codes/radeon
 LOCAL_MODULE := libvmidrm_radeon
 
-LOCAL_LDFLAGS += -L $(INCLUDE_LD_DIR)
-LOCAL_LDLIBS := -lvmidrm
+LOCAL_SHARED_LIBRARIES := libvmidrm
 
 LOCAL_SRC_FILES := \
     radeon_bo_gem.c \

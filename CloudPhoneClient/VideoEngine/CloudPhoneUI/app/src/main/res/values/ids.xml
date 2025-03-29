@@ -7,6 +7,5 @@
     <item name="iv_back" type="id" />
     <item name="iv_home" type="id" />
     <item name="iv_switch" type="id" />
-
-
+    <item name="iv_test" type="id" />
 </resources>

@@ -31,7 +31,7 @@ union CmdHelp {
 class VmiAgent {
 public:
     VmiAgent() = default;
-    ~VmiAgent();
+    ~VmiAgent() = default;
     bool Initialize();
 };
 }

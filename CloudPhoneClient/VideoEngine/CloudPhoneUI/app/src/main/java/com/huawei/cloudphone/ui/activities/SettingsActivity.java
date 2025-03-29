@@ -5,10 +5,6 @@
 package com.huawei.cloudphone.ui.activities;
 
 import android.content.DialogInterface;
-
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +13,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
+
+import com.huawei.cloudphone.BuildConfig;
 import com.huawei.cloudphone.MyApplication;
 import com.huawei.cloudphone.R;
 import com.huawei.cloudphone.dialog.AudioPlayParamsDialog;
@@ -30,6 +31,7 @@ import com.huawei.cloudphone.util.SPUtil;
 import com.huawei.cloudphone.util.ToastUtil;
 import com.huawei.cloudphone.util.ViewUtil;
 import com.huawei.cloudphone.widget.TopBar;
+import com.huawei.cloudphonesdk.maincontrol.Constant;
 import com.huawei.cloudphonesdk.utils.LogUtil;
 
 /**
@@ -39,7 +41,7 @@ import com.huawei.cloudphonesdk.utils.LogUtil;
  * @since 2019-09-24
  */
 public class SettingsActivity extends BaseActivity implements View.OnClickListener,
-    CompoundButton.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener {
     private static final String TAG = SettingsActivity.class.getSimpleName();
     private static final int FLAG_VIDEO_ENCODER_TYPE = 0;
     private static final int FLAG_VIDEO_FRAME_TYPE = 1;
@@ -51,6 +53,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     private static final int OPUS_BITRATE_DEFAULT = 192000;
     private static final int MIC_SAMPLE_INTERVAL_DEFAULT = 10;
 
+    private ScrollView scrollView;
     // 导航栏
     private TopBar mTopBar;
 
@@ -82,8 +85,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     // 服务端编码模式数据
     private String[] mEncoderTypeArray;
 
-    // 服务端编码模式弹框选择位置
-    private int mEncodeModeIndex;
     private EncodeDialog encodeDialog;
     private AudioPlayParamsDialog audioPlayParamsDialog;
     private FrameSizeParamsDialog frameSizeParamsDialog;
@@ -98,15 +99,18 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     private CheckBox mStartLogCheckBox;
     private TextView mEncoderTypeTextView;
     private TextView mVideoFrameTypeTextView;
-    private String[] mVideoFrameType;
-    private String[] mFrameRateType;
-    private TextView mFrameRateTypeTextView;
+    private String[] mVideoFrameTypeArray;
     private String[] mAudioStreamType;
     private TextView mAudioPlayParamsTextView;
     private TextView mAudioStreamTypeTextView;
     private TextView mMicStreamTypeTextView;
     private EditText opusBitRate;
     private EditText micSampleInterval;
+    private EditText density;
+    private TextView appVersion;
+    private int densityOrigin;
+    private int opusBitrateOrigin;
+    private int micSampleIntervalOrigin;
 
     @Override
     protected int getLayoutRes() {
@@ -115,37 +119,51 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView() {
+        scrollView = findViewById(R.id.scroll_view);
         mTopBar = findViewById(R.id.tb_header);
         mEncodeModeLinearLayout = findViewById(R.id.ll_encoder_type);
         mEncodeParamLinearLayout = findViewById(R.id.ll_encode_parameter);
         mEncodeParamTextView = findViewById(R.id.tv_parameter);
         mEncoderTypeTextView = findViewById(R.id.tv_encoder_type);
         mVideoFrameTypeTextView = findViewById(R.id.tv_video_frame_type);
-        mFrameRateTypeTextView = findViewById(R.id.tv_video_frame_rate);
         mAudioPlayParamsTextView = findViewById(R.id.tv_audio_play_params);
         mAudioStreamTypeTextView = findViewById(R.id.tv_audio_stream_type);
         mMicStreamTypeTextView = findViewById(R.id.tv_mic_input_type);
         opusBitRate = findViewById(R.id.tv_opus_bitrate);
+        density = findViewById(R.id.et_density);
         micSampleInterval = findViewById(R.id.tv_mic_sample_interval);
-
+        appVersion = findViewById(R.id.app_version);
+        int densityValue = SPUtil.getInt(SPUtil.VIDEO_DENSITY, 320);
+        density.setText(String.valueOf(densityValue));
+        densityOrigin = densityValue;
         mMicStreamTypeTextView.setText(SPUtil.getInt(SPUtil.MIC_STREAM_TYPE, 0) == 0 ? "OPUS" : "PCM");
         CheckBox forceLandScapeCheckBox = findViewById(R.id.cb_force_Landscape);
         CheckBox renderOptimizeCheckBox = findViewById(R.id.cb_render_optimize);
+        CheckBox adaptiveResolutionCheckBox = findViewById(R.id.cb_adaptive_resolution);
         forceLandScapeCheckBox.setOnCheckedChangeListener(this);
         renderOptimizeCheckBox.setOnCheckedChangeListener(this);
+        adaptiveResolutionCheckBox.setOnCheckedChangeListener(this);
         forceLandScapeCheckBox.setChecked(SPUtil.getBoolean(SPUtil.VIDEO_FORCE_LANDSCAPE, false));
         renderOptimizeCheckBox.setChecked(SPUtil.getBoolean(SPUtil.VIDEO_RENDER_OPTIMIZE, false));
-        int opusBitRateValue = SPUtil.getInt(SPUtil.BITRATE, 192000);
+        adaptiveResolutionCheckBox.setChecked(SPUtil.getBoolean(SPUtil.VIDEO_ADAPTIVE_RESOLUTION, Constant.VMI_ADAPTIVE_RESOLUTION));
+        appVersion.setText(BuildConfig.VERSION_NAME);
+
+        int opusBitRateValue = SPUtil.getInt(SPUtil.MIC_BITRATE, 192000);
         opusBitRate.setText(String.valueOf(opusBitRateValue));
+        opusBitrateOrigin = opusBitRateValue;
         int micSampleIntervalValue = SPUtil.getInt(SPUtil.MIC_SAMPLE_INTERVAL, 10);
+        micSampleIntervalOrigin = micSampleIntervalValue;
         micSampleInterval.setText(String.valueOf(micSampleIntervalValue));
 
-        mVideoFrameType = getResources().getStringArray(R.array.array_video_frame_type);
+        mVideoFrameTypeArray = getResources().getStringArray(R.array.array_video_frame_type);
         mEncoderTypeArray = getResources().getStringArray(R.array.array_video_encoder_type);
-        mFrameRateType = getResources().getStringArray(R.array.array_frame_rate);
         mAudioStreamType = getResources().getStringArray(R.array.array_audio_stream_type);
 
-        mEncodeModeIndex = SPUtil.getInt(SPUtil.KEY_ENCODE_MODE, 0);
+        mEncoderTypeIndex = SPUtil.getInt(SPUtil.VIDEO_ENCODER_TYPE, 1);
+        mVideoFrameTypeIndex = SPUtil.getInt(SPUtil.VIDEO_FRAME_TYPE, 0);
+
+        mEncoderTypeTextView.setText(mEncoderTypeArray[mEncoderTypeIndex]);
+        mVideoFrameTypeTextView.setText(mVideoFrameTypeArray[mVideoFrameTypeIndex]);
     }
 
     @Override
@@ -154,46 +172,53 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         mTopBar.setOnTopBarClickListener(new TopBar.OnTopBarClickListener() {
             @Override
             public void onBackClicked(View view) {
-                finish();
+                onBackPressed();
             }
 
             @Override
             public void onMenuClicked(View view) {
-                saveSettings();
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                builder.setTitle("是否保存所有修改？");
+                builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveSettings();
+                    }
+                });
+                builder.create().show();
             }
         });
     }
 
     private void saveSettings() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("是否保存所有修改？");
-        builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int opusBitRateValue = Integer.parseInt(opusBitRate.getText().toString());
-                if (opusBitRateValue > OPUS_BITRATE_MIN && opusBitRateValue < OPUS_BITRATE_MAX) {
-                    SPUtil.putInt(SPUtil.BITRATE, opusBitRateValue);
-                    Log.i(TAG, "onClick: 麦克风opus编码参数:" + opusBitRateValue);
-                } else {
-                    SPUtil.putInt(SPUtil.BITRATE, OPUS_BITRATE_DEFAULT);
-                    Toast.makeText(SettingsActivity.this, "麦克风opus编码参数不支持，请重新输入", Toast.LENGTH_LONG).show();
-                    Log.i(TAG, "onClick: 麦克风opus编码参数不支持,已使用默认值192000");
-                    opusBitRate.setText(String.valueOf(OPUS_BITRATE_DEFAULT));
-                }
-                SPUtil.putInt(SPUtil.BITRATE, opusBitRateValue);
-                int micSampleIntervalValue = Integer.parseInt(micSampleInterval.getText().toString());
-                if (micSampleIntervalValue != 5 && micSampleIntervalValue != 10 && micSampleIntervalValue != 20) {
-                    Toast.makeText(SettingsActivity.this, "麦克风采样间隔不支持，请重新输入", Toast.LENGTH_LONG).show();
-                    SPUtil.putInt(SPUtil.MIC_SAMPLE_INTERVAL, MIC_SAMPLE_INTERVAL_DEFAULT);
-                    micSampleInterval.setText(String.valueOf(MIC_SAMPLE_INTERVAL_DEFAULT));
-                    Log.i(TAG, "onClick: 麦克风采样间隔不支持,已使用默认值10");
-                } else {
-                    SPUtil.putInt(SPUtil.MIC_SAMPLE_INTERVAL, micSampleIntervalValue);
-                    Log.i(TAG, "onClick: 麦克风采样间隔:" + micSampleIntervalValue);
-                }
+        try{
+            int densityValue = Integer.parseInt(density.getText().toString());
+            int micSampleIntervalValue = Integer.parseInt(micSampleInterval.getText().toString());
+            int opusBitRateValue = Integer.parseInt(opusBitRate.getText().toString());
+            SPUtil.putInt(SPUtil.VIDEO_DENSITY, densityValue);
+            if (opusBitRateValue > OPUS_BITRATE_MIN && opusBitRateValue < OPUS_BITRATE_MAX) {
+                SPUtil.putInt(SPUtil.MIC_BITRATE, opusBitRateValue);
+                Log.i(TAG, "onClick: 麦克风opus编码参数:" + opusBitRateValue);
+            } else {
+                SPUtil.putInt(SPUtil.MIC_BITRATE, OPUS_BITRATE_DEFAULT);
+                Toast.makeText(SettingsActivity.this, "麦克风opus编码参数不支持，请重新输入", Toast.LENGTH_LONG).show();
+                Log.i(TAG, "onClick: 麦克风opus编码参数不支持,已使用默认值192000");
+                opusBitRate.setText(String.valueOf(OPUS_BITRATE_DEFAULT));
             }
-        });
-        builder.create().show();
+            SPUtil.putInt(SPUtil.MIC_BITRATE, opusBitRateValue);
+            if (micSampleIntervalValue != 5 && micSampleIntervalValue != 10 && micSampleIntervalValue != 20) {
+                Toast.makeText(SettingsActivity.this, "麦克风采样间隔不支持，请重新输入", Toast.LENGTH_LONG).show();
+                SPUtil.putInt(SPUtil.MIC_SAMPLE_INTERVAL, MIC_SAMPLE_INTERVAL_DEFAULT);
+                micSampleInterval.setText(String.valueOf(MIC_SAMPLE_INTERVAL_DEFAULT));
+                Log.i(TAG, "onClick: 麦克风采样间隔不支持,已使用默认值10");
+            } else {
+                SPUtil.putInt(SPUtil.MIC_SAMPLE_INTERVAL, micSampleIntervalValue);
+                Log.i(TAG, "onClick: 麦克风采样间隔:" + micSampleIntervalValue);
+            }
+        }catch (Throwable throwable){
+            LogUtil.error(TAG,throwable.toString());
+            Toast.makeText(SettingsActivity.this, R.string.input_params_illegal, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -203,6 +228,8 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             SPUtil.putBoolean(SPUtil.VIDEO_FORCE_LANDSCAPE, checked);
         } else if (id == R.id.cb_render_optimize) {
             SPUtil.putBoolean(SPUtil.VIDEO_RENDER_OPTIMIZE, checked);
+        } else if (id == R.id.cb_adaptive_resolution) {
+            SPUtil.putBoolean(SPUtil.VIDEO_ADAPTIVE_RESOLUTION, checked);
         } else {
             LogUtil.info(TAG, "onCheckedChanged: ignored");
         }
@@ -216,17 +243,12 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.ll_encoder_type: { // 解码方式
                 showChooseDialog(FLAG_VIDEO_ENCODER_TYPE, R.string.encoder_type, mEncoderTypeArray,
-                    mEncoderTypeIndex, mEncoderTypeTextView);
+                        mEncoderTypeIndex, mEncoderTypeTextView);
                 break;
             }
             case R.id.ll_video_frame_type: {
-                showChooseDialog(FLAG_VIDEO_FRAME_TYPE, R.string.video_frame_type, mVideoFrameType,
-                    mVideoFrameTypeIndex, mVideoFrameTypeTextView);
-                break;
-            }
-            case R.id.ll_video_frame_rate: {
-                showChooseDialog(FLAG_VIDEO_FRAME_RATE, R.string.frame_rate, mFrameRateType,
-                    mFrameRateTypeIndex, mFrameRateTypeTextView);
+                showChooseDialog(FLAG_VIDEO_FRAME_TYPE, R.string.video_frame_type, mVideoFrameTypeArray,
+                        mVideoFrameTypeIndex, mVideoFrameTypeTextView);
                 break;
             }
             case R.id.ll_encode_parameter: {
@@ -239,12 +261,12 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             }
             case R.id.ll_audio_stream_type: {
                 showChooseDialog(FLAG_AUDIO_STREAM_TYPE, R.string.audio_stream_type, mAudioStreamType,
-                    mFrameRateTypeIndex, mAudioStreamTypeTextView);
+                        mFrameRateTypeIndex, mAudioStreamTypeTextView);
                 break;
             }
             case R.id.ll_mic_input_type: {
                 showChooseDialog(FLAG_MIC_STREAM_TYPE, R.string.mic_stream_type, mAudioStreamType,
-                    mFrameRateTypeIndex, mMicStreamTypeTextView);
+                        mFrameRateTypeIndex, mMicStreamTypeTextView);
                 break;
             }
             case R.id.ll_audio_play_params: {
@@ -272,25 +294,25 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     private void showChooseDialog(final int flag, @StringRes final int titleRes, final String[] data,
                                   final int selectedIndex, final TextView textView) {
         AlertDialog alertDialog = new AlertDialog.Builder(mActivity)
-            .setTitle(titleRes)
-            .setSingleChoiceItems(data, selectedIndex, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int position) {
-                    if (flag == FLAG_VIDEO_ENCODER_TYPE) {
-                        SPUtil.putInt(SPUtil.VIDEO_ENCODER_TYPE, position);
-                    } else if (flag == FLAG_VIDEO_FRAME_TYPE) {
-                        SPUtil.putInt(SPUtil.VIDEO_FRAME_TYPE, position);
-                    } else if (flag == FLAG_VIDEO_FRAME_RATE) {
-                        SPUtil.putInt(SPUtil.VIDEO_FRAME_RATE, position == 0 ? 30 : 60);
-                    } else if (flag == FLAG_AUDIO_STREAM_TYPE) {
-                        SPUtil.putInt(SPUtil.AUDIO_PLAY_STREAM_TYPE, position);
-                    } else if (flag == FLAG_MIC_STREAM_TYPE) {
-                        SPUtil.putInt(SPUtil.MIC_STREAM_TYPE, position);
+                .setTitle(titleRes)
+                .setSingleChoiceItems(data, selectedIndex, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        if (flag == FLAG_VIDEO_ENCODER_TYPE) {
+                            SPUtil.putInt(SPUtil.VIDEO_ENCODER_TYPE, position);
+                            mEncoderTypeIndex = position;
+                        } else if (flag == FLAG_VIDEO_FRAME_TYPE) {
+                            SPUtil.putInt(SPUtil.VIDEO_FRAME_TYPE, position);
+                            mVideoFrameTypeIndex = position;
+                        } else if (flag == FLAG_AUDIO_STREAM_TYPE) {
+                            SPUtil.putInt(SPUtil.AUDIO_PLAY_STREAM_TYPE, position);
+                        } else if (flag == FLAG_MIC_STREAM_TYPE) {
+                            SPUtil.putInt(SPUtil.MIC_STREAM_TYPE, position);
+                        }
+                        ViewUtil.setText(textView, data[position]);
+                        dialog.dismiss();
                     }
-                    ViewUtil.setText(textView, data[position]);
-                    dialog.dismiss();
-                }
-            }).create();
+                }).create();
         alertDialog.show();
     }
 
@@ -322,7 +344,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     private void showFrameSizeInputDialog() {
         if (frameSizeParamsDialog == null) {
             frameSizeParamsDialog = new FrameSizeParamsDialog(mActivity);
-            frameSizeParamsDialog.setTitle("分辨率");
+            frameSizeParamsDialog.setTitle("抓图渲染分辨率");
             frameSizeParamsDialog.setNegativeButton(new View.OnClickListener() {
                 @Override
                 public void onClick(View mView) {
@@ -333,6 +355,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 @Override
                 public void onClick(View mView) {
                     sendFrameSizeParam();
+                    frameSizeParamsDialog.dismiss();
                 }
             });
         }
@@ -350,60 +373,52 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         String frameSizeWidth = frameSizeParamsDialog.getFrameSizeWidth();
         if (!TextUtils.isEmpty(frameSizeWidth)) {
             int value = Integer.parseInt(frameSizeWidth);
-            if (value != 720 && value != 1080) {
-                ToastUtil.showToast("宽度只能输入720或1080");
-                return false;
-            }
             SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH, value);
+            return true;
         } else {
+            ToastUtil.showToast(R.string.width_null_warning);
             SPUtil.removeKey(SPUtil.VIDEO_FRAME_SIZE_WIDTH);
+            return false;
         }
-        return true;
     }
 
     private boolean saveFrameSizeHeight() {
         String frameSizeHeight = frameSizeParamsDialog.getFrameSizeHeight();
         if (!TextUtils.isEmpty(frameSizeHeight)) {
             int value = Integer.parseInt(frameSizeHeight);
-            if (value != 1280 && value != 1920) {
-                ToastUtil.showToast("宽度只能输入1280或1920");
-                return false;
-            }
             SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT, value);
+            return true;
         } else {
+            ToastUtil.showToast(R.string.height_null_warning);
             SPUtil.removeKey(SPUtil.VIDEO_FRAME_SIZE_HEIGHT);
+            return false;
         }
-        return true;
     }
 
     private boolean saveFrameSizeWidthAligned() {
         String frameSizeWidthAligned = frameSizeParamsDialog.getFrameSizeWidthAligned();
         if (!TextUtils.isEmpty(frameSizeWidthAligned)) {
             int value = Integer.parseInt(frameSizeWidthAligned);
-            if (value != 720 && value != 1080) {
-                ToastUtil.showToast("宽度只能输入720或1080");
-                return false;
-            }
             SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH_ALIGNED, value);
+            return true;
         } else {
+            ToastUtil.showToast(R.string.width_null_warning);
             SPUtil.removeKey(SPUtil.VIDEO_FRAME_SIZE_WIDTH_ALIGNED);
+            return false;
         }
-        return true;
     }
 
     private boolean saveFrameSizeHeightAligned() {
         String frameSizeHeight = frameSizeParamsDialog.getFrameSizeHeightAligned();
         if (!TextUtils.isEmpty(frameSizeHeight)) {
             int value = Integer.parseInt(frameSizeHeight);
-            if (value != 1280 && value != 1920) {
-                ToastUtil.showToast("宽度只能输入1280或1920");
-                return false;
-            }
             SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT_ALIGNED, value);
+            return true;
         } else {
+            ToastUtil.showToast(R.string.height_null_warning);
             SPUtil.removeKey(SPUtil.VIDEO_FRAME_SIZE_HEIGHT_ALIGNED);
+            return false;
         }
-        return true;
     }
 
     private void showAudioPlayInputDialog() {
@@ -483,12 +498,14 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         if (!saveBitrate()) {
             return;
         }
-        // 保存profile
-        if (!saveProfile()) {
-            return;
-        }
+
         // 保存gopSize
         if (!saveGopSize()) {
+            return;
+        }
+
+        // 保存profile
+        if (!saveProfile()) {
             return;
         }
 
@@ -496,13 +513,27 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
+        if (!saveForceKeyFrame()) {
+            return;
+        }
+
         if (!saveInterpolation()) {
             return;
         }
 
-        if (!saveForceKeyFrame()) {
+        if (!saveCrf()) {
             return;
         }
+
+        if (!saveMaxCrfRate()) {
+            return;
+        }
+
+        if (!saveVbvBufferSize()) {
+            return;
+        }
+        SPUtil.putInt(SPUtil.VIDEO_STREAM_WIDTH, encodeDialog.getStreamWidth());
+        SPUtil.putInt(SPUtil.VIDEO_STREAM_HEIGHT, encodeDialog.getStreamHeight());
         encodeDialog.cancel();
     }
 
@@ -554,9 +585,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 ToastUtil.showToast("rcModeValue只可以取0~3000,0表示不生效。");
                 return false;
             }
-            SPUtil.putInt(SPUtil.VIDEO_FORCE_KET_FRAME, keyFrameValue);
+            SPUtil.putInt(SPUtil.VIDEO_FORCE_KEY_FRAME, keyFrameValue);
         } else {
-            SPUtil.removeKey(SPUtil.VIDEO_FORCE_KET_FRAME);
+            SPUtil.removeKey(SPUtil.VIDEO_FORCE_KEY_FRAME);
         }
         return true;
     }
@@ -614,5 +645,74 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             SPUtil.removeKey(SPUtil.VIDEO_GOP_SIZE);
         }
         return true;
+    }
+
+    private boolean saveCrf() {
+        String crf = encodeDialog.getCrfEditText();
+        if (!TextUtils.isEmpty(crf)) {
+            int crfValue = Integer.parseInt(crf);
+            SPUtil.putInt(SPUtil.VIDEO_CRF, crfValue);
+        } else {
+            SPUtil.removeKey(SPUtil.VIDEO_CRF);
+        }
+        return true;
+    }
+
+    private boolean saveMaxCrfRate() {
+        String maxCrfRate = encodeDialog.getMaxCrfRateEditText();
+        if (!TextUtils.isEmpty(maxCrfRate)) {
+            int maxCrfRateValue = Integer.parseInt(maxCrfRate);
+            SPUtil.putInt(SPUtil.VIDEO_MAX_CRF_RATE, maxCrfRateValue);
+        } else {
+            SPUtil.removeKey(SPUtil.VIDEO_MAX_CRF_RATE);
+        }
+        return true;
+    }
+
+    private boolean saveVbvBufferSize() {
+        String vbvBufferSize = encodeDialog.getVbvBufferSizeEditText();
+        if (!TextUtils.isEmpty(vbvBufferSize)) {
+            int vbvBufferSizeValue = Integer.parseInt(vbvBufferSize);
+            SPUtil.putInt(SPUtil.VIDEO_VBV_BUFFER_SIZE, vbvBufferSizeValue);
+        } else {
+            SPUtil.removeKey(SPUtil.VIDEO_VBV_BUFFER_SIZE);
+        }
+        return true;
+    }
+
+    /**
+     * @return 检查是否修改了参数
+     */
+    private boolean checkModified() {
+        try {
+            int opusBitrateVal = Integer.parseInt(opusBitRate.getText().toString().trim());
+            int micSampleIntervalVal = Integer.parseInt(micSampleInterval.getText().toString().trim());
+            int densityVal = Integer.parseInt(density.getText().toString().trim());
+            return opusBitrateVal != opusBitrateOrigin || micSampleIntervalVal != micSampleIntervalOrigin || densityVal != densityOrigin;
+        } catch (Throwable throwable) {
+            LogUtil.error(TAG, getString(R.string.input_params_illegal));
+            AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+            builder.setPositiveButton("退出", (dialog, which) -> {
+                finish();
+            });
+            builder.create().show();
+        }
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (checkModified()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+            builder.setTitle("是否保存所有修改？");
+            builder.setPositiveButton("保存", (dialog, which) -> {
+                        saveSettings();
+                        finish();
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> finish());
+            builder.create().show();
+        } else {
+            finish();
+        }
     }
 }

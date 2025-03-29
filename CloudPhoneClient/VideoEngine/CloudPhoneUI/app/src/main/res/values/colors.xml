@@ -47,4 +47,6 @@
     <color name="color_green">#1CF606</color>
     <color name="red">#FF0000</color>
     <color name="yellow">#FFFF00</color>
+    <color name="vmi_divide_line">#DCDCDC</color>
+    <color name="background_gray">#F0F0F0</color>
 </resources>

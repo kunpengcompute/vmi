@@ -10,8 +10,7 @@
 #include <cerrno>
 #include <cstring>
 #include <atomic>
-#include "MediaLog.h"
-#include "Property.h"
+#include "logging.h"
 
 namespace {
     constexpr uint32_t COMPRESS_RATIO = 2;
@@ -38,9 +37,8 @@ namespace {
     void *g_libHandle = nullptr;
 }
 
-VideoEncoderOpenH264::VideoEncoderOpenH264(EncoderFormat codecFormat)
+VideoEncoderOpenH264::VideoEncoderOpenH264()
 {
-    m_codecFormat = codecFormat;
     INFO("VideoEncoderOpenH264 constructor");
 }
 
@@ -52,11 +50,7 @@ VideoEncoderOpenH264::~VideoEncoderOpenH264()
 
 EncoderRetCode VideoEncoderOpenH264::InitEncoder()
 {
-    if ((!GetRoEncParam()) || (!GetPersistEncParam())) {
-        ERR("init encoder failed: GetEncParam failed");
-        return VIDEO_ENCODER_INIT_FAIL;
-    }
-    m_encParams = m_tmpEncParams;
+    m_encParams = m_videoParams;
     if (!LoadOpenH264SharedLib()) {
         ERR("init encoder failed: load openh264 shared lib failed");
         return VIDEO_ENCODER_INIT_FAIL;

@@ -23,6 +23,9 @@ import java.io.OutputStreamWriter;
  */
 public class LogUtil {
     public static final String PATH = Environment.getExternalStorageDirectory() + "/log/";
+    public static final String FPS_PATH = Environment.getExternalStorageDirectory() + "/fps/";
+    public static final String FILE_NAME = "videoFreezeRate.txt";
+    public static final String SDCARD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 
     public static final String CLIENT_LOG = "client.log";
 
@@ -164,6 +167,23 @@ public class LogUtil {
         }
     }
 
+    private static void createFile(String dir, String filename) {
+        File logDir = new File(SDCARD_PATH + "/" + dir);
+        if (!logDir.exists()) {
+            boolean mkdirs = logDir.mkdirs();
+            LogUtil.debug(TAG, "创建日志文件夹：" + mkdirs);
+        }
+        File logFile = new File(SDCARD_PATH + "/" + dir + "/" + filename);
+        if (!logFile.exists()) {
+            try {
+                boolean newFile = logFile.createNewFile();
+                LogUtil.debug(TAG, "创建日志文件：" + newFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * stopLog
      */
@@ -184,7 +204,28 @@ public class LogUtil {
         info = info + System.getProperty("line.separator");
         try {
             bw = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(fileDirName + fileName, true)));
+                new FileOutputStream(fileDirName + fileName, true)));
+            bw.write(info);
+        } catch (Exception e) {
+            error(TAG, e.getMessage());
+        } finally {
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    error(TAG, e.getMessage());
+                }
+            }
+        }
+    }
+
+    public static void writeFpsData(String dir, String file, String str) {
+        createFile(dir, file);
+        BufferedWriter bw = null;
+        String info = str + System.getProperty("line.separator");
+        try {
+            bw = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(SDCARD_PATH + "/" + dir + "/" + file, true)));
             bw.write(info);
         } catch (Exception e) {
             error(TAG, e.getMessage());

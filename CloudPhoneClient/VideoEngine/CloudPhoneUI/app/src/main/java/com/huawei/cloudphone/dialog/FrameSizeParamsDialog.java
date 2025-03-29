@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.huawei.cloudphone.R;
 import com.huawei.cloudphone.util.SPUtil;
+import com.huawei.cloudphonesdk.maincontrol.Constant;
 
 public class FrameSizeParamsDialog extends AlertDialog {
     private final View contentView;
@@ -46,10 +47,10 @@ public class FrameSizeParamsDialog extends AlertDialog {
         cancelTextView = contentView.findViewById(R.id.tv_cancel);
         ensureTextView = contentView.findViewById(R.id.tv_ok);
 
-        int width = SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH, 720);
-        int height = SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT, 1280);
-        int widthAligned = SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH_ALIGNED, 720);
-        int heightAligned = SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT_ALIGNED, 1280);
+        int width = SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH, Constant.VMI_720P_WIDTH);
+        int height = SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT, Constant.VMI_720P_HEIGHT);
+        int widthAligned = SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH_ALIGNED, Constant.VMI_720P_WIDTH);
+        int heightAligned = SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT_ALIGNED, Constant.VMI_720P_HEIGHT);
 
         frameSizeWidthEditText.setText(String.valueOf(width));
         frameSizeHeightEditText.setText(String.valueOf(height));

@@ -149,11 +149,12 @@ void NetworkCommManager::RegisterNetworkChangeStatus(NetworkChangeCallback callb
 
 bool NetworkCommManager::VerifyType(NetworkType type)
 {
+    bool isValid = false;
     if (type == NetworkType::VIDEO_SERVER || type == NetworkType::INSTRUCTION_SERVER ||
         type == NetworkType::ELASTIC_GPU) {
-        return true;
+        isValid = true;
     }
-    return false;
+    return isValid;
 }
 
 void NetworkCommManager::BreakNetCommSync(NetComm& comm)

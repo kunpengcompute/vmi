@@ -138,6 +138,14 @@ public class VmiTouch implements View.OnTouchListener {
         return VMI_SUCCESS;
     }
 
+    private boolean inside(View view, MotionEvent event) {
+        int viewWidth = view.getWidth();
+        int viewHeight = view.getHeight();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        return 0<= x && x <= viewWidth && 0 <= y && y <= viewHeight;
+    }
+
     /**
      * It's called when a touch event is dispatched to a view. This allows listeners
      * to have a chance to respond before the target view.
@@ -155,6 +163,24 @@ public class VmiTouch implements View.OnTouchListener {
         // first action of one complete touch must be ACTION_DOWN
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
             updateTouchEvent(view);
+        }
+
+        if (!inside(view, event)) {
+            int action = event.getActionMasked();
+            // 不是 UP 或 MotionEvent.ACTION_POINTER_UP 事件, 则过滤该 motion
+            if (!(action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_UP)) {
+                return true;
+            }
+
+            int viewWidth = view.getWidth();
+            int viewHeight = view.getHeight();
+            float x = event.getX();
+            float y = event.getY();
+            x = x < 0 ? 0 : x;
+            x = x > viewWidth ? viewWidth : x;
+            y = y < 0 ? 0 : y;
+            y = y > viewHeight ? viewHeight : y;
+            event.setLocation(x, y);
         }
 
         sendEvent(event);

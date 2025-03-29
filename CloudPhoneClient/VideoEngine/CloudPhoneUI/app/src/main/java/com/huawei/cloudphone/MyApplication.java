@@ -40,6 +40,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        SPUtil.initMMKV(this);
         disableApiDialog();
     }
 
