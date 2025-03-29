@@ -52,6 +52,7 @@ public class FloatingHelper implements View.OnClickListener {
             .setMainImage(R.drawable.image_menu_green)
             .addMenuItem(R.drawable.image_close, R.id.iv_close, this)
             .addMenuItem(R.drawable.image_frame_show, R.id.iv_frame, this)
+            .addMenuItem(R.drawable.image_fps_test, R.id.iv_test, this)
             .addMenuItem(R.drawable.image_video_setting, R.id.iv_video, this)
             .addMenuItem(R.drawable.image_audio_setting, R.id.iv_audio, this)
             .addMenuItem(R.drawable.image_back_key, R.id.iv_back, this)
@@ -65,6 +66,14 @@ public class FloatingHelper implements View.OnClickListener {
         mFloatingManager.setColor(res);
     }
 
+    /**
+     * 关闭悬浮按钮。
+     */
+    public void closeFloatButton() {
+        if (mFloatingManager.isOpen()) {
+            mFloatingManager.setOpen(false);
+        }
+    }
 
     @Override
     public void onClick(View view) {
@@ -104,6 +113,10 @@ public class FloatingHelper implements View.OnClickListener {
             }
             case R.id.iv_audio: {
                mActivity.showAudioPlayInputDialog();
+                break;
+            }
+            case R.id.iv_test: {
+                mActivity.showFpsTestSettingDialog();
                 break;
             }
             default: {

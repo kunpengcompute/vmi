@@ -1,16 +1,16 @@
 /*
  * 版权所有 (c) 华为技术有限公司 2022-2022
- * 功能描述：Inno GPU编码模块对外接口
+ * 功能描述：hantro GPU编码模块对外接口
  */
 
 #include "GpuEncoderHantro.h"
 #include "logging.h"
 #include "AvcodecWrapper.h"
-#include "DisplayServer/DisplayServer.h"
-#include <cutils/properties.h>
+#include "DisplayServer/DisplayServerWrap.h"
 #include <string.h>
-#include <sync/sync.h>
-#include <sw_sync.h>
+#include <unistd.h>
+#include "SystemProperty.h"
+#include "sync.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -82,16 +82,6 @@ enum AVPixelFormat get_vastapi_format(AVCodecContext *ctx, const enum AVPixelFor
     return AV_PIX_FMT_NONE;
 }
 
-char* GetVastaiVideoNodeNumber()
-{
-    char* number = new char[1];
-    if (property_get("ro.kernel.va.gpu.id", number, "0") <= 0) {
-        ERR("Init vastai encoder, get gpu id failed.");
-        return nullptr;
-    }
-    return number;
-}
-
 constexpr uint32_t MAX_WIDTH = 4096;
 constexpr uint32_t MAX_HEIGHT = 4096;
 constexpr uint32_t WIDTH_ALIGN = 32;
@@ -136,6 +126,12 @@ int32_t GpuEncoderHantro::Init(EncoderConfig &config)
     m_size = config.inSize;
     m_size.widthAligned = AlignUp(m_size.width, WIDTH_ALIGN);
     m_size.heightAligned = AlignUp(m_size.height, HEIGHT_ALIGN);
+    
+    if (m_needSetWidthOrHeight) {
+        m_size.width = m_settingParams.streamWidth;
+        m_size.height = m_settingParams.streamHeight;
+        m_needSetWidthOrHeight = false;
+    }
 
     // Allocate
     AVCodecContext* ctx;
@@ -168,6 +164,7 @@ bool GpuEncoderHantro::AllocContext(AVCodecContext *&ctx, AVCodec *&codec, Encod
         codecName = "h264_vastapi";
     } else if (config.capability == EncoderCapability::CAP_VA_ENCODE_HEVC) {
         codecName = "hevc_vastapi";
+        m_settingParams.profile = Vmi::GpuEncoder::ENC_PROFILE_IDC_HEVC_MAIN;
     } else {
         ERR("Hantro video encoder unsupport format: %u", config.capability);
         return false;
@@ -184,14 +181,20 @@ bool GpuEncoderHantro::AllocContext(AVCodecContext *&ctx, AVCodec *&codec, Encod
     // set encoder param
     ctx->gop_size = m_settingParams.gopSize;
     ctx->max_b_frames = 0; // forbidden b frame
-    ctx->width = config.inSize.width;
-    ctx->height = config.inSize.height;
     ctx->time_base = (AVRational){1, (int)(m_settingParams.frameRate)};
     ctx->framerate = (AVRational){(int)(m_settingParams.frameRate), 1};
     ctx->pix_fmt = AV_PIX_FMT_VASTAPI;
     ctx->bit_rate = m_settingParams.bitRate;
     ctx->get_format = get_vastapi_format;
-    ctx->profile = m_settingParams.profile;
+    ctx->width = m_size.width;
+    ctx->height = m_size.height;
+
+    uint32_t profile = 0;
+    if (ConvertProfileCodeToString(m_settingParams.profile, profile) != OK) {
+        ERR("Get profile string according profile code failed, code: %u", m_settingParams.profile);
+        return false;
+    }
+    ctx->profile = profile;
 
     return true;
 }
@@ -199,38 +202,28 @@ bool GpuEncoderHantro::AllocContext(AVCodecContext *&ctx, AVCodec *&codec, Encod
 bool GpuEncoderHantro::CreateAndSetHwDeviceCtx(AVCodecContext *&ctx, AVCodec* codec)
 {
     int err = 0;
-    AVBufferRef* hwDeviceCtx;
     // create hw device ctx
-    char* number = GetVastaiVideoNodeNumber();
-    if (number == nullptr) {
-        return false;
-    }
-    char* node = new char[sizeof("/dev/va_video") + sizeof(number)];
-    strcpy(node, "/dev/va_video");
-    strcat(node, number);
-    err = AvcodecWrapper::Get().Call<AV_HWDEVICE_CTX_CREATE>(&hwDeviceCtx, AV_HWDEVICE_TYPE_VASTAPI, node, nullptr, 0);
+    std::string number = GetPropertyWithDefault("ro.kernel.va.gpu.id", "0");
+    std::string node = "/dev/va_video";
+    node.append(number);
+    err = AvcodecWrapper::Get().Call<AV_HWDEVICE_CTX_CREATE>(&m_hwDevice, AV_HWDEVICE_TYPE_VASTAPI, node.c_str(), nullptr, 0);
     if (err < 0) {
         ERR("initHWAVCtx av_hwdevice_ctx_create error. Error code: %s\n", av_err2str(err));
         return false;
     }
     // set hw device ctx
-    ctx->hw_device_ctx = AvcodecWrapper::Get().Call<AV_BUFFER_REF>(hwDeviceCtx);
+    ctx->hw_device_ctx = AvcodecWrapper::Get().Call<AV_BUFFER_REF>(m_hwDevice);
     if (!ctx->hw_device_ctx) {
         ERR("A hardware device reference create failed.\n");
         return false;
     }
     // set hw frame ctx, RGB0 input
-    if (SetHWFrameCtx(ctx, hwDeviceCtx, AV_PIX_FMT_RGB0, 1) < 0) {
+    if (SetHWFrameCtx(ctx, m_hwDevice, AV_PIX_FMT_RGB0, 1) < 0) {
         ERR("initHWAVCtx setHWFrameCtx failed.\n");
         return false;
     }
-    std::string profile = "";
-    if (ConvertProfileCodeToString(m_settingParams.profile, profile) != OK) {
-        ERR("Get profile string according profile code failed, code: %u", m_settingParams.profile);
-        return false;
-    }
     std::string presetParams = "tune=1:vbvBufSize=1000:miniGopSize=1:lookaheadLength=0:intraQpOffset=-2:P2B=0";
-    presetParams = presetParams + ":preset=" + profile + ":keyint=" + std::to_string(m_settingParams.gopSize);
+    presetParams = presetParams + ":keyint=" + std::to_string(m_settingParams.gopSize);
     const char* vastParams = presetParams.c_str();
     if ((err = AvcodecWrapper::Get().Call<AV_OPT_SET>(ctx->priv_data, "vast-params", vastParams, 0)) < 0) {
         ERR("initHWAVCtx av_opt_set error. Error code: %s\n", av_err2str(err));
@@ -297,7 +290,9 @@ int32_t GpuEncoderHantro::DeInit()
 
     // 销毁编码器 直接赋空
     AvcodecWrapper::Get().Call<AVCODEC_FREE_CONTEXT>(&m_avcodec);
+    AvcodecWrapper::Get().Call<AV_BUFFER_UNREF>(&m_hwDevice);
     m_avcodec = nullptr;
+    m_hwDevice = nullptr;
     UnlockStatus(Status::INVALID);
     return OK;
 }
@@ -390,6 +385,8 @@ int32_t GpuEncoderHantro::ImportBuffer(FrameFormat format, uint64_t handle, GpuE
     int releaseFence = sw_sync_fence_create(m_fenceTimeline, "releaseFence", m_fenceValue);
     int acquireFence = -1;
     captureBuffer->acquireBufferCaller(captureBuffer->rgbBuffer, &acquireFence, &releaseFence);
+    captureBuffer->SetWmSizeCaller(captureBuffer->rgbBuffer, m_size.width, m_size.height);
+
     m_fenceValue++;
     auto newBuffer = std::make_unique<GpuEncoderBufferHantro>();
     newBuffer->format = format;
@@ -639,6 +636,12 @@ bool GpuEncoderHantro::DynamicAdjustParam(GpuEncoderBufferHantroT rgbBuffer, Han
 
 int GpuEncoderHantro::UseFFmpegtoEncode(GpuEncoderBufferHantroT &inHantroBuff, GpuEncoderBufferHantroT &outHantroBuff)
 {
+    if (inHantroBuff->captureBuffer->tmpStreamHeight != m_avcodec->height ||
+            inHantroBuff->captureBuffer->tmpStreamWidth != m_avcodec->width) {
+        //如果上下文宽高与输入Buffer宽高不一致，则不做处理，直接返回，直到Buffer队列被匹配宽高的Buffer填充
+        return OK;
+    }
+
     int err = AvcodecWrapper::Get().Call<AVCODEC_SEND_FRAME>(m_avcodec, inHantroBuff->frame);
     if (err < 0) {
         ERR("Error sending a frame for encoding.");
@@ -717,19 +720,35 @@ void GpuEncoderHantro::SetProfile(EncodeParamT &param, HantroEncodeParams &param
     return;
 }
 
-uint32_t GpuEncoderHantro::ConvertProfileCodeToString(uint32_t profileCode, std::string &profile)
+void GpuEncoderHantro::SetStreamWidth(EncodeParamT &param, HantroEncodeParams &params)
 {
-    profile = "";
+    auto ptr = static_cast<EncodeParamStreamWidth *>(param);
+    params.streamWidth = ptr->streamWidth;
+    return;
+}
+
+void GpuEncoderHantro::SetStreamHeight(EncodeParamT &param, HantroEncodeParams &params)
+{
+    auto ptr = static_cast<EncodeParamStreamHeight *>(param);
+    params.streamHeight = ptr->streamHeight;
+    return;
+}
+
+uint32_t GpuEncoderHantro::ConvertProfileCodeToString(uint32_t profileCode, uint32_t &profile)
+{
+    profile = 0;
     switch (profileCode) {
         case Vmi::GpuEncoder::ENC_PROFILE_IDC_BASELINE:
-            profile = "bronze_quality";
+            profile = FF_PROFILE_H264_BASELINE;
             break;
         case Vmi::GpuEncoder::ENC_PROFILE_IDC_MAIN:
+            profile = FF_PROFILE_H264_MAIN;
+            break;
         case Vmi::GpuEncoder::ENC_PROFILE_IDC_HEVC_MAIN:
-            profile = "silver_quality";
+            profile = FF_PROFILE_HEVC_MAIN;
             break;
         case Vmi::GpuEncoder::ENC_PROFILE_IDC_HIGH:
-            profile = "gold_quality";
+            profile = FF_PROFILE_H264_HIGH;
             break;
         default:
             ERR("Profile number error, can't find legal profile, Code: %u", profileCode);
@@ -761,6 +780,14 @@ int32_t GpuEncoderHantro::SetEncodeParam(EncodeParamT params[], uint32_t num)
                 SetProfile(params[i], tmpParams);
                 isNeedRestart = true;
                 break;
+            case ENCODE_PARAM_STREAM_WIDTH:
+                SetStreamWidth(params[i], tmpParams);
+                isNeedRestart = true;
+                break;
+            case ENCODE_PARAM_STREAM_HEIGHT:
+                SetStreamHeight(params[i], tmpParams);
+                isNeedRestart = true;
+                break;
             default:
                 ERR("Hantro set encoder param failed, unsupport param type");
                 return ERR_INVALID_PARAM;
@@ -780,6 +807,8 @@ int32_t GpuEncoderHantro::SetEncodeParam(EncodeParamT params[], uint32_t num)
     INFO("update encode params, framerate: %u, gopSize: %u, profile: %u, bitrate:%u, keyframe: %u",
         m_receiveParams.frameRate, m_receiveParams.gopSize, m_receiveParams.profile, m_receiveParams.bitRate,
         m_receiveParams.keyFrame);
+    INFO("update encode params, streamWidth: %u, streamHeight: %u",
+        m_receiveParams.streamWidth, m_receiveParams.streamHeight);
     m_dynamicAdjustParamFlag = true;                // dynamic adjust encode params
     return OK;
 }
@@ -798,6 +827,14 @@ void GpuEncoderHantro::UpdateSettingParams()
     }
     if (m_receiveParams.profile != m_settingParams.profile) {
         m_settingParams.profile = m_receiveParams.profile;
+    }
+    if (m_receiveParams.streamWidth != 0 && m_receiveParams.streamWidth != m_settingParams.streamWidth) {
+        m_settingParams.streamWidth = m_receiveParams.streamWidth;
+        m_needSetWidthOrHeight = true;
+    }
+    if (m_receiveParams.streamHeight != 0 && m_receiveParams.streamHeight != m_settingParams.streamHeight) {
+        m_settingParams.streamHeight = m_receiveParams.streamHeight;
+        m_needSetWidthOrHeight = true;
     }
     return;
 }

@@ -16,6 +16,7 @@
 #include "Communication/Connection/ServerConnection.h"
 #include "Communication/NetComm/NetComm.h"
 #include "Utils/Looper.h"
+
 namespace Vmi {
 class BreakNetCommRunnable : public Runnable {
 public:
@@ -61,6 +62,7 @@ private:
     bool GetElasticGpuRenderInfo();
     void PostConnectRenderServerRunnable();
     void ElasticGpuNetCommBreak(bool isServer);
+
 private:
     std::unique_ptr<ServerConnection> m_serverListen = nullptr;
     std::shared_ptr<NetworkComm> m_serverComm = nullptr;

@@ -25,19 +25,12 @@ int32_t GetPropertyWithDefault(const std::string& name, int32_t defaultVal)
     if (propStr.empty()) {
         return defaultVal;
     }
-    for (char c : propStr) {
-        if (c < '0' || '9' < c) {
-            ERR("Failed to get property:[%s], value:[%s] contains non-numeric characters!",
-                name.c_str(), propStr.c_str());
-            return defaultVal;
-        }
-    }
 
     std::stringstream stream;
     stream << propStr;
     intmax_t propVal;
     stream >> propVal;
-    if (stream.fail()) {
+    if (stream.fail() || !stream.eof()) {
         ERR("Failed to get property:[%s], stringstream can't change value:[%s] to int!", name.c_str(), propStr.c_str());
         return defaultVal;
     }

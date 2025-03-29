@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ib-ashmem
+  namespace: kube-system
+data:
+  config.json: |
+    {
+      "resourceName": "github.com/ashmem",
+      "socketName": "everpeace-ib-ashmem.sock",
+      "numDevices": 400,
+      "hostDevices": [{
+        "hostPath": "/dev/ashmem",
+        "containerPath": "/dev/ashmem",
+        "permission": "rwm"
+      }]
+    }

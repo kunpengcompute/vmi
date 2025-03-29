@@ -3,4 +3,3 @@ service VmiAgent /vendor/bin/VmiAgent
     user root
     group root
     onrestart restart VmiInputFlinger
-    onrestart restart vendor.audio-hal

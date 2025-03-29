@@ -23,7 +23,11 @@ public:
 
     int SendWithReservedByte(VmiDataType type, uint8_t* data, uint32_t size) override;
 
+    int SendWithReservedByte(VMIMsgType type, uint8_t* data, uint32_t size) override;
+
     void RegisterRecvDataCallback(VmiDataType type, RecvDataCallback callback, bool isSingleFragment) override;
+
+    void RegisterRecvDataCallback(VMIMsgType type, RecvDataCallback callback, bool isSingleFragment) override;
 
     void ActiveDisconnect() override;
 

@@ -223,6 +223,22 @@ DecoderRetCode DecoderMedia::OutputAndDisplay()
             INFO("Frame(%" PRId64 ") @buffer(%zd) output success, decode latency %ju ms", frameUs, lastBufferId,
                 (nowUs - frameUs) / KILO);
         }
+
+        if (pre3FrameTime > 0 && (nowUs - lastFrameUs) > (pre3FrameTime + pre2FrameTime + pre1FrameTime) / 3 * 2) {
+            if ((nowUs - lastFrameUs) / KILO > 125) {
+                bigJank ++;
+            } else if ((nowUs - lastFrameUs) / KILO > 83) {
+                jank ++;
+            }
+        }
+        LOG_RATE_LIMIT(ANDROID_LOG_INFO, 1, "jank:%u, bigJank:%u", jank, bigJank);
+        if (lastFrameUs > 0) {
+            pre3FrameTime = pre2FrameTime;
+            pre2FrameTime = pre1FrameTime;
+            pre1FrameTime = nowUs - lastFrameUs;
+        }
+        lastFrameUs = nowUs;
+
         SetTimestamp(nowUs);
         // If you are done with a buffer, use this call to return the buffer to the codec.
         // If you have not specified an output surface when configuring this video codec,

@@ -9,34 +9,41 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:resizeableActivity="false"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:resizeableActivity="false"
         tools:ignore="GoogleAppIndexingWarning"
-        android:requestLegacyExternalStorage="true"
         tools:replace="android:allowBackup,android:icon,android:roundIcon">
         <activity
+            android:name=".ui.activities.ReconnectActivity"
+            android:theme="@style/FullScreenTheme"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.TestActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/TestTheme"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:screenOrientation="portrait" >
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.LoginActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.activities.RegisterActivity"
             android:screenOrientation="portrait" />
@@ -45,14 +52,18 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.FullscreenActivity"
-	        android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:process=":remote"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.DevTestActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activities.SettingsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name=".broadcast.ADBBroadcastReceiver"
             android:exported="true">
@@ -70,11 +81,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_path" />
         </provider>
-        <service android:name="com.huawei.cloudphonesdk.audio.record.AudioRecordService"
-                 android:process=":remote"/>
+
+        <service
+            android:name="com.huawei.cloudphonesdk.audio.record.AudioRecordService"
+            android:process=":remote" />
 
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
     </application>
+
 </manifest>

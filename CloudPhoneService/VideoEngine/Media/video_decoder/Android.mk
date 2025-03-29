@@ -16,8 +16,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH) \
     $(LOCAL_PATH)/include \
     $(LOCAL_PATH)/prop \
-    $(LOCAL_PATH)/../vendor/quadraV460 \
-    $(LOCAL_PATH)/../vendor/netintV333
+    $(LOCAL_PATH)/../vendor
 
 LOCAL_LDLIBS := -llog
 

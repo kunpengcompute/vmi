@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: input-devices-permission-daemonset
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: input-devices-permission-plugin-ds
+  template:
+    metadata:
+      labels:
+        name: input-devices-permission-plugin-ds
+    spec:
+      tolerations:
+      # Allow this pod to be rescheduled while the node is in "critical add-ons only" mode.
+      # This, along with the annotation above marks this pod as a critical add-on.
+      - key: CriticalAddonsOnly
+        operator: Exists
+      containers:
+      - image: docker.io/library/input-device-permission:1.0
+        imagePullPolicy: IfNotPresent
+        name: input-devices-permission-plugin-ctr
+        command: [ "/bin/sh", "-c", "sh permission.sh" ]
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+            add:
+            - SYS_ADMIN
+        volumeMounts:
+        - name: host-files
+          mountPath: /host-files
+      volumes:
+        - name: host-files
+          hostPath:
+            path: /sys/fs/cgroup/devices/system.slice/containerd.service

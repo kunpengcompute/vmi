@@ -18,12 +18,12 @@
 
     <ImageButton
         android:id="@+id/imageBtSetting"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:background="@mipmap/ic_set"></ImageButton>
+        android:background="@drawable/ic_settings" />
 
     <LinearLayout
         android:layout_width="match_parent"

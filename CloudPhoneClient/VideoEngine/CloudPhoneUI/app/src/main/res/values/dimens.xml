@@ -1,8 +1,10 @@
 <resources>
     <dimen name="floating_width">40dp</dimen>
-    <dimen name="floating_radius">100dp</dimen>
+    <dimen name="floating_radius">120dp</dimen>
     <dimen name="menu_width">56dp</dimen>
     <dimen name="menu_heigth">56dp</dimen>
     <dimen name="menu_icon_margin_back">6dp</dimen>
     <dimen name="menu_icon_margin">16dp</dimen>
+    <dimen name="text_title">18sp</dimen>
+    <dimen name="text_small">12sp</dimen>
 </resources>

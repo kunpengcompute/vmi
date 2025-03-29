@@ -11,7 +11,8 @@
 #include "logging.h"
 #include "Looper.h"
 
-#define RUN_BEGIN     RunTestHelp helper(true, __FUNCTION__, __LINE__)
+#define RUN_BEGIN std::unique_ptr<RunTestHelp> helper_ptr = std::make_unique<RunTestHelp>(true, true, __FUNCTION__, __LINE__);RunTestHelp& helper = *helper_ptr;
+#define RUN_BEGIN_NOLOG     RunTestHelp helper(false, true, __FUNCTION__, __LINE__)
 #define RUN_ABNORMAL(fmt, ...)  helper.Abnormal(__FUNCTION__, __LINE__, fmt, ##__VA_ARGS__)
 #define EXPECT_EQ(actual, expect) \
 if ((actual) != (expect)) { \
@@ -32,7 +33,7 @@ public:
 
 class RunTestHelp {
 public:
-    explicit RunTestHelp(bool isPrintTime, const char* functionName, int line);
+    explicit RunTestHelp(bool logFlag, bool isPrintTime, const char* functionName, int line);
     ~RunTestHelp();
     void Abnormal(const char* functionName, int line, const char* fmt, ...);
     uint32_t GetRunTime(); // 单位毫秒
@@ -42,6 +43,7 @@ private:
     int m_startLine = 0;
     std::string m_functionName;
     std::chrono::time_point<std::chrono::steady_clock> m_startTime;
+    bool logFlag = true;
 };
 
 class ApiTest {
@@ -56,6 +58,8 @@ private:
     bool InitVmiEngineCompleteAbnormalTest();
     bool StartModuleAbnormalTest();
     bool StartModuleNormalTest();
+    bool StartModuleNormalTest_nolog();
+    bool StopModuleNormalTest_nolog();
     bool StopModuleNormalTest();
     bool StopModuleAbnormalTest();
     bool InjectDataAbnormalTest();

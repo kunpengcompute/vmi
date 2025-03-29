@@ -6,8 +6,8 @@
 
 #include <atomic>
 #include "VideoDecoder.h"
-#include "ni_device_api.h"
-#include "ni_rsrc_api.h"
+#include "quadraV486/ni_device_api.h"
+#include "quadraV486/ni_rsrc_api.h"
 
 namespace MediaCore {
 class VideoDecoderQuadra : public VideoDecoder {
@@ -34,6 +34,7 @@ private:
     static constexpr uint32_t DEFAULT_HEIGHT = 720;
     static constexpr uint32_t DEFAULT_FRAMERATE = 25;
     static constexpr uint32_t DEFAULT_BITDEPTH = 8;
+    static constexpr uint32_t DEFAULT_MALLOC_BUFFER = 22118400;    //分配的buffer最高支持3840 x 3840分辨率格式变化
 
     /**
      * @功能描述: 加载QUADRA动态库
@@ -160,7 +161,7 @@ private:
     uint32_t m_planeHeight = 0;
     int m_frameRate = DEFAULT_FRAMERATE;
     int m_bitDepth = DEFAULT_BITDEPTH;
-    unsigned long m_load = 0;
+    uint64_t m_load = 0;
     uint32_t m_startOfStream = 0;
 
     // 帧率统计相关

@@ -45,15 +45,24 @@ VPUS=(
     "/dev/vpu30" "/dev/vpu31" "/dev/vpu32" "/dev/vpu33" "/dev/vpu34" "/dev/vpu35"
 )
 
-# 选择编码卡（0:T432 1:Quadra 2:瀚博 3:open264）
+# 选择编码卡（0:T432 1:Quadra 2:Va1e 3:open264）
 ENCODECARD=1
 
-# T432/Quadra硬解使能开关
+# T432/Quadra硬解使能开关, 1表示使能，其他值默认不使能
 T432_QUADRA_DECODE_ENABLE=0
 
 # NETINT编码卡设备节点
 NETINT0="/dev/nvme0,/dev/nvme0n1,/dev/nvme1,/dev/nvme1n1"
 NETINT1="/dev/nvme0,/dev/nvme0n1,/dev/nvme1,/dev/nvme1n1"
+
+#DC1000硬解使能开关, 1表示使能，其他值默认不使能
+ENABLE_HARD_DECODE=1
+
+#webrtc使能开关, 1表示使能，其他值默认不使能
+ENABLE_WEBRTC_CONNECTION=0
+
+#渲染中间层开关，1表示使能，其他值默认不使能
+ENABLE_RENDER_LAYER=0
 
 # VASTAI编码卡设备节点
 HANBO_ENCODERS=(

@@ -29,7 +29,7 @@ namespace {
     constexpr int VMI_MONITOR_SLEEP_TIME = 1000;
 
     // Java环境全局指针
-    JNIEnv* g_env = nullptr;
+    JNIEnv *g_env = nullptr;
 
     // Java类对象
     jobject g_obj = nullptr;
@@ -58,7 +58,7 @@ namespace {
         uint16_t action;
     } __attribute__((packed));
 
-    ANativeWindow* g_nativeWindow = nullptr;
+    ANativeWindow *g_nativeWindow = nullptr;
 }  // namespace
 
 #define DBG(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
@@ -72,8 +72,7 @@ namespace {
  * @参数 [in] env：代表Java环境指针
  * @参数 [in] obj：代表native方法的类的class对象实例
  */
-void VmiMonitorEnter(JNIEnv *env, jobject obj)
-{
+void VmiMonitorEnter(JNIEnv *env, jobject obj) {
     while (((*env).MonitorEnter(obj)) != JNI_OK) {
         // LOG_RATE_LIMIT(Vmi::AndroidLogPriority::ANDROID_LOG_INFO, VMI_MONITOR_INTERVAL, "JNI Enter critical sections failed");
         usleep(VMI_MONITOR_SLEEP_TIME);
@@ -86,8 +85,7 @@ void VmiMonitorEnter(JNIEnv *env, jobject obj)
  * @参数 [in] env：代表Java环境指针
  * @参数 [in] obj：代表native方法的类的class对象实例
  */
-void VmiMonitorExit(JNIEnv *env, jobject obj)
-{
+void VmiMonitorExit(JNIEnv *env, jobject obj) {
     while (((*env).MonitorExit(obj)) != JNI_OK) {
         // LOG_RATE_LIMIT(Vmi::AndroidLogPriority::ANDROID_LOG_INFO, VMI_MONITOR_INTERVAL, "JNI Exit critical sections failed");
         usleep(VMI_MONITOR_SLEEP_TIME);
@@ -101,14 +99,14 @@ void VmiMonitorExit(JNIEnv *env, jobject obj)
  * @参数 [in] jStr：代表要转换的jstring对象
  * @返回值：string对象
  */
-std::string Jstring2String(JNIEnv *env, jstring jStr)
-{
+std::string Jstring2String(JNIEnv *env, jstring jStr) {
     if (jStr == nullptr) {
         return "";
     }
     const jclass stringClass = env->GetObjectClass(jStr);
     const jmethodID getBytes = env->GetMethodID(stringClass, "getBytes", "(Ljava/lang/String;)[B");
-    const jbyteArray stringJbytes = (jbyteArray)env->CallObjectMethod(jStr, getBytes, env->NewStringUTF("UTF-8"));
+    const jbyteArray stringJbytes = (jbyteArray) env->CallObjectMethod(jStr, getBytes,
+                                                                       env->NewStringUTF("UTF-8"));
     size_t length = static_cast<size_t>(env->GetArrayLength(stringJbytes));
     jbyte *pBytes = env->GetByteArrayElements(stringJbytes, nullptr);
     std::string ret = std::string(reinterpret_cast<char *>(pBytes), length);
@@ -123,8 +121,7 @@ std::string Jstring2String(JNIEnv *env, jstring jStr)
  * @参数 [in] ip：代表字符串ip
  * @返回值：返回整形，主机字节序的ip地址
  */
-unsigned int GetIpHostOrder(std::string ip)
-{
+unsigned int GetIpHostOrder(std::string ip) {
     struct in_addr addr = {};
     int ret = inet_aton(ip.c_str(), &addr);
     if (ret == 0) {
@@ -135,24 +132,21 @@ unsigned int GetIpHostOrder(std::string ip)
 }
 
 extern "C" {
-JNIEXPORT jboolean JNICALL NET_CONFIG_JNI(initialize)(JNIEnv* env, jclass cls)
-{
+JNIEXPORT jboolean JNICALL NET_CONFIG_JNI(initialize)(JNIEnv *env, jclass cls) {
     (void) env;
     (void) cls;
     return true;
 }
 
-JNIEXPORT jboolean JNICALL NET_CONFIG_JNI(setNetConfig)(JNIEnv* env, jclass cls,
-    jstring ip, jint port, jint connectType)
-{
+JNIEXPORT jboolean JNICALL NET_CONFIG_JNI(setNetConfig)(JNIEnv *env, jclass cls,
+                                                        jstring ip, jint port, jint connectType) {
     (void) cls;
     (void) connectType;
     VmiConfigClientAddress(GetIpHostOrder(Jstring2String(env, ip)), port);
     return true;
 }
 
-JNIEXPORT void JNICALL CB_JNI(setObj)(JNIEnv *env, jobject obj)
-{
+JNIEXPORT void JNICALL CB_JNI(setObj)(JNIEnv *env, jobject obj) {
     if (env == nullptr) {
         ERR("Error: set callback, can't get java environment");
         return;
@@ -173,8 +167,7 @@ JNIEXPORT void JNICALL CB_JNI(setObj)(JNIEnv *env, jobject obj)
     }
 }
 
-void CallJavaVoidFunction(const std::string& funName, EngineEvent engineEvent)
-{
+void CallJavaVoidFunction(const std::string &funName, EngineEvent engineEvent) {
     if (!g_alertLogInited) {
         ERR("g_alertLogInited is false");
         return;
@@ -198,8 +191,9 @@ void CallJavaVoidFunction(const std::string& funName, EngineEvent engineEvent)
     jclass cls = env->GetObjectClass(g_obj);
     jmethodID mid = env->GetMethodID(cls, funName.c_str(), "(IIIIILjava/lang/String;)V");
     if (mid != nullptr) {
-        env->CallVoidMethod(g_obj, mid, engineEvent.event, engineEvent.para1,  engineEvent.para2,
-             engineEvent.para3,  engineEvent.para4, env->NewStringUTF(engineEvent.additionInfo));
+        env->CallVoidMethod(g_obj, mid, engineEvent.event, engineEvent.para1, engineEvent.para2,
+                            engineEvent.para3, engineEvent.para4,
+                            env->NewStringUTF(engineEvent.additionInfo));
     } else {
         ERR("Error: Can't found %s method", funName.c_str());
     }
@@ -212,14 +206,12 @@ void CallJavaVoidFunction(const std::string& funName, EngineEvent engineEvent)
  * @参数 [in] event：代表视频流引擎事件，
  *                  目前有VMI_VIDEO_ENGINE_EVENT_SOCK_DISCONN事件。
  */
-void CallJavaOnVmiVideoEngineEvent(EngineEvent engineEvent)
-{
+void CallJavaOnVmiVideoEngineEvent(EngineEvent engineEvent) {
     (void) engineEvent;
     CallJavaVoidFunction(VIDEO_ENG_EVENT_NOTICE_JAVA_METHOD_NAME, engineEvent);
 }
 
-JNIEXPORT jint JNICALL OPENGL_JNI(initialize)(JNIEnv* env, jclass cls)
-{
+JNIEXPORT jint JNICALL OPENGL_JNI(initialize)(JNIEnv *env, jclass cls) {
     (void) env;
     (void) cls;
     uint32_t ret = Initialize(CallJavaOnVmiVideoEngineEvent);
@@ -227,8 +219,7 @@ JNIEXPORT jint JNICALL OPENGL_JNI(initialize)(JNIEnv* env, jclass cls)
 }
 
 JNIEXPORT jint JNICALL OPENGL_JNI(start)(JNIEnv *env, jclass cls, jobject surface, jint width,
-    jint height, jfloat densityDpi)
-{
+                                         jint height, jfloat densityDpi) {
     (void) env;
     (void) cls;
     INFO("OpenGLJNIWrapper_start enter");
@@ -245,8 +236,9 @@ JNIEXPORT jint JNICALL OPENGL_JNI(start)(JNIEnv *env, jclass cls, jobject surfac
         return VMI_CLIENT_START_FAIL;
     }
     g_nativeWindow = nativeWindow;
+    std::string ipAndPort = "";
     uint32_t ret = Start(reinterpret_cast<uint64_t>(nativeWindow), static_cast<uint32_t>(width),
-        static_cast<uint32_t>(height), static_cast<uint32_t>(densityDpi));
+                         static_cast<uint32_t>(height), static_cast<uint32_t>(densityDpi), ipAndPort);
     if (ret != VMI_SUCCESS) {
         ERR("Failed to start, ret: %u", ret);
         VmiMonitorExit(env, cls);
@@ -256,8 +248,7 @@ JNIEXPORT jint JNICALL OPENGL_JNI(start)(JNIEnv *env, jclass cls, jobject surfac
     return VMI_SUCCESS;
 }
 
-JNIEXPORT void JNICALL OPENGL_JNI(stop)(JNIEnv *env, jclass cls)
-{
+JNIEXPORT void JNICALL OPENGL_JNI(stop)(JNIEnv *env, jclass cls) {
     (void) env;
     (void) cls;
     INFO("OpenGLJNIWrapper_stop enter");
@@ -270,8 +261,7 @@ JNIEXPORT void JNICALL OPENGL_JNI(stop)(JNIEnv *env, jclass cls)
     VmiMonitorExit(env, cls);
 }
 
-JNIEXPORT jstring JNICALL OPENGL_JNI(getStatistics)(JNIEnv *env, jclass cls)
-{
+JNIEXPORT jstring JNICALL OPENGL_JNI(getStatistics)(JNIEnv *env, jclass cls) {
     (void) env;
     (void) cls;
     Vmi::StatisticsInfo info;
@@ -286,8 +276,8 @@ JNIEXPORT jstring JNICALL OPENGL_JNI(getStatistics)(JNIEnv *env, jclass cls)
     return env->NewStringUTF(ss.str().c_str());
 }
 
-JNIEXPORT jint JNICALL OPENGL_JNI(recvData)(JNIEnv *env, jclass cls, jbyte type, jbyteArray jData, int length)
-{
+JNIEXPORT jint JNICALL
+OPENGL_JNI(recvData)(JNIEnv *env, jclass cls, jbyte type, jbyteArray jData, int length) {
     (void) env;
     (void) cls;
     uint8_t *data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
@@ -297,28 +287,28 @@ JNIEXPORT jint JNICALL OPENGL_JNI(recvData)(JNIEnv *env, jclass cls, jbyte type,
     return ret;
 }
 
-JNIEXPORT jboolean JNICALL OPENGL_JNI(sendKeyEvent)(JNIEnv *env, jclass cls, jbyteArray jData, int length)
-{
+JNIEXPORT jboolean JNICALL
+OPENGL_JNI(sendKeyEvent)(JNIEnv *env, jclass cls, jbyteArray jData, int length) {
     (void) env;
     (void) cls;
-     if (env == nullptr) {
-         ERR("Error: send navbar input event, can't get java environment");
-         return JNI_FALSE;
-     }
+    if (env == nullptr) {
+        ERR("Error: send navbar input event, can't get java environment");
+        return JNI_FALSE;
+    }
 
-     uint8_t* data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
-     if (data == nullptr) {
-         ERR("Error: send touch, src buffer is nullptr");
-         return JNI_FALSE;
-     }
+    uint8_t *data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
+    if (data == nullptr) {
+        ERR("Error: send touch, src buffer is nullptr");
+        return JNI_FALSE;
+    }
 
     uint32_t ret = SendData(VMIMsgType::TOUCH_INPUT, data, length);
-     env->ReleaseByteArrayElements(jData, reinterpret_cast<jbyte *>(data), 0);
-     return (ret == VMI_SUCCESS) ? JNI_TRUE : JNI_FALSE;
+    env->ReleaseByteArrayElements(jData, reinterpret_cast<jbyte *>(data), 0);
+    return (ret == VMI_SUCCESS) ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL OPENGL_JNI(sendTouchEvent)(JNIEnv *env, jclass cls, jbyteArray jData, jint length)
-{
+JNIEXPORT jboolean JNICALL
+OPENGL_JNI(sendTouchEvent)(JNIEnv *env, jclass cls, jbyteArray jData, jint length) {
     (void) env;
     (void) cls;
     uint8_t *data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
@@ -331,15 +321,15 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(sendTouchEvent)(JNIEnv *env, jclass cls, j
         return JNI_FALSE;
     }
 }
-JNIEXPORT jboolean JNICALL OPENGL_JNI(sendAudioDataArray)(JNIEnv* env, jclass cls, jbyteArray jData, int length)
-{
+JNIEXPORT jboolean JNICALL
+OPENGL_JNI(sendAudioDataArray)(JNIEnv *env, jclass cls, jbyteArray jData, int length) {
     (void) cls;
     if (env == nullptr) {
         ERR("Error: send audio event, can't get java environment");
         return JNI_FALSE;
     }
 
-    uint8_t* data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
+    uint8_t *data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
     if (data == nullptr) {
         ERR("Error: send audio, src buffer is nullptr");
         return JNI_FALSE;
@@ -360,15 +350,17 @@ struct AudioMicData {
     AudioData audioData;
 } __attribute__((packed));
 
-JNIEXPORT jboolean JNICALL OPENGL_JNI(composeMicData)(JNIEnv* env, jclass cls, jbyteArray jData, jint length, jint audioType, jint sampleInterval)
-{
+
+JNIEXPORT jboolean JNICALL
+OPENGL_JNI(composeMicData)(JNIEnv *env, jclass cls, jbyteArray jData, jint length, jint audioType,
+                           jint sampleInterval) {
     (void) cls;
     if (env == nullptr) {
         ERR("Error: send audio event, can't get java environment");
         return JNI_FALSE;
     }
 
-    uint8_t* data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
+    uint8_t *data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
     if (data == nullptr) {
         ERR("Error: send audio, src buffer is nullptr");
         return JNI_FALSE;
@@ -387,10 +379,12 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(composeMicData)(JNIEnv* env, jclass cls, j
     reinterpret_cast<AudioMicData *>(total_Data.get())->audioData.extData.sampleRate = 48000;
     reinterpret_cast<AudioMicData *>(total_Data.get())->audioData.extData.sampleInterval = sampleInterval;
     std::chrono::system_clock::time_point currTime = std::chrono::system_clock::now();
-    int64_t timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(currTime.time_since_epoch()).count();
+    int64_t timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+            currTime.time_since_epoch()).count();
     reinterpret_cast<AudioMicData *>(total_Data.get())->audioData.extData.timestamp = timestamp;
 
-    memcpy(reinterpret_cast<AudioMicData *>(total_Data.get())->audioData.data, (uint8_t *)(data), length);
+    memcpy(reinterpret_cast<AudioMicData *>(total_Data.get())->audioData.data, (uint8_t *) (data),
+           length);
     uint32_t ret = SendData(VMIMsgType::MIC, total_Data.get(), totalLength);
     env->ReleaseByteArrayElements(jData, reinterpret_cast<jbyte *>(data), 0);
 
@@ -402,12 +396,40 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(composeMicData)(JNIEnv* env, jclass cls, j
     }
 }
 
-JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jobject obj) {
-
+JNIEXPORT jboolean JNICALL OPENGL_JNI(startTouch)(JNIEnv *env, jclass cls) {
     (void) env;
     (void) cls;
-    INFO("OpenGLJNIWrapper_setAudioParam enter");
+    INFO("OpenGLJNIWrapper_startTouch enter");
+    VmiConfigTouch stVmiConfigTouch;
+    stVmiConfigTouch.version = static_cast<uint16_t>(CUR_TOUCH_VERSION);
+    uint8_t vmiCmd = DATA_TOUCH;
+    uint32_t cmdLength = sizeof(vmiCmd);
+    uint32_t paramLength = sizeof(stVmiConfigTouch);
+    uint32_t length = cmdLength + paramLength;
+    uint8_t *data = static_cast<uint8_t *>(malloc(length));
+    if (data == nullptr) {
+        ERR("Error: malloc touch buffer is nullptr");
+        return JNI_FALSE;
+    }
+    memcpy(data, &vmiCmd, cmdLength);
+    memcpy(data + cmdLength, &stVmiConfigTouch, paramLength);
+    uint32_t ret = SendData(VMIMsgType::START, data, length);
+    if (ret == 0) {
+        free(data);
+        data = nullptr;
+        return JNI_TRUE;
+    } else {
+        free(data);
+        data = nullptr;
+        ERR("startTouch failed, ret = %u", ret);
+        return JNI_FALSE;
+    }
+}
 
+JNIEXPORT jboolean JNICALL OPENGL_JNI(startVideo)(JNIEnv *env, jclass cls, jobject obj) {
+    (void) env;
+    (void) cls;
+    INFO("OpenGLJNIWrapper_startVideo enter");
     VmiConfigVideo stVmiConfigVideo;
     jclass objClass = env->FindClass("com/huawei/cloudphonesdk/maincontrol/config/VmiConfigVideo");
     jfieldID jencoderType = env->GetFieldID(objClass, "encoderType", "I");
@@ -416,6 +438,7 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jo
     jfieldID jheight = env->GetFieldID(objClass, "height", "I");
     jfieldID jwidthAligned = env->GetFieldID(objClass, "widthAligned", "I");
     jfieldID jheightAligned = env->GetFieldID(objClass, "heightAligned", "I");
+    jfieldID jdensity = env->GetFieldID(objClass, "density", "I");
     jfieldID jrenderOptimize = env->GetFieldID(objClass, "renderOptimize", "Z");
     jfieldID jbitrate = env->GetFieldID(objClass, "bitrate", "I");
     jfieldID jgopSize = env->GetFieldID(objClass, "gopSize", "I");
@@ -423,6 +446,11 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jo
     jfieldID jrcMode = env->GetFieldID(objClass, "rcMode", "I");
     jfieldID jforceKeyFrame = env->GetFieldID(objClass, "forceKeyFrame", "I");
     jfieldID jinterpolation = env->GetFieldID(objClass, "interpolation", "Z");
+    jfieldID jcrf = env->GetFieldID(objClass, "crf", "I");
+    jfieldID jmaxCrfRate = env->GetFieldID(objClass, "maxCrfRate", "I");
+    jfieldID jvbvBufferSize = env->GetFieldID(objClass, "vbvBufferSize", "I");
+    jfieldID jstreamWidth = env->GetFieldID(objClass, "streamWidth", "I");
+    jfieldID jstreamHeight = env->GetFieldID(objClass, "streamHeight", "I");
 
     jint encoderType = env->GetIntField(obj, jencoderType);
     jint videoFrameType = env->GetIntField(obj, jvideoFrameType);
@@ -430,6 +458,7 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jo
     jint height = env->GetIntField(obj, jheight);
     jint widthAligned = env->GetIntField(obj, jwidthAligned);
     jint heightAligned = env->GetIntField(obj, jheightAligned);
+    jint density = env->GetIntField(obj, jdensity);
     jboolean renderOptimize = env->GetBooleanField(obj, jrenderOptimize);
     jint bitrate = env->GetIntField(obj, jbitrate);
     jint gopSize = env->GetIntField(obj, jgopSize);
@@ -437,6 +466,11 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jo
     jint rcMode = env->GetIntField(obj, jrcMode);
     jint forceKeyFrame = env->GetIntField(obj, jforceKeyFrame);
     jboolean interpolation = env->GetBooleanField(obj, jinterpolation);
+    jint crf = env->GetIntField(obj, jcrf);
+    jint maxCrfRate = env->GetIntField(obj, jmaxCrfRate);
+    jint vbvBufferSize = env->GetIntField(obj, jvbvBufferSize);
+    jint streamWidth = env->GetIntField(obj, jstreamWidth);
+    jint streamHeight = env->GetIntField(obj, jstreamHeight);
 
     stVmiConfigVideo.encoderType = static_cast<EncoderType>(encoderType);
     stVmiConfigVideo.videoFrameType = static_cast<VideoFrameType>(videoFrameType);
@@ -444,6 +478,7 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jo
     stVmiConfigVideo.resolution.height = static_cast<uint32_t>(height);
     stVmiConfigVideo.resolution.widthAligned = static_cast<uint32_t>(widthAligned);
     stVmiConfigVideo.resolution.heightAligned = static_cast<uint32_t>(heightAligned);
+    stVmiConfigVideo.density = static_cast<uint32_t>(density);
     stVmiConfigVideo.renderOptimize = static_cast<bool>(renderOptimize);
     stVmiConfigVideo.encodeParams.bitrate = static_cast<uint32_t>(bitrate);
     stVmiConfigVideo.encodeParams.gopSize = static_cast<uint32_t>(gopSize);
@@ -451,27 +486,111 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jo
     stVmiConfigVideo.encodeParams.rcMode = static_cast<RCMode>(rcMode);
     stVmiConfigVideo.encodeParams.forceKeyFrame = static_cast<uint32_t>(forceKeyFrame);
     stVmiConfigVideo.encodeParams.interpolation = static_cast<bool>(interpolation);
+    stVmiConfigVideo.encodeParams.crf = static_cast<uint32_t>(crf);
+    stVmiConfigVideo.encodeParams.maxCrfRate = static_cast<uint32_t>(maxCrfRate);
+    stVmiConfigVideo.encodeParams.vbvBufferSize = static_cast<int32_t>(vbvBufferSize);
+    stVmiConfigVideo.encodeParams.streamWidth = static_cast<uint32_t>(streamWidth);
+    stVmiConfigVideo.encodeParams.streamHeight = static_cast<uint32_t>(streamHeight);
+    stVmiConfigVideo.version = static_cast<uint16_t>(CUR_VIDEO_VERSION);
 
-    INFO("stVmiConfigVideo.encodeParams.bitrate = %u", stVmiConfigVideo.encodeParams.bitrate);
-    INFO("stVmiConfigVideo.encodeParams.gopSize = %u", stVmiConfigVideo.encodeParams.gopSize);
-    INFO("stVmiConfigVideo.encodeParams.profile = %u", stVmiConfigVideo.encodeParams.profile);
-    INFO("stVmiConfigVideo.encodeParams.rcMode = %u", stVmiConfigVideo.encodeParams.rcMode);
-    INFO("stVmiConfigVideo.encodeParams.forceKeyFrame = %u",
-         stVmiConfigVideo.encodeParams.forceKeyFrame);
-    INFO("stVmiConfigVideo.encodeParams.interpolation = %u",
-         stVmiConfigVideo.encodeParams.interpolation);
-
-    uint32_t vmiCmd = static_cast<uint32_t>(VIDEO_SET_ENCODER_PARAM);
-    uint32_t cmdLength = sizeof(VmiCmd);
-    uint32_t paramLength = sizeof(EncodeParams);
-    uint32_t length = sizeof(VmiCmd) + sizeof(EncodeParams);
+    uint8_t vmiCmd = DATA_VIDEO;
+    uint32_t cmdLength = sizeof(vmiCmd);
+    uint32_t paramLength = sizeof(stVmiConfigVideo);
+    uint32_t length = cmdLength + paramLength;
     uint8_t *data = static_cast<uint8_t *>(malloc(length));
     if (data == nullptr) {
         ERR("Error: malloc video buffer is nullptr");
         return JNI_FALSE;
     }
     memcpy(data, &vmiCmd, cmdLength);
-    memcpy(data + cmdLength, &stVmiConfigVideo.encodeParams, paramLength);
+    memcpy(data + cmdLength, &stVmiConfigVideo, paramLength);
+    uint32_t ret = SendData(VMIMsgType::START, data, length);
+    if (ret == 0) {
+        free(data);
+        data = nullptr;
+        return JNI_TRUE;
+    } else {
+        free(data);
+        data = nullptr;
+        ERR("startVideo failed, ret = %u", ret);
+        return JNI_FALSE;
+    }
+}
+
+JNIEXPORT void JNICALL OPENGL_JNI(getEncodeParam)(JNIEnv *env, jclass cls) {
+    (void) env;
+    (void) cls;
+    uint32_t vmiCmd = VIDEO_GET_ENCODER_PARAM;
+    uint32_t cmdLength = sizeof(vmiCmd);
+    EncodeParams encodeParams;
+    uint32_t paramLength = sizeof(encodeParams);
+    uint32_t length = cmdLength + paramLength;
+    uint8_t *data = static_cast<uint8_t *>(malloc(length));
+    memcpy(data, &vmiCmd, cmdLength);
+    memcpy(data + cmdLength, &encodeParams, paramLength);
+    uint32_t ret = SendData(VMIMsgType::VIDEO_RR2, data, length);
+    if (ret == 0) {
+        INFO("GetEncodeParam command cmd success!");
+    } else {
+        ERR("GetEncodeParam command cmd failed, ret = %u", ret);
+        data = nullptr;
+    }
+}
+
+JNIEXPORT jboolean JNICALL OPENGL_JNI(setEncodeParam)(JNIEnv *env, jclass cls, jobject obj) {
+
+    (void) env;
+    (void) cls;
+    INFO("OpenGLJNIWrapper_setEncodeParam enter");
+    EncodeParams encodeParams;
+    jclass objClass = env->FindClass("com/huawei/cloudphonesdk/maincontrol/config/EncodeParams");
+    jfieldID jbitrate = env->GetFieldID(objClass, "bitrate", "I");
+    jfieldID jgopSize = env->GetFieldID(objClass, "gopSize", "I");
+    jfieldID jprofile = env->GetFieldID(objClass, "profile", "I");
+    jfieldID jrcMode = env->GetFieldID(objClass, "rcMode", "I");
+    jfieldID jforceKeyFrame = env->GetFieldID(objClass, "forceKeyFrame", "I");
+    jfieldID jinterpolation = env->GetFieldID(objClass, "interpolation", "Z");
+    jfieldID jcrf = env->GetFieldID(objClass, "crf", "I");
+    jfieldID jmaxCrfRate = env->GetFieldID(objClass, "maxCrfRate", "I");
+    jfieldID jvbvBufferSize = env->GetFieldID(objClass, "vbvBufferSize", "I");
+    jfieldID jstreamWidth = env->GetFieldID(objClass, "streamWidth", "I");
+    jfieldID jstreamHeight = env->GetFieldID(objClass, "streamHeight", "I");
+
+    jint bitrate = env->GetIntField(obj, jbitrate);
+    jint gopSize = env->GetIntField(obj, jgopSize);
+    jint profile = env->GetIntField(obj, jprofile);
+    jint rcMode = env->GetIntField(obj, jrcMode);
+    jint forceKeyFrame = env->GetIntField(obj, jforceKeyFrame);
+    jboolean interpolation = env->GetBooleanField(obj, jinterpolation);
+    jint crf = env->GetIntField(obj, jcrf);
+    jint maxCrfRate = env->GetIntField(obj, jmaxCrfRate);
+    jint vbvBufferSize = env->GetIntField(obj, jvbvBufferSize);
+    jint streamWidth = env->GetIntField(obj, jstreamWidth);
+    jint streamHeight = env->GetIntField(obj, jstreamHeight);
+
+    encodeParams.bitrate = static_cast<uint32_t>(bitrate);
+    encodeParams.gopSize = static_cast<uint32_t>(gopSize);
+    encodeParams.profile = static_cast<ProfileType>(profile);
+    encodeParams.rcMode = static_cast<RCMode>(rcMode);
+    encodeParams.forceKeyFrame = static_cast<uint32_t>(forceKeyFrame);
+    encodeParams.interpolation = static_cast<bool>(interpolation);
+    encodeParams.crf = static_cast<uint32_t>(crf);
+    encodeParams.maxCrfRate = static_cast<uint32_t>(maxCrfRate);
+    encodeParams.vbvBufferSize = static_cast<int32_t>(vbvBufferSize);
+    encodeParams.streamWidth = static_cast<uint32_t>(streamWidth);
+    encodeParams.streamHeight = static_cast<uint32_t>(streamHeight);
+
+    uint32_t vmiCmd = VIDEO_SET_ENCODER_PARAM;
+    uint32_t cmdLength = sizeof(vmiCmd);
+    uint32_t paramLength = sizeof(encodeParams);
+    uint32_t length = cmdLength + paramLength;
+    uint8_t *data = static_cast<uint8_t *>(malloc(length));
+    if (data == nullptr) {
+        ERR("Error: malloc video buffer is nullptr");
+        return JNI_FALSE;
+    }
+    memcpy(data, &vmiCmd, cmdLength);
+    memcpy(data + cmdLength, &encodeParams, paramLength);
     uint32_t ret = SendData(VMIMsgType::VIDEO_RR2, data, length);
     if (ret == 0) {
         free(data);
@@ -480,7 +599,7 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jo
     } else {
         free(data);
         data = nullptr;
-        ERR("setVideoParam failed, ret = %u", ret);
+        ERR("setEncodeParam failed, ret = %u", ret);
         return JNI_FALSE;
     }
 }
@@ -503,17 +622,14 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setAudioParam)(JNIEnv *env, jclass cls, jo
     stVmiConfigAudio.audioType = static_cast<AudioType>(audioType);
     stVmiConfigAudio.params.sampleInterval = static_cast<uint32_t>(sampleInterval);
     stVmiConfigAudio.params.bitrate = static_cast<uint32_t>(bitrate);
-
-    INFO("stVmiConfigAudio.params.sampleInterval = %u", stVmiConfigAudio.params.sampleInterval);
-    INFO("stVmiConfigAudio.params.bitrate = %u", stVmiConfigAudio.params.bitrate);
-
     uint32_t vmiCmd = static_cast<uint32_t>(AUDIO_SET_AUDIOPLAY_PARAM);
     uint32_t cmdLength = sizeof(VmiCmd);
     uint32_t paramLength = sizeof(AudioPlayParams);
     uint32_t length = sizeof(VmiCmd) + sizeof(AudioPlayParams);
+
     uint8_t *data = static_cast<uint8_t *>(malloc(length));
     if (data == nullptr) {
-        ERR("Error: malloc video buffer is nullptr");
+        ERR("Error: malloc audio buffer is nullptr");
         return JNI_FALSE;
     }
     memcpy(data, &vmiCmd, cmdLength);
@@ -551,15 +667,164 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(setMicParam)(JNIEnv *env, jclass cls, jobj
         return JNI_FALSE;
     }
     memcpy(data, &stVmiConfigMic, length);
-    uint32_t ret = SendData(VMIMsgType::MIC, data, length);
+    uint32_t ret = SendData(VMIMsgType::START, data, length);
     if (ret == 0) {
         free(data);
         data = nullptr;
+        INFO("OpenGLJNIWrapper_setMicParam success");
         return JNI_TRUE;
     } else {
         free(data);
         data = nullptr;
         ERR("setAudioParam failed, ret = %u", ret);
+        return JNI_FALSE;
+    }
+}
+
+/**
+ * @功能描述：发送传感器数据到agent端
+ * @参数 [in] env：代表Java环境指针
+ * @参数 [in] cls：代表对应JAVA类对象
+ * @参数 [in] jData：代表传感器数据
+ * @参数 [in] length：代表传感器数据长度
+ * @返回值：发送结果，JNI_TRUE代表发送Sensor数据成功，JNI_FALSE代表发送失败
+ */
+JNIEXPORT jboolean JNICALL
+OPENGL_JNI(sendSensorDataArray)(JNIEnv *env, jclass cls, jbyteArray jData, int length) {
+    (void) cls;
+    if (env == nullptr) {
+        ERR("Error: send sensor data, can't get java environment");
+        return JNI_FALSE;
+    }
+
+    uint8_t *sensorData = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
+    if (sensorData == nullptr) {
+        ERR("Error: send sensor, src buffer is nullptr");
+        return JNI_FALSE;
+    }
+
+    uint32_t vmiCmd = static_cast<uint32_t>(SENSOR_SEND_SENSOR_DATA);
+    uint32_t cmdLength = sizeof(VmiCmd);
+    uint32_t totalLength = sizeof(VmiCmd) + static_cast<uint32_t>(length);
+    uint8_t *data = static_cast<uint8_t *>(malloc(totalLength));
+    if (data == nullptr) {
+        ERR("Error: malloc sensor data buffer is nullptr");
+        env->ReleaseByteArrayElements(jData, reinterpret_cast<jbyte *>(sensorData), 0);
+        return JNI_FALSE;
+    }
+
+    memcpy(data, &vmiCmd, cmdLength);
+    memcpy(data + cmdLength, sensorData, length);
+
+    uint32_t ret = SendData(VMIMsgType::SENSOR, data, totalLength);
+    env->ReleaseByteArrayElements(jData, reinterpret_cast<jbyte *>(sensorData), 0);
+    free(data);
+    if (ret != 0) {
+        ERR("sendSensorDataArray failed, ret = %u", ret);
+        return JNI_FALSE;
+    }
+    return JNI_TRUE;
+}
+/**
+ * @功能描述：发送GPS信息到Agent
+ * @参数 [in] env：代表Java环境指针
+ * @参数 [in] cls：代表对应JAVA类对象
+ * @参数 [in] latitude：代表GPS纬度
+ * @参数 [in] longitude：代表GPS经度
+ * @参数 [in] altitude：代表海拔高度
+ * @参数 [in] bearing：代表方位信息
+ * @参数 [in] speed：代表重力加速器值
+ * @返回值：发送结果，JNI_TRUE代表发送Gps数据成功，JNI_FALSE代表发送失败
+ */
+JNIEXPORT jboolean JNICALL
+OPENGL_JNI(sendGpsLocation)(JNIEnv *env, jclass cls, double latitude, double longitude,
+                            double altitude, float speed, float bearing, float accuracy,
+                            int64_t timestamp) {
+    (void) cls;
+    if (env == nullptr) {
+        ERR("Error: send location data, can't get java environment");
+        return JNI_FALSE;
+    }
+
+    VmiGpsLocationData location = {latitude, longitude, altitude, speed, bearing, accuracy,
+                                   timestamp};
+    uint32_t vmiCmd = static_cast<uint32_t>(GPS_SEND_LOCATION_DATA);
+    uint32_t cmdLength = sizeof(VmiCmd);
+    uint32_t totalLength = sizeof(VmiCmd) + sizeof(VmiGpsLocationData);
+    uint8_t *data = static_cast<uint8_t *>(malloc(totalLength));
+    if (data == nullptr) {
+        ERR("Error: malloc location data buffer is nullptr");
+        return JNI_FALSE;
+    }
+
+    memcpy(data, &vmiCmd, cmdLength);
+    memcpy(data + cmdLength, &location, sizeof(VmiGpsLocationData));
+
+    uint32_t ret = SendData(VMIMsgType::GPS, data, totalLength);
+    free(data);
+    if (ret != 0) {
+        ERR("Failed to send location data, ret = %u", ret);
+        return JNI_FALSE;
+    }
+    return JNI_TRUE;
+}
+
+/**
+ * @功能描述：发送GPS的Nmea码到Agent
+ * @参数 [in] env：代表Java环境指针
+ * @参数 [in] cls：代表对应JAVA类对象
+ * @参数 [in] jData：GPS的NMEA码数据
+ * @参数 [in] length：jData的长度
+ * @返回值：发送结果，JNI_TRUE代表发送Gps的NMEA码成功，JNI_FALSE代表发送失败
+ */
+JNIEXPORT jboolean JNICALL
+OPENGL_JNI(sendGpsNmea)(JNIEnv *env, jclass cls, jbyteArray jData, int length) {
+    (void) cls;
+    if (env == nullptr) {
+        ERR("Error: send nmea data, can't get java environment");
+        return JNI_FALSE;
+    }
+
+    uint8_t *nmeaData = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
+    if (nmeaData == nullptr) {
+        ERR("Error: send nmea, src buffer is nullptr");
+        return JNI_FALSE;
+    }
+
+    uint32_t vmiCmd = static_cast<uint32_t>(GPS_SEND_NMEA_DATA);
+    uint32_t cmdLength = sizeof(VmiCmd);
+    uint32_t totalLength = sizeof(VmiCmd) + static_cast<uint32_t>(length);
+    uint8_t *data = static_cast<uint8_t *>(malloc(totalLength));
+    if (data == nullptr) {
+        ERR("Error: malloc nmea data buffer is nullptr");
+        env->ReleaseByteArrayElements(jData, reinterpret_cast<jbyte *>(nmeaData), 0);
+        return JNI_FALSE;
+    }
+
+    memcpy(data, &vmiCmd, cmdLength);
+    memcpy(data + cmdLength, nmeaData, length);
+
+    uint32_t ret = SendData(VMIMsgType::GPS, data, totalLength);
+    env->ReleaseByteArrayElements(jData, reinterpret_cast<jbyte *>(nmeaData), 0);
+    free(data);
+    if (ret != 0) {
+        ERR("Failed to send Nmea data, ret = %u", ret);
+        return JNI_FALSE;
+    }
+    return JNI_TRUE;
+}
+
+JNIEXPORT jboolean JNICALL
+OPENGL_JNI(sendFpsTestCommand)(JNIEnv *env, jclass cls, jbyteArray jData, int length) {
+    (void) env;
+    (void) cls;
+    uint8_t *data = reinterpret_cast<uint8_t *>(env->GetByteArrayElements(jData, nullptr));
+    uint32_t ret = SendData(VMIMsgType::FPS, data, length);
+    env->ReleaseByteArrayElements(jData, reinterpret_cast<jbyte *>(data), 0);
+    if (ret == 0) {
+        return JNI_TRUE;
+    } else {
+        ERR("Send fps test command cmd failed, ret = %u", ret);
         return JNI_FALSE;
     }
 }

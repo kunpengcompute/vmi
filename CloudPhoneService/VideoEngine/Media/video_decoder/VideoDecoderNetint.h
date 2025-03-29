@@ -6,8 +6,8 @@
 
 #include <atomic>
 #include "VideoDecoder.h"
-#include "ni_device_api_logan.h"
-#include "ni_rsrc_api_logan.h"
+#include "netintV333/ni_device_api_logan.h"
+#include "netintV333/ni_rsrc_api_logan.h"
 
 namespace MediaCore {
 class VideoDecoderNetint : public VideoDecoder {

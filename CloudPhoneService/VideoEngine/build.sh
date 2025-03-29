@@ -78,6 +78,7 @@ copy_script()
     cp -rf ${VIDEO_SCRIPT}/make_image.sh ${MODULE_OUTPUT_DIR}
     cp -rf ${VIDEO_SCRIPT}/Dockerfile_* ${MODULE_OUTPUT_DIR}
     cp -rf ${VIDEO_SCRIPT}/vendor/default.prop ${MODULE_OUTPUT_DIR}/vendor
+    cp -rf ${VIDEO_SCRIPT}/k8s ${MODULE_OUTPUT_DIR}
 }
 
 unpack_binary_lib()

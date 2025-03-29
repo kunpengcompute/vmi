@@ -28,7 +28,8 @@ enum VmiErrCode : int32_t {
     ERR_VIDEO_MAX = 0x200,
     ERR_AUDIO_MAX = 0x300,
     ERR_MIC_MAX = 0x400,
-    ERR_TOUCH_MAX = 0x500
+    ERR_TOUCH_MAX = 0x500,
+    ERR_SENSOR_MAX = 0x600
 };
 
 /**
@@ -39,6 +40,8 @@ enum VmiDataType : uint8_t {
     DATA_AUDIO,                                      // 音频播放组件
     DATA_TOUCH,                                      // 触控和按键组件
     DATA_MIC,                                        // 麦克风组件
+    DATA_SENSOR,                                     // 传感器组件
+    DATA_GPS,                                        // GPS组件
     DATA_TYPE_MAX
 };
 
@@ -61,6 +64,14 @@ enum VmiMicVerson : uint16_t {
     CUR_MIC_VERSION = 6,
 };
 
+enum VmiSensorVerson : uint16_t {
+    CUR_SENSOR_VERSION = 6,
+};
+
+enum VmiGpsVerson : uint16_t {
+    CUR_GPS_VERSION = 6,
+};
+
 #define MAKE_VERSION(dataType, version) ((dataType) << 24 | (version))
 
 enum VmiVersion : uint32_t {
@@ -68,6 +79,8 @@ enum VmiVersion : uint32_t {
     AUDIO_CUR_VERSION = MAKE_VERSION(DATA_AUDIO, CUR_AUDIO_VERSION),
     TOUCH_CUR_VERSION = MAKE_VERSION(DATA_TOUCH, CUR_TOUCH_VERSION),
     MIC_CUR_VERSION = MAKE_VERSION(DATA_MIC, CUR_MIC_VERSION),
+    SENSOR_CUR_VERSION = MAKE_VERSION(DATA_SENSOR, CUR_SENSOR_VERSION),
+    GPS_CUR_VERSION = MAKE_VERSION(DATA_GPS, CUR_GPS_VERSION),
 };
 
 /**
@@ -113,6 +126,20 @@ enum VmiTouchCmdId : uint16_t {
     SEND_KEY_EVENT,                                  // 客户端发送按键数据到服务端
 };
 
+enum VmiSensorCmdId : uint16_t {
+    SEND_SENSOR_DATA = 0,                            // 客户端发送传感器数据到服务端
+    RETURN_REGISTER_CLIENT_SENSOR,                   // 服务端通知客户端注册传感器监听
+    RETURN_UNREGISTER_CLIENT_SENSOR,                 // 服务端通知客户端取消传感器监听
+    RETURN_UPDATE_CLIENT_SENSOR_RATE,                // 服务端通知客户端更新传感器采集率
+};
+
+enum VmiGpsCmdId : uint16_t {
+    SEND_LOCATION_DATA = 0,                            // 客户端发送gps location到服务端
+    SEND_NMEA_DATA,                                    // 客户端发送nmea到服务端
+    RETURN_START_GPS,                                  // 服务端通知客户端启动GPS数据发送
+    RETURN_STOP_GPS,                                   // 服务端通知客户端停止GPS数据发送
+};
+
 #define MAKE_CMD(dataType, cmdType, cmdId)  ((dataType) << 24 | (cmdType) << 16 | (cmdId))
 
 enum VmiCmd : uint32_t {
@@ -132,6 +159,16 @@ enum VmiCmd : uint32_t {
     // 触控模块的cmd定义
     TOUCH_SEND_TOUCH_EVENT = MAKE_CMD(DATA_TOUCH, CMD_TRANS_DATA, SEND_TOUCH_EVENT),    // 传输数据格式参见：VmiTouchInputData
     TOUCH_SEND_KEY_EVENT = MAKE_CMD(DATA_TOUCH, CMD_TRANS_DATA, SEND_KEY_EVENT),        // 传输数据格式参见：VmiKeyInputData
+    // 传感器模块的cmd定义
+    SENSOR_SEND_SENSOR_DATA = MAKE_CMD(DATA_SENSOR, CMD_TRANS_DATA, SEND_SENSOR_DATA),  // 传输数据格式参见：SensorData
+    SENSOR_RETURN_REGISTER_CLIENT_SENSOR = MAKE_CMD(DATA_SENSOR, CMD_TRANS_DATA, RETURN_REGISTER_CLIENT_SENSOR),
+    SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR = MAKE_CMD(DATA_SENSOR, CMD_TRANS_DATA, RETURN_UNREGISTER_CLIENT_SENSOR),
+    SENSOR_RETURN_UPDATE_CLIENT_SENSOR_RATE = MAKE_CMD(DATA_SENSOR, CMD_TRANS_DATA, RETURN_UPDATE_CLIENT_SENSOR_RATE),
+    // GPS模块的cmd定义
+    GPS_SEND_LOCATION_DATA = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, SEND_LOCATION_DATA), // 传输数据格式参见：VmiGPSLocationData
+    GPS_SEND_NMEA_DATA = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, SEND_NMEA_DATA),         // 传输数据格式参见：VmiGPSLocationData
+    GPS_RETURN_START_GPS = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, RETURN_START_GPS),
+    GPS_RETURN_STOP_GPS = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, RETURN_STOP_GPS),
 };
 
 /**
@@ -174,7 +211,7 @@ enum RCMode : uint32_t  {
     ABR,                                        // 平均码率，暂不支持
     CRF,                                        // 画质优先，暂不支持
     CBR,                                        // 恒定码率
-    CAPPED_CRF,                                 // 画质优先，但限制码率，暂不支持
+    CAPPED_CRF,                                 // 画质优先，但限制码率
     RC_MODE_MAX
 };
 
@@ -228,6 +265,11 @@ struct EncodeParams {
     RCMode rcMode = CBR;                        // 流控模式
     uint32_t forceKeyFrame = 0;                 // 在设置后第N帧强制生成I帧，0表示不生效(目前仅支持0与1的设置)
     bool interpolation = false;                 // 补帧开关
+    uint32_t crf = 34;                          // crf码控级别
+    uint32_t maxCrfRate = 20000000;             // crf码率峰值
+    int32_t vbvBufferSize = 1000;               // crf码率缓冲区大小
+    uint32_t streamWidth = 720;                 // 出流分辨率宽
+    uint32_t streamHeight = 1280;               // 出流分辨率高
 } __attribute__((packed));
 
 // 启动码流服务的初始配置，包含编码器的初始参数
@@ -309,4 +351,49 @@ struct VmiKeyInputData {
 } __attribute__((packed));
 
 struct VmiConfigTouch : public VmiConfig {} __attribute__((packed));
+
+/**
+ * 传感器相关定义
+*/
+/**
+ * 定义支持的数据类型
+ */
+enum VmiSensorType : uint32_t {
+    HANDLE_ACCELERATION = 0,
+    HANDLE_GYROSCOPE,
+    HANDLE_MAGNETIC_FIELD,
+    HANDLE_ORIENTATION,
+    HANDLE_TEMPERATURE,
+    HANDLE_PROXIMITY,
+    HANDLE_LIGHT,
+    HANDLE_PRESSURE,
+    HANDLE_HUMIDITY,
+    HANDLE_MAGNETIC_FIELD_UNCALIBRATED,
+    HANDLE_MAX = 10
+};
+
+struct SensorData {
+    float x;
+    float y;
+    float z;
+    int32_t type;
+} __attribute__((packed));
+ 
+struct SensorActivateData {
+    int handle;             // handle对应VmiSensorType里的值
+    int64_t samplingPeriod; // 在取消激活传感器时，这个字段可以忽略或设置为默认值
+} __attribute__((packed));
+
+/**
+ * GPS 相关定义
+*/
+struct VmiGpsLocationData {
+    double latitude;
+    double longitude;
+    double altitude;
+    float speed;
+    float bearing;
+    float accuracy;
+    int64_t timestamp;
+} __attribute__((packed));
 #endif

@@ -14,36 +14,13 @@
 #include <sstream>
 #include <cinttypes>
 #include <dlfcn.h>
-#include <sys/system_properties.h>
+#include "SystemProperty.h"
 #include "GpuEncoderBase.h"
 #include "logging.h"
 
 using namespace Vmi::GpuEncoder;
 
 namespace {
-    int32_t GetPropertyWithDefault(const std::string &name, int32_t defaultVal)
-    {
-        char propBuf[PROP_VALUE_MAX] = {'\0'};
-        int propLen = __system_property_get(name.c_str(), propBuf);
-        if (propLen == 0) {
-            return defaultVal;
-        }
-        auto propStr = std::string(propBuf);
-        if (propStr.empty()) {
-            return defaultVal;
-        }
-
-        std::stringstream stream;
-        stream << propStr;
-        intmax_t propVal;
-        stream >> propVal;
-        if (propVal < INT32_MIN || propVal > INT32_MAX) {
-            ERR("Propery[%s]'s is out range of int32, Get property failed!", name.c_str());
-            return defaultVal;
-        }
-        return propVal;
-    }
-
     using CreateEncTurboFunc = void *(*)(uint32_t);
 
     class ModuleLib {
@@ -169,7 +146,7 @@ void QueryModule(ModuleInfo **moduleList, uint32_t *listSize)
     }
 
     std::vector<ModuleInfo> moduleVector;
-    int32_t gpuType = GetPropertyWithDefault("ro.vmi.hardware.gpu", 0);
+    int32_t gpuType = Vmi::GetPropertyWithDefault("ro.vmi.hardware.gpu", 0);
     auto gpuIt = MODULE_INFO_MAP.find(gpuType);
     if (gpuIt != MODULE_INFO_MAP.end()) {
         moduleVector.emplace_back(gpuIt->second);

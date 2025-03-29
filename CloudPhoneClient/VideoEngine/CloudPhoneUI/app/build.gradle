@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 def releaseTime() {
-    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
+    return new Date().format("yyyyMMdd_HHmm", TimeZone.getTimeZone("GMT+08:00"))
 }
 
 android {
@@ -12,7 +12,7 @@ android {
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 25
-        versionCode 4
+        versionCode 5
         versionName releaseTime()
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -23,7 +23,7 @@ android {
                 cppFlags "-DBUILD_UNITY_PLUGIN"
                 arguments "-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON"
                 arguments "-DANDROID_STL=c++_static"
-                arguments "-DVMI_BINARY_DIR="+file(".")+"/jniLibs"
+                arguments "-DVMI_BINARY_DIR=" + file(".") + "/jniLibs"
             }
 
             ndk {
@@ -34,11 +34,11 @@ android {
 
     externalNativeBuild {
         cmake {
-            version "3.25.3"
+            version "3.28.2"
             path "src/main/cpp/CMakeLists.txt"
         }
     }
-    
+
     packagingOptions {
         pickFirst "lib/arm64-v8a/libVideoDecoder.so"
         pickFirst "lib/arm64-v8a/libVideoEngineClient.so"
@@ -52,6 +52,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // signingConfig signingConfigs.release
         }
         // debug模式相关配置
         debug {
@@ -117,6 +118,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.tencent:mmkv:1.3.9'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'

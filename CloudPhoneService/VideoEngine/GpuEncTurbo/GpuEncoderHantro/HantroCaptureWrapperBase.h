@@ -7,14 +7,18 @@
 #define HANTRO_CAPTURE_WRAPPER
 
 #include <functional>
-#include <ui/GraphicBuffer.h>
+
+typedef void* pVaGraphicBuffer;
 
 namespace Vmi {
 struct HantroCaptureBuffer {
     uint64_t data = 0;
-    android::GraphicBuffer *rgbBuffer = nullptr;
-    std::function<void(android::GraphicBuffer *, int *, int *)> acquireBufferCaller = nullptr;
-    std::function<void(android::GraphicBuffer *)> releaseBufferCaller = nullptr;
+    pVaGraphicBuffer rgbBuffer = nullptr;
+    std::function<void(pVaGraphicBuffer, int *, int *)> acquireBufferCaller = nullptr;
+    std::function<void(pVaGraphicBuffer)> releaseBufferCaller = nullptr;
+    std::function<void(pVaGraphicBuffer, unsigned int, unsigned int)> SetWmSizeCaller = nullptr;
+    uint32_t tmpStreamHeight = 0;
+    uint32_t tmpStreamWidth = 0;
 };
 using FrameComeCallback = std::function<int(HantroCaptureBuffer *)>;
 struct RefreshRequest {};

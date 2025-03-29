@@ -2,6 +2,8 @@ package com.huawei.cloudphonesdk.maincontrol.config;
 
 import androidx.annotation.NonNull;
 
+import com.huawei.cloudphonesdk.maincontrol.VideoConf;
+
 public class VmiConfigVideo {
 
     // VmiConfig
@@ -19,15 +21,48 @@ public class VmiConfigVideo {
     private int heightAligned = 1280;              // 1280: 默认不做对齐
 
     private boolean forceLandscape = false;               // 强制横屏
+    private int density = 320;                            // 屏幕密度
     private boolean renderOptimize = false;               // 出流优化，默认关闭，开启时displayResolution与captureResolution无效
 
     // EncodeParams
-    private int bitrate = 3000000;                          // 码率
+    private int bitrate = 2000000;                          // 码率
     private int gopSize = 30;                               // I帧间隔
-    private int profile = 1;   // 编码复杂度
+    private int profile = 0;   // 编码复杂度
     private int rcMode = 2;               // 流控模式
     private int forceKeyFrame = 0;                          // 在设置后第N帧强制生成I帧，0表示不生效
     private boolean interpolation = false;                  // 补帧开关
+    private int crf = 34;
+    private int maxCrfRate = 20000000;
+    private int vbvBufferSize = 1000;
+    private int streamWidth = 720;
+    private int streamHeight = 1280;
+
+    public VmiConfigVideo() {
+    }
+
+    public int getCrf() {
+        return crf;
+    }
+
+    public void setCrf(int crf) {
+        this.crf = crf;
+    }
+
+    public int getMaxCrfRate() {
+        return maxCrfRate;
+    }
+
+    public void setMaxCrfRate(int maxCrfRate) {
+        this.maxCrfRate = maxCrfRate;
+    }
+
+    public int getVbvBufferSize() {
+        return vbvBufferSize;
+    }
+
+    public void setVbvBufferSize(int vbvBufferSize) {
+        this.vbvBufferSize = vbvBufferSize;
+    }
 
     public int getVersion() {
         return version;
@@ -97,6 +132,14 @@ public class VmiConfigVideo {
         this.forceLandscape = forceLandscape;
     }
 
+    public int getDensity() {
+        return density;
+    }
+
+    public void setDensity(int density) {
+        this.density = density;
+    }
+
     public boolean isRenderOptimize() {
         return renderOptimize;
     }
@@ -153,6 +196,21 @@ public class VmiConfigVideo {
         this.interpolation = interpolation;
     }
 
+    public int getStreamWidth() {
+        return streamWidth;
+    }
+
+    public void setStreamWidth(int streamWidth) {
+        this.streamWidth = streamWidth;
+    }
+
+    public int getStreamHeight() {
+        return streamHeight;
+    }
+
+    public void setStreamHeight(int streamHeight) {
+        this.streamHeight = streamHeight;
+    }
 
     enum VideoFrameType {
         H264,
@@ -200,26 +258,30 @@ public class VmiConfigVideo {
         DATA_TYPE_MAX
     }
 
-    @NonNull
     @Override
     public String toString() {
-        return "VimConfigVideo{" +
-            "version=" + version +
-            ", encoderType=" + encoderType +
-            ", videoFrameType=" + videoFrameType +
-            ", frameRate=" + frameRate +
-            ", width=" + width +
-            ", height=" + height +
-            ", widthAligned=" + widthAligned +
-            ", heightAligned=" + heightAligned +
-            ", forceLandscape=" + forceLandscape +
-            ", renderOptimize=" + renderOptimize +
-            ", bitrate=" + bitrate +
-            ", gopSize=" + gopSize +
-            ", profile=" + profile +
-            ", rcMode=" + rcMode +
-            ", forceKeyFrame=" + forceKeyFrame +
-            ", interpolation=" + interpolation +
-            '}';
+        return "VmiConfigVideo{" +
+                "version=" + version +
+                ", encoderType=" + encoderType +
+                ", videoFrameType=" + videoFrameType +
+                ", frameRate=" + frameRate +
+                ", width=" + width +
+                ", height=" + height +
+                ", widthAligned=" + widthAligned +
+                ", heightAligned=" + heightAligned +
+                ", forceLandscape=" + forceLandscape +
+                ", renderOptimize=" + renderOptimize +
+                ", bitrate=" + bitrate +
+                ", gopSize=" + gopSize +
+                ", profile=" + profile +
+                ", rcMode=" + rcMode +
+                ", forceKeyFrame=" + forceKeyFrame +
+                ", interpolation=" + interpolation +
+                ", crf=" + crf +
+                ", maxCrfRate=" + maxCrfRate +
+                ", vbvBufferSize=" + vbvBufferSize +
+                ", streamWidth=" + streamWidth +
+                ", streamHeight=" + streamHeight +
+                '}';
     }
 }

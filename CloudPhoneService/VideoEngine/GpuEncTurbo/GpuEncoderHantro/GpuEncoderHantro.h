@@ -29,6 +29,8 @@ struct HantroEncodeParams {
     uint32_t bitRate = 0;
     uint32_t keyFrame = 0;
     uint32_t profile = 0;
+    uint32_t streamWidth = 0;
+    uint32_t streamHeight = 0;
 };
 class GpuEncoderHantro : public GpuEncoderBase {
 public:
@@ -97,6 +99,7 @@ private:
 
     // AVcodec
     AVCodecContext* m_avcodec;
+    AVBufferRef* m_hwDevice;
     bool CreateHwFrame(AVFrame *&frame);
 
     // params legal-check in gputurbo caller
@@ -105,7 +108,9 @@ private:
     void SetGopsize(EncodeParamT &param, HantroEncodeParams &params);
     void SetKeyFrame(HantroEncodeParams &params);
     void SetProfile(EncodeParamT &param, HantroEncodeParams &params);
-    uint32_t ConvertProfileCodeToString(uint32_t profileCode, std::string &profile); // convert profileCode to string
+    void SetStreamWidth(EncodeParamT &param, HantroEncodeParams &params);
+    void SetStreamHeight(EncodeParamT &param, HantroEncodeParams &params);
+    uint32_t ConvertProfileCodeToString(uint32_t profileCode, uint32_t &profile); // convert profileCode to string
 
     std::set<GpuEncoderBufferT> m_buffers {};
     // 类参数
@@ -121,8 +126,9 @@ private:
 
     // 编码参数
     bool m_needRestart = false;
+    bool m_needSetWidthOrHeight = false;
     bool m_dynamicAdjustParamFlag = false;
-    HantroEncodeParams m_settingParams {30, 30, 5000000, 0, Vmi::GpuEncoder::ENC_PROFILE_IDC_BASELINE};
+    HantroEncodeParams m_settingParams {30, 30, 5000000, 0, Vmi::GpuEncoder::ENC_PROFILE_IDC_MAIN, 0, 0};
     HantroEncodeParams m_receiveParams;
 };
 }

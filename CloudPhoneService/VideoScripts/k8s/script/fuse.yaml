@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ib-fuse
+  namespace: kube-system
+data:
+  config.json: |
+    {
+      "resourceName": "github.com/fuse",
+      "socketName": "everpeace-ib-fuse.sock",
+      "numDevices": 400,
+      "hostDevices": [{
+        "hostPath": "/dev/fuse",
+        "containerPath": "/dev/fuse",
+        "permission": "rwm"
+      }]
+    }

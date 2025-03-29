@@ -77,7 +77,7 @@ video_client_compile()
     # NdkDecoder
     info "begin build NdkDecoder"
     bash ${root_dir}/CloudPhoneClient/VideoEngine/NdkDecoder/build.sh build
-    info "begCloudPhoneApkin build NdkDecoder success"
+    info "build NdkDecoder success"
     # CloudPhoneApk
     info "begin build CloudPhoneApk"
     bash ${root_dir}/CloudPhoneClient/VideoEngine/CloudPhoneUI/build.sh build

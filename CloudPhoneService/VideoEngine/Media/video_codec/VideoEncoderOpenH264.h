@@ -16,7 +16,7 @@ public:
     /**
      * @功能描述: 构造函数
      */
-    explicit VideoEncoderOpenH264(EncoderFormat codecFormat);
+    VideoEncoderOpenH264();
 
     /**
      * @功能描述: 析构函数

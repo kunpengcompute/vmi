@@ -28,9 +28,27 @@ int NetworkComm::SendWithReservedByte(VmiDataType type, uint8_t* data, uint32_t 
     return m_netComm->Send(CovertDataTypeToMsgType(type), *head, size);
 }
 
+int NetworkComm::SendWithReservedByte(VMIMsgType type, uint8_t* data, uint32_t size)
+{
+    if (data == nullptr) {
+        ERR("Failed to send data, type:%u, size:%u", static_cast<uint32_t>(type), size);
+        return -1;
+    }
+    StreamMsgHead* head = reinterpret_cast<StreamMsgHead *>(data);
+    return m_netComm->Send(type, *head, size);
+}
+
 void NetworkComm::RegisterRecvDataCallback(VmiDataType type, RecvDataCallback callback, bool isSingleFragment)
 {
     uint32_t ret = m_netComm->RegisterHook(CovertDataTypeToMsgType(type), callback, isSingleFragment);
+    if (ret != 0) {
+        ERR("Failed to register type:%u recv callback", static_cast<uint32_t>(type));
+    }
+}
+
+void NetworkComm::RegisterRecvDataCallback(VMIMsgType type, RecvDataCallback callback, bool isSingleFragment)
+{
+    uint32_t ret = m_netComm->RegisterHook(type, callback, isSingleFragment);
     if (ret != 0) {
         ERR("Failed to register type:%u recv callback", static_cast<uint32_t>(type));
     }
@@ -66,16 +84,22 @@ VMIMsgType NetworkComm::CovertDataTypeToMsgType(VmiDataType type)
             return VMIMsgType::VIDEO_RR2;
         case DATA_TOUCH:
             return VMIMsgType::TOUCH_INPUT;
+        case DATA_SENSOR:
+            return VMIMsgType::SENSOR;
+        case DATA_GPS:
+            return VMIMsgType::GPS;
         default:
             return VMIMsgType::INVALID;
     }
 }
 
 // 视频流情况下建立的网络连接对象
-// 连接需承载音频、触控、按键、视频流的数据
+// 连接需承载音频、触控、按键、传感器、gps、视频流的数据
 bool NetworkCommmVideo::IsConveyDataType(VmiDataType type)
 {
-    if (type == DATA_AUDIO || type == DATA_TOUCH || type == DATA_MIC || type == DATA_VIDEO) {
+    if (type == DATA_AUDIO || type == DATA_TOUCH || type == DATA_MIC ||
+        type == DATA_VIDEO || type == DATA_SENSOR || type == DATA_GPS
+    ) {
         return true;
     }
     return false;

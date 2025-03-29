@@ -29,31 +29,67 @@ enum class VideoClientState : uint32_t {
 
 enum VideoClientState g_videoState = VideoClientState::NONE;
 
-uint32_t ClientAudioHandleHook(std::pair<uint8_t *, uint32_t> data)
+bool ClientAudioHandleHook(std::pair<uint8_t *, uint32_t> data)
 {
     if (!PacketManager::GetInstance().PutPkt(VMIMsgType::AUDIO, data)) {
         ERR("Failed to put audio packet!");
-        return 1;
+        return false;
     }
-    return 0;
+    return true;
 }
 
-uint32_t ClientVideoHandleHook(std::pair<uint8_t *, uint32_t> data)
+bool ClientVideoHandleHook(std::pair<uint8_t *, uint32_t> data)
 {
     if (!PacketManager::GetInstance().PutPkt(VMIMsgType::VIDEO_RR2, data)) {
         ERR("Failed to put video packet!");
-        return 1;
+        return false;
     }
-    return 0;
+    return true;
 }
 
-uint32_t ClientMicHandleHook(std::pair<uint8_t *, uint32_t> data)
+bool ClientMicHandleHook(std::pair<uint8_t *, uint32_t> data)
 {
     if (!PacketManager::GetInstance().PutPkt(VMIMsgType::MIC, data)) {
         ERR("Failed to put video packet!");
-        return 1;
+        return false;
     }
-    return 0;
+    return true;
+}
+
+bool ClientSensorHandleHook(std::pair<uint8_t *, uint32_t> data)
+{
+    if (!PacketManager::GetInstance().PutPkt(VMIMsgType::SENSOR, data)) {
+        ERR("Failed to put sensor packet!");
+        return false;
+    }
+    return true;
+}
+
+bool ClientGpsHandleHook(std::pair<uint8_t *, uint32_t> data)
+{
+    if (!PacketManager::GetInstance().PutPkt(VMIMsgType::GPS, data)) {
+        ERR("Failed to put gps packet!");
+        return false;
+    }
+    return true;
+}
+
+bool ClientFpsHandleHook(std::pair<uint8_t *, uint32_t> data)
+{
+    if (!PacketManager::GetInstance().PutPkt(VMIMsgType::FPS, data)) {
+        ERR("Failed to put fps packet!");
+        return false;
+    }
+    return true;
+}
+
+bool ClientConfigHandleHook(std::pair<uint8_t *, uint32_t> data)
+{
+    if (!PacketManager::GetInstance().PutPkt(VMIMsgType::CONFIG, data)) {
+        ERR("Failed to put config packet!");
+        return false;
+    }
+    return true;
 }
 
 bool RegisterVideoHandleHooks()
@@ -64,12 +100,26 @@ bool RegisterVideoHandleHooks()
     MAKE_SHARED_NOTHROW(videoHandle, PacketHandle, VMIMsgType::VIDEO_RR2, ClientVideoHandleHook, true);
     std::shared_ptr<PacketHandle> micHandle = nullptr;
     MAKE_SHARED_NOTHROW(micHandle, PacketHandle, VMIMsgType::MIC, ClientMicHandleHook, true);
+    std::shared_ptr<PacketHandle> sensorHandle = nullptr;
+    MAKE_SHARED_NOTHROW(sensorHandle, PacketHandle, VMIMsgType::SENSOR, ClientSensorHandleHook, true);
+    std::shared_ptr<PacketHandle> gpsHandle = nullptr;
+    MAKE_SHARED_NOTHROW(gpsHandle, PacketHandle, VMIMsgType::GPS, ClientGpsHandleHook, true);
+    std::shared_ptr<PacketHandle> fpsHandle = nullptr;
+    MAKE_SHARED_NOTHROW(fpsHandle, PacketHandle, VMIMsgType::FPS, ClientFpsHandleHook, true);
+    std::shared_ptr<PacketHandle> configHandle = nullptr;
+    MAKE_SHARED_NOTHROW(configHandle, PacketHandle, VMIMsgType::CONFIG, ClientConfigHandleHook, true);
 
-    if (audioHandle == nullptr || videoHandle == nullptr || micHandle == nullptr) {
+    if (audioHandle == nullptr || videoHandle == nullptr || micHandle == nullptr ||
+        sensorHandle == nullptr || gpsHandle == nullptr || fpsHandle == nullptr || configHandle == nullptr
+    ) {
         ERR("Failed to create packet handler");
         micHandle = nullptr;
         audioHandle = nullptr;
         videoHandle = nullptr;
+        sensorHandle = nullptr;
+        gpsHandle = nullptr;
+        fpsHandle = nullptr;
+        configHandle =nullptr;
         return false;
     }
 
@@ -86,6 +136,26 @@ bool RegisterVideoHandleHooks()
     ret = NetController::GetInstance().SetNetCommHandle(VMIMsgType::MIC, micHandle);
     if (ret != VMI_SUCCESS) {
         ERR("Failed to register mic handle hook, ret=%u", ret);
+        return false;
+    }
+    ret = NetController::GetInstance().SetNetCommHandle(VMIMsgType::SENSOR, sensorHandle);
+    if (ret != VMI_SUCCESS) {
+        ERR("Failed to register sensor handle hook, ret=%u", ret);
+        return false;
+    }
+    ret = NetController::GetInstance().SetNetCommHandle(VMIMsgType::GPS, gpsHandle);
+    if (ret != VMI_SUCCESS) {
+        ERR("Failed to register gps handle hook, ret=%u", ret);
+        return false;
+    }
+    ret = NetController::GetInstance().SetNetCommHandle(VMIMsgType::FPS, fpsHandle);
+    if (ret != VMI_SUCCESS) {
+        ERR("Failed to register fps handle hook, ret=%u", ret);
+        return false;
+    }
+    ret = NetController::GetInstance().SetNetCommHandle(VMIMsgType::CONFIG, configHandle);
+    if (ret != VMI_SUCCESS) {
+        ERR("Failed to register config handle hook, ret=%u", ret);
         return false;
     }
     return true;
@@ -106,8 +176,12 @@ bool InitVideoPacketQueues()
         { VMIMsgType::AUDIO, false },
         { VMIMsgType::TOUCH_INPUT, false },
         { VMIMsgType::NAVBAR_INPUT, false },
+        { VMIMsgType::SENSOR, false },
         { VMIMsgType::MIC, false },
-        { VMIMsgType::VIDEO_RR2, false }
+        { VMIMsgType::GPS, false },
+        { VMIMsgType::VIDEO_RR2, false },
+        { VMIMsgType::FPS, false },
+        { VMIMsgType::CONFIG, false }
     };
 
     for (auto &&it : pipMap) {
@@ -165,7 +239,7 @@ uint32_t Initialize(OnVmiEngineEvent eventHandleFunc)
     return VMI_SUCCESS;
 }
 
-uint32_t Start(uint64_t surface, uint32_t width, uint32_t height, uint32_t densityDpi)
+uint32_t Start(uint64_t surface, uint32_t width, uint32_t height, uint32_t densityDpi, std::string &ipAndPort)
 {
     std::lock_guard<std::mutex> lock(g_mutex);
     if (g_videoState != VideoClientState::INIT) {
@@ -186,7 +260,7 @@ uint32_t Start(uint64_t surface, uint32_t width, uint32_t height, uint32_t densi
         return VMI_CLIENT_START_FAIL;
     }
 
-    int32_t ret = CloudPhoneController::GetInstance().Start(surface);
+    int32_t ret = CloudPhoneController::GetInstance().Start(surface, ipAndPort);
     if (ret != VMI_SUCCESS) {
         ERR("CloudPhoneController start failed, ret: %d", ret);
         return VMI_CLIENT_START_FAIL;

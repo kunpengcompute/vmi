@@ -116,13 +116,58 @@ JNIEXPORT jboolean JNICALL OPENGL_JNI(sendTouchEvent)(JNIEnv *env, jclass cls, j
  */
 JNIEXPORT jboolean JNICALL OPENGL_JNI(sendAudioDataArray)(JNIEnv *env, jclass cls, jbyteArray jData, int length);
 
-JNIEXPORT jboolean JNICALL OPENGL_JNI(setVideoParam)(JNIEnv *env, jclass cls, jobject obj);
+JNIEXPORT jboolean JNICALL OPENGL_JNI(startTouch)(JNIEnv *env, jclass cls);
 
-JNIEXPORT jboolean JNICALL OPENGL_JNI(setMicParam)(JNIEnv *env, jclass cls, jobject obj);
+JNIEXPORT jboolean JNICALL OPENGL_JNI(startVideo)(JNIEnv *env, jclass cls, jobject obj);
 
 JNIEXPORT jboolean JNICALL OPENGL_JNI(setAudioParam)(JNIEnv *env, jclass cls, jobject obj);
 
+JNIEXPORT jboolean JNICALL OPENGL_JNI(setEncodeParam)(JNIEnv *env, jclass cls, jobject obj);
+
+JNIEXPORT void JNICALL OPENGL_JNI(getEncodeParam)(JNIEnv *env, jclass cls);
+
+JNIEXPORT jboolean JNICALL OPENGL_JNI(setMicParam)(JNIEnv *env, jclass cls, jobject obj);
+
 JNIEXPORT jboolean JNICALL OPENGL_JNI(composeMicData)(JNIEnv* env, jclass cls, jbyteArray jData, jint length, jint audioType, jint sampleInterval);
+
+/**
+ * @功能描述：发送传感器数据到agent端
+ * @参数 [in] env：代表Java环境指针
+ * @参数 [in] cls：代表对应JAVA类对象
+ * @参数 [in] jData：代表传感器数据
+ * @参数 [in] length：代表传感器数据长度
+ * @返回值：发送结果，JNI_TRUE代表发送Sensor数据成功，JNI_FALSE代表发送失败
+ */
+JNIEXPORT jboolean JNICALL OPENGL_JNI(sendSensorDataArray)(JNIEnv* env, jclass cls, jbyteArray jData, int length);
+
+/**
+ * @功能描述：发送GPS位置信息到服务端
+ * @参数 [in] env：代表Java环境指针
+ * @参数 [in] cls：代表对应JAVA类对象
+ * @参数 [in] latitude：代表GPS纬度
+ * @参数 [in] longitude：代表GPS经度
+ * @参数 [in] altitude：代表海拔高度
+ * @参数 [in] bearing：代表方位信息
+ * @参数 [in] speed：代表重力加速器值
+ * @参数 [in] accuracy
+ * @参数 [in] timestamp
+ * @返回值：发送结果，JNI_TRUE代表发送Gps数据成功，JNI_FALSE代表发送失败
+ */
+JNIEXPORT jboolean JNICALL OPENGL_JNI(sendGpsLocation)(JNIEnv* env, jclass cls, double latitude, double longitude,
+                                                       double altitude, float speed, float bearing, float accuracy,
+                                                       int64_t timestamp);
+
+/**
+ * @功能描述：发送GPS的Nmea码到服务端
+ * @参数 [in] env：代表Java环境指针
+ * @参数 [in] cls：代表对应JAVA类对象
+ * @参数 [in] jData：GPS的NMEA码
+ * @参数 [in] length：jData的长度
+ * @返回值：发送结果，JNI_TRUE代表发送Gps的NMEA码成功，JNI_FALSE代表发送失败
+ */
+JNIEXPORT jboolean JNICALL OPENGL_JNI(sendGpsNmea)(JNIEnv* env, jclass cls, jbyteArray jData, int length);
+
+JNIEXPORT jboolean JNICALL OPENGL_JNI(sendFpsTestCommand)(JNIEnv* env, jclass cls, jbyteArray jData, int length);
 }
 
 #endif

@@ -223,8 +223,6 @@ void Heartbeat::CalcLatency(const HeartbeatMsg &heartbeatResponseMsg, uint64_t r
     } else {
         m_netLoopbackLatencyAverage = -1;
     }
-    LOG_RATE_LIMIT(ANDROID_LOG_INFO, 1, "MaxLatency = %ju us, AverageLatency = %jd us",
-                   maxMicroSec, m_netLoopbackLatencyAverage);
     int64_t tooBadLatency = m_maxAveLatency * SECOND_TO_MICRO;
     if (m_netLoopbackLatencyAverage > tooBadLatency) {
         ERR("Failed to calculate latency, network average latency:%d is larger than bad latency:%" PRId64 "",

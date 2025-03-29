@@ -1,4 +1,6 @@
 LOCAL_PATH:= $(call my-dir)
+REPO_ROOT_DIR := $(LOCAL_PATH)/../../../..
+COMMON_DIR := $(REPO_ROOT_DIR)/Common/Log
 ########################################################################
 include $(CLEAR_VARS)
 
@@ -9,15 +11,12 @@ LOCAL_SRC_FILES := \
     VideoEncoderNetint.cpp \
     VideoEncoderQuadra.cpp \
     VideoEncoderVastai.cpp \
-    VideoEncoderT432.cpp \
-	../common/log/MediaLog.cpp \
-    ../common/log/MediaLogManager.cpp \
-    ../common/prop/Property.cpp
+    $(COMMON_DIR)/LogInfo.cpp \
+    $(COMMON_DIR)/logging.cpp \
 
 LOCAL_C_INCLUDES := \
     $(LOCAL_PATH) \
-    $(LOCAL_PATH)/../common/log \
-    $(LOCAL_PATH)/../common/prop \
+    $(COMMON_DIR) \
     $(LOCAL_PATH)/../vendor/openh264 \
     $(LOCAL_PATH)/../vendor/netintV333 \
     $(LOCAL_PATH)/../../../../unpack_open_source/hantro/

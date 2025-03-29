@@ -1,0 +1,87 @@
+diff --git a/Dockerfile b/Dockerfile
+index e50a82f..90de89d 100644
+--- a/Dockerfile
++++ b/Dockerfile
+@@ -1,16 +1,4 @@
+ FROM golang:1.19 as build
+-ARG CGO_ENABLED=0
+-ARG GOOS=linux
+-ARG GOARCH=amd64
+-
+-WORKDIR /go/src/k8s-host-device-plugin
+-COPY go.mod go.sum ./
+-RUN go mod download
+-
+-COPY . .
+-RUN go install -ldflags="-s -w"
+-
+-FROM gcr.io/distroless/static-debian11
+-COPY --from=build /go/bin/k8s-host-device-plugin /bin/k8s-host-device-plugin
++COPY k8s-host-device-plugin /bin/k8s-host-device-plugin
+ 
+ CMD ["/bin/k8s-host-device-plugin"]
+diff --git a/server.go b/server.go
+index 9b7c587..9f5e962 100644
+--- a/server.go
++++ b/server.go
+@@ -7,7 +7,8 @@ import (
+ 	"os"
+ 	"path"
+ 	"time"
+-
++        "strconv"
++        "strings"
+ 	"golang.org/x/net/context"
+ 	"google.golang.org/grpc"
+ 	pluginapi "k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1"
+@@ -57,15 +58,24 @@ func NewHostDevicePlugin(config HostDevicePluginConfig) (*HostDevicePlugin, erro
+ 	}
+ 
+ 	var devs = make([]*pluginapi.Device, config.NumDevices)
+-
++	isRender := false
++	if strings.Compare("github.com/render", config.ResourceName) == 0 {
++		isRender = true
++	}
+ 	health := getHostDevicesHealth(expandedHostDevices)
+ 	for i, _ := range devs {
+ 		devs[i] = &pluginapi.Device{
+ 			ID:     fmt.Sprint(i),
+ 			Health: health,
+ 		}
++		if isRender {
++			numaNodes := make([]*pluginapi.NUMANode, 1)
++		        numaNodes[0] = &pluginapi.NUMANode{ ID: int64(i % 4),}
++			devs[i].Topology = &pluginapi.TopologyInfo{
++				Nodes: numaNodes,
++			}
++		}
+ 	}
+-
+ 	healthCheckIntervalSeconds := defaultHealthCheckIntervalSeconds
+ 	if config.HealthCheckIntervalSeconds > 0 {
+ 		healthCheckIntervalSeconds = config.HealthCheckIntervalSeconds
+@@ -220,13 +230,17 @@ func (m *HostDevicePlugin) Allocate(ctx context.Context, r *pluginapi.AllocateRe
+ 
+ 	ress := make([]*pluginapi.ContainerAllocateResponse, len(r.GetContainerRequests()))
+ 
+-	for i, _ := range r.GetContainerRequests() {
+-		ds := make([]*pluginapi.DeviceSpec, len(m.hostDevices))
+-		for j, _ := range m.hostDevices {
++	for i, req := range r.GetContainerRequests() {
++		ds := make([]*pluginapi.DeviceSpec, len(req.DevicesIDs))
++		for j, id := range req.DevicesIDs {
++			pos, _ := strconv.Atoi(id)
++			if pos >= len(m.hostDevices) {
++				pos = pos % len(m.hostDevices)
++			}
+ 			ds[j] = &pluginapi.DeviceSpec{
+-				HostPath:      m.hostDevices[j].HostPath,
+-				ContainerPath: m.hostDevices[j].ContainerPath,
+-				Permissions:   m.hostDevices[j].Permission,
++				HostPath:      m.hostDevices[pos].HostPath,
++				ContainerPath: m.hostDevices[pos].ContainerPath,
++				Permissions:   m.hostDevices[pos].Permission,
+ 			}
+ 			ress[i] = &pluginapi.ContainerAllocateResponse{
+ 				Devices: ds,

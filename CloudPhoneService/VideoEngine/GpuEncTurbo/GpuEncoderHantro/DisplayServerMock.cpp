@@ -3,77 +3,92 @@
  * 功能描述：瀚博GPU抓图库假实现
  */
 
-#include "DisplayServer/DisplayServer.h"
+#include "DisplayServer/DisplayServerWrap.h"
 
-uint64_t getPaddr(buffer_handle_t)
+va_buffer_handle_wrap getHandleWrap(pVaGraphicBuffer)
+{
+    return nullptr;
+}
+
+uint64_t getPaddrWrap(va_buffer_handle_wrap)
 {
     return 0;
 }
 
-uint32_t getWidth(buffer_handle_t)
+uint32_t getWidthWrap(va_buffer_handle_wrap)
 {
     return 0;
 }
 
-uint32_t getHeight(buffer_handle_t)
+uint32_t getHeightWrap(va_buffer_handle_wrap)
 {
     return 0;
 }
-int32_t getFormat(buffer_handle_t)
-{
-    return 0;
-}
-
-uint32_t getStride(buffer_handle_t)
+int32_t getFormatWrap(va_buffer_handle_wrap)
 {
     return 0;
 }
 
-uint32_t getStrideV(buffer_handle_t)
+uint32_t getStrideWrap(va_buffer_handle_wrap)
 {
     return 0;
 }
 
-uint64_t getBufferID(buffer_handle_t)
+uint32_t getStrideVWrap(va_buffer_handle_wrap)
 {
     return 0;
 }
 
-DisplayServer::DisplayServer(DisplayServer::Mode)
+uint64_t getBufferIDWrap(va_buffer_handle_wrap)
 {
-    (void)m_Impl;
+    return 0;
 }
 
-DisplayServer::~DisplayServer() {}
+void* getAndroidGraphicBufferWrap(pVaGraphicBuffer)
+{
+    return nullptr;
+}
 
-void DisplayServer::Run() {}
+pDisplayServer CreateDisplayServer(DisplayServerMode)
+{
+    return nullptr;
+}
 
-bool DisplayServer::Stop()
+void DestroyDisplayServer(pDisplayServer) {}
+
+void DisplayServerRun(pDisplayServer) {}
+
+bool DisplayServerStop(pDisplayServer)
 {
     return true;
 }
 
-bool DisplayServer::Init(PresentBufferCallback, int)
+bool DisplayServerInit(pDisplayServer, PresentBufferCallbackWrap, int)
 {
     return true;
 }
 
-bool DisplayServer::RefreshDisplay(RefreshReq)
+bool DisplayServerRefreshDisplay(pDisplayServer, RefreshReqWrapper)
 {
     return true;
 }
 
-bool DisplayServer::GetDisplayInfo(unsigned int *, unsigned int *, unsigned int *, unsigned int *)
+bool DisplayServerGetDisplayInfo(pDisplayServer, unsigned int *, unsigned int *, unsigned int *, unsigned int *)
 {
     return true;
 }
 
-void DisplayServer::AcquireBuffer(android::GraphicBuffer *, int *, int *)
+void DisplayServerAcquireBuffer(pDisplayServer, pVaGraphicBuffer, int*, int*)
 {
     return;
 }
 
-void DisplayServer::ReleaseBuffer(android::GraphicBuffer *)
+void DisplayServerReleaseBuffer(pDisplayServer, pVaGraphicBuffer)
 {
     return;
+}
+
+bool DisplayServerSetWmSize(pDisplayServer, unsigned int, unsigned int)
+{
+    return true;
 }

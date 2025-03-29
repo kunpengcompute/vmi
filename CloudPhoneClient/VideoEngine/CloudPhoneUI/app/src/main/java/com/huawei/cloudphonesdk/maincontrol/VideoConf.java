@@ -66,6 +66,11 @@ public class VideoConf implements Parcelable {
     private int videoInterpolation;
     private int videoProFile;
     private int videoGopSize;
+    private int crf;
+    private int vbvBufferSize;
+    private int maxCrfRate;
+    private int streamWidth;
+    private int streamHeight;
     // 音频播放参数
     private int audioSampleInterval;
     private int audioPlayBitrate;
@@ -181,6 +186,7 @@ public class VideoConf implements Parcelable {
     public int getVideoInterpolation() {
         return videoInterpolation;
     }
+
 
     public void setVideoInterpolation(int videoInterpolation) {
         this.videoInterpolation = videoInterpolation;
@@ -375,6 +381,22 @@ public class VideoConf implements Parcelable {
         this.gopSize = gopSize;
     }
 
+    public int getStreamWidth() {
+        return streamWidth;
+    }
+
+    public void setStreamWidth(int streamWidth) {
+        this.streamWidth = streamWidth;
+    }
+
+    public void setStreamHeight(int streamHeight) {
+        this.streamHeight = streamHeight;
+    }
+
+    public int getStreamHeight(){
+        return streamHeight;
+    }
+
     public int getWidth() {
         return width;
     }
@@ -437,45 +459,50 @@ public class VideoConf implements Parcelable {
     @Override
     public String toString() {
         return "VideoConf{" +
-            "testTouch=" + testTouch +
-            ", testAudioClient=" + testAudioClient +
-            ", ip='" + ip + '\'' +
-            ", videoAgentPort=" + videoAgentPort +
-            ", vmiAgentPort=" + vmiAgentPort +
-            ", gameId=" + gameId +
-            ", encodeMode=" + encodeMode +
-            ", bitrate=" + bitrate +
-            ", profile=" + profile +
-            ", gopSize=" + gopSize +
-            ", width=" + width +
-            ", height=" + height +
-            ", density=" + density +
-            ", mDecodeMode=" + mDecodeMode +
-            ", mIsAudience=" + mIsAudience +
-            ", mTemplateType=" + mTemplateType +
-            ", isRecord=" + isRecord +
-            ", frameRate=" + frameRate +
-            ", videoEncoderType=" + videoEncoderType +
-            ", videoFrameType=" + videoFrameType +
-            ", videoFrameRate=" + videoFrameRate +
-            ", videoForceLandscape=" + videoForceLandscape +
-            ", videoRenderOptimize=" + videoRenderOptimize +
-            ", videoFrameSizeWidth=" + videoFrameSizeWidth +
-            ", videoFrameSizeHeight=" + videoFrameSizeHeight +
-            ", videoFrameSizeWidthAligned=" + videoFrameSizeWidthAligned +
-            ", videoFrameSizeHeightAligned=" + videoFrameSizeHeightAligned +
-            ", videoBitRate=" + videoBitRate +
-            ", videoRcMode=" + videoRcMode +
-            ", videoForceKeyFrame=" + videoForceKeyFrame +
-            ", videoInterpolation=" + videoInterpolation +
-            ", videoProFile=" + videoProFile +
-            ", videoGopSize=" + videoGopSize +
-            ", audioSampleInterval=" + audioSampleInterval +
-            ", audioPlayBitrate=" + audioPlayBitrate +
-            ", audioPlayStreamType=" + audioPlayStreamType +
-            ", micStreamType=" + micStreamType +
-            ", micSampleInterval=" + micSampleInterval +
-            '}';
+                "testTouch=" + testTouch +
+                ", testAudioClient=" + testAudioClient +
+                ", ip='" + ip + '\'' +
+                ", videoAgentPort=" + videoAgentPort +
+                ", vmiAgentPort=" + vmiAgentPort +
+                ", gameId=" + gameId +
+                ", encodeMode=" + encodeMode +
+                ", bitrate=" + bitrate +
+                ", profile=" + profile +
+                ", gopSize=" + gopSize +
+                ", width=" + width +
+                ", height=" + height +
+                ", density=" + density +
+                ", mDecodeMode=" + mDecodeMode +
+                ", mIsAudience=" + mIsAudience +
+                ", mTemplateType=" + mTemplateType +
+                ", isRecord=" + isRecord +
+                ", frameRate=" + frameRate +
+                ", videoEncoderType=" + videoEncoderType +
+                ", videoFrameType=" + videoFrameType +
+                ", videoFrameRate=" + videoFrameRate +
+                ", videoForceLandscape=" + videoForceLandscape +
+                ", videoRenderOptimize=" + videoRenderOptimize +
+                ", videoFrameSizeWidth=" + videoFrameSizeWidth +
+                ", videoFrameSizeHeight=" + videoFrameSizeHeight +
+                ", videoFrameSizeWidthAligned=" + videoFrameSizeWidthAligned +
+                ", videoFrameSizeHeightAligned=" + videoFrameSizeHeightAligned +
+                ", videoBitRate=" + videoBitRate +
+                ", videoRcMode=" + videoRcMode +
+                ", videoForceKeyFrame=" + videoForceKeyFrame +
+                ", videoInterpolation=" + videoInterpolation +
+                ", videoProFile=" + videoProFile +
+                ", videoGopSize=" + videoGopSize +
+                ", crf=" + crf +
+                ", vbvBufferSize=" + vbvBufferSize +
+                ", maxCrfRate=" + maxCrfRate +
+                ", streamWidth=" + streamWidth +
+                ", streamHeight=" + streamHeight +
+                ", audioSampleInterval=" + audioSampleInterval +
+                ", audioPlayBitrate=" + audioPlayBitrate +
+                ", audioPlayStreamType=" + audioPlayStreamType +
+                ", micStreamType=" + micStreamType +
+                ", micSampleInterval=" + micSampleInterval +
+                '}';
     }
 
     @Override
@@ -530,5 +557,29 @@ public class VideoConf implements Parcelable {
         parcel.writeInt(micStreamType);
         parcel.writeInt(micSampleInterval);
 
+    }
+
+    public int getCrf() {
+        return crf;
+    }
+
+    public void setCrf(int crf) {
+        this.crf = crf;
+    }
+
+    public int getVbvBufferSize() {
+        return vbvBufferSize;
+    }
+
+    public void setVbvBufferSize(int vbvBufferSize) {
+        this.vbvBufferSize = vbvBufferSize;
+    }
+
+    public int getMaxCrfRate() {
+        return maxCrfRate;
+    }
+
+    public void setMaxCrfRate(int maxCrfRate) {
+        this.maxCrfRate = maxCrfRate;
     }
 }

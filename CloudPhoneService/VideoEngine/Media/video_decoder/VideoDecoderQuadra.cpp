@@ -41,8 +41,8 @@ namespace {
         int fpsDenom, long bitRate, int width, int height);
 
     using NiRsrcAllocateAutoFunc = ni_device_context_t* (*)(ni_device_type_t devType, ni_alloc_rule_t rule,
-        ni_codec_t codec, int width, int height, int frameRate, unsigned long *load);
-    using NiRsrcReleaseResourceFunc = void (*)(ni_device_context_t *devCtx, ni_codec_t codec, unsigned long load);
+        ni_codec_t codec, int width, int height, int frameRate, uint64_t *load);
+    using NiRsrcReleaseResourceFunc = void (*)(ni_device_context_t *devCtx, ni_codec_t codec, uint64_t load);
     using NiRsrcFreeDeviceContextFunc = void (*)(ni_device_context_t *devCtx);
 
     using NiDeviceOpenFunc = ni_device_handle_t (*)(const char *dev, uint32_t *maxIoSizeOut);
@@ -345,6 +345,9 @@ DecoderRetCode VideoDecoderQuadra::Flush()
         ALOGE("device dec session flush error.");
         return VIDEO_DECODER_RESET_FAIL;
     }
+
+    memset(&m_frame,0, sizeof(ni_session_data_io_t));
+    m_startOfStream = 1;
     return VIDEO_DECODER_SUCCESS;
 }
 
@@ -603,7 +606,7 @@ DecoderRetCode VideoDecoderQuadra::DecoderWriteData(const uint8_t *buffer, const
 {
     if (m_sessionCtx->ready_to_close != 0) {
         ALOGE("decoder write data: session ctx ready to close is 1, no send.");
-        return VIDEO_DECODER_DECODE_FAIL;
+        return VIDEO_DECODER_SUCCESS;
     }
 
     int sendSize = InitPacketData(buffer, filledLen);
@@ -694,11 +697,8 @@ DecoderRetCode VideoDecoderQuadra::DecoderReadData(uint8_t *buffer, const uint32
 
 void VideoDecoderQuadra::DecoderPreHandleData(uint8_t *inputDataArr[])
 {
-    int tmpWriteHeight = m_frame.data.frame.video_height;
-    int tmpWriteWidth = AlignUp(m_frame.data.frame.video_width * m_sessionCtx->bit_depth_factor, QUADRA_WIDTH_ALIGN);
-
     if (!m_mallocFlag) {
-        const int intputSize = tmpWriteHeight * tmpWriteWidth * NAL_START_CODE_MIN_LEN / QUADRA_UV_HALF_LEN;
+        const uint32_t intputSize = DEFAULT_MALLOC_BUFFER;
         m_inputData = static_cast<uint8_t *>(malloc(intputSize));
         m_mallocFlag = true;
     }
@@ -893,7 +893,6 @@ void VideoDecoderQuadra::DecSessionSaveHdrs(uint8_t streamHeaders[], int headerS
 
 int VideoDecoderQuadra::FindNextNonVclNalu(std::pair<uint8_t*, uint32_t> inBuf, uint32_t codec, int &nalType)
 {
-    int dataSize = 0;
     uint8_t *inData = inBuf.first;
     uint32_t inSize = inBuf.second;
     nalType = -1;
@@ -936,7 +935,6 @@ int VideoDecoderQuadra::FindNextNonVclNalu(std::pair<uint8_t*, uint32_t> inBuf, 
         i++;
         // if reaching/passing the stream end, return the whole data chunk size
         if (i + NAL_START_CODE_MIN_LEN > inSize) {
-            dataSize = inSize;
             return inSize;
         }
     }

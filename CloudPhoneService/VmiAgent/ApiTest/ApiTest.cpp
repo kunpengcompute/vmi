@@ -14,6 +14,7 @@
 #include "NetworkCommManager.h"
 #include "VmiApi.h"
 #include "SmartPtrMacro.h"
+#include "SystemProperty.h"
 
 namespace Vmi {
 int ExitRunnable::Run()
@@ -21,25 +22,33 @@ int ExitRunnable::Run()
     return -1;
 }
 
-RunTestHelp::RunTestHelp(bool isPrintTime, const char* functionName, int line) : m_isPrintTime(isPrintTime) {
+RunTestHelp::RunTestHelp(bool logFlag, bool isPrintTime, const char* functionName, int line) : m_isPrintTime(isPrintTime), logFlag(logFlag)
+{
     m_startTime = std::chrono::steady_clock::now();
     if (!isPrintTime) {
         return;
     }
     m_startLine = line;
     m_functionName = functionName;
-    INFO("Begin Run %s:%d tests", functionName, line);
+    if(logFlag) {
+        INFO("Begin Run %s:%d tests", functionName, line);
+    }
 }
 
 RunTestHelp::~RunTestHelp()
 {
     if (!m_isPrintTime || m_isAbnormal) {
+        if(logFlag) {
+            ERR("Abnormal, End Run %s", m_functionName.c_str());
+        }
         return;
     }
     std::chrono::time_point<std::chrono::steady_clock> endTime = std::chrono::steady_clock::now();
     auto diff = endTime - m_startTime;
     auto diffTime = std::chrono::duration_cast<std::chrono::milliseconds>(diff).count();
-    INFO("End Run %s:%d tests, success, run time:%d ms", m_functionName.c_str(), m_startLine, static_cast<uint32_t>(diffTime));
+    if(logFlag) {
+        INFO("End Run %s:%d tests, success, run time:%u ms", m_functionName.c_str(), m_startLine, static_cast<uint32_t>(diffTime));
+    }
 }
 
 void RunTestHelp::Abnormal(const char* functionName, int line, const char* fmt, ...)
@@ -78,12 +87,17 @@ void ApiTest::BaseTest()
 {
     EXECUTE(VersionTest);
     EXECUTE(DeInitVmiEngineAbnormalTest);
+    sleep(15);
     EXECUTE(InitVmiEngineAbnormalTest);
-    EXECUTE(CallOtherApiWithoutInit);
+    sleep(15);
+    EXECUTE(CallOtherApiWithoutInit);//
+    sleep(30);
     EXECUTE(InitVmiEngineNormalTest);
-    EXECUTE(InitVmiEngineCompleteAbnormalTest);
+    sleep(15);
+    EXECUTE(InitVmiEngineCompleteAbnormalTest);//
+    sleep(30);
     EXECUTE(StartModuleAbnormalTest);
-    sleep(15); // 睡眠15s, 等待VmiInputFlinger启动，否则Start会失败
+    sleep(30); // 睡眠30s, 等待VmiInputFlinger启动，否则Start会失败
     EXECUTE(StartModuleNormalTest);
     EXECUTE(StopModuleNormalTest);
     EXECUTE(StopModuleAbnormalTest);
@@ -178,7 +192,7 @@ void ApiTest::KeepRunningTest(uint32_t tests)
 
     sleep(15); // 睡眠15s, 等待VmiInputFlinger启动，否则Start会失败
 
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return;
     }
 
@@ -295,6 +309,12 @@ void ApiTest::StartStopTest()
         // 启动麦克风
         VmiConfigMic micConfig;
         StartModule(VmiDataType::DATA_MIC, reinterpret_cast<uint8_t*>(&micConfig), sizeof(micConfig));
+        // 启动传感器
+        VmiConfig sensorConfig;
+        StartModule(VmiDataType::DATA_SENSOR, reinterpret_cast<uint8_t*>(&sensorConfig), sizeof(sensorConfig));
+        // 启动gps
+        VmiConfig gpsConfig;
+        StartModule(VmiDataType::DATA_GPS, reinterpret_cast<uint8_t*>(&gpsConfig), sizeof(gpsConfig));
 
         auto sleepTime = dist(engine);
         usleep(sleepTime);
@@ -408,9 +428,9 @@ bool ApiTest::VersionTest()
     RUN_BEGIN;
     const char* version = GetVersion();
     const char* expectString = "Product Name: Kunpeng BoostKit\n"
-        "Product Version: 24.0.RC1\n"
+        "Product Version: 25.0.RC1\n"
         "Component Name: BoostKit-videoengine\n"
-        "Component Version: 6.0.RC1\n"
+        "Component Version: 7.0.RC1\n"
         "Component AppendInfo: 11.0.0_r48\n";
     if (strcmp(version, expectString) != 0) {
         RUN_ABNORMAL("expect:%s, actual:%s", expectString, version);
@@ -488,6 +508,7 @@ bool ApiTest::CallOtherApiWithoutInit()
     EncodeParams params;
     ret = SetParam(VmiDataType::DATA_VIDEO, VmiCmd::VIDEO_SET_ENCODER_PARAM, reinterpret_cast<uint8_t*>(&params), sizeof(params));
     EXPECT_EQ(ret, VmiErrCode::ERR_MODULE_NOT_INIT);
+    helper_ptr.reset();
     return true;
 }
 
@@ -531,6 +552,7 @@ bool ApiTest::InitVmiEngineCompleteAbnormalTest()
     EncodeParams params;
     ret = SetParam(VmiDataType::DATA_VIDEO, VmiCmd::VIDEO_SET_ENCODER_PARAM, reinterpret_cast<uint8_t*>(&params), sizeof(params));
     EXPECT_EQ(ret, VmiErrCode::ERR_MODULE_NOT_START);
+    helper_ptr.reset();
     return true;
 }
 
@@ -575,6 +597,7 @@ bool ApiTest::StartModuleNormalTest()
     VmiErrCode ret;
     // 启动视频
     VmiConfigVideo videoConfig;
+    videoConfig.encoderType = static_cast<EncoderType>(GetPropertyWithDefault("vmi.video.encodertype", ENCODE_TYPE_MAX));
     ret = StartModule(VmiDataType::DATA_VIDEO, reinterpret_cast<uint8_t*>(&videoConfig), sizeof(videoConfig));
     EXPECT_EQ(ret, VmiErrCode::OK);
     // 启动音频
@@ -589,6 +612,14 @@ bool ApiTest::StartModuleNormalTest()
     VmiConfigMic micConfig;
     ret = StartModule(VmiDataType::DATA_MIC, reinterpret_cast<uint8_t*>(&micConfig), sizeof(micConfig));
     EXPECT_EQ(ret, VmiErrCode::OK);
+    // 启动传感器
+    VmiConfig sensorConfig;
+    ret = StartModule(VmiDataType::DATA_SENSOR, reinterpret_cast<uint8_t*>(&sensorConfig), sizeof(sensorConfig));
+    EXPECT_EQ(ret, VmiErrCode::OK);
+    // 启动gps
+    VmiConfig gpsConfig;
+    ret = StartModule(VmiDataType::DATA_GPS, reinterpret_cast<uint8_t*>(&gpsConfig), sizeof(gpsConfig));
+    EXPECT_EQ(ret, VmiErrCode::OK);
     VmiModuleStatus status = GetStatus(VmiDataType::DATA_VIDEO);
     EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
     status = GetStatus(VmiDataType::DATA_AUDIO);
@@ -597,12 +628,72 @@ bool ApiTest::StartModuleNormalTest()
     EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
     status = GetStatus(VmiDataType::DATA_MIC);
     EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
+    status = GetStatus(VmiDataType::DATA_SENSOR);
+    EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
+    status = GetStatus(VmiDataType::DATA_GPS);
+    EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
+    return true;
+}
+
+bool ApiTest::StartModuleNormalTest_nolog()
+{
+    RUN_BEGIN_NOLOG;
+    VmiErrCode ret;
+    // 启动视频
+    VmiConfigVideo videoConfig;
+    videoConfig.encoderType = static_cast<EncoderType>(GetPropertyWithDefault("vmi.video.encodertype", ENCODE_TYPE_MAX));
+    ret = StartModule(VmiDataType::DATA_VIDEO, reinterpret_cast<uint8_t*>(&videoConfig), sizeof(videoConfig));
+    EXPECT_EQ(ret, VmiErrCode::OK);
+    // 启动音频
+    VmiConfigAudio audioConfig;
+    ret = StartModule(VmiDataType::DATA_AUDIO, reinterpret_cast<uint8_t*>(&audioConfig), sizeof(audioConfig));
+    EXPECT_EQ(ret, VmiErrCode::OK);
+    // 启动触控
+    VmiConfig config;
+    ret = StartModule(VmiDataType::DATA_TOUCH, reinterpret_cast<uint8_t*>(&config), sizeof(config));
+    EXPECT_EQ(ret, VmiErrCode::OK);
+    // 启动麦克风
+    VmiConfigMic micConfig;
+    ret = StartModule(VmiDataType::DATA_MIC, reinterpret_cast<uint8_t*>(&micConfig), sizeof(micConfig));
+    EXPECT_EQ(ret, VmiErrCode::OK);
+    // 启动传感器
+    VmiConfig sensorConfig;
+    ret = StartModule(VmiDataType::DATA_SENSOR, reinterpret_cast<uint8_t*>(&sensorConfig), sizeof(sensorConfig));
+    EXPECT_EQ(ret, VmiErrCode::OK);
+    // 启动gps
+    VmiConfig gpsConfig;
+    ret = StartModule(VmiDataType::DATA_GPS, reinterpret_cast<uint8_t*>(&gpsConfig), sizeof(gpsConfig));
+    EXPECT_EQ(ret, VmiErrCode::OK);
+    VmiModuleStatus status = GetStatus(VmiDataType::DATA_VIDEO);
+    EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
+    status = GetStatus(VmiDataType::DATA_AUDIO);
+    EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
+    status = GetStatus(VmiDataType::DATA_TOUCH);
+    EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
+    status = GetStatus(VmiDataType::DATA_MIC);
+    EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
+    status = GetStatus(VmiDataType::DATA_SENSOR);
+    EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
+    status = GetStatus(VmiDataType::DATA_GPS);
+    EXPECT_EQ(status, VmiModuleStatus::MODULE_STARTED);
     return true;
 }
 
 bool ApiTest::StopModuleNormalTest()
 {
     RUN_BEGIN;
+    for (int i = 0; i < VmiDataType::DATA_TYPE_MAX; ++i) {
+        VmiErrCode ret = StopModule(static_cast<VmiDataType>(i));
+        EXPECT_EQ(ret, VmiErrCode::OK);
+        VmiModuleStatus status = GetStatus(static_cast<VmiDataType>(i));
+        EXPECT_EQ(status, VmiModuleStatus::MODULE_STOPED);
+    }
+    return true;
+}
+
+bool ApiTest::StopModuleNormalTest_nolog()
+{
+    RUN_BEGIN_NOLOG;
     for (int i = 0; i < VmiDataType::DATA_TYPE_MAX; ++i) {
         VmiErrCode ret = StopModule(static_cast<VmiDataType>(i));
         EXPECT_EQ(ret, VmiErrCode::OK);
@@ -638,7 +729,7 @@ bool ApiTest::StopModuleAbnormalTest()
 bool ApiTest::InjectDataAbnormalTest()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
     // DataType不合法
@@ -658,7 +749,7 @@ bool ApiTest::InjectDataAbnormalTest()
     // size > 16MB
     ret = InjectData(VmiDataType::DATA_TOUCH, VmiCmd::TOUCH_SEND_TOUCH_EVENT, reinterpret_cast<uint8_t*>(&inputData), 16 * 1024 * 1024 + 1);
     EXPECT_EQ(ret, VmiErrCode::ERR_ILLEGAL_INPUT);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;
@@ -667,7 +758,7 @@ bool ApiTest::InjectDataAbnormalTest()
 bool ApiTest::InjectDataNormalTest()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
     // 注入触控数据
@@ -682,7 +773,7 @@ bool ApiTest::InjectDataNormalTest()
     ret = InjectData(VmiDataType::DATA_MIC, VmiCmd::MIC_SEND_MIC_DATA,
         micData, sizeof(micData));
     EXPECT_EQ(ret, VmiErrCode::OK);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;
@@ -691,7 +782,7 @@ bool ApiTest::InjectDataNormalTest()
 bool ApiTest::SetParamAbnormalTest()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
     EncodeParams encoderParams;
@@ -711,7 +802,7 @@ bool ApiTest::SetParamAbnormalTest()
     // size > 16MB
     ret = SetParam(VmiDataType::DATA_VIDEO, VmiCmd::VIDEO_SET_ENCODER_PARAM, reinterpret_cast<uint8_t*>(&encoderParams), 16 * 1024 * 1024 + 1);
     EXPECT_EQ(ret, VmiErrCode::ERR_ILLEGAL_INPUT);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;
@@ -720,7 +811,7 @@ bool ApiTest::SetParamAbnormalTest()
 bool ApiTest::SetParamNormalTest()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
     sleep(1); // 等待Video来一帧，否则对应的编码器还可能未初始化
@@ -728,7 +819,7 @@ bool ApiTest::SetParamNormalTest()
     VmiErrCode ret = SetParam(VmiDataType::DATA_VIDEO, VmiCmd::VIDEO_SET_ENCODER_PARAM,
         reinterpret_cast<uint8_t*>(&encoderParams), sizeof(encoderParams));
     EXPECT_EQ(ret, VmiErrCode::OK);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;
@@ -737,7 +828,7 @@ bool ApiTest::SetParamNormalTest()
 bool ApiTest::GetParamAbnormalTest()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
     EncodeParams encoderParams;
@@ -757,7 +848,7 @@ bool ApiTest::GetParamAbnormalTest()
     // size > 16MB
     ret = GetParam(VmiDataType::DATA_VIDEO, VmiCmd::VIDEO_GET_ENCODER_PARAM, reinterpret_cast<uint8_t*>(&encoderParams), 16 * 1024 * 1024 + 1);
     EXPECT_EQ(ret, VmiErrCode::ERR_ILLEGAL_INPUT);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;
@@ -766,14 +857,14 @@ bool ApiTest::GetParamAbnormalTest()
 bool ApiTest::GetParamNormalTest()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
     EncodeParams encoderParams;
     VmiErrCode ret = GetParam(VmiDataType::DATA_VIDEO, VmiCmd::VIDEO_GET_ENCODER_PARAM,
         reinterpret_cast<uint8_t*>(&encoderParams), sizeof(encoderParams));
     EXPECT_EQ(ret, VmiErrCode::OK);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;
@@ -781,12 +872,13 @@ bool ApiTest::GetParamNormalTest()
 
 bool ApiTest::RepeatStartAndStopModule()
 {
+    RUN_BEGIN;
     for (int i = 0; i < 20; ++i) {
-        if (!StartModuleNormalTest()) {
+        if (!StartModuleNormalTest_nolog()) {
             return false;
         }
         sleep(1);
-        if (!StopModuleNormalTest()) {
+        if (!StopModuleNormalTest_nolog()) {
             return false;
         }
         INFO("Number of times to execute start and stop:%d", i + 1);
@@ -797,16 +889,16 @@ bool ApiTest::RepeatStartAndStopModule()
 bool ApiTest::InjectDataPerforTimes()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
-    RunTestHelp timer(false, __FUNCTION__, __LINE__);
+    RunTestHelp timer(false, false, __FUNCTION__, __LINE__);
     int runTimes = 0;
     while (timer.GetRunTime() < 1000) { // 1s
         // 注入触控数据
         VmiTouchInputData inputData;
         InitNormalTouchInputData(inputData);
-        RunTestHelp onceTime(false, __FUNCTION__, __LINE__);
+        RunTestHelp onceTime(false, false, __FUNCTION__, __LINE__);
         VmiErrCode ret = InjectData(VmiDataType::DATA_TOUCH, VmiCmd::TOUCH_SEND_TOUCH_EVENT,
             reinterpret_cast<uint8_t*>(&inputData), sizeof(inputData));
         EXPECT_EQ(ret, VmiErrCode::OK);
@@ -820,7 +912,7 @@ bool ApiTest::InjectDataPerforTimes()
     INFO("Run %s times:%d", __FUNCTION__, runTimes);
     int actual = runTimes > 1000 ? 1 : 0;
     EXPECT_EQ(actual , 1);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;
@@ -829,21 +921,22 @@ bool ApiTest::InjectDataPerforTimes()
 bool ApiTest::InjectMicDataPerforTimes()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
-    RunTestHelp timer(false, __FUNCTION__, __LINE__);
+    RunTestHelp timer(false, false, __FUNCTION__, __LINE__);
     int runTimes = 0;
     while (timer.GetRunTime() < 1000) { // 1s
         // 注入麦克风数据
         uint8_t micData[1000] = {0};
         InitMicData(micData, sizeof(micData));
-        RunTestHelp onceTime(false, __FUNCTION__, __LINE__);
+        RunTestHelp onceTime(false, false, __FUNCTION__, __LINE__);
         VmiErrCode ret = InjectData(VmiDataType::DATA_MIC, VmiCmd::MIC_SEND_MIC_DATA,
             micData, sizeof(micData));
         EXPECT_EQ(ret, VmiErrCode::OK);
         int actual = onceTime.GetRunTime() > 200 ? 1 : 0;
         EXPECT_EQ(actual, 0);
+        std::this_thread::sleep_for(std::chrono::milliseconds(9));
         ++runTimes;
         if (runTimes >= 100) { // 当前麦克风采样间隔支持的间隔是10ms，最大支持1秒注入100次
             break;
@@ -852,7 +945,7 @@ bool ApiTest::InjectMicDataPerforTimes()
     INFO("Run %s times:%d", __FUNCTION__, runTimes);
     int actual = runTimes >= 100 ? 1 : 0;
     EXPECT_EQ(actual , 1);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;
@@ -861,16 +954,16 @@ bool ApiTest::InjectMicDataPerforTimes()
 bool ApiTest::SetParamPerforTimes()
 {
     RUN_BEGIN;
-    if (!StartModuleNormalTest()) {
+    if (!StartModuleNormalTest_nolog()) {
         return false;
     }
     sleep(1); // 等待Video来一帧，否则对应的编码器还可能未初始化
-    RunTestHelp timer(false, __FUNCTION__, __LINE__);
+    RunTestHelp timer(false, false, __FUNCTION__, __LINE__);
     int runTimes = 0;
     while (timer.GetRunTime() < 1000) { // 1s
         // 设置参数
         EncodeParams encoderParams;
-        RunTestHelp onceTime(false, __FUNCTION__, __LINE__);
+        RunTestHelp onceTime(false, false, __FUNCTION__, __LINE__);
         VmiErrCode ret = SetParam(VmiDataType::DATA_VIDEO, VmiCmd::VIDEO_SET_ENCODER_PARAM,
             reinterpret_cast<uint8_t*>(&encoderParams), sizeof(encoderParams));
         EXPECT_EQ(ret, VmiErrCode::OK);
@@ -884,7 +977,7 @@ bool ApiTest::SetParamPerforTimes()
     INFO("Run %s times:%d", __FUNCTION__, runTimes);
     int actual = runTimes > 1000 ? 1 : 0;
     EXPECT_EQ(actual , 1);
-    if (!StopModuleNormalTest()) {
+    if (!StopModuleNormalTest_nolog()) {
         return false;
     }
     return true;

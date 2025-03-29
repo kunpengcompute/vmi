@@ -3,6 +3,8 @@
  */
 package com.huawei.cloudphonesdk.maincontrol;
 
+import com.huawei.cloudphonesdk.maincontrol.config.EncodeParams;
+
 /**
  * Native Listener.
  *
@@ -16,4 +18,8 @@ public interface NativeListener {
      * @param event video engine event.
      */
     void onVmiVideoEngineEvent(int event, int reserved0, int reserved1, int reserved2, int reserved3, String additionInfo);
+
+    void onVmiFpsDataReceive(int fps, int jank, int bjank);
+
+    void onVmiEncodeParamsReceive(EncodeParams encodeParams);
 }

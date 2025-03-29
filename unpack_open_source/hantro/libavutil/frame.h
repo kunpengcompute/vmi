@@ -184,12 +184,6 @@ enum AVFrameSideDataType {
      * Encoding parameters for a video frame, as described by AVVideoEncParams.
      */
     AV_FRAME_DATA_VIDEO_ENC_PARAMS,
-
-    //NETINT
-    AV_FRAME_DATA_NETINT_UDU_SEI,
-    AV_FRAME_DATA_NETINT_CUSTOM_SEI,
-    AV_FRAME_DATA_NETINT_BITRATE,
-    AV_FRAME_DATA_NETINT_LONG_TERM_REF,
 #if CONFIG_VASTAPI
     /**
      * dynamic param change 
@@ -205,6 +199,16 @@ enum AVFrameSideDataType {
     AV_FRAME_DATA_ROIMAP, // set user roimap  
 
     AV_FRAME_DATA_VASTAI_FRAMERATE  
+#endif
+#if CONFIG_NETINT
+    //NETINT
+    AV_FRAME_DATA_NETINT_UDU_SEI,
+    AV_FRAME_DATA_NETINT_CUSTOM_SEI,
+    AV_FRAME_DATA_NETINT_BITRATE,
+    AV_FRAME_DATA_NETINT_MIN_MAX_QP,
+    AV_FRAME_DATA_NETINT_LONG_TERM_REF,
+    AV_FRAME_DATA_NETINT_REGIONS_OF_INTEREST_EXTRA,
+    AV_FRAME_DATA_NETINT_GENERAL_SIDE_DATA
 #endif
 };
 
@@ -288,6 +292,18 @@ typedef struct AVRegionOfInterest {
      */
     AVRational qoffset;
 } AVRegionOfInterest;
+
+#if CONFIG_NETINT
+#define NI_GENERAL_SIDEDATA_MAX_COUNT 6
+typedef struct AVNetintGeneralSideData
+{
+    // count of side data max count is NI_GENERAL_SIDEDATA_MAX_COUNT
+    uint8_t count;
+    // type of side data, refer to ni_aux_data_type_t
+    uint8_t type[NI_GENERAL_SIDEDATA_MAX_COUNT];
+    uint32_t data[NI_GENERAL_SIDEDATA_MAX_COUNT][8];
+} AVNetintGeneralSideData;
+#endif
 
 /**
  * This structure describes decoded (raw) audio or video data.

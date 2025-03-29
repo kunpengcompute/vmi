@@ -1,0 +1,7 @@
+version: v1
+sharing:
+  timeSlicing:
+    resources:
+      - name: vatech.com/vg
+        replicas: 25
+

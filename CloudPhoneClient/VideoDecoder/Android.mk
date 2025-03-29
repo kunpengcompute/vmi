@@ -1,6 +1,16 @@
 LOCAL_PATH := $(call my-dir)
 REPO_ROOT := $(LOCAL_PATH)/../../
 include $(CLEAR_VARS)
+LOCAL_MODULE := Decoder
+LOCAL_SRC_FILES := $(LOCAL_PATH)/Decoder/libs/arm64-v8a/libDecoder.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := Communication
+LOCAL_SRC_FILES := $(REPO_ROOT)/Common/build/libCommunication.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := VideoEngineClient
 
 LOCAL_CFLAGS   += -fstack-protector-strong --param ssp-buffer-size=4 -fPIE -pie -D_FORTIFY_SOURCE=2 -O2 -fPIC -Wformat -Werror -Wall
@@ -11,14 +21,11 @@ ifeq ($(ENABLE_ASAN), 1)
 $(info "$(LOCAL_MODULE) ENABLE ASAN")
 LOCAL_CFLAGS   += -fsanitize=address -fsanitize-recover=address,all -O0
 LOCAL_CPPFLAGS += -fsanitize=address -fsanitize-recover=address,all -O0
-LOCAL_LDFLAGS  += -fsanitize=address -L $(LOCAL_PATH)/Decoder/libs/arm64-v8a
-LOCAL_LDFLAGS  += -L $(REPO_ROOT)/Common/build
+LOCAL_LDFLAGS  += -fsanitize=address
 else
 $(info "$(LOCAL_MODULE) ENABLE FORTIFY SOURCE")
 LOCAL_CFLAGS   += -D_FORTIFY_SOURCE=2 -O2 -DVMICLIENT=1
 LOCAL_CPPFLAGS += -D_FORTIFY_SOURCE=2 -O2 -DVMICLIENT=1
-LOCAL_LDFLAGS  += -L $(LOCAL_PATH)/Decoder/libs/arm64-v8a
-LOCAL_LDFLAGS  += -L $(REPO_ROOT)/Common/build
 endif
 
 LOCAL_C_INCLUDES := \
@@ -54,5 +61,6 @@ LOCAL_SRC_FILES := \
         $(REPO_ROOT)/Common/Utils/MurmurHash.cpp \
         $(REPO_ROOT)/Common/Utils/EngineEventHandler.cpp
 
-LOCAL_LDLIBS := -lmediandk -llog -lDecoder -lCommunication
+LOCAL_LDLIBS := -lmediandk -llog
+LOCAL_SHARED_LIBRARIES := libDecoder libCommunication
 include $(BUILD_SHARED_LIBRARY)

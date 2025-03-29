@@ -1,6 +1,5 @@
 /*
- * 版权所有 (c) 华为技术有限公司 2017-2021
- * 功能说明: 指令流引擎定义的函数以及返回值
+ * 版权所有 (c) 华为技术有限公司 2017-2024
  */
 
 #ifndef COMMON_DEFINE_H
@@ -10,7 +9,7 @@
 namespace Vmi {
 
 // 版本号,用于匹配客户端和服务端的版本一致性
-static const std::string ENGINE_VERSION = "Kunpeng BoostKit 24.0.RC1";
+static const std::string ENGINE_VERSION = "Kunpeng BoostKit 25.0.RC1";
 } // namespace Vmi
 
 #if defined (__cplusplus)

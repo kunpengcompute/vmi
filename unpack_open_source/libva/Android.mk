@@ -27,6 +27,11 @@ LOCAL_PATH:= $(call my-dir)/codes/va
 LIBVA_DRIVERS_PATH_32 := /vendor/lib/dri
 LIBVA_DRIVERS_PATH_64 := /vendor/lib64/dri
 UNPACK_LIBDRM_PATH := $(call my-dir)/../libdrm
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libvmidrm
+LOCAL_SRC_FILES := $(UNPACK_LIBDRM_PATH)/libs/$(TARGET_ARCH_ABI)/libvmidrm.so
+include $(PREBUILT_SHARED_LIBRARY)
  
 include $(CLEAR_VARS)
  
@@ -67,12 +72,8 @@ LOCAL_MODULE := libva
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 #LOCAL_PROPRIETARY_MODULE := true
 
-ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
-    LOCAL_LDFLAGS := -L $(UNPACK_LIBDRM_PATH)/libs/arm64-v8a
-else ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
-    LOCAL_LDFLAGS := -L $(UNPACK_LIBDRM_PATH)/libs/armeabi-v7a
-endif
-LOCAL_LDLIBS := -ldl -lvmidrm -llog
+LOCAL_LDLIBS := -ldl -llog
+LOCAL_SHARED_LIBRARIES := libvmidrm
  #---------------------------------
 LOCAL_EXPORT_C_INCLUDE_DIRS := \
 	$(LOCAL_C_INCLUDES)
@@ -103,12 +104,8 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := libva-android
 #LOCAL_PROPRIETARY_MODULE := true
 
-ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
-    LOCAL_LDFLAGS := -L $(UNPACK_LIBDRM_PATH)/libs/arm64-v8a -L $(LOCAL_PATH)/../../libs/arm64-v8a
-else ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
-    LOCAL_LDFLAGS := -L $(UNPACK_LIBDRM_PATH)/libs/armeabi-v7a -L $(LOCAL_PATH)/../../libs/armeabi-v7a
-endif
-LOCAL_LDLIBS := -lva -lvmidrm -llog
+LOCAL_LDLIBS := -llog
+LOCAL_SHARED_LIBRARIES := libva libvmidrm
  
 include $(BUILD_SHARED_LIBRARY)
  
@@ -137,11 +134,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := libva-drm
 #LOCAL_PROPRIETARY_MODULE := true
 
-ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
-    LOCAL_LDFLAGS := -L $(UNPACK_LIBDRM_PATH)/libs/arm64-v8a -L $(LOCAL_PATH)/../../libs/arm64-v8a
-else ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
-    LOCAL_LDFLAGS := -L $(UNPACK_LIBDRM_PATH)/libs/armeabi-v7a -L $(LOCAL_PATH)/../../libs/armeabi-v7a
-endif
-LOCAL_LDLIBS := -lva -lvmidrm -llog
+LOCAL_LDLIBS := -llog
+LOCAL_SHARED_LIBRARIES := libva libvmidrm
  
 include $(BUILD_SHARED_LIBRARY)

@@ -5,6 +5,7 @@ adb -s  0.0.0.0:8501 shell am start  -n  com.huawei.cloudphone/com.huawei.cloudp
 2.使用cmd命令发送视频编码参数
 adb  -s  0.0.0.0:8501  shell am broadcast  -n com.huawei.cloudphone/com.huawei.cloudphone.broadcast.ADBBroadcastReceiver -a com.example.broadcast --es cmd  video 
 --ei videoBitrate 3000000 --ei videoProfile 1 --ei videoGopSize 30 --ei videoRcMode 2 --ei videoForceKeyFrame 0 --ei videoInterpolation 0
+--ei videoCrf 34 --ei videoVbvBufferSize 1000 --ei videoMaxrate 20000000
 
 3.使用cmd命令发送音频编码参数
 adb  -s  0.0.0.0:8501  shell am broadcast  -n com.huawei.cloudphone/com.huawei.cloudphone.broadcast.ADBBroadcastReceiver -a com.example.broadcast --es cmd  audio

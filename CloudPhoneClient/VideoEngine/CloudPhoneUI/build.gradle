@@ -3,16 +3,31 @@
 buildscript {
     repositories {
         maven { url 'https://cmc.centralrepo.rnd.huawei.com/artifactory/maven-central-repo/' }
-        maven { allowInsecureProtocol = true
-                url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-        maven { allowInsecureProtocol = true
-                url 'https://maven.aliyun.com/repository/public/' }
-        maven { allowInsecureProtocol = true
-                url 'https://maven.aliyun.com/repository/google/' }
-        maven { allowInsecureProtocol = true
-                url 'https://maven.aliyun.com/repository/jcenter/' }
-        maven { allowInsecureProtocol = true
-                url 'https://maven.aliyun.com/repository/central/' }
+        maven { url 'https://developer.huawei.com/repo/' }
+        jcenter {
+            url "http://cmc-cd-mirror.rnd.huawei.com/maven/"
+            allowInsecureProtocol = true
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/google/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/jcenter/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/central/'
+        }
         mavenLocal()
         mavenCentral()
         google()
@@ -25,16 +40,31 @@ buildscript {
 allprojects {
     repositories {
         maven { url 'https://cmc.centralrepo.rnd.huawei.com/artifactory/maven-central-repo/' }
-        maven { allowInsecureProtocol = true
-                url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-        maven { allowInsecureProtocol = true
-                url 'https://maven.aliyun.com/repository/public/' }
-        maven { allowInsecureProtocol = true
-                url 'https://maven.aliyun.com/repository/google/' }
-        maven { allowInsecureProtocol = true
-                url 'https://maven.aliyun.com/repository/jcenter/' }
-        maven { allowInsecureProtocol = true
-                url 'https://maven.aliyun.com/repository/central/' }
+        maven { url 'https://developer.huawei.com/repo/' }
+        jcenter {
+            url "http://cmc-cd-mirror.rnd.huawei.com/maven/"
+            allowInsecureProtocol = true
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/google/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/jcenter/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/central/'
+        }
         mavenLocal()
         mavenCentral()
         google()

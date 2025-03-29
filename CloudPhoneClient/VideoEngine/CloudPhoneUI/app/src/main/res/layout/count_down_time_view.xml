@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:layout_marginLeft="10dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:layout_marginRight="10dp">
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/vmi_black"
+        android:text="卡顿率检测工具"/>
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="16dp"
+              android:id="@+id/displayTime"
+              android:layout_marginTop="15dp"
+              android:textColor="@color/vmi_black"
+              android:text="设置测试时间(min):"/>
+    <EditText android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="16dp"
+              android:inputType=""
+                  android:numeric="integer"
+                  android:maxLength="3"
+                  android:textColor="@color/vmi_black"
+                  android:id="@+id/inputEditText"
+                  android:hint="单位:分钟"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/tv_negative"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textColor="@color/selector_exit_button_text"
+            android:textSize="14sp" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#f3f3f3" />
+        <Button
+            android:id="@+id/tv_positive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:gravity="center"
+            android:text="开始测试"
+            android:textColor="@color/selector_exit_button_text"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,1613 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ib-vndbinder
+  namespace: kube-system
+data:
+  config.json: |
+    {
+      "resourceName": "github.com/vndbinder",
+      "socketName": "everpeace-ib-vndbinder.sock",
+      "numDevices": 400,
+      "hostDevices": [{
+        "hostPath": "/dev/binderfs/1/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/2/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/3/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/4/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/5/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/6/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/7/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/8/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/9/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/10/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/11/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/12/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/13/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/14/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/15/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/16/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/17/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/18/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/19/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/20/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/21/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/22/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/23/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/24/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/25/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/26/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/27/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/28/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/29/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/30/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/31/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/32/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/33/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/34/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/35/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/36/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/37/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/38/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/39/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/40/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/41/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/42/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/43/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/44/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/45/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/46/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/47/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/48/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/49/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/50/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/51/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/52/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/53/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/54/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/55/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/56/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/57/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/58/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/59/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/60/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/61/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/62/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/63/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/64/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/65/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/66/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/67/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/68/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/69/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/70/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/71/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/72/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/73/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/74/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/75/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/76/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/77/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/78/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/79/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/80/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/81/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/82/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/83/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/84/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/85/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/86/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/87/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/88/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/89/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/90/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/91/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/92/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/93/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/94/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/95/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/96/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/97/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/98/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/99/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/100/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/101/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/102/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/103/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/104/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/105/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/106/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/107/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/108/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/109/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/110/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/111/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/112/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/113/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/114/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/115/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/116/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/117/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/118/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/119/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/120/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/121/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/122/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/123/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/124/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/125/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/126/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/127/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/128/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/129/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/130/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/131/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/132/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/133/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/134/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/135/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/136/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/137/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/138/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/139/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/140/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/141/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/142/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/143/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/144/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/145/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/146/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/147/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/148/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/149/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/150/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/151/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/152/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/153/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/154/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/155/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/156/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/157/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/158/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/159/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/160/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/161/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/162/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/163/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/164/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/165/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/166/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/167/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/168/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/169/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/170/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/171/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/172/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/173/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/174/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/175/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/176/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/177/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/178/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/179/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/180/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/181/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/182/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/183/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/184/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/185/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/186/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/187/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/188/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/189/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/190/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/191/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/192/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/193/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/194/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/195/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/196/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/197/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/198/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/199/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/200/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/201/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/202/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/203/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/204/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/205/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/206/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/207/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/208/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/209/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/210/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/211/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/212/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/213/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/214/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/215/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/216/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/217/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/218/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/219/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/220/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/221/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/222/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/223/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/224/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/225/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/226/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/227/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/228/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/229/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/230/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/231/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/232/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/233/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/234/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/235/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/236/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/237/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/238/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/239/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/240/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/241/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/242/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/243/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/244/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/245/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/246/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/247/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/248/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/249/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/250/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/251/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/252/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/253/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/254/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/255/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/256/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/257/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/258/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/259/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/260/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/261/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/262/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/263/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/264/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/265/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/266/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/267/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/268/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/269/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/270/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/271/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/272/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/273/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/274/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/275/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/276/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/277/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/278/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/279/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/280/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/281/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/282/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/283/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/284/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/285/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/286/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/287/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/288/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/289/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/290/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/291/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/292/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/293/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/294/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/295/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/296/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/297/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/298/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/299/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/300/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/301/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/302/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/303/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/304/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/305/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/306/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/307/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/308/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/309/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/310/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/311/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/312/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/313/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/314/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/315/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/316/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/317/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/318/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/319/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/320/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/321/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/322/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/323/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/324/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/325/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/326/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/327/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/328/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/329/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/330/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/331/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/332/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/333/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/334/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/335/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/336/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/337/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/338/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/339/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/340/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/341/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/342/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/343/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/344/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/345/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/346/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/347/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/348/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/349/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/350/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/351/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/352/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/353/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/354/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/355/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/356/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/357/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/358/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/359/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/360/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/361/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/362/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/363/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/364/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/365/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/366/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/367/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/368/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/369/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/370/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/371/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/372/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/373/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/374/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/375/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/376/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/377/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/378/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/379/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/380/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/381/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/382/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/383/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/384/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/385/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/386/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/387/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/388/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/389/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/390/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/391/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/392/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/393/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/394/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/395/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/396/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/397/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/398/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/399/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+        },{
+        "hostPath": "/dev/binderfs/400/vndbinder",
+        "containerPath": "/dev/binderfs/vndbinder",
+        "permission": "rwm"
+      }]
+    }
