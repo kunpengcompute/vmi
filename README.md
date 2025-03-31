@@ -58,4 +58,4 @@ source ~/.bashrc
 # 使用视频流
 请确认已完成 [编译客户端](#buildclient) 和 [编译服务端](#buildserver) 章节，并获取到CloudPhone.apk、CloudPhoneApk.tar.gz和DemoVideoEngine.tar.gz文件。
 
-之后，请参考 《Kunpeng BoostKit 24.0.RC1 ARM原生视频流引擎 特性指南.docx》 2.2.2.2 制作视频流云手机镜像 以及之后的章节，使用云手机。
+之后，请参考 [鲲鹏Boostkit ARM原生使能套件特性指南文档](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0002.html)，使用云手机。
