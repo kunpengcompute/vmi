@@ -104,8 +104,6 @@ int SetVideoStreamWidthAndHeight(EncodeParams* params)
     }
     params->streamWidth = multiple * widthBase;
     params->streamHeight = multiple * heightBase;
-
-    int32_t netTypeInt = GetPropertyWithDefault("vmi.network.type", 0);
     return 0;
 }
 

@@ -42,27 +42,59 @@ function DownloadToolPkg()
     LogInfo "Start download packages"
     if [ ! -f "${INSTALL_DIR}/android-ndk-r25b-linux.zip" ]; then
         wget --no-check-certificate https://dl.google.com/android/repository/android-ndk-r25b-linux.zip
+        if [ $? -ne 0 ]; then
+            LogError "下载android-ndk-r25b-linux.zip失败，请检查编译机网络，或手动下载！"
+            exit 1
+        fi
     fi
     if [ ! -f "${INSTALL_DIR}/build-tools_r33.0.1-linux.zip" ]; then
         wget --no-check-certificate https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip
+        if [ $? -ne 0 ]; then
+            LogError "下载build-tools_r33.0.1-linux.zip失败，请检查编译机网络，或手动下载！"
+            exit 1
+        fi
     fi
     if [ ! -f "${INSTALL_DIR}/gradle-8.4-bin.zip" ]; then
         wget --no-check-certificate https://mirrors.cloud.tencent.com/gradle/gradle-8.4-bin.zip
+        if [ $? -ne 0 ]; then
+            LogError "下载gradle-8.4-bin.zip失败，请检查编译机网络，或手动下载！"
+            exit 1
+        fi
     fi
     if [ ! -f "${INSTALL_DIR}/cmake-3.28.2-linux-x86_64.tar.gz" ]; then
         wget --no-check-certificate https://cmake.org/files/v3.28/cmake-3.28.2-linux-x86_64.tar.gz
+        if [ $? -ne 0 ]; then
+            LogError "下载cmake-3.28.2-linux-x86_64.tar.gz失败，请检查编译机网络，或手动下载！"
+            exit 1
+        fi
     fi
     if [ ! -f "${INSTALL_DIR}/openjdk-11+28_linux-x64_bin.tar.gz" ]; then
         wget --no-check-certificate https://d6.injdk.cn/openjdk/openjdk/11/openjdk-11+28_linux-x64_bin.tar.gz
+        if [ $? -ne 0 ]; then
+            LogError "下载openjdk-11+28_linux-x64_bin.tar.gz失败，请检查编译机网络，或手动下载！"
+            exit 1
+        fi
     fi
     if [ ! -f "${INSTALL_DIR}/ninja-linux.zip" ]; then
         wget --no-check-certificate https://github.com/ninja-build/ninja/releases/download/v1.12.0/ninja-linux.zip
+        if [ $? -ne 0 ]; then
+            LogError "下载ninja-linux.zip失败，请检查编译机网络，或手动下载！"
+            exit 1
+        fi
     fi
     if [ ! -f "${INSTALL_DIR}/platform-33_r02.zip" ]; then
         wget --no-check-certificate https://dl.google.com/android/repository/platform-33_r02.zip
+        if [ $? -ne 0 ]; then
+            LogError "下载platform-33_r02.zip失败，请检查编译机网络，或手动下载！"
+            exit 1
+        fi
     fi
     if [ ! -f "${INSTALL_DIR}/platform-tools_r33.0.3-linux.zip" ]; then
         wget --no-check-certificate https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip
+        if [ $? -ne 0 ]; then
+            LogError "下载platform-tools_r33.0.3-linux.zip失败，请检查编译机网络，或手动下载！"
+            exit 1
+        fi
     fi
     LogInfo "Finish download packages"
 }
