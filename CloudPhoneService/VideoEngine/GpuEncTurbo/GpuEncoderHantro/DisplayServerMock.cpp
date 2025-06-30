@@ -68,6 +68,11 @@ bool DisplayServerInit(pDisplayServer, PresentBufferCallbackWrap, int)
     return true;
 }
 
+bool DisplayServerInitGetPresentLayerCallback(pDisplayServer, GetPresentLayerCallback gplCallback)
+{
+    return true;
+}
+
 bool DisplayServerRefreshDisplay(pDisplayServer, RefreshReqWrapper)
 {
     return true;

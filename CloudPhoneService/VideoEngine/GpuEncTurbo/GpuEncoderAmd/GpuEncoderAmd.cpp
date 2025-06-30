@@ -86,6 +86,20 @@ int32_t GpuEncoderAmd::Init(EncoderConfig &config)
     return OK;
 }
 
+int32_t GpuEncoderAmd::ResetImgSize(uint32_t width, uint32_t height)
+{
+    m_inSize.width = width;
+    m_inSize.height = height;
+    m_inSize.widthAligned = AlignUp(width, WIDTH_ALIGN);
+    m_inSize.heightAligned = AlignUp(height, WIDTH_ALIGN);
+
+    m_vaEncoderAmd.SetImgSize(width, height, m_inSize.widthAligned);
+
+    m_outSize.width = width;
+    m_outSize.height = height;
+    return OK;
+}
+
 int32_t GpuEncoderAmd::DeInit()
 {
     std::lock_guard<std::mutex> lockGuard(m_engineLock);
@@ -477,7 +491,7 @@ int32_t GpuEncoderAmd::MapYuvBuffer(GpuEncoderBufferT &buffer)
         return ERR_INTERNAL_ERROR;
     }
     yuvBuffer->data = dataOutput.data;
-    yuvBuffer->dataLen = dataOutput.dataLen;
+    yuvBuffer->dataLen = (yuvBuffer->width * yuvBuffer->height) * 3 / 2;
     yuvBuffer->mapped = true;
     return OK;
 }
@@ -832,7 +846,7 @@ int32_t GpuEncoderAmd::Reset()
     }
     // 顺利则改变状态机
     if (status == OK) {
-        m_engineStat = ENCODER_ENGINE_STATE_RUNNING;
+        m_engineStat = ENCODER_ENGINE_STATE_INIT;
         return status;
     }
     // 销毁编码
@@ -842,7 +856,7 @@ int32_t GpuEncoderAmd::Reset()
 
 bool GpuEncoderAmd::CheckAndLockStatusForReset()
 {
-    if (m_engineStat != ENCODER_ENGINE_STATE_RUNNING ||
+    if (m_engineStat != ENCODER_ENGINE_STATE_RUNNING &&
         m_engineStat != ENCODER_ENGINE_STATE_STOP) {
             ERR("Unexpect engine state: %u", m_engineStat.load());
             return false;

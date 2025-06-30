@@ -32,7 +32,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.TestActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/TestTheme"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
@@ -54,8 +53,7 @@
             android:name=".ui.activities.FullscreenActivity"
             android:theme="@style/FullScreenTheme"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:process=":remote"
-            android:screenOrientation="portrait" />
+            android:process=":remote" />
         <activity
             android:name=".ui.activities.DevTestActivity"
             android:screenOrientation="portrait" />

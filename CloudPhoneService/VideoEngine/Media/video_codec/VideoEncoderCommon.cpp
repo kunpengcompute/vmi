@@ -67,9 +67,9 @@ EncoderRetCode VideoEncoderCommon::GeneralConfig(const VmiEncoderConfig& config)
     m_nextKeyFrameDistance = config.encodeParams.keyFrame;
     m_paramsChangeFlag = false;
     INFO("VideoCodec Config width: %u, height: %u, framerate: %u bitRate: %u, gopSize: %u, profile: %u, keyFrame: %u,"
-        "rcMode: %u, crf: %u, maxCrfRate: %u, vbvBufferSize: %d", 
+        "rcMode: %u, crf: %u, maxCrfRate: %u, vbvBufferSize: %d",
         config.width, config.height, config.frameRate, config.encodeParams.bitRate, config.encodeParams.gopSize,
-        config.encodeParams.profile, config.encodeParams.keyFrame,config.encodeParams.rcMode, 
+        config.encodeParams.profile, config.encodeParams.keyFrame,config.encodeParams.rcMode,
         config.encodeParams.crf, config.encodeParams.maxCrfRate, config.encodeParams.vbvBufferSize);
     return VIDEO_ENCODER_SUCCESS;
 }

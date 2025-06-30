@@ -156,6 +156,11 @@ int32_t GpuEncoderHantro::Init(EncoderConfig &config)
     return OK;
 }
 
+int32_t GpuEncoderHantro::ResetImgSize(uint32_t width, uint32_t height)
+{
+    return OK;
+}
+
 bool GpuEncoderHantro::AllocContext(AVCodecContext *&ctx, AVCodec *&codec, EncoderConfig &config)
 {
     // find AVCodec

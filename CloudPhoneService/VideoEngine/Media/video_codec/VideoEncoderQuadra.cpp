@@ -72,7 +72,7 @@ namespace {
     using AVFrameUnrefFunc = void (*)(AVFrame *frame);
     using AVLogSetCallbackFunc = void (*)(void (*callback)(void*, int, const char*, va_list));
     using AVLogSetFunc = void (*)(int level);
-    using AVFilterGraphFreeFunc = void (*)(AVFilterGraph **graph); 
+    using AVFilterGraphFreeFunc = void (*)(AVFilterGraph **graph);
     using AVStrDupFunc = char *(*)(const char *s);
     using AVOptSetBinFunc = int (*)(void *obj, const char *name, const uint8_t *val, int size, int search_flags);
     using AVBuffersrcAddFrameFlagsFunc = int (*)(AVFilterContext *buffer_src, AVFrame *frame, int flags);
@@ -465,14 +465,14 @@ bool VideoEncoderQuadra::SendOneFrame(AVFrame *swFrame)
             auto avFrameNewSideData = reinterpret_cast<AvFrameNewSideDataFunc>(g_funcMap_avutil[AV_FRAME_NEW_SIDE_DATA]);
             AVFrameSideData *tmpSideData = avFrameNewSideData(swFrame, AV_FRAME_DATA_NETINT_BITRATE, sizeof(int32_t));
             *((int32_t*)tmpSideData->data) = m_encParams.maxCrfRate;
-            
+
             AVFrameSideData *tmpSideData2 = avFrameNewSideData(swFrame, AV_FRAME_DATA_NETINT_GENERAL_SIDE_DATA, sizeof(AVNetintGeneralSideData));
             AVNetintGeneralSideData *niTmpSideData = (AVNetintGeneralSideData*)tmpSideData2->data;
             niTmpSideData->count = 0;
             niTmpSideData->type[niTmpSideData->count] = NI_FRAME_AUX_DATA_VBV_BUFFER_SIZE;
             void *curData = (uint32_t *)&(niTmpSideData->data[niTmpSideData->count]);
             ((uint32_t *)curData)[0] = m_encParams.vbvBufferSize;
-            
+
             niTmpSideData->count = 1;
             niTmpSideData->type[niTmpSideData->count] = NI_FRAME_AUX_DATA_CRF;
             curData = (uint32_t *)&(niTmpSideData->data[niTmpSideData->count]);
@@ -547,7 +547,7 @@ bool VideoEncoderQuadra::FilterAndSendOneFrame () {
         ERR("Alloc m_filtFrame failed.");
         return VIDEO_ENCODER_ENCODE_FAIL;
     }
-    
+
     auto avBuffersrcAddFrameFlags = reinterpret_cast<AVBuffersrcAddFrameFlagsFunc>
         (g_funcMap_avfilter[AV_BUFFERSRC_ADD_FRAME_FLAGS]);
     auto ret = avBuffersrcAddFrameFlags(m_buffersrcCtx, m_swFrame, AV_BUFFERSRC_FLAG_KEEP_REF);

@@ -250,6 +250,7 @@ struct ExtDataVideo {
     FrameSize size;                             // 当前图像大小
     VideoLatency latencyInfo;                   // 抓图和编码时间点
     uint32_t frameRate;                         // 当前屏幕刷新率
+    uint32_t transform;
 } __attribute__((packed));
 
 struct VideoData {
@@ -378,7 +379,7 @@ struct SensorData {
     float z;
     int32_t type;
 } __attribute__((packed));
- 
+
 struct SensorActivateData {
     int handle;             // handle对应VmiSensorType里的值
     int64_t samplingPeriod; // 在取消激活传感器时，这个字段可以忽略或设置为默认值

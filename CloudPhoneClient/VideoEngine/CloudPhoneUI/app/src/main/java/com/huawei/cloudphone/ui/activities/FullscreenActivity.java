@@ -360,11 +360,7 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
             case VMI_VIDEO_ENGINE_EVENT_ORIENTATION_CHANGED:
                 engineOrientation = reserved0;
                 runOnUiThread(() -> {
-                    if (!isSimulator) {
-                        setRotation(Surface.ROTATION_0);
-                    } else {
-                        setRotation(engineOrientation);
-                    }
+                    setRotation(engineOrientation);
                 });
                 break;
             case Constant.VMI_ENGINE_EVENT_GET_VERSION_TIMEOUT:

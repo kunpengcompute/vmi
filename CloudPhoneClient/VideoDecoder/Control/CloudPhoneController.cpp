@@ -17,6 +17,7 @@
 #include "SystemProperty.h"
 #include "EngineEventHandler.h"
 #include "VmiDef.h"
+#include "android/native_window.h"
 
 using namespace Vmi;
 
@@ -107,6 +108,15 @@ bool CloudPhoneController::StripPacket(std::pair<uint8_t *, uint32_t> &packetPai
         ERR("Input packet length error, length = %u, data size = %u", length, length - headerLen);
         return false;
     }
+    uint32_t orientation = 0;
+    if (m_isSimulator) {
+        orientation = extBuf.orientation;
+        if (extBuf.transform != 0) {
+            ANativeWindow_setBuffersTransform(reinterpret_cast<ANativeWindow*>(m_surface), 0);
+        }
+    } else {
+        orientation = (extBuf.transform != 0) ? 1 : 0;
+    }
     std::pair<uint8_t *, uint32_t> subPacketPair = std::make_pair(buf + headerLen, length - headerLen);
     #ifdef __ANDROID__
         if (m_isFirstFrame && !HandleDecoderType(subPacketPair)) {
@@ -121,9 +131,9 @@ bool CloudPhoneController::StripPacket(std::pair<uint8_t *, uint32_t> &packetPai
             }
         }
     #endif
-    
+
     m_isFirstFrame = false;
-    return HandlePacket(subPacketPair, extBuf.orientation);
+    return HandlePacket(subPacketPair, orientation);
 }
 
 bool CloudPhoneController::HandleDecoderType(const std::pair<uint8_t *, uint32_t>& packetPair)

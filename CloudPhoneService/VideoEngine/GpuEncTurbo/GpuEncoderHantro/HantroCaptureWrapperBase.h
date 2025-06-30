@@ -22,9 +22,11 @@ struct HantroCaptureBuffer {
 };
 using FrameComeCallback = std::function<int(HantroCaptureBuffer *)>;
 struct RefreshRequest {};
+using GetPresentLayerCallback = std::function<int(size_t, const void*)>;
 class HantroCaptureWrapperBase {
 public:
     virtual void SetFrameCallback(FrameComeCallback frameCome) = 0;
+    virtual void SetGetPresentLayerCallback(GetPresentLayerCallback getLayer) = 0;
 
     virtual bool RefreshDisplay() = 0;
 
