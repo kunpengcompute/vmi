@@ -17,7 +17,9 @@
 #include "SystemProperty.h"
 #include "EngineEventHandler.h"
 #include "VmiDef.h"
+#ifdef __ANDROID__
 #include "android/native_window.h"
+#endif
 
 using namespace Vmi;
 
@@ -121,9 +123,11 @@ bool CloudPhoneController::StripPacket(std::pair<uint8_t *, uint32_t> &packetPai
     uint32_t orientation = 0;
     if (m_isSimulator) {
         orientation = extBuf.orientation;
-        if (extBuf.transform != 0) {
-            ANativeWindow_setBuffersTransform(reinterpret_cast<ANativeWindow*>(m_surface), 0);
-        }
+        #ifdef __ANDROID__
+            if (extBuf.transform != 0) {
+                ANativeWindow_setBuffersTransform(reinterpret_cast<ANativeWindow*>(m_surface), 0);
+            }
+        #endif
     } else {
         switch (extBuf.transform) {
         case static_cast<uint32_t>(AndroidRotationFlags::ROT_0):
@@ -135,7 +139,7 @@ bool CloudPhoneController::StripPacket(std::pair<uint8_t *, uint32_t> &packetPai
         case static_cast<uint32_t>(AndroidRotationFlags::ROT_90):
         default:
             orientation = 1;
-    }
+        }
     }
     std::pair<uint8_t *, uint32_t> subPacketPair = std::make_pair(buf + headerLen, length - headerLen);
     #ifdef __ANDROID__
@@ -196,7 +200,6 @@ void CloudPhoneController::WriteDataToFile(uint8_t *data, uint32_t size, Decoder
     } else {
         ERR("FILE is null");
     }
-    
 }
 
 DecoderType CloudPhoneController::ParseDecTypeFromFirstFrame(const std::pair<uint8_t *, uint32_t>& packetPair)
