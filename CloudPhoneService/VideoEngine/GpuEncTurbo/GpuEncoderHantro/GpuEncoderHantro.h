@@ -31,6 +31,9 @@ struct HantroEncodeParams {
     uint32_t profile = 0;
     uint32_t streamWidth = 0;
     uint32_t streamHeight = 0;
+    uint32_t crf = UINT32_MAX;
+    uint32_t maxCrfRate = UINT32_MAX;
+    uint32_t rcMode = UINT32_MAX;
 };
 class GpuEncoderHantro : public GpuEncoderBase {
 public:
@@ -112,6 +115,9 @@ private:
     void SetStreamWidth(EncodeParamT &param, HantroEncodeParams &params);
     void SetStreamHeight(EncodeParamT &param, HantroEncodeParams &params);
     uint32_t ConvertProfileCodeToString(uint32_t profileCode, uint32_t &profile); // convert profileCode to string
+    void SetCrfLevel(EncodeParamT &param, HantroEncodeParams &params);
+    void SetMaxCrfRate(EncodeParamT &param, HantroEncodeParams &params);
+    void SetRcmode(EncodeParamT &param, HantroEncodeParams &params);
 
     std::set<GpuEncoderBufferT> m_buffers {};
     // 类参数
@@ -129,7 +135,8 @@ private:
     bool m_needRestart = false;
     bool m_needSetWidthOrHeight = false;
     bool m_dynamicAdjustParamFlag = false;
-    HantroEncodeParams m_settingParams {30, 30, 5000000, 0, Vmi::GpuEncoder::ENC_PROFILE_IDC_MAIN, 0, 0};
+    HantroEncodeParams m_settingParams {30, 30, 5000000, 0, Vmi::GpuEncoder::ENC_PROFILE_IDC_MAIN,
+        0, 0, 21, 10000000, 3};    //依次初始化为默认值
     HantroEncodeParams m_receiveParams;
 };
 }

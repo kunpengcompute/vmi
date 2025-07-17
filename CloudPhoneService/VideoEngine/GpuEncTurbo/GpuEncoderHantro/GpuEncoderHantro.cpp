@@ -86,6 +86,8 @@ constexpr uint32_t MAX_WIDTH = 4096;
 constexpr uint32_t MAX_HEIGHT = 4096;
 constexpr uint32_t WIDTH_ALIGN = 32;
 constexpr uint32_t HEIGHT_ALIGN = 32;
+constexpr uint32_t HANTRO_CAPPED_CRF_MODE = 3;
+constexpr uint32_t HANTRO_CBR_MODE = 2;
 }
 
 namespace Vmi {
@@ -128,6 +130,8 @@ int32_t GpuEncoderHantro::Init(EncoderConfig &config)
     m_size.heightAligned = AlignUp(m_size.height, HEIGHT_ALIGN);
     
     if (m_needSetWidthOrHeight) {
+        INFO("update encode params, streamWidth: %u, streamHeight: %u",
+            m_settingParams.streamWidth, m_settingParams.streamHeight);
         m_size.width = m_settingParams.streamWidth;
         m_size.height = m_settingParams.streamHeight;
         m_needSetWidthOrHeight = false;
@@ -189,7 +193,9 @@ bool GpuEncoderHantro::AllocContext(AVCodecContext *&ctx, AVCodec *&codec, Encod
     ctx->time_base = (AVRational){1, (int)(m_settingParams.frameRate)};
     ctx->framerate = (AVRational){(int)(m_settingParams.frameRate), 1};
     ctx->pix_fmt = AV_PIX_FMT_VASTAPI;
-    ctx->bit_rate = m_settingParams.bitRate;
+    if (m_settingParams.rcMode == HANTRO_CBR_MODE) {
+        ctx->bit_rate = m_settingParams.bitRate;
+    }
     ctx->get_format = get_vastapi_format;
     ctx->width = m_size.width;
     ctx->height = m_size.height;
@@ -227,8 +233,16 @@ bool GpuEncoderHantro::CreateAndSetHwDeviceCtx(AVCodecContext *&ctx, AVCodec* co
         ERR("initHWAVCtx setHWFrameCtx failed.\n");
         return false;
     }
-    std::string presetParams = "tune=1:vbvBufSize=1000:miniGopSize=1:lookaheadLength=0:intraQpOffset=-2:P2B=0";
+    std::string presetParams = "miniGopSize=1:lookaheadLength=0:intraQpOffset=-2:P2B=0";
     presetParams = presetParams + ":keyint=" + std::to_string(m_settingParams.gopSize);
+    if (m_settingParams.rcMode == HANTRO_CBR_MODE) {
+        presetParams = presetParams + ":vbvBufSize=" + std::to_string(m_settingParams.bitRate / 1000);  //kbps
+    } else if (m_settingParams.rcMode == HANTRO_CAPPED_CRF_MODE) {
+        presetParams = presetParams + ":crf=" + std::to_string(m_settingParams.crf);
+        presetParams = presetParams + ":vbvMaxRate=" + std::to_string(m_settingParams.maxCrfRate/1000);  //kbps
+    }
+
+
     const char* vastParams = presetParams.c_str();
     if ((err = AvcodecWrapper::Get().Call<AV_OPT_SET>(ctx->priv_data, "vast-params", vastParams, 0)) < 0) {
         ERR("initHWAVCtx av_opt_set error. Error code: %s\n", av_err2str(err));
@@ -600,19 +614,21 @@ int GpuEncoderHantro::EncodeParamSetAndEncode(GpuEncoderBufferT &inBuffer, GpuEn
 
 bool GpuEncoderHantro::DynamicAdjustParam(GpuEncoderBufferHantroT rgbBuffer, HantroEncodeParams &setParams)
 {
-    if (m_receiveParams.bitRate != 0 && m_receiveParams.bitRate != setParams.bitRate) {
-        AVFrameSideData *brSide = nullptr;
-        AvcodecWrapper::Get().Call<AV_FRAME_REMOVE_SIDE_DATA>(rgbBuffer->frame, AV_FRAME_DATE_VASTAI_BITRATE_EXT1);
-        brSide = AvcodecWrapper::Get().Call<AV_FRAME_NEW_SIDE_DATA>(rgbBuffer->frame, AV_FRAME_DATE_VASTAI_BITRATE_EXT1,
-            sizeof(uint32_t) * 3);
-        if (brSide == nullptr) {
-            ERR("Hantro failed to dynamic adjust bitrate");
-            return false;
+    if ((m_receiveParams.bitRate != 0) && (m_receiveParams.bitRate != setParams.bitRate)) {
+        if (m_receiveParams.rcMode == HANTRO_CBR_MODE) {
+            AVFrameSideData *brSide = nullptr;
+            AvcodecWrapper::Get().Call<AV_FRAME_REMOVE_SIDE_DATA>(rgbBuffer->frame, AV_FRAME_DATE_VASTAI_BITRATE_EXT1);
+            brSide = AvcodecWrapper::Get().Call<AV_FRAME_NEW_SIDE_DATA>(rgbBuffer->frame, AV_FRAME_DATE_VASTAI_BITRATE_EXT1,
+                sizeof(uint32_t) * 3);
+            if (brSide == nullptr) {
+                ERR("Hantro failed to dynamic adjust bitrate");
+                return false;
+            }
+            uint32_t *data = (uint32_t*)brSide->data;
+            data[0] = m_receiveParams.bitRate / 1000;    // kbps
+            data[1] = 0;
+            data[2] = 0;
         }
-        uint32_t *data = (uint32_t*)brSide->data;
-        data[0] = m_receiveParams.bitRate / 1000;    // kbps
-        data[1] = 0;
-        data[2] = 0;
         setParams.bitRate = m_receiveParams.bitRate;
         INFO("Hantro dynamic adjust bitrate param value: %u", m_receiveParams.bitRate);
     }
@@ -633,9 +649,35 @@ bool GpuEncoderHantro::DynamicAdjustParam(GpuEncoderBufferHantroT rgbBuffer, Han
     }
 
     if (m_receiveParams.keyFrame == 1) {
-        rgbBuffer->frame->pict_type = AV_PICTURE_TYPE_I;
-        INFO("Hantro dynamic request one keyFrame.");
+        if ((m_receiveParams.crf != setParams.crf) || (m_receiveParams.maxCrfRate != setParams.maxCrfRate)
+            || (m_receiveParams.rcMode != setParams.rcMode)) {
+            INFO("request keyFrame and crf params change occur concurrently, only crf params will be applied.");
+        } else {
+            rgbBuffer->frame->pict_type = AV_PICTURE_TYPE_I;
+            INFO("Hantro dynamic request one keyFrame.");
+        }
     }
+
+    if ((m_receiveParams.crf != setParams.crf) || (m_receiveParams.maxCrfRate != setParams.maxCrfRate)) {
+        if (m_receiveParams.rcMode == HANTRO_CAPPED_CRF_MODE) {
+            AVFrameSideData *crfSide = nullptr;
+            AvcodecWrapper::Get().Call<AV_FRAME_REMOVE_SIDE_DATA>(rgbBuffer->frame, AV_FRAME_DATA_VASTAI_CRF);
+            crfSide = AvcodecWrapper::Get().Call<AV_FRAME_NEW_SIDE_DATA>(rgbBuffer->frame, AV_FRAME_DATA_VASTAI_CRF,
+                sizeof(int32_t) * 3);   //yuv三通道
+            if (crfSide == nullptr) {
+                ERR("Hantro failed to dynamic adjust CRF params.");
+                return false;
+            }
+            int32_t *data = (int32_t*)crfSide->data;
+            data[0] = m_receiveParams.crf;    // change crf every frames
+            data[1] = m_receiveParams.maxCrfRate / 1000;
+            data[2] = m_receiveParams.maxCrfRate / 1000;
+        }
+        setParams.crf = m_receiveParams.crf;
+        setParams.maxCrfRate = m_receiveParams.maxCrfRate;
+        INFO("Hantro dynamic adjust crfLevel: %u, crfMaxRate: %u", m_receiveParams.crf, m_receiveParams.maxCrfRate);
+    }
+
     return true;
 }
 
@@ -739,6 +781,27 @@ void GpuEncoderHantro::SetStreamHeight(EncodeParamT &param, HantroEncodeParams &
     return;
 }
 
+void GpuEncoderHantro::SetCrfLevel(EncodeParamT &param, HantroEncodeParams &params)
+{
+    auto ptr = static_cast<EncodeParamCrf *>(param);
+    params.crf = ptr->crf;
+    return;
+}
+
+void GpuEncoderHantro::SetMaxCrfRate(EncodeParamT &param, HantroEncodeParams &params)
+{
+    auto ptr = static_cast<EncodeParamMaxCrfRate *>(param);
+    params.maxCrfRate = ptr->maxCrfRate;
+    return;
+}
+
+void GpuEncoderHantro::SetRcmode(EncodeParamT &param, HantroEncodeParams &params)
+{
+    auto ptr = static_cast<EncodeParamRateControl *>(param);
+    params.rcMode = ptr->rateControl;
+    return;
+}
+
 uint32_t GpuEncoderHantro::ConvertProfileCodeToString(uint32_t profileCode, uint32_t &profile)
 {
     profile = 0;
@@ -768,6 +831,10 @@ int32_t GpuEncoderHantro::SetEncodeParam(EncodeParamT params[], uint32_t num)
     HantroEncodeParams tmpParams = m_settingParams;
     for (uint32_t i = 0; i < num; i++) {
         switch (params[i]->id) {
+            case ENCODE_PARAM_RATE_CONTROL:
+                SetRcmode(params[i], tmpParams);
+                isNeedRestart = true;
+                break;
             case ENCODE_PARAM_BITRATE:
                 SetBitRate(params[i], tmpParams);
                 break;
@@ -793,6 +860,12 @@ int32_t GpuEncoderHantro::SetEncodeParam(EncodeParamT params[], uint32_t num)
                 SetStreamHeight(params[i], tmpParams);
                 isNeedRestart = true;
                 break;
+            case ENCODE_PARAM_CRF:
+                SetCrfLevel(params[i], tmpParams);
+                break;
+            case ENCODE_PARAM_CRF_MAXRATE:
+                SetMaxCrfRate(params[i], tmpParams);
+                break;
             default:
                 ERR("Hantro set encoder param failed, unsupport param type");
                 return ERR_INVALID_PARAM;
@@ -812,8 +885,8 @@ int32_t GpuEncoderHantro::SetEncodeParam(EncodeParamT params[], uint32_t num)
     INFO("update encode params, framerate: %u, gopSize: %u, profile: %u, bitrate:%u, keyframe: %u",
         m_receiveParams.frameRate, m_receiveParams.gopSize, m_receiveParams.profile, m_receiveParams.bitRate,
         m_receiveParams.keyFrame);
-    INFO("update encode params, streamWidth: %u, streamHeight: %u",
-        m_receiveParams.streamWidth, m_receiveParams.streamHeight);
+    INFO("update encode params, crf: %u, maxcrfrate: %u, rcMode: %u", m_receiveParams.crf, m_receiveParams.maxCrfRate,
+        m_receiveParams.rcMode);
     m_dynamicAdjustParamFlag = true;                // dynamic adjust encode params
     return OK;
 }
@@ -832,6 +905,15 @@ void GpuEncoderHantro::UpdateSettingParams()
     }
     if (m_receiveParams.profile != m_settingParams.profile) {
         m_settingParams.profile = m_receiveParams.profile;
+    }
+    if (m_receiveParams.crf != UINT32_MAX && m_receiveParams.crf != m_settingParams.crf) {
+        m_settingParams.crf = m_receiveParams.crf;
+    }
+    if (m_receiveParams.maxCrfRate != UINT32_MAX && m_receiveParams.maxCrfRate != m_settingParams.maxCrfRate) {
+        m_settingParams.maxCrfRate = m_receiveParams.maxCrfRate;
+    }
+    if (m_receiveParams.rcMode != UINT32_MAX && m_receiveParams.rcMode != m_settingParams.rcMode) {
+        m_settingParams.rcMode = m_receiveParams.rcMode;
     }
     if (m_receiveParams.streamWidth != 0 && m_receiveParams.streamWidth != m_settingParams.streamWidth) {
         m_settingParams.streamWidth = m_receiveParams.streamWidth;
