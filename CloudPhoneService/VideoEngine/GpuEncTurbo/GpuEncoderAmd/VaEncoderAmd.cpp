@@ -117,6 +117,15 @@ EncTurboCode VaEncoderAmd::ContextInit(EncoderConfig &config)
     return ENC_TURBO_SUCCESS;
 }
 
+EncTurboCode VaEncoderAmd::SetImgSize(uint32_t width, uint32_t height, uint32_t widthAligned)
+{
+    m_vaContext.vpp.width = width;
+    m_vaContext.vpp.height = height;
+    m_vaContext.vpp.stride = widthAligned;
+    m_vaContext.enc.pictureWidth = width;
+    m_vaContext.enc.pictureHeight = height;
+}
+
 EncTurboCode VaEncoderAmd::VaDpyInit()
 {
     INFO("Create encoder...");
@@ -1528,7 +1537,7 @@ EncTurboCode VaEncoderAmd::EncUpdateMiscRateCtrl()
     miscRateCtrl->bits_per_second = m_vaContext.enc.maxBitRate;
     miscRateCtrl->target_percentage = (m_vaContext.enc.bitRate * 100) / m_vaContext.enc.maxBitRate;  // 100 percentage
     miscRateCtrl->window_size = (m_vaContext.enc.maxBitRate * 1000) / miscRateCtrl->bits_per_second;  // 1000 windows
-    
+
     vaStatus = vaUnmapBuffer(m_vaContext.vaDpy, m_vaContext.enc.miscRateControlBufID);
     if (vaStatus != VA_STATUS_SUCCESS) {
         ERR("Enc UpdateMiscRateCtrl vaUnmapBuffer failed: %d", vaStatus);
@@ -1692,7 +1701,7 @@ EncTurboCode VaEncoderAmd::Encode(VASurfaceID yuvSurfaceId, VABufferID codedbufB
 
 uint32_t VaEncoderAmd::ClcYuvSize(uint32_t size) const
 {
-    return size + (size + 3) / 4 * 2;  // mul 2 , Usize eq Vsize eq (Ysize + 3) / 4
+    return size * 3 / 2;
 }
 
 EncTurboCode VaEncoderAmd::CheckConvertStatus(VASurfaceID &yuvSurfaceId)

@@ -195,6 +195,7 @@ public:
      * @return EncTurboCode: ENC_TURBO_SUCCESS表示成功，其他错误码表示失败
      */
     EncTurboCode VaDpyInit();
+    void SetImgSize(uint32_t width, uint32_t height, uint32_t widthAligned);
 
     /**
      * @brief 设置码率控制模式

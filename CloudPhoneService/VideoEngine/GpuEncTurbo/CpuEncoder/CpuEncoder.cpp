@@ -63,6 +63,11 @@ int32_t CpuEncoder::Init(EncoderConfig &config)
     return OK;
 }
 
+int32_t CpuEncoder::ResetImgSize(uint32_t width, uint32_t height)
+{
+    return OK;
+}
+
 int32_t CpuEncoder::DeInit()
 {
     int32_t status = ReleaseAllBuffers();

@@ -45,7 +45,7 @@ namespace {
     using NiEncParamsSetValueFunc =
         ni_logan_retcode_t (*)(ni_logan_encoder_params_t *params, const char *name, const char *value, ni_logan_session_context_t *ctx);
     using NiRsrcAllocateAutoFunc = ni_logan_device_context_t* (*)(ni_logan_device_type_t devType, ni_alloc_rule_t rule,
-        ni_codec_t codec, int width, int height, int framerate, unsigned long *load);  
+        ni_codec_t codec, int width, int height, int framerate, unsigned long *load);
     using NiRsrcReleaseResourceFunc = void (*)(ni_logan_device_context_t *devCtx, ni_codec_t codec, unsigned long load);
     using NiRsrcFreeDeviceContextFunc = void (*)(ni_logan_device_context_t *devCtx);
     using NiDeviceOpenFunc = ni_device_handle_t (*)(const char *dev, uint32_t *maxIoSizeOut);
@@ -66,7 +66,7 @@ namespace {
     using NiPacketBufferFreeFunc = ni_logan_retcode_t (*)(ni_logan_packet_t *packet);
     using NiGetHwYuv420pDimFunc = void (*)(int width, int height, int bitDepthFactor, int isH264,
         int planeStride[NI_LOGAN_MAX_NUM_DATA_POINTERS], int planeHeight[NI_LOGAN_MAX_NUM_DATA_POINTERS]);
-    
+
     using NiCopyHwYuv420pFunc = void (*)(uint8_t *dstPtr[NI_LOGAN_MAX_NUM_DATA_POINTERS],
         uint8_t *srcPtr[NI_LOGAN_MAX_NUM_DATA_POINTERS], int frameWidth, int frameHeight, int bitDepthFactor,
         int dstStride[NI_LOGAN_MAX_NUM_DATA_POINTERS], int dstHeight[NI_LOGAN_MAX_NUM_DATA_POINTERS],
@@ -98,7 +98,7 @@ namespace {
     std::unordered_map<std::string, std::string> g_transProfile = {
         {"baseline", "1"},
         {"main", "2"},
-        {"high", "4"}};    
+        {"high", "4"}};
 
     std::unordered_map<std::string, std::string> g_transProfile_h265 = {
         {"main", "1"}};

@@ -129,6 +129,9 @@ struct GpuEncoderBuffer {
     GpuType gpuType = GPU_NONE;
     uint8_t *data  = nullptr;
     uint32_t dataLen = 0;
+    uint32_t transform = 0;
+    uint32_t width = 0;
+    uint32_t height = 0;
 };
 
 enum EncoderCapability : uint32_t {
@@ -159,6 +162,7 @@ public:
      * @return int32_t: OK表示成功，其他错误码表示失败
      */
     virtual int32_t Init(EncoderConfig &config) = 0;
+    virtual int32_t ResetImgSize(uint32_t width, uint32_t height) = 0;
 
     /**
      * @brief 销毁编码器

@@ -12,12 +12,18 @@ namespace Vmi {
 namespace {
     pDisplayServer g_capture { nullptr };
     FrameComeCallback g_frameCallback { nullptr };
+    GetPresentLayerCallback g_getPresentLayerCallback { nullptr };
 }
 class HantroCaptureWrapper : public HantroCaptureWrapperBase {
 public:
     void SetFrameCallback(FrameComeCallback frameCome) override
     {
         g_frameCallback = frameCome;
+    }
+
+    void SetGetPresentLayerCallback(GetPresentLayerCallback getLayer) override
+    {
+        g_getPresentLayerCallback = getLayer;
     }
 
     bool RefreshDisplay() override
@@ -66,6 +72,14 @@ public:
             mode = DisplayServerMode::Async;
         }
         g_capture = CreateDisplayServer(mode);
+        if (!DisplayerServerInit(g_capture, InitCallback, -1)) {
+            ERR("Init DisplayServer fail");
+            return false;
+        }
+        if (!DisplayServerInitGetPresentLayerCallback(g_capture, g_getPresentLayerCallback)) {
+            ERR("Init GetPresentLayerCallBack fail");
+            return false;
+        }
         return DisplayServerInit(g_capture, InitCallback, -1);
     }
 

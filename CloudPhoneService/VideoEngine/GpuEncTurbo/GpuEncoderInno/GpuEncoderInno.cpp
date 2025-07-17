@@ -200,6 +200,11 @@ int32_t GpuEncoderInno::Init(EncoderConfig &config)
     return OK;
 }
 
+int32_t GpuEncoderInno::ResetImgSize(uint32_t width, uint32_t height)
+{
+    return OK;
+}
+
 bool GpuEncoderInno::UnLoadInnoLib()
 {
     if (dlclose(m_innoYuvLib.lib) != 0) {

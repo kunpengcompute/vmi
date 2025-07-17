@@ -1,5 +1,39 @@
 LOCAL_PATH := $(call my-dir)
 REPO_ROOT := $(LOCAL_PATH)/../../
+
+########################################################################
+# NativeWindowMock
+########################################################################
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+    $(LOCAL_PATH)/Control/NativeWindowMock.cpp \
+
+#add shared libraries
+LOCAL_LDLIBS := -llog
+
+LOCAL_VENDOR_MODULE := true
+LOCAL_MULTILIB := 64
+LOCAL_MODULE := libnativewindow
+LOCAL_MODULE_TAGS := optional
+LOCAL_C_INCLUDES := \
+    $(LOCAL_PATH)/Control \
+    $(REPO_ROOT)/unpack_open_source
+
+LOCAL_CFLAGS += -DANDROID_PLATFORM_SDK_VERSION=$(PLATFORM_SDK_VERSION)
+LOCAL_CFLAGS += -Wno-address-of-packed-member -DLOG_TAG=\"INativeGpuEncTurbo\" -DCONFIG_VASTAPI
+LOCAL_CFLAGS   += -fstack-protector-strong --param ssp-buffer-size=4 -fPIE -pie -D_FORTIFY_SOURCE=2 -O2 -fPIC -Wformat -Werror -Wall
+LOCAL_CPPFLAGS += -fstack-protector-strong --param ssp-buffer-size=4 -fPIE -pie -D_FORTIFY_SOURCE=2 -O2 -fPIC -Wformat -Werror -Wall -fexceptions
+LOCAL_LDFLAGS  += -Wl,--build-id=none -Wl,-z,relro -fPIE  -Wl,-z,now,-z,noexecstack -Wformat
+
+ifeq ($(ENABLE_ASAN), 1)
+LOCAL_SANITIZE := hwaddress alignment bounds null unreachable integer
+LOCAL_SANITIZE_DIAG := alignment bounds null unreachable integer
+endif
+
+include $(BUILD_SHARED_LIBRARY)
+########################################################################
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := Decoder
 LOCAL_SRC_FILES := $(LOCAL_PATH)/Decoder/libs/arm64-v8a/libDecoder.so
@@ -62,5 +96,5 @@ LOCAL_SRC_FILES := \
         $(REPO_ROOT)/Common/Utils/EngineEventHandler.cpp
 
 LOCAL_LDLIBS := -lmediandk -llog
-LOCAL_SHARED_LIBRARIES := libDecoder libCommunication
+LOCAL_SHARED_LIBRARIES := libDecoder libCommunication libnativewindow
 include $(BUILD_SHARED_LIBRARY)
