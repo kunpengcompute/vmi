@@ -17,7 +17,9 @@
 #include "SystemProperty.h"
 #include "EngineEventHandler.h"
 #include "VmiDef.h"
+#ifdef __ANDROID__
 #include "android/native_window.h"
+#endif
 
 using namespace Vmi;
 
@@ -40,6 +42,16 @@ struct FrameTimeStamp {
     uint64_t t11;
     uint64_t t12;
     uint64_t t13;
+};
+
+enum class AndroidRotationFlags : uint32_t {
+    ROT_0 = 0,
+    FLIP_H = 1,
+    FLIP_V = 2,
+    ROT_90 = 4,
+    ROT_180 = FLIP_H | FLIP_V,
+    ROT_270 = ROT_180 | ROT_90,
+    ROT_INVALID = 0x80
 };
 
 std::unordered_map<uint8_t, int32_t> g_orientationMap {
@@ -111,11 +123,23 @@ bool CloudPhoneController::StripPacket(std::pair<uint8_t *, uint32_t> &packetPai
     uint32_t orientation = 0;
     if (m_isSimulator) {
         orientation = extBuf.orientation;
-        if (extBuf.transform != 0) {
-            ANativeWindow_setBuffersTransform(reinterpret_cast<ANativeWindow*>(m_surface), 0);
-        }
+        #ifdef __ANDROID__
+            if (extBuf.transform != 0) {
+                ANativeWindow_setBuffersTransform(reinterpret_cast<ANativeWindow*>(m_surface), 0);
+            }
+        #endif
     } else {
-        orientation = (extBuf.transform != 0) ? 1 : 0;
+        switch (extBuf.transform) {
+        case static_cast<uint32_t>(AndroidRotationFlags::ROT_0):
+            orientation = 0;
+            break;
+        case static_cast<uint32_t>(AndroidRotationFlags::ROT_270):
+            orientation = 3;
+            break;
+        case static_cast<uint32_t>(AndroidRotationFlags::ROT_90):
+        default:
+            orientation = 1;
+        }
     }
     std::pair<uint8_t *, uint32_t> subPacketPair = std::make_pair(buf + headerLen, length - headerLen);
     #ifdef __ANDROID__
@@ -176,7 +200,6 @@ void CloudPhoneController::WriteDataToFile(uint8_t *data, uint32_t size, Decoder
     } else {
         ERR("FILE is null");
     }
-    
 }
 
 DecoderType CloudPhoneController::ParseDecTypeFromFirstFrame(const std::pair<uint8_t *, uint32_t>& packetPair)

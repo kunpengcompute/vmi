@@ -428,9 +428,9 @@ bool ApiTest::VersionTest()
     RUN_BEGIN;
     const char* version = GetVersion();
     const char* expectString = "Product Name: Kunpeng BoostKit\n"
-        "Product Version: 25.0.RC1\n"
+        "Product Version: 25.1.RC1\n"
         "Component Name: BoostKit-videoengine\n"
-        "Component Version: 7.0.RC1\n"
+        "Component Version: 7.1.RC1\n"
         "Component AppendInfo: 11.0.0_r48\n";
     if (strcmp(version, expectString) != 0) {
         RUN_ABNORMAL("expect:%s, actual:%s", expectString, version);
