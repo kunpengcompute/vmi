@@ -383,6 +383,8 @@ function init_config() {
             VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB24_320CORE[*]})
         elif [ ${#hantro_gpus[@]} -eq 32 ]; then
             VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB32_320CORE[*]})
+        elif [ ${#hantro_gpus[@]} -eq 40 ]; then
+            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB40_320CORE[*]})
         elif  [ ${#hantro_gpus[@]} -ne 0 ]; then
             VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB4_320CORE[*]})
         elif [ ${#amd_gpus[@]} -eq 2 ]; then

@@ -23,7 +23,7 @@ BUILD_FPS=30
 # 云手机绑核方式 0：2容器2核(默认)；1：绑NUMA，每NUMA空前2个核
 CPU_BIND_MODE=0
 
-# GPU设备节点(XD 最多有4 * 4 = 16个渲染节点)
+# GPU设备节点(最多有4 * 10 = 40个渲染节点)
 GPUS=(
     "/dev/dri/renderD128" "/dev/dri/renderD129" "/dev/dri/renderD130" "/dev/dri/renderD131"
     "/dev/dri/renderD132" "/dev/dri/renderD133" "/dev/dri/renderD134" "/dev/dri/renderD135"
@@ -33,6 +33,8 @@ GPUS=(
     "/dev/dri/renderD148" "/dev/dri/renderD149" "/dev/dri/renderD150" "/dev/dri/renderD151"
     "/dev/dri/renderD152" "/dev/dri/renderD153" "/dev/dri/renderD154" "/dev/dri/renderD155"
     "/dev/dri/renderD156" "/dev/dri/renderD157" "/dev/dri/renderD158" "/dev/dri/renderD159"
+    "/dev/dri/renderD160" "/dev/dri/renderD161" "/dev/dri/renderD162" "/dev/dri/renderD163"
+    "/dev/dri/renderD164" "/dev/dri/renderD165" "/dev/dri/renderD166" "/dev/dri/renderD167"
 )
 
 # VPU设备节点(XD 最多有6 * 6 = 36个vpu节点)
@@ -652,6 +654,57 @@ VIDEO_GPU_MAP_HB32_320CORE=(
     "${GPUS[31]}"
     "${GPUS[7]}"
     "${GPUS[23]}"
+)
+
+# 10张卡与numa物理上的对应关系为：1/1/1/0/0/3/3/3/2/2
+# 容器绑核对应关系：numa1上第3张卡的后2个节点和numa0绑定，numa3上第3张卡的后2个节点和numa2绑定，其余节点绑核和实际显卡所在numa一致
+# 渲染节点循环顺序如下：
+# numa0卡1          -> numa2卡1          -> numa1卡1          -> numa3卡1           ->
+# numa0卡2          -> numa2卡2          -> numa1卡2          -> numa3卡2           ->
+# numa1卡3后2个节点  -> numa3卡3后2个节点 -> numa1卡1          -> numa3卡1           ->
+# numa0卡1          -> numa2卡1          -> numa1卡2          -> numa3卡2           ->
+# numa0卡2          -> numa2卡2          -> numa1卡3前2个节点  -> numa3卡3前2个节点
+VIDEO_GPU_MAP_HB40_320CORE=(
+    "${GPUS[12]}"
+    "${GPUS[32]}"
+    "${GPUS[0]}"
+    "${GPUS[20]}"
+    "${GPUS[16]}"
+    "${GPUS[36]}"
+    "${GPUS[4]}"
+    "${GPUS[24]}"
+    "${GPUS[10]}"
+    "${GPUS[30]}"
+    "${GPUS[1]}"
+    "${GPUS[21]}"
+    "${GPUS[13]}"
+    "${GPUS[33]}"
+    "${GPUS[5]}"
+    "${GPUS[25]}"
+    "${GPUS[17]}"
+    "${GPUS[37]}"
+    "${GPUS[8]}"
+    "${GPUS[28]}"
+    "${GPUS[14]}"
+    "${GPUS[34]}"
+    "${GPUS[2]}"
+    "${GPUS[22]}"
+    "${GPUS[18]}"
+    "${GPUS[38]}"
+    "${GPUS[6]}"
+    "${GPUS[26]}"
+    "${GPUS[11]}"
+    "${GPUS[31]}"
+    "${GPUS[3]}"
+    "${GPUS[23]}"
+    "${GPUS[15]}"
+    "${GPUS[35]}"
+    "${GPUS[7]}"
+    "${GPUS[27]}"
+    "${GPUS[19]}"
+    "${GPUS[39]}"
+    "${GPUS[9]}"
+    "${GPUS[29]}"
 )
 
 # 7260(128核) XD GPU 6张卡配置，每张卡4个设备节点，总共24个设备节点，循环使用
