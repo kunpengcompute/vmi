@@ -21,6 +21,7 @@ public:
     void RecvVideoData(VmiCmd cmd, uint8_t *data, uint32_t size);
 private:
     std::string TimestampToStr(uint64_t time);
+    std::string GetCurrentTimestamp();
 private:
     bool m_isPrintLatency = false;
     bool m_isSaveStremFile = false;

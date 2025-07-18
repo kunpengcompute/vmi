@@ -19,8 +19,18 @@ void Latency::Init(uint32_t dataOffset)
     m_dataOffset = dataOffset;
 }
 
-void Latency::Start(VideoFrameType frameType)
+std::string Latency::GetCurrentTimestamp()
 {
+    auto now  = std::chrono::system_clock::now();
+    std::time_t t = std::chrono::system_clock::to_time_t(now);
+    std::tm tm     = *std::localtime(&t);
+
+    char buf[32] = {0};
+    std::strftime(buf, sizeof(buf), "%Y%m%d__%H%M%S", &tm);
+    return std::string(buf);
+}
+
+void Latency::Start(VideoFrameType frameType) {
     m_frameCount = 0;
     if (!m_isSaveStremFile) {
         return;
@@ -43,8 +53,9 @@ void Latency::Start(VideoFrameType frameType)
         suffix = ".unknown";
         break;
     }
-    std::string path = "/sdcard/Movies/stream";
-    path += suffix;
+    std::string ts   = GetCurrentTimestamp();
+    std::string path = "/sdcard/Movies/stream_" + ts + suffix;
+
     m_file = fopen(path.c_str(), "wb");
     if (m_file == nullptr) {
         ERR("Failed to open %s, errno:%d:%s", path.c_str(), errno, strerror(errno));
@@ -79,7 +90,7 @@ void Latency::RecvVideoData(VmiCmd cmd, uint8_t *data, uint32_t size)
     }
     if (cmd != VmiCmd::VIDEO_RETURN_VIDEO_DATA || data == nullptr || size < sizeof(VideoData)) {
         LOG_RATE_LIMIT(ANDROID_LOG_ERROR, 1, "Failed to parse video data, cmd:%u, size:%u, offset:%u",
-            cmd, size, m_dataOffset);
+                       cmd, size, m_dataOffset);
         return;
     }
     VideoData* videoData = reinterpret_cast<VideoData*>(data + m_dataOffset);
