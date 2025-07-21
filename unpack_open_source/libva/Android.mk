@@ -47,7 +47,10 @@ LOCAL_SRC_FILES := \
 	va.c \
 	va_trace.c \
 	va_fool.c  \
-	va_str.c
+	va_str.c \
+	drm/va_drm.c \
+    drm/va_drm_auth.c \
+	drm/va_drm_utils.c
  
 #------------------------
 LOCAL_CFLAGS := \
@@ -64,7 +67,10 @@ LOCAL_CFLAGS += -DSYSCONFDIR=\"/etc\"
  
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/.. \
-	$(LOCAL_PATH)/../../Include
+	$(LOCAL_PATH)/../../Include \
+	$(LOCAL_PATH)/drm/ \
+	$(UNPACK_LIBDRM_PATH)/codes \
+    $(UNPACK_LIBDRM_PATH)/codes/include/drm
  
 LOCAL_VENDOR_MODULE := false
 LOCAL_MODULE_TAGS := optional

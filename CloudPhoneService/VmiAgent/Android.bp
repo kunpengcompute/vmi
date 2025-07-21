@@ -59,7 +59,6 @@ cc_binary {
     shared_libs: [
         "libcutils",
         "libutils",
-        "libevent",
         "libDemoUtils",
         "libVmiCommunication",
         "libhidlbase",

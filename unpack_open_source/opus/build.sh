@@ -13,8 +13,7 @@ AN_JOBS="$(grep processor /proc/cpuinfo | wc -l)"
 source ${cur_file_path}/../../scripts/compile_log.sh
 source ${REPO_ROOT_DIR}/scripts/cloud_ndk_build_func.sh ${REPO_ROOT_DIR}
 
-system_so_list="
-    libVmiOpus.so "
+system_so_list=""
 
 clean_build_env()
 {

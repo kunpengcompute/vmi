@@ -1,5 +1,6 @@
 cc_library_shared {
     name: "libVmiOpus",
+    vendor: true,
 
     srcs: [
         "codes/celt/arm/armcpu.c", 
