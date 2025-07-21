@@ -91,7 +91,7 @@ int32_t GpuEncoderAmd::ResetImgSize(uint32_t width, uint32_t height)
     m_inSize.width = width;
     m_inSize.height = height;
     m_inSize.widthAligned = AlignUp(width, WIDTH_ALIGN);
-    m_inSize.heightAligned = AlignUp(height, WIDTH_ALIGN);
+    m_inSize.heightAligned = AlignUp(height, HEIGHT_ALIGN);
 
     m_vaEncoderAmd.SetImgSize(width, height, m_inSize.widthAligned);
 

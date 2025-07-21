@@ -117,7 +117,7 @@ EncTurboCode VaEncoderAmd::ContextInit(EncoderConfig &config)
     return ENC_TURBO_SUCCESS;
 }
 
-EncTurboCode VaEncoderAmd::SetImgSize(uint32_t width, uint32_t height, uint32_t widthAligned)
+void VaEncoderAmd::SetImgSize(uint32_t width, uint32_t height, uint32_t widthAligned)
 {
     m_vaContext.vpp.width = width;
     m_vaContext.vpp.height = height;
