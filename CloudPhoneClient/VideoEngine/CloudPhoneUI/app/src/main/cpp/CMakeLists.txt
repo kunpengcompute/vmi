@@ -10,7 +10,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../../Common/Conn
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../../Common/Include)
 
 add_library(VideoEngineJni SHARED
-    VideoEngineJni.cpp)
+        VideoEngineJni.cpp)
 
 add_library(VideoEngineClient
             SHARED

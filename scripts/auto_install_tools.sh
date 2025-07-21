@@ -69,7 +69,7 @@ function DownloadToolPkg()
         fi
     fi
     if [ ! -f "${INSTALL_DIR}/openjdk-11+28_linux-x64_bin.tar.gz" ]; then
-        wget --no-check-certificate https://d6.injdk.cn/openjdk/openjdk/11/openjdk-11+28_linux-x64_bin.tar.gz
+        wget --no-check-certificate https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz 
         if [ $? -ne 0 ]; then
             LogError "下载openjdk-11+28_linux-x64_bin.tar.gz失败，请检查编译机网络，或手动下载！"
             exit 1

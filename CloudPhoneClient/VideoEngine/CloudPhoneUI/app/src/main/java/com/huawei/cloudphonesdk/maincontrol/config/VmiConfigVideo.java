@@ -4,68 +4,31 @@ import androidx.annotation.NonNull;
 
 import com.huawei.cloudphonesdk.maincontrol.VideoConf;
 
-public class VmiConfigVideo {
-
-    // VmiConfig
-    private int version = 1;
+public class VmiConfigVideo extends VmiConfig {
     // 编码器类型
     private int encoderType = 0;
     // 视频输出格式
     private int videoFrameType = 0;
-    // 帧率
-    private int frameRate = 30;
     // 抓图分辨率（仅renderOptimize关闭时有效）
     private int width = 720;                       // 720: 默认720P
     private int height = 1280;                     // 1280: 默认720P
     private int widthAligned = 720;                // 720: 默认不做对齐
     private int heightAligned = 1280;              // 1280: 默认不做对齐
-
-    private boolean forceLandscape = false;               // 强制横屏
     private int density = 320;                            // 屏幕密度
     private boolean renderOptimize = false;               // 出流优化，默认关闭，开启时displayResolution与captureResolution无效
 
     // EncodeParams
-    private int bitrate = 2000000;                          // 码率
-    private int gopSize = 30;                               // I帧间隔
-    private int profile = 0;   // 编码复杂度
-    private int rcMode = 2;               // 流控模式
-    private int forceKeyFrame = 0;                          // 在设置后第N帧强制生成I帧，0表示不生效
-    private boolean interpolation = false;                  // 补帧开关
-    private int crf = 34;
-    private int maxCrfRate = 20000000;
-    private int vbvBufferSize = 1000;
-    private int streamWidth = 720;
-    private int streamHeight = 1280;
+    private EncodeParams encodeParams;
 
     public VmiConfigVideo() {
     }
-
-    public int getCrf() {
-        return crf;
+    
+    public EncodeParams getEncodeParams() {
+	return encodeParams;
     }
 
-    public void setCrf(int crf) {
-        this.crf = crf;
-    }
-
-    public int getMaxCrfRate() {
-        return maxCrfRate;
-    }
-
-    public void setMaxCrfRate(int maxCrfRate) {
-        this.maxCrfRate = maxCrfRate;
-    }
-
-    public int getVbvBufferSize() {
-        return vbvBufferSize;
-    }
-
-    public void setVbvBufferSize(int vbvBufferSize) {
-        this.vbvBufferSize = vbvBufferSize;
-    }
-
-    public int getVersion() {
-        return version;
+    public void setEncodeParams(EncodeParams encodeParams) {
+	this.encodeParams = encodeParams;
     }
 
     public int getEncoderType() {
@@ -82,14 +45,6 @@ public class VmiConfigVideo {
 
     public void setVideoFrameType(int videoFrameType) {
         this.videoFrameType = videoFrameType;
-    }
-
-    public int getFrameRate() {
-        return frameRate;
-    }
-
-    public void setFrameRate(int frameRate) {
-        this.frameRate = frameRate;
     }
 
     public int getWidth() {
@@ -124,14 +79,6 @@ public class VmiConfigVideo {
         this.heightAligned = heightAligned;
     }
 
-    public boolean isForceLandscape() {
-        return forceLandscape;
-    }
-
-    public void setForceLandscape(boolean forceLandscape) {
-        this.forceLandscape = forceLandscape;
-    }
-
     public int getDensity() {
         return density;
     }
@@ -146,70 +93,6 @@ public class VmiConfigVideo {
 
     public void setRenderOptimize(boolean renderOptimize) {
         this.renderOptimize = renderOptimize;
-    }
-
-    public int getBitrate() {
-        return bitrate;
-    }
-
-    public void setBitrate(int bitrate) {
-        this.bitrate = bitrate;
-    }
-
-    public int getGopSize() {
-        return gopSize;
-    }
-
-    public void setGopSize(int gopSize) {
-        this.gopSize = gopSize;
-    }
-
-    public int getProfile() {
-        return profile;
-    }
-
-    public void setProfile(int profile) {
-        this.profile = profile;
-    }
-
-    public int getRcMode() {
-        return rcMode;
-    }
-
-    public void setRcMode(int rcMode) {
-        this.rcMode = rcMode;
-    }
-
-    public int getForceKeyFrame() {
-        return forceKeyFrame;
-    }
-
-    public void setForceKeyFrame(int forceKeyFrame) {
-        this.forceKeyFrame = forceKeyFrame;
-    }
-
-    public boolean isInterpolation() {
-        return interpolation;
-    }
-
-    public void setInterpolation(boolean interpolation) {
-        this.interpolation = interpolation;
-    }
-
-    public int getStreamWidth() {
-        return streamWidth;
-    }
-
-    public void setStreamWidth(int streamWidth) {
-        this.streamWidth = streamWidth;
-    }
-
-    public int getStreamHeight() {
-        return streamHeight;
-    }
-
-    public void setStreamHeight(int streamHeight) {
-        this.streamHeight = streamHeight;
     }
 
     enum VideoFrameType {
@@ -261,27 +144,25 @@ public class VmiConfigVideo {
     @Override
     public String toString() {
         return "VmiConfigVideo{" +
-                "version=" + version +
+                "version=" + getVersion() +
                 ", encoderType=" + encoderType +
                 ", videoFrameType=" + videoFrameType +
-                ", frameRate=" + frameRate +
                 ", width=" + width +
                 ", height=" + height +
                 ", widthAligned=" + widthAligned +
                 ", heightAligned=" + heightAligned +
-                ", forceLandscape=" + forceLandscape +
                 ", renderOptimize=" + renderOptimize +
-                ", bitrate=" + bitrate +
-                ", gopSize=" + gopSize +
-                ", profile=" + profile +
-                ", rcMode=" + rcMode +
-                ", forceKeyFrame=" + forceKeyFrame +
-                ", interpolation=" + interpolation +
-                ", crf=" + crf +
-                ", maxCrfRate=" + maxCrfRate +
-                ", vbvBufferSize=" + vbvBufferSize +
-                ", streamWidth=" + streamWidth +
-                ", streamHeight=" + streamHeight +
+                ", bitrate=" + encodeParams.bitrate +
+                ", gopSize=" + encodeParams.gopSize +
+                ", profile=" + encodeParams.profile +
+                ", rcMode=" + encodeParams.rcMode +
+                ", forceKeyFrame=" + encodeParams.forceKeyFrame +
+                ", interpolation=" + encodeParams.interpolation +
+                ", crf=" + encodeParams.crf +
+                ", maxCrfRate=" + encodeParams.maxCrfRate +
+                ", vbvBufferSize=" + encodeParams.vbvBufferSize +
+                ", streamWidth=" + encodeParams.streamWidth +
+                ", streamHeight=" + encodeParams.streamHeight +
                 '}';
     }
 }

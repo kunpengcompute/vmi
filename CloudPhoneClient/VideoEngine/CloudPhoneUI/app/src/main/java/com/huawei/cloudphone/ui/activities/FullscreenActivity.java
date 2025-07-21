@@ -46,7 +46,6 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,6 +88,7 @@ import com.huawei.cloudphonesdk.maincontrol.OpenGLJniCallback;
 import com.huawei.cloudphonesdk.maincontrol.OpenGLJniWrapper;
 import com.huawei.cloudphonesdk.maincontrol.UpstreamReceiveDispatcher;
 import com.huawei.cloudphonesdk.maincontrol.VideoConf;
+import com.huawei.cloudphonesdk.maincontrol.config.AudioPlayParams;
 import com.huawei.cloudphonesdk.maincontrol.config.EncodeParams;
 import com.huawei.cloudphonesdk.maincontrol.config.VmiConfigAudio;
 import com.huawei.cloudphonesdk.maincontrol.config.VmiConfigVideo;
@@ -212,8 +212,6 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
     private ProgressDialog mWaitingDialog;
     private AlertDialog mUnsupportedResolutionDialog;
     private ExitDialog mExitDialog;
-    private AlertDialog mLagDialog;
-    private EditText mEditText;
 
     // 标识分辨率是否支持
     private volatile boolean mResolutionSupported = true;
@@ -923,11 +921,10 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
             fpsTestReportDialog.startTime.setText(startTestTimeValue);
             String stopTestTimeValue = stopTestTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             fpsTestReportDialog.stopTime.setText(stopTestTimeValue);
-            StringBuilder averageBuilder = new StringBuilder();
-            averageBuilder.append("测试开始时间: ").append(startTestTimeValue).append("  测试结束时间: ").append(stopTestTimeValue).append(
-                            "  帧率平均值: ").append(fpsAverage).append("  jank/10min平均值: ").append(jankAverage).append("  bjank/10min平均值: ")
-                    .append(bJankAverage);
-            LogUtil.writeFpsData("fps", fileName, averageBuilder.toString());
+            String averageBuilder = "测试开始时间: " + startTestTimeValue + "  测试结束时间: " + stopTestTimeValue +
+                    "  帧率平均值: " + fpsAverage + "  jank/10min平均值: " + jankAverage + "  bjank/10min平均值: "
+                    + bJankAverage;
+            LogUtil.writeFpsData("fps", fileName, averageBuilder);
         }
         if (!fpsTestReportDialog.isShowing()) {
             fpsTestReportDialog.show();
@@ -993,8 +990,6 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
         VmiConfigVideo vmiConfigVideo = new VmiConfigVideo();
         vmiConfigVideo.setEncoderType(SPUtil.getInt(SPUtil.VIDEO_ENCODER_TYPE, 0));
         vmiConfigVideo.setVideoFrameType(SPUtil.getInt(SPUtil.VIDEO_FRAME_TYPE, 0));
-        vmiConfigVideo.setFrameRate(SPUtil.getInt(SPUtil.VIDEO_FRAME_RATE, 30));// 暂不使用
-        vmiConfigVideo.setForceLandscape(SPUtil.getBoolean(SPUtil.VIDEO_FORCE_LANDSCAPE, false));// 暂不使用
         // FrameSize
         vmiConfigVideo.setWidth(SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH, VMI_720P_WIDTH));
         vmiConfigVideo.setHeight(SPUtil.getInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT, VMI_720P_HEIGHT));
@@ -1003,18 +998,20 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
         vmiConfigVideo.setDensity(SPUtil.getInt(SPUtil.VIDEO_DENSITY, metric.densityDpi));
         vmiConfigVideo.setRenderOptimize(SPUtil.getBoolean(SPUtil.VIDEO_RENDER_OPTIMIZE, true));
         // EncodeParams
-        vmiConfigVideo.setBitrate(SPUtil.getInt(SPUtil.VIDEO_BIT_RATE, 3000000));
-        vmiConfigVideo.setGopSize(SPUtil.getInt(SPUtil.VIDEO_GOP_SIZE, 30));
-        vmiConfigVideo.setProfile(SPUtil.getInt(SPUtil.VIDEO_PROFILE, 1));
-        vmiConfigVideo.setRcMode(SPUtil.getInt(SPUtil.VIDEO_RC_MODE, 2));
-        vmiConfigVideo.setForceKeyFrame(SPUtil.getInt(SPUtil.VIDEO_FORCE_KEY_FRAME, 0));
-        vmiConfigVideo.setInterpolation(SPUtil.getInt(SPUtil.VIDEO_INTERPOLATION, 0) != 0); // 沿用原来的int类型，以后可考虑改为bool
-        vmiConfigVideo.setCrf(SPUtil.getInt(SPUtil.VIDEO_CRF, 34));
-        vmiConfigVideo.setMaxCrfRate(SPUtil.getInt(SPUtil.VIDEO_MAX_CRF_RATE, 20000000));
-        vmiConfigVideo.setVbvBufferSize(SPUtil.getInt(SPUtil.VIDEO_VBV_BUFFER_SIZE, 1000));
-        vmiConfigVideo.setStreamWidth(SPUtil.getInt(SPUtil.VIDEO_STREAM_WIDTH, Constant.VMI_720P_WIDTH));
-        vmiConfigVideo.setStreamHeight(SPUtil.getInt(SPUtil.VIDEO_STREAM_HEIGHT, Constant.VMI_720P_HEIGHT));
-        LogUtil.error(TAG, "streamWidth" + vmiConfigVideo.getStreamWidth());
+        EncodeParams encodeParams = new EncodeParams();
+        encodeParams.setBitrate(SPUtil.getInt(SPUtil.VIDEO_BIT_RATE, 3000000));
+        encodeParams.setGopSize(SPUtil.getInt(SPUtil.VIDEO_GOP_SIZE, 30));
+        encodeParams.setProfile(SPUtil.getInt(SPUtil.VIDEO_PROFILE, 1));
+        encodeParams.setRcMode(SPUtil.getInt(SPUtil.VIDEO_RC_MODE, 2));
+        encodeParams.setForceKeyFrame(SPUtil.getInt(SPUtil.VIDEO_FORCE_KEY_FRAME, 0));
+        encodeParams.setInterpolation(SPUtil.getInt(SPUtil.VIDEO_INTERPOLATION, 0) != 0); // 沿用原来的int类型，以后可考虑改为bool
+        encodeParams.setCrf(SPUtil.getInt(SPUtil.VIDEO_CRF, 34));
+        encodeParams.setMaxCrfRate(SPUtil.getInt(SPUtil.VIDEO_MAX_CRF_RATE, 20000000));
+        encodeParams.setVbvBufferSize(SPUtil.getInt(SPUtil.VIDEO_VBV_BUFFER_SIZE, 1000));
+        encodeParams.setStreamWidth(SPUtil.getInt(SPUtil.VIDEO_STREAM_WIDTH, Constant.VMI_720P_WIDTH));
+        encodeParams.setStreamHeight(SPUtil.getInt(SPUtil.VIDEO_STREAM_HEIGHT, Constant.VMI_720P_HEIGHT));
+
+        vmiConfigVideo.setEncodeParams(encodeParams);
         OpenGLJniWrapper.startVideo(vmiConfigVideo);
         LogUtil.info(TAG, "startModule success");
     }
@@ -1215,8 +1212,10 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
         SPUtil.putInt(SPUtil.AUDIO_PLAY_BITRATE, Integer.parseInt(audioPlayParamsDialog.getBitRate()));
         SPUtil.putInt(SPUtil.AUDIO_SAMPLE_INTERVAL, Integer.parseInt(audioPlayParamsDialog.getSampleInterval()));
         VmiConfigAudio vmiConfigAudio = new VmiConfigAudio();
-        vmiConfigAudio.setSampleInterval(SPUtil.getInt(SPUtil.AUDIO_SAMPLE_INTERVAL, 10));
-        vmiConfigAudio.setBitrate(SPUtil.getInt(SPUtil.AUDIO_PLAY_BITRATE, 192000));
+        AudioPlayParams audioPlayParams = new AudioPlayParams();
+        audioPlayParams.setSampleInterval(SPUtil.getInt(SPUtil.AUDIO_SAMPLE_INTERVAL, 10));
+        audioPlayParams.setBitrate(SPUtil.getInt(SPUtil.AUDIO_PLAY_BITRATE, 192000));
+        vmiConfigAudio.setAudioPlayParams(audioPlayParams);
         boolean ret = OpenGLJniWrapper.setAudioParam(vmiConfigAudio);
         if (ret) {
             Toast.makeText(this, "音频编码参数发送成功", Toast.LENGTH_LONG).show();
@@ -1234,7 +1233,7 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
             SPUtil.putInt(SPUtil.VIDEO_RC_MODE, encodeParams.getRcMode());
             SPUtil.putInt(SPUtil.VIDEO_FORCE_KEY_FRAME, encodeParams.getForceKeyFrame());
             SPUtil.putBoolean(SPUtil.VIDEO_INTERPOLATION, encodeParams.isInterpolation());
-            SPUtil.putInt(SPUtil.VIDEO_CRF, encodeParams.crf);
+            SPUtil.putInt(SPUtil.VIDEO_CRF, encodeParams.getCrf());
             SPUtil.putInt(SPUtil.VIDEO_MAX_CRF_RATE, encodeParams.getMaxCrfRate());
             SPUtil.putInt(SPUtil.VIDEO_VBV_BUFFER_SIZE, encodeParams.getVbvBufferSize());
             SPUtil.putInt(SPUtil.VIDEO_STREAM_WIDTH, encodeParams.getStreamWidth());
@@ -1567,8 +1566,6 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
     public void onBackPressed() {
         if (mExitDialog != null && mExitDialog.isShowing()) {
             mExitDialog.dismiss();
-        } else if (mLagDialog != null && mLagDialog.isShowing()) {
-            mLagDialog.dismiss();
         } else {
             showExitDialog();
         }
@@ -1952,8 +1949,10 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
                     int audioBitrate = intent.getIntExtra("audioBitrate", 192000);
                     int audioSampleInterval = intent.getIntExtra("audioSampleInterval", 10);
                     VmiConfigAudio vmiConfigAudio = new VmiConfigAudio();
-                    vmiConfigAudio.setSampleInterval(audioSampleInterval);
-                    vmiConfigAudio.setBitrate(audioBitrate);
+                    AudioPlayParams audioPlayParams = new AudioPlayParams();
+                    audioPlayParams.setSampleInterval(audioSampleInterval);
+                    audioPlayParams.setBitrate(audioBitrate);
+                    vmiConfigAudio.setAudioPlayParams(audioPlayParams);
                     boolean audioSendResult = OpenGLJniWrapper.setAudioParam(vmiConfigAudio);
                     if (audioSendResult) {
                         Log.i(TAG, "onReceive audio:音频编码参数发送成功.audioBitrate:" +

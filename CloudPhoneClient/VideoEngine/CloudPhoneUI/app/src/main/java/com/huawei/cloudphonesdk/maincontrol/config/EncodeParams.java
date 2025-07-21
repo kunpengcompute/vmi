@@ -1,17 +1,17 @@
 package com.huawei.cloudphonesdk.maincontrol.config;
 
 public class EncodeParams {
-    public int bitrate = 2000000;                          // 码率
-    public int gopSize = 30;                               // I帧间隔
-    public int profile = 1;   // 编码复杂度
-    public int rcMode = 2;               // 流控模式
-    public int forceKeyFrame = 0;                          // 在设置后第N帧强制生成I帧，0表示不生效
-    public boolean interpolation = false;                  // 补帧开关
-    public int crf = 34;
-    public int maxCrfRate = 20000000;
-    public int vbvBufferSize = 1000;
-    public int streamWidth = 720;
-    public int streamHeight = 1280;
+    protected int bitrate = 2000000;                          // 码率
+    protected int gopSize = 30;                               // I帧间隔
+    protected int profile = 1;   // 编码复杂度
+    protected int rcMode = 2;               // 流控模式
+    protected int forceKeyFrame = 0;                          // 在设置后第N帧强制生成I帧，0表示不生效
+    protected boolean interpolation = false;                  // 补帧开关
+    protected int crf = 34;
+    protected int maxCrfRate = 20000000;
+    protected int vbvBufferSize = 1000;
+    protected int streamWidth = 720;
+    protected int streamHeight = 1280;
 
     public EncodeParams(int bitrate, int gopSize, int profile, int rcMode, int forceKeyFrame, boolean interpolation, int crf, int maxCrfRate, int vbvBufferSize, int streamWidth, int streamHeight) {
         this.bitrate = bitrate;
@@ -27,7 +27,7 @@ public class EncodeParams {
         this.streamHeight = streamHeight;
     }
 
-    public EncodeParams(){
+    public EncodeParams() {
 
     }
 
