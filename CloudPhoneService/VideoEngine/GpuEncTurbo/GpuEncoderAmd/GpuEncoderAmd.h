@@ -62,7 +62,7 @@ public:
      * @return int32_t: OK表示成功，其他错误码表示失败
      */
     int32_t Init(EncoderConfig &config) override;
-    int32_t ResetImgSIze(uint32_t width, uint32_t height) override;
+    int32_t ResetImgSize(uint32_t width, uint32_t height) override;
 
     /**
      * @brief 销毁编码器
