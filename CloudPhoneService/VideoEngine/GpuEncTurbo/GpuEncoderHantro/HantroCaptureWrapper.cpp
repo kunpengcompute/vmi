@@ -72,7 +72,7 @@ public:
             mode = DisplayServerMode::Async;
         }
         g_capture = CreateDisplayServer(mode);
-        if (!DisplayerServerInit(g_capture, InitCallback, -1)) {
+        if (!DisplayServerInit(g_capture, InitCallback, -1)) {
             ERR("Init DisplayServer fail");
             return false;
         }
@@ -80,7 +80,7 @@ public:
             ERR("Init GetPresentLayerCallBack fail");
             return false;
         }
-        return DisplayServerInit(g_capture, InitCallback, -1);
+        return true;
     }
 
     void DeInit() override

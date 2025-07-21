@@ -24,7 +24,7 @@ namespace GpuEncoder {
 class GpuEncoderInno : public GpuEncoderBase {
 public:
     int32_t Init(EncoderConfig &config) override;
-    int32_t ResetImgSIze(uint32_t width, uint32_t height) override;
+    int32_t ResetImgSize(uint32_t width, uint32_t height) override;
 
     int32_t DeInit() override;
 
