@@ -80,8 +80,9 @@
     <string name="input_params_illegal">参数输入不合法</string>
     <string name="rcmode_hint">ABR(0),CRF(1),CBR(2),CAPPED_CRF(3)</string>
     <string name="max_crf_rate_hint">500000~100000000</string>
-    <string name="sample_interval">5/10/20</string>
+    <string name="sample_interval">5/10/20(当前仅支持10)</string>
     <string name="audio_bitrate_hint">500~512000</string>
+    <string name="broadcast_name">com.huawei.cloudphone.broadcast</string>
 
     <string-array name="array_resolution">
         <item>720*1280</item>

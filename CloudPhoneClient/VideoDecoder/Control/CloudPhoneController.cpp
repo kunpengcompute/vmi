@@ -123,11 +123,11 @@ bool CloudPhoneController::StripPacket(std::pair<uint8_t *, uint32_t> &packetPai
     uint32_t orientation = 0;
     if (m_isSimulator) {
         orientation = extBuf.orientation;
-        #ifdef __ANDROID__
-            if (extBuf.transform != 0) {
-                ANativeWindow_setBuffersTransform(reinterpret_cast<ANativeWindow*>(m_surface), 0);
-            }
-        #endif
+	#ifdef __ANDROID__
+	    if (extBuf.transform != 0) {
+            	ANativeWindow_setBuffersTransform(reinterpret_cast<ANativeWindow*>(m_surface), 0);
+	    }
+	#endif
     } else {
         switch (extBuf.transform) {
         case static_cast<uint32_t>(AndroidRotationFlags::ROT_0):

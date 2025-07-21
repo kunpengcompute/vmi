@@ -108,7 +108,7 @@ public class MyApplication extends Application {
             hiddenApiWarningShown.setAccessible(true);
             hiddenApiWarningShown.setBoolean(activityThread, true);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException
-            | IllegalAccessException | NoSuchFieldException e) {
+                | IllegalAccessException | NoSuchFieldException e) {
             LogUtil.error(TAG, "e2->" + e.getLocalizedMessage());
         }
     }

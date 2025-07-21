@@ -36,7 +36,6 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -66,7 +65,7 @@
             android:name=".broadcast.ADBBroadcastReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.example.broadcast" />
+                <action android:name="@string/broadcast_name" />
             </intent-filter>
         </receiver>
 

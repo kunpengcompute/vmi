@@ -84,7 +84,7 @@ public class TestActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH, metric.widthPixels);
         SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_HEIGHT_ALIGNED, metric.heightPixels);
         SPUtil.putInt(SPUtil.VIDEO_FRAME_SIZE_WIDTH_ALIGNED, metric.widthPixels);
-        SPUtil.putInt(SPUtil.VIDEO_DENSITY,metric.densityDpi);
+        SPUtil.putInt(SPUtil.VIDEO_DENSITY, metric.densityDpi);
     }
 
     @Override
