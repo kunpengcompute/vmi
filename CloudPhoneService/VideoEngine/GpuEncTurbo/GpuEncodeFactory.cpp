@@ -98,19 +98,23 @@ namespace {
     const std::map<uint32_t, const char *> MODULE_LIB_PATH_MAP = {
 #ifdef __LP64__
 #ifndef IS_VENDOR
-        {GPU_INNO_LIB, "/system/lib64/libVmiEncTurboInno.so"},
-        {GPU_A_LIB, "/system/lib64/libVmiEncTurboAcard.so"},
+        {GPU_INNO_LIB, "/system/lib64/libVmiEncTurboInnoSys.so"},
+        {GPU_A_LIB, "/system/lib64/libVmiEncTurboAcardSys.so"},
         {GPU_SOFT_LIB, "/system/lib64/libVmiEncTurboCpuSys.so"}
 #else
+        {GPU_INNO_LIB, "/vendor/lib64/libVmiEncTurboInno.so"},
+        {GPU_A_LIB, "/vendor/lib64/libVmiEncTurboAcard.so"},
         {GPU_HANTRO_LIB, "/vendor/lib64/libVmiEncTurboHantro.so"},
         {GPU_SOFT_LIB, "/vendor/lib64/libVmiEncTurboCpu.so"}
 #endif
 #else
 #ifndef IS_VENDOR
-        {GPU_INNO_LIB, "/system/lib/libVmiEncTurboInno.so"},
-        {GPU_A_LIB, "/system/lib/libVmiEncTurboAcard.so"},
+        {GPU_INNO_LIB, "/system/lib/libVmiEncTurboInnoSys.so"},
+        {GPU_A_LIB, "/system/lib/libVmiEncTurboAcardSys.so"},
         {GPU_SOFT_LIB, "/system/lib/libVmiEncTurboCpuSys.so"}
 #else
+        {GPU_INNO_LIB, "/vendor/lib/libVmiEncTurboInno.so"},
+        {GPU_A_LIB, "/vendor/lib/libVmiEncTurboAcard.so"},
         {GPU_SOFT_LIB, "/vendor/lib/libVmiEncTurboCpu.so"}
 #endif
 #endif

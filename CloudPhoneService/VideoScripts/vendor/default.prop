@@ -7,8 +7,6 @@ ro.sys.vmi.cloudphone=video
 vmi.videostream.engine=true
 ro.vmi.loglevel=4
 ###################################################
-ro.vndk.version=30
-ro.vndk.lite=true
 ro.zygote=zygote64_32
 ro.logd.size.stats=64K
 log.tag.stats_log=I

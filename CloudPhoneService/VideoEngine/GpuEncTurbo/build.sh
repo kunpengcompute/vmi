@@ -24,8 +24,8 @@ source_dirs="
 
 system_so_list="
     libVmiEncTurboSys.so \
-    libVmiEncTurboAcard.so \
-    libVmiEncTurboInno.so \
+    libVmiEncTurboAcardSys.so \
+    libVmiEncTurboInnoSys.so \
     libVmiEncTurboCpuSys.so "
 
 gen_head_files()
@@ -57,6 +57,10 @@ package()
     # 删除本地编译的libDisplayServer.so，本地编译的是mock，实际使用的libDisplayServer.so在创建Kbox镜像时已存在
     find ${output_dir} -name "libDisplayServer.so" | xargs rm -rf
     find ${output_symbols_dir} -name "libDisplayServer.so" | xargs rm -rf
+
+    # 删除本地编译libva.so
+    find ${output_dir} -name "libva.so" | xargs rm -rf
+    find ${output_symbols_dir} -name "libva.so" | xargs rm -rf 
 
     if [ -z "${MODULE_OUTPUT_DIR}" ]; then
         cd ${output_dir}
