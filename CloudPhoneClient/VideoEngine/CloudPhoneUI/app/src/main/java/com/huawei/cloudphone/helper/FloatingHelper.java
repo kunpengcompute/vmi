@@ -55,9 +55,6 @@ public class FloatingHelper implements View.OnClickListener {
             .addMenuItem(R.drawable.image_fps_test, R.id.iv_test, this)
             .addMenuItem(R.drawable.image_video_setting, R.id.iv_video, this)
             .addMenuItem(R.drawable.image_audio_setting, R.id.iv_audio, this)
-            .addMenuItem(R.drawable.image_back_key, R.id.iv_back, this)
-            .addMenuItem(R.drawable.image_home_key, R.id.iv_home, this)
-            .addMenuItem(R.drawable.image_switch_key, R.id.iv_switch, this)
             .attach(container);
         mFloatingManager.create();
     }
