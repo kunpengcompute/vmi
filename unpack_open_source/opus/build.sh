@@ -37,13 +37,13 @@ cloud_package(){
 
     if [ -z "${MODULE_OUTPUT_DIR}" ]; then # MODULE_OUTPUT_DIR为空，直接在本地output目录打包
         cd ${output_dir}
-        tar -zcvf OpusCloud.tar.gz system
+        tar -zcvf OpusCloud.tar.gz vendor
         cd -
     fi
 
     if [ -z "${MODULE_SYMBOL_DIR}" ]; then # MODULE_SYMBOL_DIR为空，直接在本地output/symbols目录打包
         cd ${output_symbols_dir}
-        tar -zcvf OpusCloudSymbol.tar.gz system
+        tar -zcvf OpusCloudSymbol.tar.gz vendor
         cd -
     fi
 
