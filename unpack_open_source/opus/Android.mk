@@ -1,6 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE := libVmiOpus
+LOCAL_VENDOR_MODULE := true
 
 LOCAL_LDLIBS := -lm -llog
 

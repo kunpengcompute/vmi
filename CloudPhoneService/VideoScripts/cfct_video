@@ -192,8 +192,8 @@ function wait_container_ready() {
         local cmd="$RUNTIME_CMD exec -i ${container_name} getprop sys.boot_completed | grep 1 > /dev/null 2>&1 &"
         local result=$(wait_cmd "${cmd}")
         if [ ${result} -eq 0 ]; then
-            bash $THISDIR/base_box.sh chk_key_process ${container_name}
-            [ ${?} -ne 0 ] && has_restart=1 && bash $THISDIR/base_box.sh restart "${container_name}" "$userdata_dir" 2
+            bash $THISDIR/base_box_aosp15.sh chk_key_process ${container_name}
+            [ ${?} -ne 0 ] && has_restart=1 && bash $THISDIR/base_box_aosp15.sh restart "${container_name}" "$userdata_dir" 2
             [ ${?} -eq 1 ] && [ $has_restart -eq 1 ] && echo "${container_name} started failed at $(date +'%Y-%m-%d %H:%M:%S')!" && break
 
             printf "\r\033[1;32m%03d/%03d\033[0m\n" $(($currenttime-$starttime)) $timeout
@@ -552,7 +552,7 @@ container_run() {
 
     # 额外启动参数
     local extra_run_option=$opt
-    bash $THISDIR/base_box.sh start \
+    bash $THISDIR/base_box_aosp15.sh start \
     --name "$container_name" \
     --cpus "${cpus[*]}" \
     --numas "${numa_node}" \
@@ -630,13 +630,6 @@ container_run() {
     if [ ${result} -eq -1 ]; then
         EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
     fi
-    if [ $DEFAULT_RUNTIME == "docker" ]; then
-        cmd="$RUNTIME_CMD exec -itd $container_name /kbox-init.sh"
-    else
-        cmd="$RUNTIME_CMD exec -d $container_name /kbox-init.sh 1" 
-    fi
-    LOG_INFO "$cmd"
-    $cmd &
     wait_container_ready "$container_name"
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
@@ -714,7 +707,7 @@ container_restart() {
 
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE}
+    bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE}
     [ ${?} -eq 1 ] && continue
 
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
@@ -756,7 +749,7 @@ container_delete() {
     fi
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    bash $THISDIR/base_box.sh delete $container_name ${userdata_dir} $keep_data
+    bash $THISDIR/base_box_aosp15.sh delete $container_name ${userdata_dir} $keep_data
 }
 
 pushxd()
@@ -902,8 +895,8 @@ if [ "$(whoami)" != "root" ] ; then
 fi
 
 main() {
-    if [ ! -e "$THISDIR/base_box.sh" ]; then
-        EXIT_ERROR "Can not find file base_box.sh"
+    if [ ! -e "$THISDIR/base_box_aosp15.sh" ]; then
+        EXIT_ERROR "Can not find file base_box_aosp15.sh"
     fi
 
     if [ ! -e "$CFCT_CFG" ]; then
