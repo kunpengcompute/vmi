@@ -29,8 +29,8 @@ RUN chmod -R 755 DemoVideoEngine \
     && chown -R root:root NETINT \
     && cp -pR NETINT/vendor/* /vendor \
     && cp -pR NETINT/system/* /system \
-    && cp -pR NETINT/system/lib/libxcoder_logan.so /vendor/lib/ \
-    && cp -pR NETINT/system/lib64/libxcoder_logan.so /vendor/lib64/ \
+    && cp -pR NETINT/system/lib/* /vendor/lib/ \
+    && cp -pR NETINT/system/lib64/* /vendor/lib64/ \
     && rm -rf NETINT \
     && sed -i 's/^ro.vmi.hardware.vpu=.*/ro.vmi.hardware.vpu=1/g' /system/build.prop \
     && sed -i 's/^ro.vmi.hardware.vpu=.*/ro.vmi.hardware.vpu=1/g' /system/vendor/build.prop
