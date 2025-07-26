@@ -81,5 +81,5 @@ vmi.webrtc.connection.udpmaxport=30002
 
 # 服务端audio,mic,gps,sensor开关
 ro.vmi.audio.mic.passthrough=1
-ro.vmi.gps.passthrough=1
-ro.vmi.sensor.passthrough=1
+ro.vmi.gps.passthrough=0
+ro.vmi.sensor.passthrough=0
