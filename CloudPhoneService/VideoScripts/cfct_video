@@ -548,8 +548,35 @@ container_run() {
 
 
     local ram_size_mb=$(($RAM_SIZE_GB * 1024))
-    
+   
+    if [ -f build.prop ]; then
+	   rm -rf build.prop
+    fi
 
+    echo "ro.hardware.width=${BUILD_WIDTH}" >> build.prop 
+    LOG_INFO "ro.hardware.width=${BUILD_WIDTH}"
+    echo "ro.hardware.height=${BUILD_HEIGHT}" >> build.prop 
+    LOG_INFO "ro.hardware.height=${BUILD_HEIGHT}"
+    echo "qemu.sf.lcd_density=${BUILD_DENSITY}" >> build.prop 
+    LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
+    echo "ro.hardware.fps=${BUILD_FPS}" >> build.prop 
+    LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
+
+    if [ -f $DEFAULT_PROP ]; then
+	    sed -i '/zygote\|bionic\|dalvik\|stats/d' $DEFAULT_PROP
+	    local tmp_default_prop=${DEFAULT_PROP}_$container_name
+	    cp $DEFAULT_PROP $tmp_default_prop
+	    local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
+	    if [ ${#amd_gpus[@]} -ne 0 ]; then
+		    local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
+		    LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
+		    sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
+	    fi
+	    cmd="chmod 755 $tmp_default_prop"
+	    LOG_INFO "$cmd"
+	    $cmd
+    fi
+ 
     # 额外启动参数
     local extra_run_option=$opt
     bash $THISDIR/base_box_aosp15.sh start \
@@ -566,6 +593,7 @@ container_run() {
     --enable_render_layer "$ENABLE_RENDER_LAYER"
     LOG_INFO "Initialize container ..."
 
+    rm -rf $tmp_default_prop
     local basedata=${userdata_dir}/data/android_base/data
     local volumedata=${userdata_dir}/data/$container_name/data
     if [ "$(ls $basedata 2>/dev/null)" ] && [ $no_copy_usr_data -ne 1 ]; then
@@ -578,23 +606,6 @@ container_run() {
     else
         echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/default/$CID*/devices.allow)
     fi
-    if [ -f $DEFAULT_PROP ]; then
-        local tmp_default_prop=${DEFAULT_PROP}_$container_id
-        cp $DEFAULT_PROP $tmp_default_prop
-        local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-        if [ ${#amd_gpus[@]} -ne 0 ]; then
-            local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
-            LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
-            sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
-        fi
-        cmd="$RUNTIME_CMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
-        LOG_INFO "$cmd"
-        $cmd
-        rm -rf $tmp_default_prop
-        cmd="$RUNTIME_CMD exec -i $container_name chmod 755 /system/vendor/default.prop"
-        LOG_INFO "$cmd"
-        $cmd
-    fi
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -eq 1 ]; then
@@ -606,30 +617,6 @@ container_run() {
     fi
 
     local prop_build_file="/system/vendor/build.prop /system/build.prop"
-    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.width=\).*/\1${BUILD_WIDTH}/g\" ${prop_build_file} > /dev/null 2>&1 &"
-    LOG_INFO "ro.hardware.width=${BUILD_WIDTH}"
-    local result=$(wait_cmd "${cmd}")
-    if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-    fi
-    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.height=\).*/\1${BUILD_HEIGHT}/g\" ${prop_build_file} > /dev/null 2>&1 &"
-    LOG_INFO "ro.hardware.height=${BUILD_HEIGHT}"
-    result=$(wait_cmd "${cmd}")
-    if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-    fi
-    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(qemu.sf.lcd_density=\).*/\1${BUILD_DENSITY}/g\" ${prop_build_file} > /dev/null 2>&1 &"
-    LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
-    result=$(wait_cmd "${cmd}")
-    if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-    fi
-    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.fps=\).*/\1${BUILD_FPS}/g\" ${prop_build_file} > /dev/null 2>&1 &"
-    LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
-    result=$(wait_cmd "${cmd}")
-    if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-    fi
     wait_container_ready "$container_name"
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
@@ -674,7 +661,7 @@ container_restart() {
             webrtc_conection_configure restart
         fi
         local container_id=`echo ${container_name:8}`
-        local tmp_default_prop=${DEFAULT_PROP}_$container_id
+        local tmp_default_prop=${DEFAULT_PROP}_$container_name
         cp $DEFAULT_PROP $tmp_default_prop
 
         local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
@@ -690,11 +677,7 @@ container_restart() {
         if [ ${result} -eq -1 ]; then
             EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
         fi
-        cmd="$RUNTIME_CMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
-        LOG_INFO "$cmd"
-        $cmd
-        rm -rf $tmp_default_prop
-        cmd="$RUNTIME_CMD exec -i $container_name chmod 755 /system/vendor/default.prop"
+        cmd="chmod 755 $tmp_default_prop"
         LOG_INFO "$cmd"
         $cmd
         cmd="$RUNTIME_CMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
@@ -710,6 +693,7 @@ container_restart() {
     bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE}
     [ ${?} -eq 1 ] && continue
 
+    rm -rf $tmp_default_prop
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${ENCODECARD} -eq 0 ]; then
