@@ -66,6 +66,12 @@ ENABLE_WEBRTC_CONNECTION=0
 #渲染中间层开关，1表示使能，其他值默认不使能
 ENABLE_RENDER_LAYER=0
 
+#软渲染开关，1表示使能，其他值默认不使能
+ENABLE_SOFT_RENDER=0
+
+#是否使能纯64位，1表示使能，其他值默认不使能
+ENABLE_ONLY64_KBOX=0
+
 # VASTAI编码卡设备节点
 HANBO_ENCODERS=(
     "0.0"
