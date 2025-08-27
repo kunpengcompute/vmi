@@ -26,6 +26,8 @@ TMP_VIDEO_DEMO_DID=${CUR_PATH}/DemoVideoEngine
 TMP_VIDEO_BINARY_DIR=${CUR_PATH}/BoostKit-videoengine_unpack
 TMP_ENC_DIR=${CUR_PATH}/NETINT
 
+ENABLE_SOFT_RENDER=0
+
 # 检查nvme指令
 function check_nvme_command()
 {
@@ -85,9 +87,9 @@ function check_env()
         echo -e "\033[1;31m[ERROR] ${VIDEO_BINARY_PACKAGE} is more than 1!. \033[0m" && return -1
     fi
 
-    # 检查到有A卡，才去检查编码卡
+    # 检查到有A卡同时非软渲染，才去检查编码卡
     local amd_gpus=$(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}' | wc -w)
-    if [ "$amd_gpus" -gt 0 ]; then
+    if [ "$amd_gpus" -gt 0 ] && [ $ENABLE_SOFT_RENDER -eq 0 ]; then
         check_vpu
     fi
     cp ${DOCKER_FILE_CANDIDATE} ${DOCKER_FILE}
@@ -162,6 +164,10 @@ function main()
     local start_time=$(date +%s)
     local end_time=0
 
+    if [ $# -eq 3 ] && [ $3 == "soft" ]; then
+        ENABLE_SOFT_RENDER=1
+    fi
+  
     check_env
     [ ${?} != 0 ] && echo -e "\033[1;31m[ERROR] Failed to check environment. \033[0m" && exit -1
 

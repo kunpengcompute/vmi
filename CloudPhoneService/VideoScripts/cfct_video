@@ -277,6 +277,18 @@ function init_config() {
     local xd_gpus=($(lspci -D | grep "1fe0:1010" | awk '{print $1}'))
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     local hantro_gpus=($(lspci -D | grep ":0200" | awk '{print $1}'))
+    if [ ${#xd_gpus[@]} -eq 0 ] && [ ${#amd_gpus[@]} -eq 0 ] && [ ${#hantro_gpus[@]} -eq 0 ]; then
+        ENABLE_SOFT_RENDER=1
+    fi
+    if [ ${ENABLE_SOFT_RENDER} -eq 1 ]; then
+        # 在有GPU的机器上使能软渲染
+        xd_gpus=()
+        amd_gpus=()
+        hantro_gpus=()
+        if [ ! -f $DEFAULT_PROP ]; then
+            EXIT_ERROR "Enable soft render but ${DEFAULT_PROP} not exist!"
+        fi
+    fi
     if [ $num_of_cpus -eq 128 ]; then
         if [ ${CPU_BIND_MODE} -eq 0 ]; then
             VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_128CORE_MODE0[*]})
@@ -318,7 +330,7 @@ function init_config() {
         elif [ ${#hantro_gpus[@]} -ne 0 ]; then
             VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB4_128CORE[*]})
         else
-            EXIT_ERROR "No GPU exists on the host"
+            LOG_INFO "No GPU exists on the host. Enable soft render..."
         fi
     elif [ $num_of_cpus -eq 96 ]; then
         if [ ${CPU_BIND_MODE} -eq 0 ]; then
@@ -336,7 +348,7 @@ function init_config() {
             VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD1[*]})
             VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD1[*]})
         else
-            EXIT_ERROR "No GPU exists on the host"
+            LOG_INFO "No GPU exists on the host. Enable soft render..."
         fi
     elif [ $num_of_cpus -eq 64 ]; then
         if [ ${CPU_BIND_MODE} -eq 0 ]; then
@@ -364,7 +376,7 @@ function init_config() {
             VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD1[*]})
             VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD1[*]})
         else
-            EXIT_ERROR "No GPU exists on the host"
+            LOG_INFO "No GPU exists on the host. Enable soft render..."
         fi
     elif [ $num_of_cpus -eq 320 ]; then
         if [ ${CPU_BIND_MODE} -eq 0 ]; then
@@ -394,7 +406,7 @@ function init_config() {
             VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD1[*]})
             VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD1[*]})
         else
-            EXIT_ERROR "No GPU exists on the host"
+            LOG_INFO "No GPU exists on the host. Enable soft render..."
         fi
     else
         EXIT_ERROR "num_of_cpus unrecognized: ${num_of_cpus}"
@@ -479,7 +491,9 @@ function webrtc_conection_configure()
 }
 
 container_run() {
-    check_encode_card
+    if [ $ENABLE_SOFT_RENDER -eq 0 ]; then
+        check_encode_card
+    fi
 
     local image=$1
     local container_id=$2
@@ -510,12 +524,21 @@ container_run() {
     local cpus=()
     IFS=',' read -r -a cpus <<< $cpus_string
     local numa_node=($(get_closest_numas ${cpus[@]}))
-    local gpu_node=${VIDEO_GPU_MAP[$((($container_id - 1) % ${#VIDEO_GPU_MAP[*]}))]}
+    local gpu_node=()
+    if [ ${ENABLE_SOFT_RENDER} -ne 1 ]; then
+        gpu_node=${VIDEO_GPU_MAP[$((($container_id - 1) % ${#VIDEO_GPU_MAP[*]}))]}
+    fi
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
 
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     local xd_gpus=($(lspci -D | grep "1fe0:1010" | awk '{print $1}'))
     local hantro_gpus=($(lspci -D | grep ":0200" | awk '{print $1}'))
+    if [ ${ENABLE_SOFT_RENDER} -eq 1 ]; then
+        # 在有GPU的机器上使能软渲染
+        xd_gpus=()
+        amd_gpus=()
+        hantro_gpus=()
+    fi
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         LOG_INFO "Starting on A GPU"
         if [[ ${ENCODECARD} -eq 0 ]] || [[ ${ENCODECARD} -eq 1 ]]; then
@@ -542,13 +565,12 @@ container_run() {
     elif [ ${#hantro_gpus[@]} -ne 0 ]; then
         LOG_INFO "Starting on HANTRO GPU"
         opt+=" ENABLE_HARD_DECODE=${ENABLE_HARD_DECODE}"
-    else
-        EXIT_ERROR "No GPU exists on the host"
+
     fi
 
 
     local ram_size_mb=$(($RAM_SIZE_GB * 1024))
-    
+
 
     # 额外启动参数
     local extra_run_option=$opt
@@ -582,10 +604,13 @@ container_run() {
         local tmp_default_prop=${DEFAULT_PROP}_$container_id
         cp $DEFAULT_PROP $tmp_default_prop
         local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-        if [ ${#amd_gpus[@]} -ne 0 ]; then
+        if [ ${#amd_gpus[@]} -ne 0 ] && [ ${ENABLE_SOFT_RENDER} -ne 1 ]; then
             local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
             LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
             sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
+        fi
+        if [ ${ENABLE_ONLY64_KBOX} -eq 1 ]; then
+            sed -i 's/\(.*\)ro.zygote=\(.*\)/ro.zygote='"zygote64"'/g' $tmp_default_prop
         fi
         cmd="$RUNTIME_CMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
         LOG_INFO "$cmd"
@@ -667,7 +692,9 @@ container_run() {
 }
 
 container_restart() {
-    check_encode_card
+    if [ $ENABLE_SOFT_RENDER -eq 0 ]; then
+        check_encode_card
+    fi
 
     local container_name=$1
 
@@ -685,7 +712,7 @@ container_restart() {
         cp $DEFAULT_PROP $tmp_default_prop
 
         local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-        if [ ${#amd_gpus[@]} -ne 0 ]; then
+        if [ ${#amd_gpus[@]} -ne 0 ] && [ $ENABLE_SOFT_RENDER -ne 1 ]; then
             local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
             LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
             sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
@@ -915,6 +942,8 @@ main() {
 
     init_config
     check_parameters
+
+    export ENABLE_ONLY64_KBOX
 
     if [ $1 = "start" ]; then
         local MIN=$2 MAX=$3
@@ -1299,6 +1328,8 @@ main() {
             fi
         done
     fi
+
+    unset ENABLE_ONLY64_KBOX
 }
 
 main "$@"
