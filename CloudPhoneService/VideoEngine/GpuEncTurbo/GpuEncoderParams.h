@@ -38,6 +38,8 @@ enum EncodeParamIndex : uint32_t {
     ENCODE_PARAM_KEYFRAME,
     ENCODE_PARAM_STREAM_WIDTH,
     ENCODE_PARAM_STREAM_HEIGHT,
+    ENCODE_PARAM_CRF,
+    ENCODE_PARAM_CRF_MAXRATE,
     ENCODE_PARAM_MAX
 };
 
@@ -84,6 +86,16 @@ struct EncodeParamStreamWidth : public EncodeParamBase {
 struct EncodeParamStreamHeight : public EncodeParamBase {
     EncodeParamStreamHeight() : EncodeParamBase(ENCODE_PARAM_STREAM_HEIGHT) {}
     uint32_t streamHeight;
+};
+
+struct EncodeParamCrf : public EncodeParamBase {
+    EncodeParamCrf() : EncodeParamBase(ENCODE_PARAM_CRF) {}
+    uint32_t crf;
+};
+
+struct EncodeParamMaxCrfRate : public EncodeParamBase {
+    EncodeParamMaxCrfRate() : EncodeParamBase(ENCODE_PARAM_CRF_MAXRATE) {}
+    uint32_t maxCrfRate;
 };
 
 using EncodeParamT = EncodeParamBase *;
