@@ -9,7 +9,7 @@
 namespace Vmi {
 
 // 版本号,用于匹配客户端和服务端的版本一致性
-static const std::string ENGINE_VERSION = "Kunpeng BoostKit 25.1.RC1";
+static const std::string ENGINE_VERSION = "Kunpeng BoostKit 25.2.RC1";
 } // namespace Vmi
 
 #if defined (__cplusplus)
