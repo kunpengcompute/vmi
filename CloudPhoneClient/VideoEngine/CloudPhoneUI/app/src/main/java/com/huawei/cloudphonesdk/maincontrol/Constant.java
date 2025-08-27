@@ -87,4 +87,5 @@ public class Constant {
 
     public static final boolean VMI_ADAPTIVE_RESOLUTION = true;
     public static final int VIDEO_RESOLUTION_INDEX = 1;
+    public static final int WAIT_FOR_SERVER_HOOK_REGISTER = 10;
 }
