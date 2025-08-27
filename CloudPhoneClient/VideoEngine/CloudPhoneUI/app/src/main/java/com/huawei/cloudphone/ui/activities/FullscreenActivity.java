@@ -922,8 +922,8 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
             String stopTestTimeValue = stopTestTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             fpsTestReportDialog.stopTime.setText(stopTestTimeValue);
             String averageBuilder = "测试开始时间: " + startTestTimeValue + "  测试结束时间: " + stopTestTimeValue +
-                    "  帧率平均值: " + fpsAverage + "  jank/10min平均值: " + jankAverage + "  bjank/10min平均值: "
-                    + bJankAverage;
+                    "  帧率平均值: " + fpsAverage + "  jank/10min平均值: " + jankAverage + "  bjank/10min平均值: " +
+                    bJankAverage;
             LogUtil.writeFpsData("fps", fileName, averageBuilder);
         }
         if (!fpsTestReportDialog.isShowing()) {
@@ -1012,6 +1012,7 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
         encodeParams.setStreamHeight(SPUtil.getInt(SPUtil.VIDEO_STREAM_HEIGHT, Constant.VMI_720P_HEIGHT));
 
         vmiConfigVideo.setEncodeParams(encodeParams);
+        LogUtil.info(TAG, "vmiConfigVideo = " + vmiConfigVideo);
         OpenGLJniWrapper.startVideo(vmiConfigVideo);
         LogUtil.info(TAG, "startModule success");
     }
@@ -1480,9 +1481,14 @@ public class FullscreenActivity extends BaseActivity implements NativeListener {
                 try {
                     Thread.sleep(DELAT_TIME);
                 } catch (InterruptedException e) {
-                    Log.d(TAG, "InterruptedException");
+                    LogUtil.error(TAG, "Thread.sleep DELAT_TIME InterruptedException");
                 }
                 int startResult = OpenGLJniWrapper.start(mSurfaceView.getHolder().getSurface(), guestWidth, guestHeight, metric.densityDpi);
+                try {
+                    Thread.sleep(Constant.WAIT_FOR_SERVER_HOOK_REGISTER);
+                } catch (InterruptedException e) {
+                    LogUtil.error(TAG, "Thread.sleep WAIT_FOR_SERVER_HOOK_REGISTER InterruptedException");
+                }
                 if (startResult == 0) {
                     startModule();
                     mThreadHandler.sendEmptyMessageDelayed(WHAT_CONNECT_SUCCESS, DELAY_BLACK_SCREEN);
