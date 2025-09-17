@@ -98,7 +98,7 @@ sudo apt install -y expect
 
 # 许可证书<a name="ZH-CN_TOPIC_0000002475594429"></a>
 
-本项目采用Apache License 2.0许可证。详见[LICENSE](https://gitcode.com/boostkit/cloud-virtual/blob/master/LICENSE)文件。
+本项目采用Apache License 2.0许可证。详见[LICENSE](https://gitee.com/kunpengcompute/vmi/blob/CloudPhone/LICENSE)文件。
 
 # 参考文档<a name="ZH-CN_TOPIC_0000002442368346"></a>
 
