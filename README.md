@@ -11,11 +11,7 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row64089653211"><td class="cellrowborder" valign="top" width="49.96%" headers="mcps1.1.3.1.1 "><p id="p24084615327"><a name="p24084615327"></a><a name="p24084615327"></a>OS</p>
-</td>
-<td class="cellrowborder" valign="top" width="50.03999999999999%" headers="mcps1.1.3.1.2 "><p id="p131779216275"><a name="p131779216275"></a><a name="p131779216275"></a>5.10.0-216.0.0</p>
-</td>
-</tr>
+<tbody>
 <tr id="row44089619323"><td class="cellrowborder" valign="top" width="49.96%" headers="mcps1.1.3.1.1 "><p id="p64089617323"><a name="p64089617323"></a><a name="p64089617323"></a><span>Android</span></p>
 </td>
 <td class="cellrowborder" valign="top" width="50.03999999999999%" headers="mcps1.1.3.1.2 "><p id="p540820673214"><a name="p540820673214"></a><a name="p540820673214"></a>11</p>
