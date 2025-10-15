@@ -628,21 +628,8 @@ container_run() {
     fi
     fi
     if [[ $ENABLE_RENDER_LAYER == "1" ]]; then
-        # 渲染中间层
-        local isEnabled=0;
-        $RUNTIME_CMD exec -it ${container_name} sh -c "chmod 777 -R /vendor/shader_cache/"
-        $RUNTIME_CMD exec -it ${container_name} sh -c "mkdir -p /data/local/debug/gles"
-        $RUNTIME_CMD exec -it ${container_name} sh -c "chmod 755 -R /data/local/debug/"
-        $RUNTIME_CMD exec -it ${container_name} sh -c "cp /system/vendor/etc/kbox_render_accelerating_configuration.xml /data/local/tmp" > /dev/null 2>&1 || isEnabled=1
-        $RUNTIME_CMD exec -it ${container_name} sh -c "cp /system/vendor/lib64/hw/RenderAccLayer.kbox.so /data/local/debug/gles" > /dev/null 2>&1
-        if [ $? -eq 0 ]; then
-            $RUNTIME_CMD exec -it ${container_name} sh -c "setprop debug.gles.layers RenderAccLayer.kbox.so"
-        else
-            isEnabled=1
-        fi
-        if [ $isEnabled -eq 1 ]; then
-            echo -e "\033[31mFailed to enabled render layer! kbox_render_accelerating_configuration.xml or RenderAccLayer.kbox.so may not exist\033[0m"
-        fi
+        # 使能渲染中间层，start容器时setprop放在base_box.sh会set property失败
+        $RUNTIME_CMD exec -it ${container_name} sh -c "setprop debug.gles.layers RenderAccLayer.kbox.so"
     fi
 }
 
@@ -690,7 +677,7 @@ container_restart() {
 
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE}
+    bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER
     [ ${?} -eq 1 ] && continue
 
     rm -rf $tmp_default_prop
@@ -702,15 +689,6 @@ container_restart() {
             init_quadra $container_name
         fi
     fi
-    fi
-
-    if [[ $ENABLE_RENDER_LAYER == "1" ]]; then
-        $RUNTIME_CMD exec -it ${container_name} sh -c "cp /system/vendor/lib64/hw/RenderAccLayer.kbox.so /data/local/debug/gles" > /dev/null 2>&1
-        if [ $? -eq 0 ]; then
-            $RUNTIME_CMD exec -it ${container_name} sh -c "setprop debug.gles.layers RenderAccLayer.kbox.so"
-        else
-            echo -e "\033[31mFailed to enabled render layer! kbox_render_accelerating_configuration.xml or RenderAccLayer.kbox.so may not exist\033[0m"
-        fi
     fi
 }
 
