@@ -49,27 +49,27 @@ enum VmiDataType : uint8_t {
  * 定义各个模块的版本号
  */
 enum VmiVideoVerson : uint16_t {
-    CUR_VIDEO_VERSION = 6,
+    CUR_VIDEO_VERSION = 7,
 };
 
 enum VmiAudioVersion : uint16_t {
-    CUR_AUDIO_VERSION = 6,
+    CUR_AUDIO_VERSION = 7,
 };
 
 enum VmiTouchVersion : uint16_t {
-    CUR_TOUCH_VERSION = 6,
+    CUR_TOUCH_VERSION = 7,
 };
 
 enum VmiMicVerson : uint16_t {
-    CUR_MIC_VERSION = 6,
+    CUR_MIC_VERSION = 7,
 };
 
 enum VmiSensorVerson : uint16_t {
-    CUR_SENSOR_VERSION = 6,
+    CUR_SENSOR_VERSION = 7,
 };
 
 enum VmiGpsVerson : uint16_t {
-    CUR_GPS_VERSION = 6,
+    CUR_GPS_VERSION = 7,
 };
 
 #define MAKE_VERSION(dataType, version) ((dataType) << 24 | (version))
