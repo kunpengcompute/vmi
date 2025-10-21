@@ -153,7 +153,7 @@ void VideoEncoderVastai::ReadDevicePath()
     struct dirent *ptr;
 
     while ((ptr = readdir(dir)) != NULL) {
-        if ((ptr->d_name == ".") || (ptr->d_name == ".."))
+        if ((strcmp(ptr->d_name, ".") == 0) || (strcmp(ptr->d_name, "..") == 0))
             continue;
         if (strstr(ptr->d_name, "vastai_video")) {
             break;

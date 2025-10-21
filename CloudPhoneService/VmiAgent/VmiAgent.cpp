@@ -318,7 +318,7 @@ VmiErrCode StartVideoModule(std::pair<uint8_t*, uint32_t> data)
 {
     std::lock_guard<std::mutex> lock(g_startMutex);
     if (sizeof(VmiConfigVideo) != data.second - sizeof(VmiDataType)) {
-        ERR("VideoModule start failed input config size illegal, size: %u", data.second - sizeof(VmiDataType));
+        ERR("VideoModule start failed input config size illegal, size: %u", data.second - (uint32_t)sizeof(VmiDataType));
         return VmiErrCode::ERR_ILLEGAL_INPUT;
     }
     // 如果video模块已经启动则先stop再start
@@ -372,7 +372,7 @@ VmiErrCode StartVideoModule(std::pair<uint8_t*, uint32_t> data)
 VmiErrCode StartAudioModule(std::pair<uint8_t*, uint32_t> data)
 {
     if (sizeof(VmiConfigAudio) != data.second - sizeof(VmiDataType)) {
-        ERR("AudioModule start failed input config size illegal, size: %u", data.second - sizeof(VmiDataType));
+        ERR("AudioModule start failed input config size illegal, size: %u", data.second - (uint32_t)sizeof(VmiDataType));
         return VmiErrCode::ERR_ILLEGAL_INPUT;
     }
     if (data.first == nullptr) {
@@ -391,7 +391,7 @@ VmiErrCode StartAudioModule(std::pair<uint8_t*, uint32_t> data)
 VmiErrCode StartMicModule(std::pair<uint8_t*, uint32_t> data)
 {
     if (sizeof(VmiConfigMic) != data.second - sizeof(VmiDataType)) {
-        ERR("MicModule start failed input config size illegal, size: %u", data.second - sizeof(VmiDataType));
+        ERR("MicModule start failed input config size illegal, size: %u", data.second - (uint32_t)sizeof(VmiDataType));
         return VmiErrCode::ERR_ILLEGAL_INPUT;
     }
     if (data.first == nullptr) {
@@ -410,7 +410,7 @@ VmiErrCode StartMicModule(std::pair<uint8_t*, uint32_t> data)
 VmiErrCode StartTouchModule(std::pair<uint8_t*, uint32_t> data)
 {
     if (sizeof(VmiConfigTouch) != data.second - sizeof(VmiDataType)) {
-        ERR("TouchModule start failed input config size illegal, size: %u", data.second - sizeof(VmiDataType));
+        ERR("TouchModule start failed input config size illegal, size: %u", data.second - (uint32_t)sizeof(VmiDataType));
         return VmiErrCode::ERR_ILLEGAL_INPUT;
     }
     if (data.first == nullptr) {
@@ -429,7 +429,7 @@ VmiErrCode StartTouchModule(std::pair<uint8_t*, uint32_t> data)
 VmiErrCode StartSensorModule(std::pair<uint8_t*, uint32_t> data)
 {
     if (sizeof(VmiConfig) != data.second - sizeof(VmiDataType)) {
-        ERR("SensorModule start failed input config size illegal, size: %u", data.second - sizeof(VmiDataType));
+        ERR("SensorModule start failed input config size illegal, size: %u", data.second - (uint32_t)sizeof(VmiDataType));
         return VmiErrCode::ERR_ILLEGAL_INPUT;
     }
     if (data.first == nullptr) {
@@ -448,7 +448,7 @@ VmiErrCode StartSensorModule(std::pair<uint8_t*, uint32_t> data)
 VmiErrCode StartGpsModule(std::pair<uint8_t*, uint32_t> data)
 {
     if (sizeof(VmiConfig) != data.second - sizeof(VmiDataType)) {
-        ERR("GpsModule start failed input config size illegal, size: %u", data.second - sizeof(VmiDataType));
+        ERR("GpsModule start failed input config size illegal, size: %u", data.second - (uint32_t)sizeof(VmiDataType));
         return VmiErrCode::ERR_ILLEGAL_INPUT;
     }
     if (data.first == nullptr) {
