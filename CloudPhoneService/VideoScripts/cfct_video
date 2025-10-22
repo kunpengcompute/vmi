@@ -593,7 +593,6 @@ container_run() {
     --enable_render_layer "$ENABLE_RENDER_LAYER"
     LOG_INFO "Initialize container ..."
 
-    rm -rf $tmp_default_prop
     local basedata=${userdata_dir}/data/android_base/data
     local volumedata=${userdata_dir}/data/$container_name/data
     if [ "$(ls $basedata 2>/dev/null)" ] && [ $no_copy_usr_data -ne 1 ]; then
@@ -680,7 +679,6 @@ container_restart() {
     bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER
     [ ${?} -eq 1 ] && continue
 
-    rm -rf $tmp_default_prop
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${ENCODECARD} -eq 0 ]; then
