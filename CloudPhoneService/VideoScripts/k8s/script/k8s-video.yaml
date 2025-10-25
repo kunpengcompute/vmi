@@ -8,14 +8,15 @@ spec:      #pod中容器定义
     containers:
     - name: ${POD_NAME}    #视频流容器名称
       image: docker.io/library/video:version #视频流容器镜像
-      command: [ "/bin/sh", "-c", "sh k8s-init.sh" ]
+      command: [ "/init" ]
       imagePullPolicy: IfNotPresent   #获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像
       securityContext:
+        privileged: true
         runAsUser: 0
         runAsGroup: 0
         capabilities:  #容器安全策略，权限配置 以下为视频流容器所需权限配置
-          drop:  #删除权限
-          - ALL
+          #drop:  #删除权限
+          #- ALL
           add:   #添加权限
           - SETPCAP
           - AUDIT_WRITE
@@ -53,7 +54,6 @@ spec:      #pod中容器定义
         limits: #资源限制的设置
           cpu: 2  #Cpu的限制，单位为core数
           memory: 4096M #内存限制
-          github.com/ashmem: 1 # kbox device 设备插件
           github.com/fuse: 1
           github.com/uinput: 1
           github.com/exagear: 1
@@ -61,12 +61,15 @@ spec:      #pod中容器定义
         requests: #资源请求的设置
           cpu: 2 #Cpu请求，容器启动的初始可用数量
           memory: 4096M #内存请求，容器启动的初始可用数量
-          github.com/ashmem: 1  # kbox device 设备插件
           github.com/fuse: 1
           github.com/uinput: 1
           github.com/exagear: 1
           vatech.com/vg: 1
       volumeMounts: #挂载到容器内部的存储卷配置，以下为kbox容器配置
+      - mountPath: /dev/loop-control
+        name: loop-control
+      - mountPath: /dev/loop_device
+        name: loop-device
       - mountPath: /sys/devices/system/cpu/modalias #引用pod定义的共享存储卷的名称，需用volumes[]部分定义的的卷名
         name: modalias #存储卷在容器内mount的绝对路径，应少于512字符
       - mountPath: /sys/devices/system/cpu/hotplug
@@ -129,6 +132,15 @@ spec:      #pod中容器定义
     - name: uevent #共享存储卷名称
       hostPath:  #类型为hostPath的存储卷，表示挂载Pod所在宿主机的目录
         path: /sys/devices/system/cpu/uevent #Pod所在宿主机的目录，将被用于同期中mount的目录
+    - name: sys
+      hostPath:
+        path: /sys
+    - name: loop-control
+      hostPath:
+        path: /dev/loop-control
+    - name: loop-device
+      hostPath:
+        path: /dev/loop_device
     - name: cpufreq
       hostPath:
         path: /sys/devices/system/cpu/cpufreq
