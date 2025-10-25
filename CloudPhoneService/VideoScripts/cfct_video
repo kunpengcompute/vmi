@@ -627,8 +627,7 @@ container_run() {
     fi
     fi
     if [[ $ENABLE_RENDER_LAYER == "1" ]]; then
-        # 使能渲染中间层，start容器时setprop放在base_box.sh会set property失败
-        $RUNTIME_CMD exec -it ${container_name} sh -c "setprop debug.gles.layers RenderAccLayer.kbox.so"
+        bash $THISDIR/base_box_aosp15.sh deploy_render_layer ${container_name}
     fi
 }
 
