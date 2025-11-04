@@ -91,6 +91,8 @@ spec:      #pod中容器定义
         name: cache
       - mountPath: /data
         name: data
+      - mountPath: /data/containerid
+        name: containerid
       - mountPath: /sys
         name: sys
       - mountPath: /dev/input/event0
@@ -172,6 +174,9 @@ spec:      #pod中容器定义
     - name: data
       hostPath:
         path: /home/mount/data/${POD_NAME}/data
+    - name: containerid
+      hostPath:
+        path: /var/run/containerd/${POD_NAME}
     - name: eventzero
       hostPath:
         path: /var/run/${POD_NAME}/input/event0
