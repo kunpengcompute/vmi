@@ -20,8 +20,6 @@ if [ -n "$LOG_FILE_PATH" ]; then
             # 输出文件内容
             jq '.linux.resources.devices = [{"allow": false, "access": "rwm"}, {"allow": true,"type": "c", "major": -1, "minor": -1, "access": "rwm"}, {"allow": true, "type": "b", "major": 7, "minor": -1, "access": "rwm"}]' $CONFIG_FILE > config.json.tmp
             mv config.json.tmp $CONFIG_FILE
-    else
-        echo "Error: Config file not found at $CONFIG_FILE" >> /home/fan/config.log
     fi
 fi
 
