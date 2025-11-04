@@ -478,6 +478,13 @@ function webrtc_conection_configure()
     echo $opt
 }
 
+function mount_lxcfs(){
+    docker exec -it $1 mount --bind /lxcfs-proc/meminfo /proc/meminfo 
+    docker exec -it $1 mount --bind /lxcfs-proc/diskstats /proc/diskstats
+    docker exec -it $1 mount --bind /lxcfs-proc/stat /proc/stat
+    docker exec -it $1 mount --bind /lxcfs-proc/swaps /proc/swaps 
+    docker exec -it $1 mount --bind /lxcfs-proc/uptime /proc/uptime 
+}
 container_run() {
     check_encode_card
 
@@ -618,6 +625,7 @@ container_run() {
     local prop_build_file="/system/vendor/build.prop /system/build.prop"
     wait_container_ready "$container_name"
 
+    mount_lxcfs "$container_name"
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${ENCODECARD} -eq 0 ]; then
             init_netint $container_name
@@ -677,7 +685,7 @@ container_restart() {
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
     bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER
     [ ${?} -eq 1 ] && continue
-
+    mount_lxcfs "$container_name"
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${ENCODECARD} -eq 0 ]; then
