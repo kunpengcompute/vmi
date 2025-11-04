@@ -82,22 +82,27 @@ std::string Fpsperf::GetTopPkgName(const int sdk)
     return "";
 };
 
-std::string Fpsperf::GetTopLayer(const std::string &topPkgName)
+std::string Fpsperf::GetTopLayer()
 {
     std::vector<std::string> layerlist =
-        Split(RunCmd(("dumpsys SurfaceFlinger --list |grep " + topPkgName).c_str()), '\n');
+        Split(RunCmd("dumpsys SurfaceFlinger |grep \"Output Layer\""), '\n');
     if (layerlist.empty()) {
         ERR("Failed to get topLayer");
         return "";
     }
-    std::string topLayer = layerlist.back(); // 无 SurfaceView 项时最后一行为所需行
-    for (int i = layerlist.size() - 1; i >= 0 ; --i) {
-        if (layerlist[i].find("SurfaceView") != std::string::npos) {
-            topLayer = layerlist[i];
-            break;
-        }
+    std::string topLayer = layerlist[0];  // 第一行即为所需layer
+    std::regex pattern1(R"(SurfaceView.*#\d+)");
+    std::smatch matches;
+    if (std::regex_search(topLayer, matches, pattern1)) {
+        INFO("find layer: %s", std::string(matches[0]).c_str());
+        return matches[0];
     }
-    return topLayer;
+    std::regex pattern2(R"(com.*#\d+)");
+    if (std::regex_search(topLayer, matches, pattern2)) {
+        INFO("find layer: %s", std::string(matches[0]).c_str());
+        return matches[0];
+    }
+    return "";
 };
 
 int Fpsperf::GetFpsSrc(const std::string &sflayer)

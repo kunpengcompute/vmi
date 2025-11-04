@@ -23,7 +23,7 @@ bool DeviceWatcher::Init()
 {
     int sdk = m_fpsWatcher.GetSdkVersion();
     m_topPkgName = m_fpsWatcher.GetTopPkgName(sdk);
-    m_topLayerName = m_fpsWatcher.GetTopLayer(m_topPkgName);
+    m_topLayerName = m_fpsWatcher.GetTopLayer();
 
     if (sdk == -1 || m_topPkgName.empty() || m_topLayerName.empty()) {
         ERR("Failed to init DeviceWatcher!");

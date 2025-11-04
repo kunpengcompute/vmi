@@ -30,7 +30,7 @@ public:
     std::string RunCmd(const char *cmd);
     int GetSdkVersion();
     std::string GetTopPkgName(const int sdk);
-    std::string GetTopLayer(const std::string &topPkgName);
+    std::string GetTopLayer();
     int GetFpsSrc(const std::string &sflayer);
     void GetFps(const std::string &sflayer);
     void CalJank();
