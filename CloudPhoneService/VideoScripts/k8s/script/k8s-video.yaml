@@ -11,7 +11,6 @@ spec:      #pod中容器定义
       command: [ "/init" ]
       imagePullPolicy: IfNotPresent   #获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像
       securityContext:
-        privileged: true
         runAsUser: 0
         runAsGroup: 0
         capabilities:  #容器安全策略，权限配置 以下为视频流容器所需权限配置
@@ -92,6 +91,8 @@ spec:      #pod中容器定义
         name: cache
       - mountPath: /data
         name: data
+      - mountPath: /sys
+        name: sys
       - mountPath: /dev/input/event0
         name: eventzero
       - mountPath: /dev/input/event1

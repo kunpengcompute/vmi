@@ -24,3 +24,5 @@ if [ -n "$LOG_FILE_PATH" ]; then
         echo "Error: Config file not found at $CONFIG_FILE" >> /home/fan/config.log
     fi
 fi
+
+/usr/bin/va-container-runtime "$@"
