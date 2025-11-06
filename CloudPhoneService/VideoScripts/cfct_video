@@ -612,6 +612,11 @@ container_run() {
     else
         echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/default/$CID*/devices.allow)
     fi
+    
+    container_id=$($RUNTIME_CMD ps --filter "name=$container_name" --format "{{.ID}}")
+    echo $container_id > $THISDIR/containerid_${container_name}
+    $RUNTIME_CMD cp $THISDIR/containerid_${container_name} ${container_name}:/data/containerid
+    rm -f $THISDIR/containerid_${container_name}
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
