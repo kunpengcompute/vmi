@@ -111,6 +111,8 @@ spec:      #pod中容器定义
         name: swaps
       - mountPath: /proc/uptime
         name: uptime
+      - mountPath: /lxcfs-proc
+        name: lxcfs
       - mountPath: /sys/devices/system/cpu
         name: cpusys
       - mountPath: /sys/devices/system/cpu/cpu0
@@ -177,6 +179,9 @@ spec:      #pod中容器定义
     - name: containerid
       hostPath:
         path: /var/run/containerd/${POD_NAME}
+    - name: lxcfs
+      hostPath:
+        path: /var/lib/lxc/lxcfs/proc
     - name: eventzero
       hostPath:
         path: /var/run/${POD_NAME}/input/event0
