@@ -101,16 +101,6 @@ spec:      #pod中容器定义
         name: eventone
       - mountPath: /proc/cpuinfo
         name: cpuinfo
-      - mountPath: /proc/diskstats
-        name: diskstats
-      - mountPath: /proc/meminfo
-        name: meminfo
-      - mountPath: /proc/stat
-        name: stat
-      - mountPath: /proc/swaps
-        name: swaps
-      - mountPath: /proc/uptime
-        name: uptime
       - mountPath: /lxcfs-proc
         name: lxcfs
       - mountPath: /sys/devices/system/cpu
@@ -181,7 +171,7 @@ spec:      #pod中容器定义
         path: /var/run/containerd/${POD_NAME}
     - name: lxcfs
       hostPath:
-        path: /var/lib/lxc/lxcfs/proc
+        path: ${LXCFS_PATH}/proc
     - name: eventzero
       hostPath:
         path: /var/run/${POD_NAME}/input/event0
@@ -191,21 +181,6 @@ spec:      #pod中容器定义
     - name: cpuinfo
       hostPath:
         path: /var/lib/lxc/lxcfs/proc/cpuinfo
-    - name: diskstats
-      hostPath:
-        path: /var/lib/lxc/lxcfs/proc/diskstats
-    - name: meminfo
-      hostPath:
-        path: /var/lib/lxc/lxcfs/proc/meminfo
-    - name: stat
-      hostPath:
-        path: /var/lib/lxc/lxcfs/proc/stat
-    - name: swaps
-      hostPath:
-        path: /var/lib/lxc/lxcfs/proc/swaps
-    - name: uptime
-      hostPath:
-        path: /var/lib/lxc/lxcfs/proc/uptime
     - name: cpusys
       hostPath:
         path: /var/run/docker/cpus/${POD_NAME}
