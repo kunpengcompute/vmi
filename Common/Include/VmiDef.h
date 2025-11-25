@@ -48,7 +48,7 @@ enum VmiDataType : uint8_t {
 /**
  * 定义各个模块的版本号
  */
-enum VmiVideoVerson : uint16_t {
+enum VmiVideoVersion : uint16_t {
     CUR_VIDEO_VERSION = 7,
 };
 
@@ -60,15 +60,15 @@ enum VmiTouchVersion : uint16_t {
     CUR_TOUCH_VERSION = 7,
 };
 
-enum VmiMicVerson : uint16_t {
+enum VmiMicVersion : uint16_t {
     CUR_MIC_VERSION = 7,
 };
 
-enum VmiSensorVerson : uint16_t {
+enum VmiSensorVersion : uint16_t {
     CUR_SENSOR_VERSION = 7,
 };
 
-enum VmiGpsVerson : uint16_t {
+enum VmiGpsVersion : uint16_t {
     CUR_GPS_VERSION = 7,
 };
 
