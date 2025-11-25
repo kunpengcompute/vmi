@@ -429,7 +429,7 @@ bool ApiTest::VersionTest()
     const char* version = GetVersion();
     const char* expectString = "Product Name: Kunpeng BoostKit\n"
         "Product Version: 25.3.0\n"
-        "Component Name: BoostKit-videoengine\n"
+        "Component Name: BoostKit-boostcph-videoengine\n"
         "Component Version: 7.3.0\n"
         "Component AppendInfo: 15.0.0_r17\n";
     if (strcmp(version, expectString) != 0) {

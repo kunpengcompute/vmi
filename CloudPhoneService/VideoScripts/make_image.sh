@@ -18,12 +18,12 @@ DOCKER_FILE=${CUR_PATH}/Dockerfile
 DOCKER_FILE_CANDIDATE=${CUR_PATH}/Dockerfile_NoVPU
 
 VIDEO_DEMO_PACKAGE=${CUR_PATH}/DemoVideoEngine.tar.gz
-VIDEO_BINARY_PACKAGE="BoostKit-videoengine_*.zip"
+VIDEO_BINARY_PACKAGE="BoostKit-boostcph-videoengine_*.zip"
 VIDEO_ENGINE_PACKAGE=VideoEngine.tar.gz
 ENC_PACKAGE=${CUR_PATH}/NETINT.tar.gz
 
 TMP_VIDEO_DEMO_DID=${CUR_PATH}/DemoVideoEngine
-TMP_VIDEO_BINARY_DIR=${CUR_PATH}/BoostKit-videoengine_unpack
+TMP_VIDEO_BINARY_DIR=${CUR_PATH}/BoostKit-boostcph-videoengine_unpack
 TMP_ENC_DIR=${CUR_PATH}/NETINT
 
 # 检查nvme指令
