@@ -478,6 +478,19 @@ function webrtc_conection_configure()
     echo $opt
 }
 
+create_build_prop() {
+    echo "ro.hardware.width=${BUILD_WIDTH}" >> $THISDIR/build.prop 
+    LOG_INFO "ro.hardware.width=${BUILD_WIDTH}"
+    echo "ro.hardware.height=${BUILD_HEIGHT}" >> $THISDIR/build.prop 
+    LOG_INFO "ro.hardware.height=${BUILD_HEIGHT}"
+    echo "qemu.sf.lcd_density=${BUILD_DENSITY}" >> $THISDIR/build.prop 
+    LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
+    echo "ro.hardware.fps=${BUILD_FPS}" >> $THISDIR/build.prop 
+    LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
+    echo "ro.hardware.omxsoftdecode=${va_hard_encode_flag}" >> $THISDIR/build.prop
+    LOG_INFO "ro.hardware.omxsoftdecode=${va_hard_encode_flag}"
+}
+
 container_run() {
     check_encode_card
 
@@ -516,6 +529,7 @@ container_run() {
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     local xd_gpus=($(lspci -D | grep "1fe0:1010" | awk '{print $1}'))
     local hantro_gpus=($(lspci -D | grep ":0200" | awk '{print $1}'))
+    local va_hard_encode_flag=0
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         LOG_INFO "Starting on A GPU"
         if [[ ${ENCODECARD} -eq 0 ]] || [[ ${ENCODECARD} -eq 1 ]]; then
@@ -542,6 +556,9 @@ container_run() {
     elif [ ${#hantro_gpus[@]} -ne 0 ]; then
         LOG_INFO "Starting on HANTRO GPU"
         opt+=" ENABLE_HARD_DECODE=${ENABLE_HARD_DECODE}"
+        if [ $ENABLE_HARD_DECODE -ne 1 ];then
+            va_hard_encode_flag=1
+        fi
     else
         EXIT_ERROR "No GPU exists on the host"
     fi
@@ -549,18 +566,11 @@ container_run() {
 
     local ram_size_mb=$(($RAM_SIZE_GB * 1024))
    
-    if [ -f build.prop ]; then
-	   rm -rf build.prop
+    if [ -f $THISDIR/build.prop ]; then
+	   rm -rf $THISDIR/build.prop
     fi
 
-    echo "ro.hardware.width=${BUILD_WIDTH}" >> build.prop 
-    LOG_INFO "ro.hardware.width=${BUILD_WIDTH}"
-    echo "ro.hardware.height=${BUILD_HEIGHT}" >> build.prop 
-    LOG_INFO "ro.hardware.height=${BUILD_HEIGHT}"
-    echo "qemu.sf.lcd_density=${BUILD_DENSITY}" >> build.prop 
-    LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
-    echo "ro.hardware.fps=${BUILD_FPS}" >> build.prop 
-    LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
+    create_build_prop
 
     if [ -f $DEFAULT_PROP ]; then
 	    sed -i '/zygote\|bionic\|dalvik\|stats/d' $DEFAULT_PROP
