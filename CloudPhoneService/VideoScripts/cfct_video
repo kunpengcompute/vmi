@@ -589,6 +589,31 @@ container_run() {
  
     # 额外启动参数
     local extra_run_option=$opt
+
+    if [ -z ${userdata_dir} ]; then
+        userdata_dir="/root/mount"
+    fi
+
+    if [ ! -d "${userdata_dir}/img" ]; then
+        mkdir -p ${userdata_dir}/img
+    fi
+    local KBOX_IMG=${userdata_dir}/img/$container_name.img
+    if [ ! -e $KBOX_IMG ]; then
+        fallocate -l ${STORAGE_SIZE_GB}G $KBOX_IMG
+        yes | mkfs -t ext4 $KBOX_IMG
+    fi
+    KBOX_DATA_PATH="${userdata_dir}/data/$container_name"
+    mkdir -p $KBOX_DATA_PATH/data
+    mount $KBOX_IMG $KBOX_DATA_PATH
+    echo $(($STORAGE_SIZE_GB * 2 * 1024 * 1024)) >$KBOX_DATA_PATH/storage_size
+
+    local basedata=${userdata_dir}/data/android_base/data
+    local volumedata=${userdata_dir}/data/$container_name/data
+    if [ "$(ls $basedata 2>/dev/null)" ] && [ $no_copy_usr_data -ne 1 ]; then
+        LOG_INFO "copy ${container_name} from android_base"
+        cp -r -p $basedata/* $volumedata/ 2>/dev/null
+    fi
+
     bash $THISDIR/base_box_aosp15.sh start \
     --name "$container_name" \
     --cpus "${cpus[*]}" \
@@ -603,12 +628,6 @@ container_run() {
     --enable_render_layer "$ENABLE_RENDER_LAYER"
     LOG_INFO "Initialize container ..."
 
-    local basedata=${userdata_dir}/data/android_base/data
-    local volumedata=${userdata_dir}/data/$container_name/data
-    if [ "$(ls $basedata 2>/dev/null)" ] && [ $no_copy_usr_data -ne 1 ]; then
-        LOG_INFO "copy ${container_name} from android_base"
-        cp -r -p $basedata/* $volumedata/ 2>/dev/null
-    fi
     CID=$($RUNTIME_CMD ps |grep -w $container_name|awk '{print $1}')
     if [ $DEFAULT_RUNTIME == "docker" ]; then
         echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/docker/$CID*/devices.allow)
