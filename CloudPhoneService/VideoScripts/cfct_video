@@ -603,8 +603,9 @@ container_run() {
         yes | mkfs -t ext4 $KBOX_IMG
     fi
     KBOX_DATA_PATH="${userdata_dir}/data/$container_name"
-    mkdir -p $KBOX_DATA_PATH/data
+    mkdir -p $KBOX_DATA_PATH
     mount $KBOX_IMG $KBOX_DATA_PATH
+    mkdir -p $KBOX_DATA_PATH/data
     echo $(($STORAGE_SIZE_GB * 2 * 1024 * 1024)) >$KBOX_DATA_PATH/storage_size
 
     local basedata=${userdata_dir}/data/android_base/data
