@@ -332,16 +332,17 @@ function init_config() {
         else
             LOG_INFO "No GPU exists on the host. Enable soft render..."
         fi
-    if [ $num_of_cpus -eq 112 ]; then
+    elif [ $num_of_cpus -eq 112 ]; then
         if [ ${CPU_BIND_MODE} -eq 0 ]; then
             VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_112CORE_MODE0[*]})
         elif [ ${CPU_BIND_MODE} -eq 1 ]; then
                 VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_112CORE_MODE1[*]})
-            fi
         else
             EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
         fi
         # 若为HANBO GPU获取的是芯片个数
+        if [ ${#hantro_gpus[@]} -eq 1 ]; then
+            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB1_112CORE[*]})
         elif [ ${#hantro_gpus[@]} -eq 8 ]; then
             VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB8_112CORE[*]})
         elif [ ${#hantro_gpus[@]} -eq 16 ]; then
