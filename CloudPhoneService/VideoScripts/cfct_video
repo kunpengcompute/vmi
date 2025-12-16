@@ -628,13 +628,6 @@ container_run() {
     --user_data_path "$userdata_dir" \
     --enable_render_layer "$ENABLE_RENDER_LAYER"
     LOG_INFO "Initialize container ..."
-
-    CID=$($RUNTIME_CMD ps |grep -w $container_name|awk '{print $1}')
-    if [ $DEFAULT_RUNTIME == "docker" ]; then
-        echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/docker/$CID*/devices.allow)
-    else
-        echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/default/$CID*/devices.allow)
-    fi
     
     container_id=$($RUNTIME_CMD ps --filter "name=$container_name" --format "{{.ID}}")
     echo $container_id > $THISDIR/containerid_${container_name}
