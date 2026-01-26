@@ -594,6 +594,7 @@ container_run() {
             local hanbo_node=${VIDEO_HANBO_MAP[$((($container_id - 1) % ${#VIDEO_HANBO_MAP[*]}))]}
             opt+=" -e VASTAI_VISIBLE_DEVICES=${hanbo_node}"
         fi
+        opt+=" -e ENABLE_AMD_C2_DECODE=${ENABLE_AMD_C2_DECODE}"
     elif [ ${#xd_gpus[@]} -ne 0 ]; then
         LOG_INFO "Starting on AWM GPU"
         local vpu_node=${VIDEO_VPU_MAP[$((($container_id - 1) % ${#VIDEO_VPU_MAP[*]}))]}
