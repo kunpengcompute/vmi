@@ -57,6 +57,9 @@ T432_QUADRA_DECODE_ENABLE=0
 NETINT0="/dev/nvme0,/dev/nvme0n1,/dev/nvme1,/dev/nvme1n1"
 NETINT1="/dev/nvme0,/dev/nvme0n1,/dev/nvme1,/dev/nvme1n1"
 
+#AMD C2解码器使能开关, 1表示使能，其他值默认不使能
+ENABLE_AMD_C2_DECODE=0
+
 #DC1000硬解使能开关, 1表示使能，其他值默认不使能
 ENABLE_HARD_DECODE=1
 
