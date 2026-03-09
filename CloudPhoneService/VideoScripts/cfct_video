@@ -638,9 +638,11 @@ container_run() {
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
                 $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-                sed -i '81,100d' media_codecs.xml #删除xml配置文件中硬解相关配置，以disable硬解
-                $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
-                $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
+                if sed -n '81,100p' media_codecs.xml | grep -q '<Decoders>'; then
+                    sed -i '81,100d' media_codecs.xml #删除xml配置文件中硬解相关配置，以disable硬解
+                    $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
+                    $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
+                fi
         fi
     fi
 
