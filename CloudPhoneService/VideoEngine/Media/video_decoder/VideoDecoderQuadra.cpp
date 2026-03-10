@@ -710,6 +710,9 @@ void VideoDecoderQuadra::DecoderPreHandleData(uint8_t *inputDataArr[])
     // 遍历y,u,v分量
     for (int i = 0; i < NAL_START_CODE_MIN_LEN; i++) {
         tmpSrc = reinterpret_cast<uint8_t *>(m_frame.data.frame.p_data[i]);
+        if (tmpSrc == nullptr) {
+            continue;
+        }
         int planeHeight = m_frame.data.frame.video_height;
         int planeWidth = AlignUp(m_frame.data.frame.video_width * m_sessionCtx->bit_depth_factor,
             QUADRA_WIDTH_ALIGN_PLAIN);
@@ -731,11 +734,16 @@ void VideoDecoderQuadra::DecoderPreHandleData(uint8_t *inputDataArr[])
         inputDataArr[i] = tmpDst;
 
         for (int j = 0; j < planeHeight; j++) {
+            if (cnt + writeWidth <= DEFAULT_MALLOC_BUFFER) {
                 (void)std::copy_n(tmpSrc, writeWidth, tmpDst);
                 tmpSrc += planeWidth;
                 tmpDst += writeWidth;
+                cnt += writeWidth;
+            } else {
+                ALOGE("buffer overflow");
+                return;
+            }  
         }
-        cnt += writeHeight * writeWidth;
     }
 }
 
