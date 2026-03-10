@@ -143,13 +143,6 @@
 |文档|FAQ|提供视频流安装、使用过程的常见问题和解决方法。|
 
 
-
-## 分支维护策略<a name="ZH-CN_TOPIC_0000002550251727"></a>
-
-
-## 版本维护策略<a name="ZH-CN_TOPIC_0000002550291723"></a>
-
-
 ## 免责声明<a name="ZH-CN_TOPIC_0000002550251723"></a>
 
 **致本项目使用者**
@@ -169,6 +162,8 @@
 
 ## License<a name="ZH-CN_TOPIC_0000002518771872"></a>
 
+本项目采用Apache License 2.0许可证。详见[LICENSE](LICENSE)文件
+本项目的文档适用CC-BY 4.0许可证，具体参见文件[LICENSE](docs/LICENSE)文件
 
 ## 贡献声明<a name="ZH-CN_TOPIC_0000002550251729"></a>
 
