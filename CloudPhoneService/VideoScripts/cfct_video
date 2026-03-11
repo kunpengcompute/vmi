@@ -663,11 +663,11 @@ container_run() {
     fi
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
-        if [ ${T432_QUADRA_DECODE_ENABLE} -eq 1 ]; then
-                $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-                sed -i 's/media_codecs_google_video.xml/media_codecs_kbox_video.xml/g' media_codecs.xml
-                $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
-                $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
+        if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
+            $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
+            sed -i '/<Decoders>/,/<\/Decoders>/d' media_codecs.xml
+            $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
+            $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
         fi
     fi
 
