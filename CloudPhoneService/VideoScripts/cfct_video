@@ -674,7 +674,14 @@ container_run() {
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
             $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-            sed -i '/<Decoders>/,/<\/Decoders>/d' media_codecs.xml
+            sed -i '/<Decoders>/,/<\/Decoders>/s/<Decoders>/<!-- &/' media_codecs.xml
+            sed -i '/<Decoders>/,/<\/Decoders>/s/<\/Decoders>/& -->/' media_codecs.xml
+            $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
+            $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
+        else
+            $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
+            sed -i '/<!--.*<Decoders>/s/^[[:space:]]*<!--[[:space:]]*//' media_codecs.xml
+            sed -i '/<Decoders>/,/<\/Decoders>/s/ -->$//' media_codecs.xml
             $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
             $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
         fi
@@ -774,6 +781,20 @@ container_restart() {
         if [ ${result} -eq -1 ]; then
             EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
         fi
+    fi
+
+    if [ ${#amd_gpus[@]} -ne 0 ]; then
+        if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
+            $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
+            sed -i '/<Decoders>/,/<\/Decoders>/s/<Decoders>/<!-- &/' media_codecs.xml
+            sed -i '/<Decoders>/,/<\/Decoders>/s/<\/Decoders>/& -->/' media_codecs.xml
+            $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
+        else
+            $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
+            sed -i '/<!--.*<Decoders>/s/^[[:space:]]*<!--[[:space:]]*//' media_codecs.xml
+            sed -i '/<Decoders>/,/<\/Decoders>/s/ -->$//' media_codecs.xml
+            $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
+        fi  
     fi
 
     local container_id=`echo ${container_name:8}`
