@@ -783,6 +783,7 @@ container_restart() {
         fi
     fi
 
+    local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
             $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
@@ -802,7 +803,6 @@ container_restart() {
     bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER
     [ ${?} -eq 1 ] && continue
 
-    local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${ENCODECARD} -eq 0 ]; then
             init_netint $container_name
