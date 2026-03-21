@@ -28,7 +28,6 @@
 </tbody>
 </table>
 
-
 ### 软件版本配套说明<a name="ZH-CN_TOPIC_0000002549826109"></a>
 
 |软件类型|版本|备注|
@@ -37,16 +36,12 @@
 |OS|openEuler-24.03-LTS-SP1-aarch64 （内核6.6.0-72.0.0）|-|
 |ExaGear|ExaGear ARM32-ARM64|转码软件|
 
-
-
 ### 硬件版本配套说明<a name="ZH-CN_TOPIC_0000002549826113"></a>
 
 |服务器类型|处理器型号|BIOS版本|CPLD版本|BMC版本|
 |--|--|--|--|--|
 |鲲鹏服务器|鲲鹏920 7260处理器|6.56|5.09|5.96|
 |鲲鹏服务器|鲲鹏920 7280Z处理器|20.55|5.08|5.05.12.15|
-
-
 
 ### 病毒扫描结果<a name="ZH-CN_TOPIC_0000002549706115"></a>
 
@@ -58,13 +53,9 @@
 |Bitdefender|7.5.1.200224|7.99987|2025-12-17 20:37:48|OK|
 |Kaspersky|12.0.0.6672|2025-12-17 10:02:00|2025-12-17 20:37:37|OK|
 
-
-
-
 ## 版本使用注意事项<a name="ZH-CN_TOPIC_0000002518346260"></a>
 
 版本使用注意事项详见《视频流引擎 特性指南（Android 15）》中“[约束与限制](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0007.html)”章节。
-
 
 ## V7.3.0\_15<a name="ZH-CN_TOPIC_0000002518186342"></a>
 
@@ -76,7 +67,6 @@
 |--|--|--|
 |1|视频流引擎适配Android 15|视频流引擎适配Android 15，完成出流。|
 
-
 **修改特性<a name="section451mcpsimp"></a>**
 
 无
@@ -85,11 +75,9 @@
 
 无
 
-
 ### 已解决的问题<a name="ZH-CN_TOPIC_0000002549706111"></a>
 
 无
-
 
 ### 遗留问题<a name="ZH-CN_TOPIC_0000002518186338"></a>
 
@@ -132,8 +120,6 @@
 </tbody>
 </table>
 
-
-
 ## 版本配套文档<a name="ZH-CN_TOPIC_0000002518346256"></a>
 
 ### V7.3.0\_15配套文档<a name="ZH-CN_TOPIC_0000002549706109"></a>
@@ -148,11 +134,6 @@
 |6|Kunpeng BoostKit 26.0.RC1 视频流引擎 个人数据说明|本文档向用户介绍视频流引擎的个人数据说明。|鲲鹏社区|
 |7|Kunpeng BoostKit 26.0.RC1 视频流引擎 例行维护（Android 15）|本文档主要介绍端侧和云侧引擎的例行维护说明。|鲲鹏社区|
 
-
-
 ### 获取文档方式<a name="ZH-CN_TOPIC_0000002549826107"></a>
 
 您可以通过访问[鲲鹏社区](https://www.hikunpeng.com/document/detail/zh/kunpengcps/overview/kunpengcps.html)浏览和获取相关文档。
-
-
-

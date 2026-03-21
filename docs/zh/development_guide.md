@@ -1,6 +1,6 @@
 # 开发指南<a name="ZH-CN_TOPIC_0000002521735642"></a>
 
-## 介绍<a name="ZH-CN_TOPIC_0000002549826163"></a>
+## 1 介绍<a name="ZH-CN_TOPIC_0000002549826163"></a>
 
 云手机是指虚拟出带有AOSP （Android Open Source Project）系统，具有虚拟手机功能的云服务器。作为一种新型应用，它对物理手机起到了有效的延伸和扩展作用，可以用在云手游、移动办公等诸多场景。
 
@@ -8,8 +8,7 @@
 
 本文档主要用于描述视频流云手机端侧和云侧引擎的集成开发指南。
 
-
-## 获取软件包<a name="ZH-CN_TOPIC_0000002518186396"></a>
+## 2 获取软件包<a name="获取软件包"></a>
 
 **表 1** 软件要求<a id="软件要求"></a>
 
@@ -21,7 +20,6 @@
 |4|SDK platform tools|版本：r33.0.3|获取链接|
 |5|SDK build tools|版本：r33.0.1|获取链接|
 |6|BoostKit-boostcph-videoengine_*_15.zip|Android 15视频流引擎开发包|获取链接|
-
 
 **软件包完整性校验<a name="section16873181764512"></a>**
 
@@ -36,20 +34,17 @@
 >使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
 >使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议 2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
 
+## 3 配置开发环境<a name="ZH-CN_TOPIC_0000002518186398"></a>
 
-## 配置开发环境<a name="ZH-CN_TOPIC_0000002518186398"></a>
+### 3.1 软件包分解<a name="ZH-CN_TOPIC_0000002518346310"></a>
 
-### 软件包分解<a name="ZH-CN_TOPIC_0000002518346310"></a>
-
-视频流引擎的软件包名称为BoostKit-boostcph-videoengine\_\*\_15.zip，获取方式请参见[获取软件包](获取软件包.md)，获取到软件zip包后，将zip包解压获得.tar.gz开发包。
+视频流引擎的软件包名称为BoostKit-boostcph-videoengine\_\*\_15.zip，获取方式请参见[2-获取软件包](#获取软件包)，获取到软件zip包后，将zip包解压获得.tar.gz开发包。
 
 |软件|说明|
 |--|--|
 |VideoEngine.tar.gz|视频流引擎服务端开发包。|
 
-
-
-### 服务端编译环境部署<a name="ZH-CN_TOPIC_0000002518346308"></a>
+### 3.2 服务端编译环境部署<a name="ZH-CN_TOPIC_0000002518346308"></a>
 
 **环境要求<a name="section183915472144"></a>**
 
@@ -63,16 +58,16 @@
 |--|--|--|
 |x86_64服务器|服务端编译制作|Ubuntu 22.04 LTS推荐：ubuntu-22.04-live-server-amd64.iso|
 
-
 >![](public_sys-resources/icon-note.gif) **说明：** 
->-   本文档测试服务器型号为2288H V5。
->-   服务器需有访问外网权限，以方便下载OS镜像。
+>
+>- 本文档测试服务器型号为2288H V5。
+>- 服务器需有访问外网权限，以方便下载OS镜像。
 
 **部署步骤<a name="section039914210159"></a>**
 
 1. 安装依赖库。
 
-    ```
+    ```shell
     sudo apt install -y git 
     sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg
     sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev
@@ -89,14 +84,14 @@
 
 2. 下载vmi代码，进入vmi代码目录。
 
-    ```
+    ```shell
     git clone https://gitee.com/kunpengcompute/vmi.git
     cd vmi
     ```
 
 3. 使用自动部署脚本，部署编译工具。
 
-    ```
+    ```shell
     chmod +x scripts/auto_install_tools.sh
     ./scripts/auto_install_tools.sh ${安装目录}
     ```
@@ -105,27 +100,27 @@
 
     脚本执行成功后，使用以下命令引入环境变量。
 
-    ```
+    ```shell
     source ~/.bashrc
     ```
 
-
-### 服务端调试环境部署<a name="ZH-CN_TOPIC_0000002549826179"></a>
+### 3.3 服务端调试环境部署<a name="ZH-CN_TOPIC_0000002549826179"></a>
 
 >![](public_sys-resources/icon-notice.gif) **须知：** 
->-   用户可以根据需求选择文件存放目录。
->-   服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)》。
+>
+>- 用户可以根据需求选择文件存放目录。
+>- 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)》。
 
 1. 将VideoEngine.tar.gz放至“/home/VideoEngine/Cloud“目录下。
 2. 解压视频流引擎服务端开发包。
 
-    ```
+    ```shell
     tar xzvf VideoEngine.tar.gz
     ```
 
 3. 再将解压出来的二进制文件复制至云手机（以_cloudphone\_1_云手机为例）内。
 
-    ```
+    ```shell
     docker cp system/bin cloudphone_1:/system/
     docker cp system/etc cloudphone_1:/system/
     docker cp system/lib cloudphone_1:/system/
@@ -139,35 +134,31 @@
 
     **表 1** 视频流云手机对外依赖库<a id="视频流云手机对外依赖库"></a>
 
-|描述|库名|路径|
-|--|--|--|
-|对外依赖的编码库|libVideoCodec.so|/vendor/lib、/vendor/lib64|
-|对外依赖的解码库|libVideoDecoder.so|/vendor/lib、/vendor/lib64|
-|对外依赖的GPU加速库|libVmiEncTurbo.so|/vendor/lib、/vendor/lib64|
-|对外依赖的GPU加速库（system权限）|libVmiEncTurboSys.so|/system/lib、/system/lib64|
-|Opus编解码库|libVmiOpus.so|/system/lib、/system/lib64|
-
+    |描述|库名|路径|
+    |--|--|--|
+    |对外依赖的编码库|libVideoCodec.so|/vendor/lib、/vendor/lib64|
+    |对外依赖的解码库|libVideoDecoder.so|/vendor/lib、/vendor/lib64|
+    |对外依赖的GPU加速库|libVmiEncTurbo.so|/vendor/lib、/vendor/lib64|
+    |对外依赖的GPU加速库（system权限）|libVmiEncTurboSys.so|/system/lib、/system/lib64|
+    |Opus编解码库|libVmiOpus.so|/system/lib、/system/lib64|
 
 5. 重启云手机，此时视频流云手机可运行，请参见后续开发流程调用对应的接口即可调试对应功能。
 
+## 4 对外接口<a name="ZH-CN_TOPIC_0000002549706167"></a>
 
-
-## 对外接口<a name="ZH-CN_TOPIC_0000002549706167"></a>
-
-### 使用约定<a name="ZH-CN_TOPIC_0000002549706165"></a>
+### 4.1 使用约定<a name="ZH-CN_TOPIC_0000002549706165"></a>
 
 对外接口提供的动态库是使用AOSP 15.0.0\_r17源码编译，这些库需在AOSP 15.0.0\_r17环境中使用。
 
-对外接口是通用接口，即所有的组件模块都使用相同接口交换数据，各种数据类型的定义参照本文对应章节目录描述。如：视频输出请参见[视频输出开发](视频输出开发.md)。
+对外接口是通用接口，即所有的组件模块都使用相同接口交换数据，各种数据类型的定义参照本文对应章节目录描述。如：视频输出请参见[5-视频输出开发](#视频输出开发)。
 
+### 4.2 基础数据类型<a name="ZH-CN_TOPIC_0000002518186412"></a>
 
-### 基础数据类型<a name="ZH-CN_TOPIC_0000002518186412"></a>
-
-#### VmiDataType模块数据类型<a name="ZH-CN_TOPIC_0000002549826161"></a>
+#### 4.2.1 VmiDataType模块数据类型<a name="ZH-CN_TOPIC_0000002549826161"></a>
 
 VmiDataType定义支持的数据类型，各个数据类型对应一个组件模块，当前支持的组件模块包括：视频输出、音频输出、麦克风输入、触控输入、传感器、GPS，数据类型具体定义如下：
 
-```
+```c++
 enum VmiDataType : uint8_t {
     DATA_VIDEO = 0,                                  // 码流出流组件
     DATA_AUDIO,                                      // 音频播放组件
@@ -179,12 +170,11 @@ enum VmiDataType : uint8_t {
 };
 ```
 
-
-#### VmiModuleStatus模块状态<a name="ZH-CN_TOPIC_0000002518186404"></a>
+#### 4.2.2 VmiModuleStatus模块状态<a name="ZH-CN_TOPIC_0000002518186404"></a>
 
 组件模块状态定义如下：
 
-```
+```c++
 enum VmiModuleStatus : uint32_t {
     MODULE_NOT_INIT = 0,                             // 模块未初始化
     MODULE_INITED,                                   // 模块已初始化
@@ -193,12 +183,11 @@ enum VmiModuleStatus : uint32_t {
 };
 ```
 
-
-#### VmiVersion模块版本号<a name="ZH-CN_TOPIC_0000002549706161"></a>
+#### 4.2.3 VmiVersion模块版本号<a name="VmiVersion模块版本号"></a>
 
 组件模块的版本号由模块数据类型和当前模块小版本号两部分组成，因此通过版本号可以支持模块级别的版本控制。具体定义如下：
 
-```
+```c++
 enum VmiVideoVersion : uint16_t {
     CUR_VIDEO_VERSION = 7,
 };
@@ -228,12 +217,11 @@ enum VmiVersion : uint32_t {
 };
 ```
 
-
-#### VmiErrCode错误码定义<a name="ZH-CN_TOPIC_0000002549706147"></a>
+#### 4.2.4 VmiErrCode错误码定义<a name="ZH-CN_TOPIC_0000002549706147"></a>
 
 接口返回的错误码定义如下：
 
-```
+```c++
 enum VmiErrCode : int32_t {
     OK = 0,
     ERR_VERSION_MISMATCH = 0x1,                      // 版本不兼容
@@ -259,12 +247,11 @@ enum VmiErrCode : int32_t {
 };
 ```
 
-
-#### VmiCmd命令字定义<a name="ZH-CN_TOPIC_0000002518346276"></a>
+#### 4.2.5 VmiCmd命令字定义<a name="ZH-CN_TOPIC_0000002518346276"></a>
 
 模块数据输入、数据输出、参数设置等功能均需要指定命令字作为接口的入参。命令字是一个枚举值为uint32\_t类型的枚举类型。每个32位的命令字枚举值由三部分按顺序拼接而成，分别为VmiDataType模块数据类型uint8\_t枚举值、VmiCmdType命令字类型uint8\_t枚举值、模块具体命令字（VmiVideoCmdId 、VmiAudioCmdId等）uint16\_t枚举值。具体定义如下：
 
-```
+```c++
 enum VmiCmdType : uint8_t {
     CMD_SET_PARAM = 0,                               // 设置参数类型命令
     CMD_GET_PARAM,                                   // 获取参数类型命令
@@ -333,11 +320,9 @@ enum VmiCmd : uint32_t {
 };
 ```
 
+### 4.3 函数接口<a name="ZH-CN_TOPIC_0000002518346322"></a>
 
-
-### 函数接口<a name="ZH-CN_TOPIC_0000002518346322"></a>
-
-#### GetVersion<a name="ZH-CN_TOPIC_0000002518186356"></a>
+#### 4.3.1 GetVersion<a name="ZH-CN_TOPIC_0000002518186356"></a>
 
 **函数功能<a name="section713mcpsimp"></a>**
 
@@ -356,8 +341,7 @@ const char \*GetVersion\(\)
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >回显示例中的版本号与VmiVersion模块版本号无关。
 
-
-#### InitVmiEngine<a name="ZH-CN_TOPIC_0000002518346282"></a>
+#### 4.3.2 InitVmiEngine<a name="ZH-CN_TOPIC_0000002518346282"></a>
 
 **函数功能<a name="section730mcpsimp"></a>**
 
@@ -378,10 +362,9 @@ VmiErrCode InitVmiEngine\(VmiConfigEngine \*config\);
 |--|--|--|--|
 |config|输入|VmiConfigEngine|该结构体由DataCallback和DataTypeConfig数组构成。|
 
-
 启动引擎需要的配置项为VmiConfigEngine，包含DataCallback数据回调和需要启动的模块列表。
 
-```
+```c++
 struct VmiConfigEngine {
     DataCallback dataCallback = nullptr;        // 用于发送服务端数据的回调
     DataTypeConfig dataTypeConfig[DATA_TYPE_MAX];
@@ -390,13 +373,13 @@ struct VmiConfigEngine {
 
 数据输出统一使用回调函数实现，不提供数据输出的函数接口。回调函数定义如下：
 
-```
+```c++
 using DataCallback = int(*)(VmiDataType module, VmiCmd cmd, uint8_t *data, uint32_t size);
 ```
 
 DataTypeConfig数组指明每个模块是否需要初始化，以及初始化时数据包头前需要预留的内存空间大小，便于开发者填充需要的数据。
 
-```
+```c++
 struct DataTypeConfig {
     bool shouldInit = false;
     uint32_t sendDataOffset = 0;                // 通过回调函数发送数据时，在数据头预留的空间，最小值是0，最大值是1024，单位为Byte
@@ -414,8 +397,7 @@ struct DataTypeConfig {
 - OK（0）：表示初始化成功。
 - 非0值：表示初始化失败，返回值指示错误码。
 
-
-#### DeInitVmiEngine<a name="ZH-CN_TOPIC_0000002549826123"></a>
+#### 4.3.3 DeInitVmiEngine<a name="ZH-CN_TOPIC_0000002549826123"></a>
 
 **函数功能<a name="section799mcpsimp"></a>**
 
@@ -438,8 +420,7 @@ VmiErrCode DeInitVmiEngine\(\);
 - OK（0）：表示反初始化成功。
 - 非0值：表示反初始化失败，返回值指示错误码。
 
-
-#### GetStatus<a name="ZH-CN_TOPIC_0000002518346306"></a>
+#### 4.3.4 GetStatus<a name="ZH-CN_TOPIC_0000002518346306"></a>
 
 **函数功能<a name="section819mcpsimp"></a>**
 
@@ -455,13 +436,11 @@ VmiModuleStatus GetStatus\(VmiDataType module\)
 |--|--|--|--|
 |module|输入|VmiDataType|模块数据类型名。|
 
-
 **返回值说明<a name="section856mcpsimp"></a>**
 
 数据类型：enum VmiModuleStatus : uint32\_t
 
-
-#### StartModule<a name="ZH-CN_TOPIC_0000002549706125"></a>
+#### 4.3.5 StartModule<a name="ZH-CN_TOPIC_0000002549706125"></a>
 
 **函数功能<a name="section869mcpsimp"></a>**
 
@@ -479,17 +458,16 @@ VmiErrCode StartModule\(VmiDataType module, uint8\_t\* config, uint32\_t size\)
 |config|输入|uint8_t*|启动模块时使用的配置。|
 |size|输入|uint32_t|config所指向的内存长度。|
 
-
 不同module的config不同，并且都需要继承自VmiConfig，其中，视频参考VmiConfigVideo，音频播放参考VmiConfigAudio，触控参考VmiConfigTouch，麦克风参考VmiConfigMic，sensor参考VmiConfig，GPS参考VmiConfig。
 
-```
+```c++
 struct VmiConfig {
     uint32_t version;                           // 设置为各个组件的当前的版本号，参见：VmiVersion结构体
 } __attribute__((packed));
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->VmiConfig需要传入[VmiVersion模块版本号](VmiVersion模块版本号.md)中提到的模块版本号，该版本号每个模块都不同。
+>VmiConfig需要传入[4.2.3-VmiVersion模块版本号](#VmiVersion模块版本号)中提到的模块版本号，该版本号每个模块都不同。
 
 **返回值说明<a name="section916mcpsimp"></a>**
 
@@ -500,8 +478,7 @@ struct VmiConfig {
 - OK（0）：表示启动模块成功。
 - 非0值：表示启动模块失败，返回值指示错误码。
 
-
-#### StopModule<a name="ZH-CN_TOPIC_0000002518186350"></a>
+#### 4.3.6 StopModule<a name="ZH-CN_TOPIC_0000002518186350"></a>
 
 **函数功能<a name="section923mcpsimp"></a>**
 
@@ -517,7 +494,6 @@ VmiErrCode StopModule\(VmiDataType module\)
 |--|--|--|--|
 |module|输入|VmiDataType|模块数据类型名。|
 
-
 **返回值说明<a name="section960mcpsimp"></a>**
 
 数据类型：enum VmiErrCode : int32\_t
@@ -527,8 +503,7 @@ VmiErrCode StopModule\(VmiDataType module\)
 - OK（0）：表示停止模块成功。
 - 非0值：表示停止模块失败，返回值指示错误码。
 
-
-#### InjectData<a name="ZH-CN_TOPIC_0000002518346324"></a>
+#### 4.3.7 InjectData<a name="ZH-CN_TOPIC_0000002518346324"></a>
 
 **函数功能<a name="section968mcpsimp"></a>**
 
@@ -547,7 +522,6 @@ VmiErrCode InjectData\(VmiDataType module, VmiCmd cmd, uint8\_t \*data, uint32\_
 |data|输入|uint8_t*|指向待发送数据的指针。|
 |size|输入|uint32_t|注入数据的大小。|
 
-
 **返回值说明<a name="section1031mcpsimp"></a>**
 
 数据类型：enum VmiErrCode : int32\_t
@@ -557,8 +531,7 @@ VmiErrCode InjectData\(VmiDataType module, VmiCmd cmd, uint8\_t \*data, uint32\_
 - OK（0）：表示注入数据成功。
 - 非0值：表示注入数据失败，返回值指示错误码。
 
-
-#### SetParam<a name="ZH-CN_TOPIC_0000002518186368"></a>
+#### 4.3.8 SetParam<a name="ZH-CN_TOPIC_0000002518186368"></a>
 
 **函数功能<a name="section1039mcpsimp"></a>**
 
@@ -577,7 +550,6 @@ VmiErrCode SetParam\(VmiDataType module, VmiCmd cmd, uint8\_t \*param, uint32\_t
 |param|输入|uint8_t*|设置参数的数据指针。|
 |size|输入|uint32_t|设置数据的大小。|
 
-
 **返回值说明<a name="section1103mcpsimp"></a>**
 
 数据类型：enum VmiErrCode : int32\_t
@@ -587,8 +559,7 @@ VmiErrCode SetParam\(VmiDataType module, VmiCmd cmd, uint8\_t \*param, uint32\_t
 - OK（0）：表示设置成功。
 - 非0值：表示设置参数失败，返回值指示错误码。
 
-
-#### GetParam<a name="ZH-CN_TOPIC_0000002518186372"></a>
+#### 4.3.9 GetParam<a name="ZH-CN_TOPIC_0000002518186372"></a>
 
 **函数功能<a name="section1039mcpsimp"></a>**
 
@@ -607,7 +578,6 @@ VmiErrCode GetParam\(VmiDataType module, VmiCmd cmd, uint8\_t \*param, uint32\_t
 |param|输入|uint8_t*|输出参数的数据指针。|
 |size|输入|uint32_t|输出数据的大小。|
 
-
 **返回值说明<a name="section1103mcpsimp"></a>**
 
 数据类型：enum VmiErrCode : int32\_t
@@ -617,16 +587,13 @@ VmiErrCode GetParam\(VmiDataType module, VmiCmd cmd, uint8\_t \*param, uint32\_t
 - OK（0）：获取成功参数成功。
 - 非0值：表示获取参数失败，返回值指示错误码。
 
+## 5 视频输出开发<a name="视频输出开发"></a>
 
-
-
-## 视频输出开发<a name="ZH-CN_TOPIC_0000002549826139"></a>
-
-### 使用约定<a name="ZH-CN_TOPIC_0000002518346312"></a>
+### 5.1 使用约定<a name="ZH-CN_TOPIC_0000002518346312"></a>
 
 视频输出配置VmiConfigVideo继承自VmiConfig结构体。具体结构如下：
 
-```
+```c++
 struct VmiConfigVideo : public VmiConfig {
     EncoderType encoderType = CPU;              // 编码器类型
     VideoFrameType videoFrameType = H264;       // 视频输出格式
@@ -637,10 +604,9 @@ struct VmiConfigVideo : public VmiConfig {
 } __attribute__((packed));
 ```
 
+### 5.2 配置参数<a name="视频配置参数"></a>
 
-### 配置参数<a name="ZH-CN_TOPIC_0000002549706151"></a>
-
-#### encoderType<a name="ZH-CN_TOPIC_0000002518186370"></a>
+#### 5.2.1 encoderType<a name="ZH-CN_TOPIC_0000002518186370"></a>
 
 **变量说明<a name="section1131mcpsimp"></a>**
 
@@ -648,7 +614,7 @@ struct VmiConfigVideo : public VmiConfig {
 
 **变量数据定义<a name="section1137mcpsimp"></a>**
 
-```
+```c++
 enum EncoderType : uint32_t {
     CPU,                                        // 软编
     VPU,                                        // 编码卡硬件加速
@@ -663,9 +629,7 @@ enum EncoderType : uint32_t {
 |--|--|--|--|
 |encoderType|编码器类型|0：CPU（CPU软编码器编码）1：VPU（外置硬件编码器编码）2：GPU（仅DC1000支持）|0，CPU编码|
 
-
-
-#### videoFrameType<a name="ZH-CN_TOPIC_0000002518346298"></a>
+#### 5.2.2 videoFrameType<a name="ZH-CN_TOPIC_0000002518346298"></a>
 
 **变量说明<a name="section1131mcpsimp"></a>**
 
@@ -673,7 +637,7 @@ enum EncoderType : uint32_t {
 
 **变量数据定义<a name="section1137mcpsimp"></a>**
 
-```
+```c++
 enum VideoFrameType {
     H264,　　　　　　　　　　　// 默认输出H264
     YUV,                       // YV12
@@ -691,9 +655,7 @@ RGB中RGBA8888暂不支持。
 |--|--|--|--|
 |videoFrameType|视频数据输出格式。|0：H2641：YUV（encoderType取值为0时才支持）2：RGB（暂不支持）3：H265（encodertype取值为0时不支持）|0：H264|
 
-
-
-#### resolution<a name="ZH-CN_TOPIC_0000002549826169"></a>
+#### 5.2.3 resolution<a name="ZH-CN_TOPIC_0000002549826169"></a>
 
 **变量说明<a name="section1131mcpsimp"></a>**
 
@@ -701,7 +663,7 @@ RGB中RGBA8888暂不支持。
 
 **变量数据定义<a name="section1510552312316"></a>**
 
-```
+```c++
 struct FrameSize {
     uint32_t width = 720;               // 720: 默认720P
     uint32_t height = 1280;             // 1280: 默认720P
@@ -721,12 +683,10 @@ width和height的取值范围也支持互换。
 |widthAligned|对齐后分辨率宽度（暂不支持配置）。|360~2160|720|
 |heightAligned|对齐后分辨率高度（暂不支持配置）。|360~3840|1280|
 
-
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >在启用自适应分辨率功能时，改变视频输出分辨率（与上次启动时配置不同）时，会改变AOSP系统和应用的渲染分辨率，可能会导致部分应用出现兼容性问题或渲染问题。一般此类问题可以通过重新启动应用解决，因此建议在修改分辨率前返回桌面，同时清空后台应用，以提升用户使用体验。
 
-
-#### density<a name="ZH-CN_TOPIC_0000002549706153"></a>
+#### 5.2.4 density<a name="ZH-CN_TOPIC_0000002549706153"></a>
 
 **变量说明<a name="section111994488367"></a>**
 
@@ -742,13 +702,12 @@ uint32\_t类型，默认值为320。
 |--|--|--|--|
 |density|屏幕密度。|[120~960]：包括120与960边界值。0：表示不启用自适应分辨率功能。|320|
 
-
 >![](public_sys-resources/icon-note.gif) **说明：** 
->1.  当density属性设置为0时，意味着不启用自适应分辨率功能，既启动视频模块时会使用云手机的现有渲染分辨率和屏幕密度进行渲染与出流。
->2.  当Android属性（ro.vmi.video.wmcmd）设置为0时，同样不会启用自适应分辨率功能；该属性与density变量任意一个设置为0，都将不启用自适应分辨率功能。
+>
+>1. 当density属性设置为0时，意味着不启用自适应分辨率功能，既启动视频模块时会使用云手机的现有渲染分辨率和屏幕密度进行渲染与出流。
+>2. 当Android属性（ro.vmi.video.wmcmd）设置为0时，同样不会启用自适应分辨率功能；该属性与density变量任意一个设置为0，都将不启用自适应分辨率功能。
 
-
-#### renderOptimize<a name="ZH-CN_TOPIC_0000002549706119"></a>
+#### 5.2.5 renderOptimize<a name="ZH-CN_TOPIC_0000002549706119"></a>
 
 **变量说明<a name="section1131mcpsimp"></a>**
 
@@ -762,8 +721,7 @@ uint32\_t类型，默认值为320。
 
 bool类型，默认置true，默认进行渲染优化。
 
-
-#### encodeParams<a name="ZH-CN_TOPIC_0000002549706179"></a>
+#### 5.2.6 encodeParams<a name="ZH-CN_TOPIC_0000002549706179"></a>
 
 **变量说明<a name="section1131mcpsimp"></a>**
 
@@ -771,7 +729,7 @@ bool类型，默认置true，默认进行渲染优化。
 
 **变量数据定义<a name="section1582613465553"></a>**
 
-```
+```c++
 struct EncodeParams {
     uint32_t bitrate = 3000000;             // 码率
     uint32_t gopSize = 30;                  // I帧间隔
@@ -819,18 +777,16 @@ enum RCMode : uint32_t  {
 |streamWidth|出流帧宽度。|[240, 云手机渲染分辨率]，并且出流帧宽度需要为8的倍数。|720|
 |streamHeight|出流帧高度。|[240, 云手机渲染分辨率]，并且出流帧高度需要为8的倍数。|1080|
 
-
 >![](public_sys-resources/icon-note.gif) **说明：** 
->1.  码控模式（RCMode）仅支持固定码率模式（CBR）与画质优先并限制最大码率（CAPPED\_CRF），Quadra编码卡支持两种码控模式，DC1000暂时仅支持固定码率模式（CBR）；
->2.  码控模式（RCMode）设置为固定码率模式（CBR），可通过bitrate变量来指定固定码率的数值；而Quadra编码卡码控模式（RCMode）设置为画质优先并限制最大码率（CAPPED\_CRF）时，会使用crf、maxCrfRate和vbvBufferSize变量来进行码率控制；DC1000控模式（RCMode）会使用crf、maxCrfRate变量来进行码率控制
+>
+>1. 码控模式（RCMode）仅支持固定码率模式（CBR）与画质优先并限制最大码率（CAPPED\_CRF），Quadra编码卡支持两种码控模式，DC1000暂时仅支持固定码率模式（CBR）；
+>2. 码控模式（RCMode）设置为固定码率模式（CBR），可通过bitrate变量来指定固定码率的数值；而Quadra编码卡码控模式（RCMode）设置为画质优先并限制最大码率（CAPPED\_CRF）时，会使用crf、maxCrfRate和vbvBufferSize变量来进行码率控制；DC1000控模式（RCMode）会使用crf、maxCrfRate变量来进行码率控制
 
-
-
-### 数据定义<a name="ZH-CN_TOPIC_0000002518346266"></a>
+### 5.3 数据定义<a name="ZH-CN_TOPIC_0000002518346266"></a>
 
 视频输出模块输出数据结构由数据包额外信息extData、数据包大小和实际数据三部分组成。该数据通过回调函数提供给开发者，并通过VmiCmd枚举中的VIDEO\_RETURN\_VIDEO\_DATA命令字指定。使用示例如下：
 
-```
+```c++
 VmiDataType module = DATA_VIDEO;
 VmiCmd cmd = VIDEO_RETURN_VIDEO_DATA;
 VideoData videoData;
@@ -840,7 +796,7 @@ DataCallback(module, cmd, data, sizeof(VideoData));
 
 **VideoData定义<a name="section1643611241814"></a>**
 
-```
+```c++
 struct VideoData {
     ExtDataVideo extData;               // 码流包额外信息
     uint32_t size;                      // 码流包大小
@@ -850,7 +806,7 @@ struct VideoData {
 
 **ExtDataVideo定义<a name="section379912203186"></a>**
 
-```
+```c++
 struct FrameSize {
     uint32_t width = 720;               // 720: 默认720P
     uint32_t height = 1280;             // 1280: 默认720P
@@ -875,8 +831,7 @@ struct ExtDataVideo {
 } __attribute__((packed));
 ```
 
-
-### 参数获取<a name="ZH-CN_TOPIC_0000002518186388"></a>
+### 5.4 参数获取<a name="ZH-CN_TOPIC_0000002518186388"></a>
 
 视频输出提供参数获取特性，该特性通过对外接口GetParam进行获取。
 
@@ -884,7 +839,7 @@ struct ExtDataVideo {
 
 通过指定module为DATA\_VIDEO，cmd为VIDEO\_GET\_ENCODER\_PARAM，data传入EncodeParams类型数据，可进行编码参数获取。示例如下：
 
-```
+```c++
 VmiDataType module = DATA_VIDEO;
 VmiCmd cmd = VIDEO_GET_ENCODER_PARAM;
 EncodeParams encodeParams;
@@ -892,8 +847,7 @@ uint8_t* param = &encodeParams;
 GetParam(module, cmd, param, sizeof(EncodeParams));
 ```
 
-
-### 参数设置<a name="ZH-CN_TOPIC_0000002549826121"></a>
+### 5.5 参数设置<a name="ZH-CN_TOPIC_0000002549826121"></a>
 
 视频输出提供参数设置特性，该特性通过对外接口SetParam进行设置。
 
@@ -901,7 +855,7 @@ GetParam(module, cmd, param, sizeof(EncodeParams));
 
 通过指定module为DATA\_VIDEO，cmd为VIDEO\_SET\_ENCODER\_PARAM，data传入EncodeParams类型数据，可进行编码参数设置。示例如下：
 
-```
+```c++
 VmiDataType module = DATA_VIDEO;
 VmiCmd cmd = VIDEO_SET_ENCODER_PARAM;
 EncodeParams encodeParams;
@@ -909,10 +863,9 @@ uint8_t* param = &encodeParams;
 SetParam(module, cmd, param, sizeof(EncodeParams));
 ```
 
+### 5.6 配置推荐<a name="ZH-CN_TOPIC_0000002518186374"></a>
 
-### 配置推荐<a name="ZH-CN_TOPIC_0000002518186374"></a>
-
-#### 分辨率与屏幕密度推荐搭配<a name="ZH-CN_TOPIC_0000002518186384"></a>
+#### 5.6.1 分辨率与屏幕密度推荐搭配<a name="ZH-CN_TOPIC_0000002518186384"></a>
 
 |规格|分辨率宽度（width）|分辨率长度（height）|屏幕密度（density）|
 |--|--|--|--|
@@ -923,9 +876,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |2K|1440|2560|640|
 |4K|2160|3840|960|
 
-
-
-#### 编码参数推荐搭配<a name="ZH-CN_TOPIC_0000002549706129"></a>
+#### 5.6.2 编码参数推荐搭配<a name="ZH-CN_TOPIC_0000002549706129"></a>
 
 编码参数与视频流云手机运行的硬件环境相关，硬件环境请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)》“软件部署”中的“硬件环境”章节。
 
@@ -939,7 +890,6 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |gopsize|60|
 |profile|main|
 
-
 **表 2** CAPPED\_CRF编码模式编码参数<a id="CAPPED\_CRF编码模式编码参数"></a>
 
 |编码参数|推荐值|
@@ -949,7 +899,6 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |crf|21|
 |maxCrfRate|10000000|
 |vbvBufferSize|1000|
-
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >硬件配置方案一（W6800+Quadra）建议选择使用“VPU“进行编码，并且在H.265编码时profile仅支持main。
@@ -964,30 +913,25 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |gopsize|60|
 |profile|main|
 
-
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >硬件配置方案二（道客DC 1000）建议选择使用“GPU“进行编码，并且在H.265编码时profile仅支持main。
 
+## 6 音频输出开发<a name="ZH-CN_TOPIC_0000002518346272"></a>
 
-
-
-## 音频输出开发<a name="ZH-CN_TOPIC_0000002518346272"></a>
-
-### 使用约定<a name="ZH-CN_TOPIC_0000002518346280"></a>
+### 6.1 使用约定<a name="ZH-CN_TOPIC_0000002518346280"></a>
 
 音频输出配置VmiConfigAudio继承自VmiConfig结构体。具体结构如下：
 
-```
+```c++
 struct VmiConfigAudio : public VmiConfig  {
     AudioType audioType = OPUS;
     AudioPlayParams params;                     // 默认的音频播放参数
 } __attribute__((packed));
 ```
 
+### 6.2 配置参数<a name="ZH-CN_TOPIC_0000002549706173"></a>
 
-### 配置参数<a name="ZH-CN_TOPIC_0000002549706173"></a>
-
-#### AudioType<a name="ZH-CN_TOPIC_0000002518186358"></a>
+#### 6.2.1 AudioType<a name="ZH-CN_TOPIC_0000002518186358"></a>
 
 **变量说明<a name="section1131mcpsimp"></a>**
 
@@ -999,18 +943,16 @@ struct VmiConfigAudio : public VmiConfig  {
 |--|--|--|--|
 |audioType|音频输出格式。|0：OPUS1：PCM|0：OPUS|
 
-
 **变量数据定义<a name="section1137mcpsimp"></a>**
 
-```
+```c++
 enum AudioType : uint32_t {
     OPUS,                     // 默认使用OPUS压缩音频
     PCM                       // 原始音频数据
 };
 ```
 
-
-#### AudioPlayParams<a name="ZH-CN_TOPIC_0000002518346278"></a>
+#### 6.2.2 AudioPlayParams<a name="ZH-CN_TOPIC_0000002518346278"></a>
 
 **变量说明<a name="section1131mcpsimp"></a>**
 
@@ -1025,25 +967,22 @@ bitrate参数只在OPUS格式下有效，sampleInterval参数在OPUS和PCM模式
 |sampleInterval|音频输出采样间隔。|5：5ms（暂不支持）10：10ms20：20ms（暂不支持）|10：10ms|
 |bitrate|音频OPUS编码码率（bps）。|13200~512000|192000|
 
-
 **变量数据定义<a name="section1137mcpsimp"></a>**
 
-```
+```c++
 struct AudioPlayParams {
     uint32_t sampleInterval = 10;               // ms
     uint32_t bitrate = 192000;                  // bps，只有在OPUS格式有效
 } __attribute__((packed));
 ```
 
-
-
-### 数据定义<a name="ZH-CN_TOPIC_0000002518186408"></a>
+### 6.3 数据定义<a name="ZH-CN_TOPIC_0000002518186408"></a>
 
 音频输出模块输出数据结构由码流包额外信息extData、数据包大小和实际数据三部分组成。该数据通过回调函数提供给开发者，并通过VmiCmd枚举中的AUDIO\_RETURN\_AUDIO\_PLAY\_DATA命令字指定。
 
 使用示例如下：
 
-```
+```c++
 VmiDataType module = DATA_AUDIO;
 VmiCmd cmd = AUDIO_RETURN_AUDIO_PLAY_DATA;
 uint8_t audioPlayData[240];
@@ -1057,7 +996,7 @@ DataCallback(module, cmd, data, sizeof(AudioData) + audioData.size);
 
 **AudioData定义<a name="section425686182512"></a>**
 
-```
+```c++
 struct AudioData {
     ExtDataAudio extData;               // 额外信息
     uint32_t size;                      // 大小
@@ -1067,7 +1006,7 @@ struct AudioData {
 
 **ExtDataAudio定义<a name="section541061872519"></a>**
 
-```
+```c++
 struct ExtDataAudio {
     uint32_t audioType = OPUS;              // 编码模式：OPUS/PCM
     uint8_t channels = 2;                   // 声道数 1：MONO/2:STEREO(默认)
@@ -1080,15 +1019,14 @@ struct ExtDataAudio {
 
 **AudioVolume定义<a name="section1613302917121"></a>**
 
-```
+```c++
 struct AudioVolume {
     uint32_t leftVolume = 100;                  // 左声道音量
     uint32_t rightVolume = 100;                 // 右声道音量
 } __attribute__((packed));
 ```
 
-
-### 参数获取<a name="ZH-CN_TOPIC_0000002549826129"></a>
+### 6.4 参数获取<a name="ZH-CN_TOPIC_0000002549826129"></a>
 
 音频输出提供参数获取特性，该特性通过对外接口GetParam进行获取。
 
@@ -1096,7 +1034,7 @@ struct AudioVolume {
 
 通过指定module为DATA\_AUDIO，cmd为AUDIO\_GET\_AUDIOPLAY\_PARAM，data传入AudioPlayParams类型数据，可获取音频播放参数。示例如下：
 
-```
+```c++
 VmiDataType module = DATA_AUDIO;
 VmiCmd cmd = AUDIO_GET_AUDIOPLAY_PARAM;
 AudioPlayParams audioPlayParams;
@@ -1104,8 +1042,7 @@ uint8_t* param = &audioPlayParams;
 GetParam(module, cmd, param, sizeof(AudioPlayParams));
 ```
 
-
-### 参数设置<a name="ZH-CN_TOPIC_0000002549826165"></a>
+### 6.5 参数设置<a name="ZH-CN_TOPIC_0000002549826165"></a>
 
 音频输出提供参数设置特性，该特性通过对外接口SetParam进行设置。
 
@@ -1113,7 +1050,7 @@ GetParam(module, cmd, param, sizeof(AudioPlayParams));
 
 通过指定module为DATA\_AUDIO。cmd为AUDIO\_SET\_AUDIOPLAY\_PARAM，data传入AudioPlayParams类型数据，可进行音频播放参数设置。示例如下：
 
-```
+```c++
 VmiDataType module = DATA_AUDIO;
 VmiCmd cmd = AUDIO_SET_AUDIOPLAY_PARAM;
 AudioPlayParams audioPlayParams;
@@ -1121,24 +1058,21 @@ uint8_t* param = &audioPlayParams;
 SetParam(module, cmd, param, sizeof(AudioPlayParams));
 ```
 
+## 7 麦克风输入开发<a name="ZH-CN_TOPIC_0000002518346270"></a>
 
-
-## 麦克风输入开发<a name="ZH-CN_TOPIC_0000002518346270"></a>
-
-### 使用约定<a name="ZH-CN_TOPIC_0000002549706137"></a>
+### 7.1 使用约定<a name="ZH-CN_TOPIC_0000002549706137"></a>
 
 麦克风输入配置VmiConfigMic继承自VmiConfig结构体。具体结构如下：
 
-```
+```c++
 struct VmiConfigMic : public VmiConfig {
     AudioType audioType = OPUS;
 } __attribute__((packed));
 ```
 
+### 7.2 配置参数<a name="ZH-CN_TOPIC_0000002549826147"></a>
 
-### 配置参数<a name="ZH-CN_TOPIC_0000002549826147"></a>
-
-#### AudioType<a name="ZH-CN_TOPIC_0000002549826149"></a>
+#### 7.2.1 AudioType<a name="ZH-CN_TOPIC_0000002549826149"></a>
 
 **变量说明<a name="section1131mcpsimp"></a>**
 
@@ -1150,25 +1084,22 @@ struct VmiConfigMic : public VmiConfig {
 |--|--|--|--|
 |audioType|麦克风输入格式。|0：OPUS1：PCM|0：OPUS|
 
-
 **变量数据定义<a name="section1137mcpsimp"></a>**
 
-```
+```c++
 enum AudioType : uint32_t {
     OPUS,                     // 默认使用OPUS压缩音频
     PCM                       // 原始音频数据
 };
 ```
 
-
-
-### 数据定义<a name="ZH-CN_TOPIC_0000002549826119"></a>
+### 7.3 数据定义<a name="ZH-CN_TOPIC_0000002549826119"></a>
 
 麦克风输入模块输入数据结构和音频输出数据结构均为AudioData，由码流包额外信息extData、数据包大小和实际数据三部分组成。
 
 **AudioData定义<a name="section9322642132713"></a>**
 
-```
+```c++
 struct AudioData {
     ExtDataAudio extData;               // 额外信息
     uint32_t size;                      // 大小
@@ -1178,7 +1109,7 @@ struct AudioData {
 
 **ExtDataAudio定义<a name="section1386435174014"></a>**
 
-```
+```c++
 struct ExtDataAudio {
     uint32_t audioType = OPUS;              // 编码模式：OPUS/PCM
     uint8_t channels = 2;                   // 声道数 1：MONO/2:STEREO(默认)
@@ -1192,12 +1123,11 @@ struct ExtDataAudio {
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >timestamp必须是客户端的时间戳，不能是服务端通过网络收到音频数据包之后的时间戳，否则可能会导致无法过滤因网络波动而严重延迟的包，从而出现音频整体滞后的现象。
 
-
-### 数据注入<a name="ZH-CN_TOPIC_0000002518186410"></a>
+### 7.4 数据注入<a name="ZH-CN_TOPIC_0000002518186410"></a>
 
 输入与输出不同，所有的输入都需要使用InjectData接口进行数据注入。开发者通过InjectData将数据注入到服务端，并通过VmiCmd枚举中的MIC\_SEND\_MIC\_DATA命令字指定。示例如下：
 
-```
+```c++
 VmiDataType module = DATA_MIC;
 VmiCmd cmd = MIC_SEND_MIC_DATA;
 uint8_t micData[240];
@@ -1219,23 +1149,21 @@ InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 - 3：要求每480ms注入48帧，造成480ms延迟。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->-   如果使用PCM模式传输麦克风数据，建议客户端到服务端的上行网络带宽不低于2Mbps。
->-   注入的麦克风帧之间不能混入空白帧，否则可能会导致声音听起来不连续。
+>
+>- 如果使用PCM模式传输麦克风数据，建议客户端到服务端的上行网络带宽不低于2Mbps。
+>- 注入的麦克风帧之间不能混入空白帧，否则可能会导致声音听起来不连续。
 
+## 8 触控输入开发<a name="ZH-CN_TOPIC_0000002549826137"></a>
 
-
-## 触控输入开发<a name="ZH-CN_TOPIC_0000002549826137"></a>
-
-### 使用约定<a name="ZH-CN_TOPIC_0000002549826157"></a>
+### 8.1  使用约定<a name="ZH-CN_TOPIC_0000002549826157"></a>
 
 触控输入配置VmiConfigTouch继承自VmiConfig结构体。具体结构如下：
 
-```
+```c++
 struct VmiConfigTouch : public VmiConfig {} __attribute__((packed));
 ```
 
-
-### 数据定义<a name="ZH-CN_TOPIC_0000002549706169"></a>
+### 8.2 数据定义<a name="ZH-CN_TOPIC_0000002549706169"></a>
 
 触控输入数据类型包括触控板VmiTouchInputData、键盘VmiKeyInputData。
 
@@ -1243,7 +1171,7 @@ struct VmiConfigTouch : public VmiConfig {} __attribute__((packed));
 
 触控板输入数据类型定义如下：
 
-```
+```c++
 // 触控事件
 struct VmiTouchEvent {
     uint8_t pointerID;
@@ -1265,7 +1193,7 @@ struct VmiTouchInputData {
 
 键盘输入数据类型定义如下：
 
-```
+```c++
 // 键盘输入数据
 struct VmiKeyInputData {
     uint16_t keyCode;
@@ -1273,12 +1201,11 @@ struct VmiKeyInputData {
 } __attribute__((packed));
 ```
 
-
-### 数据注入<a name="ZH-CN_TOPIC_0000002549826125"></a>
+### 8.3 数据注入<a name="ZH-CN_TOPIC_0000002549826125"></a>
 
 输入与输出不同，所有的输入都需要使用InjectData接口进行数据注入。该数据开发者通过InjectData注入到服务端，并通过VmiCmdTouch枚举中的SEND\_TOUCH\_EVENT、SEND\_KEY\_EVENT命令字指定。示例如下：
 
-```
+```c++
 VmiDataType module = TOUCH;
 VmiCmd cmd = SEND_TOUCH_EVENT;
 VmiTouchInputData touchData;
@@ -1293,31 +1220,29 @@ InjectData(module, cmd, data, sizeof(VmiKeyInputData));
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->-   服务端会对触控数据进行有限的校验，例如判断触控数据的触点位置是否在有效范围内，但不能分辨因为异常行为带来的异常数据，例如手指从客户端所在的屏幕上抬起，但客户端却发送了一个Down事件（此处客户端应该发送UP事件），因此在编写客户端代码时，需要注意。
->-   在部分机型（目前发现的有VIVO手机）上进行多指操作（3指及以上），当手指同时按下或手指依次按下的间隔时间很短的时候，客户端会发送EVENT\_CANCEL事件，导致服务端重置所有触点状态导致触控失效，手指依次按下的间隔时间较长时则没有该问题。
+>
+>- 服务端会对触控数据进行有限的校验，例如判断触控数据的触点位置是否在有效范围内，但不能分辨因为异常行为带来的异常数据，例如手指从客户端所在的屏幕上抬起，但客户端却发送了一个Down事件（此处客户端应该发送UP事件），因此在编写客户端代码时，需要注意。
+>- 在部分机型（目前发现的有VIVO手机）上进行多指操作（3指及以上），当手指同时按下或手指依次按下的间隔时间很短的时候，客户端会发送EVENT\_CANCEL事件，导致服务端重置所有触点状态导致触控失效，手指依次按下的间隔时间较长时则没有该问题。
 
+## 9 传感器输入开发<a name="ZH-CN_TOPIC_0000002518346262"></a>
 
-
-## 传感器输入开发<a name="ZH-CN_TOPIC_0000002518346262"></a>
-
-### 使用约定<a name="ZH-CN_TOPIC_0000002518186380"></a>
+### 9.1 使用约定<a name="ZH-CN_TOPIC_0000002518186380"></a>
 
 传感器输入配置VmiConfig结构体。具体结构如下：
 
-```
+```c++
 struct VmiConfig {
     uint32_t version;
 } __attribute__((packed));
 ```
 
-
-### 数据定义<a name="ZH-CN_TOPIC_0000002549826145"></a>
+### 9.2 数据定义<a name="ZH-CN_TOPIC_0000002549826145"></a>
 
 传感器输入模块输入数据结构由传感器数据x，y，z和type四部分组成。该数据通过回调函数提供给开发者。
 
 使用示例如下：
 
-```
+```c++
 struct SensorData {
     float x;
     float y;
@@ -1328,7 +1253,7 @@ struct SensorData {
 
 传感器支持类型如下：
 
-```
+```c++
 enum VmiSensorType : uint32_t {
     HANDLE_ACCELERATION = 0,                // 加速度传感器
     HANDLE_GYROSCOPE,                       // 陀螺仪传感器
@@ -1348,19 +1273,18 @@ enum VmiSensorType : uint32_t {
 
 使用示例如下：
 
-```
+```c++
 struct SensorActivateData {
     int handle;             // handle对应VmiSensorType里的值
     int64_t samplingPeriod; // 在取消激活传感器时，这个字段可以忽略或设置为默认值
 } __attribute__((packed));
 ```
 
-
-### 数据注入<a name="ZH-CN_TOPIC_0000002518186406"></a>
+### 9.3 数据注入<a name="ZH-CN_TOPIC_0000002518186406"></a>
 
 所有的输入都需要使用InjectData接口进行数据注入。开发者通过InjectData将该数据注入到服务端，并通过VmiCmd枚举中的SENSOR\_SEND\_SENSOR\_DATA命令字指定。示例如下：
 
-```
+```c++
 VmiDataType module = DATA_SENSOR;
 VmiCmd cmd = SENSOR_SEND_SENSOR_DATA;
 SensorData sensorData;
@@ -1368,12 +1292,11 @@ uint8_t* data = &sensorData;
 InjectData(module, cmd, data, sizeof(SensorData));
 ```
 
-
-### 数据输出<a name="ZH-CN_TOPIC_0000002549826117"></a>
+### 9.4 数据输出<a name="ZH-CN_TOPIC_0000002549826117"></a>
 
 所有的输出都需要使用SetParam接口进行流出。开发者通过SetParam将该数据输出到客户端，并通过VmiCmd枚举中的SENSOR\_RETURN\_REGISTER\_CLIENT\_SENSOR、SENSOR\_RETURN\_UNREGISTER\_CLIENT\_SENSOR、SENSOR\_RETURN\_UPDATE\_CLIENT\_SENSOR\_RATE命令字指定。示例如下：
 
-```
+```c++
 VmiDataType module = SENSOR;
 VmiCmd cmd = SENSOR_RETURN_REGISTER_CLIENT_SENSOR;
 VmiCmd cmd = SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR;
@@ -1383,22 +1306,19 @@ uint8_t* data = &sensorActivateData;
 SetParam(module, cmd, param, sizeof(SensorActivateData));
 ```
 
+## 10 GPS输入开发<a name="ZH-CN_TOPIC_0000002518346296"></a>
 
-
-## GPS输入开发<a name="ZH-CN_TOPIC_0000002518346296"></a>
-
-### 使用约定<a name="ZH-CN_TOPIC_0000002549706159"></a>
+### 10.1 使用约定<a name="ZH-CN_TOPIC_0000002549706159"></a>
 
 GPS输入配置VmiConfig结构体。具体结构如下：
 
-```
+```c++
 struct VmiConfig {
     uint32_t version;
 } __attribute__((packed));
 ```
 
-
-### 数据定义<a name="ZH-CN_TOPIC_0000002549706171"></a>
+### 10.2 数据定义<a name="ZH-CN_TOPIC_0000002549706171"></a>
 
 GPS输入数据类型包括经纬度位置数据VmiGpsLocationData。
 
@@ -1406,7 +1326,7 @@ GPS输入数据类型包括经纬度位置数据VmiGpsLocationData。
 
 经纬度位置输入数据类型定义如下：
 
-```
+```c++
 struct VmiGpsLocationData {
     double latitude;
     double longitude;
@@ -1418,12 +1338,11 @@ struct VmiGpsLocationData {
 } __attribute__((packed));
 ```
 
-
-### 数据注入<a name="ZH-CN_TOPIC_0000002549706139"></a>
+### 10.3 数据注入<a name="ZH-CN_TOPIC_0000002549706139"></a>
 
 所有的输入都需要使用InjectData接口进行数据注入。该数据开发者通过InjectData注入到服务端，并通过VmiCmd枚举中的GPS\_SEND\_LOCATION\_DATA命令字指定。示例如下：
 
-```
+```c++
 VmiDataType module = DATA_GPS;
 VmiCmd cmd = GPS_SEND_LOCATION_DATA;
 VmiGpsLocationData locationData;
@@ -1431,21 +1350,19 @@ uint8_t* data = &locationData;
 InjectData(module, cmd, data, sizeof(VmiGpsLocationData));
 ```
 
+## 11 视频流引擎非商用实现接口<a name="ZH-CN_TOPIC_0000002549826171"></a>
 
+### 11.1 编码接口（C&C++）<a name="ZH-CN_TOPIC_0000002549706127"></a>
 
-## 视频流引擎非商用实现接口<a name="ZH-CN_TOPIC_0000002549826171"></a>
-
-### 编码接口（C&C++）<a name="ZH-CN_TOPIC_0000002549706127"></a>
-
-#### 接口说明<a name="ZH-CN_TOPIC_0000002518186382"></a>
+#### 11.1.1 接口说明<a name="ZH-CN_TOPIC_0000002518186382"></a>
 
 视频编码模块提供视频流服务端引擎正常运行所需要调用的外部视频编码接口，由二次开发者实现，并以动态链接库的形式提供。其动态库的名称为：libVideoCodec.so。
 
-开发者继承VideoEncoder类并按照本章节中的描述实现对应接口，同时提供[CreateVideoEncoder](CreateVideoEncoder.md)、[DestroyVideoEncoder](DestroyVideoEncoder.md)接口用于创建具体的实现类实例。
+开发者继承VideoEncoder类并按照本章节中的描述实现对应接口，同时提供[11.1.2-CreateVideoEncoder](#CreateVideoEncoder)、[11.1.3-DestroyVideoEncoder](#DestroyVideoEncoder)接口用于创建具体的实现类实例。
 
 其中，接口调用的返回码定义如下：
 
-```
+```c++
 enum EncoderRetCode : uint32_t {
     VIDEO_ENCODER_SUCCESS                = 0x00,
     VIDEO_ENCODER_CREATE_FAIL            = 0x01,  // 创建编码器失败
@@ -1463,7 +1380,7 @@ enum EncoderRetCode : uint32_t {
 
 编码器类型定义如下：
 
-```
+```c++
 enum EncoderFormat: uint32_t {
     ENCODER_TYPE_OPENH264 = 0,    // 开源OpenH264编码器
     ENCODER_TYPE_NETINTH264 = 1,  // NETINT h.264硬件编码器
@@ -1477,8 +1394,7 @@ enum EncoderFormat: uint32_t {
 };
 ```
 
-
-#### CreateVideoEncoder<a name="ZH-CN_TOPIC_0000002518346320"></a>
+#### 11.1.2 CreateVideoEncoder<a name="CreateVideoEncoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1495,7 +1411,6 @@ EncoderRetCode CreateVideoEncoder\(int32\_t\* fd, EncoderFormat encoderFormat\)
 |fd|输入|int32_t*|编码器标记符。|
 |encoderFormat|输入|EncoderFormat枚举|要创建的编码器的类型。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：EncoderRetCode
@@ -1505,8 +1420,7 @@ EncoderRetCode CreateVideoEncoder\(int32\_t\* fd, EncoderFormat encoderFormat\)
 - VIDEO\_ENCODER\_SUCCESS：创建编码器实例成功。
 - VIDEO\_ENCODER\_CREATE\_FAIL：创建编码器实例失败。
 
-
-#### DestroyVideoEncoder<a name="ZH-CN_TOPIC_0000002518186348"></a>
+#### 11.1.3 DestroyVideoEncoder<a name="DestroyVideoEncoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1522,7 +1436,6 @@ EncoderRetCode DestroyVideoEncoder\(int32\_t fd\)
 |--|--|--|--|
 |fd|输入|int32_t|编码器标记符。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：EncoderRetCode
@@ -1534,18 +1447,17 @@ EncoderRetCode DestroyVideoEncoder\(int32\_t fd\)
 
 **VideoEncoder接口类涉及接口<a name="section97621346152119"></a>**
 
-VideoEncoder接口类涉及接口详细描述请参见[Config](Config.md)、[InitEncoder](InitEncoder.md)、[StartEncoder](StartEncoder.md)、[SetParams](SetParams.md)、[EncodeOneFrame](EncodeOneFrame.md)、[StopEncoder](StopEncoder.md)、[DestroyEncoder](DestroyEncoder.md)、[ResetEncoder](ResetEncoder.md)。
+VideoEncoder接口类涉及接口详细描述请参见[11.1.4-Config](#Config)、[11.1.5-InitEncoder](#InitEncoder)、[11.1.6-StartEncoder](#StartEncoder)、[11.1.7-SetParams](#SetParams)、[11.1.8-EncodeOneFrame](#EncodeOneFrame)、[11.1.9-StopEncoder](#StopEncoder)、[11.1.10-DestroyEncoder](#DestroyEncoder)、[11.1.11-ResetEncoder](#ResetEncoder)。
 
-
-#### Config<a name="ZH-CN_TOPIC_0000002549826173"></a>
+#### 11.1.4 Config<a name="Config"></a>
 
 **函数功能<a name="section20501062"></a>**
 
-输入编码器的初始化配置，需要在[InitEncoder](InitEncoder.md)之前调用。
+输入编码器的初始化配置，需要在[11.1.5-InitEncoder](#InitEncoder)之前调用。
 
 **约束说明<a name="section50291837"></a>**
 
-如[配置参数](配置参数.md)所示的参数类型，会经由此参数透传至VmiEncoderConfig和VmiEncoderParams中；[配置参数](配置参数.md)中的配置参数的相关约束此处仍然存在。
+如[5.2-配置参数](#视频配置参数)所示的参数类型，会经由此参数透传至VmiEncoderConfig和VmiEncoderParams中；[5.2-配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -1558,10 +1470,9 @@ EncoderRetCode Config\(int32\_t fd, const VmiEncoderConfig& config\)
 |fd|输入|int32_t|编码器标记符。|
 |config|输入|struct VmiEncoderConfig|要配置的编码器配置。|
 
-
 struct VmiEncoderConfig和struct VmiEncoderParams的具体定义如下：
 
-```
+```c++
 struct VmiEncoderParams {
     uint32_t bitRate = 3000000;
     uint32_t gopSize = 30;
@@ -1574,7 +1485,7 @@ struct VmiEncoderParams {
 };
 ```
 
-```
+```c++
 struct VmiEncoderConfig {
     uint32_t width = 720;
     uint32_t height = 1280;
@@ -1591,8 +1502,7 @@ struct VmiEncoderConfig {
 
 VIDEO\_ENCODER\_SUCCESS：配置编码器成功。
 
-
-#### InitEncoder<a name="ZH-CN_TOPIC_0000002549826143"></a>
+#### 11.1.5 InitEncoder<a name="InitEncoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1600,7 +1510,7 @@ VIDEO\_ENCODER\_SUCCESS：配置编码器成功。
 
 **约束说明<a name="section50291837"></a>**
 
-要求已经调用[Config](Config.md)接口输入合法的配置。
+要求已经调用[11.1.4-Config](#Config)接口输入合法的配置。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -1612,7 +1522,6 @@ EncoderRetCode InitEncoder\(int32\_t fd\)
 |--|--|--|--|
 |fd|输入|int32_t|编码器标记符。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：EncoderRetCode
@@ -1622,8 +1531,7 @@ EncoderRetCode InitEncoder\(int32\_t fd\)
 - VIDEO\_ENCODER\_SUCCESS：初始化编码器成功。
 - VIDEO\_ENCODER\_INIT\_FAIL：初始化编码器失败。
 
-
-#### StartEncoder<a name="ZH-CN_TOPIC_0000002518346294"></a>
+#### 11.1.6 StartEncoder<a name="StartEncoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1639,7 +1547,6 @@ EncoderRetCode StartEncoder\(int32\_t fd\)
 |--|--|--|--|
 |fd|输入|int32_t|编码器标记符。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：EncoderRetCode
@@ -1649,8 +1556,7 @@ EncoderRetCode StartEncoder\(int32\_t fd\)
 - VIDEO\_ENCODER\_SUCCESS：启动编码器成功。
 - VIDEO\_ENCODER\_INIT\_FAIL：初始化编码器失败。
 
-
-#### SetParams<a name="ZH-CN_TOPIC_0000002518186364"></a>
+#### 11.1.7 SetParams<a name="SetParams"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1658,7 +1564,7 @@ EncoderRetCode StartEncoder\(int32\_t fd\)
 
 **约束说明<a name="section50291837"></a>**
 
-如[配置参数](配置参数.md)所示的参数类型，会经由此参数透传至VmiEncoderParams中；[配置参数](配置参数.md)中的配置参数的相关约束此处仍然存在。
+如[5.2-配置参数](#视频配置参数)所示的参数类型，会经由此参数透传至VmiEncoderParams中；[5.2-配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -1671,10 +1577,9 @@ EncoderRetCode SetParams\(int32\_t fd, const VmiEncoderParams& params\)
 |fd|输入|int32_t|编码器标记符。|
 |params|输入|struct VmiEncoderParams|要设置的编码参数。|
 
-
 struct VmiEncoderParams的具体定义如下：
 
-```
+```c++
 struct VmiEncoderParams {
     uint32_t bitRate = 3000000;
     uint32_t gopSize = 30;
@@ -1695,8 +1600,7 @@ struct VmiEncoderParams {
 
 VIDEO\_ENCODER\_SUCCESS：设置编码器成功。
 
-
-#### EncodeOneFrame<a name="ZH-CN_TOPIC_0000002549826155"></a>
+#### 11.1.8 EncodeOneFrame<a name="EncodeOneFrame"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1716,7 +1620,6 @@ EncoderRetCode EncodeOneFrame\(int32\_t fd, const uint8\_t \*inputData, uint32\_
 |outputData|输出|uint8_t **|编码后的数据。|
 |outputSize|输出|uint32_t *|编码后的数据长度，单位Byte。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：EncoderRetCode
@@ -1726,8 +1629,7 @@ EncoderRetCode EncodeOneFrame\(int32\_t fd, const uint8\_t \*inputData, uint32\_
 - VIDEO\_ENCODER\_SUCCESS：编码一帧成功。
 - VIDEO\_ENCODER\_ENCODE\_FAIL：编码一帧失败。
 
-
-#### StopEncoder<a name="ZH-CN_TOPIC_0000002549826115"></a>
+#### 11.1.9 StopEncoder<a name="StopEncoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1743,7 +1645,6 @@ EncoderRetCode StopEncoder\(int32\_t fd\)
 |--|--|--|--|
 |fd|输入|int32_t|编码器标记符。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：EncoderRetCode
@@ -1753,8 +1654,7 @@ EncoderRetCode StopEncoder\(int32\_t fd\)
 - VIDEO\_ENCODER\_SUCCESS：停止编码器成功。
 - VIDEO\_ENCODER\_STOP\_FAIL：停止编码器失败。
 
-
-#### DestroyEncoder<a name="ZH-CN_TOPIC_0000002549706135"></a>
+#### 11.1.10 DestroyEncoder<a name="DestroyEncoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1770,7 +1670,6 @@ EncoderRetCode DestoryEncoder\(int32\_t fd\)
 |--|--|--|--|
 |fd|输入|int32_t|编码器标记符。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：EncoderRetCode
@@ -1780,8 +1679,7 @@ EncoderRetCode DestoryEncoder\(int32\_t fd\)
 - VIDEO\_ENCODER\_SUCCESS：停止编码器成功。
 - VIDEO\_ENCODER\_DESTROY\_FAIL：销毁编码器失败。
 
-
-#### ResetEncoder<a name="ZH-CN_TOPIC_0000002518186392"></a>
+#### 11.1.11 ResetEncoder<a name="ResetEncoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1797,7 +1695,6 @@ EncoderRetCode ResetEncoder\(int32\_t fd\)
 |--|--|--|--|
 |fd|输入|int32_t|编码器标记符。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：EncoderRetCode
@@ -1807,8 +1704,7 @@ EncoderRetCode ResetEncoder\(int32\_t fd\)
 - VIDEO\_ENCODER\_SUCCESS：重置编码器成功。
 - VIDEO\_ENCODER\_RESET\_FAIL：重置编码器失败。
 
-
-#### FrameScaling<a name="ZH-CN_TOPIC_0000002518186362"></a>
+#### 11.1.12 FrameScaling<a name="ZH-CN_TOPIC_0000002518186362"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1816,7 +1712,7 @@ EncoderRetCode ResetEncoder\(int32\_t fd\)
 
 **约束说明<a name="section50291837"></a>**
 
-如[配置参数](配置参数.md)中所示的参数类型，会经由此参数透传至FrameScaling入参中；[配置参数](配置参数.md)中的配置参数的相关约束此处仍然存在。
+如[5.2-配置参数](#视频配置参数)中所示的参数类型，会经由此参数透传至FrameScaling入参中；[5.2-配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
 
 二次开发者也可直接调用此接口，实现YUV帧缩放功能。
 
@@ -1832,13 +1728,11 @@ width：uint32\_t类型，期望编码宽度。该类字段如下：
 |--|--|--|--|
 |width|输入|uint32_t|期望编码宽度。|
 
-
 height：uint32\_t类型，期望编码高度。该类字段如下：
 
 |字段名称|输入/输出|字段类型|字段描述|
 |--|--|--|--|
 |height|输入|uint32_t|期望编码高度。|
-
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -1849,21 +1743,19 @@ height：uint32\_t类型，期望编码高度。该类字段如下：
 - VIDEO\_ENCODER\_SUCCESS：成功。
 - VIDEO\_ENCODER\_SET\_ENCODE\_PARAMS\_FAIL：失败。
 
+### 11.2 解码接口（C&C++）<a name="ZH-CN_TOPIC_0000002549826141"></a>
 
-
-### 解码接口（C&C++）<a name="ZH-CN_TOPIC_0000002549826141"></a>
-
-#### 接口说明<a name="ZH-CN_TOPIC_0000002518346288"></a>
+#### 11.2.1 接口说明<a name="ZH-CN_TOPIC_0000002518346288"></a>
 
 视频解码模块提供视频流服务端引擎正常运行所需要调用的外部视频解码接口，由二次开发者实现，并以动态链接库的形式提供。其动态库的名称为：libVideoDecoder.so。
 
-开发者继承VideoDecoder类并按照本章节中的描述实现对应接口，同时提供[CreateVideoDecoder](CreateVideoDecoder.md)、[DestroyVideoDecoder](DestroyVideoDecoder.md)接口用于创建具体的实现类实例。
+开发者继承VideoDecoder类并按照本章节中的描述实现对应接口，同时提供[11.2.2-CreateVideoDecoder](#CreateVideoDecoder)、[11.2.3-DestroyVideoDecoder](#DestroyVideoDecoder)接口用于创建具体的实现类实例。
 
 此接口与Android内部OMX解码组件配套使用，与视频流出流组件不相干扰。
 
 其中，接口调用的返回码定义如下：
 
-```
+```c++
 enum DecoderRetCode : uint32_t {
     VIDEO_DECODER_SUCCESS,                // 成功
     VIDEO_DECODER_CREATE_FAIL,            // 创建解码器失败
@@ -1883,8 +1775,7 @@ enum DecoderRetCode : uint32_t {
 };
 ```
 
-
-#### CreateVideoDecoder<a name="ZH-CN_TOPIC_0000002518346304"></a>
+#### 11.2.2 CreateVideoDecoder<a name="CreateVideoDecoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1900,7 +1791,6 @@ DecoderRetCode CreateVideoDecoder\(VideoDecoder \*\*decoder\)
 |--|--|--|--|
 |decoder|输出|VideoDecoder **|解码器实例二维指针，用于存放接口内创建的解码器实例。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：DecoderRetCode
@@ -1910,8 +1800,7 @@ DecoderRetCode CreateVideoDecoder\(VideoDecoder \*\*decoder\)
 - VIDEO\_DECODER\_SUCCESS：创建解码器实例成功。
 - VIDEO\_DECODER\_CREATE\_FAIL：创建解码器实例失败。
 
-
-#### DestroyVideoDecoder<a name="ZH-CN_TOPIC_0000002518346300"></a>
+#### 11.2.3 DestroyVideoDecoder<a name="DestroyVideoDecoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1927,7 +1816,6 @@ DecoderRetCode DestroyVideoDecoder\(VideoDecoder \*decoder\)
 |--|--|--|--|
 |decoder|输入|VideoDecoder *|要销毁的解码器实例指针。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：DecoderRetCode
@@ -1939,10 +1827,9 @@ DecoderRetCode DestroyVideoDecoder\(VideoDecoder \*decoder\)
 
 **VideoDecoder接口类涉及接口<a name="section97621346152119"></a>**
 
-VideoDecoder接口类涉及接口详细描述请参见[CreateDecoder](CreateDecoder.md)、[InitDecoder](InitDecoder.md)、[SetDecodeParams](SetDecodeParams.md)、[GetDecodeParams](GetDecodeParams.md)、[SetCallbacks](SetCallbacks.md)、[SetCopyFrameFunc](SetCopyFrameFunc.md)、[SendStreamData](SendStreamData.md)、[Flush](Flush.md)[StartDecoder](StartDecoder.md)、[StopDecoder](StopDecoder.md)、[DestroyDecoder](DestroyDecoder.md)。
+VideoDecoder接口类涉及接口详细描述请参见[11.2.4-CreateDecoder](#CreateDecoder)、[11.2.5-InitDecoder](#InitDecoder)、[11.2.6-SetDecodeParams](#SetDecodeParams)、[11.2.7-GetDecodeParams](#GetDecodeParams)、[11.2.8-SetCallbacks](#SetCallbacks)、[11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc)、[11.2.10-SendStreamData](#SendStreamData)、[11.2.11-Flush](#Flush)、[11.2.12-StartDecoder](#StartDecoder)、[11.2.13-StopDecoder](#StopDecoder)、[11.2.14-DestroyDecoder](#DestroyDecoder)。
 
-
-#### CreateDecoder<a name="ZH-CN_TOPIC_0000002518346314"></a>
+#### 11.2.4 CreateDecoder<a name="CreateDecoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1950,7 +1837,7 @@ VideoDecoder接口类涉及接口详细描述请参见[CreateDecoder](CreateDeco
 
 **函数原型<a name="section49973353"></a>**
 
-DecoderRetCode CreateDecoder\(MediaStreamFormat_ _decType\)
+DecoderRetCode CreateDecoder\(MediaStreamFormat__decType\)
 
 **参数说明<a name="section47106995"></a>**
 
@@ -1958,10 +1845,9 @@ DecoderRetCode CreateDecoder\(MediaStreamFormat_ _decType\)
 |--|--|--|--|
 |decType|输入|MediaStreamFormat|解码码流类型。|
 
-
 MediaStreamFormat的具体定义如下：
 
-```
+```c++
 // 解码输入格式
 enum MediaStreamFormat : uint32_t {
     STREAM_FORMAT_AVC,
@@ -1979,8 +1865,7 @@ enum MediaStreamFormat : uint32_t {
 - VIDEO\_DECODER\_SUCCESS：创建解码器成功。
 - VIDEO\_DECODER\_CREATE\_FAIL：创建解码器失败。
 
-
-#### InitDecoder<a name="ZH-CN_TOPIC_0000002549706121"></a>
+#### 11.2.5 InitDecoder<a name="InitDecoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -1988,7 +1873,7 @@ enum MediaStreamFormat : uint32_t {
 
 **约束说明<a name="section50291837"></a>**
 
-要求已经调用[CreateDecoder](CreateDecoder.md)创建解码器成功。
+要求已经调用[11.2.4-CreateDecoder](#CreateDecoder)创建解码器成功。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -2003,8 +1888,7 @@ DecoderRetCode InitDecoder\(\)
 - VIDEO\_DECODER\_SUCCESS：初始化解码器成功。
 - VIDEO\_DECODER\_INIT\_FAIL：初始化解码器失败。
 
-
-#### SetDecodeParams<a name="ZH-CN_TOPIC_0000002549826153"></a>
+#### 11.2.6 SetDecodeParams<a name="SetDecodeParams"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2021,10 +1905,9 @@ DecoderRetCode SetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
 |index|输入|DecodeParamsIndex|表示要设置的参数的类型。|
 |decParams|输入|void *|对应参数的内存地址。|
 
-
 可设置的参数的定义如下：
 
-```
+```c++
 // 解码参数
 enum DecodeParamsIndex : uint32_t {
     INDEX_PIC_INFO,
@@ -2074,8 +1957,7 @@ struct AlignInfoParams {
 - VIDEO\_DECODER\_SUCCESS：配置解码器成功。
 - VIDEO\_DECODER\_SET\_DECODE\_PARAMS\_FAIL：配置解码器失败。
 
-
-#### GetDecodeParams<a name="ZH-CN_TOPIC_0000002518346264"></a>
+#### 11.2.7 GetDecodeParams<a name="GetDecodeParams"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2092,8 +1974,7 @@ DecoderRetCode GetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
 |index|输入|DecodeParamsIndex|表示要获取的参数类型。|
 |decParams|输入|void *|对应参数的内存地址。|
 
-
-参数的详细定义请参见[SetDecodeParams](SetDecodeParams.md)。
+参数的详细定义请参见[11.2.6-SetDecodeParams](#SetDecodeParams)。
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2104,8 +1985,7 @@ DecoderRetCode GetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
 - VIDEO\_DECODER\_SUCCESS：获取解码器参数成功。
 - VIDEO\_DECODER\_GET\_DECODE\_PARAMS\_FAIL：获取解码器参数失败。
 
-
-#### SetCallbacks<a name="ZH-CN_TOPIC_0000002549826159"></a>
+#### 11.2.8 SetCallbacks<a name="SetCallbacks"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2121,10 +2001,9 @@ DecoderRetCode SetCallbacks\(std::function<void\(DecodeEventIndex, uint32\_t, vo
 |--|--|--|--|
 |eventCallBack|输入|std::function<void(DecodeEventIndex, uint32_t, void *)>|解码器事件通知回调函数。|
 
-
 当解码器中有事件需要通知上层时，需要调用此接口中设置的回调函数，其中index表示事件的类型，uint32\_t和void \*类型参数分别用于存放对应的数据，详细定义如下：
 
-```
+```c++
 // 解码事件
 enum DecodeEventIndex : uint32_t {
     INDEX_PIC_INFO_CHANGE,
@@ -2132,7 +2011,7 @@ enum DecodeEventIndex : uint32_t {
 };
 ```
 
-INDEX\_PIC\_INFO\_CHANGE表示解码图像大小变化，此时在void \*参数处挂载struct PicInfoParams \*类型，具体定义请参见[SetDecodeParams](SetDecodeParams.md)。
+INDEX\_PIC\_INFO\_CHANGE表示解码图像大小变化，此时在void \*参数处挂载struct PicInfoParams \*类型，具体定义请参见[11.2.6-SetDecodeParams](#SetDecodeParams)。
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2143,8 +2022,7 @@ INDEX\_PIC\_INFO\_CHANGE表示解码图像大小变化，此时在void \*参数�
 - VIDEO\_DECODER\_SUCCESS：设置回调成功。
 - VIDEO\_DECODER\_SET\_FUNC\_FAIL：设置回调失败。
 
-
-#### SetCopyFrameFunc<a name="ZH-CN_TOPIC_0000002518346318"></a>
+#### 11.2.9 SetCopyFrameFunc<a name="SetCopyFrameFunc"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2160,8 +2038,7 @@ DecoderRetCode SetCopyFrameFunc\(std::function<uint32\_t\(uint8\_t\*, uint8\_t\*
 |--|--|--|--|
 |copyFrame|输入|std::function<uint32_t(uint8_t*, uint8_t*, const PicInfoParams &, uint32_t)>|设置将解码好的一帧数据拷贝到输出Buffer的钩子函数（用于屏蔽输出接口格式差异）。|
 
-
-该回调中，第一个uint8\_t\*表示解码完成后数据地址，第二个uint8\_t\*表示拷贝的目标地址，需要填入[RetrieveFrameData](RetrieveFrameData.md)中输入的Buffer地址，第三个const PicInfoParams &参数表示图像宽高信息，具体定义请参见[SetDecodeParams](SetDecodeParams.md)；第四个uint32\_t参数表示输出缓冲区最大长度，需要填入[RetrieveFrameData](RetrieveFrameData.md)中输入的最大缓冲区大小，该回调返回值为处理数据的实际大小。
+该回调中，第一个uint8\_t\*表示解码完成后数据地址，第二个uint8\_t\*表示拷贝的目标地址，需要填入[11.2.11-RetrieveFrameData](#RetrieveFrameData)中输入的Buffer地址，第三个const PicInfoParams &参数表示图像宽高信息，具体定义请参见[11.2.6-SetDecodeParams](#SetDecodeParams)；第四个uint32\_t参数表示输出缓冲区最大长度，需要填入[11.2.11-RetrieveFrameData](#RetrieveFrameData)中输入的最大缓冲区大小，该回调返回值为处理数据的实际大小。
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2172,8 +2049,7 @@ DecoderRetCode SetCopyFrameFunc\(std::function<uint32\_t\(uint8\_t\*, uint8\_t\*
 - VIDEO\_DECODER\_SUCCESS：设置回调成功。
 - VIDEO\_DECODER\_SET\_FUNC\_FAIL：设置回调失败。
 
-
-#### SendStreamData<a name="ZH-CN_TOPIC_0000002518186386"></a>
+#### 11.2.10 SendStreamData<a name="SendStreamData"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2189,11 +2065,9 @@ DecoderRetCode SendStreamData\(uint8\_t \*buffer, uint32\_t filledLen\)
 |--|--|--|--|
 |buffer|输入|uint8_t *|输入码流数据缓存。|
 
-
 |字段名称|输入/输出|字段类型|字段描述|
 |--|--|--|--|
 |filledLen|输入|uint32_t|输入码流数据长度。|
-
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2205,12 +2079,11 @@ DecoderRetCode SendStreamData\(uint8\_t \*buffer, uint32\_t filledLen\)
 - VIDEO\_DECODER\_DECODE\_FAIL：发送失败。
 - VIDEO\_DECODER\_WRITE\_OVERFLOW：输入Buffer速度太快。
 
-
-#### RetrieveFrameData<a name="ZH-CN_TOPIC_0000002518186376"></a>
+#### 11.2.11 RetrieveFrameData<a name="RetrieveFrameData"></a>
 
 **函数功能<a name="section20501062"></a>**
 
-该函数作为同步接口，用于获取一帧解码输出，拷贝数据时需要使用[SetCopyFrameFunc](SetCopyFrameFunc.md)提供的CopyFrame函数。
+该函数作为同步接口，用于获取一帧解码输出，拷贝数据时需要使用[11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc)提供的CopyFrame函数。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -2222,16 +2095,13 @@ DecoderRetCode RetrieveFrameData\(uint8\_t \*buffer, uint32\_t maxLen, uint32\_t
 |--|--|--|--|
 |buffer|输入|uint8_t *|输出数据接收地址。|
 
-
 |字段名称|输入/输出|字段类型|字段描述|
 |--|--|--|--|
 |maxLen|输入|uint32_t|输出缓冲区最大长度。|
 
-
 |字段名称|输入/输出|字段类型|字段描述|
 |--|--|--|--|
 |filledLen|输出|uint32_t *|输出数据的实际长度。|
-
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2243,8 +2113,7 @@ DecoderRetCode RetrieveFrameData\(uint8\_t \*buffer, uint32\_t maxLen, uint32\_t
 - VIDEO\_DECODER\_DECODE\_FAIL：获取解码数据失败。
 - VIDEO\_DECODER\_READ\_UNDERFLOW：请求输出速度太快。
 
-
-#### Flush<a name="ZH-CN_TOPIC_0000002549706177"></a>
+#### 11.2.12 Flush<a name="Flush"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2263,8 +2132,7 @@ DecoderRetCode Flush\(\)
 - VIDEO\_DECODER\_SUCCESS：重置解码缓存状态成功。
 - VIDEO\_DECODER\_RESET\_FAIL：重置解码缓存状态失败。
 
-
-#### StartDecoder<a name="ZH-CN_TOPIC_0000002549826135"></a>
+#### 11.2.13 StartDecoder<a name="StartDecoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2283,8 +2151,7 @@ DecoderRetCode StartDecoder\(\)
 - VIDEO\_DECODER\_SUCCESS：启动成功。
 - VIDEO\_DECODER\_START\_FAIL：启动失败。
 
-
-#### StopDecoder<a name="ZH-CN_TOPIC_0000002549706141"></a>
+#### 11.2.14 StopDecoder<a name="StopDecoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2303,8 +2170,7 @@ DecoderRetCode StopDecoder\(\)
 - VIDEO\_DECODER\_SUCCESS：停止成功。
 - VIDEO\_DECODER\_STOP\_FAIL：停止失败。
 
-
-#### DestroyDecoder<a name="ZH-CN_TOPIC_0000002549826167"></a>
+#### 11.2.15 DestroyDecoder<a name="DestroyDecoder"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2314,16 +2180,13 @@ DecoderRetCode StopDecoder\(\)
 
 void DestroyDecoder\(\)
 
+### 11.3 GPU加速接口（C&C++）<a name="ZH-CN_TOPIC_0000002549706149"></a>
 
-
-### GPU加速接口（C&C++）<a name="ZH-CN_TOPIC_0000002549706149"></a>
-
-#### 接口说明<a name="ZH-CN_TOPIC_0000002518186354"></a>
+#### 11.3.1 接口说明<a name="ZH-CN_TOPIC_0000002518186354"></a>
 
 GPU加速模块提供视频流服务端引擎正常运行所需要调用的GPU加速接口，包含RGB转YUV功能和GPU编码功能，由二次开发者实现或GPU厂商实现，并以动态链接库的形式提供。其动态库的名称为：libVmiEncTurbo.so、libVmiEncTurboSys.so，其中前者为vendor库，后者为system库。
 
-
-#### QueryModule<a name="ZH-CN_TOPIC_0000002549706145"></a>
+#### 11.3.2 QueryModule<a name="QueryModule"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2340,10 +2203,9 @@ void QueryModule\(ModuleInfo \*\*moduleList, uint32\_t \*listSize\)
 |moduleList|输出|ModuleInfo **|当前系统支持的GPU加速类的列表，每一项包括GPU加速类的ID以及其对应的能力。|
 |listSize|输出|uint32_t *|moduleList的长度。|
 
-
 moduleList的详细定义如下：
 
-```
+```c++
 struct ModuleInfo {
     // 硬件对应ID
     uint32_t moduleId = 0;
@@ -2352,7 +2214,7 @@ struct ModuleInfo {
 };
 ```
 
-```
+```c++
 enum EncoderCapability : uint32_t {
     CAP_NONE,
     CAP_FORMAT_CONVERT,
@@ -2364,7 +2226,7 @@ enum EncoderCapability : uint32_t {
 
 moduleId的规定如下：
 
-```
+```c++
 enum GpuType : uint32_t {
     GPU_NONE = 0,
     GPU_INNO_G1 = 0x1,
@@ -2386,8 +2248,7 @@ enum GpuType : uint32_t {
 };
 ```
 
-
-#### CreateModule<a name="ZH-CN_TOPIC_0000002518186366"></a>
+#### 11.3.3 CreateModule<a name="CreateModule"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2395,7 +2256,7 @@ enum GpuType : uint32_t {
 
 **约束说明<a name="section50291837"></a>**
 
-输入的moduleId需要从[QueryModule](QueryModule.md)返回的moduleList中选择。
+输入的moduleId需要从[11.3.2-QueryModule](#QueryModule)返回的moduleList中选择。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -2407,18 +2268,17 @@ void \*CreateModule\(uint32\_t moduleId\)
 |--|--|--|--|
 |moduleId|输入|uint32_t|用于指定要用于GPU加速的GPU卡型号。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：void \*，实际指向一个创建好的GPU加速类实例，可以通过GpuEncoderBase中定义的接口使用。
 
 **GpuEncoderBase接口类涉及接口<a name="section97621346152119"></a>**
 
-GpuEncoderBase接口类涉及接口详细描述请参见[Init](Init.md)、[Deinit](Deinit.md)、[Start](Start.md)、[Stop](Stop.md)[CreateBuffer](CreateBuffer.md)、[ImportBuffer](ImportBuffer.md)、[ReleaseBuffer](ReleaseBuffer.md)、[MapBuffer](MapBuffer.md)、[UnmapBuffer](UnmapBuffer.md)、[RetriveBufferData](RetriveBufferData.md)、[Convert](Convert.md)、[Encode](Encode.md)、[SetEncodeParam](SetEncodeParam.md)、[Reset](Reset.md)。
+GpuEncoderBase接口类涉及接口详细描述请参见[11.3.5-Init](#Init)、[11.3.6-Deinit](#Deinit)、[11.3.7-Start](#Start)、[11.3.8-Stop](#Stop)、[11.3.9-CreateBuffer](#CreateBuffer)、[11.3.10-ImportBuffer](#ImportBuffer)、[11.3.11-ReleaseBuffer](#ReleaseBuffer)、[11.3.12-MapBuffer](#MapBuffer)、[11.3.13-UnmapBuffer](#UnmapBuffer)、[11.3.14-RetriveBufferData](#RetriveBufferData)、[11.3.15-Convert](#Convert)、[11.3.16-Encode](#Encode)、[11.3.17-SetEncodeParam](#SetEncodeParam)、[11.3.18-Reset](#Reset)。
 
 GpuEncoderBase接口类返回值说明：
 
-```
+```c++
 enum GpuEncoderErrorCode : uint32_t {
     OK,
     ERR_INVALID_STATUS,
@@ -2434,8 +2294,7 @@ enum GpuEncoderErrorCode : uint32_t {
 };
 ```
 
-
-#### DestroyModule<a name="ZH-CN_TOPIC_0000002549826151"></a>
+#### 11.3.4 DestroyModule<a name="ZH-CN_TOPIC_0000002549826151"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2443,7 +2302,7 @@ enum GpuEncoderErrorCode : uint32_t {
 
 **约束说明<a name="section50291837"></a>**
 
-输入的实例必须由[CreateModule](CreateModule.md)创建。
+输入的实例必须由[11.3.3-CreateModule](#CreateModule)创建。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -2455,9 +2314,7 @@ void DestroyModule\(void \*module\)
 |--|--|--|--|
 |module|输入|void *|要销毁的GPU加速类实例指针。|
 
-
-
-#### Init<a name="ZH-CN_TOPIC_0000002518186402"></a>
+#### 11.3.5 Init<a name="Init"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2473,10 +2330,9 @@ int32\_t Init\(EncoderConfig &config\) = 0
 |--|--|--|--|
 |config|输入|EncoderConfig &|EncoderConfig结构体引用类型，GPU编码配置项。|
 
-
 EncoderConfig结构体和相关枚举定义如下：
 
-```
+```c++
 enum EncoderCapability : uint32_t {
     CAP_NONE,
     CAP_FORMAT_CONVERT,
@@ -2486,7 +2342,7 @@ enum EncoderCapability : uint32_t {
 };
 ```
 
-```
+```c++
 enum DeviceNode : uint32_t {
     DEV_DRI_RENDERD128 = 128,
     DEV_DRI_RENDERD129 = 129,
@@ -2516,7 +2372,7 @@ struct FrameSize {
 };
 ```
 
-```
+```c++
 struct EncoderConfig {
     EncoderCapability capability = CAP_NONE; 
     DeviceNode deviceNode = DEV_DRI_OTHER;
@@ -2534,8 +2390,7 @@ struct EncoderConfig {
 - OK：初始化GPU加速实例成功。
 - 其他：初始化GPU加速实例失败。
 
-
-#### Deinit<a name="ZH-CN_TOPIC_0000002518186390"></a>
+#### 11.3.6 Deinit<a name="Deinit"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2554,8 +2409,7 @@ int32\_t DeInit\(\) = 0
 - OK：销毁GPU加速实例成功。
 - 其他：销毁GPU加速实例失败。
 
-
-#### Start<a name="ZH-CN_TOPIC_0000002518346316"></a>
+#### 11.3.7 Start<a name="Start"></a>
 
 启动GPU加速实例。
 
@@ -2576,8 +2430,7 @@ int32\_t Start\(\) = 0
 - OK：启动GPU加速实例成功。
 - 其他：启动GPU加速实例失败。
 
-
-#### Stop<a name="ZH-CN_TOPIC_0000002518346290"></a>
+#### 11.3.8 Stop<a name="Stop"></a>
 
 停止GPU加速实例。
 
@@ -2598,8 +2451,7 @@ int32\_t Stop\(\) = 0
 - OK：停止GPU加速实例成功。
 - 其他：停止GPU加速实例失败。
 
-
-#### CreateBuffer<a name="ZH-CN_TOPIC_0000002549706131"></a>
+#### 11.3.9 CreateBuffer<a name="CreateBuffer"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2615,10 +2467,9 @@ int32\_t CreateBuffer\(FrameFormat format, MemType type, GpuEncoderBufferT &buff
 |--|--|--|--|
 |format|输入|FrameFormat|要创建的Buffer对应的格式。|
 
-
 FrameFormat定义如下。
 
-```
+```c++
 enum FrameFormat : uint32_t {
     FRAME_FORMAT_NONE,
     FRAME_FORMAT_RGBA,
@@ -2635,10 +2486,9 @@ enum FrameFormat : uint32_t {
 |--|--|--|--|
 |type|输入|MemType|需要为Buffer分配空间的位置。|
 
-
 MemType定义如下。
 
-```
+```c++
 enum MemType : uint32_t {
     MEM_TYPE_NONE,
     MEM_TYPE_HOST, //分配在主机内存中
@@ -2651,10 +2501,9 @@ enum MemType : uint32_t {
 |--|--|--|--|
 |buffer|输出|GpuEncoderBufferT  &|分配完成后用于挂载Buffer的指针。|
 
-
 GpuEncoderBufferT定义如下，开发者或厂商实现该接口时需要使用new为GpuEncoderBuffer分配内存，并在ReleaseBuffer接口中进行内存释放。
 
-```
+```c++
 struct GpuEncoderBuffer {
     FrameFormat format = FRAME_FORMAT_NONE;
     MemType memType = MEM_TYPE_NONE;
@@ -2675,8 +2524,7 @@ using GpuEncoderBufferT = GpuEncoderBuffer *;
 - OK：创建Buffer成功。
 - 其他：创建Buffer失败。
 
-
-#### ImportBuffer<a name="ZH-CN_TOPIC_0000002518346268"></a>
+#### 11.3.10 ImportBuffer<a name="ImportBuffer"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2694,7 +2542,6 @@ int32\_t ImportBuffer\(FrameFormat format, uint64\_t handle, GpuEncoderBufferT &
 |handle|输入|uint64_t|要导入的Buffer对应的句柄或显存地址。|
 |buffer|输出|GpuEncoderBufferT &|导入完成后用于挂载Buffer的指针。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：GpuEncoderErrorCode
@@ -2704,8 +2551,7 @@ int32\_t ImportBuffer\(FrameFormat format, uint64\_t handle, GpuEncoderBufferT &
 - OK：导入Buffer成功。
 - 其他：导入Buffer失败。
 
-
-#### ReleaseBuffer<a name="ZH-CN_TOPIC_0000002518186378"></a>
+#### 11.3.11 ReleaseBuffer<a name="ReleaseBuffer"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2721,7 +2567,6 @@ int32\_t ReleaseBuffer\(GpuEncoderBufferT &buffer\) = 0
 |--|--|--|--|
 |buffer|输入|GpuEncoderBufferT &|需要释放的Buffer的指针。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：GpuEncoderErrorCode
@@ -2731,8 +2576,7 @@ int32\_t ReleaseBuffer\(GpuEncoderBufferT &buffer\) = 0
 - OK：释放Buffer成功。
 - 其他：释放Buffer失败。
 
-
-#### MapBuffer<a name="ZH-CN_TOPIC_0000002518186400"></a>
+#### 11.3.12 MapBuffer<a name="MapBuffer"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2752,10 +2596,9 @@ int32\_t MapBuffer\(GpuEncoderBufferT &buffer, uint32\_t flag\) = 0
 |buffer|输出|GpuEncoderBufferT &|需要进行数据映射Buffer的指针。|
 |flag|输入|uint32_t|控制映射数据的访问类型，包含可读和可写。|
 
-
 flag取值范围说明，同时使能读写时flag值为FLAG\_READ | FLAG\_WRITE。
 
-```
+```c++
 enum MapFlag : uint32_t {
     FLAG_READ = 1,
     FLAG_WRITE = 1 << 1,
@@ -2771,8 +2614,7 @@ enum MapFlag : uint32_t {
 - OK：映射Buffer数据成功。
 - 其他：映射Buffer数据失败。
 
-
-#### UnmapBuffer<a name="ZH-CN_TOPIC_0000002549826175"></a>
+#### 11.3.13 UnmapBuffer<a name="UnmapBuffer"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2788,7 +2630,6 @@ int32\_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
 |--|--|--|--|
 |buffer|输入|GpuEncoderBufferT &|需要解除数据映射的Buffer的指针。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：GpuEncoderErrorCode
@@ -2798,8 +2639,7 @@ int32\_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
 - OK：解除Buffer数据映射成功。
 - 其他：解除Buffer数据映射失败。
 
-
-#### RetriveBufferData<a name="ZH-CN_TOPIC_0000002518346302"></a>
+#### 11.3.14 RetriveBufferData<a name="RetriveBufferData"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2824,7 +2664,6 @@ int32\_t RetriveBufferData\(GpuEncoderBufferT &buffer, uint8\_t \*data, uint32\_
 |memLen|输入|uint32_t|用于接收Buffer数据的内存空间的最大长度。|
 |dataLen|输出|uint32_t &|实际拷贝数据的大小。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：GpuEncoderErrorCode
@@ -2834,8 +2673,7 @@ int32\_t RetriveBufferData\(GpuEncoderBufferT &buffer, uint8\_t \*data, uint32\_
 - OK：获取Buffer数据成功。
 - 其他：获取Buffer数据失败。
 
-
-#### Convert<a name="ZH-CN_TOPIC_0000002549706163"></a>
+#### 11.3.15 Convert<a name="Convert"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2852,7 +2690,6 @@ int32\_t Convert\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 
 |inBuffer|输入|GpuEncoderBufferT &|需要进行格式转换的输入Buffer。|
 |outBuffer|输出|GpuEncoderBufferT &|接收格式转换后数据的输出Buffer。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：GpuEncoderErrorCode
@@ -2862,8 +2699,7 @@ int32\_t Convert\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 
 - OK：转换Buffer格式成功。
 - 其他：转换Buffer格式失败。
 
-
-#### Encode<a name="ZH-CN_TOPIC_0000002549706155"></a>
+#### 11.3.16 Encode<a name="Encode"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2880,7 +2716,6 @@ int32\_t Encode\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 0
 |inBuffer|输入|GpuEncoderBufferT &|需要进行编码的输入Buffer。|
 |outBuffer|输出|GpuEncoderBufferT &|接收编码后数据的输出Buffer。|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：GpuEncoderErrorCode
@@ -2890,8 +2725,7 @@ int32\_t Encode\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 0
 - OK：编码成功。
 - 其他：编码失败。
 
-
-#### SetEncodeParam<a name="ZH-CN_TOPIC_0000002518346292"></a>
+#### 11.3.17 SetEncodeParam<a name="SetEncodeParam"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2908,10 +2742,9 @@ int32\_t SetEncodeParam\(EncodeParamT params\[\], uint32\_t num\) = 0
 |params|输入|EncodeParamT[]|要设置的编码参数的列表。|
 |num|输入|uint32_t|要设置编码参数的数量。|
 
-
 EncodeParamT的相关定义如下：
 
-```
+```c++
 enum EncodeParamIndex : uint32_t {
     ENCODE_PARAM_NONE,
     ENCODE_PARAM_RATE_CONTROL, //设置码控方式
@@ -2973,8 +2806,7 @@ using EncodeParamT = EncodeParamBase *;
 - ERR\_NEED\_RESET：需要调用Reset接口后编码参数才能生效。
 - 其他：设置编码参数失败。
 
-
-#### Reset<a name="ZH-CN_TOPIC_0000002549706175"></a>
+#### 11.3.18 Reset<a name="Reset"></a>
 
 重置编码器，部分编码参数设置需要在本接口调用后生效。
 
@@ -2995,8 +2827,7 @@ int32\_t Reset\(\) = 0
 - OK：重置编码器成功。
 - 其他：重置编码器失败。
 
-
-#### ResetImgSize<a name="ZH-CN_TOPIC_0000002549706143"></a>
+#### 11.3.19 ResetImgSize<a name="ZH-CN_TOPIC_0000002549706143"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3017,7 +2848,6 @@ int32\_t ResetImgSize\(uint32\_t width, uint32\_t height\) = 0
 |width|输入|uint32_t|要设置的图像宽度（单位为像素，必须为偶数）|
 |height|输入|uint32_t|要设置的图像高度（单位为像素，必须为偶数）|
 
-
 **返回值说明<a name="section7911548131510"></a>**
 
 数据类型：int32\_t
@@ -3027,18 +2857,15 @@ int32\_t ResetImgSize\(uint32\_t width, uint32\_t height\) = 0
 - 0：设置图像尺寸成功。
 - 其他：设置图像尺寸失败。
 
+### 11.4 Opus编解码接口（C&C++）<a name="ZH-CN_TOPIC_0000002518186360"></a>
 
-
-### Opus编解码接口（C&C++）<a name="ZH-CN_TOPIC_0000002518186360"></a>
-
-#### 接口说明<a name="ZH-CN_TOPIC_0000002549706123"></a>
+#### 11.4.1 接口说明<a name="ZH-CN_TOPIC_0000002549706123"></a>
 
 视频流音频播放和麦克风输入功能支持Opus格式码流输入和输出，该功能需要对应的Opus编解码库提供编解码能力支持，该库由二次开发者实现，并以动态链接库的形式提供。其动态库的名称为：libVmiOpus.so。
 
 该系列接口与开源软件[Opus 1.3.1](https://github.com/xiph/opus/tree/v1.3.1)版本类似，可以参考其API和数据接口定义。
 
-
-#### OpusEncoderCreateApi<a name="ZH-CN_TOPIC_0000002518346286"></a>
+#### 11.4.2 OpusEncoderCreateApi<a name="ZH-CN_TOPIC_0000002518346286"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3056,8 +2883,7 @@ OpusEncoder \*OpusEncoderCreateApi\(opus\_int32 Fs, int channels, int applicatio
 
 与Opus 1.3.1中opus\_encoder\_create接口一致，请参见Opus 1.3.1中定义。
 
-
-#### OpusEncodeApi<a name="ZH-CN_TOPIC_0000002549826177"></a>
+#### 11.4.3 OpusEncodeApi<a name="ZH-CN_TOPIC_0000002549826177"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3075,8 +2901,7 @@ opus\_int32 OpusEncodeApi\(OpusEncoder \*st, const opus\_int16 \*pcm, int frame\
 
 与Opus 1.3.1中opus\_encode接口一致，请参见Opus 1.3.1中定义。
 
-
-#### OpusEncoderCtlApi<a name="ZH-CN_TOPIC_0000002549706181"></a>
+#### 11.4.4 OpusEncoderCtlApi<a name="ZH-CN_TOPIC_0000002549706181"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3094,8 +2919,7 @@ int OpusEncoderCtlApi\(OpusEncoder \*st, int request, opus\_int32 par\)
 
 与Opus 1.3.1中opus\_encoder\_ctl接口一致，请参见Opus 1.3.1中定义。
 
-
-#### OpusEncoderDestroyApi<a name="ZH-CN_TOPIC_0000002549826133"></a>
+#### 11.4.5 OpusEncoderDestroyApi<a name="ZH-CN_TOPIC_0000002549826133"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3113,8 +2937,7 @@ void OpusEncoderDestroyApi\(OpusEncoder \*st\)
 
 与Opus 1.3.1中opus\_encoder\_destroy接口一致，请参见Opus 1.3.1中定义。
 
-
-#### OpusDecoderCreateApi<a name="ZH-CN_TOPIC_0000002549826127"></a>
+#### 11.4.6 OpusDecoderCreateApi<a name="ZH-CN_TOPIC_0000002549826127"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3132,8 +2955,7 @@ OpusDecoder \*OpusDecoderCreateApi\(opus\_int32 Fs, int channels, int \*error\)
 
 与Opus 1.3.1中opus\_decoder\_create接口一致，请参见Opus 1.3.1中定义。
 
-
-#### OpusDecodeApi<a name="ZH-CN_TOPIC_0000002549706157"></a>
+#### 11.4.7 OpusDecodeApi<a name="ZH-CN_TOPIC_0000002549706157"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3151,8 +2973,7 @@ int OpusDecodeApi\(OpusDecoder \*st, const unsigned char \*data, opus\_int32 len
 
 与Opus 1.3.1中opus\_decode接口一致，请参见Opus 1.3.1中定义。
 
-
-#### OpusDecoderCtlApi<a name="ZH-CN_TOPIC_0000002518346284"></a>
+#### 11.4.8 OpusDecoderCtlApi<a name="ZH-CN_TOPIC_0000002518346284"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3170,8 +2991,7 @@ int OpusDecoderCtlApi\(OpusDecoder \*st, int request, opus\_int32 par\)
 
 与Opus 1.3.1中opus\_decoder\_ctl接口一致，请参见Opus 1.3.1中定义。
 
-
-#### OpusDecoderDestroyApi<a name="ZH-CN_TOPIC_0000002549826131"></a>
+#### 11.4.9 OpusDecoderDestroyApi<a name="ZH-CN_TOPIC_0000002549826131"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3189,8 +3009,7 @@ void OpusDecoderDestroyApi\(OpusDecoder \*st\)
 
 与Opus 1.3.1中opus\_decoder\_destroy接口一致，请参见Opus 1.3.1中定义。
 
-
-#### OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549706133"></a>
+#### 11.4.10OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549706133"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -3207,7 +3026,3 @@ const char \*OpusStrerrorApi\(int error\)
 **返回值说明<a name="section7911548131510"></a>**
 
 与Opus 1.3.1中opus\_strerror接口一致，请参见Opus 1.3.1中定义。
-
-
-
-
