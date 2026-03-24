@@ -14,12 +14,12 @@
 
 |序号|软件|说明|获取地址|
 |--|--|--|--|
-|1|AOSP源码|版本：android-15.0.0_r17|获取链接|
-|2|Android NDK|版本：r25b|获取链接|
-|3|SDK platform|版本：33_r02|获取链接|
-|4|SDK platform tools|版本：r33.0.3|获取链接|
-|5|SDK build tools|版本：r33.0.1|获取链接|
-|6|BoostKit-boostcph-videoengine_*_15.zip|Android 15视频流引擎开发包|获取链接|
+|1|AOSP源码|版本：android-15.0.0_r17|[获取链接](https://android.googlesource.com/platform/manifest)|
+|2|Android NDK|版本：r25b|[获取链接](https://dl.google.com/android/repository/android-ndk-r25b-linux.zip)|
+|3|SDK platform|版本：33_r02|[获取链接](https://dl.google.com/android/repository/platform-33_r02.zip)|
+|4|SDK platform tools|版本：r33.0.3|[获取链接](https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip)|
+|5|SDK build tools|版本：r33.0.1|[获取链接](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
+|6|BoostKit-boostcph-videoengine_*_15.zip|Android 15视频流引擎开发包|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=%E8%A7%86%E9%A2%91%E6%B5%81%E5%BC%95%E6%93%8E#application-soft)|
 
 **软件包完整性校验<a name="section16873181764512"></a>**
 
@@ -56,7 +56,7 @@
 
 |设备型号|用途|服务器OS版本|
 |--|--|--|
-|x86_64服务器|服务端编译制作|Ubuntu 22.04 LTS推荐：ubuntu-22.04-live-server-amd64.iso|
+|x86_64服务器|服务端编译制作|Ubuntu 22.04 LTS推荐：[ubuntu-22.04-live-server-amd64.iso](https://old-releases.ubuntu.com/releases/22.04/ubuntu-22.04-live-server-amd64.iso)|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
