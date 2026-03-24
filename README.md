@@ -1,106 +1,185 @@
-# 项目介绍<a name="ZH-CN_TOPIC_0000002442154444"></a>
+# 视频流介绍<a name="ZH-CN_TOPIC_0000002518224780"></a>
 
-视频流引擎主要应用于云手机，基于视频流引擎技术实现的云手机方案也称为视频流云手机。分为端侧和云侧两个部分：云侧运行于服务器上；端侧一般为云手机APK，可以被安装在用户的Android手机上，用于和云侧进行交互，进而对Kbox容器进行正常的操作。
+## 项目简介<a name="ZH-CN_TOPIC_0000002550235025"></a>
 
-# 版本说明<a name="ZH-CN_TOPIC_0000002442154440"></a>
+### 简介<a name="ZH-CN_TOPIC_0000002518384706"></a>
 
-<a name="table740710612324"></a>
-<table><thead align="left"><tr id="row144075603214"><th class="cellrowborder" valign="top" width="49.96%" id="mcps1.1.3.1.1"><p id="p114078693216"><a name="p114078693216"></a><a name="p114078693216"></a>项目</p>
-</th>
-<th class="cellrowborder" valign="top" width="50.03999999999999%" id="mcps1.1.3.1.2"><p id="p4238382489"><a name="p4238382489"></a><a name="p4238382489"></a>版本</p>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr id="row44089619323"><td class="cellrowborder" valign="top" width="49.96%" headers="mcps1.1.3.1.1 "><p id="p64089617323"><a name="p64089617323"></a><a name="p64089617323"></a><span>Android</span></p>
-</td>
-<td class="cellrowborder" valign="top" width="50.03999999999999%" headers="mcps1.1.3.1.2 "><p id="p540820673214"><a name="p540820673214"></a><a name="p540820673214"></a>11</p>
-</td>
-</tr>
-</tbody>
-</table>
+视频流引擎主要应用于云手机，基于视频流引擎技术实现的云手机方案也称为视频流云手机。本文介绍了视频流引擎的基本概念，提供视频流引擎环境部署和使用操作指导。
 
-# 环境部署<a name="ZH-CN_TOPIC_0000002442314316"></a>
+云手机是基于ARM服务器虚拟出的带有AOSP （Android Open Source Project）系统的虚拟手机服务。简单来说，云手机=ARM服务器+Android OS。您可以远程实时控制云手机，实现安卓APP的云端运行；也可以基于云手机的基础算力，高效搭建应用，如云游戏、移动办公、直播互娱等场景。
+
+端云协同引擎顾名思义可以分为端侧和云侧两个部分：云侧运行于服务器上；端侧一般为云手机APK，可以被安装在用户的Android手机上，用于和云侧进行交互，进而对Kbox容器进行正常的操作。
+
+端云协同引擎包括视频流引擎和指令流引擎，本文主要描述视频流引擎。
+
+视频流引擎主要应用于云手机，基于视频流引擎技术实现的云手机方案也称为视频流云手机。本文介绍了视频流引擎的基本概念，提供视频流引擎环境部署和使用操作指导。
+### 软件架构<a name="ZH-CN_TOPIC_0000002518224792"></a>
+
+本节介绍视频流云手机的上下文逻辑结构与所包含的模块含义及作用。
+
+**图 1** 视频流云手机架构图<a name="fig0420851397"></a><a id="视频流云手机架构图"></a>
+![](figures/视频流云手机架构图.png "视频流云手机架构图")
+
+视频流引擎包括服务端和客户端两个部分：服务端提供图像获取、图像数据编码等功能；客户端提供视频数据解码播放功能。在部分场景下还包含用户触控的获取和注入、音频数据的获取和播放等功能。
+
+|模块名称|功能描述|
+|--|--|
+|抓图模块|获取图像数据，输出格式为RGBA显存地址或者RGBA内存地址。|
+|编码模块|将YUV数据通过编码模块编码为H.264/H.265码流，并通过视频流引擎对外API发送。|
+|GPU加速模块|将抓图模块获取的RGBA数据，利用GPU能力转换为YUV数据或视频码流。|
+|音频采集|获取音频数据，输出OPUS或PCM格式音频数据，并通过视频流引擎对外API发送。|
+|麦克风注入|从视频流引擎对外API获取OPUS或PCM数据，并注入Android系统。|
+|触控分发|向服务端Android云手机注入触控数据。|
+|视频流引擎对外API|视频流引擎服务端的对外API接口。|
+
+
+本节介绍视频流云手机的上下文逻辑结构与所包含的模块含义及作用。
+### 规格<a name="ZH-CN_TOPIC_0000002549864541"></a>
+
+鲲鹏服务器上视频流云手机规格，如[**表 1** 视频流云手机规格](#视频流云手机规格)所示。
+
+**表 1** 视频流云手机规格<a id="视频流云手机规格"></a>
+
+|条目|配置|
+|--|--|
+|场景|中度游戏应用（王者荣耀登录页面）硬编|
+|绑核策略|容器绑NUMA，每NUMA空前两核。|
+|内存|3GB|
+|存储|16GB|
+|分辨率/帧率|720*1280/30fps|
+|手机开数|120路|
+
+
+>![](public_sys-resources/icon-note.gif) **说明：** 
+>内存和硬盘以满足整机规格为准，可灵活调配。
 
 
 
-
-
-## 编译机推荐配置<a name="ZH-CN_TOPIC_0000002442368342"></a>
-
-除执行机外准备一个编译机，用于编译视频流容器启动所需要的包文件。
-
-系统版本：Ubuntu 22.04.3 LTS
-
-系统架构：x86\_64
-
-## 网络要求<a name="ZH-CN_TOPIC_0000002475768317"></a>
-
-确保服务器已连接网络，以便顺利完成Gradle编译和其他开源依赖包的下载。
-
-## 安装依赖库<a name="ZH-CN_TOPIC_0000002442528242"></a>
+## 目录结构<a name="ZH-CN_TOPIC_0000002518595280"></a>
 
 ```
-sudo apt install -y git
-sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg
-sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev
-sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev
-sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev
-sudo apt install -y libxml2-utils xsltproc unzip
-sudo apt install -y libx11-dev libreadline-dev
-sudo apt install -y libncurses5 libncurses5-dev
-sudo apt install -y tofrodos python-markdown-doc zlib1g-dev
-sudo apt install -y dpkg-dev libsdl1.2-dev
-sudo apt install -y m4 bc python3 python3-mako gettext
-sudo apt install -y expect
+├── docs                                          # 项目文档目录
+│   └── zh                                       # 中文文档目录
+│       ├── figures                              # 中文文档图片资源目录
+│       ├── quick_start.md                       # 快速入门
+│       ├── release_notes.md                     # Kbox云手机版本发布说明
+│       ├── installation_guide.md                # Kbox云手机安装指导
+│       ├── user_guide.md                        # Kbox云手机使用指导
+│       ├── best_practices.md                    # Kbox云手机场景化应用最佳实践
+│       ├── api_reference.md                     # Kbox云手机接口参考
+│       ├── design_guide.md                      # Kbox云手机设计指南
+│       ├── faq.md                               # Kbox云手机安装使用常见问题3
+├── CloudPhoneClient                              # 视频流客户端apk编译目录
+│   ├── AudioPlay                                # 音频模块
+│   ├── TouchCapture                             # 触控模块 
+│   ├── VideoDecoder                             # 客户端解码器控制与适配层
+│   └── VideoEngine 
+│       ├── CloudPhoneUI                         # 客户端app的UI部分 
+│       └── NdkDecoder                           # 安卓原生的ndk解码器
+├── CloudPhoneService                             # 视频流服务端编译目录 
+│   ├── VideoEngine 
+│   │   ├── GpuEncTurbo                         # 集成适配了GPU编码模块，包括渲染流化一体和GPU编码方案。（硬件解码模块在aosp OMX层由厂商实现） 
+│   │   └── Media                               # 软编和硬件编码器（编码卡）适配层。适
+│   ├── VideoScripts                             # 存放用于创建视频流服务端镜像的脚本 
+│   └── VmiAgent                                 # 视频流服务端程序主逻辑，视频流连接后持续运行，控制服务端各模块的启动和停止，网络模块的初始化，以及各个模块的数据的接收和发放>
+├── Common                                        # 通用文件目录
+│   ├── Communication                            # 控制客户端和服务端的数据交流
+│   │   ├── Connection                          # 客户端和服务端对VmiSocket的实现
+│   │   ├── Heartbeat                           # 心跳模块，每隔一段时间（当前是100秒）向对方发送一次心跳数据，并等待对方回复，通过等待回复时间判断网络连接速度是否过慢或断开，若连接过慢或断开，则向视频流引擎发送信号主动停止连接 
+│   │   ├── MsgFragment                         # 报文整合和发送
+│   │   ├── NetComm                             # 网络通信模块
+│   │   ├── PacketHandle                        # 数据包处理器, 处理包队列和重组功能
+│   │   ├── PacketManager                       # 数据包管理器，创建数据包队列，用于保存重组后的包，等待进一步处理 
+│   │   ├── Socket                              # 将socket封装为VmiSocket供引擎代码使用
+│   │   └── StreamParse                         # 报文数据解封装
+│   ├── Connection                               # 基于TCP协议实现的通信库
+│   ├── Log                                      # 日志模块
+│   └── Utils                                    # 其他通用功能，包括统一处理引擎的上报事件、数据包队列实现、版本校验等
+├── open_source_download                          # 存放下载的开源软件压缩包
+├── scripts                                       # 编译脚本存放目录
+└── unpack_open_source                            # 开源软件解压目录
+├── hantro                                        # 瀚博GPU编码模块
+├── libdrm                                        # 提供与GPU交互的内核子系统
+├── libva                                         # 为视频处理提供硬件加速功能
+├── openH264                                      # 支持H.264视频格式的编解码
+└── opus                                          # 音频编解码软件
 ```
 
-## 执行脚本<a name="ZH-CN_TOPIC_0000002475728121"></a>
 
-1.  git拉取代码，安装编译环境。
+## 版本说明<a name="ZH-CN_TOPIC_0000002518755186"></a>
 
-    ```
-    ./scripts/auto_install_tools.sh ${安装目录} 
-    source ~/.bashrc
-    ```
+视频流引擎包含Android11和Android15两个分支版本，本节主要介绍两个版本差异和特性变更说明。
 
-    其中，安装目录可以自己指定，若不输入\{安装目录\}，则脚本使用默认目录\~/NativeCompileToolsDir
+视频流是基于AOSP开发的，目前适配了AOSP11和AOSP15，由于Android版本的差异，视频流存在两套代码用于支持不同的Android代码，分别是AOSP11和AOSP15两个代码分支。
 
-    此脚本执行成功后，之后不需要再重复执行。
+**表 1** Kbox代码分支差异<a id="Kbox代码分支差异"></a>
 
-2.  编译客户端。
+|代码分支|AOSP11|AOSP15|
+|--|--|--|
+|支持的内核版本|5.10|6.6|
+|支持的docker版本|18.0|24.0|
+|对应的AOSP版本|11|15|
 
-    ```
-    ./build_video.sh video_client
-    ```
 
-    命令执行成功后，将在output目录生成CloudPhoneApk.tar.gz和已解压好的CloudPhone.apk
+**变更说明<a name="section4408930144513"></a>**
 
-3.  编译服务端。
+每个发布版本特性变更详细信息，请参见《版本说明书》。
 
-    ```
-    ./build_video.sh video_server
-    ```
 
-    命令执行成功后，将在output目录生成DemoVideoEngine.tar.gz
+## 环境部署<a name="ZH-CN_TOPIC_0000002550275031"></a>
 
-# 快速上手<a name="ZH-CN_TOPIC_0000002475594421"></a>
+视频流云手机支持的硬件环境和操作系统，以及环境部署所需的软件包请参见《部署指南》中的“环境要求”。
 
-根据[环境部署](环境部署.md)章节获取到CloudPhone.apk、CloudPhoneApk.tar.gz和DemoVideoEngine.tar.gz文件。之后请依照[特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0002.html)使用云手机。
+视频流云手机支持裸机和虚拟机，详见的环境部署请参见《部署指南》。
 
-# 贡献指南<a name="ZH-CN_TOPIC_0000002442314312"></a>
 
-如果使用过程中有任何问题，或者需要反馈特性需求和bug报告，可以提交issue联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。
+## 学习文档<a name="ZH-CN_TOPIC_0000002550235029"></a>
 
-# 免责声明<a name="ZH-CN_TOPIC_0000002475674237"></a>
+|学习资源类别|学习资源名称|学习资源简介|
+|--|--|--|
+|文档|快速入门|提供视频流云手机启动和操作的快速入门指导。|
+|文档|版本说明书|提供视频流云手机每个发布版本的基础信息和特性更新信息。|
+|文档|部署指南|提供视频流云手机裸机和虚拟机两种环境部署的详细指导。|
+|文档|FAQ|提供视频流安装、使用过程的常见问题和解决方法。|
 
-此代码仓仅包含功能演示与开发示例代码，旨在展示特定功能的使用方式与集成方法，不用于生产环境。所有代码仅为技术参考，不继承或承诺任何上下游软件的安全设计与防护机制。本仓库中的示例代码可能存在安全缺陷、漏洞或不完整实现，鲲鹏计算社区不对代码的安全性、稳定性及合规性承担任何责任。使用者应自行评估风险，并根据实际场景进行安全加固。任何因使用本仓库代码所引发的安全问题，均由使用者自行承担。请勿将本仓库代码直接用于生产系统，建议持续关注上游开源项目的安全公告与版本更新。
 
-# 许可证书<a name="ZH-CN_TOPIC_0000002475594429"></a>
+## 免责声明<a name="ZH-CN_TOPIC_0000002550275033"></a>
 
-本项目采用Apache License 2.0许可证。详见[LICENSE](https://gitee.com/kunpengcompute/vmi/blob/CloudPhone/LICENSE)文件。
+**致本项目使用者**
 
-# 参考文档<a name="ZH-CN_TOPIC_0000002442368346"></a>
+- 本项目仅供调试和开发之用，使用者需自行承担使用风险，并理解以下内容：
+    - 数据处理及删除：用户在使用本工具过程中产生的数据属于用户责任范畴。建议用户在使用完毕后及时删除相关数据，以防信息泄露。
+    - 数据保密与传播：使用者了解并同意不得将通过本工具产生的数据随意外发或传播。对于由此产生的信息泄露、数据泄露或其他不良后果，本工具及其开发者概不负责。
+    - 用户输入安全性：用户需自行保证输入的命令行的安全性，并承担因输入不当而导致的任何安全风险或损失。对于输入命令行不当所导致的问题，本工具及其开发者概不负责。
 
-特性指南（[https://support.huawei.com/enterprise/zh/doc/EDOC1100494962/f2f40b4c?idPath=23710424|251364417|9856629|253662285](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0002.html)）
+- 免责声明范围：本免责声明适用于所有使用本工具的个人或实体。使用本工具即表示您同意并接受本声明的内容，并愿意承担因使用该功能而产生的风险和责任，如有异议请停止使用本工具。
+- 在使用本工具之前，请**谨慎阅读并理解以上免责声明的内容**。对于使用本工具所产生的任何问题或疑问，请及时联系开发者。
+
+**致数据所有者**
+
+如果您不希望您的模型或数据集等信息在本项目中被提及，或希望更新本项目有关的描述，请在GitCode提交issue，我们将根据您的issue要求删除或更新您相关描述。衷心感谢您对本项目的理解和贡献。
+
+
+## License<a name="ZH-CN_TOPIC_0000002550235031"></a>
+
+本项目采用Apache License 2.0许可证。详见[LICENSE](LICENSE)文件
+本项目的文档适用CC-BY 4.0许可证，具体参见文件[LICENSE](docs/LICENSE)文件
+## 贡献声明<a name="ZH-CN_TOPIC_0000002518595284"></a>
+
+欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](zh-cn_topic_0000002535534673.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
+
+
+## 建议与交流<a name="ZH-CN_TOPIC_0000002518755190"></a>
+
+欢迎大家为社区做贡献。如果有任何疑问或建议，请提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)，我们会尽快回复。感谢您的支持。
+
+
+## 致谢<a name="ZH-CN_TOPIC_0000002550275035"></a>
+
+Kbox由华为公司的下列部门联合贡献：
+
+- 鲲鹏计算Boostkit开发部
+
+感谢来自社区的每一个PR，欢迎贡献Kbox！
+
 
