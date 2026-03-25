@@ -19,7 +19,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |内存|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR5 DIMM内存-64GB-4800MT/s|
 |硬盘|系统盘：2*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型数据盘：2*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|
 |网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-2*25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|
-|Riser卡|RISER1与RISER2模组相同，均为：PCIe X16 + PCIe X8|RISER1与RISER2模组相同，均为：PCIe X8*3|前置Riser（x8*2）*2+后置Riser（x8*2）*2+Riser3（x8*2）*1|
+|Riser卡|RISER1与RISER2模组相同，均为：PCIe X16 + PCIe X8|RISER1与RISER2模组相同，均为：PCIe X8*3|前置Riser（x8*2）*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）*1|
 |编码卡|1 * NETINT Quadra T2A（X8）|无|无|
 |GPU|2*AMD W6800|4*道客DC 1000|8*道客DC 1000|
 |操作系统|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|
@@ -29,8 +29,6 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 >
 >- 选择鲲鹏服务器兼容的Mellanox网卡，通过[鲲鹏计算兼容性查询工具](https://info.support.huawei.com/computing/tools/compatibility-query/enterprise/kunpeng-computing/component-compatibility)可查询具体型号网卡。
 >- NETINT驱动针对Android15系统仅支持Quadra卡。
-
-部署Kbox云手机容器环境前请确保您的环境满足已验证的硬件环境要求。
 
 #### 1.1.2 软件环境<a name="ZH-CN_TOPIC_0000002549866439"></a>
 
@@ -48,15 +46,15 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 |序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|
 |--|--|--|--|--|--|--|
-|1|BoostKit-boostcph-videoengine_*_15.zip|视频流引擎二进制包。|获取链接|√|√|√|
+|1|BoostKit-boostcph-videoengine_*_15.zip|视频流引擎二进制包。|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#base-soft)|√|√|√|
 |2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|请联系华为技术支持获取。|√|√|√|
 |3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的sha256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|
 |4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|请联系华为技术支持获取。|√|√|√|
 |5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的sha256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|
 |6|VideoClientEmulator.tar.gz|视频流云手机压测工具。|请联系华为技术支持获取。|√|√|√|
-|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15。|获取链接下载密码:test123|√|-|-|
-|8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|获取链接下载密码:test123|√|-|-|
-|9|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|获取链接|√|√|√|
+|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15。|[获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123|√|-|-|
+|8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|[获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123|√|-|-|
+|9|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -76,8 +74,6 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 >使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
 >使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议 2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
 
-在部署视频流云手机环境前，请参见本节提供的渠道获取相应的软件包并对华为提供的软件包进行完整性校验，以便进行后续的部署步骤。
-
 ### 1.2 部署云手机<a name="ZH-CN_TOPIC_0000002549746425"></a>
 
 #### 1.2.1 环境配置<a name="ZH-CN_TOPIC_0000002518386582"></a>
@@ -87,8 +83,6 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
 
 具体配置步骤请参见《[Kbox云手机容器 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0167.html)》中“软件部署”的“配置BIOS”章节内容。
-
-环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
 
 ##### 1.2.1.2 （硬件配置方案一，可选）升级NVMe固件版本<a name="ZH-CN_TOPIC_0000002518226644"></a>
 
@@ -135,8 +129,6 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
     reboot
     ```
 
-该章节仅在使用硬件配置方案一，并且需要使能编码卡硬件解码功能时才需要执行。若不需要使能硬件解码则跳过该章节。
-
 ##### 1.2.1.3 （硬件配置方案一）配置GPU工作模式<a name="ZH-CN_TOPIC_0000002518226676"></a>
 
 使用硬件配置方案一时将GPU卡工作模式设置为高性能模式，使GPU运行在最高频率，保持GPU性能最优。该操作每次系统重启都需重新配置一次。
@@ -146,8 +138,6 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 ```shell
 find /sys -name power_dpm_force_performance_level | xargs -I {} sh -c "echo high > '{}'"
 ```
-
-使用硬件配置方案一时将GPU卡工作模式设置为高性能模式，使GPU运行在最高频率，保持GPU性能最优。该操作每次系统重启都需重新配置一次。
 
 ##### 1.2.1.4 部署Kbox容器基础环境<a name="ZH-CN_TOPIC_0000002549746421" id="部署Kbox容器基础环境"></a>
 
@@ -165,10 +155,10 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 |软件名|版本号|软件描述|获取方式|
 |--|--|--|--|
-|Containerd|v1.7.14|Containerd是一个容器运行时。|Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：获取链接|
-|runc|v1.1.12|runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。|获取链接|
-|CNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|获取链接|
-|nerdctl|v1.7.5|nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。|获取链接|
+|Containerd|v1.7.14|Containerd是一个容器运行时。|Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service)|
+|runc|v1.1.12|runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。|[获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64)|
+|/rCNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|[获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
+|nerdctl|v1.7.5|nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。|[获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz)|
 
 **部署Containerd环境<a name="section343716111874"></a>**
 
@@ -253,8 +243,6 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)\~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
 
-视频流云手机除支持以基于Docker的容器运行时启动外，还支持以Containerd容器运行时启动。若选择以Containerd运行时运行视频流云手机，可参考本章节进行Containerd相关软件包的部署。
-
 #### 1.2.2 （硬件配置方案二、三）安装显卡驱动<a name="ZH-CN_TOPIC_0000002549866411"></a>
 
 使用硬件配置方案二、三每次服务器重启后，都需要重新执行安装显卡驱动步骤。
@@ -323,8 +311,6 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 > rmmod va_pci
 > ```
 
-使用硬件配置方案二、三每次服务器重启后，都需要重新执行安装显卡驱动步骤。
-
 #### 1.2.3 制作镜像<a name="ZH-CN_TOPIC_0000002549866429" id="制作镜像"></a>
 
 ##### 1.2.3.1 制作Kbox镜像<a name="ZH-CN_TOPIC_0000002549866417"></a>
@@ -388,8 +374,6 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     kbox          origin    d1f5cfd2e722    6 seconds ago    2.09GB
     ```
-
-制作视频流云手机镜像前需要根据本章节内容完成Kbox镜像的制作。
 
 ##### 1.2.3.2 制作视频流云手机镜像<a name="ZH-CN_TOPIC_0000002518386578"></a>
 
@@ -461,8 +445,6 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     video         latest    40e5f42c17d9    6 seconds ago    2.11GB
     ```
-
-获取视频流客户端tar包组件、视频流服务端tar包组件、视频流引擎二进制软件包和视频流NETINT编码卡tar包组件进行视频流云手机镜像的制作。
 
 #### 1.2.4 设置cfct\_config配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002518386584"></a>
 
@@ -615,8 +597,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 >- 宿主机上多容器共享一个着色器缓存路径，可以先启动一路云手机预收集应用尽可能完整的着色器，其他云手机通过将配置文件对应的应用设置为只读模式来使能ShaderCache功能，此时性能最佳。
 >- ShaderCache功能没有缓存淘汰机制，若是缓存文件系统存储已满或者游戏版本更新，为了避免着色器和二进制文件不能对应，请清理整个文件系统的缓存。
 
-通过cfct\_config文件配置参数可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
-
 #### 1.2.5 设置cfct\_config配置文件（配置方案二）<a name="ZH-CN_TOPIC_0000002518386592"></a>
 
 通过设置cfct\_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
@@ -673,8 +653,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 4. 如果需要使能图形加速层，请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
 
-通过设置cfct\_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
-
 #### 1.2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518386594" id="制作基础数据卷"></a>
 
 确认并根据需要调整默认的镜像名称和数据卷存放目录。删除或备份现有数据卷，解压并设置启动脚本权限，使用脚本启动云手机并预装应用，最后删除初始容器。
@@ -722,8 +700,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ./cfct_video delete ${index}
     ```
 
-确认并根据需要调整默认的镜像名称和数据卷存放目录。删除或备份现有数据卷，解压并设置启动脚本权限，使用脚本启动云手机并预装应用，最后删除初始容器。
-
 ### 1.3 K8s集群下部署视频流云手机（配置方案二）<a name="ZH-CN_TOPIC_0000002518226646"></a>
 
 #### 1.3.1 环境准备<a name="ZH-CN_TOPIC_0000002549866425"></a>
@@ -743,8 +719,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 >
 >- K8s是容器编排平台，其工作节点需实际运行云手机业务，在部署K8s前或重启节点后，需确保工作节点完成视频流云手机的环境部署，完成环境部署的校验方式可启动一个视频流云手机验证。
 >- K8s集群环境部署和部署镜像涉及从Docker镜像仓拉取镜像的操作，需确保部署的服务器网络环境能够从Docker镜像仓拉取镜像。
-
-视频流云手机支持使用Containerd启动，使用K8s集群管理。在K8s集群下部署视频流云手机时需准备至少2台服务器，1台作为master节点，1台或者多台作为工作节点。
 
 #### 1.3.2 搭建k8s集群<a name="ZH-CN_TOPIC_0000002518386560"></a>
 
@@ -850,8 +824,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     echo "net.ipv4.ip_forward=1" >> /etc/sysctl.d/k8s.conf
     sysctl -p /etc/sysctl.d/k8s.conf
     ```
-
-在所有master和工作节点下完成K8s集群软件安装、Containerd配置以及其他相关操作。
 
 ##### 1.3.2.2 master节点操作<a name="ZH-CN_TOPIC_0000002549746441"></a>
 
@@ -967,8 +939,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >若查看当前节点的状态（STATUS）列是NotReady，及查看kubelet服务状态（systemctl status kubelet）时有明显报错（Network plugin returns error: cni plugin not initialized），此情况建议将集群重置并将服务器重启后重新初始化。
-
-在master节点上初始化集群。
 
 ##### 1.3.2.3 工作节点操作<a name="ZH-CN_TOPIC_0000002549746443" id="工作节点操作"></a>
 
@@ -1189,8 +1159,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
         >    make uninstall-service
         >    ```
 
-将工作节点加入到集群中。
-
 #### 1.3.3 部署镜像<a name="ZH-CN_TOPIC_0000002549746431"></a>
 
 ##### 1.3.3.1 部署道客设备插件镜像<a name="ZH-CN_TOPIC_0000002518386564" id="部署道客设备插件镜像"></a>
@@ -1206,8 +1174,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >道客设备插件版本支持v0.0.5版本及以上。
-
-在所有工作节点完成部署道客设备插件镜像的操作。
 
 ##### 1.3.3.2 部署设备插件镜像<a name="ZH-CN_TOPIC_0000002518226672"></a>
 
@@ -1258,8 +1224,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ctr -n k8s.io images import k8s-hostdev-plugin.tar
     ```
 
-在所有工作节点完成部署设备插件镜像的操作。
-
 ##### 1.3.3.3 部署视频流镜像<a name="ZH-CN_TOPIC_0000002549746415"></a>
 
 选择一台工作节点机器进行镜像制作，然后在所有工作节点导入并完成部署视频流镜像操作。
@@ -1304,8 +1268,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ```
 
     **crictl images**命令可查看镜像名称和tag，例如：镜像名为docker.io/library/video:version。
-
-选择一台工作节点机器进行镜像制作，然后在所有工作节点导入并完成部署视频流镜像操作。
 
 ## 2 虚拟机环境部署<a name="ZH-CN_TOPIC_0000002550093497"></a>
 
@@ -1354,14 +1316,14 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 |项目|版本|下载地址|
 |--|--|--|
-|openEuler|24.03 LTS SP1|获取链接|
-|Kernel|基于6.6.0-72.0.0|获取链接|
+|openEuler|24.03 LTS SP1|[获取链接](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler%2024.03%20LTS%20SP1)|
+|Kernel|基于6.6.0-72.0.0| [获取链接](https://gitee.com/openeuler/kernel/repository/archive/6.6.0-72.0.0.zip) |
 
 **表 5** 虚拟机操作系统要求<a id="虚拟机操作系统要求"></a>
 
 |项目|版本|下载地址|
 |--|--|--|
-|openEuler|24.03 LTS SP1|获取链接|
+|openEuler|24.03 LTS SP1|[[获取链接](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler 24.03 LTS SP1)](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler%2024.03%20LTS%20SP1)|
 |Kernel|基于6.6.0-72.0.0|请参见《Kbox云手机容器 特性指南（Android 15）》“软件部署”中的“编译内核”章节进行编译。|
 
 **软件要求<a name="zh-cn_topic_0000002518345410_section1543425619147" id="软件要求"></a>**
@@ -1372,9 +1334,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 |软件包|文件|文件路径|获取地址|
 |--|--|--|--|
-|Kbox-AOSP15|虚拟机内核补丁|Kbox-AOSP15/deploy_scripts/vm_deploy/patchForKernel/general.patch|获取链接|
-
-建议在鲲鹏920 7280Z处理器上部署视频流引擎的虚拟机环境，部署前，请确保您的硬件环境满足要求。
+|Kbox-AOSP15|虚拟机内核补丁|Kbox-AOSP15/deploy_scripts/vm_deploy/patchForKernel/general.patch|[获取链接](https://gitcode.com/boostkit/Kbox/tree/AOSP15)|
 
 ### 2.2 宿主机环境配置<a name="ZH-CN_TOPIC_0000002518493742"></a>
 
@@ -1392,8 +1352,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 |CPU超线程|Advanced > Power And Performance Configuration > CPU PM Control > SMT2|Enabled|
 |性能策略|Advanced > Power And Performance Configuration > Power Policy|Performance|
 |GICv4.1|Advanced >Processor Configuration >GIC Version|4.1|
-
-通过在宿主机中修改BIOS相关配置选项，使宿主机达到部署虚拟机环境的最优条件。
 
 #### 2.2.2 修改内核模块<a name="ZH-CN_TOPIC_0000002550093499"></a>
 
@@ -1497,8 +1455,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     uname -r
     ```
 
-使用道客DC 1000硬件环境时，在虚拟机内安装驱动需要对宿主机内核做适配，请提前获取内核源码。
-
 #### 2.2.3 安装虚拟机相关依赖<a name="ZH-CN_TOPIC_0000002518493744"></a>
 
 在宿主机中安装虚拟机环境所需的依赖。
@@ -1533,8 +1489,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >若后续**virt-manager**指令报错则需要重新打开一个ssh界面。
 
-在宿主机中安装虚拟机环境所需的依赖。
-
 #### 2.2.4 查询GPU卡PCIe节点信息<a name="ZH-CN_TOPIC_0000002549973493"></a>
 
 鲲鹏920 7280Z处理器有4个NUMA，总共会创建4个虚拟机，虚拟机所使用的资源分别对应宿主机的4个NUMA。因每个NUMA上都会有两张GPU卡，为避免产生跨NUMA访问而造成性能损失，在创建虚拟机前，需要确认每个虚拟机使用GPU卡的PCIe节点，用于添加设备。
@@ -1554,8 +1508,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ```
 
     ![](figures/zh-cn_image_0000002518185706.png)
-
-鲲鹏920 7280Z处理器有4个NUMA，总共会创建4个虚拟机，虚拟机所使用的资源分别对应宿主机的4个NUMA。因每个NUMA上都会有两张GPU卡，为避免产生跨NUMA访问而造成性能损失，在创建虚拟机前，需要确认每个虚拟机使用GPU卡的PCIe节点，用于添加设备。
 
 #### 2.2.5 配置宿主机网络<a name="ZH-CN_TOPIC_0000002550093501" id="配置宿主机网络"></a>
 
@@ -1660,8 +1612,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     出现如下配置说明网桥创建成功。
 
     ![](figures/zh-cn_image_0000002518345676.png)
-
-创建宿主机网络设备，支撑后续虚拟机网络配置。
 
 ### 2.3 虚拟机配置<a name="ZH-CN_TOPIC_0000002518653642"></a>
 
@@ -1788,8 +1738,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     passwd root
     ```
 
-总共需要创建4个虚拟机，需要顺序操作执行4次该章节的操作步骤。
-
 #### 2.3.2 配置虚拟机网络<a name="ZH-CN_TOPIC_0000002550093503"></a>
 
 ##### 2.3.2.1 配置虚拟机网卡配置文件<a name="ZH-CN_TOPIC_0000002518653644"></a>
@@ -1871,8 +1819,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >至此已经实现了虚拟机在服务器局域网内的数据通信，如果希望在外网访问局域网内的该虚拟机，请联系网络管理员按照局域网内服务器的相关配置对虚拟机进行配置即可。
-
-通过配置虚拟机内部的网卡文件以启用网络。若采用SR-IOV方案，则需依照本章步骤手动生成该配置文件。
 
 ### 2.4 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002550093505"></a>
 
@@ -1980,5 +1926,3 @@ cfct\_config配置文件配置项和配置方法如下所示。
 4. 请参见《视频流引擎 特性指南》的“启动视频流云手机”章节调用cfct\_video脚本即可成功在虚拟机启动视频流容器。
 
     ![](figures/zh-cn_image_0000002518185616.png)
-
-在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改cfct\_video和cfct\_config配置文件，以便正确设置视频流的启动与运行参数。
