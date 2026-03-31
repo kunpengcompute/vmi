@@ -14,12 +14,12 @@
 
 |序号|软件|说明|获取地址|
 |--|--|--|--|
-|1|AOSP源码|版本：android-11.0.0_r48|获取链接|
-|2|Android NDK|版本：r25b|获取链接|
-|3|SDK platform|版本：33_r02|获取链接|
-|4|SDK platform tools|版本：r33.0.3|获取链接|
-|5|SDK build tools|版本：r33.0.1|获取链接|
-|6|BoostKit-boostcph-videoengine_*_11.zip|Android 11视频流引擎开发包|获取链接|
+|1|AOSP源码|版本：android-11.0.0_r48|[获取链接](https://android.googlesource.com/platform/manifest)|
+|2|Android NDK|版本：r25b|[获取链接](https://dl.google.com/android/repository/android-ndk-r25b-linux.zip)|
+|3|SDK platform|版本：33_r02|[获取链接](https://dl.google.com/android/repository/platform-33_r02.zip)|
+|4|SDK platform tools|版本：r33.0.3|[获取链接](https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip)|
+|5|SDK build tools|版本：r33.0.1|[获取链接](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
+|6|BoostKit-boostcph-videoengine_*_11.zip|Android 11视频流引擎开发包|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=%E8%A7%86%E9%A2%91%E6%B5%81%E5%BC%95%E6%93%8E#application-soft)|
 
 **软件包完整性校验<a name="section16873181764512"></a>**
 
@@ -56,7 +56,7 @@
 
 |设备型号|用途|服务器OS版本|
 |--|--|--|
-|x86_64服务器|服务端编译制作|Ubuntu 22.04 LTS推荐：ubuntu-22.04-live-server-amd64.iso|
+|x86_64服务器|服务端编译制作|Ubuntu 22.04 LTS推荐：[ubuntu-22.04-live-server-amd64.iso](https://old-releases.ubuntu.com/releases/22.04/ubuntu-22.04-live-server-amd64.iso)|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -1358,7 +1358,7 @@ InjectData(module, cmd, data, sizeof(VmiGpsLocationData));
 
 视频编码模块提供视频流服务端引擎正常运行所需要调用的外部视频编码接口，由二次开发者实现，并以动态链接库的形式提供。其动态链接库的名称为：libVideoCodec.so。
 
-开发者继承VideoEncoder类并按照本章节中的描述实现对应接口，同时提供[CreateVideoEncoder](#CreateVideoEncoder)、[DestroyVideoEncoder](#DestroyVideoEncoder)接口用于创建具体的实现类实例。
+开发者继承VideoEncoder类并按照本章节中的描述实现对应接口，同时提供[11.1.2-CreateVideoEncoder](#CreateVideoEncoder)、[11.1.3-DestroyVideoEncoder](#DestroyVideoEncoder)接口用于创建具体的实现类实例。
 
 其中，接口调用的返回码定义如下：
 
@@ -1447,17 +1447,17 @@ EncoderRetCode DestroyVideoEncoder\(int32\_t fd\)
 
 **VideoEncoder接口类涉及接口<a name="section97621346152119"></a>**
 
-VideoEncoder接口类涉及接口详细描述请参见[Config](#Config)、[InitEncoder](#InitEncoder)、[StartEncoder](#StartEncoder)、[SetParams](#SetParams)、[EncodeOneFrame](#EncodeOneFrame)、[StopEncoder](#StopEncoder)、[DestroyEncoder](#DestroyEncoder)、[ResetEncoder](#ResetEncoder)。
+VideoEncoder接口类涉及接口详细描述请参见[11.1.4-Config](#Config)、[11.1.5-InitEncoder](#InitEncoder)、[11.1.6-StartEncoder](#StartEncoder)、[11.1.7-SetParams](#SetParams)、[11.1.8-EncodeOneFrame](#EncodeOneFrame)、[11.1.9-StopEncoder](#StopEncoder)、[11.1.10-DestroyEncoder](#DestroyEncoder)、[11.1.11-ResetEncoder](#ResetEncoder)。
 
 #### 11.1.4 Config<a name="ZH-CN_TOPIC_0000002518345986" id="Config"></a>
 
 **函数功能<a name="section20501062"></a>**
 
-输入编码器的初始化配置，需要在[InitEncoder](#InitEncoder)之前调用。
+输入编码器的初始化配置，需要在[11.1.5-InitEncoder](#InitEncoder)之前调用。
 
 **约束说明<a name="section50291837"></a>**
 
-如[配置参数](#视频配置参数)所示的参数类型，会经由此参数透传至VmiEncoderConfig和VmiEncoderParams中；[配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
+如[5.2-配置参数](#视频配置参数)所示的参数类型，会经由此参数透传至VmiEncoderConfig和VmiEncoderParams中；[5.2-配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -1510,7 +1510,7 @@ VIDEO\_ENCODER\_SUCCESS：配置编码器成功。
 
 **约束说明<a name="section50291837"></a>**
 
-要求已经调用[Config](#Config)接口输入合法的配置。
+要求已经调用[11.1.4-Config](#Config)接口输入合法的配置。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -1564,7 +1564,7 @@ EncoderRetCode StartEncoder\(int32\_t fd\)
 
 **约束说明<a name="section50291837"></a>**
 
-如[配置参数](#视频配置参数)所示的参数类型，会经由此参数透传至VmiEncoderParams中；[配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
+如[5.2-配置参数](#视频配置参数)所示的参数类型，会经由此参数透传至VmiEncoderParams中；[5.2-配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -1712,7 +1712,7 @@ EncoderRetCode ResetEncoder\(int32\_t fd\)
 
 **约束说明<a name="section50291837"></a>**
 
-如[配置参数](#视频配置参数)中所示的参数类型，会经由此参数透传至FrameScaling入参中；[配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
+如[5.2-配置参数](#视频配置参数)中所示的参数类型，会经由此参数透传至FrameScaling入参中；[5.2-配置参数](#视频配置参数)中的配置参数的相关约束此处仍然存在。
 
 二次开发者也可直接调用此接口，实现YUV帧缩放功能。
 
@@ -1749,7 +1749,7 @@ height：uint32\_t类型，期望编码高度。该类字段如下：
 
 视频解码模块提供视频流服务端引擎正常运行所需要调用的外部视频解码接口，由二次开发者实现，并以动态链接库的形式提供。其动态链接库的名称为：libVideoDecoder.so。
 
-开发者继承VideoDecoder类并按照本章节中的描述实现对应接口，同时提供[CreateVideoDecoder](#CreateVideoDecoder)、[DestroyVideoDecoder](#DestroyVideoDecoder)接口用于创建具体的实现类实例。
+开发者继承VideoDecoder类并按照本章节中的描述实现对应接口，同时提供[11.2.2-CreateVideoDecoder](#CreateVideoDecoder)、[11.2.3-DestroyVideoDecoder](#DestroyVideoDecoder)接口用于创建具体的实现类实例。
 
 此接口与安卓内部OMX解码组件配套使用，与视频流出流组件不相干扰。
 
@@ -1827,7 +1827,7 @@ DecoderRetCode DestroyVideoDecoder\(VideoDecoder \*decoder\)
 
 **VideoDecoder接口类涉及接口<a name="section97621346152119"></a>**
 
-VideoDecoder接口类涉及接口详细描述请参见[CreateDecoder](#CreateDecoder)、[InitDecoder](#InitDecoder)、[SetDecodeParams](#SetDecodeParams)、[GetDecodeParams](#GetDecodeParams)、[SetCallbacks](#SetCallbacks)、[SetCopyFrameFunc](#SetCopyFrameFunc)、[SendStreamData](#SendStreamData)、[Flush](#Flush)[StartDecoder](#StartDecoder)、[StopDecoder](#StopDecoder)、[DestroyDecoder](#DestroyDecoder)。
+VideoDecoder接口类涉及接口详细描述请参见[11.2.4-CreateDecoder](#CreateDecoder)、[11.2.5-InitDecoder](#InitDecoder)、[11.2.6-SetDecodeParams](#SetDecodeParams)、[11.2.7-GetDecodeParams](#GetDecodeParams)、[11.2.8-SetCallbacks](#SetCallbacks)、[11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc)、[11.2.10-SendStreamData](#SendStreamData)、[11.2.12-Flush](#Flush)[11.2.13-StartDecoder](#StartDecoder)、[11.2.14-StopDecoder](#StopDecoder)、[11.2.15-DestroyDecoder](#DestroyDecoder)。
 
 #### 11.2.4 CreateDecoder<a name="ZH-CN_TOPIC_0000002518345956" id="CreateDecoder"></a>
 
@@ -1873,7 +1873,7 @@ enum MediaStreamFormat : uint32_t {
 
 **约束说明<a name="section50291837"></a>**
 
-要求已经调用[CreateDecoder](#CreateDecoder)创建解码器成功。
+要求已经调用[11.2.4-CreateDecoder](#CreateDecoder)创建解码器成功。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -1974,7 +1974,7 @@ DecoderRetCode GetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
 |index|输入|DecodeParamsIndex|表示要获取的参数类型。|
 |decParams|输入|void *|对应参数的内存地址。|
 
-参数的详细定义请参见[SetDecodeParams](#SetDecodeParams)。
+参数的详细定义请参见[11.2.6-SetDecodeParams](#SetDecodeParams)。
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2011,7 +2011,7 @@ enum DecodeEventIndex : uint32_t {
 };
 ```
 
-INDEX\_PIC\_INFO\_CHANGE表示解码图像大小变化，此时在void \*参数处挂载struct PicInfoParams \*类型，具体定义请参见[SetDecodeParams](#SetDecodeParams)。
+INDEX\_PIC\_INFO\_CHANGE表示解码图像大小变化，此时在void \*参数处挂载struct PicInfoParams \*类型，具体定义请参见[11.2.6-SetDecodeParams](#SetDecodeParams)。
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2038,7 +2038,7 @@ DecoderRetCode SetCopyFrameFunc\(std::function<uint32\_t\(uint8\_t\*, uint8\_t\*
 |--|--|--|--|
 |copyFrame|输入|std::function<uint32_t(uint8_t*, uint8_t*, const PicInfoParams &, uint32_t)>|设置将解码好的一帧数据拷贝到输出buffer的钩子函数（用于屏蔽输出接口格式差异）。|
 
-该回调中，第一个uint8\_t\*表示解码完成后数据地址，第二个uint8\_t\*表示拷贝的目标地址，需要填入[RetrieveFrameData](#RetrieveFrameData)中输入的buffer地址，第三个const PicInfoParams &参数表示图像宽高信息，具体定义请参见[SetDecodeParams](#SetDecodeParams)；第四个uint32\_t参数表示输出缓冲区最大长度，需要填入[RetrieveFrameData](#RetrieveFrameData)中输入的最大缓冲区大小，该回调返回值为处理数据的实际大小。
+该回调中，第一个uint8\_t\*表示解码完成后数据地址，第二个uint8\_t\*表示拷贝的目标地址，需要填入[11.2.11-RetrieveFrameData](#RetrieveFrameData)中输入的buffer地址，第三个const PicInfoParams &参数表示图像宽高信息，具体定义请参见[11.2.6-SetDecodeParams](#SetDecodeParams)；第四个uint32\_t参数表示输出缓冲区最大长度，需要填入[11.2.11-RetrieveFrameData](#RetrieveFrameData)中输入的最大缓冲区大小，该回调返回值为处理数据的实际大小。
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2083,7 +2083,7 @@ DecoderRetCode SendStreamData\(uint8\_t \*buffer, uint32\_t filledLen\)
 
 **函数功能<a name="section20501062"></a>**
 
-该接口作为同步接口，用于获取一帧解码输出，拷贝数据时需要使用[SetCopyFrameFunc](#SetCopyFrameFunc)提供的CopyFrame函数。
+该接口作为同步接口，用于获取一帧解码输出，拷贝数据时需要使用[11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc)提供的CopyFrame函数。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -2256,7 +2256,7 @@ enum GpuType : uint32_t {
 
 **约束说明<a name="section50291837"></a>**
 
-输入的moduleId需要从[QueryModule](#QueryModule)返回的moduleList中选择。
+输入的moduleId需要从[11.3.2-QueryModule](#QueryModule)返回的moduleList中选择。
 
 **函数原型<a name="section49973353"></a>**
 
@@ -2274,7 +2274,7 @@ void \*CreateModule\(uint32\_t moduleId\)
 
 **GpuEncoderBase接口类涉及接口<a name="section97621346152119"></a>**
 
-GpuEncoderBase接口类涉及接口详细描述请参见[Init](#Init)、[Deinit](#Deinit)、[Start](#Start)、[Stop](#Stop)、[CreateBuffer](#CreateBuffer)、[ImportBuffer](#ImportBuffer)、[ReleaseBuffer](#ReleaseBuffer)、[MapBuffer](#MapBuffer)、[UnmapBuffer](#UnmapBuffer)、[RetriveBufferData](#RetriveBufferData)、[Convert](#Convert)、[Encode](#Encode)、[SetEncodeParam](#SetEncodeParam)、[Reset](#Reset)。
+GpuEncoderBase接口类涉及接口详细描述请参见[11.3.5-Init](#Init)、[11.3.6-Deinit](#Deinit)、[11.3.7-Start](#Start)、[11.3.8-Stop](#Stop)、[11.3.9-CreateBuffer](#CreateBuffer)、[11.3.10-ImportBuffer](#ImportBuffer)、[11.3.11-ReleaseBuffer](#ReleaseBuffer)、[11.3.12-MapBuffer](#MapBuffer)、[11.3.13-UnmapBuffer](#UnmapBuffer)、[11.3.14-RetriveBufferData](#RetriveBufferData)、[11.3.15-Convert](#Convert)、[11.3.16-Encode](#Encode)、[11.3.17-SetEncodeParam](#SetEncodeParam)、[11.3.18-Reset](#Reset)。
 
 GpuEncoderBase接口类返回值说明：
 
@@ -2302,7 +2302,7 @@ enum GpuEncoderErrorCode : uint32_t {
 
 **约束说明<a name="section50291837"></a>**
 
-输入的实例必须由[CreateModule](#CreateModule)创建。
+输入的实例必须由[11.3.3-CreateModule](#CreateModule)创建。
 
 **函数原型<a name="section49973353"></a>**
 
