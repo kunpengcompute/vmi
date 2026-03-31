@@ -1,4 +1,15 @@
-# 验收测试指南<a name="ZH-CN_TOPIC_0000002521693378"></a>
+# 测试指南<a name="ZH-CN_TOPIC_0000002521693378"></a>
+
+### 测试结果列表<a name="ZH-CN_TOPIC_0000002518346378"></a>
+
+|name|value|
+|--|--|
+|Product name|Kunpeng Boostkit||
+|Product Version|26.0.RC1||
+|Document Name|视频流引擎 验收测试指南||
+|Issue|10||
+|Date|2026-03-30||
+||
 
 ## 概述<a name="ZH-CN_TOPIC_0000002549706229"></a>
 
@@ -9,7 +20,7 @@
 ### 注意事项<a name="ZH-CN_TOPIC_0000002549706233"></a>
 
 1. 在进行验收前请确保使用的物理环境、系统环境以及软件版本正确并配套。
-2. 执行验收用例前请首先完成视频流云手机端到端环境部署，具体部署步骤请参见《[视频流引擎 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0002.html)》。
+2. 执行验收用例前请首先完成视频流云手机端到端环境部署，具体部署步骤请参见《[安装指南](install_guide.md)》。
 3. 验收的项目应经过华为公司和用户双方相关人员的确认。
 4. 在验收和初验测试过程中，双方人员应对照相关标准严格测试，部分指标参数出厂时已经测试，若验收时条件有限，可进行抽测或免测。
 
@@ -18,7 +29,7 @@
 
 ## 测试准备<a name="ZH-CN_TOPIC_0000002549706237"></a>
 
-服务器硬件以及软件包信息、用例验收前环境部署以及密度测试方法等信息请参见《[视频流引擎 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0002.html)》，BIOS/iBMC/CPLD版本请参见《[视频流引擎 版本配套表](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcps_video_0003.html)》。
+服务器硬件以及软件包信息、用例验收前环境部署以及密度测试方法等信息请参见《[安装指南](install_guide.md)》，BIOS/iBMC/CPLD版本请参见《[版本配套表](release_notes.md#ZH-CN_TOPIC_0000002549706328)》。
 
 ## 测试约定<a name="ZH-CN_TOPIC_0000002518186462"></a>
 
@@ -318,7 +329,7 @@
 </tr>
 <tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
 </th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol923475117464"></a><a name="ol923475117464"></a><ol id="ol923475117464"><li>视频流云手机环境部署完成。</li><li>请参见《<a href="https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html" target="_blank" rel="noopener noreferrer">视频流引擎 特性指南</a>》中的“软件部署”章节修改分辨率为1080P后启动视频流云手机。</li><li>视频流云手机已安装APP。（APP建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。）</li></ol>
+<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol923475117464"></a><a name="ol923475117464"></a><ol id="ol923475117464"><li>视频流云手机环境部署完成。</li><li>请参见《<a href="install_guide.md" target="_blank" rel="noopener noreferrer">安装指南</a>》中的“软件部署”章节修改分辨率为1080P后启动视频流云手机。</li><li>视频流云手机已安装APP。（APP建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。）</li></ol>
 </td>
 </tr>
 <tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
@@ -363,7 +374,7 @@
 </tr>
 <tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
 </th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol923475117464"></a><a name="ol923475117464"></a><ol id="ol923475117464"><li>视频流云手机环境部署完成。</li><li>请参见《<a href="https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html" target="_blank" rel="noopener noreferrer">视频流引擎 特性指南</a>》中的“软件部署”章节修改帧率为60fps后启动视频流云手机。</li><li>视频流云手机已安装APP。（APP建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。）</li></ol>
+<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol923475117464"></a><a name="ol923475117464"></a><ol id="ol923475117464"><li>视频流云手机环境部署完成。</li><li>请参见《<a href="install_guide.md" target="_blank" rel="noopener noreferrer">安装指南</a>》中的“软件部署”章节修改帧率为60fps后启动视频流云手机。</li><li>视频流云手机已安装APP。（APP建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。）</li></ol>
 </td>
 </tr>
 <tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>

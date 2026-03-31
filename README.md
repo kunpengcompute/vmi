@@ -62,7 +62,7 @@
 │   └── zh                                       # 中文文档目录
 │       ├── figures                              # 中文文档图片资源目录
 │       ├── quick_start.md                       # 快速入门
-│       ├── release_notes.md                     # Kbox云手机版本发布说明
+│       ├── 版本说明书.md                         # Kbox云手机版本发布说明
 │       ├── installation_guide.md                # Kbox云手机安装指导
 │       ├── user_guide.md                        # Kbox云手机使用指导
 │       ├── best_practices.md                    # Kbox云手机场景化应用最佳实践
