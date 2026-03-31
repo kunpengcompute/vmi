@@ -12,25 +12,23 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 **表 1** Kbox云手机容器环境部署硬件配置方案要求<a id="Kbox云手机容器环境部署硬件配置方案要求"></a>
 
-|配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|
-|--|--|--|--|
-|服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
-|CPU|2*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
-|内存|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR5 DIMM内存-64GB-4800MT/s|
-|硬盘|系统盘：2*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型数据盘：2*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|
-|网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-2*25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|
-|Riser卡|Riser1与Riser2模组相同，均为：PCIe X16 + PCIe X8|Riser1与Riser2模组相同，均为：PCIe X8*3|前置Riser（x8*2）*2+后置Riser（x8*2）*2+Riser3（x8*2）*1|
-|编码卡|1 * NETINT Quadra T2A（X8）|无|无|
-|GPU|2*AMD W6800|4*道客DC1000|8*道客DC1000|
-|操作系统|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
-|内核版本|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
+|配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|硬件配置方案四|
+|--|--|--|--|--|
+|服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
+|CPU|2*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|2*鲲鹏920 7280W处理器，64 <Core@2.2GHz>|
+|内存|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR5 DIMM内存-64GB-4800MT/s|16*DDR5 DIMM内存-64GB-5200MT/s|
+|硬盘|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*固态硬盘-480GB-SATA 6Gb/s-2.5 inch height-读密集型<br>1\*S4510 固态硬盘-960GB-SATA 6Gb/s-读取密集型<br>数据盘：1\*ES3600P V6固态硬盘-6400GB-NVMe 64Gb/s<br>1\*ES3500P V5固态硬盘-4000GB-NVMe 32Gb/s|
+|网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-225GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
+|Riser卡|Riser1与Riser2模组相同，均为：PCIe X16 + PCIe X8|Riser1与Riser2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）\*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）\*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|
+|编码卡|1 * NETINT Quadra T2A（X8）|无|无|无|
+|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000|8\*道客DC1000|
+|操作系统|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
+|内核版本|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
 >- 选择鲲鹏服务器兼容的Mellanox网卡，通过[鲲鹏计算兼容性查询工具](https://info.support.huawei.com/computing/tools/compatibility-query/enterprise/kunpeng-computing/component-compatibility)可查询具体型号网卡。
 >- NETINT Quadra是NETINT T432编码卡下一代演进，后续文档仅以Quadra为例进行说明；若需要使能T432编码卡，也可参考Quadra编码卡进行使能。
-
-部署Kbox云手机容器环境前请确保您的环境满足已验证的硬件环境要求。
 
 #### 1.1.2 软件环境<a name="ZH-CN_TOPIC_0000002549706295"></a>
 
@@ -46,18 +44,18 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 **表 1** 部署视频流引擎的软件环境要求<a id="部署视频流引擎的软件环境要求"></a>
 
-|序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|
-|--|--|--|--|--|--|--|
-|1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|获取链接|√|√|√|
-|2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|请联系华为技术支持获取。|√|√|√|
-|3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|
-|4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|请联系华为技术支持获取。|√|√|√|
-|5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|
-|6|VideoClientEmulator.tar.gz|视频流云手机压测工具。|请联系华为技术支持获取。|√|√|√|
-|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-scale。|获取链接下载密码：test123|√|-|-|
-|8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|获取链接下载密码：test123|√|-|-|
-|9|WebClient.zip|Web客户端。|请联系华为技术支持获取。|√|√|√|
-|10|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|获取链接|√|√|√|
+|序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|
+|--|--|--|--|--|--|--|--|
+|1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#base-soft)|√|√|√|√|
+|2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|请联系华为技术支持获取。|√|√|√|√|
+|3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|√|
+|4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|请联系华为技术支持获取。|√|√|√|√|
+|5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|√|
+|6|VideoClientEmulator.tar.gz|视频流云手机压测工具。|请联系华为技术支持获取。|√|√|√|√|
+|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-scale。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>下载密码：test123|√|-|-|-|
+|8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br/>下载密码：test123|√|-|-|-|
+|9|WebClient.zip|Web客户端。|请联系华为技术支持获取。|√|√|√|√|
+|10|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -77,8 +75,6 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 >使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
 >使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议 2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
 
-在部署视频流云手机环境前，请参见本节提供的渠道获取相应的软件包并对华为提供的软件包进行完整性校验，以便进行后续的部署步骤。
-
 ### 1.2 部署云手机<a name="ZH-CN_TOPIC_0000002549826291"></a>
 
 #### 1.2.1 环境配置<a name="ZH-CN_TOPIC_0000002549826289"></a>
@@ -91,9 +87,9 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
 
-- **[（硬件配置方案一，可选）升级NVMe固件版本](https://gitcode.com/fuaniu/Kbox/blob/AOSP11/docs/zh/install_guide.md#升级NVMe固件版本)**
+- **[（硬件配置方案一，可选）升级NVMe固件版本](https://gitcode.com/boostkit/Kbox/blob/AOSP11/docs/zh/install_guide.md#升级NVMe固件版本)**
 
-- **[（硬件配置方案一）配置GPU工作模式和CPU绑定](https://gitcode.com/fuaniu/Kbox/blob/AOSP11/docs/zh/install_guide.md#配置GPU工作模式和CPU绑定)**  
+- **[（硬件配置方案一）配置GPU工作模式和CPU绑定](https://gitcode.com/boostkit/Kbox/blob/AOSP11/docs/zh/install_guide.md#配置GPU工作模式和CPU绑定)**  
 
 ##### 1.2.1.2 部署Kbox容器基础环境<a name="ZH-CN_TOPIC_0000002518186516" id="部署Kbox容器基础环境"></a>
 
@@ -111,10 +107,10 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 |软件名|版本号|软件描述|获取方式|
 |--|--|--|--|
-|Containerd|v1.7.14|Containerd是一个容器运行时。|Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：获取链接|
-|runc|v1.1.12|runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。|获取链接|
-|CNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|获取链接|
-|nerdctl|v1.7.5|nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。|获取链接|
+|Containerd|v1.7.14|Containerd是一个容器运行时。|Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service)|
+|runc|v1.1.12|runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。|[获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64)|
+|/rCNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|[获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
+|nerdctl|v1.7.5|nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。|[获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz)|
 
 **部署Containerd环境<a name="section343716111874"></a>**
 
@@ -199,9 +195,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)\~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
 
-视频流云手机除支持以基于Docker的容器运行时启动外，还支持以Containerd容器运行时启动。若选择以Containerd运行时运行视频流云手机，可参考本章节进行Containerd相关软件包的部署。
-
-- **[（硬件配置方案二、三）安装显卡驱动](https://gitcode.com/fuaniu/Kbox/blob/AOSP11/docs/zh/install_guide.md#安装显卡驱动)**  
+- **[（硬件配置方案二、三、四）安装显卡驱动](https://gitcode.com/boostkit/Kbox/blob/AOSP11/docs/zh/install_guide.md#安装显卡驱动)**  
 
 #### 1.2.2 制作镜像<a name="ZH-CN_TOPIC_0000002549826281"></a>
 
@@ -230,7 +224,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     2. 将Kbox-AOSP11文件夹中的deploy\_scripts目录上传至服务器的“\~/dependency“目录。
     3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox\_\*.zip到“\~/dependency/deploy\_scripts“目录。
-    4. （硬件配置方案二、三）使用硬件配置方案二、三时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC20.tgz，获取va\_driver.tgz，上传到服务器的“\~/dependency/deploy\_scripts“目录。
+    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC20.tgz，获取va\_driver.tgz，上传到服务器的“\~/dependency/deploy\_scripts“目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
@@ -240,7 +234,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
             ./make_image.sh kbox:demo kbox:origin
             ```
 
-        - 硬件配置方案二、三：
+        - 硬件配置方案二、三、四：
 
             ```shell
             cd ~/dependency/deploy_scripts
@@ -260,8 +254,6 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     kbox          origin    d1f5cfd2e722    6 seconds ago    2.09GB
     ```
-
-制作视频流云手机镜像前需要根据本章节内容完成Kbox镜像的制作。
 
 ##### 1.2.2.2 制作视频流云手机镜像<a name="ZH-CN_TOPIC_0000002549706277"></a>
 
@@ -297,7 +289,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
         chmod +x Dockerfile_NoVPU Dockerfile_T432 Dockerfile_QuadraT2A make_image.sh
         ```
 
-    - 配置方案二、三：
+    - 配置方案二、三、四：
 
         ```shell
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU  make_image.sh
@@ -368,8 +360,6 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     iptables -P FORWARD ACCEPT
     ```
 
-获取视频流客户端tar包组件、视频流服务端tar包组件、视频流引擎二进制软件包和视频流NETINT编码卡tar包组件进行视频流云手机镜像的制作。若使用Containerd容器运行时启动视频流云手机，则需要使用Docker工具导出符合OCI格式的镜像，并通过nerdctl工具导入以供Containerd使用。
-
 #### 1.2.3 设置cfct\_config配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002549706303"></a>
 
 通过设置cfct\_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
@@ -399,6 +389,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 7. 当编码卡插在CPU0上时，删除_“$\{NETINT1\}”_；若编码卡插在CPU1上时，删除_“$\{NETINT0\}”_。
 8. 如果要使能WebRTC特性，需要将cfct\_config中的“ENABLE\_WEBRTC\_CONNECTION“设置为“1“。若视频帧采用CPU进行软编码，需要将cfct\_config中的“CPU\_BIND\_MODE“设置为“1“，以防卡顿。
 9. 如果需要使能图形加速层功能，需要将cfct\_config中的“**ENABLE\_RENDER\_LAYER**”设置为“1“。详细说明请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
+10. 如果要使能C2解码器，需要将cfct_config中的“**ENABLE\_AMD_C2\_DECODE**”设置为“1“
 
 **NETINT编码卡芯片节点所属NUMA查询方式<a name="section2507154233510"></a>**
 
@@ -522,9 +513,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 >- 宿主机上多容器共享一个着色器缓存路径，可以先启动一路云手机预收集应用尽可能完整的着色器，其他云手机通过将配置文件对应的应用设置为只读模式来使能ShaderCache功能，此时性能最佳。
 >- ShaderCache功能没有缓存淘汰机制，若是缓存文件系统存储已满或者游戏版本更新，为了避免着色器和二进制文件不能对应，请清理整个文件系统的缓存。
 
-通过设置cfct\_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
-
-#### 1.2.4 设置cfct\_config配置文件（配置方案二、三）<a name="ZH-CN_TOPIC_0000002518186514"></a>
+#### 1.2.4 设置cfct\_config配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518186514"></a>
 
 通过设置cfct\_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
 
@@ -582,8 +571,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 6. 如果要使能图形加速层，需要将cfct\_config中“ENABLE\_RENDER\_LAYER“设置为“1“。详细说明请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
 
-通过设置cfct\_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
-
 #### 1.2.5 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518346430" id="制作基础数据卷"></a>
 
 确认并根据需要调整默认的镜像名称和数据卷存放目录。删除或备份现有数据卷，解压并设置启动脚本权限，使用脚本启动云手机并预装应用，最后删除初始容器。
@@ -631,8 +618,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ./cfct_video delete 1
     ```
 
-确认并根据需要调整默认的镜像名称和数据卷存放目录。删除或备份现有数据卷，解压并设置启动脚本权限，使用脚本启动云手机并预装应用，最后删除初始容器。
-
 ### 1.3 K8s集群下部署视频流云手机（配置方案二）<a name="ZH-CN_TOPIC_0000002518346436"></a>
 
 #### 1.3.1 环境准备<a name="ZH-CN_TOPIC_0000002518346440"></a>
@@ -652,8 +637,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 >
 >- K8s是容器编排平台，其工作节点需实际运行云手机业务，在部署K8s前或重启节点后，需确保工作节点完成视频流云手机的环境部署，完成环境部署的校验方式可启动一个视频流云手机验证。
 >- K8s集群环境部署和部署镜像涉及从Docker镜像仓拉取镜像的操作，需确保部署的服务器网络环境能够从Docker镜像仓拉取镜像。
-
-视频流云手机支持使用Containerd启动，使用K8s集群管理。在K8s集群下部署视频流云手机时需准备至少2台服务器，1台作为master节点，1台或者多台作为工作节点。
 
 #### 1.3.2 搭建K8s集群<a name="ZH-CN_TOPIC_0000002549826297"></a>
 
@@ -752,8 +735,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     sysctl -p /etc/sysctl.d/k8s.conf
     ```
 
-在所有master和工作节点下完成K8s集群软件安装、Containerd配置以及其他相关操作。
-
 ##### 1.3.2.2 master节点操作<a name="ZH-CN_TOPIC_0000002549706297"></a>
 
 在master节点上初始化集群。
@@ -834,8 +815,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >若查看当前节点的状态（STATUS）列是NotReady，及查看kubelet服务状态（systemctl status kubelet）时有明显报错（Network plugin returns error: cni plugin not initialized），此情况建议将集群重置并将服务器重启后重新初始化。
 
-在master节点上初始化集群。
-
 ##### 1.3.2.3 工作节点操作<a name="ZH-CN_TOPIC_0000002518186532"></a>
 
 将工作节点加入到集群中。
@@ -915,7 +894,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >
     > ```shell
     > kubeadm token create --print-join-command
-    >    ```
+    > ```
 
 3. 修改kubelet配置，并重启kubelet。
 
@@ -1042,16 +1021,14 @@ cfct\_config配置文件配置项和配置方法如下所示。
         > systemctl daemon-reload
         > systemctl restart kubelet
         > systemctl status kubelet
-        >    ```
+        > ```
         >
         >- 进入“topology-affinity-plugin“源码目录，并执行插件卸载命令。
         >
         > ```shell
         > cd /home/k8s/topo-affinity-plugin-master
         > make uninstall-service
-        >    ```
-
-将工作节点加入到集群中。
+        > ```
 
 #### 1.3.3 部署镜像<a name="ZH-CN_TOPIC_0000002518346452"></a>
 
@@ -1068,8 +1045,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >道客设备插件版本支持v0.0.5版本及以上。
-
-在所有工作节点完成部署道客设备插件镜像的操作。
 
 ##### 1.3.3.2 部署设备插件镜像<a name="ZH-CN_TOPIC_0000002518186506"></a>
 
@@ -1120,8 +1095,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ctr -n k8s.io images import k8s-hostdev-plugin.tar
     ```
 
-在所有工作节点完成部署设备插件镜像的操作。
-
 ##### 1.3.3.3 部署input设备权限写入插件镜像<a name="ZH-CN_TOPIC_0000002549706311"></a>
 
 在所有工作节点完成部署input设备权限写入插件镜像的操作。
@@ -1143,9 +1116,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ctr -n k8s.io images import input-device-permission.tar
     ```
 
-在所有工作节点完成部署input设备权限写入插件镜像的操作。
-
-##### 1.3.3.4 部署视频流镜像<a name="ZH-CN_TOPIC_0000002518186530" id="部署视频流镜像"></a>
+1.3.3.4 部署视频流镜像<a name="ZH-CN_TOPIC_0000002518186530" id="部署视频流镜像"></a>
 
 选择一台工作节点机器进行镜像制作，然后在所有工作节点导入并完成部署视频流镜像操作。
 
@@ -1190,8 +1161,6 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     **crictl images**命令可查看镜像名称和tag，例如：镜像名为docker.io/library/video:version。
 
-选择一台工作节点机器进行镜像制作，然后在所有工作节点导入并完成部署视频流镜像操作。
-
 ## 2 虚拟机环境部署<a name="ZH-CN_TOPIC_0000002518304958"></a>
 
 ### 2.1 环境要求<a name="ZH-CN_TOPIC_0000002549944725"></a>
@@ -1212,15 +1181,15 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 |配置项|参数|
 |--|--|
-|CPU||2*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
-|内存||16*DDR5 RDIMM内存-64GB-4800MT/s|
-|硬盘|系统盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
-|硬盘|数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
-|网卡|板载|1*（4*GE接口卡）1*5902L板载灵活网卡|
-|Riser卡||1*16X SLOT(PCIe X16) + 2*8X SLOT (PCIe X8)-RISER1&2模组、2*8X SLOT (PCIe X8)-后置Riser|
-|GPU||4*DC1000|
-|操作系统||openEuler 22.03 LTS SP4|
-|系统/内核版本||5.10.0-216.0.0|
+|CPU|2*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
+|内存|16*DDR5 DIMM内存-64GB-4800MT/s|
+|硬盘系统盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
+|硬盘数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
+|网卡|1 *（4 *GE接口卡， 1 * 5902L板载灵活网卡|
+|Riser卡|1* 16X SLOT(PCIe X16) + 2*8X SLOT(PCIe X8)-RISER1&2模组， 2 *8X SLOT(PCIe X8)-后置Riser|
+|GPU|4*DC1000|
+|操作系统|openEuler 22.03LTS SP4|
+|系统/内核版本|5.10.0-216.0.0|
 
 **表 3** 虚拟机规格<a id="虚拟机规格"></a>
 
@@ -1239,14 +1208,14 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 |项目|版本|下载地址|
 |--|--|--|
-|openEuler|22.03 LTS SP4|获取链接|
-|Kernel|基于5.10.0-216.0.0|获取链接|
+|openEuler|22.03 LTS SP4|[获取链接](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler%2022.03%20LTS%20SP4)|
+|Kernel|基于5.10.0-216.0.0|[获取链接](https://gitee.com/openeuler/kernel/repository/archive/5.10.0-216.0.0.zip)|
 
 **表 5** 虚拟机操作系统要求<a id="虚拟机操作系统要求"></a>
 
 |项目|版本|下载地址|
 |--|--|--|
-|openEuler|22.03 LTS SP4|获取链接|
+|openEuler|22.03 LTS SP4|[获取链接](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler%2022.03%20LTS%20SP4)|
 |Kernel|基于5.10.0-216.0.0|请参见《Kbox云手机容器 特性指南》“软件部署”中的“编译内核”章节进行编译。|
 
 **获取虚拟机软件包<a name="section1543425619147" id="获取虚拟机软件包"></a>**
@@ -1257,8 +1226,8 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 |软件包|文件|文件路径|获取地址|
 |--|--|--|--|
-|Kbox-AOSP11.zip|虚拟机内核补丁|Kbox-AOSP11/deploy_scripts/vm_deploy/patchForKernel/general.patch|获取链接|
-|Kbox-AOSP11.zip|虚拟机调优脚本|Kbox-AOSP11/deploy_scripts/vm_deploy/setup_vm.sh|获取链接|
+|Kbox-AOSP11.zip|虚拟机内核补丁|Kbox-AOSP11/deploy_scripts/vm_deploy/patchForKernel/general.patch|[获取链接](https://mirrors.huaweicloud.com/kunpeng/archive/kunpeng_solution/ARMNative/BoostKit25.1.RC1_Demo/Kbox_Demo/Kbox-AOSP11.zip)|
+|Kbox-AOSP11.zip|虚拟机调优脚本|Kbox-AOSP11/deploy_scripts/vm_deploy/setup_vm.sh|[获取链接](https://mirrors.huaweicloud.com/kunpeng/archive/kunpeng_solution/ARMNative/BoostKit25.1.RC1_Demo/Kbox_Demo/Kbox-AOSP11.zip)|
 
 ### 2.2 宿主机环境配置<a name="ZH-CN_TOPIC_0000002550064713" id="宿主机环境配置"></a>
 
@@ -1951,112 +1920,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002550068153.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >至此已经实现了虚拟机在服务器局域网内的数据通信，如果希望在外网访问局域网内的该虚拟机，请联系网络管理员按照局域网内服务器的相关配置对虚拟机进行配置即可。
-
-##### 2.3.3.2 （可选）修改SSH端口<a name="ZH-CN_TOPIC_0000002550064719"></a>
-
-通常出于安全考虑和管理方便，需要修改SSH服务默认的22号端口。
-
-1. 修改SSH默认的端口号。
-    1. 打开SSH配置文件。
-
-        ```shell
-        vi /etc/ssh/sshd_config
-        ```
-
-    2. 按“i”进入编辑模式，修改配置文件中的“Port“值（以8700为例）。
-
-        ```shell
-        Port 8700
-        ```
-
-        ![](figures/zh-cn_image_0000002518308394.png)
-
-    3. 按“Esc“键退出编辑模式，输入**:wq!**并按“Enter“键保存并退出文件。
-
-2. 在SELinux环境中允许SSH服务使用指定的8700端口。
-
-    ```shell
-    semanage port -a -t ssh_port_t -p tcp 8700
-    ```
-
-    >![](public_sys-resources/icon-note.gif) **说明：** 
-    >若提示semanage命令未安装，请执行如下命令进行安装。
-    >
-    >```shell
-    >yum provides semanage
-    >```
-    >
-    >![](figures/zh-cn_image_0000002518468310.png)
-    >
-    >```shell
-    >dnf install policycoreutils-python-utils-3.3-8.oe2203sp3.noarch
-    >```
-
-3. 防火墙开启8700端口。
-
-    ```shell
-    firewall-cmd --zone=public --add-port=8700/tcp –-permanent
-    firewall-cmd --reload
-    ```
-
-4. 重启SSH服务。
-
-    ```shell
-    systemctl restart sshd
-    ```
-
-5. 验证SSH端口。
-
-    修改端口后，原默认的22号端口无法使用**ssh**连接，必须在**ssh**中通过“-p“选项指定端口为新配置的端口（8700）连接。
-
-    ```shell
-    ssh 192.168.20.150
-    ```
-
-    ![](figures/zh-cn_image_0000002549948161.png)
-
-    ```shell
-    ssh -p 8700 192.168.20.150
-    ```
-
-    ![](figures/zh-cn_image_0000002550068155.png)
-
-##### 2.3.3.3（可选）配置路由表<a name="ZH-CN_TOPIC_0000002518464888"></a>
-
-配置路由表可以使能外网与虚拟机之间的直接通信，本章节提供的方案仅供参考。
-
->![](public_sys-resources/icon-note.gif) **说明：** 
->直接将整个大网IP地址（以121.37.54.34为例）所有端口都映射向虚拟机，分配一个端口（121.37.54.35 8021）给宿主机供SSH连接。
-
-1. **ssh**连接路由器。
-
-    ```shell
-    ssh -p8700 -oHostKeyAlgorithms=ssh-rsa admin@192.168.20.100
-    ```
-
-2. 进入Interface GigabitEthernet 0/0/2。
-
-    ![](figures/zh-cn_image_0000002518308396.png)
-
-    （tap自动补齐）
-
-3. 查看当前路由表映射。
-
-    ```shell
-    display this
-    ```
-
-    ![](figures/zh-cn_image_0000002518468314.png)
-
-4. 新增路由映射，将121.37.54.34端口全部映射至192.168.20.150，同时将121.37.54.35 8021端口映射至宿主机192.168.20.18 8700端口用于**ssh**连接。
-
-    ```shell
-    nat static protocol tcp global 121.37.54.34 any inside 192.168.20.150 any netmask 255.255.255.255
-    nat static protocol tcp global 121.37.54.35 8021 inside 192.168.20.18 8700 netmask 255.255.255.255
-    ```
-
-    此时外网可以通过IP地址121.37.54.34直接访问虚拟机的所有端口，可以使用**scrcpy**连接虚拟机内容器。
+    >至此已经实现了虚拟机在服务器局域网内的数据通信，如果希望在外网访问局域网内的该虚拟机，请联系网络管理员按照局域网内服务器的相关配置对虚拟机进行配置即可
 
 ### 2.4 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002549947651" id="视频流启动环境配置"></a>
 
