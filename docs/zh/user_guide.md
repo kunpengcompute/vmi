@@ -12,7 +12,13 @@
     BUILD_FPS=30
     ```
 
-2. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式和使用WebRTC方式访问的视频流云手机实例，则需要进行以下配置。
+2. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct\_config配置文件中的ENABLE_AMD_C2_DECODE=1。其他值不使能，默认为0。必须在容器第一次启动时配置开/关C2解码器，不支持中途切换。云手机内置应用会根据自身需要自行选择解码器。
+
+    ```shell
+    ENABLE_AMD_C2_DECODE=0
+    ```
+
+3. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式和使用WebRTC方式访问的视频流云手机实例，则需要进行以下配置。
     1. 从DemoVideoEngine.tar.gz中解压获取“vendor“文件夹，并将其中的“default.prop”文件拷贝到当前目录。
 
         ```shell
@@ -54,14 +60,14 @@
 
         使用WebRTC方式访问视频流云手机实例时，需要通过default.prop配置云手机服务端的IP地址属性vmi.webrtc.connection.serverip和可用的UDP起始端口vmi.webrtc.connection.udpbeginport，属性字段请参见[启动脚本配置项](#启动脚本配置项)章节的WebRTC属性配置项字段描述表。
 
-3. 启动视频流云手机。
+4. 启动视频流云手机。
 
     ```shell
     cd /home/kbox_video/
     ./cfct_video start ${index1} ${index2}
     ```
 
-    上述命令中_$\{index1\}_与_$\{index2\}_为设备号，其中_$\{index2\}_可缺省。启动脚本使用示例：
+    上述命令中 \$\{index1\} 与 \$\{index2\} 为设备号，其中 \$\{index2\} 可缺省。启动脚本使用示例：
 
     - 启动一个编号为1的视频流云手机。
 
@@ -75,7 +81,7 @@
         ./cfct_video start 1 5
         ```
 
-4. <a name="li3304181302311"></a>查看视频流云手机。
+5. <a name="li3304181302311"></a>查看视频流云手机。
 
     - 基于Docker容器运行时的视频流云手机。
 
@@ -99,7 +105,7 @@
 
     确认所启动的容器存在，且状态正常。
 
-5. 确认视频流云手机是否启动成功，其中**_$\{index\}_**为启动实例的编号，参见[4](#li3304181302311)中命令回显所示的最后一列，如_android\_35，**$\{index\}**_即为_35_。
+6. 确认视频流云手机是否启动成功，其中 **\$\{index\}** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android\_35， **\$\{index\}** 即为35。
 
     - 基于Docker容器运行时的视频流云手机。
 
@@ -142,15 +148,15 @@
 
     ```shell
     Product Name: Kunpeng BoostKit
-    Product Version: 25.3.0
+    Product Version: 26.0.RC1
     Component Name: BoostKit-boostcph-videoengine
-    Component Version: 7.3.0
+    Component Version: 8.0.RC1
     Component AppendInfo: 11.0.0_r48
     ```
 
 方法二：通过视频流引擎对外API获取版本信息
 
-请参见《[视频流引擎 开发指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_16_0016.html)》中“对外接口”章节的“GetVersion”接口使用方法，通过调用该API获取版本信息，回显示例与方法一中的回显示例相同。
+请参见[视频流引擎 开发指南](development_guide.md)中“对外接口”章节的“GetVersion”接口使用方法，通过调用该API获取版本信息，回显示例与方法一中的回显示例相同。
 
 本章节提供两种方法获取视频流引擎组件版本信息，通过获取的软件包和API对外接口进行查询版本号信息。
 
@@ -170,14 +176,14 @@
 
     ![](figures/zh-cn_image_0000002549744251.png)
 
-5. 返回至主页面，自上而下依次输入服务器IP地址、**$\{port**\}，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
+5. 返回至主页面，自上而下依次输入服务器IP地址、**\$\{port\}**，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
 
-    **$\{port**\}默认值为8000+**$\{index\}**。
+    **\$\{port\}** 默认值为 8000 + **\$\{index\}**。
 
     ![](figures/zh-cn_image_0000002549864241.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >- 每个视频流云手机实例需要设置端口**$\{port\}**，部署时可进入cfct\_video脚本设置合适的**$\{port\}**，端口号取值范围为1024\~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >- 每个视频流云手机实例需要设置端口 **\$\{port\}** ，部署时可进入cfct\_video脚本设置合适的 **\$\{port\}**，端口号取值范围为1024\~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位安卓系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
@@ -192,7 +198,7 @@
 
     ![](figures/zh-cn_image_0000002518224474.png)
 
-3. 自上而下依次输入服务器IP地址、**$\{port\}**，单击“SUBMIT”即可访问云侧的视频流云手机。其中**$\{port**\}默认值为8000+**$\{index\}**。
+3. 自上而下依次输入服务器IP地址、**\$\{port\}** ，单击“SUBMIT”即可访问云侧的视频流云手机。其中 **\$\{port\}** 默认值为8000 + **\$\{index\}**。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >每个视频流云手机实例需要配置映射端口，部署时可进入cfct\_video脚本设置合适的**$\{port\}**，端口号取值范围为1024\~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
@@ -246,13 +252,13 @@
 
 使用cfct\_video脚本重启视频流云手机实例。
 
-- 重启编号为_$\{index1\}_的视频流云手机。
+- 重启编号为 $\{index1\} 的视频流云手机。
 
     ```shell
     ./cfct_video restart ${index1}
     ```
 
-- 重启编号为_$\{index1\}_\~_$\{index2\}_的所有视频流云手机。
+- 重启编号为 \$\{index1\} \~ \$\{index2\} 的所有视频流云手机。
 
     ```shell
     ./cfct_video restart ${index1} ${index2}
@@ -264,13 +270,13 @@
 
 使用cfct\_video脚本删除视频流云手机实例。
 
-- 删除编号为_$\{index1\}_的视频流云手机。
+- 删除编号为 \$\{index1\} 的视频流云手机。
 
     ```shell
     ./cfct_video delete ${index1}
     ```
 
-- 删除编号为_$\{index1\}_\~_$\{index2\}_的所有视频流云手机。
+- 删除编号为 \$\{index1\} \~ \$\{index2\} 的所有视频流云手机。
 
     ```shell
     ./cfct_video delete ${index1} ${index2}
@@ -357,7 +363,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >执行**./delete\_devices.sh**命令可删除设备插件。
+    >执行 **./delete\_devices.sh** 命令可删除设备插件。
 
 2. 启动完成后，查看设备插件是否运行成功。
 
@@ -417,7 +423,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >_$\{index1\}_与_$\{index2\}_为pod编号，其中_$\{index2\}_可缺省。例：
+    > \$\{index1\} 与 \$\{index2\} 为pod编号，其中 \$\{index2\} 可缺省。例：
     >- 创建名为video2的pod。
     >
     > ```shell
@@ -444,7 +450,7 @@
     kubectl get pods -o wide
     ```
 
-    请参见[访问视频流云手机](#访问视频流云手机)访问视频流云手机，其中客户端连接端口为8000+**$\{index\}，index为pod编号**。
+    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**$\{index\}，index为pod编号**。
 
     - 在master节点上，可通过如下命令进入容器，以video1为例：
 
@@ -470,9 +476,9 @@ cd /home/k8s/k8s/script
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->_$\{index1\}_与_$\{index2\}_为pod编号，其中_$\{index2\}_可缺省。
+> \$\{index1\} 与 \$\{index2\} 为pod编号，其中 \$\{index2\} 可缺省。
 >例：./k8s-video.sh delete 2（删除名为video2的pod）
->./k8s-video.sh delete  _1_ _5_（删除名为video1\~video5 共5个pod）
+>./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
 
 删除K8s视频流云手机实例需要在master节点下操作。
 
@@ -513,19 +519,19 @@ cd /home/k8s/k8s/script
 
 |字段名称|字段描述|取值范围|默认值|
 |--|--|--|--|
-|ro.hardware.fps|云手机屏幕刷新帧率。|30fps60fps90fps|30：默认屏幕刷新帧率|
-|ro.hardware.width|云手机屏幕物理宽度。宽、高、密度三者要匹配，关系如下：360p(360 640 120)、480p(480 856 160)、720p(720 1280 320)、1080p(1080 1920 480)、2K(1440 2560 640)、4K(2160 3840  960)。|360：物理宽度360480：物理宽度480720：物理宽度7201080：物理宽度10801440：物理宽度14402160：物理宽度2160|720：默认物理宽度|
-|ro.hardware.height|云手机屏幕物理高度。|640：物理高度640856：物理高度8561280：物理高度12801920：物理高度19202560：物理高度25603840：物理高度3840|1280：默认物理高度|
+|ro.hardware.fps|云手机屏幕刷新帧率。|30fps<br>60fps<br>90fps|30：默认屏幕刷新帧率|
+|ro.hardware.width|云手机屏幕物理宽度。宽、高、密度三者要匹配，关系如下：360p(360 640 120)、480p(480 856 160)、720p(720 1280 320)、1080p(1080 1920 480)、2K(1440 2560 640)、4K(2160 3840  960)。|360：物理宽度360<br>480：物理宽度480<br>720：物理宽度720<br>1080：物理宽度1080<br>1440：物理宽度1440<br>2160：物理宽度2160|720：默认物理宽度|
+|ro.hardware.height|云手机屏幕物理高度。|640：物理高度640<br>856：物理高度856<br>1280：物理高度1280<br>1920：物理高度1920<br>2560：物理高度2560<br>3840：物理高度3840|1280：默认物理高度|
 |ro.vmi.video.capture.render_optimizing|主屏出流使能开关。|1：默认开启|1：默认开启|
-|ro.vmi.hardware.vpu|编码卡类型。|0：没有编码卡1：T4323：Quadra|3：默认使用Quadra|
-|vmi.mic.cachefactor|麦克风帧缓存大小。|0：不缓存1：缓存1帧2：缓存2帧3：缓存3帧|2：默认缓存2帧|
+|ro.vmi.hardware.vpu|编码卡类型。|0：没有编码卡<br>1：T432<br>3：Quadra|3：默认使用Quadra|
+|vmi.mic.cachefactor|麦克风帧缓存大小。|0：不缓存<br>1：缓存1帧<br>2：缓存2帧<br>3：缓存3帧|2：默认缓存2帧|
 |vmi.crowd.control.master|群控开关。|false：关闭|false：默认关闭|
-|ro.vmi.loglevel|日志级别。|1：default2：verbose3：debug4：info5：warn6：error7：fatal|4：默认info日志级别|
-|ro.hardware.dynamicfps|动态帧率调整功能开关。|0：不生效1：生效|1：默认生效|
-|ro.hardware.downfps|动态帧率调整功能生效，客户端断开连接后的渲染帧率。|12fps24fps|12：默认的客户端断开连接后渲染帧率（动态帧率调整功能生效时）|
-|ro.hardware.compositionBypass|合成优化开关，针对应用全屏场景优化。（GPU为DC1000时不支持，不允许打开此开关）|1：生效合成优化其他：不生效|0：默认关闭|
+|ro.vmi.loglevel|日志级别。|1：default<br>2：verbose<br>3：debug<br>4：info<br>5：warn<br>6：error<br>7：fatal|4：默认info日志级别|
+|ro.hardware.dynamicfps|动态帧率调整功能开关。|0：不生效<br>1：生效|1：默认生效|
+|ro.hardware.downfps|动态帧率调整功能生效，客户端断连后的渲染帧率。|12fps<br>24fps|12：默认的客户端断连后渲染帧率（动态帧率调整功能生效时）|
+|ro.hardware.compositionBypass|合成优化开关，针对应用全屏场景优化。（GPU为DC1000时不支持，不允许打开此开关）|1：生效合成优化<br>其他：不生效|0：默认关闭|
 |ro.hardware.compositionBypass.offset|合成优化偏置帧数。在合成优化功能打开时，连续一定帧数满足生效条件后实际生效合成优化功能，可以改善合成优化功能开启后可能出现的画面旋转现象。|大于0|可根据实际情况调整（AMD环境建议0）|
-|ro.vmi.adaptive.vsync|自适应vsync功能开关，打开后可以优化服务端图像渲染阶段的处理时延。|1：生效自适应vsync其他：不生效|默认不生效|
+|ro.vmi.adaptive.vsync|自适应vsync功能开关，打开后可以优化服务端图像渲染阶段的处理时延。|1：生效自适应vsync<br>其他：不生效|默认不生效|
 
 视频流服务端引擎可通过系统属性配置视频，音频，网络等功能引擎参数，本章节对相关配置参数进行配置说明。
 
@@ -545,25 +551,25 @@ cd /home/k8s/k8s/script
 |配置项分类|元素|子元素|属性|取值范围|配置说明|
 |--|--|--|--|--|--|
 |通用配置|Application|-|name|system|表示系统通用配置。|
-|通用配置|Application|-|isEnable|truefalse|指定该应用是否开启图形加速层功能。|
+|通用配置|Application|-|isEnable|true：开启<br>false：不开启|指定该应用是否开启图形加速层功能。|
 |通用配置|Application|feature|name|kbox.render.accelerating.gpuMock|指定图形加速层功能。|
-|通用配置|Application|feature|isEnable|true：开启false：不开启|指定该应用是否开启对应功能。|
+|通用配置|Application|feature|isEnable|true：开启<br>false：不开启|指定该应用是否开启对应功能。|
 |应用配置|Application|-|name|process_name|指定应用的进程名。|
-|应用配置|Application|-|isEnable|true：开启false：不开启|指定该应用是否开启图形加速层功能。|
-|应用配置|Application|feature|name|kbox.render.accelerating.shaderCachekbox.render.accelerating.gpuMock|指定图形加速层功能。取值不同时配置项也不同，请参见[**表 2** 应用配置项中feature元素的name属性取值不同时配置说明](#应用配置项中feature元素的name属性取值不同时配置说明)。|
-|应用配置|Application|feature|isEnable|truefalse|指定该应用是否开启对应功能。|
+|应用配置|Application|-|isEnable|true：开启<br>false：不开启|指定该应用是否开启图形加速层功能。|
+|应用配置|Application|feature|name|kbox.render.accelerating.shaderCache<br>kbox.render.accelerating.gpuMock|指定图形加速层功能。取值不同时配置项也不同，请参见[**表 2** 应用配置项中feature元素的name属性取值不同时配置说明](#应用配置项中feature元素的name属性取值不同时配置说明)。|
+|应用配置|Application|feature|isEnable|true：开启<br>false：不开启|指定该应用是否开启对应功能。|
 
 **表 2** 应用配置项中feature元素的name属性取值不同时配置说明<a id="应用配置项中feature元素的name属性取值不同时配置说明"></a>
 
 |name属性取值|子元素|内部参数|配置说明|必选/可选|
 |--|--|--|--|--|
-|kbox.render.accelerating.shaderCache|GL_SHADER_CACHE|SHADER_CACHE_MODE|指定ShaderCache功能应用对缓存路径的读写模式。取值如下：0：对缓存路径文件没有读写权限的关闭模式。1：只有读权限的只读模式。2：既有读权限又有写权限的读写模式。|可选|
+|kbox.render.accelerating.shaderCache|GL_SHADER_CACHE|SHADER_CACHE_MODE|指定ShaderCache功能应用对缓存路径的读写模式。取值如下：<br>0：对缓存路径文件没有读写权限的关闭模式。<br>1：只有读权限的只读模式。<br>2：既有读权限又有写权限的读写模式。|可选|
 |kbox.render.accelerating.shaderCache|GL_SHADER_CACHE|SHADER_CACHE_DIR_SIZE|指定应用的可缓存文件存储大小。取值为：64，128，256，512，1024，单位为MB。|可选|
 |kbox.render.accelerating.gpuMock|GL_RENDERER_MOCK|GL_RENDERER|对GPU型号进行模拟。|可选|
 |kbox.render.accelerating.gpuMock|GL_RENDERER_MOCK|GL_VENDOR|对GPU厂商进行模拟。|可选|
 |kbox.render.accelerating.gpuMock|GL_RENDERER_MOCK|GL_VERSION|对OpenGL ES版本号进行模拟。|可选|
-|kbox.render.accelerating.gpuMock|GL_EXTENSION_MOCK|-|支持对OpenGL ES的拓展是否使能进行模拟。属性param表示OpenGL ES的某个拓展名。属性value有以下取值：1：若OpenGL ES不支持该拓展，将其模拟为支持。0：若OpenGL ES已支持该拓展，将其模拟为不支持。|可选|
-|kbox.render.accelerating.gpuMock|GL_MAX_VALUE_MOCK|-|支持对OpenGL ES的GL_MAX能力值进行模拟。属性param为OpenGL ES可查询的某个GL_MAX_*枚举值。属性value为值大小。|可选|
+|kbox.render.accelerating.gpuMock|GL_EXTENSION_MOCK|-|支持对OpenGL ES的拓展是否使能进行模拟。<br>属性param表示OpenGL ES的某个拓展名。<br>属性value有以下取值：<br> 1：若OpenGL ES不支持该拓展，将其模拟为支持。<br> 0：若OpenGL ES已支持该拓展，将其模拟为不支持。|可选|
+|kbox.render.accelerating.gpuMock|GL_MAX_VALUE_MOCK|-|支持对OpenGL ES的GL_MAX能力值进行模拟。<br>属性param为OpenGL ES可查询的某个GL_MAX_*枚举值。<br>属性value为值大小。|可选|
 
 **配置规则<a name="section18753121811614"></a>**
 
@@ -616,7 +622,7 @@ cd /home/k8s/k8s/script
 
 视频流服务端引擎可通过启动脚本cfct\_config文件中的配置项，配置硬件解码、WebRTC等功能，本章节提供视频流启动脚本cfct\_config默认功能配置项说明。
 
-视频流启动脚本cfct\_config默认功能配置项如[**表 1** 视频流引擎非商用部分脚本配置项字段描述表](#视频流引擎非商用部分脚本配置项字段描述表) 视频流引擎非商用部分脚本配置项字段描述表](#table5430154192018)所示。
+视频流启动脚本cfct\_config默认功能配置项如[**表 1** 视频流引擎非商用部分脚本配置项字段描述表](#视频流引擎非商用部分脚本配置项字段描述表) 所示。
 
 请参见[**表 1** 视频流引擎非商用部分脚本配置项字段描述表](#视频流引擎非商用部分脚本配置项字段描述表)配置视频流引擎音视频等模块的默认运行参数。
 
@@ -628,14 +634,15 @@ cd /home/k8s/k8s/script
 |--|--|--|--|
 |RAM_SIZE_GB|云手机运行内存。|可用的云手机内存范围|6：默认6GB运行内存|
 |STORAGE_SIZE_GB|云手机存储大小。|可用的云手机存储范围|16：默认16GB存储|
-|BUILD_WIDTH|云手机屏幕物理宽度。宽、高、密度三者要匹配，关系如下：360p(360 640 120)、480p(480 856 160)、720p(720 1280 320)、1080p(1080 1920 480)、2K(1440 2560 640)、4K(2160 3840 960)。|360：物理宽度360480：物理宽度480720：物理宽度7201080：物理宽度10801440：物理宽度14402160：物理宽度2160|720：默认物理宽度|
-|BUILD_HEIGHT|云手机屏幕物理高度。|640：物理高度640856：物理高度8561280：物理高度12801920：物理高度19202560：物理高度25603840：物理高度3840|1280：默认物理高度|
-|BUILD_DENSITY|云手机屏幕密度。|120：屏幕密度（360p）160：屏幕密度（480p）320：屏幕密度（720p）480：屏幕密度（1080p）640：屏幕密度（2K）960：屏幕密度（4K）|320：默认屏幕密度|
+|BUILD_WIDTH|云手机屏幕物理宽度。宽、高、密度三者要匹配，关系如下：360p(360 640 120)、480p(480 856 160)、720p(720 1280 320)、1080p(1080 1920 480)、2K(1440 2560 640)、4K(2160 3840 960)。|360：物理宽度360<br>480：物理宽度480<br>720：物理宽度720<br>1080：物理宽度1080<br>1440：物理宽度1440<br>2160：物理宽度2160|720：默认物理宽度|
+|BUILD_HEIGHT|云手机屏幕物理高度。|640：物理高度640<br>856：物理高度856<br>1280：物理高度1280<br>1920：物理高度1920<br>2560：物理高度2560<br>3840：物理高度3840|1280：默认物理高度|
+|BUILD_DENSITY|云手机屏幕密度。|120：屏幕密度（360p）<br>160：屏幕密度（480p）<br>320：屏幕密度（720p）<br>480：屏幕密度（1080p）<br>640：屏幕密度（2K）<br>960：屏幕密度（4K）|320：默认屏幕密度|
 |BUILD_FPS|云手机屏幕刷新帧率。|1-120fps|30：默认屏幕刷新帧率|
-|ENCODECARD|选择编码卡。|0：T4321：Quadra2：Va1e（暂不支持）3：OpenH264|1：默认选择Quadra编码卡|
-|T432_QUADRA_DECODE_ENABLE|T432/Quadra硬解使能开关。|0/其他值：不使能1：使能|0：默认不使能|
-|ENABLE_HARD_DECODE|DC1000硬解使能开关。|0/其他值：不使能1：使能|1：默认使能|
-|ENABLE_WEBRTC_CONNECTION|WebRTC使能开关。|0/其他值：不使能1：使能|0：默认不使能|
+|ENCODECARD|选择编码卡。|0：T432<br>1：Quadra<br>2：Va1e（暂不支持）<br>3：OpenH264|1：默认选择Quadra编码卡|
+|ENABLE_AMD_C2_DECODE|AMD方案C2软解使能开关|0/其他值：不使能<br>1：使能|0：默认不使能|
+|T432_QUADRA_DECODE_ENABLE|T432/Quadra硬解使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
+|ENABLE_HARD_DECODE|DC1000硬解使能开关。|0/其他值：不使能<br>1：使能|1：默认使能|
+|ENABLE_WEBRTC_CONNECTION|WebRTC使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
 
 视频流服务端引擎可通过启动脚本cfct\_config文件中的配置项，配置硬件解码、WebRTC等功能，本章节提供视频流启动脚本cfct\_config默认功能配置项说明。
 
@@ -649,38 +656,38 @@ cd /home/k8s/k8s/script
 
 |字段名称|字段描述|取值范围|默认值|
 |--|--|--|--|
-|vmi.video.encodertype|编码器类型配置项，当该项配置为CPU，即使用软编时，若云手机需要运行较大负载应用，为防止默认绑核方式（2容器2核）的CPU资源不足，建议更改绑核方式为绑NUMA，修改方法如下：将cfct_config配置文件中CPU_BIND_MODE字段修改为1。|0：CPU（CPU软编码器编码）1：VPU（外置硬件编码器编码）2：GPU（仅DC1000支持）|1：默认VPU（外置硬件编码器编码）|
-|vmi.video.videoframetype|帧数据输出格式。|0：H2641：YUV（只有当encodertype取值为0时支持）2：RGB（暂不支持）3：H265（vmi.video.encodertype取值为0时不可用）|3：H265|
+|vmi.video.encodertype|编码器类型配置项，当该项配置为CPU，即使用软编时，若云手机需要运行较大负载应用，为防止默认绑核方式（2容器2核）的CPU资源不足，建议更改绑核方式为绑NUMA，修改方法如下：将cfct_config配置文件中CPU_BIND_MODE字段修改为1。|0：CPU（CPU软编码器编码）<br>1：VPU（外置硬件编码器编码）<br>2：GPU（仅DC1000支持）|1：默认VPU（外置硬件编码器编码）|
+|vmi.video.videoframetype|帧数据输出格式。|0：H264<br>1：YUV（只有当encodertype取值为0时支持）<br>2：RGB（暂不支持）<br>3：H265（vmi.video.encodertype取值为0时不可用）|3：H265|
 |vmi.video.frame.width|自适应分辨率宽度（必须是8的倍数）。|360~2160|720|
 |vmi.video.frame.height|自适应分辨率高度（必须是8的倍数）。|360~3840|1280|
 |vmi.video.frame.widthaligned|对齐后分辨率宽度（暂不支持配置）。|360~2160|720|
 |vmi.video.frame.heightaligned|对齐后分辨率高度（暂不支持配置）。|360~3840|1280|
 |vmi.video.frame.density|自适应分辨率屏幕像素密度。|120~960|320|
-|ro.vmi.video.wmcmd|是否使用自适应分辨率功能。|0：不启用1：启用|1|
+|ro.vmi.video.wmcmd|是否使用自适应分辨率功能。|0：不启用<br>1：启用|1|
 |vmi.video.encode.gopsize|编码GOP大小配置项。|30~3000|60：默认编码GOP大小为60|
-|vmi.video.encode.profile|编码profile配置项（H.265编码仅支持配置main）。|0：baseline（仅H264支持）1：main2：high（仅H264支持）|1：main|
-|vmi.video.encode.bitrate|编码码率。|500000~50000000（AMD，一般为W6800）500000~30000000（DC1000）单位bps|8000000|
-|vmi.video.encode.forcekeyframe|编码强制I帧配置项。|0：不触发编码强制I帧1：在下一帧强制生成I帧|0：默认不触发编码强制I帧|
-|vmi.video.encode.rcmode|编码格式参数项。|0：ABR平均码率模式（暂不支持）1：CRF画质优先模式（暂不支持）2：CBR恒定码率模式3：CAPPED_CRF画质优先并限制最大码率模式|3：CAPPED_CRF画质优先并限制最大码率模式|
+|vmi.video.encode.profile|编码profile配置项（H.265编码仅支持配置main）。|0：baseline（仅H264支持）<br>1：main<br>2：high（仅H264支持）|1：main|
+|vmi.video.encode.bitrate|编码码率。|500000~50000000（AMD，一般为W6800）<br>500000~30000000（DC1000）<br>单位bps|8000000|
+|vmi.video.encode.forcekeyframe|编码强制I帧配置项。|0：不触发编码强制I帧<br>1：在下一帧强制生成I帧|0：默认不触发编码强制I帧|
+|vmi.video.encode.rcmode|编码格式参数项。|0：ABR平均码率模式（暂不支持）<br>1：CRF画质优先模式（暂不支持）<br>2：CBR恒定码率模式<br>3：CAPPED_CRF画质优先并限制最大码率模式|3：CAPPED_CRF画质优先并限制最大码率模式|
 |vmi.video.encode.crf|CRF码控级别。|0-51|21|
-|vmi.video.encode.maxcrfrate|CRF码率峰值。|500000~100000000（AMD，一般为W6800）500000~30000000（DC1000）|10000000|
-|vmi.video.encode.vbvbuffersize|CRF码率缓冲区大小。|-1：自动模式0：禁用峰值比特率限制[min_vbv_size ~ 3000 ]：min_vbv_size = floor(1000 / fps) +1且min_vbv_size >= 10|1000|
-|vmi.video.encode.interpolation|补帧参数项。|0：关闭补帧1：开启补帧|0：关闭补帧|
-|vmi.audio.audiotype|音频输出格式。|0：OPUS1：PCM|0：OPUS|
-|vmi.audio.encode.sampleinterval|音频输出采样间隔。|5：5ms（暂不支持）10：10ms20：20ms（暂不支持）|10：10ms|
+|vmi.video.encode.maxcrfrate|CRF码率峰值。|500000~100000000（AMD，一般为W6800）<br>500000~30000000（DC1000）|10000000|
+|vmi.video.encode.vbvbuffersize|CRF码率缓冲区大小。|-1：自动模式<br>0：禁用峰值比特率限制<br>[min_vbv_size ~ 3000 ]：min_vbv_size = floor(1000 / fps) +1且min_vbv_size >= 10|1000|
+|vmi.video.encode.interpolation|补帧参数项。|0：关闭补帧<br>1：开启补帧|0：关闭补帧|
+|vmi.audio.audiotype|音频输出格式。|0：OPUS<br>1：PCM|0：OPUS|
+|vmi.audio.encode.sampleinterval|音频输出采样间隔。|5：5ms（暂不支持）<br>10：10ms<br>20：20ms（暂不支持）|10：10ms|
 |vmi.audio.encode.bitrate|音频OPUS编码码率（bps）。|13200~512000|192000|
-|vmi.mic.audiotype|麦克风输入格式。|0：OPUS1：PCM|0：OPUS|
-|vmi.network.type|网络类型。|1：tcp4：webrtc|1：tcp|
+|vmi.mic.audiotype|麦克风输入格式。|0：OPU<br>S1：PCM|0：OPUS|
+|vmi.network.type|网络类型。|1：tcp<br>4：webrtc|1：tcp|
 |demo.data.offset|用于测试网络包预留字段大小。|0~1024|20|
-|vmi.video.renderoptimize|出流优化，默认开启。|0：关闭1：开启|1：默认开启|
-|ro.vmi.audio.mic.passthrough|服务端audio，mic开关。|0：关闭1：开启|1：默认开启|
-|ro.vmi.gps.passthrough|服务端gps开关。|0：关闭1：开启|1：默认开启|
-|ro.vmi.sensor.passthrough|服务端sensor开关。|0：关闭1：开启|1：默认开启|
+|vmi.video.renderoptimize|出流优化，默认开启。|0：关闭<br>1：开启|1：默认开启|
+|ro.vmi.audio.mic.passthrough|服务端audio，mic开关。|0：关闭<br>1：开启|1：默认开启|
+|ro.vmi.gps.passthrough|服务端gps开关。|0：关闭<br>1：开启|1：默认开启|
+|ro.vmi.sensor.passthrough|服务端sensor开关。|0：关闭<br>1：开启|1：默认开启|
 |ro.hardware.vsyncoffset|vsync优化，该容器vsync信号相比默认值的偏移量，单位ns。|0：偏移量|0：默认偏移量|
 |ro.sys.vmi.cloudphone|云手机类型。|video：视频流云手机|video：默认视频流云手机|
 |heartbeat.max.aveage.latency|心跳最大平均时延。|1：1s|1：默认1s|
 |vmi.sys.network.latency.average|网络平均最大时延。|具体网络平均最大时延|-1：默认-1|
-|ro.vmi.loglevel|日志级别。|1：default2：verbose3：debug4：info5：warn6：error7：fatal|4：默认info日志级别|
+|ro.vmi.loglevel|日志级别。|1：default<br>2：verbose<br>3：debug<br>4：info<br>5：warn<br>6：error<br>7：fatal|4：默认info日志级别|
 
 本章节提供非商用部分音视频等模块的系统属性说明，开发者可以通过修改属性说明中的不同属性，配置视频流引擎音视频等模块的默认运行参数。
 
@@ -694,14 +701,14 @@ cd /home/k8s/k8s/script
 
 |字段名称|字段描述|取值范围|
 |--|--|--|
-|vmi.video.encodertype|编码器类型配置项。|0：CPU（CPU软编码器编码）1：VPU（外置硬件编码器编码）2：GPU（暂不支持）|
-|vmi.video.videoframetype|帧数据输出格式。|0：H2641：YUV（只有当encodertype取值为0时支持）|
-|vmi.video.encode.bitrate|WebRTC初始编码码率。|1000000~3000000单位bps|
-|vmi.video.encode.target_bitrate|WebRTC目标编码码率。|3000000~50000000单位bps|
+|vmi.video.encodertype|编码器类型配置项。|0：CPU（CPU软编码器编码）<br>1：VPU（外置硬件编码器编码）<br>2：GPU（暂不支持）|
+|vmi.video.videoframetype|帧数据输出格式。|0：H264<br>1：YUV（只有当encodertype取值为0时支持）|
+|vmi.video.encode.bitrate|WebRTC初始编码码率。|1000000~3000000<br>单位bps|
+|vmi.video.encode.target_bitrate|WebRTC目标编码码率。|3000000~50000000<br>单位bps|
 |vmi.audio.audiotype|音频输出格式。|1（目前WebRTC只支持音频PCM的输出格式）|
 |vmi.webrtc.connection.serverip|云手机服务端的IP地址。|具体IP地址。|
-|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口+**${index}***2-1，起始端口+**${index}***2。|可用的起始端口。|
-|vmi.network.type|网络类型。|1：TCP4：WebRTC|
+|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **\$\{index\}** * 2 - 1，起始端口 + **\$\{index\}** * 2。|可用的起始端口。|
+|vmi.network.type|网络类型。|1：TCP<br>4：WebRTC|
 |vmi.webrtc.httpserver.port|服务端HTTP映射端口号。|具体映射端口号。|
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|
 |vmi.webrtc.connection.udpmaxport|服务端使用的UDP最大端口。|可用的最大端口。|
