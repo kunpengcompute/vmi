@@ -675,7 +675,8 @@ container_run() {
     --image "$image" \
     --user_data_path "$userdata_dir" \
     --enable_render_layer "$ENABLE_RENDER_LAYER"\
-    --enable_f2fs "$ENABLE_F2FS"
+    --enable_f2fs "$ENABLE_F2FS"\
+    --system_size_mb "$SYSTEM_PARTITION_SIZE_MB"
     LOG_INFO "Initialize container ..."
 
     
@@ -756,7 +757,7 @@ container_restart() {
 
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER $ENABLE_F2FS
+    bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER $ENABLE_F2FS $SYSTEM_PARTITION_SIZE_MB
     [ ${?} -eq 1 ] && continue
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
     if [ ${#amd_gpus[@]} -ne 0 ]; then
