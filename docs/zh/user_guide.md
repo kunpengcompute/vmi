@@ -643,6 +643,9 @@ cd /home/k8s/k8s/script
 |T432_QUADRA_DECODE_ENABLE|T432/Quadra硬解使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
 |ENABLE_HARD_DECODE|DC1000硬解使能开关。|0/其他值：不使能<br>1：使能|1：默认使能|
 |ENABLE_WEBRTC_CONNECTION|WebRTC使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
+|ENABLE_F2FS|F2FS文件格式启动使能开关。|0/其他值：不使能1：使能|0：默认不使能|
+|SYSTEM_PARTITION_SIZE_MB|/system分区大小调节使能开关和具体设定数值（单位为MB）。|0：不使能  非0值：使能|0：默认不使能|
+
 
 视频流服务端引擎可通过启动脚本cfct\_config文件中的配置项，配置硬件解码、WebRTC等功能，本章节提供视频流启动脚本cfct\_config默认功能配置项说明。
 
