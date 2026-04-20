@@ -635,7 +635,8 @@ container_run() {
     --extra_run_option "$extra_run_option" \
     --image "$image" \
     --user_data_path "$userdata_dir" \
-    --enable_render_layer "$ENABLE_RENDER_LAYER"
+    --enable_render_layer "$ENABLE_RENDER_LAYER"\
+    --enable_f2fs "$ENABLE_F2FS"
     LOG_INFO "Initialize container ..."
 
     local basedata=${userdata_dir}/data/android_base/data
@@ -800,7 +801,7 @@ container_restart() {
 
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER
+    bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER $ENABLE_F2FS
     [ ${?} -eq 1 ] && continue
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
