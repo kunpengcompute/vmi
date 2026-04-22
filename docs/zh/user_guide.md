@@ -355,11 +355,11 @@
 2. 启动k8s视频流云手机。
 
     ```shell
-    ./k8s-video.sh start ${index1} ${index2}
+    ./k8s-video.sh start ${index1} ${index2} ${index3} ${index4} 
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    > \$\{index1\} 与 \$\{index2\} 为pod编号，其中 \$\{index2\} 可缺省。例：
+    > \$\{index1\} 与 \$\{index2\} 为pod编号，\$\{index3\}表示是否使能容器内文件为F2FS格式， 1表示使能，0表示不使能，默认是0；\$\{index4\}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不是能，该配置项默认是0。其中 \$\{index2\} \$\{index3\} \$\{index4\}可缺省。例：
     >- 创建名为video2的pod。
     >
     > ```shell
@@ -370,6 +370,21 @@
     >
     > ```shell
     > ./k8s-video.sh start 1 5
+    > ```
+    >- 创建名为video1\~video5共5个pod，并且都使能f2fs文件格式，且容器内/system分区大小配额为10240M
+    >
+    > ```shell
+    > ./k8s-video.sh start 1 5 1 10240
+    > ```
+    >- 创建名为video1\~video5共5个pod，不使能f2fs文件格式，且容器内/system分区大小配额为10240M
+    >
+    > ```shell
+    > ./k8s-video.sh start 1 5 0 10240
+    > ```
+    >- 创建名为video2的pod，不使能f2fs文件格式，且容器内/system分区大小配额为10240M
+    >
+    > ```shell
+    > ./k8s-video.sh start 2 2 0 10240
     > ```
 
 3. 启动后，查看是否启动成功。
