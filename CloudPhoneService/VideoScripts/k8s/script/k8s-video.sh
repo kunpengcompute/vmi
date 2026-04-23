@@ -19,7 +19,7 @@ if [ -z $5 ]; then
 fi
 
 if [ -z ${USER_DATA_PATH} ]; then
-    USER_DATA_PATH="/home/mhx/mount/"
+    USER_DATA_PATH="/home/mount/"
 fi
 
 if [ -z ${STORAGE_SIZE_GB} ]; then
@@ -376,7 +376,7 @@ function start(){
             # 轮询等待 K8s 分配 containerd 的运行 ID
             while [ $count -lt $max_wait ]; do
                 # 提取形如 containerd://xxxxxxxx 的真实 ID 字符串
-                container_id=$(kubectl get pod ${POD_NAME} -o jsonpath='{.status.containerStatuses[0].containerID}' 2>/dev/null | awk -F'://' '{print $2}')
+                container_id=$(crictl ps --name video$i --state running -q)
                 if [ -n "$container_id" ]; then
                     break
                 fi
