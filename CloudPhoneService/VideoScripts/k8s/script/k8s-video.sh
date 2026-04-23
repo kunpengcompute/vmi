@@ -376,7 +376,7 @@ function start(){
             # 轮询等待 K8s 分配 containerd 的运行 ID
             while [ $count -lt $max_wait ]; do
                 # 提取形如 containerd://xxxxxxxx 的真实 ID 字符串
-                container_id=$(crictl ps --name video$i --state running -q)
+                container_id=$(kubectl get pod ${POD_NAME} -o jsonpath='{.status.containerStatuses[0].containerID}' 2>/dev/null | awk -F'://' '{print $2}')
                 if [ -n "$container_id" ]; then
                     break
                 fi
