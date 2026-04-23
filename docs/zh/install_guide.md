@@ -837,7 +837,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     |参数|说明|
     |--|--|
-    |ACTION|参数值为create或delete，创建或者删除。|
+    |ACTION|参数值为create，fcreate或delete，普通创建、创建f2fs格式启动的容器或者删除。|
     |STORAGE_START_INDEX|数据卷删除或创建起始编号。|
     |STORAGE_END_INDEX|数据卷删除或创建结束编号，结束编号必须大于或者等于起始编号。|
     |STORAGE_SIZE_GB|存储大小，单位为GB。删除时可不传。|
@@ -849,6 +849,11 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
         ```shell
         ./storage_manager.sh create 1 100 32
+        ```
+    - 创建1个存储大小为32GB的存储隔离数据卷，名称为video1，并且容器内部以f2fs格式启动。
+
+        ```shell
+        ./storage_manager.sh fcreate 1 1 32
         ```
 
     - 如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，名称为video101\~video120。
