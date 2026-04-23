@@ -423,7 +423,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    > \$\{index1\} 与 \$\{index2\} 为pod编号，其中 \$\{index2\} 可缺省。例：
+    > \$\{index1\} 与 \$\{index2\} 为pod编号，\$\{index3\}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不是能，该配置项默认是0。其中 \$\{index2\} \$\{index3\} 可缺省。例：
     >- 创建名为video2的pod。
     >
     > ```shell
@@ -434,6 +434,11 @@
     >
     > ```shell
     > ./k8s-video.sh start 1 5
+    >    ```
+    >- 创建名为video1的pod。system分区大小限制为10240MB
+    >
+    > ```shell
+    > ./k8s-video.sh start 1 1 10240
     >    ```
 
 3. 启动后，查看是否启动成功。
