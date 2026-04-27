@@ -83,6 +83,9 @@ HANBO_ENCODERS=(
     "1.1"
 )
 
+# 使用NFS挂载启动的数据盘目录
+NFS_DIR="/tmp/nfs"
+
 # 数据卷存放位置
 USERDATA="/home/mount"
 
