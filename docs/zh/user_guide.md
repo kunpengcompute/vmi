@@ -80,6 +80,14 @@
         ```shell
         ./cfct_video start 1 5
         ```
+    
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >使用NFS挂载启动时，将start命令替换成nstart，例：
+    >
+    >```shell
+    >./cfct_video nstart 1 5
+    >```
+
 
 5. <a name="li3304181302311"></a>查看视频流云手机。
 
@@ -127,8 +135,6 @@
 
     ![](figures/zh-cn_image_0000002549864239.png)
 
-可根据需求配置cfct\_config文件中的参数启动不同分辨率和帧率的视频流云手机实例，配置default.prop文件中的初始视频编码参数。当使用WebRTC进行数据传输时，需要根据需求配置default.prop中的抓图分辨率；当后续使用APK访问视频流云手机时，可以在APK视图中修改抓图分辨率。
-
 ### 1.2 查询组件版本号信息<a name="ZH-CN_TOPIC_0000002549744227" id="查询组件版本号信息"></a>
 
 本章节提供两种方法获取视频流引擎组件版本信息，通过获取的软件包和API对外接口进行查询版本号信息。
@@ -158,8 +164,6 @@
 
 请参见[视频流引擎 开发指南](development_guide.md)中“对外接口”章节的“GetVersion”接口使用方法，通过调用该API获取版本信息，回显示例与方法一中的回显示例相同。
 
-本章节提供两种方法获取视频流引擎组件版本信息，通过获取的软件包和API对外接口进行查询版本号信息。
-
 ### 1.3 访问视频流云手机<a name="ZH-CN_TOPIC_0000002549864229" id="访问视频流云手机"></a>
 
 #### 1.3.1 APK方式访问<a name="ZH-CN_TOPIC_0000002518224464" id="APK方式访问"></a>
@@ -187,8 +191,6 @@
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位安卓系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
-若使用默认方式启动视频流云手机时，可以通过APK方式访问云手机。
-
 #### 1.3.2 PC端Web网页方式访问<a name="ZH-CN_TOPIC_0000002518384374"></a>
 
 若使用WebRTC进行数据传输的方式启动视频流云手机实例时，可以通过PC端的Web网页访问云手机。
@@ -202,8 +204,6 @@
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >每个视频流云手机实例需要配置映射端口，部署时可进入cfct\_video脚本设置合适的**$\{port\}**，端口号取值范围为1024\~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
-
-若使用WebRTC进行数据传输的方式启动视频流云手机实例时，可以通过PC端的Web网页访问云手机。
 
 ### 1.4 （可选）动态修改云手机参数<a name="ZH-CN_TOPIC_0000002549744243"></a>
 
@@ -246,8 +246,6 @@
 
     3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
-通过CloudPhone.apk可以动态修改云手机运行时的视频编码、音频播放编码参数。
-
 ### 1.5 重启视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864227"></a>
 
 使用cfct\_video脚本重启视频流云手机实例。
@@ -263,8 +261,6 @@
     ```shell
     ./cfct_video restart ${index1} ${index2}
     ```
-
-使用cfct\_video脚本重启视频流云手机实例。
 
 ### 1.6 删除视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864211"></a>
 
@@ -282,7 +278,12 @@
     ./cfct_video delete ${index1} ${index2}
     ```
 
-使用cfct\_video脚本删除视频流云手机实例。
+>![](public_sys-resources/icon-note.gif) **说明：** 
+>删除NFS挂载的容器时，将delete命令替换成ndelete，例：
+>
+>```shell
+>./cfct_video ndelete 1 5
+>```
 
 ## 2 k8s集群下操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002518224466"></a>
 
@@ -349,8 +350,6 @@
 
     预期结果为Pod名称应以va-device-plugin-daemonset开头，其状态（STATUS）列都是Running状态。
 
-在master节点下启动道客设备插件，启动前需要获取视频流服务端tar包组件，用于获取Kbox容器音视频数据等。
-
 ### 2.2 启动设备插件<a name="ZH-CN_TOPIC_0000002518224436"></a>
 
 在master节点下启动设备插件。
@@ -373,8 +372,6 @@
 
     期望是以k8s-host-device开头的Pod名称，其状态（STATUS）列都是Running状态。
 
-在master节点下启动设备插件。
-
 ### 2.3 启动input设备权限写入插件<a name="ZH-CN_TOPIC_0000002549864213"></a>
 
 在master节点下启动input设备权限写入插件。
@@ -396,8 +393,6 @@
     ```
 
     期望是以input-devices-permission-daemonset开头的Pod名称，其状态（STATUS）列都是Running状态。
-
-在master节点下启动input设备权限写入插件。
 
 ### 2.4 启动K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864215"></a>
 
@@ -423,23 +418,31 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    > 
+    > 若需要使用NFS挂载启动，则将start改成nstart。例：
+    >
+    > ```shell
+    > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4} 
+    > ```
+    >
     > \$\{index1\} 与 \$\{index2\} 为pod编号，\$\{index3\}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不是能，该配置项默认是0。其中 \$\{index2\} \$\{index3\} 可缺省。例：
     >- 创建名为video2的pod。
     >
     > ```shell
     > ./k8s-video.sh start 2
-    >    ```
+    > ```
     >
     >- 创建名为video1\~video5共5个pod。
     >
     > ```shell
     > ./k8s-video.sh start 1 5
-    >    ```
+    > ```
+    >
     >- 创建名为video1的pod。system分区大小限制为10240MB
     >
     > ```shell
     > ./k8s-video.sh start 1 1 10240
-    >    ```
+    > ```
 
 3. 启动后，查看是否启动成功。
 
@@ -469,8 +472,6 @@
         crictl exec -it ${CONTAINER} sh
         ```
 
-启动K8s视频流云手机实例需要在master节点下操作。
-
 ### 2.5 删除K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002518384356"></a>
 
 删除K8s视频流云手机实例需要在master节点下操作。
@@ -484,8 +485,6 @@ cd /home/k8s/k8s/script
 > \$\{index1\} 与 \$\{index2\} 为pod编号，其中 \$\{index2\} 可缺省。
 >例：./k8s-video.sh delete 2（删除名为video2的pod）
 >./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
-
-删除K8s视频流云手机实例需要在master节点下操作。
 
 ### 2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
 
@@ -507,8 +506,6 @@ cd /home/k8s/k8s/script
 
 3. 将所需的应用（例地铁跑酷等）预装到该云手机容器中。
 4. 登录云手机video1所在节点，基础数据卷所在位置为“/home/mount/img/video1.img“，将img文件重命名为videobase.img并拷贝到每个工作节点的“/home/mount/img“目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
-
-通过本章节步骤制作基础数据卷，用于工作节点的容器存储隔离和大小设置。
 
 ## 3 可配置项功能说明<a name="ZH-CN_TOPIC_0000002549864233"></a>
 
@@ -537,8 +534,6 @@ cd /home/k8s/k8s/script
 |ro.hardware.compositionBypass|合成优化开关，针对应用全屏场景优化。（GPU为DC1000时不支持，不允许打开此开关）|1：生效合成优化<br>其他：不生效|0：默认关闭|
 |ro.hardware.compositionBypass.offset|合成优化偏置帧数。在合成优化功能打开时，连续一定帧数满足生效条件后实际生效合成优化功能，可以改善合成优化功能开启后可能出现的画面旋转现象。|大于0|可根据实际情况调整（AMD环境建议0）|
 |ro.vmi.adaptive.vsync|自适应vsync功能开关，打开后可以优化服务端图像渲染阶段的处理时延。|1：生效自适应vsync<br>其他：不生效|默认不生效|
-
-视频流服务端引擎可通过系统属性配置视频，音频，网络等功能引擎参数，本章节对相关配置参数进行配置说明。
 
 #### 3.1.2 图形加速层配置项<a name="ZH-CN_TOPIC_0000002518224442" id="图形加速层配置项"></a>
 
@@ -619,8 +614,6 @@ cd /home/k8s/k8s/script
 </Application>
 ```
 
-当前图形加速层使能了GPUMock和ShaderCache两个可配置功能，本章节对两个可配置功能的配置项、配置规则进行说明，并且提供配置示例以供参考。
-
 ### 3.2 视频流引擎非商用部分<a name="ZH-CN_TOPIC_0000002549744215"></a>
 
 #### 3.2.1 启动脚本配置项<a name="ZH-CN_TOPIC_0000002549864225" id="启动脚本配置项"></a>
@@ -650,9 +643,7 @@ cd /home/k8s/k8s/script
 |ENABLE_WEBRTC_CONNECTION|WebRTC使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
 |ENABLE_F2FS|F2FS文件格式启动使能开关。|0/其他值：不使能1：使能|0：默认不使能|
 |SYSTEM_PARTITION_SIZE_MB|/system分区大小调节使能开关和具体设定数值（单位为MB）。|0：不使能  非0值：使能|0：默认不使能|
-
-
-视频流服务端引擎可通过启动脚本cfct\_config文件中的配置项，配置硬件解码、WebRTC等功能，本章节提供视频流启动脚本cfct\_config默认功能配置项说明。
+|NFS_DIR|客户端NFS挂载服务端的目录|可用的NFS挂载目录|/tmp/nfs：默认NFS挂载目录|
 
 #### 3.2.2 视频流引擎属性配置项<a name="ZH-CN_TOPIC_0000002518384388"></a>
 
@@ -720,8 +711,6 @@ cd /home/k8s/k8s/script
 |vmi.webrtc.httpserver.port|服务端HTTP映射端口号。|具体映射端口号。|
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|
 |vmi.webrtc.connection.udpmaxport|服务端使用的UDP最大端口。|可用的最大端口。|
-
-本章节提供非商用部分WebRTC模块的系统属性说明，开发者可以通过修改属性说明中的不同属性，配置视频流引擎WebRTC模块的默认运行参数。
 
 ## 4 故障处理<a name="ZH-CN_TOPIC_0000002549864199"></a>
 

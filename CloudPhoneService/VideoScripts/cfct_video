@@ -551,6 +551,13 @@ container_run() {
         echo "Skip usr data copy"
         no_copy_usr_data=1
     fi
+
+    local enable_nfs=0
+    if [ $3 ] && [ $3 -eq 2 ]; then
+        echo "Use nfs mount"
+        enable_nfs=1
+        no_copy_usr_data=1
+    fi
     local port=$(($container_id+8000))
     local adb_port=$(($container_id +8500))
     local container_name="${DOCKER_NAME_PREFIX}${container_id}"
@@ -637,7 +644,9 @@ container_run() {
     --user_data_path "$userdata_dir" \
     --enable_render_layer "$ENABLE_RENDER_LAYER"\
     --enable_f2fs "$ENABLE_F2FS"\
-    --system_size_mb "$SYSTEM_PARTITION_SIZE_MB"
+    --system_size_mb "$SYSTEM_PARTITION_SIZE_MB" \
+    --enable_nfs "$enable_nfs" \
+    --nfs_dir "$NFS_DIR"
     LOG_INFO "Initialize container ..."
 
     local basedata=${userdata_dir}/data/android_base/data
@@ -835,6 +844,9 @@ container_delete() {
     fi
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
+    if [ $keep_data -eq 2 ]; then
+        userdata_dir=$NFS_DIR
+    fi
     bash $THISDIR/base_box.sh delete $container_name ${userdata_dir} $keep_data
 }
 
@@ -1064,6 +1076,19 @@ main() {
                 container_run $DOCKER_IMAGE $container_id 1
             fi
         done
+    elif [ $1 = "nstart" ]; then
+        local MIN=$2 MAX=$3
+        if [ -z $3 ]; then
+            MAX=$2
+        fi
+        local container_id
+        for container_id in $(seq $MIN $MAX); do
+            if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+                LOG_WARN "android_$container_id exist!"
+            else
+                container_run $DOCKER_IMAGE $container_id 2
+            fi
+        done
     elif [ $1 = "qtstart" ]; then
         local MIN=$2 MAX=$3 COUNT=$4
         if [ -z $3 ]; then
@@ -1101,6 +1126,19 @@ main() {
                 LOG_WARN "no container android_$container_id!"
             else
                 container_delete "android_$container_id" "" 1
+            fi
+        done
+    elif [ $1 = "ndelete" ]; then
+        local MIN=$2 MAX=$3
+        if [ -z $3 ]; then
+            MAX=$2
+        fi
+        local container_id
+        for container_id in $(seq $MIN $MAX); do
+            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
+                LOG_WARN "no container android_$container_id!"
+            else
+                container_delete "android_$container_id" "" 2
             fi
         done
     elif [ $1 = "qtdelete" ]; then
