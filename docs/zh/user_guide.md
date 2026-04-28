@@ -712,6 +712,38 @@ cd /home/k8s/k8s/script
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|
 |vmi.webrtc.connection.udpmaxport|服务端使用的UDP最大端口。|可用的最大端口。|
 
+#### 3.2.4 容器内cpu频率动态调节<a name="ZH-CN_TOPIC_0000002549744226" id="容器内cpu频率动态调节"></a>
+##### 3.2.4.1 功能背景
+在真机中，系统为了平衡负载和功耗，会动态调节 CPU 的运行频率，而云机依托于服务器宿主机的容器化环境运行，其底层物理 CPU 的频率通常处于恒定状态，与真机存在差异。下面步骤说明如何实现云手机cpu频率动态调节，提高仿真能力
+
+##### 3.2.4.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
+   当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改，
+   
+   在修改前先确保相关路径有写入权限，输入如下命令查看相关路径的权限
+   ```shell
+   ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/
+   ```
+
+   如果包含 w（如 -rw-r--r--），说明文件的所有者（通常是 root）拥有写入权限。
+
+   如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。
+   
+   随后输入如下命令读取cpu所支持的频率列表。
+   ```shell
+   cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
+   ```
+   随后输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值
+   ```shell
+   echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_cur_freq
+   ```
+
+   ```shell
+   echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/cpuinfo_cur_freq
+   ```
+
+##### 3.2.4.3 **校验是否生效。**
+   启动容器后，在容器内安装如“手机设备信息大全”的应用，查看cpu频率是否等于预期，若等于预期值即表示cpu频率调节生效。
+
 ## 4 故障处理<a name="ZH-CN_TOPIC_0000002549864199"></a>
 
 ### 4.1 概述<a name="ZH-CN_TOPIC_0000002549864223"></a>
