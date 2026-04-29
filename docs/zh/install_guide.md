@@ -317,13 +317,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 制作视频流云手机镜像前需要根据本章节内容完成Kbox镜像的制作。
 
-1. 请参见[部署Kbox容器基础环境](#部署Kbox容器基础环境)获取Kbox容器启动依赖组件android.tar和Kbox-AOSP15.zip，并上传至服务器的“/home/kbox\_video“目录（本文以此目录作为示例，用户也可自行设置目录）。
-2. 解压Kbox-AOSP15.zip，获取“deploy\_scripts“路径下的2个组件android\_kbox\_aosp15.sh、base\_box\_aosp15.sh，并将其拷贝到“/home/kbox\_video“目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
+1. 请参见[部署Kbox容器基础环境](#部署Kbox容器基础环境)获取Kbox容器启动依赖组件android.tar和Kbox-patches-AOSP15.zip，并上传至服务器的“/home/kbox\_video“目录（本文以此目录作为示例，用户也可自行设置目录）。
+2. 解压Kbox-patches-AOSP15.zip，获取“deploy\_scripts“路径下的2个组件android\_kbox\_aosp15.sh、base\_box\_aosp15.sh，并将其拷贝到“/home/kbox\_video“目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
 
     ```shell
-    unzip Kbox-AOSP15.zip
-    cp Kbox-AOSP15/deploy_scripts/base_box_aosp15.sh /home/kbox_video/
-    cp Kbox-AOSP15/deploy_scripts/android_kbox_aosp15.sh /home/kbox_video/
+    unzip Kbox-patches-AOSP15.zip
+    cp Kbox-patches-AOSP15/deploy_scripts/base_box_aosp15.sh /home/kbox_video/
+    cp Kbox-patches-AOSP15/deploy_scripts/android_kbox_aosp15.sh /home/kbox_video/
     chmod 755 /home/kbox_video/base_box_aosp15.sh
     chmod 755 /home/kbox_video/android_kbox_aosp15.sh
     ```
@@ -338,7 +338,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
         docker import android.tar kbox:demo
         ```
 
-    2. 将Kbox-AOSP15文件夹中的deploy\_scripts目录上传至服务器的“\~/dependency“目录。
+    2. 将Kbox-patches-AOSP15文件夹中的deploy\_scripts目录上传至服务器的“\~/dependency“目录。
     3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox\_\*.zip到“\~/dependency/deploy\_scripts“目录。
     4. （硬件配置方案二、三）使用硬件配置方案二、三时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC13-A15.tgz，获取va\_driver.tgz，上传到服务器的“\~/dependency/deploy\_scripts“目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
@@ -583,10 +583,10 @@ cfct\_config配置文件配置项和配置方法如下所示。
 以上两个功能均可使用kbox\_render\_accelerating\_configuration.xml配置文件进行功能配置。图形加速层的使能步骤如下：
 
 1. 修改云手机启动配置文件cfct\_config中“**ENABLE\_RENDER\_LAYER**”设置为1。
-2. 从软件包Kbox-AOSP15.zip中复制kbox\_render\_accelerating\_configuration.xml配置文件到启动路径/home/kbox\_video/。
+2. 从软件包Kbox-patches-AOSP15.zip中复制kbox\_render\_accelerating\_configuration.xml配置文件到启动路径/home/kbox\_video/。
 
     ```shell
-    cp /home/kbox_video/Kbox-AOSP15/deploy_scripts/kbox_render_accelerating_configuration.xml /home/kbox_video/
+    cp /home/kbox_video/Kbox-patches-AOSP15/deploy_scripts/kbox_render_accelerating_configuration.xml /home/kbox_video/
     ```
 
 3. 打开kbox\_render\_accelerating\_configuration.xml配置文件，对应用的图形加速层功能进行配置。具体配置项描述请参见[图形加速层配置项](user_guide.md#图形加速层配置项)章节的图形加速层配置项说明。
@@ -1334,7 +1334,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 |软件包|文件|文件路径|获取地址|
 |--|--|--|--|
-|Kbox-AOSP15|虚拟机内核补丁|Kbox-AOSP15/deploy_scripts/vm_deploy/patchForKernel/general.patch|[获取链接](https://gitcode.com/boostkit/Kbox/tree/AOSP15)|
+|Kbox-patches-AOSP15|虚拟机内核补丁|Kbox-patches-AOSP15/deploy_scripts/vm_deploy/patchForKernel/general.patch|[获取链接](https://gitcode.com/boostkit/Kbox-patches/tree/AOSP15)|
 
 ### 2.2 宿主机环境配置<a name="ZH-CN_TOPIC_0000002518493742"></a>
 
