@@ -162,10 +162,10 @@ spec:      #pod中容器定义
         path: /sys/devices/system/cpu/cpuidle
     - name: cache
       hostPath:
-        path: /home/mount/data/${POD_NAME}/cache
+        path: ${USER_DATA_PATH}/data/${POD_NAME}/cache
     - name: data
       hostPath:
-        path: /home/mount/data/${POD_NAME}/data
+        path: ${USER_DATA_PATH}/data/${POD_NAME}/data
     - name: containerid
       hostPath:
         path: /var/run/containerd/${POD_NAME}
@@ -210,4 +210,4 @@ spec:      #pod中容器定义
         path: /sys/devices/system/cpu/cpu7
     - name: storagesize
       hostPath:
-        path: /home/mount/data/${POD_NAME}/storage_size
+        path: ${USER_DATA_PATH}/data/${POD_NAME}/storage_size
