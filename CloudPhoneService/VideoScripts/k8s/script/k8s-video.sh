@@ -14,7 +14,7 @@ NFS_DATA_PATH="/tmp/nfs"
 STORAGE_SIZE_GB=32
 function start(){
     if [ -z "$DATA_BASE_PATH" ]; then
-        export DATA_BASE_PATH="/home/mount/data"
+        export DATA_BASE_PATH="/home/mount"
     fi
     for ((i=$MIN; i<=$MAX; i++))
     do
@@ -117,7 +117,7 @@ function nstart(){
             echo "Already mounted: $DATA_PATH"
         fi
     done
-    export DATA_BASE_PATH=${NFS_DATA_PATH}/data
+    export DATA_BASE_PATH=${NFS_DATA_PATH}
     start "$@"
 }
 
