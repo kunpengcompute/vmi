@@ -8,7 +8,7 @@ spec:      #pod中容器定义
     containers:
     - name: ${POD_NAME}    #视频流容器名称
       image: docker.io/library/video:version #视频流容器镜像
-      command: [ "/bin/sh", "-c", "sh k8s-init.sh" ]
+      command: [ "init" ]
       imagePullPolicy: IfNotPresent   #获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像
       securityContext:
         runAsUser: 0
@@ -89,6 +89,8 @@ spec:      #pod中容器定义
         name: cache
       - mountPath: /data
         name: data
+      - mountPath: /data/containerid
+        name: containerid
       - mountPath: /dev/input/event0
         name: eventzero
       - mountPath: /dev/input/event1
@@ -158,7 +160,10 @@ spec:      #pod中容器定义
         path: /home/mount/data/${POD_NAME}/cache
     - name: data
       hostPath:
-        path: /home/mount/data/${POD_NAME}/data
+        path: ${DATA_BASE_PATH}/${POD_NAME}/data
+    - name: containerid
+      hostPath:
+        path: /var/run/containerd/${POD_NAME}
     - name: eventzero
       hostPath:
         path: /var/run/${POD_NAME}/input/event0
