@@ -498,8 +498,16 @@ cd /home/k8s/k8s/script
     ./k8s-video.sh start 1
     ```
 
-2. 将所需的应用（例地铁跑酷等）预装到该云手机容器中。
-3. 将img文件重命名为videobase.img并拷贝到每个工作节点的“/home/mount/img“目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
+2. 在master节点找到云手机video1所在节点。
+
+    ```shell
+    kubectl get pod -A -owide
+    ```
+
+    在回显信息中找到NAME为video1的行，NODE列的值即为video1所在节点。
+
+3. 将所需的应用（例地铁跑酷等）预装到该云手机容器中。
+4. 登录云手机video1所在节点，基础数据卷所在位置为“/home/mount/img/video1.img“，将img文件重命名为videobase.img并拷贝到每个工作节点的“/home/mount/img“目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
 
 ## 3 可配置项功能说明<a name="ZH-CN_TOPIC_0000002549864233"></a>
 
@@ -635,7 +643,7 @@ cd /home/k8s/k8s/script
 |T432_QUADRA_DECODE_ENABLE|T432/Quadra硬解使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
 |ENABLE_HARD_DECODE|DC1000硬解使能开关。|0/其他值：不使能<br>1：使能|1：默认使能|
 |ENABLE_WEBRTC_CONNECTION|WebRTC使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
-|ENABLE_F2FS|F2FS文件格式启动使能开关。|0/其他值：不使能1：使能|0：默认不使能|
+|ENABLE_F2FS|F2FS文件系统启动使能开关。|0/其他值：不使能1：使能|0：默认不使能|
 |SYSTEM_PARTITION_SIZE_MB|/system分区大小调节使能开关和具体设定数值（单位为MB）。|0：不使能  非0值：使能|0：默认不使能|
 |NFS_DIR|客户端NFS挂载服务端的目录|可用的NFS挂载目录|/tmp/nfs：默认NFS挂载目录|
 
@@ -705,6 +713,38 @@ cd /home/k8s/k8s/script
 |vmi.webrtc.httpserver.port|服务端HTTP映射端口号。|具体映射端口号。|
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|
 |vmi.webrtc.connection.udpmaxport|服务端使用的UDP最大端口。|可用的最大端口。|
+
+#### 3.2.4 容器内cpu频率动态调节<a name="ZH-CN_TOPIC_0000002549744226" id="容器内cpu频率动态调节"></a>
+##### 3.2.4.1 功能背景
+在真机中，系统为了平衡负载和功耗，会动态调节 CPU 的运行频率，而云机依托于服务器宿主机的容器化环境运行，其底层物理 CPU 的频率通常处于恒定状态，与真机存在差异。下面步骤说明如何实现云手机cpu频率动态调节，提高仿真能力
+
+##### 3.2.4.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
+   当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改，
+   
+   在修改前先确保相关路径有写入权限，输入如下命令查看相关路径的权限
+   ```shell
+   ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/
+   ```
+
+   如果包含 w（如 -rw-r--r--），说明文件的所有者（通常是 root）拥有写入权限。
+
+   如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。
+   
+   随后输入如下命令读取cpu所支持的频率列表。
+   ```shell
+   cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
+   ```
+   随后输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值
+   ```shell
+   echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_cur_freq
+   ```
+
+   ```shell
+   echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/cpuinfo_cur_freq
+   ```
+
+##### 3.2.4.3 **校验是否生效。**
+   启动容器后，在容器内安装如“手机设备信息大全”的应用，查看cpu频率是否等于预期，若等于预期值即表示cpu频率调节生效。
 
 ## 4 故障处理<a name="ZH-CN_TOPIC_0000002549864199"></a>
 
