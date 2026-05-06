@@ -193,8 +193,8 @@ function wait_container_ready() {
         local result=$(wait_cmd "${cmd}")
         if [ ${result} -eq 0 ]; then
             bash $THISDIR/base_box.sh chk_key_process ${container_name}
-            [ ${?} -ne 0 ] && has_restart=1 && bash $THISDIR/base_box.sh restart "${container_name}" "$userdata_dir" 2
-            [ ${?} -eq 1 ] && [ $has_restart -eq 1 ] && echo "${container_name} started failed at $(date +'%Y-%m-%d %H:%M:%S')!" && break
+            #[ ${?} -ne 0 ] && has_restart=1 && bash $THISDIR/base_box.sh restart "${container_name}" "$userdata_dir" 2
+            #[ ${?} -eq 1 ] && [ $has_restart -eq 1 ] && echo "${container_name} started failed at $(date +'%Y-%m-%d %H:%M:%S')!" && break
 
             printf "\r\033[1;32m%03d/%03d\033[0m\n" $(($currenttime-$starttime)) $timeout
             return 0
@@ -539,6 +539,58 @@ function webrtc_conection_configure()
     echo $opt
 }
 
+create_build_prop() {
+    echo "ro.hardware.width=${BUILD_WIDTH}" >> $THISDIR/build.prop 
+    LOG_INFO "ro.hardware.width=${BUILD_WIDTH}"
+    echo "ro.hardware.height=${BUILD_HEIGHT}" >> $THISDIR/build.prop 
+    LOG_INFO "ro.hardware.height=${BUILD_HEIGHT}"
+    echo "qemu.sf.lcd_density=${BUILD_DENSITY}" >> $THISDIR/build.prop 
+    LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
+    echo "ro.hardware.fps=${BUILD_FPS}" >> $THISDIR/build.prop 
+    LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
+    #echo "ro.hardware.omxsoftdecode=${va_hard_encode_flag}" >> $THISDIR/build.prop
+    #LOG_INFO "ro.hardware.omxsoftdecode=${va_hard_encode_flag}"
+    echo "ro.hardware.enableC2decode=0" >> $THISDIR/build.prop
+    echo "ro.hardware.omxsoftdecode=0" >> $THISDIR/build.prop
+    # 配置是否使能C2解码器
+    if lspci | grep -q "Radeon PRO W6800"; then
+        if [ ${ENABLE_AMD_C2_DECODE} -eq 1 ];then
+            sed -i "s/ro.hardware.enableC2decode=0/ro.hardware.enableC2decode=1/g" $THISDIR/build.prop
+            sudo chmod 666 /dev/dma_heap/system
+        else
+            sed -i "s/ro.hardware.enableC2decode=1/ro.hardware.enableC2decode=0/g" $THISDIR/build.prop
+        fi
+    fi
+    local VA_SGPU100_ID=":0200"
+    # VA GPU需要配置相关属性、修改设备的权限, 否则会导致容器无法启动, 当前VA GPU仅支持一张卡，故使用 GPUS_RENDER[0]
+    if [ -n "$(lspci -n | grep ${VA_SGPU100_ID} | awk '{print $3}')" ]; then
+        if [ $ENABLE_HARD_DECODE -eq 1 ];then
+            sed -i "s/ro.hardware.omxsoftdecode=1/ro.hardware.omxsoftdecode=0/g" $THISDIR/build.prop
+        else
+            sed -i "s/ro.hardware.omxsoftdecode=0/ro.hardware.omxsoftdecode=1/g" $THISDIR/build.prop
+        fi
+    fi
+
+}
+
+create_default_prop() {
+    if [ -f $DEFAULT_PROP ]; then
+        local tmp_default_prop=${DEFAULT_PROP}_$container_name
+        cp $DEFAULT_PROP $tmp_default_prop
+        local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
+        if [ ${#amd_gpus[@]} -ne 0 ] && [ ${ENABLE_SOFT_RENDER} -ne 1 ]; then
+            local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
+            LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
+            sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
+        fi
+        if [ ${ENABLE_ONLY64_KBOX} -eq 1 ]; then
+            sed -i 's/\(.*\)ro.zygote=\(.*\)/ro.zygote='"zygote64"'/g' $tmp_default_prop
+        fi
+        chmod 755 $tmp_default_prop
+    fi
+}
+
+
 container_run() {
     if [ $ENABLE_SOFT_RENDER -eq 0 ]; then
         check_encode_card
@@ -621,7 +673,11 @@ container_run() {
 
     local ram_size_mb=$(($RAM_SIZE_GB * 1024))
 
-
+    if [ -f $THISDIR/build.prop ]; then
+	   rm -rf $THISDIR/build.prop
+    fi
+    create_build_prop
+    create_default_prop
     # 额外启动参数
     local extra_run_option=$opt
     bash $THISDIR/base_box.sh start \
@@ -652,26 +708,6 @@ container_run() {
     else
         echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/default/$CID*/devices.allow)
     fi
-    if [ -f $DEFAULT_PROP ]; then
-        local tmp_default_prop=${DEFAULT_PROP}_$container_id
-        cp $DEFAULT_PROP $tmp_default_prop
-        local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-        if [ ${#amd_gpus[@]} -ne 0 ] && [ ${ENABLE_SOFT_RENDER} -ne 1 ]; then
-            local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
-            LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
-            sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
-        fi
-        if [ ${ENABLE_ONLY64_KBOX} -eq 1 ]; then
-            sed -i 's/\(.*\)ro.zygote=\(.*\)/ro.zygote='"zygote64"'/g' $tmp_default_prop
-        fi
-        cmd="$RUNTIME_CMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
-        LOG_INFO "$cmd"
-        $cmd
-        rm -rf $tmp_default_prop
-        cmd="$RUNTIME_CMD exec -i $container_name chmod 755 /system/vendor/default.prop"
-        LOG_INFO "$cmd"
-        $cmd
-    fi
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
@@ -688,39 +724,7 @@ container_run() {
             $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
         fi
     fi
-
-    local prop_build_file="/system/vendor/build.prop /system/build.prop"
-    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.width=\).*/\1${BUILD_WIDTH}/g\" ${prop_build_file} > /dev/null 2>&1 &"
-    LOG_INFO "ro.hardware.width=${BUILD_WIDTH}"
-    local result=$(wait_cmd "${cmd}")
-    if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-    fi
-    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.height=\).*/\1${BUILD_HEIGHT}/g\" ${prop_build_file} > /dev/null 2>&1 &"
-    LOG_INFO "ro.hardware.height=${BUILD_HEIGHT}"
-    result=$(wait_cmd "${cmd}")
-    if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-    fi
-    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(qemu.sf.lcd_density=\).*/\1${BUILD_DENSITY}/g\" ${prop_build_file} > /dev/null 2>&1 &"
-    LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
-    result=$(wait_cmd "${cmd}")
-    if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-    fi
-    cmd="$RUNTIME_CMD exec -i $container_name sed -i \"s/^\(ro.hardware.fps=\).*/\1${BUILD_FPS}/g\" ${prop_build_file} > /dev/null 2>&1 &"
-    LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
-    result=$(wait_cmd "${cmd}")
-    if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-    fi
-    if [ $DEFAULT_RUNTIME == "docker" ]; then
-        cmd="$RUNTIME_CMD exec -itd $container_name /kbox-init.sh"
-    else
-        cmd="$RUNTIME_CMD exec -d $container_name /kbox-init.sh 1" 
-    fi
-    LOG_INFO "$cmd"
-    $cmd &
+       
     wait_container_ready "$container_name"
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
@@ -754,35 +758,13 @@ container_restart() {
             webrtc_conection_configure restart
         fi
         local container_id=`echo ${container_name:8}`
-        local tmp_default_prop=${DEFAULT_PROP}_$container_id
+        local tmp_default_prop=${DEFAULT_PROP}_$container_name
         cp $DEFAULT_PROP $tmp_default_prop
-
-        local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-        if [ ${#amd_gpus[@]} -ne 0 ] && [ $ENABLE_SOFT_RENDER -ne 1 ]; then
-            local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
-            LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
-            sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
+        if [ -f $THISDIR/build.prop ]; then
+	    rm -rf $THISDIR/build.prop
         fi
-
-        local cmd="$RUNTIME_CMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
-        LOG_INFO "$cmd"
-        local result=$(wait_cmd "${cmd}")
-        if [ ${result} -eq -1 ]; then
-            EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-        fi
-        cmd="$RUNTIME_CMD cp $tmp_default_prop $container_name:/system/vendor/default.prop"
-        LOG_INFO "$cmd"
-        $cmd
-        rm -rf $tmp_default_prop
-        cmd="$RUNTIME_CMD exec -i $container_name chmod 755 /system/vendor/default.prop"
-        LOG_INFO "$cmd"
-        $cmd
-        cmd="$RUNTIME_CMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
-        LOG_INFO "$cmd"
-        local result=$(wait_cmd "${cmd}")
-        if [ ${result} -eq -1 ]; then
-            EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
-        fi
+        create_build_prop
+        create_default_prop
     fi
 
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
