@@ -19,7 +19,11 @@ if [ -z $5 ]; then
 fi
 
 if [ -z ${USER_DATA_PATH} ]; then
-    USER_DATA_PATH="/home/mount/"
+    USER_DATA_PATH="/home/mount"
+fi
+
+if [ -z ${NFS_DATA_PATH} ]; then
+    NFS_DATA_PATH="/tmp/nfs"
 fi
 
 if [ -z ${STORAGE_SIZE_GB} ]; then
@@ -296,35 +300,36 @@ function start(){
     cd $THISDIR
     export LXCFS_PATH=$(get_lxcfs_path)
     export THIS_DIR=$THISDIR
+    export USER_DATA_PATH=$USER_DATA_PATH
     if [ "$ENABLE_F2FS" == "1" ]; then  
- 	    check_f2fs_partition "${USER_DATA_PATH}data"
- 	    if [ $? -ne 0 ]; then
- 	        return 1 # 校验失败，直接退出拉起流程
- 	    fi
- 	fi
+	    check_f2fs_partition "${USER_DATA_PATH}/data"
+	    if [ $? -ne 0 ]; then
+	        return 1 # 校验失败，直接退出拉起流程
+	    fi
+	fi
     for ((j=$MIN; j<=$MAX; j++))
     do
         IMG=${USER_DATA_PATH}/img/video$j.img
         if [ ! -e $IMG ]; then
             fallocate -l ${STORAGE_SIZE_GB}G $IMG
             if [ "$ENABLE_F2FS" == "1" ]; then
- 	             yes | mkfs.f2fs $IMG
- 	         else
- 	             yes | mkfs -t ext4 $IMG
- 	         fi
+	             yes | mkfs.f2fs $IMG
+	         else
+	             yes | mkfs -t ext4 $IMG
+	         fi
         fi
-        DATA_PATH="${USER_DATA_PATH}data/video$j"
+        DATA_PATH="${USER_DATA_PATH}/data/video$j"
         mkdir -p $DATA_PATH
         if [ "$ENABLE_F2FS" == "1" ]; then
- 	        mount -t f2fs -o loop $IMG $DATA_PATH
+	        mount -t f2fs -o loop $IMG $DATA_PATH
         else
             mount $IMG $DATA_PATH
- 	    fi
+	    fi
         echo $(($STORAGE_SIZE_GB * 2 * 1024 * 1024)) >$DATA_PATH/storage_size
-        export YAML_PATH=$j  #yaml配置文件位置
-        export POD_NAME=video$j  # pod名称及容器名称
-        touch /var/run/containerd/video$j  # 用于存放容器ID
-        export HOSTPORT=$(expr $j + 8000)   # 宿主机端口号
+        export YAML_PATH=$j
+        export POD_NAME=video$j
+        touch /var/run/containerd/video$j
+        export HOSTPORT=$(expr $j + 8000)
         export HOSTPORT2=$(expr $j + 8500)
         cp k8s-video.yaml k8s-video-apply.yaml
         mock_cpu
@@ -486,42 +491,54 @@ function delete(){
 }
 
 function check_f2fs_partition () {
- 	     local target_path=$1
- 	     local has_error=0
- 	     
- 	     # 1. 校验当前内核是否支持 f2fs
- 	     # 使用 grep -q 静默匹配，如果找到了会返回 0 (true)
- 	     if ! grep -q "f2fs" /proc/filesystems; then
- 	         echo -e "\033[1;31m[ERROR] 校验失败: 当前系统内核不支持 f2fs 文件系统。\033[0m"
- 	         echo -e "\033[1;31m[ERROR] 执行 'cat /proc/filesystems | grep f2fs' 未检测到回显。\033[0m"
- 	         echo -e "\033[1;31m[ERROR] 请检查内核是否编译了 f2fs 支持，或尝试手动加载模块 (modprobe f2fs)。\033[0m"
- 	         has_error=1
- 	     fi
- 	 
- 	     # 2. 校验目标目录所在的分区是否为 f2fs 格式
- 	     mkdir -p "${target_path}"
- 	     local host_fs_type=$(df -T "${target_path}" | tail -1 | awk '{print $2}')
- 	     if [ "$host_fs_type" != "f2fs" ]; then
- 	         echo -e "\033[1;31m[ERROR] 校验失败: 容器配置为使能 f2fs (ENABLE_F2FS=1)\033[0m"
- 	         echo -e "\033[1;31m[ERROR] 但目标挂载目录 ${target_path} 所在的分区格式为 ${host_fs_type}，并非 f2fs。\033[0m"
- 	         echo -e "\033[1;31m[ERROR] 请检查底层硬盘分区格式是否已正确格式化并挂载！\033[0m"
- 	         has_error=1
- 	     fi
- 	 
- 	     # 3. 最终判断逻辑：只要有一个校验未通过，就中止并返回 1
- 	     if [ "$has_error" -ne 0 ]; then
- 	         echo -e "\033[1;31m[ERROR] f2fs 运行环境检查未通过，操作已中止。\033[0m"
- 	         return 1
- 	     fi
- 	 
- 	     return 0
- 	 }
+    local target_path=$1
+    local has_error=0
+    
+    # 1. 校验当前内核是否支持 f2fs
+    # 使用 grep -q 静默匹配，如果找到了会返回 0 (true)
+    if ! grep -q "f2fs" /proc/filesystems; then
+        echo -e "\033[1;31m[ERROR] 校验失败: 当前系统内核不支持 f2fs 文件系统。\033[0m"
+        echo -e "\033[1;31m[ERROR] 执行 'cat /proc/filesystems | grep f2fs' 未检测到回显。\033[0m"
+        echo -e "\033[1;31m[ERROR] 请检查内核是否编译了 f2fs 支持，或尝试手动加载模块 (modprobe f2fs)。\033[0m"
+        has_error=1
+    fi
+
+    # 2. 校验目标目录所在的分区是否为 f2fs 格式
+    mkdir -p "${target_path}"
+    local host_fs_type=$(df -T "${target_path}" | tail -1 | awk '{print $2}')
+    if [ "$host_fs_type" != "f2fs" ]; then
+        echo -e "\033[1;31m[ERROR] 校验失败: 容器配置为使能 f2fs (ENABLE_F2FS=1)\033[0m"
+        echo -e "\033[1;31m[ERROR] 但目标挂载目录 ${target_path} 所在的分区格式为 ${host_fs_type}，并非 f2fs。\033[0m"
+        echo -e "\033[1;31m[ERROR] 请检查底层硬盘分区格式是否已正确格式化并挂载！\033[0m"
+        has_error=1
+    fi
+
+    # 3. 最终判断逻辑：只要有一个校验未通过，就中止并返回 1
+    if [ "$has_error" -ne 0 ]; then
+        echo -e "\033[1;31m[ERROR] f2fs 运行环境检查未通过，操作已中止。\033[0m"
+        return 1
+    fi
+
+    return 0
+ }
+
+function nstart(){
+    USER_DATA_PATH=${NFS_DATA_PATH}
+    start "$@"
+}
+
+function ndelete(){
+    USER_DATA_PATH=${NFS_DATA_PATH}
+    delete "$@"
+}
 
 check_environment $1
 
 case "$ACTION" in
     start) start "$@";;
+    nstart) nstart "$@";;
     delete) delete;;
+    ndelete) ndelete;;
     tdelete) delete 1;;
     *) echo -e  "\033[1;31minput command[$ACTION] not support.\033[0m"
 esac
