@@ -372,31 +372,33 @@
 
     期望是以k8s-host-device开头的Pod名称，其状态（STATUS）列都是Running状态。
 
-### 2.3 启动input设备权限写入插件<a name="ZH-CN_TOPIC_0000002549864213"></a>
+### 2.3 运行hook脚本<a name="ZH-CN_TOPIC_0000002549866525"></a>
 
-在master节点下启动input设备权限写入插件。
+在所有工作节点运行hook脚本。
 
-1. 启动input设备权限写入插件。
+1. 请参见[视频流引擎 安装指南](install_guide.md)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
+2. 将“/home/k8s/k8s/script“目录下的oci-device-hook.sh脚本拷贝到“/usr/local/sbin/“目录。
 
     ```shell
     cd /home/k8s/k8s/script
-    kubectl create -f input-permission.yaml
+    cp oci-device-hook.sh /usr/local/sbin/
     ```
 
-    >![](public_sys-resources/icon-note.gif) **说明：** 
-    >执行**kubectl delete -f input-permission.yaml**命令可删除input设备权限写入插件。
-
-2. 启动完成后，查看input设备权限写入插件是否可运行成功。
+3. 更改Containerd配置，将[部署道客设备插件镜像](install_guide.md#部署道客设备插件镜像)新增的容器运行时改成“/usr/local/sbin/oci-device-hook.sh“。
 
     ```shell
-    kubectl get pods -A
+    sed -i 's|BinaryName = "/usr/bin/va-container-runtime"|BinaryName ="/usr/local/sbin/oci-device-hook.sh"|g' /etc/containerd/config.toml
     ```
 
-    期望是以input-devices-permission-daemonset开头的Pod名称，其状态（STATUS）列都是Running状态。
+4. 重启Containerd。
+
+    ```shell
+    systemctl restart containerd
+    ```
 
 ### 2.4 启动K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864215"></a>
 
-启动K8s视频流云手机实例需要在master节点下操作。
+启动K8s视频流云手机实例需要在工作节点下操作。
 
 1. 修改k8s-video.yaml文件。
 
@@ -462,7 +464,7 @@
 
     请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**$\{index\}，index为pod编号**。
 
-    - 在master节点上，可通过如下命令进入容器，以video1为例：
+    - 在任意节点上，可通过如下命令进入容器，以video1为例：
 
         ```shell
         kubectl exec -it video1 -- sh
@@ -476,7 +478,7 @@
 
 ### 2.5 删除K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002518384356"></a>
 
-删除K8s视频流云手机实例需要在master节点下操作。
+删除K8s视频流云手机实例需要在工作节点下操作。
 
 ```shell
 cd /home/k8s/k8s/script
@@ -492,7 +494,7 @@ cd /home/k8s/k8s/script
 
 通过本章节步骤制作基础数据卷，用于工作节点的容器存储隔离和大小设置。
 
-1. 在master节点使用k8s-video.sh脚本启动一路云手机，以video1为例。
+1. 在工作节点使用k8s-video.sh脚本启动一路云手机，以video1为例。
 
     ```shell
     ./k8s-video.sh start 1

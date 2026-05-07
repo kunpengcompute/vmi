@@ -711,7 +711,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     mkdir -p /etc/containerd/
     cd /etc/containerd/
     containerd config default > /etc/containerd/config.toml
-    sed -i "s|SystemdCgroup =.*|SystemdCgroup = false|g" /etc/containerd/config.toml
+    sed -i "s|SystemdCgroup =.*|SystemdCgroup = true|g" /etc/containerd/config.toml
     ```
 
 9. 配置crictl，并重启containerd。
@@ -747,16 +747,50 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     此过程若无报错则下载成功。
 
-2. 集群初始化。
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+        >国内网络环境需要配置镜像仓，例如：
+        >
+        >```shell
+        >kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
+
+2. 修改containerd镜像配置，根据拉取的镜像中pause的版本更改config.toml的配置，查看pause镜像版本
+
+    ```shell
+    crictl images
+    ```
+
+    ​    **图 1** 镜像拉取信息<a name="fig1579095614545"></a><a id="镜像拉取信息"></a>
+    ​    ![](figures/镜像拉取信息.png "镜像拉取信息")
+
+    ​    以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](#fig1579095614545)中registry.aliyuncs.com/google\_containers/pause:3.9为例：
+
+        ```shell
+        sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
+        ```
+
+3. 重启Containerd。
+
+    ```shell
+    systemctl restart containerd
+    ```
+
+4. 集群初始化。
 
     ```shell
     kubeadm init --pod-network-cidr=10.244.0.0/16
     ```
 
-    初始化成功后有如[**图 1** 集群初始化成功打印信息](#集群初始化成功打印信息)所示信息打印。
+    初始化成功后有如[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息)所示信息打印。
 
-    **图 1** 集群初始化成功打印信息<a name="fig1336104663519"></a><a id="集群初始化成功打印信息"></a>
-    
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >如果在下载镜像时配置了镜像仓，集群初始化也需要配置相同镜像仓，例如：
+    >
+    >```shell
+    >kubeadm init --pod-network-cidr=10.244.0.0/16 --image-repository registry.aliyuncs.com/google_containers
+    >```
+
+    **图 2** 集群初始化成功打印信息<a name="fig1336104663519"></a><a id="集群初始化成功打印信息"></a>
+
     ![](figures/zh-cn_image_0000002518346460.png)
 
     需执行在[**图 1** 集群初始化成功打印信息](#集群初始化成功打印信息)中黄框信息命令配置集群，红框信息表示工作节点加入集群的token命令，请保存该段命令。
@@ -783,7 +817,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >ip link delete flannel.1
     >```
 
-3. 启动kube-flannel网络插件。
+5. 启动kube-flannel网络插件。
 
     请参见[视频流引擎](#视频流引擎)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
 
@@ -794,7 +828,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     kubectl apply -f kube-flannel.yml
     ```
 
-4. 查看集群状态。
+6. 查看集群状态。
 
     1. 查看当前节点的状态。
 
@@ -883,7 +917,14 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
 
-2. 执行在master初始化成功时保存的[**图 1** 集群初始化成功打印信息](#集群初始化成功打印信息)红框中加入集群的token命令。
+2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](master节点操作.md#fig1579095614545)中registry.aliyuncs.com/google\_containers/pause:3.9为例
+
+    ```shell
+    sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
+    systemctl restart containerd
+    ```
+
+3. 执行在master初始化成功时保存的[**图 1** 集群初始化成功打印信息](#集群初始化成功打印信息)红框中加入集群的token命令。
 
     例如：
 
@@ -901,14 +942,16 @@ cfct\_config配置文件配置项和配置方法如下所示。
     > kubeadm token create --print-join-command
     > ```
 
-3. 修改kubelet配置，并重启kubelet。
+4. 拷贝master节点的kube config文件到工作节点
 
     ```shell
-    sed -i "s|--cgroup-driver=systemd|--cgroup-driver=cgroupfs|g" /etc/sysconfig/kubelet
-    systemctl restart kubelet
+    rm -rf $HOME/.kube
+    mkdir -p $HOME/.kube
+    sudo scp root@xxx.xxx.xxx.xxx:$HOME/.kube/config $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
     ```
 
-4. 查看集群状态。
+5. 查看集群状态。
     1. 需在master节点查看状态。
 
         ```shell
@@ -933,7 +976,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
         预期结果为所有的容器状态（STATE）列都是Running。
 
-5. （可选）配置NUMA亲和。
+6. （可选）配置NUMA亲和。
     1. 编译环境配置和插件时需要保证Golang版本1.23或以上，将新的1.23版本的Golang go目录放至“/usr/lib“下，将“go/bin/go“和“go/bin/gofmt“放至“/usr/bin“下。
 
         ```shell
