@@ -193,8 +193,6 @@ function wait_container_ready() {
         local result=$(wait_cmd "${cmd}")
         if [ ${result} -eq 0 ]; then
             bash $THISDIR/base_box.sh chk_key_process ${container_name}
-            #[ ${?} -ne 0 ] && has_restart=1 && bash $THISDIR/base_box.sh restart "${container_name}" "$userdata_dir" 2
-            #[ ${?} -eq 1 ] && [ $has_restart -eq 1 ] && echo "${container_name} started failed at $(date +'%Y-%m-%d %H:%M:%S')!" && break
 
             printf "\r\033[1;32m%03d/%03d\033[0m\n" $(($currenttime-$starttime)) $timeout
             return 0
@@ -548,8 +546,6 @@ create_build_prop() {
     LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
     echo "ro.hardware.fps=${BUILD_FPS}" >> $THISDIR/build.prop 
     LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
-    #echo "ro.hardware.omxsoftdecode=${va_hard_encode_flag}" >> $THISDIR/build.prop
-    #LOG_INFO "ro.hardware.omxsoftdecode=${va_hard_encode_flag}"
     echo "ro.hardware.enableC2decode=0" >> $THISDIR/build.prop
     echo "ro.hardware.omxsoftdecode=0" >> $THISDIR/build.prop
     # 配置是否使能C2解码器
