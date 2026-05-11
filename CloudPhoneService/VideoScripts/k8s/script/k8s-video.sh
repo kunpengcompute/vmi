@@ -12,6 +12,29 @@ if [ -z $4 ]; then
 fi
 NFS_DATA_PATH="/tmp/nfs"
 STORAGE_SIZE_GB=32
+
+function check_nfs_mount() {
+    local nfs_dir=$1
+    
+    if [ ! -d "$nfs_dir" ]; then
+        echo -e "\033[1;31m[ERROR] NFS目录 ${nfs_dir} 不存在！\033[0m"
+        exit 1
+    fi
+    
+    if ! mountpoint -q "$nfs_dir"; then
+        echo -e "\033[1;31m[ERROR] NFS目录 ${nfs_dir} 不是挂载点！\033[0m"
+        exit 1
+    fi
+    
+    if ! mount | grep " ${nfs_dir} " | grep -qE " type nfs| type nfs4"; then
+        echo -e "\033[1;31m[ERROR] NFS目录 ${nfs_dir} 不是NFS远端挂载目录！\033[0m"
+        exit 1
+    fi
+    
+    echo "NFS目录 ${nfs_dir} 检查通过"
+    return 0
+}
+
 function start(){
     if [ -z "$DATA_BASE_PATH" ]; then
         export DATA_BASE_PATH="/home/mount"
@@ -91,6 +114,7 @@ function start(){
 }
 
 function nstart(){
+    check_nfs_mount "${NFS_DATA_PATH}"
     echo "Creating storage: MIN=$MIN, MAX=$MAX, SIZE=${STORAGE_SIZE_GB}G"
     if [ ! -d "${NFS_DATA_PATH}/img" ]; then
         mkdir -p ${NFS_DATA_PATH}/img
