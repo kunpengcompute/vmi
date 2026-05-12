@@ -793,6 +793,12 @@ container_run() {
     --system_size_mb "$SYSTEM_PARTITION_SIZE_MB" \
     --enable_nfs "$enable_nfs" \
     --nfs_dir "$NFS_DIR"
+
+    # 新增拦截逻辑,判断上方base_box是否执行成功 
+    if [ $? -ne 0 ]; then
+        LOG_ERROR "${container_name} 基础环境准备失败，终止后续拉起流程！"
+        return 1
+    fi
     LOG_INFO "Initialize container ..."
 
     CID=$($RUNTIME_CMD ps |grep -w $container_name|awk '{print $1}')
@@ -879,7 +885,11 @@ container_restart() {
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
     bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER $ENABLE_F2FS $SYSTEM_PARTITION_SIZE_MB
     
-    [ ${?} -eq 1 ] && continue
+    # 重启阶段新增拦截逻辑,判断上方base_box的restart是否执行成功
+    if [ $? -ne 0 ]; then
+        LOG_ERROR "${container_name} 重启失败：基础环境检查未通过或发生异常！"
+        return 1
+    fi
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${ENCODECARD} -eq 0 ]; then
