@@ -69,6 +69,13 @@ ENABLE_WEBRTC_CONNECTION=0
 #渲染中间层开关，1表示使能，其他值默认不使能
 ENABLE_RENDER_LAYER=0
 
+# 是否使能f2fs文件系统格式，1表示使能(f2fs)，0表示不使能(ext4),其他值默认不使能
+ENABLE_F2FS=0
+# 容器内 /system 分区的大小，单位为 MB。
+# 默认为 0，表示不限制（走系统默认逻辑）。
+# 若设置为非 0 值，系统会校验 /var/lib/docker 所在路径是否为 xfs 格式，若是 xfs 才生效。
+SYSTEM_PARTITION_SIZE_MB=0
+
 # VASTAI编码卡设备节点
 HANBO_ENCODERS=(
     "0.0"
@@ -79,13 +86,6 @@ HANBO_ENCODERS=(
 
 # 数据卷存放位置
 USERDATA="/home/mount"
-
-# 是否使能f2fs文件系统格式，1表示使能(f2fs)，0表示不使能(ext4),其他值默认不使能
-ENABLE_F2FS=0
-# 容器内 /system 分区的大小，单位为 MB。
-# 默认为 0，表示不限制（走系统默认逻辑）。
-# 若设置为非 0 值，系统会校验 /var/lib/docker 所在路径是否为 xfs 格式，若是 xfs 才生效。
-SYSTEM_PARTITION_SIZE_MB=0
 
 # 使用NFS挂载启动的数据盘目录
 NFS_DIR="/tmp/nfs"
