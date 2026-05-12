@@ -968,15 +968,29 @@ cfct\_config配置文件配置项和配置方法如下所示。
 |STORAGE_SIZE_GB|存储大小，单位为GB。删除时可不传。|
 |IMG_BASE|基础数据卷img文件，若无基础数据卷可不传，基础数据卷img文件制作请参考。删除时可不传。参数STORAGE_SIZE_GB和IMG_BASE只传其中一个。|
 
+注意：如果使用预先创建的数据卷的文件格式需要和后面使用k8s-video.sh创建容器时期的f2fs文件系统开关保持一致，该开关默认是0即默认使用ext4文件格式，此时则使用create方法来创建数据卷；如果要创建f2fs格式的数据卷，则要使用fcreate
+
     例如：
     
-    - 创建100个存储大小为32GB的存储隔离数据卷，名称为video1\~video100。
+    - 创建100个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video1\~video100。
     
         ```shell
         ./storage_manager.sh create 1 100 32
         ```
     
-    - 如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，名称为video101\~video120。
+    - 创建100个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video1\~video100。
+    
+        ```shell
+        ./storage_manager.sh create 1 100 32
+        ```
+    
+    - 如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video101\~video120。
+    
+        ```shell
+        ./storage_manager.sh create 101 120 32
+        ```
+
+    - 如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video101\~video120。
     
         ```shell
         ./storage_manager.sh create 101 120 32
@@ -994,10 +1008,16 @@ cfct\_config配置文件配置项和配置方法如下所示。
         ./storage_manager.sh delete 101 120
         ```
     
-    - 通过videobase.img为基础制作名为video1\~video100的数据卷。
+    - 通过videobase.img为基础制作名为video1\~video100的数据卷，文件格式为默认的ext4。
     
         ```shell
         ./storage_manager.sh create 1 100 /home/mount/img/videobase.img
+        ```
+
+    - 通过videobase.img为基础制作名为video1\~video100的数据卷，文件格式为f2fs。
+    
+        ```shell
+        ./storage_manager.sh fcreate 1 100 /home/mount/img/videobase.img
         ```
     
     >![](public_sys-resources/icon-note.gif) **说明：** 
