@@ -56,6 +56,9 @@
     ./cfct_video start ${index1} 
     ```
 
+    如果在启动视频流云手机后如果出现如下图所示的报错，显示"/system/bin/getprop:no such file xxx" 这个错误是容器刚启动的时候部分系统属性未准备到位而导致的，这些系统属性会随着容器的启动逐步准备就绪，因此对容器的正常拉起和使用没有影响，无需理会
+    ![](figures/1_zh-cn_image_getprop_no_such_file.png)
+
     上述命令中 \$\{index1\} 为启动实例的编号。启动一个编号为1的视频流云手机示例：
 
     ```shell
