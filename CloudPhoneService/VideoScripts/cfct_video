@@ -920,7 +920,7 @@ container_delete() {
     fi
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    if [ $keep_data -eq 2 ]; then
+    if [ "${keep_data:-0}" -eq 2 ]; then
         userdata_dir=$NFS_DIR
     fi
     bash $THISDIR/base_box.sh delete $container_name ${userdata_dir} $keep_data
