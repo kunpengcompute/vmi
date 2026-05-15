@@ -505,6 +505,39 @@ function check_parameters() {
     fi
 }
 
+function check_f2fs_partition() {
+    local target_path=$1
+    local has_error=0
+
+    # 1. 校验当前内核是否支持 f2fs
+    # 使用 grep -q 静默匹配，如果找到了会返回 0 (true)
+    if ! grep -q "f2fs" /proc/filesystems; then
+        echo -e "\033[1;31m[ERROR] 校验失败: 当前系统内核不支持 f2fs 文件系统。\033[0m"
+        echo -e "\033[1;31m[ERROR] 执行 'cat /proc/filesystems | grep f2fs' 未检测到回显。\033[0m"
+        echo -e "\033[1;31m[ERROR] 请检查内核是否编译了 f2fs 支持，或尝试手动加载模块 (modprobe f2fs)。\033[0m"
+        has_error=1
+    fi
+
+    # 2. 校验目标目录所在的分区是否为 f2fs 格式
+    mkdir -p "${target_path}"
+    local host_fs_type=$(df -T "${target_path}" | tail -1 | awk '{print $2}')
+    if [ "$host_fs_type" != "f2fs" ]; then
+        echo -e "\033[1;31m[ERROR] 校验失败: 容器配置为使能 f2fs (ENABLE_F2FS=1)\033[0m"
+        echo -e "\033[1;31m[ERROR] 但目标挂载目录 ${target_path} 所在的分区格式为 ${host_fs_type}，并非 f2fs。\033[0m"
+        echo -e "\033[1;31m[ERROR] 请检查底层硬盘分区格式是否已正确格式化并挂载！\033[0m"
+        has_error=1
+    fi
+
+    # 3. 最终判断逻辑：只要有一个校验未通过，就中止并返回 1
+    if [ "$has_error" -ne 0 ]; then
+        echo -e "\033[1;31m[ERROR] f2fs 运行环境检查未通过，操作已中止。\033[0m"
+        return 1
+    fi
+
+    return 0
+}
+
+
 function webrtc_conection_configure()
 {
     local start_cmd="$1"
@@ -703,6 +736,47 @@ container_run() {
     create_default_prop
     # 额外启动参数
     local extra_run_option=$opt
+
+    if [ -z ${userdata_dir} ]; then
+        userdata_dir="/root/mount"
+    fi
+
+    if [ ! -d "${userdata_dir}/img" ]; then
+        mkdir -p ${userdata_dir}/img
+    fi
+    # f2fs 宿主机物理分区格式校验
+    if [ "$ENABLE_F2FS" == "1" ]; then
+        check_f2fs_partition "${userdata_dir}/data"
+        if [ $? -ne 0 ]; then
+            return 1 # 校验失败，直接退出拉起流程
+        fi
+    fi
+    local KBOX_IMG=${userdata_dir}/img/$container_name.img
+    if [ ! -e $KBOX_IMG ]; then
+        fallocate -l ${STORAGE_SIZE_GB}G $KBOX_IMG
+        if [ "$ENABLE_F2FS" == "1" ]; then
+            yes | mkfs.f2fs $KBOX_IMG
+        else
+            yes | mkfs -t ext4 $KBOX_IMG
+        fi
+    fi
+    KBOX_DATA_PATH="${userdata_dir}/data/$container_name"
+    mkdir -p $KBOX_DATA_PATH
+    if [ "$ENABLE_F2FS" == "1" ]; then
+            mount -t f2fs -o loop $KBOX_IMG $KBOX_DATA_PATH
+        else
+            mount $KBOX_IMG $KBOX_DATA_PATH
+        fi
+    mkdir -p $KBOX_DATA_PATH/data
+    echo $(($STORAGE_SIZE_GB * 2 * 1024 * 1024)) >$KBOX_DATA_PATH/storage_size
+
+    local basedata=${userdata_dir}/data/android_base/data
+    local volumedata=${userdata_dir}/data/$container_name/data
+    if [ "$(ls $basedata 2>/dev/null)" ] && [ $no_copy_usr_data -ne 1 ]; then
+        LOG_INFO "copy ${container_name} from android_base"
+        cp -r -p $basedata/* $volumedata/ 2>/dev/null
+    fi
+
     bash $THISDIR/base_box.sh start \
     --name "$container_name" \
     --cpus "${cpus[*]}" \
@@ -719,14 +793,14 @@ container_run() {
     --system_size_mb "$SYSTEM_PARTITION_SIZE_MB" \
     --enable_nfs "$enable_nfs" \
     --nfs_dir "$NFS_DIR"
+
+    # 新增拦截逻辑,判断上方base_box是否执行成功 
+    if [ $? -ne 0 ]; then
+        LOG_ERROR "${container_name} 基础环境准备失败，终止后续拉起流程！"
+        return 1
+    fi
     LOG_INFO "Initialize container ..."
 
-    local basedata=${userdata_dir}/data/android_base/data
-    local volumedata=${userdata_dir}/data/$container_name/data
-    if [ "$(ls $basedata 2>/dev/null)" ] && [ $no_copy_usr_data -ne 1 ]; then
-        LOG_INFO "copy ${container_name} from android_base"
-        cp -r -p $basedata/* $volumedata/ 2>/dev/null
-    fi
     CID=$($RUNTIME_CMD ps |grep -w $container_name|awk '{print $1}')
     if [ $DEFAULT_RUNTIME == "docker" ]; then
         echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/docker/$CID*/devices.allow)
@@ -811,7 +885,11 @@ container_restart() {
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
     bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER $ENABLE_F2FS $SYSTEM_PARTITION_SIZE_MB
     
-    [ ${?} -eq 1 ] && continue
+    # 重启阶段新增拦截逻辑,判断上方base_box的restart是否执行成功
+    if [ $? -ne 0 ]; then
+        LOG_ERROR "${container_name} 重启失败：基础环境检查未通过或发生异常！"
+        return 1
+    fi
 
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${ENCODECARD} -eq 0 ]; then
@@ -842,7 +920,7 @@ container_delete() {
     fi
     local container_id=`echo ${container_name:8}`
     local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    if [ $keep_data -eq 2 ]; then
+    if [ "${keep_data:-0}" -eq 2 ]; then
         userdata_dir=$NFS_DIR
     fi
     bash $THISDIR/base_box.sh delete $container_name ${userdata_dir} $keep_data
