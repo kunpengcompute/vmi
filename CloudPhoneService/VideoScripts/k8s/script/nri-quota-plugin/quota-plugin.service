@@ -1,0 +1,15 @@
+[Unit]
+Description=NRI Quota Plugin for containerd
+After=containerd.service
+Requires=containerd.service
+
+[Service]
+Type=simple
+ExecStart=/opt/nri-quota-plugin/quota-plugin
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
