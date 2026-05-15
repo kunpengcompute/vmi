@@ -4,6 +4,7 @@ metadata:    # 元数据
   name: ${POD_NAME}   # pod名称
   annotations:
     container.apparmor.security.beta.kubernetes.io/${POD_NAME}: unconfined  #配置apparmor,kbox-demo为pod名称
+    system.size.mb: "${SYSTEM_SIZE_MB}"  # SYSTEM分区配额大小(MB)
 spec:      #pod中容器定义
     containers:
     - name: ${POD_NAME}    #视频流容器名称
