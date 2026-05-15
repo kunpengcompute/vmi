@@ -3,14 +3,19 @@
 ACTION=$1
 MIN=$2
 MAX=$3
-SYSTEM_SIZE_MB=$4  # 新增：第四个参数，限定system分区大小(MB)
+ENABLE_F2FS=$4
+SYSTEM_SIZE_MB=$5  # 第五个参数，限定system分区大小(MB)
 THISDIR=$(readlink -ef $(dirname $0))
 if [ -z $3 ]; then
     MAX=$2
 fi
 
 if [ -z $4 ]; then
-    SYSTEM_SIZE_MB=0 # 如果没有传入第四个参数，默认不使能配额限制
+    ENABLE_F2FS=0
+fi
+
+if [ -z $5 ]; then
+    SYSTEM_SIZE_MB=0 # 如果没有传入第五个参数，默认不使能配额限制
 fi
 
 if [ -z ${USER_DATA_PATH} ]; then
