@@ -56,6 +56,9 @@
     ./cfct_video start ${index1} 
     ```
 
+    如果在启动视频流云手机后如果出现如下图所示的报错，显示"/system/bin/getprop:no such file xxx" 这个错误是容器刚启动的时候部分系统属性未准备到位而导致的，这些系统属性会随着容器的启动逐步准备就绪，因此对容器的正常拉起和使用没有影响，无需理会
+    ![](figures/1_zh-cn_image_getprop_no_such_file.png)
+
     上述命令中 \$\{index1\} 为启动实例的编号。启动一个编号为1的视频流云手机示例：
 
     ```shell
@@ -350,6 +353,8 @@
 
 2. 启动k8s视频流云手机。
 
+ 注意：如果使用预先创建的镜像启动，那么预先创建的数据卷的文件格式需要和这里k8s-video.sh创建容器时期的f2fs文件系统开关保持一致，如果前面的./storage_manager.sh 用的是fcreate方法，那么预先创建的就是f2fs文件格式的数据卷，则f2fs开关需要设置为1即打开，如果是使用create方法来创建数据卷，那么f2fs开关需要设置为0即默认状态
+
     ```shell
     ./k8s-video.sh start ${index1} ${index2} ${index3} ${index4} 
     ```
@@ -361,7 +366,8 @@
     > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4} 
     > ```
     >
-    > \$\{index1\} 与 \$\{index2\} 为pod编号，\$\{index3\}表示是否使能容器内文件为F2FS格式， 1表示使能，0表示不使能，默认是0；\$\{index4\}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不是能，该配置项默认是0。其中 \$\{index2\} \$\{index3\} \$\{index4\}可缺省。例：
+    > \$\{index1\} 与 \$\{index2\} 为pod编号，\$\{index3\}表示是否使能容器内文件为F2FS格式， 1表示使能，0表示不使能，默认是0；\$\{index4\}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不是能，该配置项默认是0。其中 \$\{index2\} \$\{index3\} \$\{index4\}可缺省。
+    例：
     >- 创建名为video2的pod。
     >
     > ```shell
