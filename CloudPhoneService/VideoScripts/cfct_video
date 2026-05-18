@@ -183,8 +183,23 @@ function wait_container_ready() {
     local endtime=$(($starttime+$timeout))
     local has_restart=0
 
-    local container_id=`echo ${container_name:8}`
-    local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
+    local userdata_dir
+    local mount_source
+    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
+        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' ${container_name})
+    else
+        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' ${container_name})
+    fi
+    
+    if [ -n "$mount_source" ]; then
+        userdata_dir=$(echo "$mount_source" | sed "s|/data/${container_name}/data$||")
+        if [ "$userdata_dir" == "$mount_source" ]; then
+            userdata_dir=$(dirname "$mount_source")
+        fi
+    else
+        local container_id=`echo ${container_name:8}`
+        userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
+    fi
 
     while [ "$currenttime" -lt "$endtime" ] ; do
         printf "\r%03d/%03d" $(($currenttime-$starttime)) $timeout
@@ -793,8 +808,25 @@ container_restart() {
         fi
     fi
 
-    local container_id=`echo ${container_name:8}`
-    local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
+    local userdata_dir
+    local mount_source
+    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
+        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' $container_name)
+    else
+        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' $container_name)
+    fi
+    
+    if [ -n "$mount_source" ]; then
+        userdata_dir=$(echo "$mount_source" | sed "s|/data/${container_name}/data$||")
+        if [ "$userdata_dir" == "$mount_source" ]; then
+            userdata_dir=$(dirname "$mount_source")
+        fi
+    else
+        local container_id=`echo ${container_name:8}`
+        userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
+    fi
+    
+    LOG_INFO "restart using mount path: $userdata_dir"
     bash $THISDIR/base_box_aosp15.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER $ENABLE_F2FS $SYSTEM_PARTITION_SIZE_MB
     [ ${?} -eq 1 ] && continue
     local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
@@ -825,11 +857,30 @@ container_delete() {
         LOG_INFO "Remove container image: $imageid"
         $RUNTIME_CMD rmi $imageid
     fi
-    local container_id=`echo ${container_name:8}`
-    local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
+    
+    local userdata_dir
+    local mount_source
+    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
+        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' $container_name 2>/dev/null)
+    else
+        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' $container_name 2>/dev/null)
+    fi
+    
+    if [ -n "$mount_source" ]; then
+        userdata_dir=$(echo "$mount_source" | sed "s|/data/${container_name}/data$||")
+        if [ "$userdata_dir" == "$mount_source" ]; then
+            userdata_dir=$(dirname "$mount_source")
+        fi
+    else
+        local container_id=`echo ${container_name:8}`
+        userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
+    fi
+    
     if [ "${keep_data:-0}" -eq 2 ]; then
         userdata_dir=$NFS_DIR
     fi
+    
+    LOG_INFO "delete using mount path: $userdata_dir"
     bash $THISDIR/base_box_aosp15.sh delete $container_name ${userdata_dir} $keep_data
 }
 
