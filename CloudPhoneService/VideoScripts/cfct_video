@@ -777,6 +777,10 @@ container_run() {
         cp -r -p $basedata/* $volumedata/ 2>/dev/null
     fi
 
+    if [ -e $volumedata/containerid ]; then
+        rm -rf $volumedata/containerid
+    fi
+
     bash $THISDIR/base_box.sh start \
     --name "$container_name" \
     --cpus "${cpus[*]}" \
