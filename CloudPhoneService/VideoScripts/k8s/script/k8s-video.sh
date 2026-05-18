@@ -483,6 +483,23 @@ function check_nfs_mount() {
 
 function nstart(){
     check_nfs_mount "${NFS_DATA_PATH}"
+    
+    # 检查是否已存在f2fs镜像
+    for ((i=$MIN; i<=$MAX; i++))
+    do
+        IMG=${NFS_DATA_PATH}/img/video$i.img
+        if [ -e $IMG ]; then
+            # 检查镜像文件系统类型
+            local fs_type=$(file -s $IMG 2>/dev/null | grep -o "f2fs" || echo "")
+            if [ "$fs_type" == "f2fs" ]; then
+                echo -e "\033[1;31m[ERROR] 不可以同时使能F2FS和NFS！\033[0m"
+                echo -e "\033[1;31m[ERROR] 检测到镜像 ${IMG} 为f2fs格式，使用nstart命令（NFS挂载）\033[0m"
+                echo -e "\033[1;31m[ERROR] 请删除现有f2fs镜像，或使用storage_manager.sh create创建ext4镜像\033[0m"
+                exit 1
+            fi
+        fi
+    done
+    
     USER_DATA_PATH=${NFS_DATA_PATH}
     start "$@"
 }
