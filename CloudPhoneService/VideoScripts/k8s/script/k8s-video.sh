@@ -47,8 +47,11 @@ function start(){
         export HOSTPORT=$(expr $i + 8000) # 宿主机端口号
         export HOSTPORT2=$(expr $i + 8500)
         export SYSTEM_SIZE_MB
-        envsubst < k8s-video.yaml | kubectl apply -f -
-        
+        if [ "$SYSTEM_SIZE_MB" -gt 0 ]; then
+            echo "Pod ${POD_NAME} 创建成功，配额(${SYSTEM_SIZE_MB}MB)将由NRI插件自动应用"
+        cp k8s-video.yaml k8s-video-apply.yaml
+        mock_cpu
+        envsubst < k8s-video-apply.yaml | kubectl apply -f -
         if [ "$SYSTEM_SIZE_MB" -gt 0 ]; then
             echo "Pod ${POD_NAME} 创建成功，配额(${SYSTEM_SIZE_MB}MB)将由NRI插件自动应用"
         fi
@@ -121,6 +124,116 @@ function delete(){
     for ((i=$MIN; i<=$MAX; i++))
     do
         kubectl delete pod video$i
+    done
+}
+
+#CPU文件模拟
+function mock_cpu() {
+    local CPU_PATH="/var/lib/kbox/cpus/${POD_NAME}/cpu"
+    local CPU_NUM=8
+    if [ -d "${CPU_PATH}" ];then
+        umount /var/lib/kbox/cpus/$POD_NAME/cpu/cpu*/* > /dev/null 2>&1
+        rm -rf /var/lib/kbox/cpus/$POD_NAME
+        [ $? -ne 0 ] && echo "fail to remove data files /var/lib/kbox/cpus/$POD_NAME !" && RET="fail"
+    fi
+
+    mkdir -p ${CPU_PATH}
+    chmod 755 ${CPU_PATH}
+
+    echo "7" >${CPU_PATH}"/kernel_max"
+    echo "0-7" >${CPU_PATH}"/possible"
+    echo "0-7" >${CPU_PATH}"/present"
+    echo "0-7" >${CPU_PATH}"/online"
+
+    chmod 444 ${CPU_PATH}/kernel_max ${CPU_PATH}/possible ${CPU_PATH}/present ${CPU_PATH}/online
+
+    # mock_cpufreq
+    mkdir -p ${CPU_PATH}/cpufreq/policy0 ${CPU_PATH}/cpufreq/cpuidle
+    chmod 755 ${CPU_PATH}/cpufreq ${CPU_PATH}/cpufreq/policy0 ${CPU_PATH}/cpufreq/cpuidle
+
+    echo "$(seq 0 $(($CPU_NUM - 1))|tr 'n' ' ')" >${CPU_PATH}"/cpufreq/policy0/affected_cpus"
+    echo "1954000" >${CPU_PATH}"/cpufreq/policy0/cpuinfo_max_freq"
+    echo "1954000" >${CPU_PATH}"/cpufreq/policy0/cpuinfo_cur_freq"
+    echo "554000" >${CPU_PATH}"/cpufreq/policy0/cpuinfo_min_freq"
+    echo "0" >${CPU_PATH}"/cpufreq/policy0/cpuinfo_transition_latency"
+    cat ${CPU_PATH}"/cpufreq/policy0/affected_cpus" >${CPU_PATH}"/cpufreq/policy0/related_cpus"
+    echo "554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000" >${CPU_PATH}"/cpufreq/policy0/scaling_available_frequencies"
+    echo "interacitve userspace powersave performance schedutil" >${CPU_PATH}"/cpufreq/policy0/scaling_available_governors"
+    cat ${CPU_PATH}"/cpufreq/policy0/cpuinfo_cur_freq" >${CPU_PATH}"/cpufreq/policy0/scaling_cur_freq"
+    echo "cpufreq-dt" >${CPU_PATH}"/cpufreq/policy0/scaling_driver"
+    echo "performance" >${CPU_PATH}"/cpufreq/policy0/scaling_governor"
+    cat ${CPU_PATH}"/cpufreq/policy0/cpuinfo_max_freq" >${CPU_PATH}"/cpufreq/policy0/scaling_max_freq"
+    cat ${CPU_PATH}"/cpufreq/policy0/cpuinfo_min_freq" >${CPU_PATH}"/cpufreq/policy0/scaling_min_freq"
+    echo "<unsupported>" >${CPU_PATH}"/cpufreq/policy0/scaling_setspeed"
+
+    chmod 444 ${CPU_PATH}/cpufreq/policy0/*
+    chmod 400 ${CPU_PATH}/cpufreq/policy0/cpuinfo_cur_freq
+    chmod 644 ${CPU_PATH}/cpufreq/policy0/scaling_governor ${CPU_PATH}/cpufreq/policy0/scaling_setspeed
+    chmod 660 ${CPU_PATH}/cpufreq/policy0/scaling_max_freq ${CPU_PATH}/cpufreq/policy0/scaling_min_freq
+
+    # mock_cpuidle
+    mkdir -p ${CPU_PATH}/cpufreq/cpuidle/driver ${CPU_PATH}/cpufreq/cpuidle/state0 ${CPU_PATH}/cpufreq/cpuidle/state1
+    chmod 755 ${CPU_PATH}/cpufreq/cpuidle/*
+
+    echo "hisi_cluster0_idle_driver" >${CPU_PATH}"/cpufreq/cpuidle/driver/name"
+    chmod 444 ${CPU_PATH}"/cpufreq/cpuidle/driver/name" 
+
+    echo "ARM64 WFI" >${CPU_PATH}"/cpufreq/cpuidle/state0/desc"
+    echo "0" >${CPU_PATH}"/cpufreq/cpuidle/state0/disable"
+    echo "1" >${CPU_PATH}"/cpufreq/cpuidle/state0/latency"
+    echo "WFI" >${CPU_PATH}"/cpufreq/cpuidle/state0/name"
+    echo "0" >${CPU_PATH}"/cpufreq/cpuidle/state0/power"
+    echo "1" >${CPU_PATH}"/cpufreq/cpuidle/state0/residency"
+    echo "$((RANDOM*4+11111))" >${CPU_PATH}"/cpufreq/cpuidle/state0/usage"
+    echo "$(($(cat ${CPU_PATH}/cpufreq/cpuidle/state0/usage)*666))" >${CPU_PATH}"/cpufreq/cpuidle/state0/time"
+
+    chmod 444 ${CPU_PATH}/cpufreq/cpuidle/state0/*
+    chmod 644 ${CPU_PATH}/cpufreq/cpuidle/state0/disable
+
+    echo "cpu-sleep-0" >${CPU_PATH}"/cpufreq/cpuidle/state1/desc"
+    echo "0" >${CPU_PATH}"/cpufreq/cpuidle/state1/disable"
+    echo "110" >${CPU_PATH}"/cpufreq/cpuidle/state1/latency"
+    echo "cpu-sleep-0" >${CPU_PATH}"/cpufreq/cpuidle/state1/name"
+    echo "0" >${CPU_PATH}"/cpufreq/cpuidle/state1/power"
+    echo "3000" >${CPU_PATH}"/cpufreq/cpuidle/state1/residency"
+    echo "$((RANDOM*+11111))" >${CPU_PATH}"/cpufreq/cpuidle/state1/usage"
+    echo "$(($(cat ${CPU_PATH}/cpufreq/cpuidle/state1/usage)*22222))" >${CPU_PATH}"/cpufreq/cpuidle/state0/time"
+
+
+    chmod 444 ${CPU_PATH}/cpufreq/cpuidle/state1/*
+    chmod 644 ${CPU_PATH}/cpufreq/cpuidle/state1/disable
+
+    # mock_cpu*
+    for ((j=0; j<8; j++));
+    do
+        mkdir -p ${CPU_PATH}/cpu$j
+        chmod 755 ${CPU_PATH}/cpu$j
+        #其他文件的挂载
+        mkdir -p ${CPU_PATH}/cpu$j/hotplug ${CPU_PATH}/cpu$j/power ${CPU_PATH}/cpu$j/regs ${CPU_PATH}/cpu$j/topology
+        cp /sys/devices/system/cpu/cpu$j/cpu_capacity ${CPU_PATH}/cpu$j/cpu_capacity
+        mount --bind /sys/devices/system/cpu/cpu$j/hotplug ${CPU_PATH}/cpu$j/hotplug
+        echo "1" >${CPU_PATH}/cpu$j/online
+        mount --bind /sys/devices/system/cpu/cpu$j/power ${CPU_PATH}/cpu$j/power
+        mount --bind /sys/devices/system/cpu/cpu$j/regs ${CPU_PATH}/cpu$j/regs
+        mount --bind /sys/devices/system/cpu/cpu$j/topology ${CPU_PATH}/cpu$j/topology
+        mkdir -p ${CPU_PATH}/cpu$j/cpufreq ${CPU_PATH}/cpu$j/cpuidle
+        mount --bind ${CPU_PATH}/cpufreq/policy0 ${CPU_PATH}/cpu$j/cpufreq
+        mount --bind ${CPU_PATH}/cpufreq/cpuidle ${CPU_PATH}/cpu$j/cpuidle
+    done
+
+   # 1. 替换基础的公共系统挂载点
+    yq eval -i '
+        (.spec.volumes[] | select(.name == "cpusys") | .hostPath.path) = "/var/lib/kbox/cpus/'"${POD_NAME}"'/cpu" |
+        (.spec.volumes[] | select(.name == "cpufreq") | .hostPath.path) = "/var/lib/kbox/cpus/'"${POD_NAME}"'/cpu/cpufreq" |
+        (.spec.volumes[] | select(.name == "cpuidle") | .hostPath.path) = "/var/lib/kbox/cpus/'"${POD_NAME}"'/cpu/cpufreq/cpuidle"
+    ' k8s-video-apply.yaml
+
+    # 2. 借助 Bash 循环动态处理所有 cpuX 挂载点
+    for ((j=0; j<CPU_NUM; j++));
+    do
+        yq eval -i '
+            (.spec.volumes[] | select(.name == "cpu'"$j"'") | .hostPath.path) = "/var/lib/kbox/cpus/'"${POD_NAME}"'/cpu/cpu'"$j"'"
+        ' k8s-video-apply.yaml
     done
 }
 
