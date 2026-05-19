@@ -611,7 +611,24 @@ cfct\_config配置文件配置项和配置方法如下所示。
     cp -rp android_1 android_base
     ```
 
-6. 删除android\_1容器。
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >如果使用nfs挂载启动的容器，由于性能考虑，不支持cp -rp直接拷贝数据目录，应该直接拷贝img。
+    >
+    >将所需的应用（例如地铁跑酷等）预装到该云手机容器中，将android\_1.img拷贝为android_base.img作为新数据卷。
+    >
+    >```shell
+    >cd ${USERDATA}/img/
+    >cp -rp android_1.img android_base.img
+    >```
+    >
+    >在启动指定容器前手动拷贝android_base.img为相应容器编号。
+    >
+    >```shell
+    >cd ${USERDATA}/img/
+    >cp -rp android_base.img android_${index}.img
+    >```
+
+ 6. 删除android\_1容器。
 
     ```shell
     cd /home/kbox_video/
