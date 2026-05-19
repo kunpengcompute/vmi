@@ -656,14 +656,28 @@ cd /home/k8s/k8s/script
 ##### 3.2.3.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
    当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改，
    
-   在修改前先确保相关路径有写入权限，输入如下命令查看相关路径的权限
+   在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限
    ```shell
-   ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/
+   ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/scaling_cur_freq
+   ```
+   ```shell
+   ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
    ```
 
    如果包含 w（如 -rw-r--r--），说明文件的所有者（通常是 root）拥有写入权限。
 
-   如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。
+   如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。则输入如下命令新增权限
+
+输入如下命令给scaling_cur_freq添加写入（w）权限
+```shell
+chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
+```
+
+输入如下命令给cpuinfo_cur_freq添加写入（w）权限
+```shell
+chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
+```
+
    
    随后输入如下命令读取cpu所支持的频率列表。
    ```shell
@@ -676,6 +690,23 @@ cd /home/k8s/k8s/script
 
    ```shell
    echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/cpuinfo_cur_freq
+   ```
+
+   如果容器重启，那么之前的修改值会失效，CPU频率值会恢复默认。
+
+   要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如“手机设备信息大全”这样的第三方应用中观察到cpu频率的动态变化，此处的“sleep 1”表示每隔1s变化一次，此处的“1”可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改
+   ```shell
+   CPU_ID=0
+   FREQS=(554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000)
+
+   while true; do
+      for FREQ in "${FREQS[@]}"; do
+         echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/scaling_cur_freq 2>/dev/null
+         echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/cpuinfo_cur_freq 2>/dev/null
+         echo "CPU${CPU_ID} 频率已动态调节为: $FREQ"
+         sleep 1
+      done
+   done
    ```
 
 ##### 3.2.3.3 **校验是否生效。**
