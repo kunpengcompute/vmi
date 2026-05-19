@@ -606,7 +606,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 5. 将所需的应用（例地铁跑酷等）预装到该云手机容器中，将android\_1作为新数据卷，供启动视频流云手机时使用。
 
-```shell
+    ```shell
     cd {USERDATA}/data/
     cp -rp android_1 android_base
     ```
