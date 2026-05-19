@@ -301,6 +301,9 @@ function start(){
     export LXCFS_PATH=$(get_lxcfs_path)
     export THIS_DIR=$THISDIR
     export USER_DATA_PATH=$USER_DATA_PATH
+    if [ ! -d "${USER_DATA_PATH}/img" ]; then
+        mkdir -p ${USER_DATA_PATH}/img
+    fi
     if [ "$ENABLE_F2FS" == "1" ]; then  
 	    check_f2fs_partition "${USER_DATA_PATH}/data"
 	    if [ $? -ne 0 ]; then

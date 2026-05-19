@@ -84,7 +84,9 @@ data:
           "type": "portmap",
           "capabilities": {
             "portMappings": true
-          }
+          },
+          "snat": true,
+          "masqAll": true
         }
       ]
     }
