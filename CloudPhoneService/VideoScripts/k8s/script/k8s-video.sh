@@ -47,8 +47,6 @@ function start(){
         export HOSTPORT=$(expr $i + 8000) # 宿主机端口号
         export HOSTPORT2=$(expr $i + 8500)
         export SYSTEM_SIZE_MB
-        if [ "$SYSTEM_SIZE_MB" -gt 0 ]; then
-            echo "Pod ${POD_NAME} 创建成功，配额(${SYSTEM_SIZE_MB}MB)将由NRI插件自动应用"
         cp k8s-video.yaml k8s-video-apply.yaml
         mock_cpu
         envsubst < k8s-video-apply.yaml | kubectl apply -f -
