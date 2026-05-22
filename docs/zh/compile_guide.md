@@ -52,7 +52,7 @@ cd ~/ARMNative/vmi
 source ~/.bashrc 
 ```
 
-其中，\${安装目录}可以自己指定，若不输入\${安装目录}，则脚本使用默认目录~/NativeCompileToolsDir。
+其中，\\${安装目录}可以自己指定，若不输入${安装目录}，则脚本使用默认目录~/NativeCompileToolsDir。
 
 并在~/.bashrc中添加以下环境变量：
 
@@ -109,17 +109,17 @@ ln -s ccache /usr/bin/c++
 下载必要依赖，如果已安装，跳过即可
 
 ```shell
-sudo apt install -y git	 
-sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg	 
-sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev	 
-sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev	 
-sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev	 
-sudo apt install -y libxml2-utils xsltproc unzip	 
-sudo apt install -y libx11-dev libreadline-dev	 
-sudo apt install -y libncurses5 libncurses5-dev	 
-sudo apt install -y tofrodos python-markdown-doc zlib1g-dev	 
-sudo apt install -y dpkg-dev libsdl1.2-dev	 
-sudo apt install -y m4 bc python3 python3-mako gettext	 
+sudo apt install -y git     
+sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg     
+sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev     
+sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev     
+sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev     
+sudo apt install -y libxml2-utils xsltproc unzip     
+sudo apt install -y libx11-dev libreadline-dev     
+sudo apt install -y libncurses5 libncurses5-dev     
+sudo apt install -y tofrodos python-markdown-doc zlib1g-dev     
+sudo apt install -y dpkg-dev libsdl1.2-dev     
+sudo apt install -y m4 bc python3 python3-mako gettext     
 sudo apt install -y expect
 ```
 
