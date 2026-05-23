@@ -765,10 +765,11 @@ cfct_config配置文件配置项和配置方法如下所示。
     此过程若无报错则下载成功。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-        >国内网络环境需要配置镜像仓，例如：
-        >
-        >```shell
-        >kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
+    >国内网络环境需要配置镜像仓，例如：
+    >
+    >```shell
+    >kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
+    >```
 
 2. 修改containerd镜像配置，根据拉取的镜像中pause的版本更改config.toml的配置，查看pause镜像版本
 
