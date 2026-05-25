@@ -1,6 +1,6 @@
 # 测试指南<a name="ZH-CN_TOPIC_0000002521693378"></a>
 
-### 测试结果列表<a name="ZH-CN_TOPIC_0000002518346378"></a>
+## 测试结果列表<a name="ZH-CN_TOPIC_0000002518346378"></a>
 
 |name|value|
 |--|--|
@@ -475,7 +475,7 @@ Component AppendInfo: 11.0.0_r48</pre>
 </tr>
 <tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
 </th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><p id="p1589817372715"><a name="p1589817372715"></a><a name="p1589817372715"></a>启动规格为720*1280*30fps的120路视频流云手机出流，运行王者荣耀，在登录界面稳定运行30分钟，使用客户端连接视频流云手机，使用开发自研压测工具收集帧率数据。</p>
+<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><p id="p1589817372715"><a name="p1589817372715"></a><a name="p1589817372715"></a>启动规格为720\*1280\*30fps的120路视频流云手机出流，运行王者荣耀，在登录界面稳定运行30分钟，使用客户端连接视频流云手机，使用开发自研压测工具收集帧率数据。</p>
 </td>
 </tr>
 <tr id="row51729637"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.6.1"><p id="p29351091"><a name="p29351091"></a><a name="p29351091"></a>预期结果</p>

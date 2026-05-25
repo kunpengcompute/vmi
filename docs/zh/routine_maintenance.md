@@ -55,7 +55,7 @@
 
     ![](figures/zh-cn_image_0000002518345622.png)
 
-    当“Active“显示为“active“时，Docker服务状态正常，其他情况则为异常状态。
+    当“Active”显示为“active”时，Docker服务状态正常，其他情况则为异常状态。
 
 3. 如果服务状态异常，请执行以下命令查看Docker服务启动失败原因。
 
@@ -65,7 +65,7 @@
 
     若无法解决，请重启Docker服务（请参见[4](#li65832418453)）或联系华为技术支持。
 
-4. <a name="li65832418453"></a>按照以下步骤重启Docker服务。重启后请重新进行服务状态查询是否为“active“状态。若重启失败或服务状态不为“active“状态，请联系华为技术支持。
+4. <a name="li65832418453"></a>按照以下步骤重启Docker服务。重启后请重新进行服务状态查询是否为“active”状态。若重启失败或服务状态不为“active”状态，请联系华为技术支持。
 
     ```shell
     systemctl daemon-reload
@@ -89,7 +89,7 @@
     docker ps -a
     ```
 
-3. 执行以下命令，进入视频流云手机容器中，其中“{android_id}“为启动实例的编号。
+3. 执行以下命令，进入视频流云手机容器中，其中“{android_id}”为启动实例的编号。
 
     ```shell
     docker exec -it android_${android_id} sh
@@ -101,7 +101,7 @@
     getprop sys.boot_completed
     ```
 
-    若回显信息中“sys.boot_completed“显示为“1“，则表示启动成功。
+    若回显信息中“sys.boot_completed”显示为“1”，则表示启动成功。
 
 ##### 2.4.1.2 运行时容器状态<a name="ZH-CN_TOPIC_0000002549825353"></a>
 
@@ -114,7 +114,7 @@
     docker ps -a
     ```
 
-3. 执行以下命令，进入视频流云手机容器中，其中“{android_id}“为自定义的启动实例的编号，一般为从1开始的数字。
+3. 执行以下命令，进入视频流云手机容器中，其中“{android_id}”为自定义的启动实例的编号，一般为从1开始的数字。
 
     ```shell
     docker exec -it android_${android_id} sh
@@ -142,7 +142,7 @@ docker stats
 ![](figures/zh-cn_image_0000002549825465.png)
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->默认情况下，**stats**命令会每隔1s刷新一次输出的内容，“Ctrl+C“可以终止刷新。
+>默认情况下，**stats**命令会每隔1s刷新一次输出的内容，“Ctrl+C”可以终止刷新。
 >回显参数说明：
 >
 >- CONTAINER ID：显示容器ID。
@@ -159,7 +159,7 @@ docker stats
 在视频流云手机容器运行过程中，可以通过检查其进程状态判断容器是否正常。
 
 1. 使用视频流云手机运维用户（如root）账号通过SSH登录工具（如Xshell）登录到部署视频流云手机的服务器。
-2. 执行以下命令，进入视频流云手机容器中，其中“{android_id}“为启动实例的编号。
+2. 执行以下命令，进入视频流云手机容器中，其中“{android_id}”为启动实例的编号。
 
     ```shell
     docker exec -it android_${android_id} sh
@@ -174,7 +174,7 @@ docker stats
 
         ![](figures/zh-cn_image_0000002518185694.png)
 
-    - 查看VmiAgent进程。若VmiAgent进程存在，如上图所示红框，查看其对应的PID（对应上图中的283），执行以下命令可以查看进程状态、CPU使用率和内存使用率等，其中“{pid}“为VmiAgent进程编号，如下图所示。
+    - 查看VmiAgent进程。若VmiAgent进程存在，如上图所示红框，查看其对应的PID（对应上图中的283），执行以下命令可以查看进程状态、CPU使用率和内存使用率等，其中“{pid}”为VmiAgent进程编号，如下图所示。
 
         ```shell
         top -p ${pid}
@@ -248,7 +248,7 @@ docker stats
     su - root
     ```
 
-3. 执行以下命令，进入Docker容器中查看相关CPU和内存占用率状态，其中“{android_id}“为启动实例的编号。
+3. 执行以下命令，进入Docker容器中查看相关CPU和内存占用率状态，其中“{android_id}”为启动实例的编号。
 
     ```shell
     docker exec -it android_${android_id} sh
@@ -276,7 +276,7 @@ docker stats
     ![](figures/Snipaste_2023-02-17_14-52-49.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >**ctop**是Docker管理的资源监控工具，若未安装ctop，请先下载[ctop-0.7.5-linux-arm64](https://github.com/bcicen/ctop/releases/download/v0.7.5/ctop-0.7.5-linux-arm64)，将下载后的二进制重命名为ctop，并拷贝到“/usr/bin“目录下即可完成安装。
+    >**ctop**是Docker管理的资源监控工具，若未安装ctop，请先下载[ctop-0.7.5-linux-arm64](https://github.com/bcicen/ctop/releases/download/v0.7.5/ctop-0.7.5-linux-arm64)，将下载后的二进制重命名为ctop，并拷贝到“/usr/bin”目录下即可完成安装。
     >**ctop**命令回显参数说明：
     >- NAME：容器名称。
     >- CID：容器ID。
@@ -320,7 +320,7 @@ docker stats
 
     ![](figures/zh-cn_image_0000002549705465.png)
 
-    上图中视频流云手机容器数据存储在“/home/mount/data/“下，红色矩形圈出来的是容器android_1的数据存储信息，其存储大小为“16G“，当前使用率为“4%“。若“Use%“的值均不大于85%，则磁盘空间使用率正常。否则，需要处理磁盘空间。
+    上图中视频流云手机容器数据存储在“/home/mount/data/”下，红色矩形圈出来的是容器android_1的数据存储信息，其存储大小为“16G”，当前使用率为“4%”。若“Use%”的值均不大于85%，则磁盘空间使用率正常。否则，需要处理磁盘空间。
 
 ### 3.6 监控负载<a name="ZH-CN_TOPIC_0000002518345502"></a>
 
@@ -376,7 +376,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
 
 ##### 4.3.1.1 ANR时应用堆栈信息<a name="ZH-CN_TOPIC_0000002549825383"></a>
 
-在视频流云手机容器内若出现了应用程序未响应（ANR，Application Not responding）时，需要搜集相关应用堆栈信息，该信息保存在容器的“/data/anr/“路径下。
+在视频流云手机容器内若出现了应用程序未响应（ANR，Application Not responding）时，需要搜集相关应用堆栈信息，该信息保存在容器的“/data/anr/”路径下。
 
 #### 4.3.2 服务器侧查询日志操作<a name="ZH-CN_TOPIC_0000002549705307"></a>
 
@@ -389,7 +389,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     su - root
     ```
 
-3. 进入服务器的“/var/log“目录，可以查看syslog和其他kernel日志。
+3. 进入服务器的“/var/log”目录，可以查看syslog和其他kernel日志。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >syslog文件记录警告信息，常常是系统出问题的信息。
@@ -429,7 +429,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 可使用Docker提供的inspect命令查看容器的详细信息，如下命令，其中“{android_id}“为启动实例的编号。
+4. 可使用Docker提供的inspect命令查看容器的详细信息，如下命令，其中“{android_id}”为启动实例的编号。
 
     ```shell
     docker inspect android_${android_id}
@@ -468,7 +468,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 执行以下命令可以查询到实时的服务端日志信息。其中“{android_id}“为对应的容器编号，“VMI“为视频流云手机的日志tag前缀。
+4. 执行以下命令可以查询到实时的服务端日志信息。其中“{android_id}”为对应的容器编号，“VMI”为视频流云手机的日志tag前缀。
 
     ```shell
     docker exec -it android_${android_id} logcat |grep -i VMI
@@ -489,7 +489,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 执行以下命令可以查询到当前正在运行的进程信息，其中“{android_id}“为对应的容器编号。
+4. 执行以下命令可以查询到当前正在运行的进程信息，其中“{android_id}”为对应的容器编号。
 
     ```shell
     docker exec -it android_${android_id} ps -elf
@@ -510,7 +510,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 执行以下命令，可以实时查询到容器中各个进程的资源占用情况，其中“{android_id}“为对应的容器编号。
+4. 执行以下命令，可以实时查询到容器中各个进程的资源占用情况，其中“{android_id}”为对应的容器编号。
 
     ```shell
     docker exec -it android_${android_id} top
@@ -531,7 +531,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 执行以下命令，可以查询到容器中系统属性信息，其中“{android_id}“为对应的容器编号。
+4. 执行以下命令，可以查询到容器中系统属性信息，其中“{android_id}”为对应的容器编号。
 
     ```shell
     docker exec -it android_${android_id} getprop
@@ -552,7 +552,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 执行以下命令，获取容器的所有系统服务诊断输出，其中“\${android_id}“为启动实例的编号。
+4. 执行以下命令，获取容器的所有系统服务诊断输出，其中“\${android_id}”为启动实例的编号。
 
     dumpsys是在Android设备上运行的工具，可提供有关系统服务的信息。
 
@@ -595,7 +595,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 执行以下命令，可以查询到实时的服务端日志信息，其中“{android_id}“为对应的容器编号。
+4. 执行以下命令，可以查询到实时的服务端日志信息，其中“{android_id}”为对应的容器编号。
 
     ```shell
     docker exec -it android_${android_id} logcat -d >> /home/file.log
@@ -604,7 +604,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
 5. 将日志从服务器中对应的目录下复制到本地，方便用户查看。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >“/home/file.log“是日志输出的路径。
+    >“/home/file.log”是日志输出的路径。
 
 ### 4.5 日志溢出转储<a name="ZH-CN_TOPIC_0000002549825309"></a>
 

@@ -485,10 +485,17 @@ cd /home/k8s/k8s/script
 ./k8s-video.sh delete ${index1} ${index2}
 ```
 
+若要删除NFS挂载的K8s视频流云手机实例，则在工作节点进行如下操作。
+
+```shell
+cd /home/k8s/k8s/script
+./k8s-video.sh ndelete ${index1} ${index2}
+```
+
 >![](public_sys-resources/icon-note.gif) **说明：** 
 > \${index1} 与 \${index2} 为pod编号，其中 \${index2} 可缺省。
->例：./k8s-video.sh delete 2（删除名为video2的pod）
->./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
+> 例：./k8s-video.sh delete 2（删除名为video2的pod）
+> ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
 
 ### 2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
 
@@ -722,7 +729,7 @@ cd /home/k8s/k8s/script
 
 在真机中，系统为了平衡负载和功耗，会动态调节 CPU 的运行频率，而云机依托于服务器宿主机的容器化环境运行，其底层物理 CPU 的频率通常处于恒定状态，与真机存在差异。下面步骤说明如何实现云手机cpu频率动态调节，提高仿真能力
 
-##### 3.2.4.2\**具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
+##### 3.2.4.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
 
    当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改，
    
@@ -785,7 +792,7 @@ cd /home/k8s/k8s/script
    done
    ```
 
-##### 3.2.4.3\**校验是否生效。**
+##### 3.2.4.3 **校验是否生效。**
 
    启动容器后，在容器内安装如“手机设备信息大全”的应用，查看cpu频率是否等于预期，若等于预期值即表示cpu频率调节生效。
 

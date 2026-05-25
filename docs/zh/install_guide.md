@@ -95,7 +95,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0130.html)》中的“软件部署”章节。按照步骤完成该章节中“启动和卸载云手机实例”小节前的所有部署。
 
-##### 1.2.1.3（可选）部署Containerd环境<a name="ZH-CN_TOPIC_0000002549826283" id="部署Containerd环境"></a>
+##### 1.2.1.3 （可选）部署Containerd环境<a name="ZH-CN_TOPIC_0000002549826283" id="部署Containerd环境"></a>
 
 视频流云手机除支持以基于Docker的容器运行时启动外，还支持以Containerd容器运行时启动。若选择以Containerd运行时运行视频流云手机，可参考本章节进行Containerd相关软件包的部署。
 

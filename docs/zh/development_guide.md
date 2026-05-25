@@ -96,7 +96,7 @@
     ./scripts/auto_install_tools.sh ${安装目录}
     ```
 
-    其中，{安装目录}为下载和解压编译工具的目录，可由用户自己指定。如果不输入{安装目录}，则脚本会使用默认目录：“~/NativeCompileToolsDir“。
+    其中，{安装目录}为下载和解压编译工具的目录，可由用户自己指定。如果不输入{安装目录}，则脚本会使用默认目录：“~/NativeCompileToolsDir”。
 
     脚本执行成功后，使用以下命令引入环境变量。
 
@@ -111,7 +111,7 @@
 >- 用户可以根据需求选择文件存放目录。
 >- 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html)》。
 
-1. 将VideoEngine.tar.gz放至“/home/VideoEngine/Cloud“目录下。
+1. 将VideoEngine.tar.gz放至“/home/VideoEngine/Cloud”目录下。
 2. 解压视频流引擎服务端开发包。
 
     ```shell
@@ -719,7 +719,7 @@ uint32_t类型，默认值为320。
 
 **变量数据定义<a name="section1137mcpsimp"></a>**
 
-bool类型，默认设置为“true“，即进行渲染优化。
+bool类型，默认设置为“true”，即进行渲染优化。
 
 #### encodeParams<a name="ZH-CN_TOPIC_0000002518345960"></a>
 
@@ -897,7 +897,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |vbvBufferSize|1000|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->硬件配置方案1（W6800+Quadra）建议选择使用“VPU“进行编码，在H.265编码时profile仅支持main。
+>硬件配置方案1（W6800+Quadra）建议选择使用“VPU”进行编码，在H.265编码时profile仅支持main。
 
 **硬件配置方案二<a name="section1827916308460"></a>**
 
@@ -910,7 +910,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |profile|main|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->硬件配置方案二（DC1000）建议选择使用“GPU“进行编码，在H.265编码时profile仅支持main。
+>硬件配置方案二（DC1000）建议选择使用“GPU”进行编码，在H.265编码时profile仅支持main。
 
 ## 6 音频输出开发<a name="ZH-CN_TOPIC_0000002518186016"></a>
 
