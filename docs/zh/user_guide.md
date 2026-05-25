@@ -485,17 +485,12 @@ cd /home/k8s/k8s/script
 ./k8s-video.sh delete ${index1} ${index2}
 ```
 
-若要删除NFS挂载的K8s视频流云手机实例，则在工作节点进行如下操作。
-
-```shell
-cd /home/k8s/k8s/script
-./k8s-video.sh ndelete ${index1} ${index2}
-```
-
 >![](public_sys-resources/icon-note.gif) **说明：** 
 > \${index1} 与 \${index2} 为pod编号，其中 \${index2} 可缺省。
 > 例：./k8s-video.sh delete 2（删除名为video2的pod）
 > ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
+> 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
+> ./k8s-video.sh ndelete 1 5（删除名为video1 -video5 共5个pod）
 
 ### 2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
 
