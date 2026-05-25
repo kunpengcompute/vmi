@@ -98,21 +98,21 @@
 >
 >- 清理pagecache。
 >
->  ```shell
->  echo 1 > /proc/sys/vm/drop_caches
->  ```
+> ```shell
+> echo 1 > /proc/sys/vm/drop_caches
+> ```
 >
 >- 清理内核slab对象（包括inode对象和dentry目录对象）。
 >
->  ```shell
->  echo 2 > /proc/sys/vm/drop_caches
->  ```
+> ```shell
+> echo 2 > /proc/sys/vm/drop_caches
+> ```
 >
 >- 同时清理pagecache和内核slab对象。
 >
->  ```shell
->  echo 3 > /proc/sys/vm/drop_caches
->  ```
+> ```shell
+> echo 3 > /proc/sys/vm/drop_caches
+> ```
 
 ## 7 应用场景
 

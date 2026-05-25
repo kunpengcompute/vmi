@@ -25,7 +25,7 @@ tar -xvf aosp11r48.tar
 
 ### 项目代码下载
 
-编译完整的视频流二进制包需要下载本仓库和[VMIEngine](https://gitcode.com/fuaniu/Kbox/blob/AOSP11/docs/zh/compile_guide.md)仓库。
+编译完整的视频流二进制包需要下载本仓库和[VMIEngine](https://gitcode.com/boostkit/VMIEngine/tree/dev_aosp15)仓库。
 
 ```shell
 git clone https://gitcode.com/boostkit/vmi.git

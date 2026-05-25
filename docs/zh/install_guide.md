@@ -977,68 +977,68 @@ cfct_config配置文件配置项和配置方法如下所示。
 
     **表 1** 容器存储隔离和大小设置参数说明<a id="容器存储隔离和大小设置参数说明"></a>
 
-|参数|说明|
-|--|--|
-| ACTION | 参数值为create或delete，创建或者删除 |
-| STORAGE_START_INDEX | 数据卷删除或创建起始编号 |
-| STORAGE_END_INDEX | 数据卷删除或创建结束编号，结束编号必须大于或者等于起始编号 |
-| STORAGE_SIZE_GB | 存储大小，单位为GB。删除时可不传 |
-| IMG_BASE | 基础数据卷img文件，若无基础数据卷可不传，基础数据卷img文件制作请参考。删除时可不传。参数STORAGE_SIZE_GB和IMG_BASE只传其中一个 |
+    |参数|说明|
+    |--|--|
+    | ACTION | 参数值为create或delete，创建或者删除 |
+    | STORAGE_START_INDEX | 数据卷删除或创建起始编号 |
+    | STORAGE_END_INDEX | 数据卷删除或创建结束编号，结束编号必须大于或者等于起始编号 |
+    | STORAGE_SIZE_GB | 存储大小，单位为GB。删除时可不传 |
+    | IMG_BASE | 基础数据卷img文件，若无基础数据卷可不传，基础数据卷img文件制作请参考。删除时可不传。参数STORAGE_SIZE_GB和IMG_BASE只传其中一个 |
 
-注意：如果使用预先创建的数据卷的文件格式需要和后面使用k8s-video.sh创建容器时期的f2fs文件系统开关保持一致，该开关默认是0即默认使用ext4文件格式，此时则使用create方法来创建数据卷；如果要创建f2fs格式的数据卷，则要使用fcreate
+    注意：如果使用预先创建的数据卷的文件格式需要和后面使用k8s-video.sh创建容器时期的f2fs文件系统开关保持一致，该开关默认是0即默认使用ext4文件格式，此时则使用create方法来创建数据卷；如果要创建f2fs格式的数据卷，则要使用fcreate
 
-例如：
-    
-创建100个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video1~video100。
-    
-```shell
-./storage_manager.sh create 1 100 32
-```
-    
-创建100个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video1~video100。
-    
-```shell
-./storage_manager.sh fcreate 1 100 32
-```
-    
-如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video101~video120。
-    
-```shell
-./storage_manager.sh create 101 120 32
-```
+    例如：
+        
+    创建100个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video1~video100。
+        
+    ```shell
+    ./storage_manager.sh create 1 100 32
+    ```
+        
+    创建100个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video1~video100。
+        
+    ```shell
+    ./storage_manager.sh fcreate 1 100 32
+    ```
+        
+    如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video101~video120。
+        
+    ```shell
+    ./storage_manager.sh create 101 120 32
+    ```
 
-如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video101~video120。
-    
-```shell
-./storage_manager.sh fcreate 101 120 32
-```
-    
-删除名称为video1~video100数据卷。
-    
-```shell
-./storage_manager.sh delete 1 100
-```
-    
-如果在此基础上，要删除名称为video101~video120这剩余20个数据卷。
-    
-```shell
-./storage_manager.sh delete 101 120
-```
-    
-通过videobase.img为基础制作名为video1~video100的数据卷，文件格式为默认的ext4。
-    
-```shell
-./storage_manager.sh create 1 100 /home/mount/img/videobase.img
-```
+    如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video101~video120。
+        
+    ```shell
+    ./storage_manager.sh fcreate 101 120 32
+    ```
+        
+    删除名称为video1~video100数据卷。
+        
+    ```shell
+    ./storage_manager.sh delete 1 100
+    ```
+        
+    如果在此基础上，要删除名称为video101~video120这剩余20个数据卷。
+        
+    ```shell
+    ./storage_manager.sh delete 101 120
+    ```
+        
+    通过videobase.img为基础制作名为video1~video100的数据卷，文件格式为默认的ext4。
+        
+    ```shell
+    ./storage_manager.sh create 1 100 /home/mount/img/videobase.img
+    ```
 
-通过videobase.img为基础制作名为video1~video100的数据卷，文件格式为f2fs。
-    
-```shell
-./storage_manager.sh fcreate 1 100 /home/mount/img/videobase.img
-```
-    
->![](public_sys-resources/icon-note.gif) **说明：** 
->若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
+    通过videobase.img为基础制作名为video1~video100的数据卷，文件格式为f2fs。
+        
+    ```shell
+    ./storage_manager.sh fcreate 1 100 /home/mount/img/videobase.img
+    ```
+        
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
 
 2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](master节点操作.md#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例
 
@@ -1056,9 +1056,9 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >-   工作节点重启后，重新加入集群时，需保证此工作节点可运行视频流云手机。
-    >-   xx.xx.xx.xx为IP地址，xxxx为映射端口号。
-    >-   加入集群的**token**命令若失效可重新在master节点执行如下命令重新生成。
+    >- 工作节点重启后，重新加入集群时，需保证此工作节点可运行视频流云手机。
+    >- xx.xx.xx.xx为IP地址，xxxx为映射端口号。
+    >- 加入集群的**token**命令若失效可重新在master节点执行如下命令重新生成。
     >
     >    ```shell
     >    kubeadm token create --print-join-command
@@ -1185,7 +1185,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
         >卸载TAP插件步骤：
-        >-   “/var/lib/kubelet/kubeadm-flags.env”文件为初始配置内容并重启kubelet。
+        >- “/var/lib/kubelet/kubeadm-flags.env”文件为初始配置内容并重启kubelet。
         >
         >    ```shell
         >    systemctl daemon-reload
@@ -1193,7 +1193,7 @@ cfct_config配置文件配置项和配置方法如下所示。
         >    systemctl status kubelet
         >    ```
         >
-        >-   进入“topology-affinity-plugin”源码目录，并执行插件卸载命令。
+        >- 进入“topology-affinity-plugin”源码目录，并执行插件卸载命令。
         >
         >    ```shell
         >    cd /home/k8s/topo-affinity-plugin-master
