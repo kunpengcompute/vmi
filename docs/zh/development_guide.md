@@ -96,7 +96,7 @@
     ./scripts/auto_install_tools.sh ${安装目录}
     ```
 
-    其中，\{安装目录\}为下载和解压编译工具的目录，可由用户自己指定。如果不输入\{安装目录\}，则脚本会使用默认目录：“~/NativeCompileToolsDir“。
+    其中，{安装目录}为下载和解压编译工具的目录，可由用户自己指定。如果不输入{安装目录}，则脚本会使用默认目录：“~/NativeCompileToolsDir”。
 
     脚本执行成功后，使用以下命令引入环境变量。
 
@@ -111,7 +111,7 @@
 >- 用户可以根据需求选择文件存放目录。
 >- 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)》。
 
-1. 将VideoEngine.tar.gz放至“/home/VideoEngine/Cloud“目录下。
+1. 将VideoEngine.tar.gz放至“/home/VideoEngine/Cloud”目录下。
 2. 解压视频流引擎服务端开发包。
 
     ```shell
@@ -448,7 +448,7 @@ VmiModuleStatus GetStatus\(VmiDataType module\)
 
 **函数原型<a name="section875mcpsimp"></a>**
 
-VmiErrCode StartModule\(VmiDataType module, uint8_t\* config, uint32_t size\)
+VmiErrCode StartModule\(VmiDataType module, uint8_t\*config, uint32_t size\)
 
 **参数说明<a name="section878mcpsimp"></a>**
 
@@ -901,7 +901,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |vbvBufferSize|1000|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->硬件配置方案一（W6800+Quadra）建议选择使用“VPU“进行编码，并且在H.265编码时profile仅支持main。
+>硬件配置方案一（W6800+Quadra）建议选择使用“VPU”进行编码，并且在H.265编码时profile仅支持main。
 
 **硬件配置方案二<a name="section1827916308460"></a>**
 
@@ -914,7 +914,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |profile|main|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
->硬件配置方案二（道客DC 1000）建议选择使用“GPU“进行编码，并且在H.265编码时profile仅支持main。
+>硬件配置方案二（道客DC 1000）建议选择使用“GPU”进行编码，并且在H.265编码时profile仅支持main。
 
 ## 6 音频输出开发<a name="ZH-CN_TOPIC_0000002518346272"></a>
 
@@ -1402,7 +1402,7 @@ enum EncoderFormat: uint32_t {
 
 **函数原型<a name="section49973353"></a>**
 
-EncoderRetCode CreateVideoEncoder\(int32_t\* fd, EncoderFormat encoderFormat\)
+EncoderRetCode CreateVideoEncoder\(int32_t\*fd, EncoderFormat encoderFormat\)
 
 **参数说明<a name="section47106995"></a>**
 
@@ -1617,7 +1617,7 @@ EncoderRetCode EncodeOneFrame\(int32_t fd, const uint8_t \*inputData, uint32_t i
 | fd | 输入 | int32_t | 编码器标记符 |
 | inputData | 输入 | const uint8_t * | 待编码数据缓冲区首地址，数据格式为yuv420p |
 | inputSize | 输入 | uint32_t | 待编码数据长度，单位Byte |
-| outputData | 输出 | uint8_t ** | 编码后的数据 |
+| outputData | 输出 | uint8_t **| 编码后的数据 |
 | outputSize | 输出 | uint32_t * | 编码后的数据长度，单位Byte |
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1789,7 +1789,7 @@ DecoderRetCode CreateVideoDecoder\(VideoDecoder \*\*decoder\)
 
 |参数名称|输入/输出|参数类型|参数描述|
 |--|--|--|--|
-| decoder | 输出 | VideoDecoder ** | 解码器实例二维指针，用于存放接口内创建的解码器实例 |
+| decoder | 输出 | VideoDecoder **| 解码器实例二维指针，用于存放接口内创建的解码器实例 |
 
 **返回值说明<a name="section7911548131510"></a>**
 
@@ -2200,7 +2200,7 @@ void QueryModule\(ModuleInfo \*\*moduleList, uint32_t \*listSize\)
 
 |参数名称|输入/输出|参数类型|参数描述|
 |--|--|--|--|
-| moduleList | 输出 | ModuleInfo ** | 当前系统支持的GPU加速类的列表，每一项包括GPU加速类的ID以及其对应的能力 |
+| moduleList | 输出 | ModuleInfo **| 当前系统支持的GPU加速类的列表，每一项包括GPU加速类的ID以及其对应的能力 |
 | listSize | 输出 | uint32_t * | moduleList的长度 |
 
 moduleList的详细定义如下：
@@ -3009,7 +3009,7 @@ void OpusDecoderDestroyApi\(OpusDecoder \*st\)
 
 与Opus 1.3.1中opus_decoder_destroy接口一致，请参见Opus 1.3.1中定义。
 
-#### 11.4.10OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549706133"></a>
+#### 11.4.10 OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549706133"></a>
 
 **函数功能<a name="section20501062"></a>**
 

@@ -52,7 +52,7 @@ cd ~/ARMNative/vmi
 source ~/.bashrc 
 ```
 
-其中，\\${安装目录}可以自己指定，若不输入${安装目录}，则脚本使用默认目录~/NativeCompileToolsDir。
+其中，\${安装目录}可以自己指定，若不输入\${安装目录}，则脚本使用默认目录~/NativeCompileToolsDir。
 
 并在~/.bashrc中添加以下环境变量：
 
