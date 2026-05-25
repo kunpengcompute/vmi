@@ -44,9 +44,9 @@
         >![](public_sys-resources/icon-note.gif) **说明：** 
         >改变视频输出分辨率（与上次启动时配置不同）时，会改变AOSP系统和应用的渲染分辨率，可能会导致部分应用出现兼容性问题或渲染问题。一般此类问题可以通过重新启动应用解决，因此建议在修改分辨率前返回桌面，同时清空后台应用，以提升用户使用体验。
         >修改default.prop后直接启动容器不会立即生效，需要在启动容器时手动重启一次容器才能生效。
-    
+
     4. 配置视频和音频的输出格式。
-    
+
         若使用APK方式访问视频流云手机实例，可通过default.prop中修改视频和音频的输出格式，可配置的属性字段请参见[3.2.1-启动脚本配置项](#启动脚本配置项)章节的视频流属性配置项字段描述表。
 
 4. 启动视频流云手机。
@@ -79,7 +79,6 @@
     >./cfct_video nstart \${start_index} \${end_index}
     >```
     >
-
 5. <a name="li3304181302311"></a>查看基于Docker容器运行时的视频流云手机。
 
     ```shell
@@ -446,10 +445,10 @@ cd /home/k8s/k8s/script
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 > \${index1} 与 \${index2} 为pod编号，其中 \${index2} 可缺省。
->例：./k8s-video.sh delete 2（删除名为video2的pod）
->./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
->若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
->./k8s-video.sh ndelete 1 5（删除名为video1 -video5 共5个pod）
+> 例：./k8s-video.sh delete 2（删除名为video2的pod）
+> ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
+> 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
+> ./k8s-video.sh ndelete 1 5（删除名为video1 -video5 共5个pod）
 
 ### 2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518386694"></a>
 
@@ -661,7 +660,7 @@ cd /home/k8s/k8s/script
 ##### 3.2.3.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
 
    当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改，
-   
+
    在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限
 
    ```shell
@@ -688,7 +687,6 @@ chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufre
 chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
 ```
 
-   
    随后输入如下命令读取cpu所支持的频率列表。
 
    ```shell
