@@ -487,10 +487,9 @@ function check_f2fs_partition() {
     mkdir -p "${target_path}"
     local host_fs_type=$(df -T "${target_path}" | tail -1 | awk '{print $2}')
     if [ "$host_fs_type" != "f2fs" ]; then
-        echo -e "\033[1;31m[ERROR] 校验失败: 容器配置为使能 f2fs (ENABLE_F2FS=1)\033[0m"
-        echo -e "\033[1;31m[ERROR] 但目标挂载目录 ${target_path} 所在的分区格式为 ${host_fs_type}，并非 f2fs。\033[0m"
-        echo -e "\033[1;31m[ERROR] 请检查底层硬盘分区格式是否已正确格式化并挂载！\033[0m"
-        has_error=1
+        echo  "当前容器配置为使能 f2fs (ENABLE_F2FS=1)"
+        echo  "但目标挂载目录 ${target_path} 所在的分区格式为 ${host_fs_type}，并非 f2fs。"
+        echo  "这可能会导致性能受到影响，请注意！"
     fi
 
     # 3. 最终判断逻辑：只要有一个校验未通过，就中止并返回 1
