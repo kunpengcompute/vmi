@@ -15,12 +15,12 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|硬件配置方案四|
 |--|--|--|--|--|
 |服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
-|CPU|2*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|2*鲲鹏920 7280W处理器，64 <Core@2.2GHz>|
-|内存|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR5 DIMM内存-64GB-4800MT/s|16*DDR5 DIMM内存-64GB-5200MT/s|
+|CPU|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|2\*鲲鹏920 7280W处理器，64 <Core@2.2GHz>|
+|内存|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR5 DIMM内存-64GB-4800MT/s|16\*DDR5 DIMM内存-64GB-5200MT/s|
 |硬盘|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*固态硬盘-480GB-SATA 6Gb/s-2.5 inch height-读密集型<br>1\*S4510 固态硬盘-960GB-SATA 6Gb/s-读取密集型<br>数据盘：1\*ES3600P V6固态硬盘-6400GB-NVMe 64Gb/s<br>1\*ES3500P V5固态硬盘-4000GB-NVMe 32Gb/s|
 |网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-225GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
 |Riser卡|Riser1与Riser2模组相同，均为：PCIe X16 + PCIe X8|Riser1与Riser2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）\*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）\*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|
-|编码卡|1 * NETINT Quadra T2A（X8）|无|无|无|
+|编码卡|1\*NETINT Quadra T2A（X8）|无|无|无|
 |GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000|8\*道客DC1000|
 |操作系统|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
 |内核版本|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
@@ -215,7 +215,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 3. 制作Kbox镜像，镜像名称通常命名为kbox:origin。
     1. 上传Kbox Demo镜像包android.tar至“~/dependency”目录（本文以此目录作为示例，用户可自行设置目录），并挂载。
 
-        镜像的名称和tag可以自行定义，格式为“\{名称\}:\{tag\}”，此处设置镜像名为kbox:demo。
+        镜像的名称和tag可以自行定义，格式为“{名称}:{tag}”，此处设置镜像名为kbox:demo。
 
         ```shell
         cd ~/dependency
@@ -303,7 +303,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
         ./make_image.sh
         ```
 
-    - 如果镜像名称需要自定义，执行命令如下例所示。通过参数指定Kbox基础云手机和视频流云手机镜像名称，格式均为“\{镜像名\}:\{tag\}”，如下例所示kbox、video为镜像名，origin、latest为tag。
+    - 如果镜像名称需要自定义，执行命令如下例所示。通过参数指定Kbox基础云手机和视频流云手机镜像名称，格式均为“{镜像名}:{tag}”，如下例所示kbox、video为镜像名，origin、latest为tag。
 
         ```shell
         ./make_image.sh kbox:origin video:latest
@@ -381,7 +381,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 3. NETINT编码卡的节点在不同服务器中会有区别，应根据实际情况修改cfct_config中NETINT的值，保证编码不会因跨片导致性能损失。
 4. 如果要使能Quadra/T432编码卡硬解，需要将cfct_config中的“T432_QUADRA_DECODE_ENABLE”设置为“1”。
-5. 针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_\{_CPU总核数_\}CORE_MODE\{_CPU_BIND_MODE变量值_\}。NETINT编码卡芯片节点所属NUMA查询方式请参见[NETINT编码卡芯片节点所属NUMA查询方式](#section2507154233510)。
+5. 针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。NETINT编码卡芯片节点所属NUMA查询方式请参见[NETINT编码卡芯片节点所属NUMA查询方式](#section2507154233510)。
 
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。GPU卡所属NUMA查询方式请参见[AMD GPU渲染节点所属NUMA的查询方式](#section20575115322416)。
 
@@ -410,7 +410,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 2. 查看NVMe节点与PCIe bus号对应关系。
 
-    _\{index\}_为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点_\{index\}_即为1。
+    _{index}_为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点_{index}_即为1。
 
     ```shell
     find /sys/devices/ -name nvme{index}
@@ -425,7 +425,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 3. 通过bus号找到该节点与NUMA从属关系。
 
-    _\{busID\}_为上一步骤获取的bus号。以nvme1设备的回显为例，_\{busID\}_即为0000:05:00.0。
+    _{busID}_为上一步骤获取的bus号。以nvme1设备的回显为例，_{busID}_即为0000:05:00.0。
 
     ```shell
     lspci -vvvs {busID} | grep NUMA
@@ -534,7 +534,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 3. 当前视频流云手机默认使能DC1000 GPU硬解的硬解功能（即默认**ENABLE_HARD_DECODE=1**），如需使用软解，需设置**ENABLE_HARD_DECODE=0**并重启容器。
 4. 如果要使能WebRTC特性，需要更改cfct_config中的ENABLE_WEBRTC_CONNECTION=1。
-5. 绑核和确认绑核生效。针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_\{_CPU总核数_\}CORE_MODE\{_CPU_BIND_MODE变量值_\}。
+5. 绑核和确认绑核生效。针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。
 
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。
 
@@ -584,7 +584,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     USERDATA="/home/mount"
     ```
 
-2. 删除原有数据卷或备份到其他位置，其中\{USERDATA\}为[1](#li16219132415811)中的实际数据卷存放目录，若存在多个数据卷存放目录，则需要分别对每个数据卷存放目录进行本章节余下所有操作。
+2. 删除原有数据卷或备份到其他位置，其中{USERDATA}为[1](#li16219132415811)中的实际数据卷存放目录，若存在多个数据卷存放目录，则需要分别对每个数据卷存放目录进行本章节余下所有操作。
 
     ```shell
     rm -rf {USERDATA}/data/android_base
@@ -628,7 +628,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     >cp -rp android_base.img android_\${index}.img
     >```
 
- 6. 删除android_1容器。
+6. 删除android_1容器。
 
     ```shell
     cd /home/kbox_video/
@@ -902,6 +902,7 @@ cfct_config配置文件配置项和配置方法如下所示。
         ```shell
         ./storage_manager.sh create 1 100 32
         ```
+
     - 创建1个存储大小为32GB的存储隔离数据卷，名称为video1，并且容器内部以f2fs格式启动。
 
         ```shell
@@ -1098,13 +1099,13 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 #### 1.3.3 部署镜像<a name="ZH-CN_TOPIC_0000002518346452"></a>
 
-##### 1.3.3.1 部署道客设备插件镜像<a name="ZH-CN_TOPIC_0000002518346450"></a>
+##### 1.3.3.1 部署道客设备插件镜像<a name="部署道客设备插件镜像"></a>
 
 在所有工作节点完成部署道客设备插件镜像的操作。
 
 道客设备插件由道客提供，本文档配套v0.0.5版本。请先获取相关的安装文档和软件包，并按照文档完成道客设备插件的部署。
 
-1. 请参见《[Kbox云手机容器 特性指南](todo)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-25.03.01.01-RC20.tgz软件包。解压获取k8s-v0.0.5-1.tar.gz压缩包。
+1. 请参见《[Kbox云手机容器 安装指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-25.03.01.01-RC20.tgz软件包。解压获取k8s-v0.0.5-1.tar.gz压缩包。
 2. 解压k8s-v0.0.5-1.tar.gz获取相关的安装文档和软件包。
 3. 请参见《DC1000加速卡Va Docker安装指南  01.pdf》中第四章（安装Va Docker）安装Va Docker。
 4. 请参见《DC1000加速卡Kubernetes设备插件安装指南 03.pdf》中第三章（安装部署）安装设备插件。
@@ -1247,13 +1248,13 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 |配置项|参数|
 |--|--|
-|CPU|2*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
-|内存|16*DDR5 DIMM内存-64GB-4800MT/s|
+|CPU|2\*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
+|内存|16\*DDR5 DIMM内存-64GB-4800MT/s|
 |硬盘系统盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
 |硬盘数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
-|网卡|1 *（4 *GE接口卡， 1 * 5902L板载灵活网卡|
-|Riser卡|1* 16X SLOT(PCIe X16) + 2*8X SLOT(PCIe X8)-RISER1&2模组， 2 *8X SLOT(PCIe X8)-后置Riser|
-|GPU|4*DC1000|
+|网卡|1\*（4\*GE接口卡， 1\*5902L板载灵活网卡|
+|Riser卡|1* 16X SLOT(PCIe X16) + 2\*8X SLOT(PCIe X8)-RISER1&2模组， 2\*8X SLOT(PCIe X8)-后置Riser|
+|GPU|4\*DC1000|
 |操作系统|openEuler 22.03LTS SP4|
 |系统/内核版本|5.10.0-216.0.0|
 
@@ -1406,7 +1407,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >内存大页配置参考：hugepages = 当前总内存\*0.8（向下取整），在本环境下设置为1TB \* 0.8 = 800GB。
+    >内存大页配置参考：hugepages = 当前总内存\*0.8（向下取整），在本环境下设置为1TB \*0.8 = 800GB。
 
 3. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存并退出文件。
 4. 更新grub配置文件。

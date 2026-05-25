@@ -67,7 +67,7 @@
     ./cfct_video start ${index1} ${index2}
     ```
 
-    上述命令中 \${index1} 与 \\\${index2} 为设备号，其中 ${index2} 可缺省。启动脚本使用示例：
+    上述命令中 \${index1} 与 \${index2} 为设备号，其中 \${index2} 可缺省。启动脚本使用示例：
 
     - 启动一个编号为1的视频流云手机。
 
@@ -87,7 +87,6 @@
     >```shell
     >./cfct_video nstart 1 5
     >```
-
 
 5. <a name="li3304181302311"></a>查看视频流云手机。
 
@@ -113,7 +112,7 @@
 
     确认所启动的容器存在，且状态正常。
 
-6. 确认视频流云手机是否启动成功，其中 **$\{index\}** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **$\{index\}** 即为35。
+6. 确认视频流云手机是否启动成功，其中 **\${index}** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **\${index}** 即为35。
 
     - 基于Docker容器运行时的视频流云手机。
 
@@ -180,14 +179,14 @@
 
     ![](figures/zh-cn_image_0000002549744251.png)
 
-5. 返回至主页面，自上而下依次输入服务器IP地址、**$\{port\}**，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
+5. 返回至主页面，自上而下依次输入服务器IP地址、**\${port}**，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
 
-    **$\{port\}** 默认值为 8000 + **$\{index\}**。
+    **\${port}** 默认值为 8000 + **\${index}**。
 
     ![](figures/zh-cn_image_0000002549864241.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >- 每个视频流云手机实例需要设置端口 **$\{port\}** ，部署时可进入cfct_video脚本设置合适的 **$\{port\}**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >- 每个视频流云手机实例需要设置端口 **\${port}** ，部署时可进入cfct_video脚本设置合适的 **\${port}**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位安卓系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
@@ -200,10 +199,10 @@
 
     ![](figures/zh-cn_image_0000002518224474.png)
 
-3. 自上而下依次输入服务器IP地址、**$\{port\}** ，单击“SUBMIT”即可访问云侧的视频流云手机。其中 **$\{port\}** 默认值为8000 + **$\{index\}**。
+3. 自上而下依次输入服务器IP地址、**\${port}** ，单击“SUBMIT”即可访问云侧的视频流云手机。其中 **\${port}** 默认值为8000 + **\${index}**。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >每个视频流云手机实例需要配置映射端口，部署时可进入cfct_video脚本设置合适的**$\{port\}**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >每个视频流云手机实例需要配置映射端口，部署时可进入cfct_video脚本设置合适的**\${port}**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
 
 ### 1.4 （可选）动态修改云手机参数<a name="ZH-CN_TOPIC_0000002549744243"></a>
 
@@ -250,7 +249,7 @@
 
 使用cfct_video脚本重启视频流云手机实例。
 
-- 重启编号为 $\{index1\} 的视频流云手机。
+- 重启编号为 \${index1} 的视频流云手机。
 
     ```shell
     ./cfct_video restart ${index1}
@@ -423,7 +422,7 @@
     > 
     >
     > 
-    > \${index1} 与 \\\${index2} 为pod编号，$\{index3\}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 ${index2} $\{index3\} 可缺省。例：
+    > \${index1} 与 \${index2} 为pod编号，\${index3}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 \${index2} \${index3} 可缺省。例：
     >- 创建名为video2的pod。
     >
     > ```shell
@@ -441,6 +440,7 @@
     > ```shell
     > ./k8s-video.sh start 1 1 10240
     > ```
+    >
     > 若需要使用NFS挂载启动，则将start改成nstart。例：
     >
     > ```shell
@@ -462,7 +462,7 @@
     kubectl get pods -o wide
     ```
 
-    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**$\{index\}，index为pod编号**。
+    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**\${index}，index为pod编号**。
 
     - 在任意节点上，可通过如下命令进入容器，以video1为例：
 
@@ -470,7 +470,7 @@
         kubectl exec -it video1 -- sh
         ```
 
-    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中“$\{CONTAINER\}”是**crictl ps**返回的第一列。
+    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中“\${CONTAINER}”是**crictl ps**返回的第一列。
 
         ```shell
         crictl exec -it ${CONTAINER} sh
@@ -486,7 +486,7 @@ cd /home/k8s/k8s/script
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
-> \${index1} 与 \\\${index2} 为pod编号，其中 ${index2} 可缺省。
+> \${index1} 与 \${index2} 为pod编号，其中 \${index2} 可缺省。
 >例：./k8s-video.sh delete 2（删除名为video2的pod）
 >./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
 
@@ -710,17 +710,20 @@ cd /home/k8s/k8s/script
 |vmi.video.encode.target_bitrate|WebRTC目标编码码率。|3000000~50000000<br>单位bps|
 |vmi.audio.audiotype|音频输出格式。|1（目前WebRTC只支持音频PCM的输出格式）|
 |vmi.webrtc.connection.serverip|云手机服务端的IP地址。|具体IP地址。|
-|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **$\{index\}** * 2 - 1，起始端口 + **$\{index\}** * 2。|可用的起始端口。|
+|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **\${index}** * 2 - 1，起始端口 + **\${index}** * 2。|可用的起始端口。|
 |vmi.network.type|网络类型。|1：TCP<br>4：WebRTC|
 |vmi.webrtc.httpserver.port|服务端HTTP映射端口号。|具体映射端口号。|
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|
 |vmi.webrtc.connection.udpmaxport|服务端使用的UDP最大端口。|可用的最大端口。|
 
 #### 3.2.4 容器内cpu频率动态调节<a name="ZH-CN_TOPIC_0000002549744226" id="容器内cpu频率动态调节"></a>
+
 ##### 3.2.4.1 功能背景
+
 在真机中，系统为了平衡负载和功耗，会动态调节 CPU 的运行频率，而云机依托于服务器宿主机的容器化环境运行，其底层物理 CPU 的频率通常处于恒定状态，与真机存在差异。下面步骤说明如何实现云手机cpu频率动态调节，提高仿真能力
 
-##### 3.2.4.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
+##### 3.2.4.2\**具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
+
    当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改，
    
    在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限
@@ -738,6 +741,7 @@ cd /home/k8s/k8s/script
    如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。
    则在容器内执行如下命令新增权限
    输入如下命令给scaling_cur_freq添加写入（w）权限
+
    ```shell
    chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
    ```
@@ -749,10 +753,13 @@ cd /home/k8s/k8s/script
    ```
    
    随后输入如下命令读取cpu所支持的频率列表。
+
    ```shell
    cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
    ```
+
    随后输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值
+
    ```shell
    echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_cur_freq
    ```
@@ -764,10 +771,10 @@ cd /home/k8s/k8s/script
    如果容器重启，那么之前的修改值会失效，CPU频率值会恢复默认。
 
    要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如“手机设备信息大全”这样的第三方应用中观察到cpu频率的动态变化，此处的“sleep 1”表示每隔1s变化一次，此处的“1”可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改
+
    ```shell
    CPU_ID=0
    FREQS=(554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000)
-
    while true; do
       for FREQ in "${FREQS[@]}"; do
          echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/scaling_cur_freq 2>/dev/null
@@ -778,7 +785,8 @@ cd /home/k8s/k8s/script
    done
    ```
 
-##### 3.2.4.3 **校验是否生效。**
+##### 3.2.4.3\**校验是否生效。**
+
    启动容器后，在容器内安装如“手机设备信息大全”的应用，查看cpu频率是否等于预期，若等于预期值即表示cpu频率调节生效。
 
 ## 4 故障处理<a name="ZH-CN_TOPIC_0000002549864199"></a>
