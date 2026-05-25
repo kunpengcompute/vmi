@@ -935,6 +935,8 @@ cfct_config配置文件配置项和配置方法如下所示。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
+    
+    >此处创建的数据卷的文件格式需要和'k8s-video.sh'拉起pod时的配置保持一致。例如：若通过'fcreate'为video1创建了f2fs格式的数据卷，那么使用启动脚本'k8s-video.sh'拉起video1的时候必须将f2fs开关设置为1。
 
 2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](master节点操作.md#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例
 

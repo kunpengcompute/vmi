@@ -413,38 +413,64 @@
     - spec.containers.resources.limits.memory和spec.containers.resources.requests.memory：容器的内存，两者需同时修改。
 
 2. 启动K8s视频流云手机。
+   
+   注意：启动K8s视频流云手机前请在挂载目录下的img目录中查看是否有预期之外的pod编号的数据卷，避免导致后续创建的pod中的文件格式不符合预期。
 
     ```shell
-    ./k8s-video.sh start ${index1} ${index2} ${index3} 
+    ./k8s-video.sh start ${index1} ${index2} ${index3} ${index4}
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     > 
     >
     > 
-    > \${index1} 与 \${index2} 为pod编号，\${index3}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 \${index2} \${index3} 可缺省。例：
-    >- 创建名为video2的pod。
+    > \${index1} 与 \${index2} 为pod编号，\${index3}表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。 \${index4}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 \${index2} \${index3} \$\{index4\}可缺省。例：
+    >- 创建名为video2的pod，里面的文件格式是默认的ext4。
     >
     > ```shell
     > ./k8s-video.sh start 2
     > ```
     >
-    >- 创建名为video1~video5共5个pod。
+    >- 创建名为video3的pod，里面的文件格式是f2fs。
+    >
+    > ```shell
+    > ./k8s-video.sh start 3 3 1
+    > ```
+    >
+    >- 创建名为video3的pod，里面的文件格式是f2fs。
+    >
+    > ```shell
+    > ./k8s-video.sh start 3 3 1
+    > ```
+    >
+    >- 创建名为video1\~video5共5个pod，里面的文件格式是默认的ext4。
     >
     > ```shell
     > ./k8s-video.sh start 1 5
     > ```
     >
-    >- 创建名为video1的pod。system分区大小限制为10240MB
+    >- 创建名为video2\~video6共5个pod，里面的文件格式是f2fs。
     >
     > ```shell
-    > ./k8s-video.sh start 1 1 10240
+    > ./k8s-video.sh start 2 6 1
+    > ```
+    >
+    >- 创建名为video1的pod。里面的文件格式是默认的ext4，system分区大小限制为10240MB。
+    >
+    > ```shell
+    > ./k8s-video.sh start 1 1 0 10240
+    > ```
+    >
+    >- 创建名为video2的pod。里面的文件格式是f2fs，system分区大小限制为10240MB。
+    >
+    > ```shell
+    > ./k8s-video.sh start 2 2 1 10240
     > ```
     >
     > 若需要使用NFS挂载启动，则将start改成nstart。例：
     >
     > ```shell
-    > ./k8s-video.sh nstart \${index1} \${index2} \${index3} 
+    > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4}
     > ```
     >
 
