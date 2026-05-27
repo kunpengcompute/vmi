@@ -25,7 +25,7 @@ tar -xvf aosp11r48.tar
 
 ### 项目代码下载
 
-编译完整的视频流二进制包需要下载本仓库和[VMIEngine](https://gitcode.com/fuaniu/Kbox/blob/AOSP11/docs/zh/compile_guide.md)仓库。
+编译完整的视频流二进制包需要下载本仓库和[VMIEngine](https://gitcode.com/boostkit/VMIEngine/tree/dev_aosp15)仓库。
 
 ```shell
 git clone https://gitcode.com/boostkit/vmi.git
@@ -109,17 +109,17 @@ ln -s ccache /usr/bin/c++
 下载必要依赖，如果已安装，跳过即可
 
 ```shell
-sudo apt install -y git	 
-sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg	 
-sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev	 
-sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev	 
-sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev	 
-sudo apt install -y libxml2-utils xsltproc unzip	 
-sudo apt install -y libx11-dev libreadline-dev	 
-sudo apt install -y libncurses5 libncurses5-dev	 
-sudo apt install -y tofrodos python-markdown-doc zlib1g-dev	 
-sudo apt install -y dpkg-dev libsdl1.2-dev	 
-sudo apt install -y m4 bc python3 python3-mako gettext	 
+sudo apt install -y git     
+sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg     
+sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev     
+sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev     
+sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev     
+sudo apt install -y libxml2-utils xsltproc unzip     
+sudo apt install -y libx11-dev libreadline-dev     
+sudo apt install -y libncurses5 libncurses5-dev     
+sudo apt install -y tofrodos python-markdown-doc zlib1g-dev     
+sudo apt install -y dpkg-dev libsdl1.2-dev     
+sudo apt install -y m4 bc python3 python3-mako gettext     
 sudo apt install -y expect
 ```
 

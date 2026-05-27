@@ -15,13 +15,13 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|
 |--|--|--|--|
 |服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
-|CPU|2*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
-|内存|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR4 RDIMM内存-32GB-2933MT/s|16*DDR5 DIMM内存-64GB-4800MT/s|
-|硬盘|系统盘：2*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型数据盘：2*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|
-|网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|板载：1*（4*GE接口卡）1*TM280板载灵活网卡-2*25GE/10GE光口-4端口-SFP28（不含光模块）外接：1*Mellanox网卡|
-|Riser卡|RISER1与RISER2模组相同，均为：PCIe X16 + PCIe X8|RISER1与RISER2模组相同，均为：PCIe X8*3|前置Riser（x8*2）*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）*1|
-|编码卡|1 * NETINT Quadra T2A（X8）|无|无|
-|GPU|2*AMD W6800|4*道客DC 1000|8*道客DC 1000|
+|CPU|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
+|内存|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR5 DIMM内存-64GB-4800MT/s|
+|硬盘|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型数据盘：2\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|
+|网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|
+|Riser卡|RISER1与RISER2模组相同，均为：PCIe X16 + PCIe X8|RISER1与RISER2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）*1|
+|编码卡|1\*NETINT Quadra T2A（X8）|无|无|
+|GPU|2\*AMD W6800|4\*道客DC 1000|8\*道客DC 1000|
 |操作系统|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|
 |系统/内核版本|6.6.0-72.0.0|6.6.0-72.0.0|6.6.0-72.0.0|
 
@@ -46,15 +46,15 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 |序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|
 |--|--|--|--|--|--|--|
-|1|BoostKit-boostcph-videoengine_*_15.zip|视频流引擎二进制包。|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#base-soft)|√|√|√|
-|2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|请联系华为技术支持获取。|√|√|√|
-|3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的sha256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|
-|4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|请联系华为技术支持获取。|√|√|√|
-|5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的sha256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|
-|6|VideoClientEmulator.tar.gz|视频流云手机压测工具。|请联系华为技术支持获取。|√|√|√|
-|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15。|[获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123|√|-|-|
-|8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|[获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123|√|-|-|
-|9|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|
+| 1 | BoostKit-boostcph-videoengine_*_15.zip | 视频流引擎二进制包 | [获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#base-soft) | √ | √ | √ |
+| 2 | DemoVideoEngine.tar.gz | 视频流服务端tar包组件，负责获取Kbox容器音视频数据等 | 请联系华为技术支持获取 | √ | √ | √ |
+| 3 | DemoVideoEngine_sha256.txt | 视频流服务端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ |
+| 4 | CloudPhoneApk.tar.gz | 视频流客户端tar包组件，负责解码播放音视频数据 | 请联系华为技术支持获取 | √ | √ | √ |
+| 5 | CloudPhoneApk_sha256.txt | 视频流客户端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ |
+| 6 | VideoClientEmulator.tar.gz | 视频流云手机压测工具 | 请联系华为技术支持获取 | √ | √ | √ |
+| 7 | NETINT-v*XXX*.tar.gz | 视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - |
+| 8 | Quadra_V*XXX*.zip | NETINT编码卡Quadra软固件及文档包 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - |
+| 9 | topo-affinity-plugin-master.zip | K8s NUMA亲和插件 | [获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin) | √ | √ | √ |
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -110,7 +110,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >NVMe固件版本比较的规则是：数字越大，字母越靠后，版本越新。
 
-2. 请从**Quadra\_V_XXX_.zip**（其中，XXX为版本号信息，仅做示例使用，下列步骤请按实际名称解压）中获取4.8.F-Android15固件升级包并升级固件**。**
+2. 请从**Quadra_V_XXX_.zip**（其中，XXX为版本号信息，仅做示例使用，下列步骤请按实际名称解压）中获取4.8.F-Android15固件升级包并升级固件**。**
 
     ```shell
     unzip Quadra_VXXX.zip
@@ -155,14 +155,14 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 |软件名|版本号|软件描述|获取方式|
 |--|--|--|--|
-|Containerd|v1.7.14|Containerd是一个容器运行时。|Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service)|
-|runc|v1.1.12|runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。|[获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64)|
-|/rCNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|[获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
-|nerdctl|v1.7.5|nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。|[获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz)|
+| Containerd | v1.7.14 | Containerd是一个容器运行时 | Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service) |
+| runc | v1.1.12 | runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件 | [获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64) |
+| /rCNI Plugin | v1.4.1 | 容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口 | [获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
+| nerdctl | v1.7.5 | nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像 | [获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz) |
 
 **部署Containerd环境<a name="section343716111874"></a>**
 
-1. <a id="部署Containerd环境1"></a>下载并解压Containerd二进制软件包到“/usr/local“目录下。
+1. <a id="部署Containerd环境1"></a>下载并解压Containerd二进制软件包到“/usr/local”目录下。
 
     ```shell
     mkdir -p /root/containerdenv/downloads
@@ -241,13 +241,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     systemctl restart docker
     ```
 
-    若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)\~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
+    若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
 
 #### 1.2.2 （硬件配置方案二、三）安装显卡驱动<a name="ZH-CN_TOPIC_0000002549866411"></a>
 
 使用硬件配置方案二、三每次服务器重启后，都需要重新执行安装显卡驱动步骤。
 
-1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)获取VAGPU-25.03.01.01-RC13-A15.tgz，上传至“\~/dependency/“目录，解压后获取显卡内核态驱动。
+1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)获取VAGPU-25.03.01.01-RC13-A15.tgz，上传至“~/dependency/”目录，解压后获取显卡内核态驱动。
 
     ```shell
     cd ~/dependency/
@@ -261,7 +261,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     insmod va_pci.ko
     ```
 
-3. 将驱动包里的固件拷贝到系统的“/lib/firmware/“目录。
+3. 将驱动包里的固件拷贝到系统的“/lib/firmware/”目录。
 
     ```shell
     cp rgx* /lib/firmware/
@@ -317,8 +317,8 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 制作视频流云手机镜像前需要根据本章节内容完成Kbox镜像的制作。
 
-1. 请参见[部署Kbox容器基础环境](#部署Kbox容器基础环境)获取Kbox容器启动依赖组件android.tar和Kbox-patches-AOSP15.zip，并上传至服务器的“/home/kbox\_video“目录（本文以此目录作为示例，用户也可自行设置目录）。
-2. 解压Kbox-patches-AOSP15.zip，获取“deploy\_scripts“路径下的2个组件android\_kbox\_aosp15.sh、base\_box\_aosp15.sh，并将其拷贝到“/home/kbox\_video“目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
+1. 请参见[部署Kbox容器基础环境](#部署Kbox容器基础环境)获取Kbox容器启动依赖组件android.tar和Kbox-patches-AOSP15.zip，并上传至服务器的“/home/kbox_video”目录（本文以此目录作为示例，用户也可自行设置目录）。
+2. 解压Kbox-patches-AOSP15.zip，获取“deploy_scripts”路径下的2个组件android_kbox_aosp15.sh、base_box_aosp15.sh，并将其拷贝到“/home/kbox_video”目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
 
     ```shell
     unzip Kbox-patches-AOSP15.zip
@@ -329,18 +329,18 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     ```
 
 3. 制作Kbox镜像，镜像名称通常命名为kbox:origin。
-    1. 上传Kbox Demo镜像包android.tar至“\~/dependency“目录（本文以此目录作为示例，用户可自行设置目录），并挂载。
+    1. 上传Kbox Demo镜像包android.tar至“~/dependency”目录（本文以此目录作为示例，用户可自行设置目录），并挂载。
 
-        镜像的名称和tag可以自行定义，格式为“\{名称\}:\{tag\}”，此处设置镜像名为kbox:demo。
+        镜像的名称和tag可以自行定义，格式为“{名称}:{tag}”，此处设置镜像名为kbox:demo。
 
         ```shell
         cd ~/dependency
         docker import android.tar kbox:demo
         ```
 
-    2. 将Kbox-patches-AOSP15文件夹中的deploy\_scripts目录上传至服务器的“\~/dependency“目录。
-    3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox\_\*.zip到“\~/dependency/deploy\_scripts“目录。
-    4. （硬件配置方案二、三）使用硬件配置方案二、三时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC13-A15.tgz，获取va\_driver.tgz，上传到服务器的“\~/dependency/deploy\_scripts“目录。
+    2. 将Kbox-patches-AOSP15文件夹中的deploy_scripts目录上传至服务器的“~/dependency”目录。
+    3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox_\*.zip到“~/dependency/deploy_scripts”目录。
+    4. （硬件配置方案二、三）使用硬件配置方案二、三时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC13-A15.tgz，获取va_driver.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
@@ -381,7 +381,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 **校验软件包完整性<a name="section1286473717216"></a>**
 
-1. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取CloudPhoneApk.tar.gz、DemoVideoEngine.tar.gz和BoostKit-boostcph-videoengine\_\*\_15.zip软件包，获取后将软件包上传至服务器的“/home/kbox\_video“目录。
+1. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取CloudPhoneApk.tar.gz、DemoVideoEngine.tar.gz和BoostKit-boostcph-videoengine_\*_15.zip软件包，获取后将软件包上传至服务器的“/home/kbox_video”目录。
 2. 通过以下命令获取如下组件的sha256校验码。
 
     ```shell
@@ -389,11 +389,11 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     sha256sum CloudPhoneApk.tar.gz
     ```
 
-3. 将校验码分别与DemoVideoEngine\_sha256.txt和CloudPhoneApk\_sha256.txt进行对比。
+3. 将校验码分别与DemoVideoEngine_sha256.txt和CloudPhoneApk_sha256.txt进行对比。
 
     如果一致，说明获取的软件包完整，可以继续下一步操作，否则应该暂停部署，重新获取完整的软件包。
 
-4. （硬件配置方案一）使用硬件配置方案一时请参见[1.1.2.2-视频流引擎](#视频流引擎)获取NETINT-vXXX.tar.gz软件包，获取后将软件包上传至服务器的“/home/kbox\_video“目录，并重命名为NETINT.tar.gz。
+4. （硬件配置方案一）使用硬件配置方案一时请参见[1.1.2.2-视频流引擎](#视频流引擎)获取NETINT-vXXX.tar.gz软件包，获取后将软件包上传至服务器的“/home/kbox_video”目录，并重命名为NETINT.tar.gz。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >- NETINT对Android15系统仅支持Quadra编码卡
@@ -422,14 +422,14 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
         ./make_image.sh
         ```
 
-    - 如果镜像名称需要自定义，执行命令如下例所示。通过参数指定Kbox基础云手机和视频流云手机镜像名称，格式均为“\{镜像名\}:\{tag\}”，如下例所示kbox、video为镜像名，origin、latest为tag。
+    - 如果镜像名称需要自定义，执行命令如下例所示。通过参数指定Kbox基础云手机和视频流云手机镜像名称，格式均为“{镜像名}:{tag}”，如下例所示kbox、video为镜像名，origin、latest为tag。
 
         ```shell
         ./make_image.sh kbox:origin video:latest
         ```
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
-        >镜像名只可包含数字与小写字母，首字符应为小写字母，tag名只可包含数字与字母。若自定义修改了视频流云手机的镜像名称，请参见[1.2.6-制作基础数据卷](#制作基础数据卷)章节中将cfct\_config配置文件中的视频流云手机镜像名更新为自定义的镜像名称。
+        >镜像名只可包含数字与小写字母，首字符应为小写字母，tag名只可包含数字与字母。若自定义修改了视频流云手机的镜像名称，请参见[1.2.6-制作基础数据卷](#制作基础数据卷)章节中将cfct_config配置文件中的视频流云手机镜像名更新为自定义的镜像名称。
         >执行该步骤后，回显中会出现多行linkerconfig告警，该告警不影响正常功能，可以忽略。
         >![](figures/zh-cn_image_0000002549866449.png)
 
@@ -446,13 +446,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     video         latest    40e5f42c17d9    6 seconds ago    2.11GB
     ```
 
-#### 1.2.4 设置cfct\_config配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002518386584"></a>
+#### 1.2.4 设置cfct_config配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002518386584"></a>
 
-通过cfct\_config文件配置参数可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
+通过cfct_config文件配置参数可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config配置文件中的配置正确。
 
-cfct\_config配置文件配置项和配置方法如下所示。
+cfct_config配置文件配置项和配置方法如下所示。
 
-1. 解压cfct\_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
+1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
 
     ```shell
     cd /home/kbox_video/
@@ -465,14 +465,14 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
-3. NETINT编码卡的节点在不同服务器中会有区别，请参见[4](#li5561723173614)并结合实际情况修改cfct\_config中NETINT的值，保证编码不会因跨片导致性能损失。
-4. 针对1张GPU卡环境：需要修改cfct\_config配置文件中VIDEO\_CPU\_MAP\_\{_CPU总核数_\}CORE\_MODE\{_CPU\_BIND\_MODE变量值_\}。NETINT编码卡芯片节点所属NUMA查询方式请参见[NETINT编码卡芯片节点所属NUMA查询方式](#section2507154233510)。
+3. NETINT编码卡的节点在不同服务器中会有区别，请参见[4](#li5561723173614)并结合实际情况修改cfct_config中NETINT的值，保证编码不会因跨片导致性能损失。
+4. 针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。NETINT编码卡芯片节点所属NUMA查询方式请参见[NETINT编码卡芯片节点所属NUMA查询方式](#section2507154233510)。
 
-    以VIDEO\_CPU\_MAP\_128CORE\_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0\_CPUS2和MODE0\_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0\_CPUS0和MODE0\_CPUS1所有相关引用。GPU卡所属NUMA查询方式请参见[AMD GPU渲染节点所属NUMA的查询方式](#section20575115322416)。
+    以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。GPU卡所属NUMA查询方式请参见[AMD GPU渲染节点所属NUMA的查询方式](#section20575115322416)。
 
-5. 针对1张编码卡环境：需要修改cfct\_config配置文件中“VIDEO\_ENC\_MAP\_CORE“。
-6. 当编码卡插在CPU0上时，删除_“$\{NETINT1\}”_；若编码卡插在CPU1上时，删除_“$\{NETINT0\}”_。
-7. 若视频帧采用CPU进行软编码，需要将cfct\_config中的“CPU\_BIND\_MODE“设置为“1“，以防卡顿。
+5. 针对1张编码卡环境：需要修改cfct_config配置文件中“VIDEO_ENC_MAP_CORE”。
+6. 当编码卡插在CPU0上时，删除_“\${NETINT1}”_；若编码卡插在CPU1上时，删除_“\${NETINT0}”_。
+7. 若视频帧采用CPU进行软编码，需要将cfct_config中的“CPU_BIND_MODE”设置为“1”，以防卡顿。
 8. 如果需要使能图形加速层，请参见[图形加速层的基本功能和使用说明](#section9932195417616)。
 
 **NETINT编码卡芯片节点所属NUMA查询方式<a name="section2507154233510"></a>**
@@ -494,7 +494,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 2. 查看NVMe节点与PCIe bus号对应关系。
 
-    _\{index\}_为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点_\{index\}_即为1。
+    _{index}_为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点_{index}_即为1。
 
     ```shell
     find /sys/devices/ -name nvme{index}
@@ -509,7 +509,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 3. 通过bus号找到该节点与NUMA从属关系。
 
-    _\{busID\}_为上一步骤获取的bus号。以nvme1设备的回显为例，_\{busID\}_即为0000:05:00.0。
+    _{busID}_为上一步骤获取的bus号。以nvme1设备的回显为例，_{busID}_即为0000:05:00.0。
 
     ```shell
     lspci -vvvs {busID} | grep NUMA
@@ -521,7 +521,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     NUMA node: 0
     ```
 
-4. <a name="li5561723173614"></a>根据编码卡NVMe设备节点对应的NUMA修改cfct\_config中NETINT的值。
+4. <a name="li5561723173614"></a>根据编码卡NVMe设备节点对应的NUMA修改cfct_config中NETINT的值。
 
     鲲鹏920 7265F/7260服务器：从属于0、1号NUMA的NVMe节点写在NETINT0字段中，从属于2、3号NUMA的NVMe节点写在NETINT1字段中。
 
@@ -580,30 +580,30 @@ cfct\_config配置文件配置项和配置方法如下所示。
 - GPUMock：对GPU厂商、GPU型号、OpenGL ES版本、GLMax能力值、OpenGL ES拓展进行模拟。
 - ShaderCache：通过预构建着色器二进制、多云手机共享缓存，消除着色器编译链接等处理时间，降低OpenGL ES大型应用运行卡顿率。
 
-以上两个功能均可使用kbox\_render\_accelerating\_configuration.xml配置文件进行功能配置。图形加速层的使能步骤如下：
+以上两个功能均可使用kbox_render_accelerating_configuration.xml配置文件进行功能配置。图形加速层的使能步骤如下：
 
-1. 修改云手机启动配置文件cfct\_config中“**ENABLE\_RENDER\_LAYER**”设置为1。
-2. 从软件包Kbox-patches-AOSP15.zip中复制kbox\_render\_accelerating\_configuration.xml配置文件到启动路径/home/kbox\_video/。
+1. 修改云手机启动配置文件cfct_config中“**ENABLE_RENDER_LAYER**”设置为1。
+2. 从软件包Kbox-patches-AOSP15.zip中复制kbox_render_accelerating_configuration.xml配置文件到启动路径/home/kbox_video/。
 
     ```shell
     cp /home/kbox_video/Kbox-patches-AOSP15/deploy_scripts/kbox_render_accelerating_configuration.xml /home/kbox_video/
     ```
 
-3. 打开kbox\_render\_accelerating\_configuration.xml配置文件，对应用的图形加速层功能进行配置。具体配置项描述请参见[图形加速层配置项](user_guide.md#图形加速层配置项)章节的图形加速层配置项说明。
+3. 打开kbox_render_accelerating_configuration.xml配置文件，对应用的图形加速层功能进行配置。具体配置项描述请参见[图形加速层配置项](user_guide.md#图形加速层配置项)章节的图形加速层配置项说明。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
->- 首次启动云手机后，若需要修改图形加速层功能的配置，修改配置文件中应用对应的配置，手动将其拷贝到云手机容器“/data/local/tmp“路径，重启应用生效。
+>- 首次启动云手机后，若需要修改图形加速层功能的配置，修改配置文件中应用对应的配置，手动将其拷贝到云手机容器“/data/local/tmp”路径，重启应用生效。
 >- 宿主机上多容器共享一个着色器缓存路径，可以先启动一路云手机预收集应用尽可能完整的着色器，其他云手机通过将配置文件对应的应用设置为只读模式来使能ShaderCache功能，此时性能最佳。
 >- ShaderCache功能没有缓存淘汰机制，若是缓存文件系统存储已满或者游戏版本更新，为了避免着色器和二进制文件不能对应，请清理整个文件系统的缓存。
 
-#### 1.2.5 设置cfct\_config配置文件（配置方案二）<a name="ZH-CN_TOPIC_0000002518386592"></a>
+#### 1.2.5 设置cfct_config配置文件（配置方案二）<a name="ZH-CN_TOPIC_0000002518386592"></a>
 
-通过设置cfct\_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct\_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct\_config配置文件中的配置正确。
+通过设置cfct_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config配置文件中的配置正确。
 
-cfct\_config配置文件配置项和配置方法如下所示。
+cfct_config配置文件配置项和配置方法如下所示。
 
-1. 解压cfct\_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
+1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
 
     ```shell
     cd /home/kbox_video/
@@ -616,9 +616,9 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
-3. 针对1张GPU卡环境：需要修改cfct\_config配置文件中VIDEO\_CPU\_MAP\_\{_CPU总核数_\}CORE\_MODE\{_CPU\_BIND\_MODE变量值_\}。
+3. 针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。
 
-    以VIDEO\_CPU\_MAP\_128CORE\_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0\_CPUS2和MODE0\_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0\_CPUS0和MODE0\_CPUS1所有相关引用。
+    以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。
 
     - 如何确认当前环境只有一张GPU？
 
@@ -659,20 +659,20 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 1. <a name="li16219132415811"></a>确认数据卷存放目录和镜像名称。
 
-    默认镜像名称为video:latest，默认数据卷存放目录为“/home/mount“，可根据实际情况自行更改，修改方法为将“cfct\_config”文件中“DOCKER\_IMAGE“和“USERDATA“值调整为实际的名称或目录。
+    默认镜像名称为video:latest，默认数据卷存放目录为“/home/mount”，可根据实际情况自行更改，修改方法为将“cfct_config”文件中“DOCKER_IMAGE”和“USERDATA”值调整为实际的名称或目录。
 
     ```shell
     DOCKER_IMAGE=video:latest
     USERDATA="/home/mount"
     ```
 
-2. 删除原有数据卷或备份到其他位置，其中\{USERDATA\}为[1](#li16219132415811)中的实际数据卷存放目录，若存在多个数据卷存放目录，则需要分别对每个数据卷存放目录进行本章节余下所有操作。
+2. 删除原有数据卷或备份到其他位置，其中{USERDATA}为[1](#li16219132415811)中的实际数据卷存放目录，若存在多个数据卷存放目录，则需要分别对每个数据卷存放目录进行本章节余下所有操作。
 
     ```shell
     rm -rf ${USERDATA}/data/android_base
     ```
 
-3. 从DemoVideoEngine.tar.gz中解压获取启动脚本cfct\_video，并赋予权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
+3. 从DemoVideoEngine.tar.gz中解压获取启动脚本cfct_video，并赋予权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
 
     ```shell
     cd /home/kbox_video/
@@ -680,13 +680,13 @@ cfct\_config配置文件配置项和配置方法如下所示。
     chmod 755 cfct_video
     ```
 
-4. 使用cfct\_video脚本启动1路云手机。
+4. 使用cfct_video脚本启动1路云手机。
 
     ```shell
     ./cfct_video start ${index}  
     ```
 
-5. 将所需的应用（例地铁跑酷等）预装到该云手机容器中，将android\_$\{index\}作为新数据卷，供启动视频流云手机时使用。
+5. 将所需的应用（例地铁跑酷等）预装到该云手机容器中，将android_\${index}作为新数据卷，供启动视频流云手机时使用。
 
     ```shell
     cd ${USERDATA}/data/
@@ -696,21 +696,21 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >如果使用nfs挂载启动的容器，由于性能考虑，不支持cp -rp直接拷贝数据目录，应该直接拷贝img。
     >
-    >将所需的应用（例如地铁跑酷等）预装到该云手机容器中，将android\_$\{index\}.img拷贝为android_base.img作为新数据卷。
+    >将所需的应用（例如地铁跑酷等）预装到该云手机容器中，将android_\${index}.img拷贝为android_base.img作为新数据卷。
     >
     >```shell
-    >cd ${USERDATA}/img/
-    >cp -rp android_${index}.img android_base.img
+    >cd \${USERDATA}/img/
+    >cp -rp android_\${index}.img android_base.img
     >```
     >
     >在启动指定容器前手动拷贝android_base.img为相应容器编号。
     >
     >```shell
-    >cd ${USERDATA}/img/
-    >cp -rp android_base.img android_${index}.img
+    >cd \${USERDATA}/img/
+    >cp -rp android_base.img android_\${index}.img
     >```
 
-6. 删除android\_$\{index\}容器。
+6. 删除android_\${index}容器。
 
     ```shell
     cd /home/kbox_video/
@@ -729,8 +729,8 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 |节点名称（即主机名，可自定义）|节点角色|服务器个数|环境准备|节点功能|
 |--|--|--|--|--|
-|k8s-master|master节点|1台|基于鲲鹏服务器和openEuler 24.03 LTS SP1系统。|整个集群的大脑和控制中心，负责协调和管理集群中的各种资源，以实现高可用性、可扩展性和自动化运维，实际不运行云手机相关业务。|
-|k8s-slave1|工作节点|1台及以上|请参见2 软件部署章节完成视频流云手机的环境部署。|运行云手机业务。|
+| k8s-master | master节点 | 1台 | 基于鲲鹏服务器和openEuler 24.03 LTS SP1系统 | 整个集群的大脑和控制中心，负责协调和管理集群中的各种资源，以实现高可用性、可扩展性和自动化运维，实际不运行云手机相关业务 |
+| k8s-slave1 | 工作节点 | 1台及以上 | 请参见2 软件部署章节完成视频流云手机的环境部署 | 运行云手机业务 |
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -870,7 +870,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     **图 1** 镜像拉取信息<a name="fig1579095614545"></a><a id="镜像拉取信息"></a>
     ![](figures/镜像拉取信息.png "镜像拉取信息")
 
-    以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](#fig1579095614545)中registry.aliyuncs.com/google\_containers/pause:3.9为例：
+    以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例：
 
     ```shell
     sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
@@ -977,70 +977,71 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     **表 1** 容器存储隔离和大小设置参数说明<a id="容器存储隔离和大小设置参数说明"></a>
 
-|参数|说明|
-|--|--|
-|ACTION|参数值为create或delete，创建或者删除。|
-|STORAGE_START_INDEX|数据卷删除或创建起始编号。|
-|STORAGE_END_INDEX|数据卷删除或创建结束编号，结束编号必须大于或者等于起始编号。|
-|STORAGE_SIZE_GB|存储大小，单位为GB。删除时可不传。|
-|IMG_BASE|基础数据卷img文件，若无基础数据卷可不传，基础数据卷img文件制作请参考。删除时可不传。参数STORAGE_SIZE_GB和IMG_BASE只传其中一个。|
+    |参数|说明|
+    |--|--|
+    | ACTION | 参数值为create或delete，创建或者删除 |
+    | STORAGE_START_INDEX | 数据卷删除或创建起始编号 |
+    | STORAGE_END_INDEX | 数据卷删除或创建结束编号，结束编号必须大于或者等于起始编号 |
+    | STORAGE_SIZE_GB | 存储大小，单位为GB。删除时可不传 |
+    | IMG_BASE | 基础数据卷img文件，若无基础数据卷可不传，基础数据卷img文件制作请参考。删除时可不传。参数STORAGE_SIZE_GB和IMG_BASE只传其中一个 |
 
-注意：如果使用预先创建的数据卷的文件格式需要和后面使用k8s-video.sh创建容器时期的f2fs文件系统开关保持一致，该开关默认是0即默认使用ext4文件格式，此时则使用create方法来创建数据卷；如果要创建f2fs格式的数据卷，则要使用fcreate
+    注意：如果使用预先创建的数据卷的文件格式需要和后面使用k8s-video.sh创建容器时期的f2fs文件系统开关保持一致，该开关默认是0即默认使用ext4文件格式，此时则使用create方法来创建数据卷；如果要创建f2fs格式的数据卷，则要使用fcreate
 
-例如：
-    
-创建100个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video1\~video100。
-    
-```shell
-./storage_manager.sh create 1 100 32
-```
-    
-创建100个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video1\~video100。
-    
-```shell
-./storage_manager.sh fcreate 1 100 32
-```
-    
-如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video101\~video120。
-    
-```shell
-./storage_manager.sh create 101 120 32
-```
+    例如：
+        
+    创建100个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video1~video100。
+        
+    ```shell
+    ./storage_manager.sh create 1 100 32
+    ```
+        
+    创建100个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video1~video100。
+        
+    ```shell
+    ./storage_manager.sh fcreate 1 100 32
+    ```
+        
+    如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video101~video120。
+        
+    ```shell
+    ./storage_manager.sh create 101 120 32
+    ```
 
-如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video101\~video120。
-    
-```shell
-./storage_manager.sh fcreate 101 120 32
-```
-    
-删除名称为video1\~video100数据卷。
-    
-```shell
-./storage_manager.sh delete 1 100
-```
-    
-如果在此基础上，要删除名称为video101\~video120这剩余20个数据卷。
-    
-```shell
-./storage_manager.sh delete 101 120
-```
-    
-通过videobase.img为基础制作名为video1\~video100的数据卷，文件格式为默认的ext4。
-    
-```shell
-./storage_manager.sh create 1 100 /home/mount/img/videobase.img
-```
+    如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video101~video120。
+        
+    ```shell
+    ./storage_manager.sh fcreate 101 120 32
+    ```
+        
+    删除名称为video1~video100数据卷。
+        
+    ```shell
+    ./storage_manager.sh delete 1 100
+    ```
+        
+    如果在此基础上，要删除名称为video101~video120这剩余20个数据卷。
+        
+    ```shell
+    ./storage_manager.sh delete 101 120
+    ```
+        
+    通过videobase.img为基础制作名为video1~video100的数据卷，文件格式为默认的ext4。
+        
+    ```shell
+    ./storage_manager.sh create 1 100 /home/mount/img/videobase.img
+    ```
 
-通过videobase.img为基础制作名为video1\~video100的数据卷，文件格式为f2fs。
-    
-```shell
-./storage_manager.sh fcreate 1 100 /home/mount/img/videobase.img
-```
-    
->![](public_sys-resources/icon-note.gif) **说明：** 
->若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
+    通过videobase.img为基础制作名为video1~video100的数据卷，文件格式为f2fs。
+        
+    ```shell
+    ./storage_manager.sh fcreate 1 100 /home/mount/img/videobase.img
+    ```
+        
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
+    >此处创建的数据卷的文件格式需要和'k8s-video.sh'拉起pod时的配置保持一致。例如：若通过'fcreate'为video1创建了f2fs格式的数据卷，那么使用启动脚本'k8s-video.sh'拉起video1的时候必须将f2fs开关设置为1。
 
-2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](master节点操作.md#fig1579095614545)中registry.aliyuncs.com/google\_containers/pause:3.9为例
+2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](master节点操作.md#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例
 
     ```shell
     sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
@@ -1056,9 +1057,10 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >-   工作节点重启后，重新加入集群时，需保证此工作节点可运行视频流云手机。
-    >-   xx.xx.xx.xx为IP地址，xxxx为映射端口号。
-    >-   加入集群的**token**命令若失效可重新在master节点执行如下命令重新生成。
+    >- 工作节点重启后，重新加入集群时，需保证此工作节点可运行视频流云手机。
+    >- xx.xx.xx.xx为IP地址，xxxx为映射端口号。
+    >- 加入集群的**token**命令若失效可重新在master节点执行如下命令重新生成。
+    >
     >    ```shell
     >    kubeadm token create --print-join-command
     >    ```
@@ -1098,7 +1100,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
         期望是所有的容器状态（STATE）列都是Running
 
 6. （可选）配置NUMA亲和。
-    1. 编译环境配置和插件时需要保证Golang版本1.23或以上，将新的1.23版本的Golang go目录放至“/usr/lib“下，将“go/bin/go“和“go/bin/gofmt“放至“/usr/bin“下。
+    1. 编译环境配置和插件时需要保证Golang版本1.23或以上，将新的1.23版本的Golang go目录放至“/usr/lib”下，将“go/bin/go”和“go/bin/gofmt”放至“/usr/bin”下。
 
         ```shell
         systemctl stop kubeletexport GOROOT=/usr/lib/go
@@ -1106,7 +1108,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
         go env -w GOPROXY=https://goproxy.io,direct
         ```
 
-    2. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取K8s NUMA亲和插件软件包topo-affinity-plugin-master.zip，获取后将软件包上传至服务器的“/home/k8s“目录。
+    2. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取K8s NUMA亲和插件软件包topo-affinity-plugin-master.zip，获取后将软件包上传至服务器的“/home/k8s”目录。
     3. 解压topo-affinity-plugin-master.zip，进入软件包目录并编译插件。
 
         ```shell
@@ -1116,7 +1118,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
         make build
         ```
 
-        构建完成后，请确认在“bin“目录下生成“kunpeng-tap“二进制文件。
+        构建完成后，请确认在“bin”目录下生成“kunpeng-tap”二进制文件。
 
     4. 安装containerd运行时的版本。
 
@@ -1124,7 +1126,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
         make install-service-containerd
         ```
 
-        如果需要修改启动参数，则在源代码目录下的“hack/kunpeng-tap.service.containerd“文件的“ExecStart=“下进行修改，用户可根据需求修改相关参数后启动。参数说明请参见[**表 2** 启动参数说明](#启动参数说明)。
+        如果需要修改启动参数，则在源代码目录下的“hack/kunpeng-tap.service.containerd”文件的“ExecStart=”下进行修改，用户可根据需求修改相关参数后启动。参数说明请参见[**表 2** 启动参数说明](#启动参数说明)。
 
         ```shell
         [Unit]
@@ -1160,7 +1162,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     6. 修改并重启Kubelet。
         1. 重启前需确保该节点上未部署容器。
-        2. 修改kubelet参数配置文件“/var/lib/kubelet/kubeadm-flags.env“。
+        2. 修改kubelet参数配置文件“/var/lib/kubelet/kubeadm-flags.env”。
 
             初始配置内容如下：
 
@@ -1184,13 +1186,16 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
         >卸载TAP插件步骤：
-        >-   “/var/lib/kubelet/kubeadm-flags.env“文件为初始配置内容并重启kubelet。
+        >- “/var/lib/kubelet/kubeadm-flags.env”文件为初始配置内容并重启kubelet。
+        >
         >    ```shell
         >    systemctl daemon-reload
         >    systemctl restart kubelet
         >    systemctl status kubelet
         >    ```
-        >-   进入“topology-affinity-plugin“源码目录，并执行插件卸载命令。
+        >
+        >- 进入“topology-affinity-plugin”源码目录，并执行插件卸载命令。
+        >
         >    ```shell
         >    cd /home/k8s/topo-affinity-plugin-master
         >    make uninstall-service
@@ -1232,7 +1237,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 3. 合入device-plugin.patch。
 
-    将device-plugin.patch（此文件位于DemoVideoEngine.tar.gz中的“k8s/DevicesPlugin“文件夹下）拷贝到“k8s-host-device-plugin“目录。
+    将device-plugin.patch（此文件位于DemoVideoEngine.tar.gz中的“k8s/DevicesPlugin”文件夹下）拷贝到“k8s-host-device-plugin”目录。
 
     ```shell
     cd k8s-host-device-plugin
@@ -1265,7 +1270,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 选择一台工作节点机器进行镜像制作，然后在所有工作节点导入并完成部署视频流镜像操作。
 
-1. 将DemoVideoEngine.tar.gz软件包放在指定目录下，假设DemoVideoEngine.tar.gz已经放在“/home/k8s“目录下。
+1. 将DemoVideoEngine.tar.gz软件包放在指定目录下，假设DemoVideoEngine.tar.gz已经放在“/home/k8s”目录下。
 
     ```shell
     mkdir -p /home/k8s/tmp 
@@ -1275,7 +1280,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 2. <a id="部署视频流镜像2"></a>修改编码器类型，重新制作DemoVideoEngine.tar.gz软件包。
 
-    “default.prop”文件中设置编码器默认类型为“1“，而道客需要使用编码器类型为“2“，故解压修改后需要重新打包。此外“default.prop”文件还可以修改帧率等设置信息，设置完成后需要重新制作镜像。需保证制作后的镜像通过Docker方式可正常运行云手机。
+    “default.prop”文件中设置编码器默认类型为“1”，而道客需要使用编码器类型为“2”，故解压修改后需要重新打包。此外“default.prop”文件还可以修改帧率等设置信息，设置完成后需要重新制作镜像。需保证制作后的镜像通过Docker方式可正常运行云手机。
 
     1. 打开“default.prop”文件。
 
@@ -1283,8 +1288,8 @@ cfct\_config配置文件配置项和配置方法如下所示。
         vi vendor/default.prop
         ```
 
-    2. 按“i“键进入编辑模式，修改文件中“vmi.video.encodertype“值为“2“，“vmi.video.encode.rcmode“值为“2“。
-    3. 按“Esc“键，输入**:wq!**并按“Enter“键保存并退出编辑。
+    2. 按“i”键进入编辑模式，修改文件中“vmi.video.encodertype”值为“2”，“vmi.video.encode.rcmode”值为“2”。
+    3. 按“Esc”键，输入**:wq!**并按“Enter”键保存并退出编辑。
     4. 重新制作DemoVideoEngine.tar.gz软件包。
 
         ```shell
@@ -1320,19 +1325,19 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 |序号|设备型号|用途|
 |--|--|--|
-|1|鲲鹏920 7280Z处理器|用于构建视频流容器运行的虚拟机环境，运行视频流云手机。|
+| 1 | 鲲鹏920 7280Z处理器 | 用于构建视频流容器运行的虚拟机环境，运行视频流云手机 |
 
 **表 2** 鲲鹏服务器配置及参数<a id="鲲鹏服务器配置及参数"></a>
 
 |配置项|配置子项|参数|
 |--|--|--|
-|CPU|-|2*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
-|内存|-|16*DDR5 RDIMM内存-64GB-4800MT/s|
+|CPU|-|2\*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
+|内存|-|16\*DDR5 RDIMM内存-64GB-4800MT/s|
 |硬盘|系统盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
 |数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
-|网卡|板载|1*（4*GE接口卡）1*5902L板载灵活网卡|
-|Riser卡|-|1*16X SLOT(PCIe X16) + 2*8X SLOT (PCIe X8)-RISER1&2模组、2*8X SLOT (PCIe X8)-后置Riser|
-|GPU|-|4*道客DC 1000|
+|网卡|板载|1*（4\*GE接口卡）1\*5902L板载灵活网卡|
+|Riser卡|-|1\*16X SLOT(PCIe X16) + 2\*8X SLOT (PCIe X8)-RISER1&2模组、2\*8X SLOT (PCIe X8)-后置Riser|
+|GPU|-|4\*道客DC 1000|
 |操作系统|-|openEuler 24.03 LTS SP1|
 |系统/内核版本|-|6.6.0-72.0.0|
 
@@ -1361,7 +1366,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 |项目|版本|下载地址|
 |--|--|--|
 |openEuler|24.03 LTS SP1|[[获取链接](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler 24.03 LTS SP1)](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler%2024.03%20LTS%20SP1)|
-|Kernel|基于6.6.0-72.0.0|请参见《Kbox云手机容器 特性指南（Android 15）》“软件部署”中的“编译内核”章节进行编译。|
+| Kernel | 基于6.6.0-72.0.0 | 请参见《Kbox云手机容器 特性指南（Android 15）》“软件部署”中的“编译内核”章节进行编译 |
 
 **软件要求<a name="zh-cn_topic_0000002518345410_section1543425619147" id="软件要求"></a>**
 
@@ -1409,7 +1414,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ```
 
 4. 请参见[2.1-软件要求](#软件要求)，获取内核patch文件general.patch。
-5. 在内核源码目录“kernel-6.6.0-72.0.0“下，合入patch。
+5. 在内核源码目录“kernel-6.6.0-72.0.0”下，合入patch。
 
     ```shell
     patch -p1 < general.patch
@@ -1443,9 +1448,9 @@ cfct\_config配置文件配置项和配置方法如下所示。
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >配置方法说明：
     >-   “/”用于搜索。
-    >-   “Y“将选中项编译进内核，对应项显示为：\[\*\]。
-    >-   “N“将选中项排除，对应项显示为：\[\]。
-    >-   “M“键将选中的项编译成模块（编译成ko的形式），对应项显示为：<M\>。
+    >-   “Y”将选中项编译进内核，对应项显示为：\[\*\]。
+    >-   “N”将选中项排除，对应项显示为：\[\]。
+    >-   “M”键将选中的项编译成模块（编译成ko的形式），对应项显示为：<M\>。
     >-   “Enter”编辑选中项内容。
     >-   数字选择搜索结果。
     >-   修改完成后单击最下方<Save\>保存修改。
@@ -1515,8 +1520,8 @@ cfct\_config配置文件配置项和配置方法如下所示。
     vi /etc/ssh/sshd_config
     ```
 
-4. 按“i“进入编辑模式，将“X11Forwarding“字段设置为“yes“。
-5. 按“Esc“键退出编辑模式，输入**:wq!**并按“Enter“键保存退出文件。
+4. 按“i”进入编辑模式，将“X11Forwarding”字段设置为“yes”。
+5. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存退出文件。
 6. 重启sshd服务。
 
     ```shell
@@ -1538,7 +1543,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     ![](figures/zh-cn_image_0000002518185712.png)
 
-2. 确认所对应的NUMA，此返回顺序符合[1](#zh-cn_topic_0000002518185514_p644mcpsimp)中的ID顺序，即可确定每个GPU卡节点所对应的NUMA ID。下图所示回显信息仅为示例，如17:00.0\~18:00.3（即前八个节点）对应宿主机的NUMA 1。
+2. 确认所对应的NUMA，此返回顺序符合[1](#zh-cn_topic_0000002518185514_p644mcpsimp)中的ID顺序，即可确定每个GPU卡节点所对应的NUMA ID。下图所示回显信息仅为示例，如17:00.0~18:00.3（即前八个节点）对应宿主机的NUMA 1。
 
     ```shell
     lspci -vvv -d 1f4f:0200 | grep NUMA
@@ -1575,7 +1580,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002518185756.png)
 
     - 如果该步骤执行成功，说明设备支持SR-IOV虚拟网卡直通方案。回显为7表示可以生成7个虚拟网卡，最多可以支撑7个虚拟机使用虚拟网卡。
-    - 如果该步骤执行失败，或者回显的虚拟网卡数小于准备部署的虚拟机数量，则可以选择第二个方案网桥模式。网桥模式会带来额外的计算性能损耗以及时延。网桥模式配置详情请查看[6](#zh-cn_topic_0000002549705251_li9644845123820)\~[7](#zh-cn_topic_0000002549705251_li55473504593)。
+    - 如果该步骤执行失败，或者回显的虚拟网卡数小于准备部署的虚拟机数量，则可以选择第二个方案网桥模式。网桥模式会带来额外的计算性能损耗以及时延。网桥模式配置详情请查看[6](#zh-cn_topic_0000002549705251_li9644845123820)~[7](#zh-cn_topic_0000002549705251_li55473504593)。
 
 4. 生成VF虚拟网卡。
 
@@ -1584,7 +1589,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >每次服务器重启都需要重新执行该步骤，建议将其配置在“\~/.bashrc“等文件中，确保每次重启后都会自动执行。
+    >每次服务器重启都需要重新执行该步骤，建议将其配置在“~/.bashrc”等文件中，确保每次重启后都会自动执行。
 
 5. <a name="配置宿主机网络5"></a>查看生成的VF节点。
 
@@ -1597,7 +1602,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002518345668.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >[1](#配置宿主机网络1)\~[5](#配置宿主机网络5)已经完成了SR-IOV虚拟网卡方案中，虚拟网卡的生成。后续步骤可以跳过。
+    >[1](#配置宿主机网络1)~[5](#配置宿主机网络5)已经完成了SR-IOV虚拟网卡方案中，虚拟网卡的生成。后续步骤可以跳过。
     >如果设备不支持SR-IOV，考虑使用下面的网桥方案。
     >如果[3](#配置宿主机网络3)中网卡最多支持的VF网卡数量回显小于4，比如说是2，那么考虑2个虚拟机使用SR-IOV方案，2个虚拟机使用网桥方案。
 
@@ -1608,7 +1613,7 @@ cfct\_config配置文件配置项和配置方法如下所示。
     cp ifcfg-eno5 ifcfg-eno5.bak
     ```
 
-7. <a name="zh-cn_topic_0000002549705251_li55473504593"></a>新建网桥配置文件“ifcfg-br0“并修改网卡配置文件。
+7. <a name="zh-cn_topic_0000002549705251_li55473504593"></a>新建网桥配置文件“ifcfg-br0”并修改网卡配置文件。
 
     将网卡配置文件的IPADDR，NETMASK，GATEWAY，DNS全部移植到网桥配置文件中。
 
@@ -1663,10 +1668,10 @@ cfct\_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >使用openEuler官方提供的已经装好了系统的qcow2镜像可以简化操作，不用从头开始安装操作系统，但是该镜像内的“/boot“目录使用的是vfat文件系统，该文件系统不支持**ln**软链接，后续如果编译安装内核时**make install**时会出现“Operation not permitted”报错，如下图所示。
+    >使用openEuler官方提供的已经装好了系统的qcow2镜像可以简化操作，不用从头开始安装操作系统，但是该镜像内的“/boot”目录使用的是vfat文件系统，该文件系统不支持**ln**软链接，后续如果编译安装内核时**make install**时会出现“Operation not permitted”报错，如下图所示。
     >![](figures/zh-cn_image_0000002518345686.png)
     >解决方案：
-    >进入“/boot“目录， 手动将刚编译出来的System.map-6.6.0\*和vmlinuz-6.6.0\*各自拷贝一份命名为System.map和vmlinuz后，直接重启服务器即可，无需再次执行make install。
+    >进入“/boot”目录， 手动将刚编译出来的System.map-6.6.0\*和vmlinuz-6.6.0\*各自拷贝一份命名为System.map和vmlinuz后，直接重启服务器即可，无需再次执行make install。
 
 2. <a name="zh-cn_topic_0000002518345430_li1862819192232"></a>解压qcow压缩包。
 
@@ -1682,11 +1687,11 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     ![](figures/1_zh-cn_image_0000002120521137.png)
 
-4. 选择“Import existing disk image“后单击“Forward“。
+4. 选择“Import existing disk image”后单击“Forward”。
 
     ![](figures/zh-cn_image_0000002518345648.png)
 
-5. 单击“Browse“，再单击“Browse Local”选择[2](#zh-cn_topic_0000002518345430_li1862819192232)中解压缩的openEuler 24.03 LTS SP1镜像后，单击“open”，填写“Generic Linux 2022“，最后单击“Forward“。
+5. 单击“Browse”，再单击“Browse Local”选择[2](#zh-cn_topic_0000002518345430_li1862819192232)中解压缩的openEuler 24.03 LTS SP1镜像后，单击“open”，填写“Generic Linux 2022”，最后单击“Forward”。
 
     ![](figures/zh-cn_image_0000002549705547.png)
 
@@ -1694,14 +1699,14 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     ![](figures/zh-cn_image_0000002549825491.png)
 
-6. “Memory“分配额度填写“180000“，“CPUs“处填写“80“，然后单击“Forward“。
+6. “Memory”分配额度填写“180000”，“CPUs”处填写“80”，然后单击“Forward”。
 
     ![](figures/zh-cn_image_0000002518185732.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >内存180000仅供参考，用户根据实际情况分配即可。
 
-7. 名称分别起名为vm_X_（X = 0,1,2,3） ，如果[2.2.5-配置宿主机网络](#配置宿主机网络)中宿主机配置了网桥模式，此处Network selection应选择Bridge device...，然后填入网桥名称，最后单击“Finish“。
+7. 名称分别起名为vm_X_（X = 0,1,2,3） ，如果[2.2.5-配置宿主机网络](#配置宿主机网络)中宿主机配置了网桥模式，此处Network selection应选择Bridge device...，然后填入网桥名称，最后单击“Finish”。
 
     ![](figures/zh-cn_image_0000002549705529.png)
 
@@ -1712,14 +1717,14 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
     ![](figures/zh-cn_image_0000002549825521.png)
 
-9. 进入界面后单击下方“Add Hardware“依次添加以下相关设备。
+9. 进入界面后单击下方“Add Hardware”依次添加以下相关设备。
 
     ![](figures/zh-cn_image_0000002549825527.png)
 
-    1. 添加外设1：“Add Hardware \> Input \> USB Keyboard \> Finish“
-    2. 添加外设2：“Add Hardware \> Input \> Virtio Tablet \> Finish“
-    3. 添加GPU卡PCIe设备（每个虚拟机需要2张GPU卡，4个虚拟机 x 2张GPU卡 = 8个节点，因此总共需要添加8个GPU卡节点） :  “Add Hardware \> PCI Host Device  \> 选择对应节点 \> Finish“
-    4. 如果[2.2.5-配置宿主机网络](#配置宿主机网络)中采用了SR-IOV方案，添加虚拟网卡到虚拟机：“Add Hardware \> PCI Host Device  \> 选择对应节点 \> Finish“。网卡节点请参见[2.2.5-5](#配置宿主机网络5)回显信息。
+    1. 添加外设1：“Add Hardware \> Input \> USB Keyboard \> Finish”
+    2. 添加外设2：“Add Hardware \> Input \> Virtio Tablet \> Finish”
+    3. 添加GPU卡PCIe设备（每个虚拟机需要2张GPU卡，4个虚拟机 x 2张GPU卡 = 8个节点，因此总共需要添加8个GPU卡节点） :  “Add Hardware \> PCI Host Device  \> 选择对应节点 \> Finish”
+    4. 如果[2.2.5-配置宿主机网络](#配置宿主机网络)中采用了SR-IOV方案，添加虚拟网卡到虚拟机：“Add Hardware \> PCI Host Device  \> 选择对应节点 \> Finish”。网卡节点请参见[2.2.5-5](#配置宿主机网络5)回显信息。
 
         ![](figures/zh-cn_image_0000002549705511.png)
 
@@ -1746,11 +1751,11 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
         ![](figures/zh-cn_image_0000002518185766.png)
 
-    2. 打开virt-manager，单击“Add Hardware \> Storage \> Manage“。将“Bus type“配置为“VirtIO“，“Cache mode“配置为“none“。
+    2. 打开virt-manager，单击“Add Hardware \> Storage \> Manage”。将“Bus type”配置为“VirtIO”，“Cache mode”配置为“none”。
 
         ![](figures/zh-cn_image_0000002549825535.png)
 
-    3. 单击“Browse Local \> dev \> nvme0n1p7 \> open“。
+    3. 单击“Browse Local \> dev \> nvme0n1p7 \> open”。
 
         ![](figures/zh-cn_image_0000002549825517.png)
 
@@ -1859,15 +1864,15 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
 ### 2.4 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002550093505"></a>
 
-在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改cfct\_video和cfct\_config配置文件，以便正确设置视频流的启动与运行参数。
+在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改cfct_video和cfct_config配置文件，以便正确设置视频流的启动与运行参数。
 
 请参见《Kbox云手机容器 特性指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0130.html)”以及《视频流引擎 特性指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
 
 具体操作步骤如下所示：
 
-1. 请参见《视频流引擎 特性指南（Android 15）》中的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节解压缩出cfct\_video和cfct\_config文件。
-2. 修改cfct\_config脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
-    1. 打开cfct\_config脚本。
+1. 请参见《视频流引擎 特性指南（Android 15）》中的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节解压缩出cfct_video和cfct_config文件。
+2. 修改cfct_config脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
+    1. 打开cfct_config脚本。
 
         ```shell
         vim cfct_config
@@ -1930,19 +1935,19 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
         ![](figures/zh-cn_image_0000002518185626.png)
 
-    3. 按“Esc“键退出编辑模式，输入**:wq!**并按“Enter“键保存退出文件。
+    3. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存退出文件。
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
         >上述的配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
 
-3. 修改cfct\_video脚本适配当前虚拟机80核。
-    1. 打开cfct\_video脚本。
+3. 修改cfct_video脚本适配当前虚拟机80核。
+    1. 打开cfct_video脚本。
 
         ```shell
         vim cfct_video
         ```
 
-    2. 按“i”进入编辑模式，新增以下内容至**elif \[ $num\_of\_cpus -eq 64 \]; then**上方。
+    2. 按“i”进入编辑模式，新增以下内容至**elif \[ $num_of_cpus -eq 64 \]; then**上方。
 
         ```shell
         elif [ $num_of_cpus -eq 80 ]; then
@@ -1958,8 +1963,8 @@ cfct\_config配置文件配置项和配置方法如下所示。
 
         ![](figures/zh-cn_image_0000002518185600.png)
 
-    3. 按“Esc“键退出编辑模式，输入**:wq!**并按“Enter“键保存退出文件。
+    3. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存退出文件。
 
-4. 请参见《视频流引擎 特性指南》的“启动视频流云手机”章节调用cfct\_video脚本即可成功在虚拟机启动视频流容器。
+4. 请参见《视频流引擎 特性指南》的“启动视频流云手机”章节调用cfct_video脚本即可成功在虚拟机启动视频流容器。
 
     ![](figures/zh-cn_image_0000002518185616.png)
