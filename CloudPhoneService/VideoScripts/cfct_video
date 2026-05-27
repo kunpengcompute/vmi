@@ -837,8 +837,10 @@ container_run() {
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
             $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-            sed -i '/<Decoders>/,/<\/Decoders>/s/<Decoders>/<!-- &/' media_codecs.xml
-            sed -i '/<Decoders>/,/<\/Decoders>/s/<\/Decoders>/& -->/' media_codecs.xml
+            if ! grep -q '<!--.*<Decoders>' media_codecs.xml; then
+                sed -i '/<Decoders>/,/<\/Decoders>/s/<Decoders>/<!-- &/' media_codecs.xml
+                sed -i '/<Decoders>/,/<\/Decoders>/s/<\/Decoders>/& -->/' media_codecs.xml
+            fi
             $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
             $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
         else
@@ -896,8 +898,10 @@ container_restart() {
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
             $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-            sed -i '/<Decoders>/,/<\/Decoders>/s/<Decoders>/<!-- &/' media_codecs.xml
-            sed -i '/<Decoders>/,/<\/Decoders>/s/<\/Decoders>/& -->/' media_codecs.xml
+            if ! grep -q '<!--.*<Decoders>' media_codecs.xml; then
+                sed -i '/<Decoders>/,/<\/Decoders>/s/<Decoders>/<!-- &/' media_codecs.xml
+                sed -i '/<Decoders>/,/<\/Decoders>/s/<\/Decoders>/& -->/' media_codecs.xml
+            fi
             $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
         else
             $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
