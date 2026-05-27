@@ -4,22 +4,22 @@
 
 ### 1.1 启动视频流云手机实例<a name="ZH-CN_TOPIC_0000002549744219" id="启动视频流云手机实例"></a>
 
-可根据需求配置cfct\_config文件中的参数启动不同分辨率和帧率的视频流云手机实例，配置default.prop文件中的初始视频编码参数。当使用WebRTC进行数据传输时，需要根据需求配置default.prop中的抓图分辨率；当后续使用APK访问视频流云手机时，可以在APK视图中修改抓图分辨率。
+可根据需求配置cfct_config文件中的参数启动不同分辨率和帧率的视频流云手机实例，配置default.prop文件中的初始视频编码参数。当使用WebRTC进行数据传输时，需要根据需求配置default.prop中的抓图分辨率；当后续使用APK访问视频流云手机时，可以在APK视图中修改抓图分辨率。
 
-1. （可选）若需要启动不同帧率的视频流云手机实例，则需要修改cfct\_config配置文件中的帧率属性值。默认帧率为30fps，720p和1080p分辨率下也可支持60fps。
+1. （可选）若需要启动不同帧率的视频流云手机实例，则需要修改cfct_config配置文件中的帧率属性值。默认帧率为30fps，720p和1080p分辨率下也可支持60fps。
 
     ```shell
     BUILD_FPS=30
     ```
 
-2. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct\_config配置文件中的ENABLE_AMD_C2_DECODE=1。其他值不使能，默认为0。必须在容器第一次启动时配置开/关C2解码器，不支持中途切换。云手机内置应用会根据自身需要自行选择解码器。
+2. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct_config配置文件中的ENABLE_AMD_C2_DECODE=1。其他值不使能，默认为0。必须在容器第一次启动时配置开/关C2解码器，不支持中途切换。云手机内置应用会根据自身需要自行选择解码器。
 
     ```shell
     ENABLE_AMD_C2_DECODE=0
     ```
 
 3. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式和使用WebRTC方式访问的视频流云手机实例，则需要进行以下配置。
-    1. 从DemoVideoEngine.tar.gz中解压获取“vendor“文件夹，并将其中的“default.prop”文件拷贝到当前目录。
+    1. 从DemoVideoEngine.tar.gz中解压获取“vendor”文件夹，并将其中的“default.prop”文件拷贝到当前目录。
 
         ```shell
         cd /home/kbox_video/
@@ -30,7 +30,7 @@
     2. 配置初始化编码参数。通过修改default.prop中对应属性值来初始化编码参数，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.encode开头的属性。
     3. 配置抓图分辨率。
 
-        通过修改default.prop中对应属性值来修改抓图分辨率，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.frame开头的属性。如果要改变分辨率，建议同步在cfct\_config文件中修改屏幕像素密度以达到最佳显示效果，推荐的配置说明如下[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
+        通过修改default.prop中对应属性值来修改抓图分辨率，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.frame开头的属性。如果要改变分辨率，建议同步在cfct_config文件中修改屏幕像素密度以达到最佳显示效果，推荐的配置说明如下[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
 
         **表 1** 不同分辨率配置说明<a id="不同分辨率配置说明"></a>
 
@@ -52,7 +52,7 @@
 
     5. 使能自适应分辨率开关。
 
-        若使用APK方式访问视频流云手机实例，可在APK的设置页中使能自适应分辨率开关，参见[APK方式访问](#APK方式访问)。若不使能自适应分辨率开关，则需要修改default.prop中对应属性值来修改抓图分辨率，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.frame开头的属性。如果要改变分辨率，建议同步在cfct\_config文件中修改屏幕像素密度以达到最佳显示效果，推荐的配置说明如前[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
+        若使用APK方式访问视频流云手机实例，可在APK的设置页中使能自适应分辨率开关，参见[APK方式访问](#APK方式访问)。若不使能自适应分辨率开关，则需要修改default.prop中对应属性值来修改抓图分辨率，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.frame开头的属性。如果要改变分辨率，建议同步在cfct_config文件中修改屏幕像素密度以达到最佳显示效果，推荐的配置说明如前[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
 
         ![](figures/zh-cn_image_0000002518384392.png)
 
@@ -67,7 +67,7 @@
     ./cfct_video start ${index1} ${index2}
     ```
 
-    上述命令中 \$\{index1\} 与 \$\{index2\} 为设备号，其中 \$\{index2\} 可缺省。启动脚本使用示例：
+    上述命令中 \${index1} 与 \${index2} 为设备号，其中 \${index2} 可缺省。启动脚本使用示例：
 
     - 启动一个编号为1的视频流云手机。
 
@@ -75,7 +75,7 @@
         ./cfct_video start 1
         ```
 
-    - 启动编号为1\~5的五个视频流云手机。
+    - 启动编号为1~5的五个视频流云手机。
 
         ```shell
         ./cfct_video start 1 5
@@ -87,7 +87,6 @@
     >```shell
     >./cfct_video nstart 1 5
     >```
-
 
 5. <a name="li3304181302311"></a>查看视频流云手机。
 
@@ -113,7 +112,7 @@
 
     确认所启动的容器存在，且状态正常。
 
-6. 确认视频流云手机是否启动成功，其中 **\$\{index\}** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android\_35， **\$\{index\}** 即为35。
+6. 确认视频流云手机是否启动成功，其中 **\${index}** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **\${index}** 即为35。
 
     - 基于Docker容器运行时的视频流云手机。
 
@@ -131,7 +130,7 @@
         getprop sys.boot_completed
         ```
 
-    如果回显信息中sys.boot\_completed显示为“1“，则表示启动成功。
+    如果回显信息中sys.boot_completed显示为“1”，则表示启动成功。
 
     ![](figures/zh-cn_image_0000002549864239.png)
 
@@ -141,7 +140,7 @@
 
 方法一：通过获取的软件包查询版本号信息
 
-1. 请参见[部署视频流引擎的软件环境要求](install_guide.md#部署视频流引擎的软件环境要求)获取BoostKit-boostcph-videoengine\_\*.zip进行解压缩，获取版本文件。
+1. 请参见[部署视频流引擎的软件环境要求](install_guide.md#部署视频流引擎的软件环境要求)获取BoostKit-boostcph-videoengine_*.zip进行解压缩，获取版本文件。
 2. 查看视频流引擎组件版本。
 
     ```shell
@@ -180,14 +179,14 @@
 
     ![](figures/zh-cn_image_0000002549744251.png)
 
-5. 返回至主页面，自上而下依次输入服务器IP地址、**\$\{port\}**，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
+5. 返回至主页面，自上而下依次输入服务器IP地址、**\${port}**，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
 
-    **\$\{port\}** 默认值为 8000 + **\$\{index\}**。
+    **\${port}** 默认值为 8000 + **\${index}**。
 
     ![](figures/zh-cn_image_0000002549864241.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >- 每个视频流云手机实例需要设置端口 **\$\{port\}** ，部署时可进入cfct\_video脚本设置合适的 **\$\{port\}**，端口号取值范围为1024\~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >- 每个视频流云手机实例需要设置端口 **\${port}** ，部署时可进入cfct_video脚本设置合适的 **\${port}**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位安卓系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
@@ -200,10 +199,10 @@
 
     ![](figures/zh-cn_image_0000002518224474.png)
 
-3. 自上而下依次输入服务器IP地址、**\$\{port\}** ，单击“SUBMIT”即可访问云侧的视频流云手机。其中 **\$\{port\}** 默认值为8000 + **\$\{index\}**。
+3. 自上而下依次输入服务器IP地址、**\${port}** ，单击“SUBMIT”即可访问云侧的视频流云手机。其中 **\${port}** 默认值为8000 + **\${index}**。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >每个视频流云手机实例需要配置映射端口，部署时可进入cfct\_video脚本设置合适的**$\{port\}**，端口号取值范围为1024\~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >每个视频流云手机实例需要配置映射端口，部署时可进入cfct_video脚本设置合适的**\${port}**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
 
 ### 1.4 （可选）动态修改云手机参数<a name="ZH-CN_TOPIC_0000002549744243"></a>
 
@@ -231,7 +230,7 @@
     3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
-        >如果不使能自适应分辨率，启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。如果要改变自适应分辨率的宽高，建议同步修改cfct\_config文件中屏幕像素密度以达到最佳显示效果，推荐的配置说明如[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
+        >如果不使能自适应分辨率，启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。如果要改变自适应分辨率的宽高，建议同步修改cfct_config文件中屏幕像素密度以达到最佳显示效果，推荐的配置说明如[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
 
 4. 设置音频播放编码参数。
     1. 单击图中音频图标。
@@ -248,15 +247,15 @@
 
 ### 1.5 重启视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864227"></a>
 
-使用cfct\_video脚本重启视频流云手机实例。
+使用cfct_video脚本重启视频流云手机实例。
 
-- 重启编号为 $\{index1\} 的视频流云手机。
+- 重启编号为 \${index1} 的视频流云手机。
 
     ```shell
     ./cfct_video restart ${index1}
     ```
 
-- 重启编号为 \$\{index1\} \~ \$\{index2\} 的所有视频流云手机。
+- 重启编号为 \${index1} ~ \${index2} 的所有视频流云手机。
 
     ```shell
     ./cfct_video restart ${index1} ${index2}
@@ -264,15 +263,15 @@
 
 ### 1.6 删除视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864211"></a>
 
-使用cfct\_video脚本删除视频流云手机实例。
+使用cfct_video脚本删除视频流云手机实例。
 
-- 删除编号为 \$\{index1\} 的视频流云手机。
+- 删除编号为 \${index1} 的视频流云手机。
 
     ```shell
     ./cfct_video delete ${index1}
     ```
 
-- 删除编号为 \$\{index1\} \~ \$\{index2\} 的所有视频流云手机。
+- 删除编号为 \${index1} ~ \${index2} 的所有视频流云手机。
 
     ```shell
     ./cfct_video delete ${index1} ${index2}
@@ -307,7 +306,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >“$NODENAME“为工作节点名称。
+    >“$NODENAME”为工作节点名称。
 
 3. 创建命名空间va-plugin。
 
@@ -362,7 +361,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >执行 **./delete\_devices.sh** 命令可删除设备插件。
+    >执行 **./delete_devices.sh** 命令可删除设备插件。
 
 2. 启动完成后，查看设备插件是否运行成功。
 
@@ -377,14 +376,14 @@
 在所有工作节点运行hook脚本。
 
 1. 请参见[视频流引擎 安装指南](install_guide.md)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
-2. 将“/home/k8s/k8s/script“目录下的oci-device-hook.sh脚本拷贝到“/usr/local/sbin/“目录。
+2. 将“/home/k8s/k8s/script”目录下的oci-device-hook.sh脚本拷贝到“/usr/local/sbin/”目录。
 
     ```shell
     cd /home/k8s/k8s/script
     cp oci-device-hook.sh /usr/local/sbin/
     ```
 
-3. 更改Containerd配置，将[部署道客设备插件镜像](install_guide.md#部署道客设备插件镜像)新增的容器运行时改成“/usr/local/sbin/oci-device-hook.sh“。
+3. 更改Containerd配置，将[部署道客设备插件镜像](install_guide.md#部署道客设备插件镜像)新增的容器运行时改成“/usr/local/sbin/oci-device-hook.sh”。
 
     ```shell
     sed -i 's|BinaryName = "/usr/bin/va-container-runtime"|BinaryName ="/usr/local/sbin/oci-device-hook.sh"|g' /etc/containerd/config.toml
@@ -425,12 +424,19 @@
     > 
     >
     > 
-    > \$\{index1\} 与 \$\{index2\} 为pod编号，\$\{index3\}表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。 \$\{index4\}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 \$\{index2\} \$\{index3\} \$\{index4\}可缺省。例：
+    > \${index1} 与 \${index2} 为pod编号，\${index3}表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。 \${index4}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 \${index2} \${index3} \$\{index4\}可缺省。例：
     >- 创建名为video2的pod，里面的文件格式是默认的ext4。
     >
     > ```shell
     > ./k8s-video.sh start 2
     > ```
+    >
+    >- 创建名为video3的pod，里面的文件格式是f2fs。
+    >
+    > ```shell
+    > ./k8s-video.sh start 3 3 1
+    > ```
+    >
     >- 创建名为video3的pod，里面的文件格式是f2fs。
     >
     > ```shell
@@ -442,6 +448,7 @@
     > ```shell
     > ./k8s-video.sh start 1 5
     > ```
+    >
     >- 创建名为video2\~video6共5个pod，里面的文件格式是f2fs。
     >
     > ```shell
@@ -453,11 +460,13 @@
     > ```shell
     > ./k8s-video.sh start 1 1 0 10240
     > ```
+    >
     >- 创建名为video2的pod。里面的文件格式是f2fs，system分区大小限制为10240MB。
     >
     > ```shell
     > ./k8s-video.sh start 2 2 1 10240
     > ```
+    >
     > 若需要使用NFS挂载启动，则将start改成nstart。例：
     >
     > ```shell
@@ -479,7 +488,7 @@
     kubectl get pods -o wide
     ```
 
-    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**$\{index\}，index为pod编号**。
+    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**\${index}，index为pod编号**。
 
     - 在任意节点上，可通过如下命令进入容器，以video1为例：
 
@@ -487,7 +496,7 @@
         kubectl exec -it video1 -- sh
         ```
 
-    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中“$\{CONTAINER\}“是**crictl ps**返回的第一列。
+    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中“\${CONTAINER}”是**crictl ps**返回的第一列。
 
         ```shell
         crictl exec -it ${CONTAINER} sh
@@ -503,9 +512,11 @@ cd /home/k8s/k8s/script
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
-> \$\{index1\} 与 \$\{index2\} 为pod编号，其中 \$\{index2\} 可缺省。
->例：./k8s-video.sh delete 2（删除名为video2的pod）
->./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
+> \${index1} 与 \${index2} 为pod编号，其中 \${index2} 可缺省。
+> 例：./k8s-video.sh delete 2（删除名为video2的pod）
+> ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
+> 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
+> ./k8s-video.sh ndelete 1 5（删除名为video1 -video5 共5个pod）
 
 ### 2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
 
@@ -526,7 +537,7 @@ cd /home/k8s/k8s/script
     在回显信息中找到NAME为video1的行，NODE列的值即为video1所在节点。
 
 3. 将所需的应用（例地铁跑酷等）预装到该云手机容器中。
-4. 登录云手机video1所在节点，基础数据卷所在位置为“/home/mount/img/video1.img“，将img文件重命名为videobase.img并拷贝到每个工作节点的“/home/mount/img“目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
+4. 登录云手机video1所在节点，基础数据卷所在位置为“/home/mount/img/video1.img”，将img文件重命名为videobase.img并拷贝到每个工作节点的“/home/mount/img”目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
 
 ## 3 可配置项功能说明<a name="ZH-CN_TOPIC_0000002549864233"></a>
 
@@ -563,11 +574,11 @@ cd /home/k8s/k8s/script
 - GPUMock：对GPU厂商、GPU型号、OpenGL ES版本、GLMax能力值、OpenGL ES拓展进行模拟。
 - ShaderCache：通过预构建着色器二进制、多云手机共享缓存，消除着色器编译链接等处理时间，降低OpenGL ES大型应用运行卡顿率。
 
-可使用kbox\_render\_accelerating\_configuration.xml配置文件进行相关功能配置。
+可使用kbox_render_accelerating_configuration.xml配置文件进行相关功能配置。
 
 **配置项<a name="section4273629612"></a>**
 
-**表 1** kbox\_render\_accelerating\_configuration.xml配置项说明<a id="kbox\_render\_accelerating\_configuration.xml配置项说明"></a>
+**表 1** kbox_render_accelerating_configuration.xml配置项说明<a id="kbox_render_accelerating_configuration.xml配置项说明"></a>
 
 |配置项分类|元素|子元素|属性|取值范围|配置说明|
 |--|--|--|--|--|--|
@@ -594,7 +605,7 @@ cd /home/k8s/k8s/script
 
 **配置规则<a name="section18753121811614"></a>**
 
-- 为了方便进行全局配置，除了支持对具体应用进行独立配置外，也支持系统通用配置。系统通用配置的Application名固定为“system“，具体应用的配置可以覆盖系统通用配置；系统通用配置支持GPUMock，不支持ShaderCache进行配置。
+- 为了方便进行全局配置，除了支持对具体应用进行独立配置外，也支持系统通用配置。系统通用配置的Application名固定为“system”，具体应用的配置可以覆盖系统通用配置；系统通用配置支持GPUMock，不支持ShaderCache进行配置。
 - GPUMock是个基础功能，可供图形加速层其他功能使用，应用使能ShaderCache功能会自动使能GPUMock功能。
 
 **配置示例<a name="section18450203117618"></a>**
@@ -639,9 +650,9 @@ cd /home/k8s/k8s/script
 
 #### 3.2.1 启动脚本配置项<a name="ZH-CN_TOPIC_0000002549864225" id="启动脚本配置项"></a>
 
-视频流服务端引擎可通过启动脚本cfct\_config文件中的配置项，配置硬件解码、WebRTC等功能，本章节提供视频流启动脚本cfct\_config默认功能配置项说明。
+视频流服务端引擎可通过启动脚本cfct_config文件中的配置项，配置硬件解码、WebRTC等功能，本章节提供视频流启动脚本cfct_config默认功能配置项说明。
 
-视频流启动脚本cfct\_config默认功能配置项如[**表 1** 视频流引擎非商用部分脚本配置项字段描述表](#视频流引擎非商用部分脚本配置项字段描述表) 所示。
+视频流启动脚本cfct_config默认功能配置项如[**表 1** 视频流引擎非商用部分脚本配置项字段描述表](#视频流引擎非商用部分脚本配置项字段描述表) 所示。
 
 请参见[**表 1** 视频流引擎非商用部分脚本配置项字段描述表](#视频流引擎非商用部分脚本配置项字段描述表)配置视频流引擎音视频等模块的默认运行参数。
 
@@ -727,17 +738,20 @@ cd /home/k8s/k8s/script
 |vmi.video.encode.target_bitrate|WebRTC目标编码码率。|3000000~50000000<br>单位bps|
 |vmi.audio.audiotype|音频输出格式。|1（目前WebRTC只支持音频PCM的输出格式）|
 |vmi.webrtc.connection.serverip|云手机服务端的IP地址。|具体IP地址。|
-|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **\$\{index\}** * 2 - 1，起始端口 + **\$\{index\}** * 2。|可用的起始端口。|
+|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **\${index}** * 2 - 1，起始端口 + **\${index}** * 2。|可用的起始端口。|
 |vmi.network.type|网络类型。|1：TCP<br>4：WebRTC|
 |vmi.webrtc.httpserver.port|服务端HTTP映射端口号。|具体映射端口号。|
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|
 |vmi.webrtc.connection.udpmaxport|服务端使用的UDP最大端口。|可用的最大端口。|
 
 #### 3.2.4 容器内cpu频率动态调节<a name="ZH-CN_TOPIC_0000002549744226" id="容器内cpu频率动态调节"></a>
+
 ##### 3.2.4.1 功能背景
+
 在真机中，系统为了平衡负载和功耗，会动态调节 CPU 的运行频率，而云机依托于服务器宿主机的容器化环境运行，其底层物理 CPU 的频率通常处于恒定状态，与真机存在差异。下面步骤说明如何实现云手机cpu频率动态调节，提高仿真能力
 
 ##### 3.2.4.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
+
    当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改，
    
    在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限
@@ -755,6 +769,7 @@ cd /home/k8s/k8s/script
    如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。
    则在容器内执行如下命令新增权限
    输入如下命令给scaling_cur_freq添加写入（w）权限
+
    ```shell
    chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
    ```
@@ -766,10 +781,13 @@ cd /home/k8s/k8s/script
    ```
    
    随后输入如下命令读取cpu所支持的频率列表。
+
    ```shell
    cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
    ```
+
    随后输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值
+
    ```shell
    echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_cur_freq
    ```
@@ -781,10 +799,10 @@ cd /home/k8s/k8s/script
    如果容器重启，那么之前的修改值会失效，CPU频率值会恢复默认。
 
    要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如“手机设备信息大全”这样的第三方应用中观察到cpu频率的动态变化，此处的“sleep 1”表示每隔1s变化一次，此处的“1”可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改
+
    ```shell
    CPU_ID=0
    FREQS=(554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000)
-
    while true; do
       for FREQ in "${FREQS[@]}"; do
          echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/scaling_cur_freq 2>/dev/null
@@ -796,13 +814,14 @@ cd /home/k8s/k8s/script
    ```
 
 ##### 3.2.4.3 **校验是否生效。**
+
    启动容器后，在容器内安装如“手机设备信息大全”的应用，查看cpu频率是否等于预期，若等于预期值即表示cpu频率调节生效。
 
 ## 4 故障处理<a name="ZH-CN_TOPIC_0000002549864199"></a>
 
 ### 4.1 概述<a name="ZH-CN_TOPIC_0000002549864223"></a>
 
-#### 4.1.2 故障处理原则<a name="ZH-CN_TOPIC_0000002549744235"></a>
+#### 4.1.1 故障处理原则<a name="ZH-CN_TOPIC_0000002549744235"></a>
 
 - 故障分析、定位和处理原则：
     - 以尽快恢复业务为原则。
@@ -830,7 +849,7 @@ cd /home/k8s/k8s/script
     - 了解基本故障相关定位和处理方法。
     - 掌握远程接入方式的使用。
 
-#### 4.1.3 故障处理流程<a name="ZH-CN_TOPIC_0000002518224434"></a>
+#### 4.1.2 故障处理流程<a name="ZH-CN_TOPIC_0000002518224434"></a>
 
 故障处理总体流程主要分为四个过程：故障信息收集、故障判断、故障定位、故障排除。
 
