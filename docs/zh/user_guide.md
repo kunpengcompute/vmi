@@ -55,18 +55,14 @@
     cd /home/kbox_video/
     ./cfct_video start ${index1} 
     ```
-
-    如果在启动视频流云手机后如果出现如下图所示的报错，显示"/system/bin/getprop:no such file xxx" 这个错误是容器刚启动的时候部分系统属性未准备到位而导致的，这些系统属性会随着容器的启动逐步准备就绪，因此对容器的正常拉起和使用没有影响，无需理会
-    ![](figures/1_zh-cn_image_getprop_no_such_file.png)
-
-    上述命令中 \${index1} 为启动实例的编号。启动一个编号为1的视频流云手机示例：
+    上述命令中 `${index1}` 为启动实例的编号。启动一个编号为1的视频流云手机示例：
 
     ```shell
     ./cfct_video start 1
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >启动容器的过程中可能会出现“writing syncT "procError"、exec /system/bin/chmod: no such file”等类似报错，该报错不影响正常功能，忽略即可。
+    >启动容器的过程中可能会出现“writing syncT "procError"、exec /system/bin/chmod: no such file、/system/bin/getprop:no such file”等类似报错，该报错不影响正常功能，忽略即可。
     >若需要启动多路，则使用如下命令。
     >
     >```shell
@@ -91,7 +87,7 @@
 
     确认所启动的容器存在，且状态正常。
 
-6. 确认基于Docker容器运行时的视频流云手机是否启动成功，其中 **\${index}** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **\${index}** 即为35。
+6. 确认基于Docker容器运行时的视频流云手机是否启动成功，其中 **`${index}`** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **`${index}`** 即为35。
 
     ```shell
     docker exec -it android_${index} sh 
@@ -146,14 +142,14 @@
 
     ![](figures/zh-cn_image_0000002518386702.png)
 
-4. 返回至主页面，自上而下依次输入服务器IP地址、**\${port}**，双击“开始连接”即可访问云侧的视频流云手机，如下图所示。
+4. 返回至主页面，自上而下依次输入服务器IP地址、**`${port}`**，双击“开始连接”即可访问云侧的视频流云手机，如下图所示。
 
-    **\${port}** 默认值为 8000 + **\${index}**。
+    **`${port}`** 默认值为 8000 + **`${index}`**。
 
     ![](figures/zh-cn_image_0000002549866551.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    >- 每个视频流云手机实例需要设置端口 **\${port}** ，部署时可进入cfct_video脚本设置合适的 **\${port}**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >- 每个视频流云手机实例需要设置端口 **`${port}`** ，部署时可进入cfct_video脚本设置合适的 **`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位Android系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
@@ -198,7 +194,7 @@
 
 使用cfct_video脚本重启视频流云手机实例。
 
-重启编号为 \${index1} 的视频流云手机。
+重启编号为 `${index1}` 的视频流云手机。
 
 ```shell
 ./cfct_video restart ${index1}
@@ -208,7 +204,7 @@
 
 使用cfct_video脚本删除视频流云手机实例。
 
-删除编号为 \${index1} 的视频流云手机。
+删除编号为 `${index1}` 的视频流云手机。
 
 ```shell
 ./cfct_video delete ${index1}
@@ -352,7 +348,7 @@
 
 2. 启动k8s视频流云手机。
 
-    注意：如果使用预先创建的镜像启动，那么预先创建的数据卷的文件格式需要和这里k8s-video.sh创建容器时期的f2fs文件系统开关保持一致，如果前面的./storage_manager.sh 用的是fcreate方法，那么预先创建的就是f2fs文件格式的数据卷，则f2fs开关需要设置为1即打开，如果是使用create方法来创建数据卷，那么f2fs开关需要设置为0即默认状态
+    注意：如果提前创建的数据卷格式为f2fs，那么需要配置f2fs开关为1；如果提前创建的数据卷格式为ext4，需要配置f2fs开关为0。
 
     ```shell
     ./k8s-video.sh start ${index1} ${index2} ${index3} ${index4} 
@@ -363,10 +359,10 @@
     > 若需要使用NFS挂载启动，则将start改成nstart。例：
     >
     > ```shell
-    > ./k8s-video.sh nstart \${index1} \${index2} \${index3} \${index4} 
+    > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4} 
     > ```
     >
-    > \${index1} 与 \${index2} 为pod编号，\${index3}表示是否使能容器内文件为F2FS格式， 1表示使能，0表示不使能，默认是0；\${index4}表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 \${index2} \${index3} \${index4}可缺省。
+    > `${index1}` 与 `${index2}` 为pod编号，`${index3}`表示是否使能容器内文件为F2FS格式， 1表示使能，0表示不使能，默认是0；`${index4}`表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 `${index2}` `${index3}` `${index4}`可缺省。
     例：
     >- 创建名为video2的pod。
     >
@@ -380,19 +376,19 @@
     > ./k8s-video.sh start 1 5
     > ```
     >
-    >- 创建名为video1~video5共5个pod，并且都使能f2fs文件格式，且容器内/system分区大小配额为10240M
+    >- 创建名为video1~video5共5个pod，并且都使能f2fs文件格式，且容器内/system分区大小配额为10240M。
     >
     > ```shell
     > ./k8s-video.sh start 1 5 1 10240
     > ```
     >
-    >- 创建名为video1~video5共5个pod，不使能f2fs文件格式，且容器内/system分区大小配额为10240M
+    >- 创建名为video1~video5共5个pod，不使能f2fs文件格式，且容器内/system分区大小配额为10240M。
     >
     > ```shell
     > ./k8s-video.sh start 1 5 0 10240
     > ```
     >
-    >- 创建名为video2的pod，不使能f2fs文件格式，且容器内/system分区大小配额为10240M
+    >- 创建名为video2的pod，不使能f2fs文件格式，且容器内/system分区大小配额为10240M。
     >
     > ```shell
     > ./k8s-video.sh start 2 2 0 10240
@@ -420,7 +416,7 @@
     kubectl get pods -o wide
     ```
 
-    请参见[1.3-访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**\${index}，index为Pod编号**。
+    请参见[1.3-访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**`${index}`，index为Pod编号**。
 
     - 在master节点和工作节点上，可通过如下命令进入容器，以video1为例：
 
@@ -428,7 +424,7 @@
         kubectl exec -it video1 -- sh
         ```
 
-    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中“\${CONTAINER}”是**crictl ps**返回的第一列。
+    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中“`${CONTAINER}`”是**crictl ps**返回的第一列。
 
         ```shell
         crictl exec -it ${CONTAINER} sh
@@ -444,7 +440,7 @@ cd /home/k8s/k8s/script
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
-> \${index1} 与 \${index2} 为pod编号，其中 \${index2} 可缺省。
+> `${index1}` 与 `${index2}` 为pod编号，其中 `${index2}` 可缺省。
 > 例：./k8s-video.sh delete 2（删除名为video2的pod）
 > ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
 > 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
@@ -655,13 +651,13 @@ cd /home/k8s/k8s/script
 
 ##### 3.2.3.1 功能背景
 
-在真机中，系统为了平衡负载和功耗，会动态调节 CPU 的运行频率，而云机依托于服务器宿主机的容器化环境运行，其底层物理 CPU 的频率通常处于恒定状态，与真机存在差异。下面步骤说明如何实现云手机cpu频率动态调节，提高仿真能力
+在真机中，系统为了平衡负载和功耗，会动态调节 CPU 的运行频率，而云机依托于服务器宿主机的容器化环境运行，其底层物理 CPU 的频率通常处于恒定状态，与真机存在差异。下面步骤说明如何实现云手机cpu频率动态调节，提高仿真能力。
 
 ##### 3.2.3.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
 
-   当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改，
+   当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改。
 
-   在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限
+   在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限。
 
    ```shell
    ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/scaling_cur_freq
@@ -673,27 +669,27 @@ cd /home/k8s/k8s/script
 
    如果包含 w（如 -rw-r--r--），说明文件的所有者（通常是 root）拥有写入权限。
 
-   如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。则输入如下命令新增权限
+   如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。则输入如下命令新增权限。
 
-输入如下命令给scaling_cur_freq添加写入（w）权限
+在容器内输入如下命令给scaling_cur_freq添加写入（w）权限。
 
 ```shell
 chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
 ```
 
-输入如下命令给cpuinfo_cur_freq添加写入（w）权限
+在容器内输入如下命令给cpuinfo_cur_freq添加写入（w）权限。
 
 ```shell
 chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
 ```
 
-   随后输入如下命令读取cpu所支持的频率列表。
+   随后在容器内输入如下命令读取cpu所支持的频率列表。
 
    ```shell
    cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
    ```
 
-   随后输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值
+   随后在容器内输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值。
 
    ```shell
    echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_cur_freq
@@ -705,7 +701,7 @@ chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufre
 
    如果容器重启，那么之前的修改值会失效，CPU频率值会恢复默认。
 
-   要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如“手机设备信息大全”这样的第三方应用中观察到cpu频率的动态变化，此处的“sleep 1”表示每隔1s变化一次，此处的“1”可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改
+   要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如“手机设备信息大全”这样的第三方应用中观察到cpu频率的动态变化，此处的“sleep 1”表示每隔1s变化一次，此处的“1”可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改。
 
    ```shell
    CPU_ID=0

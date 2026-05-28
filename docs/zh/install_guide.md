@@ -985,8 +985,6 @@ cfct_config配置文件配置项和配置方法如下所示。
     | STORAGE_SIZE_GB | 存储大小，单位为GB。删除时可不传 |
     | IMG_BASE | 基础数据卷img文件，若无基础数据卷可不传，基础数据卷img文件制作请参考。删除时可不传。参数STORAGE_SIZE_GB和IMG_BASE只传其中一个 |
 
-    注意：如果使用预先创建的数据卷的文件格式需要和后面使用k8s-video.sh创建容器时期的f2fs文件系统开关保持一致，该开关默认是0即默认使用ext4文件格式，此时则使用create方法来创建数据卷；如果要创建f2fs格式的数据卷，则要使用fcreate
-
     例如：
         
     创建100个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video1~video100。
@@ -1039,7 +1037,9 @@ cfct_config配置文件配置项和配置方法如下所示。
         
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
+    
     >此处创建的数据卷的文件格式需要和'k8s-video.sh'拉起pod时的配置保持一致。例如：若通过'fcreate'为video1创建了f2fs格式的数据卷，那么使用启动脚本'k8s-video.sh'拉起video1的时候必须将f2fs开关设置为1。
+
 
 2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](master节点操作.md#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例
 
