@@ -11,6 +11,8 @@
 extern "C" {
 #endif
 
+#define VMI_API __attribute__((visibility("default")))
+
 namespace Vmi {
 struct StatisticsInfo {
     uint64_t lag;     // 网路延迟(ms)
@@ -24,7 +26,7 @@ struct StatisticsInfo {
  * @参数 [in] eventHandleFunc：传入的视频流引擎客户端事件回调函数指针
  * @返回值：VMI_SUCCESS，初始化成功，其他返回值参考错误码定义
  */
-uint32_t Initialize(OnVmiEngineEvent eventHandleFunc);
+VMI_API uint32_t Initialize(OnVmiEngineEvent eventHandleFunc);
 
 /**
  * @功能描述：启动视频流引擎客户端，包括启动视频解码线程和网络连接等，调用者需在调用之前保证网络通道可用
@@ -36,19 +38,19 @@ uint32_t Initialize(OnVmiEngineEvent eventHandleFunc);
  * @参数 [in] ipAndPort：当前服务端ip和容器号
  * @返回值：VMI_SUCCESS，初始化成功，其他返回值参考错误码定义
  */
-uint32_t Start(uint64_t surface, uint32_t width, uint32_t height, uint32_t densityDpi, std::string &ipAndPort);
+VMI_API uint32_t Start(uint64_t surface, uint32_t width, uint32_t height, uint32_t densityDpi, std::string &ipAndPort);
 
 /**
  * @功能描述：停止视频流引擎客户端，包括停止视频解码线程和网络连接等；该函数是阻塞式的，要等所有线程退出，资源被释放后才会返回
  *           禁止在OnVmiEngineEvent回调函数中调用视频流引擎客户端的Stop函数
  */
-void Stop();
+VMI_API void Stop();
 
 /**
  * @功能描述：获取视频流引擎客户端的统计数据，包括网络时延、接收帧率、解码帧率等
  * @参数 [out] info：统计信息，包括网络时延、接收帧率、解码帧率等
  */
-void GetStatistics(Vmi::StatisticsInfo &info);
+VMI_API void GetStatistics(Vmi::StatisticsInfo &info);
 
 /**
  * @功能描述：视频流引擎客户端接收数据
@@ -57,7 +59,7 @@ void GetStatistics(Vmi::StatisticsInfo &info);
  * @参数 [in] length：代表接收type类型数据buffer的长度
  * @返回值：大于0，代表接收的字节数，其他返回值参考错误码定义
  */
-int32_t RecvData(VMIMsgType type, uint8_t* data, uint32_t length);
+VMI_API int32_t RecvData(VMIMsgType type, uint8_t* data, uint32_t length);
 
 /**
  * @功能描述：视频流引擎客户端发送数据
@@ -66,7 +68,7 @@ int32_t RecvData(VMIMsgType type, uint8_t* data, uint32_t length);
  * @参数 [in] length：代表发送type类型数据buffer长度
  * @返回值：VMI_SUCCESS, 代表发送成功；其他返回值参考错误码定义
  */
-uint32_t SendData(VMIMsgType type, uint8_t* data, uint32_t length);
+VMI_API uint32_t SendData(VMIMsgType type, uint8_t* data, uint32_t length);
 
 #if defined (__cplusplus)
 }

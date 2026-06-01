@@ -9,8 +9,10 @@
 #include <cstdint>
 #include "ItemQueue.h"
 
+#define VMI_API __attribute__((visibility("default")))
+
 namespace Vmi {
-class VideoUtil {
+class VMI_API VideoUtil {
 public:
     /*
      * @brief: construct

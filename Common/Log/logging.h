@@ -46,6 +46,9 @@ using LogCallbackFunction=void (*)(const int level, const char* tag, const char*
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define VMI_API __attribute__((visibility("default")))
+
 /**
  * @brief: VmiLogPrint, do not use this function directly,use ERR, INFO, DBG, MEMDUMP instead.
  * @param [in] fileName: code file anem
@@ -56,7 +59,7 @@ extern "C" {
  * @param fmt : as fmt in printf
  * @param ... : variable number of arguments
  */
-void VmiLogPrint(int level, const char* vmiTag, const char* fmt, ...) __attribute__((format (printf, 3, 4)));
+VMI_API void VmiLogPrint(int level, const char* vmiTag, const char* fmt, ...) __attribute__((format (printf, 3, 4)));
 
 
 #ifdef __cplusplus
