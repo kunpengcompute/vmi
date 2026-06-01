@@ -8,6 +8,9 @@
 #include <mutex>
 #include <functional>
 #include <condition_variable>
+
+#define VMI_API __attribute__((visibility("default")))
+
 namespace Vmi {
 using RunnableDealFunc = std::function<void(void)>;
 class Runnable {
@@ -20,7 +23,7 @@ public:
     virtual int Run() = 0;
 };
 
-class Looper {
+class VMI_API Looper {
 public:
     Looper() = default;
     virtual ~Looper() = default;

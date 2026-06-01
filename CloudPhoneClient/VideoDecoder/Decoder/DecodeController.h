@@ -11,6 +11,9 @@
 #include "DecoderBase.h"
 
 namespace Vmi {
+
+#define VMI_API __attribute__((visibility("default")))
+
 constexpr uint32_t VMI_VIDEO_ENGINE_CLIENT_SUCCESS = 0;
 constexpr uint32_t VMI_VIDEO_ENGINE_CLIENT_INIT_FAIL = 0x0A070001;
 constexpr uint32_t VMI_VIDEO_ENGINE_CLIENT_PARAM_INVALID = 0x0A070002;
@@ -32,7 +35,7 @@ enum class EngineStat {
     VMI_ENGINE_STOP = 0x03,
     VMI_ENGINE_INVALID = 0x0
 };
-class DecodeController {
+class VMI_API DecodeController {
 public:
     /*
      * @fn GetInstance
