@@ -8,10 +8,12 @@
 #include <string>
 #include <sys/system_properties.h>
 
+#define VMI_API __attribute__((visibility("default")))
+
 namespace Vmi {
-std::string GetPropertyWithDefault(const std::string& name, const std::string& defaultVal);
-int32_t GetPropertyWithDefault(const std::string& name, int32_t defaultVal);
-void SetProperty(const std::string& name, const std::string& val);
+VMI_API std::string GetPropertyWithDefault(const std::string& name, const std::string& defaultVal);
+VMI_API int32_t GetPropertyWithDefault(const std::string& name, int32_t defaultVal);
+VMI_API void SetProperty(const std::string& name, const std::string& val);
 }
 
 #endif // VMI_SYSTEMPROPERTY_H

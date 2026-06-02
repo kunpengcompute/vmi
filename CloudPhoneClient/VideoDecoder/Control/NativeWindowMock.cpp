@@ -5,43 +5,45 @@
 
 #include "android/native_window.h"
 
-void ANativeWindow_acquire(ANativeWindow* window) {}
+#define VMI_API __attribute__((visibility("default")))
 
-void ANativeWindow_release(ANativeWindow* window) {}
+VMI_API void ANativeWindow_acquire(ANativeWindow* window) {}
 
-int32_t ANativeWindow_getWidth(ANativeWindow* window)
+VMI_API void ANativeWindow_release(ANativeWindow* window) {}
+
+VMI_API int32_t ANativeWindow_getWidth(ANativeWindow* window)
 {
    return 0;
 }
 
-int32_t ANativeWindow_getHeight(ANativeWindow* window)
+VMI_API int32_t ANativeWindow_getHeight(ANativeWindow* window)
 {
    return 0;
 }
 
-int32_t ANativeWindow_getFormat(ANativeWindow* window)
+VMI_API int32_t ANativeWindow_getFormat(ANativeWindow* window)
 {
    return 0;
 }
 
-int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* window, int32_t width, int32_t height, int32_t format)
+VMI_API int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* window, int32_t width, int32_t height, int32_t format)
 {
    return 0;
 }
 
-int32_t ANativeWindow_lock(ANativeWindow* window, ANativeWindow_Buffer* outBuffer, ARect* inOutDirtyBounds)
+VMI_API int32_t ANativeWindow_lock(ANativeWindow* window, ANativeWindow_Buffer* outBuffer, ARect* inOutDirtyBounds)
 {
    return 0;
 }
 
-int32_t ANativeWindow_unlockAndPost(ANativeWindow* window)
+VMI_API int32_t ANativeWindow_unlockAndPost(ANativeWindow* window)
 {
    return 0;
 }
 
 #if __ANDROID_API__ >= 26
 
-int32_t ANativeWindow_setBuffersTransform(ANativeWindow* window, int32_t transform)
+VMI_API int32_t ANativeWindow_setBuffersTransform(ANativeWindow* window, int32_t transform)
 {
    return 0;
 }
@@ -50,12 +52,12 @@ int32_t ANativeWindow_setBuffersTransform(ANativeWindow* window, int32_t transfo
 
 #if __ANDROID_API__ >= 28
 
-int32_t ANativeWindow_setBuffersDataSpace(ANativeWindow* window, int32_t dataSpace)
+VMI_API int32_t ANativeWindow_setBuffersDataSpace(ANativeWindow* window, int32_t dataSpace)
 {
    return 0;
 }
 
-int32_t ANativeWindow_getBuffersDataSpace(ANativeWindow* window)
+VMI_API int32_t ANativeWindow_getBuffersDataSpace(ANativeWindow* window)
 {
    return 0;
 }
@@ -64,11 +66,11 @@ int32_t ANativeWindow_getBuffersDataSpace(ANativeWindow* window)
 
 #if __ANDROID_API__ >= 30
 
-int32_t ANativeWindow_setFrameRate(ANativeWindow* window, float frameRate, int8_t compatibility)
+VMI_API int32_t ANativeWindow_setFrameRate(ANativeWindow* window, float frameRate, int8_t compatibility)
 {
    return 0;
 }
 
-void ANativeWindow_tryAllocateBuffers(ANativeWindow* window) {}
+VMI_API void ANativeWindow_tryAllocateBuffers(ANativeWindow* window) {}
 
 #endif // __ANDROID_API__ >= 30

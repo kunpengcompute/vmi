@@ -14,6 +14,8 @@
 extern "C" {
 #endif
 
+#define VMI_API __attribute__((visibility("default")))
+
 enum VmiSocketErrorCode {
     SOCKET_RECV_FAIL_RETRY = -1,   // 接收函数返回失败，可再调接收函数重试
     SOCKET_RECV_FAIL_DISCONN = -2, // 接收函数返回失败，SOCKET断链，不可用
@@ -31,7 +33,7 @@ using OnNewConnectionCallback = void (*)(int connection);
  * @参数 [in] cb：新连接建立后的通知回调函数
  * @返回值：成功返回0，失败返回错误码
  */
-int RegConnectionCB(OnNewConnectionCallback cb);
+VMI_API int RegConnectionCB(OnNewConnectionCallback cb);
 
 /**
  * @功能描述：关闭通信连接，销毁通信资源。该接口是引擎要求二次开发者在通信模块实现的外部符号，
@@ -39,7 +41,7 @@ int RegConnectionCB(OnNewConnectionCallback cb);
  * @参数 [in] connection： OnNewConnectionCallback返回的连接句柄
  * @返回值：成功返回0，失败返回错误码
  */
-int CloseConnection(int connection);
+VMI_API int CloseConnection(int connection);
 
 /**
  * @功能描述：发送数据给对端，该函数是引擎要求二次开发者在通信模块实现的外部符号，引擎会调用该函数发送数据
@@ -49,7 +51,7 @@ int CloseConnection(int connection);
  * @参数 [in] len：待发送数据长度，不超过64KB
  * @返回值：成功返回len，表示已将所有数据发送（不存在只发送部分数据的情况）；有错误返回对应的错误码 VmiSocketErrorCode；
  */
-ssize_t SendFully(int connection, uint8_t *buf, size_t len);
+VMI_API ssize_t SendFully(int connection, uint8_t *buf, size_t len);
 
 /**
  * @功能描述：接收对端发送的数据。引擎要求二次开发者实现通信模块，用于数据的发送和接收
@@ -59,7 +61,7 @@ ssize_t SendFully(int connection, uint8_t *buf, size_t len);
  * @参数 [in] len：用于存放接收数据的内存长度，不超过64KB
  * @返回值：成功返回实际收到的数据大小，有错误返回对应的错误码 VmiSocketErrorCode
  */
-ssize_t Recv(int connection, uint8_t *buf, size_t len);
+VMI_API ssize_t Recv(int connection, uint8_t *buf, size_t len);
 
 /**
  * @功能描述：校验服务端和客户端版本是否匹配
@@ -67,7 +69,7 @@ ssize_t Recv(int connection, uint8_t *buf, size_t len);
  * @参数 [in] clientVersion：客户端版本号信息
  * @返回值：校验成功返回true，校验失败返回false
  */
-bool CheckVersionMatch(const char* serverVersion, const char* clientVersion);
+VMI_API bool CheckVersionMatch(const char* serverVersion, const char* clientVersion);
 
 #if defined (__cplusplus)
 }

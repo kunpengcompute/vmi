@@ -12,6 +12,8 @@
 extern "C" {
 #endif
 
+#define VMI_API __attribute__((visibility("default")))
+
 constexpr int CONNECTION_SUCCESS = 0;              // 成功
 constexpr int CONNECTION_FAIL_AND_CAN_RETRY = -1;  // 处理失败，但是可以重试
 constexpr int CONNECTION_PARAM_CHECK_FAILED = -2;  // 参数校验失败
@@ -22,7 +24,7 @@ constexpr int CONNECTION_NOT_INIT_SYMBOL = -1000;  // 符号未初始化
  * @功能描述：创建连接对象
  * @返回值：成功时返回新创建的通信连接描述符；错误时返回负数并设置errno
  */
-int VmiCreateConnection();
+VMI_API int VmiCreateConnection();
 
 /**
  * @功能描述：由服务端程序调用，指定监听的端口
@@ -30,21 +32,21 @@ int VmiCreateConnection();
  * @参数 [in] port:需监听的端口
  * @返回值：成功时返回0；错误时返回-1并设置errno
  */
-int VmiListen(int connection, unsigned int port);
+VMI_API int VmiListen(int connection, unsigned int port);
 
 /**
  * @功能描述：由服务端程序调用，调用后将阻塞线程直到新的连接出现，此函数返回新的通信连接描述符
  * @参数 [in] connection:通信连接描述符
  * @返回值：返回值表示与客户端建立新连接的描述符，错误时返回负数并设置errno
  */
-int VmiAccept(int connection);
+VMI_API int VmiAccept(int connection);
 
 /**
  * @功能描述：由客户端程序调用，配置客户端的IP和端口
  * @参数 [in] ip:使用网络字节序表示的ip地址
  * @参数 [in] port:对端的端口
  */
-void VmiConfigClientAddress(unsigned int ip, unsigned int port);
+VMI_API void VmiConfigClientAddress(unsigned int ip, unsigned int port);
 
 /**
  * @功能描述：由客户端程序调用，用于与服务端建立连接，其开始连接的参数通过VmiConfigClientAddress进行设置
@@ -53,15 +55,16 @@ void VmiConfigClientAddress(unsigned int ip, unsigned int port);
  * @参数 [in] port:对端的端口
  * @返回值：成功返回0,；错误时返回负数并设置errno
  */
-int VmiBeginConnect(int connection);
+VMI_API int VmiBeginConnect(int connection);
 
 /**
  * @功能描述：由客户端程序调用，用于与服务端建立连接
+ * @参数 [in] connection:通信连接描述符
  * @参数 [in] ip:使用网络字节序表示的ip地址
  * @参数 [in] port:对端的端口
  * @返回值：成功返回0,；若错误时返回-1并设置errno
  */
-int VmiConnect(int connection, unsigned int ip, unsigned int port);
+VMI_API int VmiConnect(int connection, unsigned int ip, unsigned int port);
 
 /**
  * @功能描述：发送数据给对端
@@ -70,7 +73,7 @@ int VmiConnect(int connection, unsigned int ip, unsigned int port);
  * @参数 [in] len:待发送数据的字节数
  * @返回值：发送成功时返回发送的字节数；若错误时返回-1并设置errno
  */
-ssize_t VmiSend(int connection, const uint8_t* buf, size_t len);
+VMI_API ssize_t VmiSend(int connection, const uint8_t* buf, size_t len);
 
 /**
  * @功能描述：接收对端发送的数据，阻塞式调用
@@ -79,13 +82,13 @@ ssize_t VmiSend(int connection, const uint8_t* buf, size_t len);
  * @参数 [in] len:存放接收数据指针指向内存的字节数
  * @返回值：接收成功则返回接收到数据字节数，若错误则返回-1并设置erron
  */
-ssize_t VmiRecv(int connection, uint8_t* buf, size_t len);
+VMI_API ssize_t VmiRecv(int connection, uint8_t* buf, size_t len);
 
 /**
  * @功能描述：关闭通信连接
  * @参数 [in] connection:通信连接描述符
  */
-void VmiCloseConnection(int connection);
+VMI_API void VmiCloseConnection(int connection);
 
 #ifdef __cplusplus
 }
