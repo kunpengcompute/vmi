@@ -13,9 +13,11 @@
 #include "VersionCheck.h"
 #include "NetComm/NetComm.h"
 
+#define VMI_API __attribute__((visibility("default")))
+
 namespace Vmi {
 
-class ServerConnection {
+class VMI_API ServerConnection {
 public:
     using NewConnectCb = std::function<void(const ServerConnection& connection, std::unique_ptr<NetComm> netcomm)>;
 

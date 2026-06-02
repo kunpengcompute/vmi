@@ -6,8 +6,11 @@
 #define CLIENT_CONNECTION_H
 #include "VersionCheck.h"
 #include "NetComm/NetComm.h"
+
+#define VMI_API __attribute__((visibility("default")))
+
 namespace Vmi {
-class ClientConnection {
+class VMI_API ClientConnection {
 public:
     explicit ClientConnection(VersionCheck::EngineType type);
     ClientConnection(VersionCheck::EngineType type, bool isServer);
