@@ -12,18 +12,18 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 **表 1** Kbox云手机容器环境部署硬件配置方案要求<a id="Kbox云手机容器环境部署硬件配置方案要求"></a>
 
-|配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|
-|--|--|--|--|
-|服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
-|CPU|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
-|内存|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR5 DIMM内存-64GB-4800MT/s|
-|硬盘|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型数据盘：2\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|
-|网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|
-|Riser卡|RISER1与RISER2模组相同，均为：PCIe X16 + PCIe X8|RISER1与RISER2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）*1|
-|编码卡|1\*NETINT Quadra T2A（X8）|无|无|
-|GPU|2\*AMD W6800|4\*道客DC 1000|8\*道客DC 1000|
-|操作系统|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|
-|系统/内核版本|6.6.0-72.0.0|6.6.0-72.0.0|6.6.0-72.0.0|
+|配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|硬件配置方案四|
+|--|--|--|--|--|
+|服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
+|CPU|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|2\*鲲鹏920 7260W处理器，64 <Core@2.2GHz>|
+|内存|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR5 DIMM内存-64GB-4800MT/s|16\*DDR5 DIMM内存-64GB-5200MT/s|
+|硬盘|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型数据盘：2\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*固态硬盘-480GB-SATA 6Gb/s-2.5 inch height-读密集型<br>1\*S4510 固态硬盘-960GB-SATA 6Gb/s-读取密集型<br>数据盘：1\*ES3600P V6固态硬盘-6400GB-NVMe 64Gb/s<br>1\*ES3500P V5固态硬盘-4000GB-NVMe 32Gb/s|
+|网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
+|Riser卡|RISER1与RISER2模组相同，均为：PCIe X16 + PCIe X8|RISER1与RISER2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|
+|编码卡|1\*NETINT Quadra T2A（X8）|无|无|无|
+|GPU|2\*AMD W6800|4\*道客DC 1000|8\*道客DC 1000|8\*道客DC1000|
+|操作系统|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|
+|系统/内核版本|6.6.0-72.0.0|6.6.0-72.0.0|6.6.0-72.0.0|6.6.0-72.0.0|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -44,17 +44,17 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 **表 1** 部署视频流引擎的软件环境要求<a id="部署视频流引擎的软件环境要求"></a>
 
-|序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|
-|--|--|--|--|--|--|--|
-| 1 | BoostKit-boostcph-videoengine_*_15.zip | 视频流引擎二进制包 | [获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#base-soft) | √ | √ | √ |
-| 2 | DemoVideoEngine.tar.gz | 视频流服务端tar包组件，负责获取Kbox容器音视频数据等 | 请联系华为技术支持获取 | √ | √ | √ |
-| 3 | DemoVideoEngine_sha256.txt | 视频流服务端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ |
-| 4 | CloudPhoneApk.tar.gz | 视频流客户端tar包组件，负责解码播放音视频数据 | 请联系华为技术支持获取 | √ | √ | √ |
-| 5 | CloudPhoneApk_sha256.txt | 视频流客户端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ |
-| 6 | VideoClientEmulator.tar.gz | 视频流云手机压测工具 | 请联系华为技术支持获取 | √ | √ | √ |
-| 7 | NETINT-v*XXX*.tar.gz | 视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - |
-| 8 | Quadra_V*XXX*.zip | NETINT编码卡Quadra软固件及文档包 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - |
-| 9 | topo-affinity-plugin-master.zip | K8s NUMA亲和插件 | [获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin) | √ | √ | √ |
+|序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|
+|--|--|--|--|--|--|--|--|
+| 1 | BoostKit-boostcph-videoengine_*_15.zip | 视频流引擎二进制包 | [获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#base-soft) | √ | √ | √ | √ |
+| 2 | DemoVideoEngine.tar.gz | 视频流服务端tar包组件，负责获取Kbox容器音视频数据等 | 请联系华为技术支持获取 | √ | √ | √ | √ |
+| 3 | DemoVideoEngine_sha256.txt | 视频流服务端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ | √ |
+| 4 | CloudPhoneApk.tar.gz | 视频流客户端tar包组件，负责解码播放音视频数据 | 请联系华为技术支持获取 | √ | √ | √ | √ |
+| 5 | CloudPhoneApk_sha256.txt | 视频流客户端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ | √ |
+| 6 | VideoClientEmulator.tar.gz | 视频流云手机压测工具 | 请联系华为技术支持获取 | √ | √ | √ | √ |
+| 7 | NETINT-v*XXX*.tar.gz | 视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - | - |
+| 8 | Quadra_V*XXX*.zip | NETINT编码卡Quadra软固件及文档包 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - | - |
+| 9 | topo-affinity-plugin-master.zip | K8s NUMA亲和插件 | [获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin) | √ | √ | √ | √ |
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -243,9 +243,9 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
 
-#### 1.2.2 （硬件配置方案二、三）安装显卡驱动<a name="ZH-CN_TOPIC_0000002549866411"></a>
+#### 1.2.2 （硬件配置方案二、三、四）安装显卡驱动<a name="ZH-CN_TOPIC_0000002549866411"></a>
 
-使用硬件配置方案二、三每次服务器重启后，都需要重新执行安装显卡驱动步骤。
+使用硬件配置方案二、三、四每次服务器重启后，都需要重新执行安装显卡驱动步骤。
 
 1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)获取VAGPU-25.03.01.01-RC13-A15.tgz，上传至“~/dependency/”目录，解压后获取显卡内核态驱动。
 
@@ -285,6 +285,12 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     ```shell
     insmod va_gfx.ko kworkerCores=80,80,81,81,82,82,83,83,0,0,1,1,2,2,3,3,240,240,241,241,242,242,243,243,160,160,161,161,162,162,163,163
+    ```
+
+    硬件配置方案四（鲲鹏920 7260W处理器 + 8\*道客DC 1000）：
+
+    ```shell
+    insmod va_gfx.ko kworkerCores=64,64,65,65,66,66,67,67,0,0,1,1,2,2,3,3,192,192,193,193,194,194,195,195,128,128,129,129,130,130,131,131
     ```
 
 5. 等待脚本执行完成，查看内核日志。
@@ -340,7 +346,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     2. 将Kbox-patches-AOSP15文件夹中的deploy_scripts目录上传至服务器的“~/dependency”目录。
     3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox_\*.zip到“~/dependency/deploy_scripts”目录。
-    4. （硬件配置方案二、三）使用硬件配置方案二、三时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC13-A15.tgz，获取va_driver.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
+    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC13-A15.tgz，获取va_driver.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
@@ -350,7 +356,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
             ./make_image_aosp15.sh kbox:demo kbox:origin
             ```
 
-        - 硬件配置方案二、三：
+        - 硬件配置方案二、三、四：
 
             ```shell
             cd ~/dependency/deploy_scripts
@@ -408,7 +414,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
         chmod +x Dockerfile_NoVPU Dockerfile_QuadraT2A make_image.sh
         ```
 
-    - 配置方案二：
+    - 配置方案二、三、四：
 
         ```shell
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU  make_image.sh
@@ -597,7 +603,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 >- 宿主机上多容器共享一个着色器缓存路径，可以先启动一路云手机预收集应用尽可能完整的着色器，其他云手机通过将配置文件对应的应用设置为只读模式来使能ShaderCache功能，此时性能最佳。
 >- ShaderCache功能没有缓存淘汰机制，若是缓存文件系统存储已满或者游戏版本更新，为了避免着色器和二进制文件不能对应，请清理整个文件系统的缓存。
 
-#### 1.2.5 设置cfct_config配置文件（配置方案二）<a name="ZH-CN_TOPIC_0000002518386592"></a>
+#### 1.2.5 设置cfct_config配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518386592"></a>
 
 通过设置cfct_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config配置文件中的配置正确。
 
