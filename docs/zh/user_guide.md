@@ -44,6 +44,7 @@
         |2160|960|
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
+        >
         >改变视频输出分辨率（与上次启动时配置不同）时，会改变AOSP系统和应用的渲染分辨率，可能会导致部分应用出现兼容性问题或渲染问题。一般此类问题可以通过重新启动应用解决，因此建议在修改分辨率前返回桌面，同时清空后台应用，以提升用户使用体验。
 
     4. 配置视频和音频的输出格式。
@@ -82,6 +83,7 @@
         ```
     
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >使用NFS挂载启动时，将start命令替换成nstart，例：
     >
     >```shell
@@ -186,6 +188,7 @@
     ![](figures/zh-cn_image_0000002549864241.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >- 每个视频流云手机实例需要设置端口 **`${port}`** ，部署时可进入cfct_video脚本设置合适的 **`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位安卓系统手机上。
     >- 请确保手机和服务器之间网络畅通。
@@ -199,9 +202,10 @@
 
     ![](figures/zh-cn_image_0000002518224474.png)
 
-3. 自上而下依次输入服务器IP地址、**`${port}`** ，单击“SUBMIT”即可访问云侧的视频流云手机。其中 **`${port}`** 默认值为8000 + **\${index}**。
+3. 自上而下依次输入服务器IP地址、**`${port}`** ，单击“SUBMIT”即可访问云侧的视频流云手机。其中 **`${port}`** 默认值为8000 + **${index}**。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >每个视频流云手机实例需要配置映射端口，部署时可进入cfct_video脚本设置合适的**`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
 
 ### 1.4 （可选）动态修改云手机参数<a name="ZH-CN_TOPIC_0000002549744243"></a>
@@ -230,6 +234,7 @@
     3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
+        >
         >如果不使能自适应分辨率，启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。如果要改变自适应分辨率的宽高，建议同步修改cfct_config文件中屏幕像素密度以达到最佳显示效果，推荐的配置说明如[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
 
 4. 设置音频播放编码参数。
@@ -278,6 +283,7 @@
     ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >删除NFS挂载的容器时，将delete命令替换成ndelete，例：
 >
 >```shell
@@ -306,6 +312,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >“$NODENAME”为工作节点名称。
 
 3. 创建命名空间va-plugin。
@@ -339,6 +346,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >执行**kubectl delete -f va-device-plugin.yaml**命令可删除道客设备插件。
 
 7. 启动完成后，查看道客设备插件是否可运行成功。
@@ -361,6 +369,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >执行 **./delete_devices.sh** 命令可删除设备插件。
 
 2. 启动完成后，查看设备插件是否运行成功。
@@ -447,13 +456,13 @@
     > ./k8s-video.sh start 3 3 1
     > ```
     >
-    >- 创建名为video1\~video5共5个pod，里面的文件格式是默认的ext4。
+    >- 创建名为video1~video5共5个pod，里面的文件格式是默认的ext4。
     >
     > ```shell
     > ./k8s-video.sh start 1 5
     > ```
     >
-    >- 创建名为video2\~video6共5个pod，里面的文件格式是f2fs。
+    >- 创建名为video2~video6共5个pod，里面的文件格式是f2fs。
     >
     > ```shell
     > ./k8s-video.sh start 2 6 1
@@ -510,6 +519,7 @@ cd /home/k8s/k8s/script
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 > `${index1}` 与 `${index2}` 为pod编号，其中 `${index2}` 可缺省，例：
 >
 > ```shell
@@ -744,7 +754,7 @@ cd /home/k8s/k8s/script
 |vmi.video.encode.target_bitrate|WebRTC目标编码码率。|3000000~50000000<br>单位bps|
 |vmi.audio.audiotype|音频输出格式。|1（目前WebRTC只支持音频PCM的输出格式）|
 |vmi.webrtc.connection.serverip|云手机服务端的IP地址。|具体IP地址。|
-|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **`${index}`** * 2 - 1，起始端口 + **\${index}** * 2。|可用的起始端口。|
+|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **`${index}`** * 2 - 1，起始端口 + **${index}** * 2。|可用的起始端口。|
 |vmi.network.type|网络类型。|1：TCP<br>4：WebRTC|
 |vmi.webrtc.httpserver.port|服务端HTTP映射端口号。|具体映射端口号。|
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|
@@ -888,6 +898,7 @@ cd /home/k8s/k8s/script
 故障排除是指根据不同的故障原因清除故障的过程。故障排除包括检修设备、修改配置数据、重启相关进程、重启容器、重启服务器等。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >处理重大故障前，请先联系技术支持工程师协助解决。
 >在故障处理过程中，维护人员可能需要执行修改配置数据、重启虚拟机等重大操作，为确保数据安全，首先应该保存现场数据，备份相关数据库、告警信息和日志文件等。
 >当系统维护人员无法自行排除故障时，请联系技术支持工程师协助解决。

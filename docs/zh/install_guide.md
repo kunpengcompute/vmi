@@ -71,6 +71,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 3. 使用[2](#li1273482318125)获取到的签名验证指南文档对下载的软件包进行PGP数字签名校验。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >如果校验失败，请不要使用该软件包，先联系华为技术支持工程师解决。
 >使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
 >使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议 2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
@@ -276,6 +277,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 4. （硬件配置方案一）使用硬件配置方案一时请参见[视频流引擎](#视频流引擎)获取NETINT-vXXX.tar.gz软件包，获取后将软件包上传至服务器的“/home/kbox_video”目录，并重命名为NETINT.tar.gz。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >- Quadra编码卡和T432配套的NETINT.tar.gz不同，请选择对应的NETINT.tar.gz。
     >- NETINT Quadra是NETINT T432编码卡的下一代演进，后续文档仅以Quadra为例进行说明；若需要使能T432编码卡，可参考Quadra编码卡进行使能。
 
@@ -310,6 +312,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
         ```
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
+        >
         >镜像名只可包含数字与小写字母，首字符应为小写字母，tag名只可包含数字与字母。若自定义修改了视频流云手机的镜像名称，请参见[制作基础数据卷](#制作基础数据卷)章节中将cfct_config配置文件中的视频流云手机镜像名更新为自定义的镜像名称。
 
 3. 查看视频流云手机镜像（video:latest）是否制作成功。
@@ -377,6 +380,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 2. 通过配置GPU、CPU、ENC、USERDATA等map中对应路数的值，选择该路容器使用的GPU、CPU、NETINT编码卡，以及数据卷存放路径。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
 3. NETINT编码卡的节点在不同服务器中会有区别，应根据实际情况修改cfct_config中NETINT的值，保证编码不会因跨片导致性能损失。
@@ -386,7 +390,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。GPU卡所属NUMA查询方式请参见[AMD GPU渲染节点所属NUMA的查询方式](#section20575115322416)。
 
 6. 针对1张编码卡环境：需要修改cfct_config配置文件中“VIDEO_ENC_MAP_CORE”。
-7. 当编码卡插在CPU0上时，删除\${NETINT1}；若编码卡插在CPU1上时，删除\${NETINT0}。
+7. 当编码卡插在CPU0上时，删除${NETINT1}；若编码卡插在CPU1上时，删除${NETINT0}。
 8. 如果要使能WebRTC特性，需要将cfct_config中的“ENABLE_WEBRTC_CONNECTION”设置为“1”。若视频帧采用CPU进行软编码，需要将cfct_config中的“CPU_BIND_MODE”设置为“1”，以防卡顿。
 9. 如果需要使能图形加速层功能，需要将cfct_config中的“**ENABLE_RENDER_LAYER**”设置为“1”。详细说明请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
 10. 如果要使能C2解码器，需要将cfct_config中的“**ENABLE_AMD_C2_DECODE**”设置为“1”
@@ -452,6 +456,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 **AMD GPU渲染节点所属NUMA的查询方式<a name="section20575115322416"></a>**
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >AMD GPU每张卡对应1个GPU渲染节点。
 
 1. <a name="li34656503552"></a>获取GPU渲染节点命令。
@@ -530,6 +535,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 2. 通过配置GPU、CPU、USERDATA等map中对应路数的值，选择该路容器使用的GPU、CPU以及数据卷存放路径。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
 3. 当前视频流云手机默认使能DC1000 GPU硬解的硬解功能（即默认**ENABLE_HARD_DECODE=1**），如需使用软解，需设置**ENABLE_HARD_DECODE=0**并重启容器。
@@ -612,20 +618,21 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >如果使用nfs挂载启动的容器，由于性能考虑，不支持cp -rp直接拷贝数据目录，应该直接拷贝img。
     >
     >将所需的应用（例如地铁跑酷等）预装到该云手机容器中，将android_1.img拷贝为android_base.img作为新数据卷。
     >
     >```shell
-    >cd \${USERDATA}/img/
+    >cd ${USERDATA}/img/
     >cp -rp android_1.img android_base.img
     >```
     >
     >在启动指定容器前手动拷贝android_base.img为相应容器编号。
     >
     >```shell
-    >cd \${USERDATA}/img/
-    >cp -rp android_base.img android_\${index}.img
+    >cd ${USERDATA}/img/
+    >cp -rp android_base.img android_${index}.img
     >```
 
 6. 删除android_1容器。
@@ -765,6 +772,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     此过程若无报错则下载成功。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >国内网络环境需要配置镜像仓，例如：
     >
     >```shell
@@ -801,6 +809,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     初始化成功后有如[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息)所示信息打印。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >如果在下载镜像时配置了镜像仓，集群初始化也需要配置相同镜像仓，例如：
     >
     >```shell
@@ -821,6 +830,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >当在master节点上集群初始化失败后，需按照提示查找原因并进行重置，重置后重新执行初始化命令。重置命令如下。
     >
     >```shell
@@ -865,6 +875,7 @@ cfct_config配置文件配置项和配置方法如下所示。
         预期结果为所有的pod的状态（STATUS）列都是Running。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >若查看当前节点的状态（STATUS）列是NotReady，及查看kubelet服务状态（systemctl status kubelet）时有明显报错（Network plugin returns error: cni plugin not initialized），此情况建议将集群重置并将服务器重启后重新初始化。
 
 ##### 1.3.2.3 工作节点操作<a name="ZH-CN_TOPIC_0000002518186532"></a>
@@ -934,6 +945,7 @@ cfct_config配置文件配置项和配置方法如下所示。
         ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
     >
     >此处创建的数据卷的文件格式需要和'k8s-video.sh'拉起pod时的配置保持一致。例如：若通过'fcreate'为video1创建了f2fs格式的数据卷，那么使用启动脚本'k8s-video.sh'拉起video1的时候必须将f2fs开关设置为1。
@@ -955,6 +967,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >- 工作节点重启后，重新加入集群时，需保证此工作节点可运行视频流云手机。
     >- xx.xx.xx.xx为IP地址，xxxx为映射端口号。
     >- 加入集群的**token**命令若失效可重新在master节点执行如下命令重新生成。
@@ -1083,6 +1096,7 @@ cfct_config配置文件配置项和配置方法如下所示。
         ```
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
+        >
         >卸载TAP插件步骤：
         >- “/var/lib/kubelet/kubeadm-flags.env”文件为初始配置内容并重启kubelet。
         >
@@ -1113,6 +1127,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 4. 请参见《DC1000加速卡Kubernetes设备插件安装指南 03.pdf》中第三章（安装部署）安装设备插件。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >道客设备插件版本支持v0.0.5版本及以上。
 
 ##### 1.3.3.2 部署设备插件镜像<a name="ZH-CN_TOPIC_0000002518186506"></a>
@@ -1267,6 +1282,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 |4|80|180GiB|512GiB|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >上述虚拟机内存以及磁盘容量仅作为演示，具体容量根据实际情况分配。
 
 **操作系统要求<a name="section305mcpsimp"></a>**
@@ -1359,6 +1375,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     |DEBUG_INFO_BTF|N|
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >配置方法说明：
     >- “/”用于搜索。
     >- “Y”将选中项编译进内核，对应项显示为：\[\*\]。
@@ -1409,6 +1426,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >内存大页配置参考：hugepages = 当前总内存\*0.8（向下取整），在本环境下设置为1TB \*0.8 = 800GB。
 
 3. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存并退出文件。
@@ -1507,6 +1525,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >若后续**virt-manager**指令报错则需要重新启动一个SSH终端界面。
 
 #### 2.2.5 查询GPU卡PCIe节点信息<a name="ZH-CN_TOPIC_0000002518464884" id="查询GPU卡PCIe节点信息"></a>
@@ -1567,6 +1586,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >每次服务器重启都需要重新执行该步骤，建议将其配置在“~/.bashrc”等文件中，确保每次重启后都会自动执行。
 
 5. <a id="配置宿主机网络5"></a>查看生成的VF节点。
@@ -1580,6 +1600,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002518468282.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >[1](#配置宿主机网络1)~[5](#配置宿主机网络5)已经完成了SR-IOV虚拟网卡方案中，虚拟网卡的生成。后续步骤可以跳过。
     >如果设备不支持SR-IOV，考虑使用下面的网桥方案。
     >如果[3](#配置宿主机网络3)中网卡最多支持的VF网卡数量回显小于4。例如为2，那么考虑2个虚拟机使用SR-IOV方案，2个虚拟机使用网桥方案。
@@ -1611,6 +1632,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >1. 网桥配置文件中的IPADDR，NETMASK，GATEWAY，DNS根据宿主机网卡配置修改。
     >2. 宿主机网卡配置文件中删除IPADDR，NETMASK，GATEWAY，DNS配置并在最后新增配置“BRIDGE=br0”。
     > ![](figures/zh-cn_image_0000002549948133.png)
@@ -1662,11 +1684,13 @@ cfct_config配置文件配置项和配置方法如下所示。
     ![](figures/1_zh-cn_image_0000002085084878.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >内存180000仅供参考。建议根据[2.2.3-8](#修改grub配置8)中内存大页分配情况，将NUMA分配的内存大页全部分配到对应的虚拟机中。
 
 5. 磁盘处分配512GiB，然后单击“Forward”。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >此处的512GiB仅作为示例，请根据实际情况分配磁盘空间。如果后续准备直通磁盘分区作为数据盘以提升虚拟机的IO性能，此处可以分配少量空间比如50GiB，将该磁盘仅作为系统盘。
 
     ![](figures/1_zh-cn_image_0000002120684817.png)
@@ -1696,6 +1720,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002518308370.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >如果[2.2.6-配置宿主机网络](#配置宿主机网络)选择了SR-IOV虚拟网卡直通配置，则无需考虑Network selection，后续会删除这些虚拟网络接口。
 
 7. 进入界面后单击下方“Add Hardware”依次添加以下相关设备。
@@ -1752,6 +1777,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >如果没有使能虚拟机内存大页，虚拟机默认会使用宿主机的空闲内存，如果宿主机系统空闲内存不足，则虚拟机系统会安装失败。此时就需要提前将内存大页分配给虚拟机，让其直接使用内存大页安装系统。
 
 14. 配置root账号和密码，完成后单击“Begin Installation”开始安装。
@@ -1765,6 +1791,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 16. （可选）直通磁盘分区进入虚拟机内部作为数据盘。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >直通磁盘分区可以提升虚拟机磁盘的IO性能，推荐在磁盘IO密集场景比如说高密度云游戏场景使能该特性。
 
     1. 查看宿主机磁盘分区信息。
@@ -1820,6 +1847,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002518468300.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >上述操作也可使用如下命令完成设置。
     >
     >```shell
@@ -1837,6 +1865,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002549948149.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >上述操作也可使用如下命令完成设置。
     >
     >```shell
@@ -1852,6 +1881,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ![](figures/1_zh-cn_image_0000002120702289.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >上述操作也可使用如下命令完成设置。
     >
     >```shell
@@ -1869,6 +1899,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002518308386.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >上述操作也可使用如下命令完成设置。
     >
     >```shell
@@ -1907,6 +1938,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >每次虚拟机重启都需要执行该步骤操作使能cluster调度优化，建议将其配置在“~/.bashrc”等同类型文件中，确保每次重启后都会自动执行。
 
 #### 2.3.3 配置虚拟机网络<a name="ZH-CN_TOPIC_0000002518304964"></a>
@@ -1940,6 +1972,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     - 如果[2.2.6-配置宿主机网络](#配置宿主机网络)中采用的网桥模式，那么虚拟机中会自动生成网络配置文件，文件名和**ip a**中网卡名称一致，则跳过该步骤。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >如果条件允许，建议使用SR-IOV虚拟网卡方案，采用该方案的虚拟机具有更强的计算性能以及更短的时延。
 
 3. 进入虚拟机配置虚拟机的IPADDR，NETMASK，GATEWAY，DNS，确保ONBOOT=yes。
@@ -1989,6 +2022,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ![](figures/zh-cn_image_0000002550068153.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >至此已经实现了虚拟机在服务器局域网内的数据通信，如果希望在外网访问局域网内的该虚拟机，请联系网络管理员按照局域网内服务器的相关配置对虚拟机进行配置即可
 
 ### 2.4 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002549947651" id="视频流启动环境配置"></a>
@@ -2067,6 +2101,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     3. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存并退出文件。
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
+        >
         >上述的配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
 
 3. 修改cfct_video脚本适配当前虚拟机80核。

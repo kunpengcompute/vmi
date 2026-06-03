@@ -30,6 +30,7 @@
 3. 使用[2](#li1273482318125)获取到的签名验证指南文档对下载的软件包进行PGP数字签名校验。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >如果校验失败，请不要使用该软件包，先联系华为技术支持工程师解决。
 >使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
 >使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议 2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
@@ -339,6 +340,7 @@ const char \*GetVersion\(\)
 返回值示例请参见《[视频流引擎 使用指南](user_guide.md)》中的“[查询组件版本号信息](user_guide.md#查询组件版本号信息)”章节。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >回显示例中的版本号与VmiVersion模块版本号无关。
 
 #### 4.3.2 nitVmiEngine<a name="ZH-CN_TOPIC_0000002549825823"></a>
@@ -467,6 +469,7 @@ struct VmiConfig {
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >VmiConfig需要传入[VmiVersion（模块版本号）](#模块版本号)中提到的模块版本号，该版本号每个模块都不同。
 
 **返回值说明<a name="section916mcpsimp"></a>**
@@ -684,6 +687,7 @@ width和height的取值范围也支持互换。
 |heightAligned|对齐后分辨率高度（暂不支持配置）。|360~3840|1280|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >在启用自适应分辨率功能时，改变视频输出分辨率（与上次启动时配置不同）时，会改变AOSP系统和应用的渲染分辨率，可能会导致部分应用出现兼容性问题或渲染问题。一般此类问题可以通过重新启动应用解决，因此建议在修改分辨率前返回桌面，同时清空后台应用，以提升用户使用体验。
 
 #### 5.2.4 density<a name="ZH-CN_TOPIC_0000002518345940"></a>
@@ -897,6 +901,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |vbvBufferSize|1000|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >硬件配置方案1（W6800+Quadra）建议选择使用“VPU”进行编码，在H.265编码时profile仅支持main。
 
 **硬件配置方案二<a name="section1827916308460"></a>**
@@ -910,6 +915,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |profile|main|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >硬件配置方案二（DC1000）建议选择使用“GPU”进行编码，在H.265编码时profile仅支持main。
 
 ## 6 音频输出开发<a name="ZH-CN_TOPIC_0000002518186016"></a>
@@ -1117,6 +1123,7 @@ struct ExtDataAudio {
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >timestamp必须是客户端的时间戳，不能是服务端通过网络收到音频数据包之后的时间戳，否则可能会导致无法过滤因网络波动而严重延迟的包，从而出现音频整体滞后的现象。
 
 ### 7.4 数据注入<a name="ZH-CN_TOPIC_0000002549825843"></a>
