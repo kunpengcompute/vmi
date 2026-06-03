@@ -422,7 +422,11 @@
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     > 
+    > 若需要使用NFS挂载启动，则将start改成nstart。例：
     >
+    > ```shell
+    > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4}
+    > ```
     > 
     > `${index1}` 与 `${index2}` 为pod编号，`${index3}`表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。 `${index4}`表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 `${index2}` `${index3}` `${index4}`可缺省。例：
     >- 创建名为video2的pod，里面的文件格式是默认的ext4。
@@ -467,12 +471,6 @@
     > ./k8s-video.sh start 2 2 1 10240
     > ```
     >
-    > 若需要使用NFS挂载启动，则将start改成nstart。例：
-    >
-    > ```shell
-    > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4}
-    > ```
-    >
 
 3. 启动后，查看是否启动成功。
 
@@ -512,11 +510,19 @@ cd /home/k8s/k8s/script
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
-> `${index1}` 与 `${index2}` 为pod编号，其中 `${index2}` 可缺省。
-> 例：./k8s-video.sh delete 2（删除名为video2的pod）
+> `${index1}` 与 `${index2}` 为pod编号，其中 `${index2}` 可缺省，例：
+>
+> ```shell
+> ./k8s-video.sh delete 2（删除名为video2的pod）
 > ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
+> ```
+> 
 > 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
+> 
+> ```shell
 > ./k8s-video.sh ndelete 1 5（删除名为video1 -video5 共5个pod）
+> ```
+> 
 
 ### 2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
 

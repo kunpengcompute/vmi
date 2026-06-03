@@ -410,7 +410,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 2. 查看NVMe节点与PCIe bus号对应关系。
 
-    _{index}_为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点_{index}_即为1。
+    {index}为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点{index}即为1。
 
     ```shell
     find /sys/devices/ -name nvme{index}
@@ -425,7 +425,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 3. 通过bus号找到该节点与NUMA从属关系。
 
-    _{busID}_为上一步骤获取的bus号。以nvme1设备的回显为例，_{busID}_即为0000:05:00.0。
+    {busID}为上一步骤获取的bus号。以nvme1设备的回显为例，{busID}即为0000:05:00.0。
 
     ```shell
     lspci -vvvs {busID} | grep NUMA
@@ -777,10 +777,10 @@ cfct_config配置文件配置项和配置方法如下所示。
     crictl images
     ```
 
-    ​    **图 1** 镜像拉取信息<a name="fig1579095614545"></a><a id="镜像拉取信息"></a>
+    ​    **图 1** 镜像拉取信息<a id="镜像拉取信息"></a>
     ​    ![](figures/镜像拉取信息.png "镜像拉取信息")
 
-    ​    以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例：
+    ​    以[**图 1** 镜像拉取信息](#镜像拉取信息)中registry.aliyuncs.com/google_containers/pause:3.9为例：
 
         ```shell
         sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
@@ -807,7 +807,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     >kubeadm init --pod-network-cidr=10.244.0.0/16 --image-repository registry.aliyuncs.com/google_containers
     >```
 
-    **图 2** 集群初始化成功打印信息<a name="fig1336104663519"></a><a id="集群初始化成功打印信息"></a>
+    **图 2** 集群初始化成功打印信息<a id="集群初始化成功打印信息"></a>
 
     ![](figures/zh-cn_image_0000002518346460.png)
 
@@ -935,10 +935,10 @@ cfct_config配置文件配置项和配置方法如下所示。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
-    
+    >
     >此处创建的数据卷的文件格式需要和'k8s-video.sh'拉起pod时的配置保持一致。例如：若通过'fcreate'为video1创建了f2fs格式的数据卷，那么使用启动脚本'k8s-video.sh'拉起video1的时候必须将f2fs开关设置为1。
 
-2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](master节点操作.md#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例
+2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息)中registry.aliyuncs.com/google_containers/pause:3.9为例
 
     ```shell
     sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
@@ -1238,7 +1238,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 **硬件要求<a name="section217mcpsimp"></a>**
 
-硬件要求如[**表 1** Kbox安卓容器环境部署硬件环境要求](#Kbox安卓容器环境部署硬件环境要求) Kbox安卓容器环境部署硬件环境要求](#table220mcpsimp)所示，硬件配置及参数如[**表 2** 鲲鹏服务器配置及参数](#鲲鹏服务器配置及参数) 鲲鹏服务器配置及参数](#table242mcpsimp)所示。
+硬件要求如[**表 1** Kbox安卓容器环境部署硬件环境要求](#Kbox安卓容器环境部署硬件环境要求)所示，硬件配置及参数如[**表 2** 鲲鹏服务器配置及参数](#鲲鹏服务器配置及参数)所示。
 
 **表 1** Kbox安卓容器环境部署硬件环境要求<a id="Kbox安卓容器环境部署硬件环境要求"></a>
 
@@ -1271,7 +1271,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 **操作系统要求<a name="section305mcpsimp"></a>**
 
-宿主机/虚拟机操作系统要求如[**表 4** 宿主机操作系统要求](#宿主机操作系统要求) 宿主机操作系统要求](#table308mcpsimp)、[**表 5** 虚拟机操作系统要求](#虚拟机操作系统要求) 虚拟机操作系统要求](#table339mcpsimp)所示。
+宿主机/虚拟机操作系统要求如[**表 4** 宿主机操作系统要求](#宿主机操作系统要求)、[**表 5** 虚拟机操作系统要求](#虚拟机操作系统要求)所示。
 
 **表 4** 宿主机操作系统要求<a id="宿主机操作系统要求"></a>
 
@@ -1289,7 +1289,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 **获取虚拟机软件包<a name="section1543425619147" id="获取虚拟机软件包"></a>**
 
-虚拟机部署所需的补丁和脚本文件如[**表 6** 虚拟机部署所需文件获取方式](#虚拟机部署所需文件获取方式) 虚拟机部署所需文件获取方式](#table10743166141716)所示。
+虚拟机部署所需的补丁和脚本文件如[**表 6** 虚拟机部署所需文件获取方式](#虚拟机部署所需文件获取方式)所示。
 
 **表 6** 虚拟机部署所需文件获取方式<a id="虚拟机部署所需文件获取方式"></a>
 
