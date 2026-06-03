@@ -42,6 +42,7 @@
         |2160|960|
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
+        >
         >改变视频输出分辨率（与上次启动时配置不同）时，会改变AOSP系统和应用的渲染分辨率，可能会导致部分应用出现兼容性问题或渲染问题。一般此类问题可以通过重新启动应用解决，因此建议在修改分辨率前返回桌面，同时清空后台应用，以提升用户使用体验。
         >修改default.prop后直接启动容器不会立即生效，需要在启动容器时手动重启一次容器才能生效。
 
@@ -63,17 +64,18 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >启动容器的过程中可能会出现“writing syncT "procError"、exec /system/bin/chmod: no such file、/system/bin/getprop:no such file”等类似报错，该报错不影响正常功能，忽略即可。
     >若需要启动多路，则使用如下命令。
     >
     >```shell
-    >./cfct_video start \${start_index} \${end_index}
+    >./cfct_video start ${start_index} ${end_index}
     >```
     > 
     >若需要使用NFS挂载启动视频流云手机，将start改成nstart，例：
     >
     >```shell
-    >./cfct_video nstart \${start_index} \${end_index}
+    >./cfct_video nstart ${start_index} ${end_index}
     >```
     >
 5. <a name="li3304181302311"></a>查看基于Docker容器运行时的视频流云手机。
@@ -150,6 +152,7 @@
     ![](figures/zh-cn_image_0000002549866551.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >- 每个视频流云手机实例需要设置端口 **`${port}`** ，部署时可进入cfct_video脚本设置合适的 **`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位Android系统手机上。
     >- 请确保手机和服务器之间网络畅通。
@@ -176,6 +179,7 @@
     3. 设置完成后，点击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
+        >
         >启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[3.2.1-启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。
 
 3. 设置音频播放编码参数。
@@ -212,10 +216,11 @@
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
 >
 >```shell
->./cfct_video ndelete \${index1}
+>./cfct_video ndelete ${index1}
 >```
 
 ## 2 K8s集群下操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002549746531"></a>
@@ -240,6 +245,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >“$NODENAME”为工作节点名称。
 
 3. 创建命名空间va-plugin。
@@ -273,6 +279,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >执行**kubectl delete -f va-device-plugin.yaml**命令可删除道客设备插件。
 
 7. 启动完成后，查看道客设备插件是否可运行成功。
@@ -295,6 +302,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >第一次执行./start_devices.sh命令后会出现一些报错，是因为脚本会先删除一遍设备插件的daemonSet。
     >删除设备插件可通过执行 **./delete_devices.sh** 命令。
 
@@ -404,6 +412,7 @@
     期望对应以video开头的pod名称其状态（STATUS）列都是Running。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >启动多路云手机时可能会因为Pod达到上限（默认Pod是110）而无法启动新的云手机，可以在工作节点编辑“/etc/sysconfig/kubelet”文件，“KUBELET_EXTRA_ARGS”中增加“--max-pods=300”后。使用**systemctl restart kubelet**重启kubelet，修改Pod上限为“300”，重启前不需要清理现有的容器。
     >可以通过如下命令观察输出的Capacity.pods的值是否为300，“$NODENAME”为工作节点名称。
     >
@@ -796,6 +805,7 @@ chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufre
 故障排除是指根据不同的故障原因清除故障的过程。故障排除包括检修设备、修改配置数据、重启相关进程、重启容器、重启服务器等。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >处理重大故障前，请先联系技术支持工程师协助解决。
 >在故障处理过程中，维护人员可能需要执行修改配置数据、重启虚拟机等重大操作，为确保数据安全，首先应该保存现场数据，备份相关数据库、告警信息和日志文件等。
 >当系统维护人员无法自行排除故障时，请联系技术支持工程师协助解决。
