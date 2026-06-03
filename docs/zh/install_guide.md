@@ -471,7 +471,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。GPU卡所属NUMA查询方式请参见[AMD GPU渲染节点所属NUMA的查询方式](#section20575115322416)。
 
 5. 针对1张编码卡环境：需要修改cfct_config配置文件中“VIDEO_ENC_MAP_CORE”。
-6. 当编码卡插在CPU0上时，删除_“\${NETINT1}”_；若编码卡插在CPU1上时，删除_“\${NETINT0}”_。
+6. 当编码卡插在CPU0上时，删除“\${NETINT1}”；若编码卡插在CPU1上时，删除“\${NETINT0}”。
 7. 若视频帧采用CPU进行软编码，需要将cfct_config中的“CPU_BIND_MODE”设置为“1”，以防卡顿。
 8. 如果需要使能图形加速层，请参见[图形加速层的基本功能和使用说明](#section9932195417616)。
 
@@ -494,7 +494,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 2. 查看NVMe节点与PCIe bus号对应关系。
 
-    _{index}_为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点_{index}_即为1。
+    {index}为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点{index}即为1。
 
     ```shell
     find /sys/devices/ -name nvme{index}
@@ -509,7 +509,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 3. 通过bus号找到该节点与NUMA从属关系。
 
-    _{busID}_为上一步骤获取的bus号。以nvme1设备的回显为例，_{busID}_即为0000:05:00.0。
+    {busID}为上一步骤获取的bus号。以nvme1设备的回显为例，{busID}即为0000:05:00.0。
 
     ```shell
     lspci -vvvs {busID} | grep NUMA
@@ -723,7 +723,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 视频流云手机支持使用Containerd启动，使用K8s集群管理。在K8s集群下部署视频流云手机时需准备至少2台服务器，1台作为master节点，1台或者多台作为工作节点。
 
-各节点规划详情如[**表 1** K8s集群节点详情](#K8s集群节点详情) K8s集群节点详情](#table15536812165711)所示。
+各节点规划详情如[**表 1** K8s集群节点详情](#K8s集群节点详情)所示。
 
 **表 1** K8s集群节点详情<a id="K8s集群节点详情"></a>
 
@@ -867,10 +867,11 @@ cfct_config配置文件配置项和配置方法如下所示。
     crictl images
     ```
 
-    **图 1** 镜像拉取信息<a name="fig1579095614545"></a><a id="镜像拉取信息"></a>
-    ![](figures/镜像拉取信息.png "镜像拉取信息")
+    **图 1** 镜像拉取信息<a id="镜像拉取信息"></a>
 
-    以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例：
+    ![](figures/镜像拉取信息.png)
+
+    以[**图 1** 镜像拉取信息](#镜像拉取信息) 中registry.aliyuncs.com/google_containers/pause:3.9为例：
 
     ```shell
     sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
@@ -888,7 +889,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     kubeadm init --pod-network-cidr=10.244.0.0/16
     ```
 
-    初始化成功后有如[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息) 集群初始化成功打印信息](#fig1336104663519)所示信息打印。
+    初始化成功后有如[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息) 所示信息打印。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >如果在下载镜像时配置了镜像仓，集群初始化也需要配置相同镜像仓，例如：
@@ -897,11 +898,11 @@ cfct_config配置文件配置项和配置方法如下所示。
     >kubeadm init --pod-network-cidr=10.244.0.0/16 --image-repository registry.aliyuncs.com/google_containers
     >```
 
-    **图 2** 集群初始化成功打印信息<a name="fig1336104663519"></a><a id="集群初始化成功打印信息"></a>
+    **图 2** 集群初始化成功打印信息<a id="集群初始化成功打印信息"></a>
     
     ![](figures/zh-cn_image_0000002549746463.png)
 
-    需执行在[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息) 集群初始化成功打印信息](#fig1336104663519)中黄框信息命令配置集群，红框信息表示工作节点加入集群的token命令，请保存该段命令。
+    需执行在[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息) 中黄框信息命令配置集群，红框信息表示工作节点加入集群的token命令，请保存该段命令。
 
     ```shell
     rm -rf $HOME/.kube
@@ -1037,17 +1038,16 @@ cfct_config配置文件配置项和配置方法如下所示。
         
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >若已执行该步骤命令，重新修改某个编号的数据卷存储大小时需先删除对应编号的数据卷再重新创建。
-    
+    >
     >此处创建的数据卷的文件格式需要和'k8s-video.sh'拉起pod时的配置保持一致。例如：若通过'fcreate'为video1创建了f2fs格式的数据卷，那么使用启动脚本'k8s-video.sh'拉起video1的时候必须将f2fs开关设置为1。
 
-
-2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 镜像拉取信息](master节点操作.md#fig1579095614545)中registry.aliyuncs.com/google_containers/pause:3.9为例
+2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 中registry.aliyuncs.com/google_containers/pause:3.9为例
 
     ```shell
     sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
     ```
 
-3. 执行在master节点集群初始化成功时保存的[3.2.2-[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息) 集群初始化成功打印信息](master节点操作.md#fig1336104663519)红框中加入集群的token命令。
+3. 执行在master节点集群初始化成功时保存的[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息) 红框中加入集群的token命令。
 
     例如：
 

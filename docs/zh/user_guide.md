@@ -55,6 +55,7 @@
     cd /home/kbox_video/
     ./cfct_video start ${index1} 
     ```
+    
     上述命令中 `${index1}` 为启动实例的编号。启动一个编号为1的视频流云手机示例：
 
     ```shell
@@ -440,11 +441,20 @@ cd /home/k8s/k8s/script
 ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
-> `${index1}` 与 `${index2}` 为pod编号，其中 `${index2}` 可缺省。
-> 例：./k8s-video.sh delete 2（删除名为video2的pod）
+>
+> `${index1}` 与 `${index2}` 为pod编号，其中 `${index2}` 可缺省。例：
+>
+> ```shell
+> ./k8s-video.sh delete 2（删除名为video2的pod）
 > ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
+> ```
+>
 > 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
+>
+> ```shell
 > ./k8s-video.sh ndelete 1 5（删除名为video1 -video5 共5个pod）
+> ```
+>
 
 ### 2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518386694"></a>
 
