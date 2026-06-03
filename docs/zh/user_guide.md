@@ -406,7 +406,7 @@
 
 ### 2.4 运行nri插件
 
-在所有工作节点运行nri插件
+在所有工作节点运行nri插件。
 
 1. 请参见[视频流引擎 安装指南](install_guide.md)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
 
@@ -441,7 +441,7 @@
     chmod +x /opt/nri-quota-plugin/quota-plugin
     ```
 
-5. 启动nri插件
+5. 启动nri插件。
 
     ```shell
     cp quota-plugin.service /etc/systemd/system/quota-plugin.service
