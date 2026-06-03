@@ -59,6 +59,9 @@ function check_environment() {
     check_selinux
     check_max_user_instances
     check_cgroup_v2
+
+    # 关闭udev相关服务
+    stop_udev_services
 }
 
 function check_exagear() {
@@ -169,6 +172,28 @@ function check_max_user_instances() {
 function check_cgroup_v2() {
     if ! mount | grep -q "cgroup2 on /sys/fs/cgroup"; then
         echo "WARNING: cgroup v2 is disabled, which may lead to functional issues."
+    fi
+}
+
+function stop_udev_services() {
+    stop_service 'systemd-udevd-control.socket'
+    stop_service 'systemd-udevd-kernel.socket'
+    stop_service 'systemd-udevd.service'
+}
+
+stop_service() {
+    local service_name="$1"
+
+    if systemctl is-active --quiet "$service_name"; then
+        systemctl stop "$service_name"
+    fi
+
+    local is_stopped
+    is_stopped=$(systemctl is-active "$service_name")
+
+    if [[ "$is_stopped" != "inactive" ]]; then
+        echo -e "\033[1;31m[ERROR] 服务 $service_name 停止失败\033[0m"
+        return 1
     fi
 }
 
