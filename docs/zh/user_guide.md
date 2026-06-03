@@ -404,7 +404,53 @@
     systemctl restart containerd
     ```
 
-### 2.4 启动K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864215"></a>
+### 2.4 运行nri插件
+
+在所有工作节点运行nri插件
+
+1. 请参见[视频流引擎 安装指南](install_guide.md)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
+
+2. 进入/home/k8s/k8s/scripts/nri-quota-plugin目录构建插件。
+
+    ```shell
+    go build -o quota-plugin main.go
+    ```
+
+3. 配置containerd并重启启用NRI。
+
+    编辑 `/etc/containerd/config.toml`，将disable改为false。
+
+    ```toml
+    [plugins."io.containerd.nri.v1.nri"]
+    disable = false
+    plugin_config_path = "/etc/nri"
+    plugin_socket_path = "/var/run/nri"
+    ```
+
+    重启containerd。
+
+    ```shell
+    systemctl restart containerd
+    ```
+
+4. 部署插件。
+
+    ```shell
+    mkdir -p /var/log/nri /var/run/nri
+    cp quota-plugin /opt/nri-quota-plugin/
+    chmod +x /opt/nri-quota-plugin/quota-plugin
+    ```
+
+5. 启动nri插件
+
+    ```shell
+    cp quota-plugin.service /etc/systemd/system/quota-plugin.service
+    systemctl daemon-reload
+    systemctl enable quota-plugin
+    systemctl start quota-plugin
+    ```
+
+### 2.5 启动K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864215"></a>
 
 启动K8s视频流云手机实例需要在工作节点下操作。
 
@@ -509,7 +555,7 @@
         crictl exec -it ${CONTAINER} sh
         ```
 
-### 2.5 删除K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002518384356"></a>
+### 2.6 删除K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002518384356"></a>
 
 删除K8s视频流云手机实例需要在工作节点下操作。
 
@@ -534,7 +580,7 @@ cd /home/k8s/k8s/script
 > ```
 > 
 
-### 2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
+### 2.7 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
 
 通过本章节步骤制作基础数据卷，用于工作节点的容器存储隔离和大小设置。
 

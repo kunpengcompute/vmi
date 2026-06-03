@@ -1200,7 +1200,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     ctr -n k8s.io images import input-device-permission.tar
     ```
 
-1.3.3.4 部署视频流镜像<a name="ZH-CN_TOPIC_0000002518186530" id="部署视频流镜像"></a>
+##### 1.3.3.4 部署视频流镜像<a name="ZH-CN_TOPIC_0000002518186530" id="部署视频流镜像"></a>
 
 选择一台工作节点机器进行镜像制作，然后在所有工作节点导入并完成部署视频流镜像操作。
 
