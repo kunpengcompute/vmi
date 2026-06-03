@@ -59,7 +59,7 @@ function check_encode_card()
     fi
 
     cmd="nvme list"
-    output=$($cmd)
+    output=$($cmd 2>/dev/null)
     if echo "$output" | grep -q "QuadraT2A"; then
         LOG_INFO "set encode card to QuadraT2A"
         ENCODECARD=1
