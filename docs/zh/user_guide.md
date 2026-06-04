@@ -600,7 +600,7 @@ cd /home/k8s/k8s/script
 | T432_QUADRA_DECODE_ENABLE | Quadra硬解使能开关 | 0/其他值：不使能<br>1：使能 | 0：默认不使能 |
 | ENABLE_HARD_DECODE | DC1000硬解使能开关 | 0/其他值：不使能<br>1：使能 | 1：默认使能 |
 | ENABLE_WEBRTC_CONNECTION | WebRTC使能开关 | 0/其他值：不使能<br>1：使能 | 0：默认不使能 |
-| ENABLE_F2FS | F2FS文件系统启动使能开关 | 0/其他值：不使能1：使能 | 0：默认不使能 |
+| ENABLE_F2FS | F2FS文件系统启动使能开关 | 0/其他值：不使能 1：使能 | 0：默认不使能 |
 | SYSTEM_PARTITION_SIZE_MB | /system分区大小调节使能开关和具体设定数值（单位为MB） | 0：不使能  非0值：使能 | 0：默认不使能 |
 |NFS_DIR|客户端NFS挂载服务端的目录|可用的NFS挂载目录|/tmp/nfs：默认NFS挂载目录|
 
