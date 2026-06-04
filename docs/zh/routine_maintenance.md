@@ -73,6 +73,7 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >- systemctl daemon-reload ：启动Docker守护进程。
     >- systemctl restart docker：重启Docker服务。
 
@@ -142,6 +143,7 @@ docker stats
 ![](figures/zh-cn_image_0000002549825465.png)
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
+>
 >默认情况下，**stats**命令会每隔1s刷新一次输出的内容，“Ctrl+C”可以终止刷新。
 >回显参数说明：
 >
@@ -208,6 +210,7 @@ docker stats
     若视频流云手机某些进程内存使用率高于85%，CPU使用率持续高于90%，则需要进一步排查该进程是否异常或请联系华为技术支持。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >回显参数说明：
     >- PID：进程号。
     >- USER：进程创建者。
@@ -234,6 +237,7 @@ docker stats
     若内存使用率高于85%，CPU使用率持续高于90%，请联系华为技术支持。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >**htop**命令回显结果说明：
     >左边部分（图中红框）从上至下，分别为CPU、内存、交换分区的使用情况。
     >右边部分（图中黄框）为：Tasks为进程总数，当前运行的进程数、Load average为系统1分钟，5分钟，15分钟的平均负载情况、Uptime为系统运行的时间。
@@ -265,6 +269,7 @@ docker stats
     若视频流云手机某些进程内存占用率高于85%，CPU占用率持续高于90%，则需要进一步排查该进程是否异常或请联系华为技术支持。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >参数与主机CPU和内存占用率状态参数一致，此处不再赘述。
 
     若希望更直观地显示CPU负载、内存消耗的实时信息，则可以通过以下命令操作。
@@ -276,6 +281,7 @@ docker stats
     ![](figures/Snipaste_2023-02-17_14-52-49.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >**ctop**是Docker管理的资源监控工具，若未安装ctop，请先下载[ctop-0.7.5-linux-arm64](https://github.com/bcicen/ctop/releases/download/v0.7.5/ctop-0.7.5-linux-arm64)，将下载后的二进制重命名为ctop，并拷贝到“/usr/bin”目录下即可完成安装。
     >**ctop**命令回显参数说明：
     >- NAME：容器名称。
@@ -346,6 +352,7 @@ docker stats
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >回显结果说明：
     >- 19:49:12表示当前时间。
     >- up 25 days,  5:04表示系统已运行的时间。
@@ -392,6 +399,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
 3. 进入服务器的“/var/log”目录，可以查看syslog和其他kernel日志。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >syslog文件记录警告信息，常常是系统出问题的信息。
     >其他kernel文件主要包括核心启动日志（dmesg）、系统报错日志（messages）、登录记录（wtmp）和引导日志（boot.log）等。
 
@@ -552,7 +560,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 执行以下命令，获取容器的所有系统服务诊断输出，其中“\${android_id}”为启动实例的编号。
+4. 执行以下命令，获取容器的所有系统服务诊断输出，其中“${android_id}”为启动实例的编号。
 
     dumpsys是在Android设备上运行的工具，可提供有关系统服务的信息。
 
@@ -604,6 +612,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
 5. 将日志从服务器中对应的目录下复制到本地，方便用户查看。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
     >“/home/file.log”是日志输出的路径。
 
 ### 4.5 日志溢出转储<a name="ZH-CN_TOPIC_0000002549825309"></a>
