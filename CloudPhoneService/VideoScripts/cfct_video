@@ -777,6 +777,13 @@ container_run() {
 container_restart() {
     check_encode_card
 
+    local mount_source
+    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
+        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' $container_name)
+    else
+        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' $container_name)
+    fi
+
     local container_name=$1
 
     LOG_INFO "Restart container: $container_name"
@@ -817,12 +824,6 @@ container_restart() {
     fi
 
     local userdata_dir
-    local mount_source
-    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
-        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' $container_name)
-    else
-        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' $container_name)
-    fi
     
     if [ -n "$mount_source" ]; then
         userdata_dir=$(echo "$mount_source" | sed "s|/data/${container_name}/data$||")
@@ -857,6 +858,14 @@ container_delete() {
     LOG_INFO "Remove container: $container_name"
     param_check_container_name "$container_name"
 
+    local mount_source
+    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
+        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' $container_name 2>/dev/null)
+    else
+        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' $container_name 2>/dev/null)
+    fi
+    
+
     imageid="$($RUNTIME_CMD ps -a | grep $container_name | awk '{print $2}')"
     $RUNTIME_CMD ps | grep -q "$container_name" && $RUNTIME_CMD stop -t 0 $container_name
     $RUNTIME_CMD rm $container_name
@@ -867,12 +876,6 @@ container_delete() {
     fi
     
     local userdata_dir
-    local mount_source
-    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
-        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' $container_name 2>/dev/null)
-    else
-        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' $container_name 2>/dev/null)
-    fi
     
     if [ -n "$mount_source" ]; then
         userdata_dir=$(echo "$mount_source" | sed "s|/data/${container_name}/data$||")
