@@ -827,13 +827,6 @@ container_run() {
     fi
     LOG_INFO "Initialize container ..."
 
-    CID=$($RUNTIME_CMD ps |grep -w $container_name|awk '{print $1}')
-    if [ $DEFAULT_RUNTIME == "docker" ]; then
-        echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/docker/$CID*/devices.allow)
-    else
-        echo "c 13:* rwm" >$(ls -d /sys/fs/cgroup/devices/default/$CID*/devices.allow)
-    fi
-
     if [ ${#amd_gpus[@]} -ne 0 ]; then
         if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
             $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
