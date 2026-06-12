@@ -862,6 +862,10 @@ container_run() {
 }
 
 container_restart() {
+    if [ ! -f "$THISDIR/local.prop" ]; then
+        touch $THISDIR/local.prop
+    fi
+
     if [ $ENABLE_SOFT_RENDER -eq 0 ]; then
         check_encode_card
     fi
