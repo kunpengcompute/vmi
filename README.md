@@ -13,6 +13,7 @@
 端云协同引擎包括视频流引擎和指令流引擎，本文主要描述视频流引擎。
 
 视频流引擎主要应用于云手机，基于视频流引擎技术实现的云手机方案也称为视频流云手机。本文介绍了视频流引擎的基本概念，提供视频流引擎环境部署和使用操作指导。
+
 ### 软件架构<a name="ZH-CN_TOPIC_0000002518611974"></a>
 
 本节介绍视频流云手机的上下文逻辑结构与所包含的模块含义及作用。
@@ -32,8 +33,8 @@
 |触控分发|向服务端Android云手机注入触控数据。|
 |视频流引擎对外API|视频流引擎服务端的对外API接口。|
 
-
 本节介绍视频流云手机的上下文逻辑结构与所包含的模块含义及作用。
+
 ### 规格<a name="ZH-CN_TOPIC_0000002518771874"></a>
 
 鲲鹏服务器上视频流云手机规格，如[**表 1** 视频流云手机规格](#视频流云手机规格)所示。
@@ -49,15 +50,12 @@
 |分辨率/帧率|720*1280/30fps|
 |手机开数|120路|
 
-
->![](public_sys-resources/icon-note.gif) **说明：** 
+>![](docs/zh/public_sys-resources/icon-note.gif) **说明：** 
 >内存和硬盘以满足整机规格为准，可灵活调配。
-
-
 
 ## 目录结构<a name="ZH-CN_TOPIC_0000002518771876"></a>
 
-```
+```text
 ├── docs                                          # 项目文档目录
 │   └── zh                                       # 中文文档目录
 │       ├── figures                              # 中文文档图片资源目录
@@ -105,7 +103,6 @@
 └── opus                                          # 音频编解码软件
 ```
 
-
 ## 版本说明<a name="ZH-CN_TOPIC_0000002518611968"></a>
 
 视频流引擎包含Android11和Android15两个分支版本，本节主要介绍两个版本差异和特性变更说明。
@@ -120,18 +117,15 @@
 |支持的docker版本|18.0|24.0|
 |对应的AOSP版本|11|15|
 
-
 **变更说明<a name="section4408930144513"></a>**
 
 每个发布版本特性变更详细信息，请参见《版本说明书》。
-
 
 ## 环境部署<a name="ZH-CN_TOPIC_0000002518611970"></a>
 
 视频流云手机支持的硬件环境和操作系统，以及环境部署所需的软件包请参见《部署指南》中的“环境要求”。
 
 视频流云手机支持裸机和虚拟机，详见的环境部署请参见《部署指南》。
-
 
 ## 学习文档<a name="ZH-CN_TOPIC_0000002550291725"></a>
 
@@ -141,7 +135,6 @@
 |文档|版本说明书|提供视频流云手机每个发布版本的基础信息和特性更新信息。|
 |文档|部署指南|提供视频流云手机裸机和虚拟机两种环境部署的详细指导。|
 |文档|FAQ|提供视频流安装、使用过程的常见问题和解决方法。|
-
 
 ## 免责声明<a name="ZH-CN_TOPIC_0000002550251723"></a>
 
@@ -159,7 +152,6 @@
 
 如果您不希望您的模型或数据集等信息在本项目中被提及，或希望更新本项目有关的描述，请在GitCode提交issue，我们将根据您的issue要求删除或更新您相关描述。衷心感谢您对本项目的理解和贡献。
 
-
 ## License<a name="ZH-CN_TOPIC_0000002518771872"></a>
 
 本项目采用Apache License 2.0许可证。详见[LICENSE](LICENSE)文件
@@ -167,13 +159,11 @@
 
 ## 贡献声明<a name="ZH-CN_TOPIC_0000002550251729"></a>
 
-欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](zh-cn_topic_0000002535534673.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
-
+欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
 
 ## 建议与交流<a name="ZH-CN_TOPIC_0000002550291721"></a>
 
 欢迎大家为社区做贡献。如果有任何疑问或建议，请提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)，我们会尽快回复。感谢您的支持。
-
 
 ## 致谢<a name="ZH-CN_TOPIC_0000002550251725"></a>
 
@@ -182,5 +172,3 @@ Kbox由华为公司的下列部门联合贡献：
 - 鲲鹏计算Boostkit开发部
 
 感谢来自社区的每一个PR，欢迎贡献Kbox！
-
-
