@@ -50,7 +50,7 @@
 |分辨率/帧率|720*1280/30fps|
 |手机开数|120路|
 
->![](public_sys-resources/icon-note.gif) **说明：** 
+>![](docs/zh/public_sys-resources/icon-note.gif) **说明：** 
 >内存和硬盘以满足整机规格为准，可灵活调配。
 
 ## 目录结构<a name="ZH-CN_TOPIC_0000002518595280"></a>
@@ -159,7 +159,7 @@
 
 ## 贡献声明<a name="ZH-CN_TOPIC_0000002518595284"></a>
 
-欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](zh-cn_topic_0000002535534673.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
+欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
 
 ## 建议与交流<a name="ZH-CN_TOPIC_0000002518755190"></a>
 
