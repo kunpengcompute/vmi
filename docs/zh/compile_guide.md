@@ -1,8 +1,8 @@
 # 编译指南
 
-## 环境准备
+## 1.环境准备
 
-### 编译服务器
+### 1.1 编译服务器
 
 系统版本：Ubuntu 22.04.3 LTS
 
@@ -10,11 +10,11 @@
 
 使用自己的用户账号
 
-### 网络要求
+### 1.2 网络要求
 
 保证服务器正常联网，以确保可以正常gradle编译和下载开源软件。
 
-### AOSP环境搭建
+### 1.3 AOSP环境搭建
 
 获取[AOSP源码](https://link.gitcode.com/?target=https%3A%2F%2Fandroid.googlesource.com%2Fplatform%2Fmanifest&from=https%3A%2F%2Fgitcode.com%2Ffuaniu%2FKbox%2Fblob%2FAOSP11%2Fdocs%2Fzh%2Fcompile_guide.md&lang=zh&theme=white)，上传至~/ARMNative目录下并解压
 
@@ -23,7 +23,7 @@ cd ~/ARMNative
 tar -xvf aosp11r48.tar
 ```
 
-### 项目代码下载
+### 1.4 项目代码下载
 
 编译完整的视频流二进制包需要下载本仓库和[VMIEngine](https://gitcode.com/boostkit/VMIEngine)仓库。
 
@@ -32,7 +32,7 @@ git clone https://gitcode.com/boostkit/vmi.git
 git clone https://gitcode.com/boostkit/VMIEngine.git
 ```
 
-### 安装编译环境
+### 1.5 安装编译环境
 
 进入vmi源码目录下执行auto_install_tools.sh，如果想了解各脚本的具体实现细节，请参考[编译脚本介绍](compile_scripts_introduction.md)文档
 
@@ -58,7 +58,7 @@ export AN_AOSPOUT=${AN_AOSPDIR}/out
 source ~/.bashrc
 ```
 
-### ccache配置
+### 1.6 ccache配置
 
 配置ccahe加快编译速度，查看本地ccache安装位置
 
@@ -92,9 +92,9 @@ ln -s ccache /usr/bin/cc
 ln -s ccache /usr/bin/c++
 ```
 
-## 编译AOSP源码
+## 2.编译AOSP源码
 
-### 安装依赖库
+### 2.1 安装依赖库
 
 下载必要依赖，如果已安装，跳过即可
 
@@ -113,7 +113,7 @@ sudo apt install -y m4 bc python3 python3-mako gettext
 sudo apt install -y expect
 ```
 
-### 编译源码
+### 2.2 编译源码
 
 进入安卓源码目录，执行如下编译指令
 
@@ -124,7 +124,7 @@ lunch aosp_arm64-eng
 make -j【线程数】
 ```
 
-## 编译视频流
+## 3. 编译视频流
 
 编译前需设置如下环境变量，不建议写入~/.bashrc中，每次编译前设置即可。
 
@@ -132,7 +132,7 @@ make -j【线程数】
 export ANDROID_VERSION=11
 ```
 
-### 编译客户端
+### 3.1 编译客户端
 
 ```shell
 cd ~/ARMNative/vmi
@@ -141,7 +141,7 @@ cd ~/ARMNative/vmi
 
 命令执行成功后，将在output目录生成CloudPhoneApk.tar.gz和已解压好的CloudPhone.apk
 
-### 编译服务端
+### 3.2 编译服务端
 
 ```shell
 cd ~/ARMNative/vmi
@@ -150,7 +150,7 @@ cd ~/ARMNative/vmi
 
 命令执行成功后，将在output目录生成DemoVideoEngine.tar.gz
 
-### 编译二进制
+### 3.3 编译二进制包
 
 ```shell
 cd ~/ARMNative/VMIEngine
