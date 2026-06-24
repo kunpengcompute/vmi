@@ -1,16 +1,5 @@
 # 测试指南<a name="ZH-CN_TOPIC_0000002521693378"></a>
 
-## 测试结果列表<a name="ZH-CN_TOPIC_0000002518346378"></a>
-
-|name|value|
-|--|--|
-|Product name|Kunpeng Boostkit||
-|Product Version|26.0.RC1||
-|Document Name|视频流引擎 验收测试指南||
-|Issue|10||
-|Date|2026-03-30||
-||
-
 ## 概述<a name="ZH-CN_TOPIC_0000002549706229"></a>
 
 ### 验收依据<a name="ZH-CN_TOPIC_0000002518186466"></a>

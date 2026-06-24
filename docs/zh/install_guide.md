@@ -15,7 +15,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|硬件配置方案四|
 |--|--|--|--|--|
 |服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
-|CPU|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7260处理器，64 <Core@2.6GHz>|2\*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|2\*鲲鹏920 7260W处理器，64 <Core@2.2GHz>|
+|CPU|2\*鲲鹏920 7260处理器，64 Core\@2.6GHz|2\*鲲鹏920 7260处理器，64 Core\@2.6GHz|2\*鲲鹏920 7280Z处理器，80 Core\@2.9GHz|2\*鲲鹏920 7260W处理器，64 Core\@2.2GHz|
 |内存|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR5 DIMM内存-64GB-4800MT/s|16\*DDR5 DIMM内存-64GB-5200MT/s|
 |硬盘|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*固态硬盘-480GB-SATA 6Gb/s-2.5 inch height-读密集型<br>1\*S4510 固态硬盘-960GB-SATA 6Gb/s-读取密集型<br>数据盘：1\*ES3600P V6固态硬盘-6400GB-NVMe 64Gb/s<br>1\*ES3500P V5固态硬盘-4000GB-NVMe 32Gb/s|
 |网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-225GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
@@ -34,7 +34,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 ##### 1.1.2.1 Kbox<a name="ZH-CN_TOPIC_0000002549826303"></a>
 
-部署Kbox云手机容器的软件环境要求请参见《[Kbox云手机容器 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0131.html)》中软件部署的“软件环境”章节。
+部署Kbox云手机容器的软件环境要求请参见《[Kbox云手机容器 特性指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/feature_guide.md)》中软件部署的“软件环境”章节。
 
 ##### 1.1.2.2 视频流引擎<a name="ZH-CN_TOPIC_0000002518346424" id="视频流引擎"></a>
 
@@ -46,7 +46,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 |序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|
 |--|--|--|--|--|--|--|--|
-|1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#base-soft)|√|√|√|√|
+|1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#application-soft)|√|√|√|√|
 |2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|请联系华为技术支持获取。|√|√|√|√|
 |3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|√|
 |4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|请联系华为技术支持获取。|√|√|√|√|
@@ -84,17 +84,17 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
 
-具体配置步骤请参见《[Kbox云手机容器 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0167.html)》中“软件部署”的“配置BIOS”章节内容。
+具体配置步骤请参见《[Kbox云手机容器 特性指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/feature_guide.md)》中“软件部署”的“配置BIOS”章节内容。
 
 环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
 
-- **[（硬件配置方案一，可选）升级NVMe固件版本](https://gitcode.com/boostkit/Kbox/blob/AOSP11/docs/zh/install_guide.md#升级NVMe固件版本)**
+- **[（硬件配置方案一，可选）升级NVMe固件版本](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md#升级NVMe固件版本)**
 
-- **[（硬件配置方案一）配置GPU工作模式和CPU绑定](https://gitcode.com/boostkit/Kbox/blob/AOSP11/docs/zh/install_guide.md#配置GPU工作模式和CPU绑定)**  
+- **[（硬件配置方案一）配置GPU工作模式和CPU绑定](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md#配置GPU工作模式和CPU绑定)**  
 
 ##### 1.2.1.2 部署Kbox容器基础环境<a name="ZH-CN_TOPIC_0000002518186516" id="部署Kbox容器基础环境"></a>
 
-Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0130.html)》中的“软件部署”章节。按照步骤完成该章节中“启动和卸载云手机实例”小节前的所有部署。
+Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/feature_guide.md)》中的“软件部署”章节。按照步骤完成该章节中“启动和卸载云手机实例”小节前的所有部署。
 
 ##### 1.2.1.3 （可选）部署Containerd环境<a name="ZH-CN_TOPIC_0000002549826283" id="部署Containerd环境"></a>
 
