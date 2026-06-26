@@ -136,7 +136,7 @@
 | 测试组网 | 无 |
 | 预置条件 | 1. 视频流云手机环境部署完成。<br>2. 已创建视频流云手机容器，并使用adb连接。 |
 | 测试步骤 | 1. 执行**sudo docker exec -it android_*x* sh**进入视频流云手机容器，出现结果1。<br>2. 执行**cat /vendor/etc/videoengine_version.txt**查询版本号内容，出现结果2。 |
-| 预期结果 | 1. 容器可以正常进入。<br>2. 文件内容包含视频流组件版本信息如下，且版本信息准确。（具体版本号以当前版本为准。）<br><pre><br>Product Name: Kunpeng BoostKit<br>Product Version: xxx<br>Component Name: BoostKit-boostcph-videoengine<br>Component Version: xxx<br>Component AppendInfo: 15.0.0_r17<br><pre>
+| 预期结果 | 1. 容器可以正常进入。<br>2. 文件内容包含视频流组件版本信息如下，且版本信息准确。（具体版本号以当前版本为准。）<br>Product Name: Kunpeng BoostKit<br>Product Version: xxx<br>Component Name: BoostKit-boostcph-videoengine<br>Component Version: xxx<br>Component AppendInfo: 15.0.0_r17 |
 | 测试结果 |  |
 | 备注 | 测试步骤中**android_*x***中的***x***为实际创建的视频流云手机容器的容器编号。 |
 
