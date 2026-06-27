@@ -38,349 +38,122 @@
 #### 视频流云手机编码/解码测试<a name="ZH-CN_TOPIC_0000002518346358"></a>
 
 <a name="table35101782"></a>
-<table><tbody><tr id="row13303384"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.1.1"><p id="p3832334"><a name="p3832334"></a><a name="p3832334"></a>用例编号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.1.1 "><p id="p41983644"><a name="p41983644"></a><a name="p41983644"></a>4.1.1</p>
-</td>
-</tr>
-<tr id="row42308484"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.2.1"><p id="p4435211"><a name="p4435211"></a><a name="p4435211"></a>测试目的</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.2.1 "><p id="p1865071635911"><a name="p1865071635911"></a><a name="p1865071635911"></a>验证视频流云手机编码/解码功能。</p>
-</td>
-</tr>
-<tr id="row12043371"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.3.1"><p id="p35988971"><a name="p35988971"></a><a name="p35988971"></a>测试组网</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.3.1 "><p id="p29425548"><a name="p29425548"></a><a name="p29425548"></a>无</p>
-</td>
-</tr>
-<tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol19643542164818"></a><a name="ol19643542164818"></a><ol id="ol19643542164818"><li>视频流云手机环境部署完成。</li><li>客户端连接视频流云手机成功。</li><li>视频流云手机已安装APP。（建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。）</li></ol>
-</td>
-</tr>
-<tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><p id="p7131193765113"><a name="p7131193765113"></a><a name="p7131193765113"></a>在客户端内运行APP 10min，同时观察APP内各场景的页面显示情况。</p>
-</td>
-</tr>
-<tr id="row51729637"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.6.1"><p id="p29351091"><a name="p29351091"></a><a name="p29351091"></a>预期结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.6.1 "><p id="p5970153051815"><a name="p5970153051815"></a><a name="p5970153051815"></a>视频流云手机编解码模块运行正常，APP运行过程画面渲染正常、界面切换正常、功能操作正常，无花屏、黑屏、闪退、严重卡顿、卡死等不良现象；如有横竖屏切换，切换正常，视频流云手机容器无崩溃、无响应等不良现象。</p>
-</td>
-</tr>
-<tr id="row66169923"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.7.1"><p id="p58163537"><a name="p58163537"></a><a name="p58163537"></a>测试结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.7.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row55525677"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.8.1"><p id="p1286006"><a name="p1286006"></a><a name="p1286006"></a>备注</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.8.1 ">&nbsp;&nbsp;</td>
-</tr>
-</tbody>
-</table>
+
+| 项目 | 内容 |
+| --- | --- |
+| 用例编号 | 4.1.1 |
+| 测试目的 | 验证视频流云手机编码/解码功能。 |
+| 测试组网 | 无 |
+| 预置条件 | 1. 视频流云手机环境部署完成。<br>2. 客户端连接视频流云手机成功。<br>3. 视频流云手机已安装APP。（建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。） |
+| 测试步骤 | 在客户端内运行APP 10min，同时观察APP内各场景的页面显示情况。 |
+| 预期结果 | 视频流云手机编解码模块运行正常，APP运行过程画面渲染正常、界面切换正常、功能操作正常，无花屏、黑屏、闪退、严重卡顿、卡死等不良现象；如有横竖屏切换，切换正常，视频流云手机容器无崩溃、无响应等不良现象。 |
+| 测试结果 |  |
+| 备注 |  |
 
 #### 视频流云手机触控测试<a name="ZH-CN_TOPIC_0000002549706219"></a>
 
 <a name="table35101782"></a>
-<table><tbody><tr id="row13303384"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.1.1"><p id="p3832334"><a name="p3832334"></a><a name="p3832334"></a>用例编号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.1.1 "><p id="p41983644"><a name="p41983644"></a><a name="p41983644"></a>4.1.2</p>
-</td>
-</tr>
-<tr id="row42308484"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.2.1"><p id="p4435211"><a name="p4435211"></a><a name="p4435211"></a>测试目的</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.2.1 "><p id="p1865071635911"><a name="p1865071635911"></a><a name="p1865071635911"></a>验证视频流云手机触控功能。</p>
-</td>
-</tr>
-<tr id="row12043371"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.3.1"><p id="p35988971"><a name="p35988971"></a><a name="p35988971"></a>测试组网</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.3.1 "><p id="p29425548"><a name="p29425548"></a><a name="p29425548"></a>无</p>
-</td>
-</tr>
-<tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol164692735010"></a><a name="ol164692735010"></a><ol id="ol164692735010"><li>视频流云手机环境部署完成。</li><li>客户端连接视频流云手机成功。</li><li>视频流云手机已安装APP。（APP建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。）</li></ol>
-</td>
-</tr>
-<tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><p id="p758610280518"><a name="p758610280518"></a><a name="p758610280518"></a>在客户端内对<term id="term31991730420"><a name="term31991730420"></a><a name="term31991730420"></a>云手机</term>或APP界面触发单击或者滑动操作10min。</p>
-</td>
-</tr>
-<tr id="row51729637"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.6.1"><p id="p29351091"><a name="p29351091"></a><a name="p29351091"></a>预期结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.6.1 "><p id="p1815463520184"><a name="p1815463520184"></a><a name="p1815463520184"></a>触控功能正常，流畅无卡顿。</p>
-</td>
-</tr>
-<tr id="row66169923"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.7.1"><p id="p58163537"><a name="p58163537"></a><a name="p58163537"></a>测试结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.7.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row55525677"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.8.1"><p id="p1286006"><a name="p1286006"></a><a name="p1286006"></a>备注</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.8.1 ">&nbsp;&nbsp;</td>
-</tr>
-</tbody>
-</table>
+
+| 项目 | 内容 |
+| --- | --- |
+| 用例编号 | 4.1.2 |
+| 测试目的 | 验证视频流云手机触控功能。 |
+| 测试组网 | 无 |
+| 预置条件 | 1. 视频流云手机环境部署完成。<br>2. 客户端连接视频流云手机成功。<br>3. 视频流云手机已安装APP。（APP建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。） |
+| 测试步骤 | 在客户端内对云手机或APP界面触发单击或者滑动操作10min。 |
+| 预期结果 | 触控功能正常，流畅无卡顿。 |
+| 测试结果 |  |
+| 备注 |  |
 
 #### 视频流云手机音频测试<a name="ZH-CN_TOPIC_0000002518186456"></a>
 
 <a name="table35101782"></a>
-<table><tbody><tr id="row13303384"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.1.1"><p id="p3832334"><a name="p3832334"></a><a name="p3832334"></a>用例编号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.1.1 "><p id="p41983644"><a name="p41983644"></a><a name="p41983644"></a>4.1.3</p>
-</td>
-</tr>
-<tr id="row42308484"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.2.1"><p id="p4435211"><a name="p4435211"></a><a name="p4435211"></a>测试目的</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.2.1 "><p id="p1865071635911"><a name="p1865071635911"></a><a name="p1865071635911"></a>验证视频流云手机音频功能。</p>
-</td>
-</tr>
-<tr id="row12043371"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.3.1"><p id="p35988971"><a name="p35988971"></a><a name="p35988971"></a>测试组网</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.3.1 "><p id="p29425548"><a name="p29425548"></a><a name="p29425548"></a>无</p>
-</td>
-</tr>
-<tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol1772914270494"></a><a name="ol1772914270494"></a><ol id="ol1772914270494"><li>视频流云手机环境部署完成。</li><li>客户端连接视频流云手机成功。</li><li>视频流云手机已安装酷狗音乐。</li></ol>
-</td>
-</tr>
-<tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><p id="p182906855416"><a name="p182906855416"></a><a name="p182906855416"></a>启动酷狗音乐软件，播放歌曲，调节音量大小。</p>
-</td>
-</tr>
-<tr id="row51729637"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.6.1"><p id="p29351091"><a name="p29351091"></a><a name="p29351091"></a>预期结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.6.1 "><p id="p17553192548"><a name="p17553192548"></a><a name="p17553192548"></a>声音正常播放，可调节音量大小。</p>
-</td>
-</tr>
-<tr id="row66169923"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.7.1"><p id="p58163537"><a name="p58163537"></a><a name="p58163537"></a>测试结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.7.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row55525677"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.8.1"><p id="p1286006"><a name="p1286006"></a><a name="p1286006"></a>备注</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.8.1 ">&nbsp;&nbsp;</td>
-</tr>
-</tbody>
-</table>
+
+| 项目 | 内容 |
+| --- | --- |
+| 用例编号 | 4.1.3 |
+| 测试目的 | 验证视频流云手机音频功能。 |
+| 测试组网 | 无 |
+| 预置条件 | 1. 视频流云手机环境部署完成。<br>2. 客户端连接视频流云手机成功。<br>3. 视频流云手机已安装酷狗音乐。 |
+| 测试步骤 | 启动酷狗音乐软件，播放歌曲，调节音量大小。 |
+| 预期结果 | 声音正常播放，可调节音量大小。 |
+| 测试结果 |  |
+| 备注 |  |
 
 #### 视频流云手机麦克风测试<a name="ZH-CN_TOPIC_0000002549826215"></a>
 
 <a name="table35101782"></a>
-<table><tbody><tr id="row13303384"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.1.1"><p id="p3832334"><a name="p3832334"></a><a name="p3832334"></a>用例编号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.1.1 "><p id="p41983644"><a name="p41983644"></a><a name="p41983644"></a>4.1.4</p>
-</td>
-</tr>
-<tr id="row42308484"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.2.1"><p id="p4435211"><a name="p4435211"></a><a name="p4435211"></a>测试目的</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.2.1 "><p id="p1865071635911"><a name="p1865071635911"></a><a name="p1865071635911"></a>验证视频流云手机麦克风功能。</p>
-</td>
-</tr>
-<tr id="row12043371"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.3.1"><p id="p35988971"><a name="p35988971"></a><a name="p35988971"></a>测试组网</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.3.1 "><p id="p29425548"><a name="p29425548"></a><a name="p29425548"></a>无</p>
-</td>
-</tr>
-<tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol1772914270494"></a><a name="ol1772914270494"></a><ol id="ol1772914270494"><li>视频流云手机环境部署完成。</li><li>客户端连接视频流云手机成功。</li><li>视频流云手机已安装录音软件。</li></ol>
-</td>
-</tr>
-<tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><p id="p182906855416"><a name="p182906855416"></a><a name="p182906855416"></a>启动录音软件，进行录音。</p>
-</td>
-</tr>
-<tr id="row51729637"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.6.1"><p id="p29351091"><a name="p29351091"></a><a name="p29351091"></a>预期结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.6.1 "><p id="p17553192548"><a name="p17553192548"></a><a name="p17553192548"></a>录音成功，录音文件能正常播放。</p>
-</td>
-</tr>
-<tr id="row66169923"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.7.1"><p id="p58163537"><a name="p58163537"></a><a name="p58163537"></a>测试结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.7.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row55525677"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.8.1"><p id="p1286006"><a name="p1286006"></a><a name="p1286006"></a>备注</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.8.1 ">&nbsp;&nbsp;</td>
-</tr>
-</tbody>
-</table>
+
+| 项目 | 内容 |
+| --- | --- |
+| 用例编号 | 4.1.4 |
+| 测试目的 | 验证视频流云手机麦克风功能。 |
+| 测试组网 | 无 |
+| 预置条件 | 1. 视频流云手机环境部署完成。<br>2. 客户端连接视频流云手机成功。<br>3. 视频流云手机已安装录音软件。 |
+| 测试步骤 | 启动录音软件，进行录音。 |
+| 预期结果 | 录音成功，录音文件能正常播放。 |
+| 测试结果 |  |
+| 备注 |  |
 
 #### 视频流云手机支持高分辨率测试<a name="ZH-CN_TOPIC_0000002549826219"></a>
 
 <a name="table35101782"></a>
-<table><tbody><tr id="row13303384"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.1.1"><p id="p3832334"><a name="p3832334"></a><a name="p3832334"></a>用例编号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.1.1 "><p id="p41983644"><a name="p41983644"></a><a name="p41983644"></a>4.1.7</p>
-</td>
-</tr>
-<tr id="row42308484"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.2.1"><p id="p4435211"><a name="p4435211"></a><a name="p4435211"></a>测试目的</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.2.1 "><p id="p1865071635911"><a name="p1865071635911"></a><a name="p1865071635911"></a>验证视频流云手机支持高分辨率。</p>
-</td>
-</tr>
-<tr id="row12043371"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.3.1"><p id="p35988971"><a name="p35988971"></a><a name="p35988971"></a>测试组网</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.3.1 "><p id="p29425548"><a name="p29425548"></a><a name="p29425548"></a>无</p>
-</td>
-</tr>
-<tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol923475117464"></a><a name="ol923475117464"></a><ol id="ol923475117464"><li>视频流云手机环境部署完成。</li><li>请参见《<a href="install_guide.md" target="_blank" rel="noopener noreferrer">安装指南</a>》中的“软件部署”章节修改分辨率为1080P后启动视频流云手机。</li><li>视频流云手机已安装APP。（建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。）</li></ol>
-</td>
-</tr>
-<tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><a name="ol44691207477"></a><a name="ol44691207477"></a><ol id="ol44691207477"><li>使用真机链接云手机客户端并运行已安装的APP。</li><li>启动应用并试玩10min。</li></ol>
-</td>
-</tr>
-<tr id="row51729637"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.6.1"><p id="p29351091"><a name="p29351091"></a><a name="p29351091"></a>预期结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.6.1 "><a name="ol934919319240"></a><a name="ol934919319240"></a><ol id="ol934919319240"><li>视频流云手机及APP运行正常，无卡顿、黑屏等不良现象。</li><li>执行<strong id="b10600669209"><a name="b10600669209"></a><a name="b10600669209"></a>docker exec -it android_<em id="i159721394207"><a name="i159721394207"></a><a name="i159721394207"></a>x</em> sh</strong>进入云手机，接着执行<strong id="b971511171141"><a name="b971511171141"></a><a name="b971511171141"></a>wm size</strong>命令查看分辨率回显值，1080P设置成功。</li></ol>
-</td>
-</tr>
-<tr id="row66169923"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.7.1"><p id="p58163537"><a name="p58163537"></a><a name="p58163537"></a>测试结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.7.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row55525677"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.8.1"><p id="p1286006"><a name="p1286006"></a><a name="p1286006"></a>备注</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.8.1 "><p id="p37057631"><a name="p37057631"></a><a name="p37057631"></a>测试步骤中<strong id="b360512438479"><a name="b360512438479"></a><a name="b360512438479"></a>android_<em id="i11462204715477"><a name="i11462204715477"></a><a name="i11462204715477"></a>x</em></strong>中的<em id="i168292365481"><a name="i168292365481"></a><a name="i168292365481"></a><strong id="b68291136194814"><a name="b68291136194814"></a><a name="b68291136194814"></a>x</strong></em>为实际创建的视频流云手机容器的容器编号。</p>
-</td>
-</tr>
-</tbody>
-</table>
+
+| 项目 | 内容 |
+| --- | --- |
+| 用例编号 | 4.1.7 |
+| 测试目的 | 验证视频流云手机支持高分辨率。 |
+| 测试组网 | 无 |
+| 预置条件 | 1. 视频流云手机环境部署完成。<br>2. 请参见《[安装指南](install_guide.md)》中的“软件部署”章节修改分辨率为1080P后启动视频流云手机。<br>3. 视频流云手机已安装APP。（建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。） |
+| 测试步骤 | 1. 使用真机链接云手机客户端并运行已安装的APP。<br>2. 启动应用并试玩10min。 |
+| 预期结果 | 1. 视频流云手机及APP运行正常，无卡顿、黑屏等不良现象。<br>2. 执行**docker exec -it android_*x* sh**进入云手机，接着执行**wm size**命令查看分辨率回显值，1080P设置成功。 |
+| 测试结果 |  |
+| 备注 | 测试步骤中**android_*x***中的***x***为实际创建的视频流云手机容器的容器编号。 |
 
 #### 视频流云手机支持高帧率测试<a name="ZH-CN_TOPIC_0000002518346368"></a>
 
 <a name="table35101782"></a>
-<table><tbody><tr id="row13303384"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.1.1"><p id="p3832334"><a name="p3832334"></a><a name="p3832334"></a>用例编号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.1.1 "><p id="p41983644"><a name="p41983644"></a><a name="p41983644"></a>4.1.8</p>
-</td>
-</tr>
-<tr id="row42308484"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.2.1"><p id="p4435211"><a name="p4435211"></a><a name="p4435211"></a>测试目的</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.2.1 "><p id="p1865071635911"><a name="p1865071635911"></a><a name="p1865071635911"></a>视频流云手机支持高帧率。</p>
-</td>
-</tr>
-<tr id="row12043371"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.3.1"><p id="p35988971"><a name="p35988971"></a><a name="p35988971"></a>测试组网</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.3.1 "><p id="p29425548"><a name="p29425548"></a><a name="p29425548"></a>无</p>
-</td>
-</tr>
-<tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol923475117464"></a><a name="ol923475117464"></a><ol id="ol923475117464"><li>视频流云手机环境部署完成。</li><li>请参见《<a href="install_guide.md" target="_blank" rel="noopener noreferrer">安装指南</a>》中的“软件部署”章节修改帧率为60fps后启动视频流云手机。</li><li>视频流云手机已安装APP。（建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。）</li></ol>
-</td>
-</tr>
-<tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><a name="ol44691207477"></a><a name="ol44691207477"></a><ol id="ol44691207477"><li>使用真机链接云手机客户端并运行已安装的APP。</li><li>启动应用并试玩10min。</li></ol>
-</td>
-</tr>
-<tr id="row51729637"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.6.1"><p id="p29351091"><a name="p29351091"></a><a name="p29351091"></a>预期结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.6.1 "><p id="p113792247186"><a name="p113792247186"></a><a name="p113792247186"></a>视频流云手机及APP运行正常，观察视频流云手机客户端APK的左上角悬浮窗帧率指标稳定在55~60fps。</p>
-</td>
-</tr>
-<tr id="row66169923"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.7.1"><p id="p58163537"><a name="p58163537"></a><a name="p58163537"></a>测试结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.7.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row55525677"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.8.1"><p id="p1286006"><a name="p1286006"></a><a name="p1286006"></a>备注</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.8.1 ">&nbsp;&nbsp;</td>
-</tr>
-</tbody>
-</table>
+
+| 项目 | 内容 |
+| --- | --- |
+| 用例编号 | 4.1.8 |
+| 测试目的 | 视频流云手机支持高帧率。 |
+| 测试组网 | 无 |
+| 预置条件 | 1. 视频流云手机环境部署完成。<br>2. 请参见《[安装指南](install_guide.md)》中的“软件部署”章节修改帧率为60fps后启动视频流云手机。<br>3. 视频流云手机已安装APP。（建议使用兼容性列表中的APP，如地铁跑酷、酷狗音乐等。） |
+| 测试步骤 | 1. 使用真机链接云手机客户端并运行已安装的APP。<br>2. 启动应用并试玩10min。 |
+| 预期结果 | 视频流云手机及APP运行正常，观察视频流云手机客户端APK的左上角悬浮窗帧率指标稳定在55~60fps。 |
+| 测试结果 |  |
+| 备注 |  |
 
 #### 视频流组件版本号查询测试<a name="ZH-CN_TOPIC_0000002549826225"></a>
 
 <a name="table35101782"></a>
-<table><tbody><tr id="row13303384"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.1.1"><p id="p3832334"><a name="p3832334"></a><a name="p3832334"></a>用例编号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.1.1 "><p id="p41983644"><a name="p41983644"></a><a name="p41983644"></a>4.1.9</p>
-</td>
-</tr>
-<tr id="row42308484"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.2.1"><p id="p4435211"><a name="p4435211"></a><a name="p4435211"></a>测试目的</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.2.1 "><p id="p1865071635911"><a name="p1865071635911"></a><a name="p1865071635911"></a>视频流组件版本号查询测试。</p>
-</td>
-</tr>
-<tr id="row12043371"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.3.1"><p id="p35988971"><a name="p35988971"></a><a name="p35988971"></a>测试组网</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.3.1 "><p id="p29425548"><a name="p29425548"></a><a name="p29425548"></a>无</p>
-</td>
-</tr>
-<tr id="row63503344"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.4.1"><p id="p43497253"><a name="p43497253"></a><a name="p43497253"></a>预置条件</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.4.1 "><a name="ol164692735010"></a><a name="ol164692735010"></a><ol id="ol164692735010"><li>视频流云手机环境部署完成。</li><li>已创建视频流云手机容器，并使用adb连接。</li></ol>
-</td>
-</tr>
-<tr id="row11759093"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.5.1"><p id="p12962448"><a name="p12962448"></a><a name="p12962448"></a>测试步骤</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.5.1 "><a name="ol16121093219"></a><a name="ol16121093219"></a><ol id="ol16121093219"><li>执行<strong id="b22264237518"><a name="b22264237518"></a><a name="b22264237518"></a>sudo docker exec -it android_<em id="i18947227205110"><a name="i18947227205110"></a><a name="i18947227205110"></a>x</em> sh</strong>进入视频流云手机容器，出现结果1。</li><li>执行<strong id="b16783234114910"><a name="b16783234114910"></a><a name="b16783234114910"></a>cat /vendor/etc/videoengine_version.txt</strong>查询版本号内容，出现结果2。</li></ol>
-</td>
-</tr>
-<tr id="row51729637"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.6.1"><p id="p29351091"><a name="p29351091"></a><a name="p29351091"></a>预期结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.6.1 "><a name="ol31291241193210"></a><a name="ol31291241193210"></a><ol id="ol31291241193210"><li>容器可以正常进入。</li><li>文件内容包含视频流组件版本信息如下，且版本信息准确。（具体版本号以当前版本为准。）<a name="screen896623710395"></a><a name="screen896623710395"></a><pre class="screen" codetype="ColdFusion" id="screen896623710395">Product Name: Kunpeng BoostKit
-Product Version: xxx
-Component Name: BoostKit-boostcph-videoengine
-Component Version: xxx
-Component AppendInfo: 15.0.0_r17</pre>
-</li></ol>
-</td>
-</tr>
-<tr id="row66169923"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.7.1"><p id="p58163537"><a name="p58163537"></a><a name="p58163537"></a>测试结果</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.7.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row55525677"><th class="firstcol" valign="top" width="22.220000000000002%" id="mcps1.1.3.8.1"><p id="p1286006"><a name="p1286006"></a><a name="p1286006"></a>备注</p>
-</th>
-<td class="cellrowborder" valign="top" width="77.78%" headers="mcps1.1.3.8.1 "><p id="p37057631"><a name="p37057631"></a><a name="p37057631"></a>测试步骤中<strong id="b360512438479"><a name="b360512438479"></a><a name="b360512438479"></a>android_<em id="i11462204715477"><a name="i11462204715477"></a><a name="i11462204715477"></a>x</em></strong>中的<em id="i168292365481"><a name="i168292365481"></a><a name="i168292365481"></a><strong id="b68291136194814"><a name="b68291136194814"></a><a name="b68291136194814"></a>x</strong></em>为实际创建的视频流云手机容器的容器编号。</p>
-</td>
-</tr>
-</tbody>
-</table>
+
+| 项目 | 内容 |
+| --- | --- |
+| 用例编号 | 4.1.9 |
+| 测试目的 | 视频流组件版本号查询测试。 |
+| 测试组网 | 无 |
+| 预置条件 | 1. 视频流云手机环境部署完成。<br>2. 已创建视频流云手机容器，并使用adb连接。 |
+| 测试步骤 | 1. 执行**sudo docker exec -it android_*x* sh**进入视频流云手机容器，出现结果1。<br>2. 执行**cat /vendor/etc/videoengine_version.txt**查询版本号内容，出现结果2。 |
+| 预期结果 | 1. 容器可以正常进入。<br>2. 文件内容包含视频流组件版本信息如下，且版本信息准确。（具体版本号以当前版本为准。）<br>Product Name: Kunpeng BoostKit<br>Product Version: xxx<br>Component Name: BoostKit-boostcph-videoengine<br>Component Version: xxx<br>Component AppendInfo: 15.0.0_r17 |
+| 测试结果 |  |
+| 备注 | 测试步骤中**android_*x***中的***x***为实际创建的视频流云手机容器的容器编号。 |
 
 ## 测试结果分析<a name="ZH-CN_TOPIC_0000002518186450"></a>
 
 ### 测试基本信息<a name="ZH-CN_TOPIC_0000002549706211"></a>
 
 <a name="table56604068"></a>
-<table><tbody><tr id="row35370789"><th class="firstcol" valign="top" width="21.07%" id="mcps1.1.3.1.1"><p id="p46461622"><a name="p46461622"></a><a name="p46461622"></a>设备制造商</p>
-</th>
-<td class="cellrowborder" valign="top" width="78.93%" headers="mcps1.1.3.1.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row47655290"><th class="firstcol" valign="top" width="21.07%" id="mcps1.1.3.2.1"><p id="p34873320"><a name="p34873320"></a><a name="p34873320"></a>设备型号</p>
-</th>
-<td class="cellrowborder" valign="top" width="78.93%" headers="mcps1.1.3.2.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row55500145"><th class="firstcol" valign="top" width="21.07%" id="mcps1.1.3.3.1"><p id="p66326724"><a name="p66326724"></a><a name="p66326724"></a>测试地点</p>
-</th>
-<td class="cellrowborder" valign="top" width="78.93%" headers="mcps1.1.3.3.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row33800412"><th class="firstcol" valign="top" width="21.07%" id="mcps1.1.3.4.1"><p id="p53478832"><a name="p53478832"></a><a name="p53478832"></a>测试人员</p>
-</th>
-<td class="cellrowborder" valign="top" width="78.93%" headers="mcps1.1.3.4.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row62927705"><th class="firstcol" valign="top" width="21.07%" id="mcps1.1.3.5.1"><p id="p63979351"><a name="p63979351"></a><a name="p63979351"></a>测试时间</p>
-</th>
-<td class="cellrowborder" valign="top" width="78.93%" headers="mcps1.1.3.5.1 ">&nbsp;&nbsp;</td>
-</tr>
-<tr id="row287118"><th class="firstcol" valign="top" width="21.07%" id="mcps1.1.3.6.1"><p id="p23256560"><a name="p23256560"></a><a name="p23256560"></a>其余信息</p>
-</th>
-<td class="cellrowborder" valign="top" width="78.93%" headers="mcps1.1.3.6.1 ">&nbsp;&nbsp;</td>
-</tr>
-</tbody>
-</table>
+
+| 项目 | 内容 |
+| --- | --- |
+| 设备制造商 |  |
+| 设备型号 |  |
+| 测试地点 |  |
+| 测试人员 |  |
+| 测试时间 |  |
+| 其余信息 |  |
 
 ### 测试结果列表<a name="ZH-CN_TOPIC_0000002518186446"></a>
 
