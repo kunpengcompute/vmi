@@ -1,0 +1,78 @@
+[files]
+# these files may be written in non english words
+extend-exclude = ["src/vendor/kbox/omx/**", "build/**", "test/**"]
+ignore-hidden = true
+ignore-files = true
+ignore-dot = true
+ignore-vcs = true
+ignore-global = true
+ignore-parent = true
+
+[default]
+binary = false
+check-filename = false
+check-file = true
+unicode = true
+ignore-hex = true
+identifier-leading-digits = false
+locale = "en"
+extend-ignore-identifiers-re = []
+extend-ignore-words-re = []
+extend-ignore-re = ["TARGET_2ND_.*"]
+
+[default.extend-identifiers]
+shift_2nd = "shift_2nd"
+
+[default.extend-words]
+# arm cpu features
+neon = "neon"
+sve = "sve"
+dotprod = "dotprod"
+i8mm = "i8mm"
+# Android Log macros
+ALOG = "ALOG"
+# Graphics Level of Detail
+LOD = "LOD"
+# Android 2ND arch variable
+2ND = "2ND"
+
+[type.py]
+extend-glob = []
+extend-ignore-identifiers-re = []
+extend-ignore-words-re = []
+extend-ignore-re = []
+
+[type.py.extend-identifiers]
+
+[type.py.extend-words]
+
+[type.cpp]
+extend-glob = []
+extend-ignore-identifiers-re = []
+extend-ignore-words-re = []
+extend-ignore-re = []
+
+[type.cpp.extend-identifiers]
+countr_one = "countr_one"
+
+[type.cpp.extend-words]
+
+[type.sh]
+extend-glob = []
+extend-ignore-identifiers-re = []
+extend-ignore-words-re = []
+extend-ignore-re = []
+
+[type.sh.extend-identifiers]
+
+[type.sh.extend-words]
+
+[type.vimscript]
+extend-glob = []
+extend-ignore-identifiers-re = []
+extend-ignore-words-re = []
+extend-ignore-re = []
+
+[type.vimscript.extend-identifiers]
+
+[type.vimscript.extend-words]
