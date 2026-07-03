@@ -1,73 +1,65 @@
 #! /bin/bash
 # Copyright Huawei Technologies Co., Ltd. 2022-2024. All rights reserved.
 #===============================================================================
-# Variables
+# Source base_box.sh（公共函数库）
 #===============================================================================
-MYNAME=$(basename $0)
-THISDIR=$(readlink -ef $(dirname $0))
-
-CFCT_CFG=$THISDIR/cfct_config
-DEFAULT_PROP=$THISDIR/default.prop
-ENC_PACKAGE=$THISDIR/NETINT.tar.gz
-CONTAINERD_CONFIG=$THISDIR/containerd_config
-if [ -f "$CONTAINERD_CONFIG" ]; then
-    DEFAULT_RUNTIME=containerd
-    RUNTIME_CMD=nerdctl
-    echo "Default container runtime selected: containerd"
-else
-    DEFAULT_RUNTIME=docker
-    RUNTIME_CMD=docker
-    echo "Default container runtime selected: docker"
+CURRENT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+if [ ! -e "${CURRENT_DIR}/base_box.sh" ]; then
+    echo "[ERROR] Can not find file base_box.sh"
+    exit 1
 fi
-DOCKER_NAME_PREFIX="android_"  # must end with "_"
-
-VIDEO_CPU_MAP=()
-VIDEO_GPU_MAP=()
-VIDEO_VPU_MAP=()
-VIDEO_ENC_MAP=()
-VIDEO_USERDATA_MAP=()
-VIDEO_VSYNC_OFFSET_MAP=()
-VIDEO_HANBO_MAP=()
+source "${CURRENT_DIR}/base_box.sh"
 
 #===============================================================================
 # Functions
 #===============================================================================
-LOG_INFO() {
-    echo -e "\033[1;36m[INFO] $@\033[0m"
-}
-
-LOG_WARN() {
-    echo -e "\033[1;32m[WARNING] $@\033[0m"
-}
-
-LOG_ERROR() {
-    echo -e "\033[1;31m[ERROR] $@\033[0m"
-}
-
-EXIT_ERROR() {
-    LOG_ERROR "$@" ; exit 1
-}
-
-function check_encode_card()
-{
-    # 检查nvme指令
-    cmd="nvme --help"
-    $cmd >/dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        LOG_INFO "nvme command unavailable, cannot auto detect vpu"
-        return 0
+# 初始化视频流运行时环境变量（THISDIR、CFCT_CFG 等）
+# 必须在 main 入口最早调用
+function init_video_env() {
+    bb_init_runtime_env
+    CFCT_CFG=$THISDIR/cfct_config
+    if [ ! -f "$CFCT_CFG" ]; then
+        bb_exit_error "Can not find file $CFCT_CFG"
     fi
+    source $CFCT_CFG
+    bb_log_info "$CFCT_CFG loaded"
 
-    cmd="nvme list"
-    output=$($cmd 2>/dev/null)
-    if echo "$output" | grep -q "QuadraT2A"; then
-        LOG_INFO "set encode card to QuadraT2A"
-        ENCODECARD=1
-    elif echo "$output" | grep -q "T432"; then
-        LOG_INFO "set encode card to T432"
-        ENCODECARD=0
-    else
-        LOG_INFO "encode card unchange"
+    DOCKER_NAME_PREFIX="android_"  # must end with "_"
+    DEFAULT_PROP=$THISDIR/default.prop
+    ENC_PACKAGE=$THISDIR/NETINT.tar.gz
+
+    bb_init_hardware_config
+
+    bb_check_environment
+    bb_log_info "Default container runtime selected: ${DEFAULT_RUNTIME}"
+}
+
+function check_hardware_map() {
+    for ((i=0; i<${#CPU_MAP[@]}; i++)); do
+        local cpus=()
+        IFS=',' read -r -a cpus <<< ${CPU_MAP[i]}
+        local lim=$(bb_get_num_of_cpus)
+        for ((j=0; j<${#cpus[@]}; j++)); do
+            if [ ${cpus[j]} -ge $lim ]; then
+                bb_exit_error "The number ${cpus[j]} in CPU_MAP exceeds the number of cpus 0-$((${lim}-1))."
+            fi
+        done
+    done
+    for ((i=0; i<${#GPU_MAP[@]}; i++)); do
+        if [ ! -e ${GPU_MAP[i]} ]; then
+            bb_exit_error "The ${GPU_MAP[i]} in GPU_MAP doesn't exist."
+        fi
+    done
+    if [ ${#amd_gpus[@]} -ne 0 ]; then
+        for ((i=0; i<${#ENC_MAP[@]}; i++)); do
+            local encs=()
+            IFS=',' read -r -a encs <<< ${ENC_MAP[i]}
+            for ((j=0; j<${#encs[@]}; j++)); do
+                if [ ! -e ${encs[j]} ]; then
+                    bb_exit_error "The ${encs[j]} in ENC_MAP doesn't exist."
+                fi
+            done
+        done
     fi
 }
 
@@ -77,19 +69,19 @@ function param_check_container_name() {
     local opts="-a"
     [ "$status" == "RUNNING" ] && opts=""
     if [ -z "$container_name" ] ; then
-        LOG_ERROR "Container name is not specified!"
+        bb_log_error "Container name is not specified!"
     elif ! echo "$container_name" | grep -q "$DOCKER_NAME_PREFIX" ; then
-        LOG_ERROR "Container name does not start with '$DOCKER_NAME_PREFIX'"
+        bb_log_error "Container name does not start with '$DOCKER_NAME_PREFIX'"
     elif ! $RUNTIME_CMD ps $opts | grep -w -q "$container_name" ; then
         if [ "$status" == "RUNNING" ] ; then
-            LOG_ERROR "Container named $container_name is not running!"
+            bb_log_error "Container named $container_name is not running!"
         else
-            LOG_ERROR "Container named $container_name doesn't exist!"
+            bb_log_error "Container named $container_name doesn't exist!"
         fi
     else
         return 0
     fi
-    LOG_ERROR "Please specify container name below"
+    bb_log_error "Please specify container name below"
     $RUNTIME_CMD ps $opts
     exit 1
 }
@@ -99,125 +91,17 @@ function param_check_image_id_or_name() {
     local name=${image%:*}
     local ver=${image#*:}
     if [ -z "$image" ] ; then
-        LOG_ERROR "Container image ID is not specified!"
+        bb_log_error "Container image ID is not specified!"
     elif ! $RUNTIME_CMD images | grep -q "$name" ; then
-        LOG_ERROR "Container image $image doesn't exist"
+        bb_log_error "Container image $image doesn't exist"
     elif ! $RUNTIME_CMD images | grep -q "$ver" ; then
-        LOG_ERROR "Container image $image doesn't exist"
+        bb_log_error "Container image $image doesn't exist"
     else
         return 0
     fi
-    LOG_ERROR "Please select the image below"
+    bb_log_error "Please select the image below"
     $RUNTIME_CMD images
     exit 1
-}
-
-function get_num_of_cpus() {
-    echo $(lscpu | grep -w "CPU(s)" | head -n 1 | awk '{print $2}')
-}
-
-function get_num_of_numas() {
-    echo $(lscpu | grep -w "NUMA node(s)" | awk '{print $3}')
-}
-
-function get_closest_numas() {
-    local num_of_cpus=$(get_num_of_cpus)
-    local num_of_numas=$(get_num_of_numas)
-    local cpus_per_numa=$((${num_of_cpus} / ${num_of_numas}))
-
-    local cpu
-    local numa_list=()
-    for cpu in $@; do
-        local numa=$((${cpu} / ${cpus_per_numa}))
-        [[ ${numa_list[@]/${numa}/} != ${numa_list[@]} ]] && continue
-        echo $numa
-        numa_list=("${numa_list[@]}", "$numa")
-    done
-}
-
-function wait_async_cmd() {
-    eval $1
-    local pid=$(jobs -rp)
-    local count_time=0
-    while true; do
-        local count=$(jobs -rp | wc -l)
-        if [ ${count} -eq 0 ]; then
-            wait ${pid}
-            echo $?
-            break
-        fi
-
-        if [ ${count_time} -gt 8 ]; then
-            kill -9 ${pid}
-            echo -1
-            break
-        fi
-
-        sleep 0.5
-        count_time=$((count_time + 1))
-    done
-}
-
-function wait_cmd() {
-    local count_time=0
-    while true; do
-        local result=$(wait_async_cmd "$1")
-        if [ ${result} -ne -1 ]; then
-            echo ${result}
-            break
-        fi
-
-        if [ ${count_time} -gt 3 ]; then
-            echo -1
-            break
-        fi
-        count_time=$((count_time + 1))
-    done
-}
-
-function wait_container_ready() {
-    local container_name=$1
-    local timeout=${2:-100}
-    local starttime=$(date +%s)
-    local currenttime=$starttime
-    local endtime=$(($starttime+$timeout))
-    local has_restart=0
-
-    local userdata_dir
-    local mount_source
-    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
-        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' ${container_name})
-    else
-        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' ${container_name})
-    fi
-    
-    if [ -n "$mount_source" ]; then
-        userdata_dir=$(echo "$mount_source" | sed "s|/data/${container_name}/data$||")
-        if [ "$userdata_dir" == "$mount_source" ]; then
-            userdata_dir=$(dirname "$mount_source")
-        fi
-    else
-        local container_id=`echo ${container_name:8}`
-        userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    fi
-
-    while [ "$currenttime" -lt "$endtime" ] ; do
-        printf "\r%03d/%03d" $(($currenttime-$starttime)) $timeout
-        sleep 1
-        local cmd="$RUNTIME_CMD exec -i ${container_name} getprop sys.boot_completed | grep 1 > /dev/null 2>&1 &"
-        local result=$(wait_cmd "${cmd}")
-        if [ ${result} -eq 0 ]; then
-            bash $THISDIR/base_box.sh chk_key_process ${container_name}
-
-            printf "\r\033[1;32m%03d/%03d\033[0m\n" $(($currenttime-$starttime)) $timeout
-            return 0
-        elif [ ${result} -eq -1 ]; then
-            LOG_WARN "${container_name} wait_cmd timeout, exit and continue!"
-        fi
-        currenttime=$(date +%s)
-    done
-    printf "\r\033[1;31m%03d/%03d\033[0m\n" $(($currenttime-$starttime)) $timeout
-    return 1
 }
 
 function init_quadra() {
@@ -225,22 +109,22 @@ function init_quadra() {
     local container_name=$1
     local ni_init_success=$($RUNTIME_CMD exec -i ${container_name} getprop ni_rsrc_init_completed)
     if [ "${ni_init_success}" == "yes" ]; then
-        LOG_INFO "$container_name netint devices ready"
+        bb_log_info "$container_name netint devices ready"
     else
-        LOG_WARN "ni_rsrc_init_completed is not ready"
+        bb_log_warn "ni_rsrc_init_completed is not ready"
     fi
 }
 
-function init_netint() {
+function init_netint_t432() {
     local container_name=$1
     local starttime=$(date +%s)
     local currenttime=$starttime
     local cmd="$RUNTIME_CMD exec -d $container_name sh -c \"test -f /system/vendor/bin/ni_rsrc_mon_logan\" > /dev/null 2>&1 &"
-    local result=$(wait_cmd "${cmd}")
+    local result=$(bb_wait_cmd "${cmd}")
     if [ ${result} == 1 ]; then
-        LOG_WARN "${container_name} /system/vendor/bin/ni_rsrc_mon_logan not exist"
+        bb_log_warn "${container_name} /system/vendor/bin/ni_rsrc_mon_logan not exist"
     elif [ ${result} -eq -1 ]; then
-        LOG_WARN "${container_name} wait_cmd timeout, continue"
+        bb_log_warn "${container_name} wait_cmd timeout, continue"
     else
         $RUNTIME_CMD exec -i $container_name /vendor/bin/ni_rsrc_mon_logan
         if [ $DEFAULT_RUNTIME == "docker" ]; then
@@ -250,7 +134,7 @@ function init_netint() {
             local netint_nums=0
         fi
         if [ $netint_nums -eq 0 ]; then
-            LOG_WARN "Netint device doesn't exist."
+            bb_log_warn "Netint device doesn't exist."
             return
         fi
         netint_nums=$(($netint_nums - 1))
@@ -260,308 +144,40 @@ function init_netint() {
             currenttime=$(date +%s)
             printf "\033[1;36m[INFO] wait netint devices to be ready %ds\033[0m\n" $(($currenttime-$starttime))
             if [ $(($currenttime-$starttime)) -ge 19 ]; then
-                EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
+                bb_exit_error "${container_name} wait_cmd timeout, exit!"
                 exit
             fi
             cmd="$RUNTIME_CMD exec -i $container_name sh -c \"test -f /dev/shm_netint/NI_LOGAN_lck_d${netint_nums}\" > /dev/null 2>&1 &"
-            result=$(wait_cmd "${cmd}")
+            result=$(bb_wait_cmd "${cmd}")
             if [ ${result} == 1 ]; then
                 continue
             elif [ ${result} -eq -1 ]; then
-                EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
+                bb_exit_error "${container_name} wait_cmd timeout, exit!"
             fi
             cmd="$RUNTIME_CMD exec -i $container_name sh -c \"test -f /dev/shm_netint/NI_LOGAN_lck_e${netint_nums}\" > /dev/null 2>&1 &"
-            result=$(wait_cmd "${cmd}")
+            result=$(bb_wait_cmd "${cmd}")
             if [ ${result} == 1 ]; then
                 continue
             elif [ ${result} -eq -1 ]; then
-                EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
+                bb_exit_error "${container_name} wait_cmd timeout, exit!"
             fi
             break
         done
         $RUNTIME_CMD exec -d $container_name chmod 666 /dev/nvm*n*
         $RUNTIME_CMD exec -d $container_name chmod 777 -R /dev/shm_netint
-        LOG_INFO "$container_name netint devices ready"
+        bb_log_info "$container_name netint devices ready"
     fi
 }
 
-function init_config() {
-    local num_of_cpus=$(get_num_of_cpus)
-    local xd_gpus=($(lspci -D | grep "1fe0:1010" | awk '{print $1}'))
-    local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-    local hantro_gpus=($(lspci -D | grep ":0200" | awk '{print $1}'))
-    if [ ${#xd_gpus[@]} -eq 0 ] && [ ${#amd_gpus[@]} -eq 0 ] && [ ${#hantro_gpus[@]} -eq 0 ]; then
-        ENABLE_SOFT_RENDER=1
-    fi
-    if [ ${ENABLE_SOFT_RENDER} -eq 1 ]; then
-        # 在有GPU的机器上使能软渲染
-        xd_gpus=()
-        amd_gpus=()
-        hantro_gpus=()
-        if [ ! -f $DEFAULT_PROP ]; then
-            EXIT_ERROR "Enable soft render but ${DEFAULT_PROP} not exist!"
-        fi
-    fi
-    if [ $num_of_cpus -eq 128 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_128CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-            if [ ${#xd_gpus[@]} -ne 0 ]; then
-                # XD在绑定NUMA状态下需要进行负载均衡
-                VIDEO_CPU_MAP=(${VIDEO_XD_CPU_MAP_128CORE_MODE1[*]})
-            else
-                VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_128CORE_MODE1[*]})
-            fi
-        else
-            EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        # 若为AMD GPU，对2张卡进行了单独配置，其他情况默认都当做1张卡进行配置；
-        if [ ${#amd_gpus[@]} -eq 2 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD2[*]})
-            VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD2[*]})
-        elif [ ${#amd_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD1[*]})
-            VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD1[*]})
-        # 若为XD GPU获取的是卡个数，对2卡和4卡环境进行单独配置，其他情况默认都当做1张卡进行配置；
-        elif [ ${#xd_gpus[@]} -eq 2 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_XD2_128CORE[*]})
-            VIDEO_VPU_MAP=(${VIDEO_VPU_MAP_XD2_128CORE[*]})
-        elif [ ${#xd_gpus[@]} -eq 4 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_XD4_128CORE[*]})
-            VIDEO_VPU_MAP=(${VIDEO_VPU_MAP_XD4_128CORE[*]})
-        elif [ ${#xd_gpus[@]} -eq 6 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_XD6_128CORE[*]})
-            VIDEO_VPU_MAP=(${VIDEO_VPU_MAP_XD6_128CORE[*]})
-        elif [ ${#xd_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_XD1_128CORE[*]})
-            VIDEO_VPU_MAP=(${VIDEO_VPU_MAP_XD1_128CORE[*]})
-         # 若为HANBO GPU获取的是芯片个数
-        elif [ ${#hantro_gpus[@]} -eq 8 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB8_128CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 16 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB16_128CORE[*]})
-        elif [ ${#hantro_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB4_128CORE[*]})
-        else
-            LOG_INFO "No GPU exists on the host. Enable soft render..."
-        fi
-    elif [ $num_of_cpus -eq 112 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_112CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-                VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_112CORE_MODE1[*]})
-        else
-            EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        # 若为HANBO GPU获取的是芯片个数
-        if [ ${#hantro_gpus[@]} -eq 1 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB1_CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 8 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB8_112CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 16 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB16_112CORE[*]})
-        elif [ ${#hantro_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB4_112CORE[*]})
-        else
-            LOG_INFO "No GPU exists on the host. Enable soft render..."
-        fi
-    elif [ $num_of_cpus -eq 96 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_96CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_96CORE_MODE1[*]})
-        else
-            EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        # 若为AMD GPU，对2张卡进行了单独配置，其他情况默认都当做1张卡进行配置；
-        if [ ${#amd_gpus[@]} -eq 2 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD2[*]})
-            VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD2[*]})
-        elif [ ${#amd_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD1[*]})
-            VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD1[*]})
-        else
-            LOG_INFO "No GPU exists on the host. Enable soft render..."
-        fi
-    elif [ $num_of_cpus -eq 64 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_64CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_64CORE_MODE1[*]})
-        else
-            EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_64CORE[*]})
-        VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_64CORE[*]})
-    elif [ $num_of_cpus -eq 160 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_160CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_160CORE_MODE1[*]})
-        else
-            EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        # 若为AMD GPU，对2张卡进行了单独配置，其他情况默认都当做1张卡进行配置；
-        if [ ${#amd_gpus[@]} -eq 2 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD2[*]})
-            VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD2[*]})
-        elif [ ${#amd_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD1[*]})
-            VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD1[*]})
-        else
-            LOG_INFO "No GPU exists on the host. Enable soft render..."
-        fi
-    elif [ $num_of_cpus -eq 256 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_256CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_256CORE_MODE1[*]})
-        else
-	    EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB32_256CORE[*]})	
-    elif [ $num_of_cpus -eq 320 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_320CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_320CORE_MODE1[*]})
-        else
-            EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-
-        if [ ${#hantro_gpus[@]} -eq 8 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB8_320CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 16 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB16_320CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 24 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB24_320CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 32 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB32_320CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 40 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB40_320CORE[*]})
-        elif  [ ${#hantro_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB4_320CORE[*]})
-        elif [ ${#amd_gpus[@]} -eq 2 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD2[*]})
-            VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD2[*]})
-        elif [ ${#amd_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_AMD1[*]})
-            VIDEO_VSYNC_OFFSET_MAP=(${VIDEO_VSYNC_OFFSET_MAP_AMD1[*]})
-        else
-            LOG_INFO "No GPU exists on the host. Enable soft render..."
-        fi
-    elif [ $num_of_cpus -eq 384 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-            VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_384CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-                VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_384CORE_MODE1[*]})
-        else
-            EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        # 若为HANBO GPU获取的是芯片个数
-        if [ ${#hantro_gpus[@]} -eq 1 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB1_CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 8 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB8_384CORE[*]})
-        elif [ ${#hantro_gpus[@]} -eq 16 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB16_384CORE[*]})
-        elif [ ${#hantro_gpus[@]} -ne 0 ]; then
-            VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_HB4_384CORE[*]})
-        else
-            LOG_INFO "No GPU exists on the host. Enable soft render..."
-        fi
-    else
-        EXIT_ERROR "num_of_cpus unrecognized: ${num_of_cpus}"
-    fi
-
-    VIDEO_USERDATA_MAP=(${VIDEO_USERDATA_MAP_CORE[*]})
-    VIDEO_ENC_MAP=(${VIDEO_ENC_MAP_CORE[*]})
-
-    if [ ${#amd_gpus[@]} -ne 0 ]; then
-        local hanbo_encoders=($(lspci -d 1ec6:0100 | awk '{print $1}'))
-        if [ ${ENCODECARD} -eq 2 ]; then
-            if [ ${#hanbo_encoders[@]} -eq 2 ]; then
-                VIDEO_HANBO_MAP=(${VIDEO_HANBO_MAP_HANBO2[*]})
-            elif [ ${#hanbo_encoders[@]} -ne 0 ]; then
-                VIDEO_HANBO_MAP=(${VIDEO_HANBO_MAP_HANBO1[*]})
-            else
-                EXIT_ERROR "No hanboEncoders exists on the host"
-            fi
-        fi
-    fi
-}
-
-function check_parameters() {
-    for ((i=0; i<${#VIDEO_CPU_MAP[@]}; i++)); do
-        local cpus=()
-        IFS=',' read -r -a cpus <<< ${VIDEO_CPU_MAP[i]}
-        local lim=$(get_num_of_cpus)
-        for ((j=0; j<${#cpus[@]}; j++)); do
-            if [ ${cpus[j]} -ge $lim ]; then
-                EXIT_ERROR "The number ${cpus[j]} in VIDEO_CPU_MAP exceeds the number of cpus 0-$((${lim}-1))."
-            fi
-        done
-    done
-    for ((i=0; i<${#VIDEO_GPU_MAP[@]}; i++)); do
-        if [ ! -e ${VIDEO_GPU_MAP[i]} ]; then
-            EXIT_ERROR "The ${VIDEO_GPU_MAP[i]} in VIDEO_GPU_MAP doesn't exist."
-        fi
-    done
-    if [ ${#amd_gpus[@]} -ne 0 ]; then
-        for ((i=0; i<${#VIDEO_ENC_MAP[@]}; i++)); do
-            local encs=()
-            IFS=',' read -r -a encs <<< ${VIDEO_ENC_MAP[i]}
-            for ((j=0; j<${#encs[@]}; j++)); do
-                if [ ! -e ${encs[j]} ]; then
-                    EXIT_ERROR "The ${encs[j]} in VIDEO_ENC_MAP doesn't exist."
-                fi
-            done
-        done
-    fi
-}
-
-function check_f2fs_partition() {
-    local target_path=$1
-    local has_error=0
-
-    # 1. 校验当前内核是否支持 f2fs
-    # 使用 grep -q 静默匹配，如果找到了会返回 0 (true)
-    if ! grep -q "f2fs" /proc/filesystems; then
-        echo -e "\033[1;31m[ERROR] 校验失败: 当前系统内核不支持 f2fs 文件系统。\033[0m"
-        echo -e "\033[1;31m[ERROR] 执行 'cat /proc/filesystems | grep f2fs' 未检测到回显。\033[0m"
-        echo -e "\033[1;31m[ERROR] 请检查内核是否编译了 f2fs 支持，或尝试手动加载模块 (modprobe f2fs)。\033[0m"
-        has_error=1
-    fi
-
-    # 2. 校验目标目录所在的分区是否为 f2fs 格式
-    mkdir -p "${target_path}"
-    local host_fs_type=$(df -T "${target_path}" | tail -1 | awk '{print $2}')
-    if [ "$host_fs_type" != "f2fs" ]; then
-        echo  "当前容器配置为使能 f2fs (ENABLE_F2FS=1)"
-        echo  "但目标挂载目录 ${target_path} 所在的分区格式为 ${host_fs_type}，并非 f2fs。"
-        echo  "这可能会导致性能受到影响，请注意！"
-    fi
-
-    # 3. 最终判断逻辑：只要有一个校验未通过，就中止并返回 1
-    if [ "$has_error" -ne 0 ]; then
-        echo -e "\033[1;31m[ERROR] f2fs 运行环境检查未通过，操作已中止。\033[0m"
-        return 1
-    fi
-
-    return 0
-}
-
-
-function webrtc_conection_configure()
-{
+function webrtc_conection_configure() {
     local start_cmd="$1"
     if [ -f $DEFAULT_PROP ]; then
         local serverip=$(grep "vmi.webrtc.connection.serverip" $DEFAULT_PROP | awk -F= '{print $2}' | tr -d '\r')
         if [ ${serverip} = "0.0.0.0" ]; then
-            EXIT_ERROR "Server IP is null in default.prop"
+            bb_exit_error "Server IP is null in default.prop"
         fi
     else
-        EXIT_ERROR "No default.prop for webrtc connection configuration"
+        bb_exit_error "No default.prop for webrtc connection configuration"
     fi
     local networktype=4
     local map_http_port=$((8000+$container_id))
@@ -584,144 +200,66 @@ function webrtc_conection_configure()
     echo $opt
 }
 
-function check_nfs_mount() {
-    local nfs_dir=$1
-    
-    if [ ! -d "$nfs_dir" ]; then
-        EXIT_ERROR "NFS目录 ${nfs_dir} 不存在！"
-    fi
-    
-    if ! mountpoint -q "$nfs_dir"; then
-        EXIT_ERROR "NFS目录 ${nfs_dir} 不是挂载点！"
-    fi
-    
-    if ! mount | grep " ${nfs_dir} " | grep -qE " type nfs| type nfs4"; then
-        EXIT_ERROR "NFS目录 ${nfs_dir} 不是NFS远端挂载目录！"
-    fi
-    
-    LOG_INFO "NFS目录 ${nfs_dir} 检查通过"
-    return 0
-}
-
-create_build_prop() {
-    echo "ro.hardware.width=${BUILD_WIDTH}" >> $THISDIR/build.prop 
-    LOG_INFO "ro.hardware.width=${BUILD_WIDTH}"
-    echo "ro.hardware.height=${BUILD_HEIGHT}" >> $THISDIR/build.prop 
-    LOG_INFO "ro.hardware.height=${BUILD_HEIGHT}"
-    echo "qemu.sf.lcd_density=${BUILD_DENSITY}" >> $THISDIR/build.prop 
-    LOG_INFO "qemu.sf.lcd_density=${BUILD_DENSITY}"
-    echo "ro.hardware.fps=${BUILD_FPS}" >> $THISDIR/build.prop 
-    LOG_INFO "ro.hardware.fps=${BUILD_FPS}"
-    echo "ro.hardware.enableC2decode=0" >> $THISDIR/build.prop
-    echo "ro.hardware.omxsoftdecode=0" >> $THISDIR/build.prop
-    # 配置是否使能C2解码器
-    if lspci | grep -q "Radeon PRO W6800"; then
-        if [ ${ENABLE_AMD_C2_DECODE} -eq 1 ];then
-            sed -i "s/ro.hardware.enableC2decode=0/ro.hardware.enableC2decode=1/g" $THISDIR/build.prop
-            sudo chmod 666 /dev/dma_heap/system
-        else
-            sed -i "s/ro.hardware.enableC2decode=1/ro.hardware.enableC2decode=0/g" $THISDIR/build.prop
-        fi
-    fi
-    local VA_SGPU100_ID=":0200"
-    # VA GPU需要配置相关属性、修改设备的权限, 否则会导致容器无法启动, 当前VA GPU仅支持一张卡，故使用 GPUS_RENDER[0]
-    if [ -n "$(lspci -n | grep ${VA_SGPU100_ID} | awk '{print $3}')" ]; then
-        if [ $ENABLE_HARD_DECODE -eq 1 ];then
-            sed -i "s/ro.hardware.omxsoftdecode=1/ro.hardware.omxsoftdecode=0/g" $THISDIR/build.prop
-        else
-            sed -i "s/ro.hardware.omxsoftdecode=0/ro.hardware.omxsoftdecode=1/g" $THISDIR/build.prop
-        fi
-    fi
-
-}
-
-create_default_prop() {
-    if [ -f $DEFAULT_PROP ]; then
-        local tmp_default_prop=${DEFAULT_PROP}_$container_name
-        cp $DEFAULT_PROP $tmp_default_prop
-        local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-        if [ ${#amd_gpus[@]} -ne 0 ] && [ ${ENABLE_SOFT_RENDER} -ne 1 ]; then
-            local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
-            LOG_INFO "android_$container_id vsyncoffset=${vsync_offset}"
-            sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
-        fi
-        if [ ${ENABLE_ONLY64_KBOX} -eq 1 ]; then
-            sed -i 's/\(.*\)ro.zygote=\(.*\)/ro.zygote='"zygote64"'/g' $tmp_default_prop
-        fi
-        chmod 755 $tmp_default_prop
-    fi
-}
-
-
-container_run() {
+function container_run() {
     if [ $ENABLE_SOFT_RENDER -eq 0 ]; then
-        check_encode_card
+        bb_check_encode_card
     fi
 
+    # 基本参数准备
     local image=$1
-    local container_id=$2
-    local no_copy_usr_data=0
-    if [ $3 ] && [ $3 -eq 1 ]; then
-        echo "Skip usr data copy"
-        no_copy_usr_data=1
-    fi
+    param_check_image_id_or_name $image
 
-    local enable_nfs=0
-    if [ $3 ] && [ $3 -eq 2 ]; then
-        echo "Use nfs mount"
-        check_nfs_mount "$NFS_DIR"
-        enable_nfs=1
-        no_copy_usr_data=1
-    fi
-    
-    # 检查F2FS和NFS冲突
-    if [ "$ENABLE_F2FS" == "1" ] && [ "$enable_nfs" == "1" ]; then
-        echo -e "\033[1;31m[ERROR] 不可以同时使能F2FS和NFS！\033[0m"
-        echo -e "\033[1;31m[ERROR] 当前配置：ENABLE_F2FS=1，使用nstart命令（NFS挂载）\033[0m"
-        echo -e "\033[1;31m[ERROR] 请将ENABLE_F2FS设置为0，或使用start命令（本地挂载）\033[0m"
-        exit 1
-    fi
+    local container_id=$2
     local port=$(($container_id+8000))
     local adb_port=$(($container_id +8500))
     local container_name="${DOCKER_NAME_PREFIX}${container_id}"
-    param_check_image_id_or_name $image
-    if [ ! "$($RUNTIME_CMD volume ls -q 2>/dev/null|grep -w android_base)" ]; then
-        LOG_INFO "create android_base"
-        $RUNTIME_CMD volume create android_base
+    local ram_size_mb=$(($RAM_SIZE_GB * 1024))
+    local cpus_string=${CPU_MAP[$((($container_id - 1) % ${#CPU_MAP[*]}))]}
+    local cpus=()
+    IFS=',' read -r -a cpus <<< $cpus_string
+    local numa_node=($(bb_get_closest_numas ${cpus[@]}))
+    local gpu_node=()
+    if [ ${ENABLE_SOFT_RENDER} -ne 1 ]; then
+        gpu_node=${GPU_MAP[$((($container_id - 1) % ${#GPU_MAP[*]}))]}
     fi
+    local userdata_dir=${USERDATA_MAP[$((($container_id - 1) % ${#USERDATA_MAP[*]}))]}
+    
+    # 准备云机属性配置文件
+    bb_create_build_prop
+    bb_create_default_prop
+
+    # 数据卷挂载准备
+    local no_copy_usr_data=0
+    local enable_nfs=0
+    if [ -n "$3" ] && [ "$3" != "0" ]; then # $3 为数据卷挂载方式，0：重新创建数据卷；1：基于已有数据卷；2：挂载到NFS目录
+        echo "Skip usr data copy"
+        no_copy_usr_data=1
+        if [ $3 -eq 2 ]; then
+            echo "Use nfs mount"
+            bb_check_nfs_mount "$NFS_DIR"
+            enable_nfs=1
+        fi
+    fi
+    bb_check_nfs_f2fs_conflict "$enable_nfs"
+
+    bb_log_info "Create container: $container_name"
+    $RUNTIME_CMD ps -f name=$container_name
+
+    # 准备额外启动参数
     local opt=""
     if [ ${ENABLE_WEBRTC_CONNECTION} -eq 1 ]; then
-        LOG_INFO "Starting on configure WEBRTC connection"
+        bb_log_info "Starting on configure WEBRTC connection"
         opt+=$(webrtc_conection_configure start)
     else 
         opt+=" -p ${port}:8888 "
     fi
-    LOG_INFO "Create container: $container_name"
-    $RUNTIME_CMD ps -f name=$container_name
-
-    local cpus_string=${VIDEO_CPU_MAP[$((($container_id - 1) % ${#VIDEO_CPU_MAP[*]}))]}
-    local cpus=()
-    IFS=',' read -r -a cpus <<< $cpus_string
-    local numa_node=($(get_closest_numas ${cpus[@]}))
-    local gpu_node=()
-    if [ ${ENABLE_SOFT_RENDER} -ne 1 ]; then
-        gpu_node=${VIDEO_GPU_MAP[$((($container_id - 1) % ${#VIDEO_GPU_MAP[*]}))]}
-    fi
-    local userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-
-    local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-    local xd_gpus=($(lspci -D | grep "1fe0:1010" | awk '{print $1}'))
-    local hantro_gpus=($(lspci -D | grep ":0200" | awk '{print $1}'))
-    if [ ${ENABLE_SOFT_RENDER} -eq 1 ]; then
-        # 在有GPU的机器上使能软渲染
-        xd_gpus=()
-        amd_gpus=()
-        hantro_gpus=()
-    fi
-    if [ ${#amd_gpus[@]} -ne 0 ]; then
-        LOG_INFO "Starting on A GPU"
+    
+    if [ $ENABLE_SOFT_RENDER -eq 1 ]; then
+        true
+    elif bb_has_amd_gpu; then
+        bb_log_info "Starting on A GPU"
         if [[ ${ENCODECARD} -eq 0 ]] || [[ ${ENCODECARD} -eq 1 ]]; then
-            local encs_string=${VIDEO_ENC_MAP[$((($container_id - 1) % ${#VIDEO_ENC_MAP[*]}))]}
+            local encs_string=${ENC_MAP[$((($container_id - 1) % ${#ENC_MAP[*]}))]}
             local encs=""
             local encs_dev=()
             IFS=',' read -r -a encs_dev <<< $encs_string
@@ -729,131 +267,58 @@ container_run() {
                 encs+=" --device=${i}:${i}:rwm"
             done
             opt+=$encs
-        elif [ ${ENCODECARD} -eq 2 ]; then
-            local hanbo_node=${VIDEO_HANBO_MAP[$((($container_id - 1) % ${#VIDEO_HANBO_MAP[*]}))]}
-            opt+=" -e VASTAI_VISIBLE_DEVICES=${hanbo_node}"
         fi
         opt+=" -e ENABLE_AMD_C2_DECODE=${ENABLE_AMD_C2_DECODE}"
-    elif [ ${#xd_gpus[@]} -ne 0 ]; then
-        LOG_INFO "Starting on AWM GPU"
-        local vpu_node=${VIDEO_VPU_MAP[$((($container_id - 1) % ${#VIDEO_VPU_MAP[*]}))]}
+    elif bb_has_xd_gpu; then
+        bb_log_info "Starting on AWM GPU"
+        local vpu_node=${VPU_MAP[$((($container_id - 1) % ${#VPU_MAP[*]}))]}
         local index=$((`echo ${gpu_node:16}` - 128))
         opt+=" --device=/dev/pvr_sync:/dev/pvr_sync:rwm"
         opt+=" --device=${gpu_node}:/dev/renderD190:rwm"
         opt+=" --device=/dev/ion-${index}:/dev/ion:rwm"
         opt+=" --device=${vpu_node}:/dev/vpu"
-    elif [ ${#hantro_gpus[@]} -ne 0 ]; then
-        LOG_INFO "Starting on HANTRO GPU"
+    elif bb_has_hantro_gpu; then
+        bb_log_info "Starting on HANTRO GPU"
         opt+=" ENABLE_HARD_DECODE=${ENABLE_HARD_DECODE}"
-
     fi
-
-
-    local ram_size_mb=$(($RAM_SIZE_GB * 1024))
-
-    if [ -f $THISDIR/build.prop ]; then
-	   rm -rf $THISDIR/build.prop
-    fi
-    create_build_prop
-    create_default_prop
     # 额外启动参数
     local extra_run_option=$opt
 
-    if [ -z ${userdata_dir} ]; then
-        userdata_dir="/root/mount"
-    fi
-
-    if [ ! -d "${userdata_dir}/img" ]; then
-        mkdir -p ${userdata_dir}/img
-    fi
-    # f2fs 宿主机物理分区格式校验
-    if [ "$ENABLE_F2FS" == "1" ]; then
-        check_f2fs_partition "${userdata_dir}/data"
-        if [ $? -ne 0 ]; then
-            return 1 # 校验失败，直接退出拉起流程
-        fi
-    fi
-    local KBOX_IMG=${userdata_dir}/img/$container_name.img
-    if [ ! -e $KBOX_IMG ]; then
-        fallocate -l ${STORAGE_SIZE_GB}G $KBOX_IMG
-        if [ "$ENABLE_F2FS" == "1" ]; then
-            yes | mkfs.f2fs $KBOX_IMG
-        else
-            yes | mkfs -t ext4 $KBOX_IMG
-        fi
-    fi
-    KBOX_DATA_PATH="${userdata_dir}/data/$container_name"
-    mkdir -p $KBOX_DATA_PATH
-    if [ "$ENABLE_F2FS" == "1" ]; then
-            mount -t f2fs -o loop $KBOX_IMG $KBOX_DATA_PATH
-        else
-            mount $KBOX_IMG $KBOX_DATA_PATH
-        fi
-    mkdir -p $KBOX_DATA_PATH/data
-    echo $(($STORAGE_SIZE_GB * 2 * 1024 * 1024)) >$KBOX_DATA_PATH/storage_size
-
-    local basedata=${userdata_dir}/data/android_base/data
-    local volumedata=${userdata_dir}/data/$container_name/data
-    if [ "$(ls $basedata 2>/dev/null)" ] && [ $no_copy_usr_data -ne 1 ]; then
-        LOG_INFO "copy ${container_name} from android_base"
-        cp -r -p $basedata/* $volumedata/ 2>/dev/null
-    fi
-
-    if [ -e $volumedata/containerid ]; then
-        rm -rf $volumedata/containerid
-    fi
-
-    bash $THISDIR/base_box.sh start \
-    --name "$container_name" \
-    --cpus "${cpus[*]}" \
-    --numas "${numa_node}" \
-    --gpus "${gpu_node}" \
-    --storage_size_gb "$STORAGE_SIZE_GB" \
-    --ram_size_mb "${ram_size_mb}" \
-    --ports "${adb_port}:5555" \
-    --extra_run_option "$extra_run_option" \
-    --image "$image" \
-    --user_data_path "$userdata_dir" \
-    --enable_render_layer "$ENABLE_RENDER_LAYER"\
-    --enable_f2fs "$ENABLE_F2FS"\
-    --system_size_mb "$SYSTEM_PARTITION_SIZE_MB" \
-    --enable_nfs "$enable_nfs" \
-    --nfs_dir "$NFS_DIR"
+    BB_NAME="$container_name"
+    BB_CPUS="${cpus[*]}"
+    BB_NUMAS="${numa_node}"
+    BB_GPUS_RENDER="${gpu_node}"
+    BB_STORAGE_SIZE_GB="$STORAGE_SIZE_GB"
+    BB_RAM_SIZE_MB="${ram_size_mb}"
+    BB_PORTS="${adb_port}:5555"
+    BB_EXTRA_RUN_OPTION="$extra_run_option"
+    BB_IMAGE_NAME="$image"
+    BB_USER_DATA_PATH="$userdata_dir"
+    BB_ENABLE_RENDER_LAYER="$ENABLE_RENDER_LAYER"
+    BB_ENABLE_F2FS="$ENABLE_F2FS"
+    BB_SYSTEM_SIZE_MB="$SYSTEM_PARTITION_SIZE_MB"
+    BB_ENABLE_NFS="$enable_nfs"
+    BB_NFS_DIR="$NFS_DIR"
+    BB_SKIP_DATA_COPY=$no_copy_usr_data
+    bb_start_box
 
     # 新增拦截逻辑,判断上方base_box是否执行成功 
     if [ $? -ne 0 ]; then
-        LOG_ERROR "${container_name} 基础环境准备失败，终止后续拉起流程！"
+        bb_log_error "${container_name} 基础环境准备失败，终止后续拉起流程！"
         return 1
     fi
-    LOG_INFO "Initialize container ..."
+    bb_log_info "Initialize container ..."
 
-    if [ ${#amd_gpus[@]} -ne 0 ]; then
-        if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
-            $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-            if ! grep -q '<!--.*<Decoders>' media_codecs.xml; then
-                sed -i '/<Decoders>/,/<\/Decoders>/s/<Decoders>/<!-- &/' media_codecs.xml
-                sed -i '/<Decoders>/,/<\/Decoders>/s/<\/Decoders>/& -->/' media_codecs.xml
-            fi
-            $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
-            $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
-        else
-            $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-            sed -i '/<!--.*<Decoders>/s/^[[:space:]]*<!--[[:space:]]*//' media_codecs.xml
-            sed -i '/<Decoders>/,/<\/Decoders>/s/ -->$//' media_codecs.xml
-            $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
-            $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
-        fi
-    fi
-       
-    wait_container_ready "$container_name"
+    bb_prepare_media_codecs_for_amd $container_name
+    bb_wait_container_ready "$container_name" 100 0
 
-    if [ ${#amd_gpus[@]} -ne 0 ]; then
+    # 云机启动后处理
+    if bb_has_amd_gpu; then
         if [ ${ENCODECARD} -eq 0 ]; then
-            init_netint $container_name
-    	else if [ ${ENCODECARD} -eq 1 ]; then 
+            init_netint_t432 $container_name
+    	elif [ ${ENCODECARD} -eq 1 ]; then 
 	        init_quadra $container_name
         fi
-    fi
     fi
     if [[ $ENABLE_RENDER_LAYER == "1" ]]; then
         # 使能渲染中间层，start容器时setprop放在base_box.sh会set property失败
@@ -861,153 +326,101 @@ container_run() {
     fi
 }
 
-container_restart() {
-    if [ ! -f "$THISDIR/local.prop" ]; then
-        touch $THISDIR/local.prop
-    fi
-
+function container_restart() {
     if [ $ENABLE_SOFT_RENDER -eq 0 ]; then
-        check_encode_card
+        bb_check_encode_card
     fi
 
     local container_name=$1
 
-    local mount_source
-    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
-        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' $container_name)
-    else
-        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' $container_name)
-    fi
-
-    LOG_INFO "Restart container: $container_name"
+    bb_log_info "Restart container: $container_name"
     param_check_container_name "$container_name"
 
-    if [ -f $DEFAULT_PROP ] && $RUNTIME_CMD ps | grep -w -q "$container_name"
-    then
-        if [ ${ENABLE_WEBRTC_CONNECTION} -eq 1 ]; then
-            LOG_INFO "Starting on configure WEBRTC connection"
-            webrtc_conection_configure restart
-        fi
-        local container_id=`echo ${container_name:8}`
-        local tmp_default_prop=${DEFAULT_PROP}_$container_name
-        cp $DEFAULT_PROP $tmp_default_prop
-        if [ -f $THISDIR/build.prop ]; then
-	    rm -rf $THISDIR/build.prop
-        fi
-        create_build_prop
-        create_default_prop
+    if [ ${ENABLE_WEBRTC_CONNECTION} -eq 1 ]; then
+        bb_log_info "Starting on configure WEBRTC connection"
+        webrtc_conection_configure restart
     fi
+    bb_create_build_prop
+    bb_create_default_prop
+    bb_prepare_media_codecs_for_amd $container_name
 
-    local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
-    if [ ${#amd_gpus[@]} -ne 0 ]; then
-        if [ ${T432_QUADRA_DECODE_ENABLE} -ne 1 ]; then
-            $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-            if ! grep -q '<!--.*<Decoders>' media_codecs.xml; then
-                sed -i '/<Decoders>/,/<\/Decoders>/s/<Decoders>/<!-- &/' media_codecs.xml
-                sed -i '/<Decoders>/,/<\/Decoders>/s/<\/Decoders>/& -->/' media_codecs.xml
-            fi
-            $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
-        else
-            $RUNTIME_CMD cp ${container_name}:/system/vendor/etc/media_codecs.xml .
-            sed -i '/<!--.*<Decoders>/s/^[[:space:]]*<!--[[:space:]]*//' media_codecs.xml
-            sed -i '/<Decoders>/,/<\/Decoders>/s/ -->$//' media_codecs.xml
-            $RUNTIME_CMD cp ./media_codecs.xml ${container_name}:/system/vendor/etc/
-        fi  
-    fi
+    local userdata_dir=$(bb_get_mount_dir "$container_name")
 
-    local userdata_dir
-    
-    if [ -n "$mount_source" ]; then
-        userdata_dir=$(echo "$mount_source" | sed "s|/data/${container_name}/data$||")
-        if [ "$userdata_dir" == "$mount_source" ]; then
-            userdata_dir=$(dirname "$mount_source")
-        fi
-    else
-        local container_id=`echo ${container_name:8}`
-        userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    fi
-    
-    LOG_INFO "restart using mount path: $userdata_dir"
-    bash $THISDIR/base_box.sh restart $container_name ${userdata_dir} 3 ${ENABLE_HARD_DECODE} $ENABLE_RENDER_LAYER $ENABLE_F2FS $SYSTEM_PARTITION_SIZE_MB
+    bb_log_info "restart using mount path: $userdata_dir"
+    BB_NAME="$container_name"
+    BB_USER_DATA_PATH="${userdata_dir}"
+    BB_RESTART_TIMES=3
+    BB_ENABLE_HARD_DECODE="${ENABLE_HARD_DECODE}"
+    BB_ENABLE_RENDER_LAYER="${ENABLE_RENDER_LAYER}"
+    BB_ENABLE_F2FS="${ENABLE_F2FS}"
+    BB_SYSTEM_SIZE_MB="${SYSTEM_PARTITION_SIZE_MB}"
+    bb_restart_box
     
     # 重启阶段新增拦截逻辑,判断上方base_box的restart是否执行成功
     if [ $? -ne 0 ]; then
-        LOG_ERROR "${container_name} 重启失败：基础环境检查未通过或发生异常！"
+        bb_log_error "${container_name} 重启失败：基础环境检查未通过或发生异常！"
         return 1
     fi
 
-    if [ ${#amd_gpus[@]} -ne 0 ]; then
+    if bb_has_amd_gpu; then
         if [ ${ENCODECARD} -eq 0 ]; then
-            init_netint $container_name
-        else if [ ${ENCODECARD} -eq 1 ]; then
+            init_netint_t432 $container_name
+        elif [ ${ENCODECARD} -eq 1 ]; then
             init_quadra $container_name
         fi
     fi
-    fi
 }
 
-container_delete() {
+function container_delete() {
     local container_name=$1
     local delete_image=$2
     local keep_data=$3
-    local imageid
 
-    local mount_source
-    if [ "$DEFAULT_RUNTIME" == "docker" ]; then
-        mount_source=$($RUNTIME_CMD inspect --format='{{range .Mounts}}{{if eq .Destination "/data"}}{{.Source}}{{end}}{{end}}' $container_name 2>/dev/null)
-    else
-        mount_source=$($RUNTIME_CMD inspect --mode=native --format='{{range .Spec.mounts}}{{if eq .destination "/data"}}{{.source}}{{end}}{{end}}' $container_name 2>/dev/null)
-    fi
-
-    LOG_INFO "Remove container: $container_name"
+    bb_log_info "Remove container: $container_name"
     param_check_container_name "$container_name"
 
-    imageid="$($RUNTIME_CMD ps -a | grep $container_name | awk '{print $2}')"
+    local imageid="$($RUNTIME_CMD ps -a | grep $container_name | awk '{print $2}')"
     $RUNTIME_CMD ps | grep -q "$container_name" && $RUNTIME_CMD stop -t 0 $container_name
     $RUNTIME_CMD rm $container_name
 
     if [ "$delete_image" == "--image" ] ; then
-        LOG_INFO "Remove container image: $imageid"
+        bb_log_info "Remove container image: $imageid"
         $RUNTIME_CMD rmi $imageid
     fi
-    
-    local userdata_dir
-    
-    if [ -n "$mount_source" ]; then
-        userdata_dir=$(echo "$mount_source" | sed "s|/data/${container_name}/data$||")
-        if [ "$userdata_dir" == "$mount_source" ]; then
-            userdata_dir=$(dirname "$mount_source")
-        fi
-    else
-        local container_id=`echo ${container_name:8}`
-        userdata_dir=${VIDEO_USERDATA_MAP[$((($container_id - 1) % ${#VIDEO_USERDATA_MAP[*]}))]}
-    fi
-    
+
+    local userdata_dir=$(bb_get_mount_dir "$container_name")
+
     if [ "${keep_data:-0}" -eq 2 ]; then
         userdata_dir=$NFS_DIR
     fi
     
-    LOG_INFO "delete using mount path: $userdata_dir"
-    bash $THISDIR/base_box.sh delete $container_name ${userdata_dir} $keep_data
+    bb_log_info "delete using mount path: $userdata_dir"
+    BB_NAME="$container_name"
+    BB_USER_DATA_PATH="${userdata_dir}"
+    BB_KEEP_DATA="${keep_data:-0}"
+    bb_delete_box
+
+    if [ -f "${DEFAULT_PROP}_${container_name}" ]; then
+        rm -f ${DEFAULT_PROP}_$container_name
+    fi
 }
 
-pushxd()
-{
+function pushxd() {
     local target=$1
     local container_name=$2
     local container_id=`echo ${container_name:8}`
 
     if [ ! "$($RUNTIME_CMD ps -a  2>/dev/null | grep -w $container_name)" ]
     then
-        LOG_ERROR "$container_name doesn't exist!"
+        bb_log_error "$container_name doesn't exist!"
         return
     fi
 
     local cmd="$RUNTIME_CMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
-    LOG_INFO "$cmd"
-    result=$(wait_cmd "${cmd}")
+    bb_log_info "$cmd"
+    result=$(bb_wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
+        bb_exit_error "${container_name} wait_cmd timeout, exit!"
     fi
 
     local tmp_xd_libs="$(basename ${target%%.*})_$container_id"
@@ -1071,35 +484,34 @@ pushxd()
     rm -rf ${tmp_xd_libs}
 
     cmd="$RUNTIME_CMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
-    LOG_INFO "$cmd"
-    result=$(wait_cmd "${cmd}")
+    bb_log_info "$cmd"
+    result=$(bb_wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
+        bb_exit_error "${container_name} wait_cmd timeout, exit!"
     fi
 
-    LOG_INFO "restarting container: $container_name...."
+    bb_log_info "restarting container: $container_name...."
     cmd="container_restart $container_name"
-    LOG_INFO $cmd
+    bb_log_info $cmd
     $cmd
 }
 
-push()
-{
+function push() {
     local target=$1
     local container_name=$2
     local container_id=`echo ${container_name:8}`
 
     if [ ! "$($RUNTIME_CMD ps -a  2>/dev/null | grep -w $container_name)" ]
     then
-        LOG_ERROR "$container_name doesn't exist!"
+        bb_log_error "$container_name doesn't exist!"
         return
     fi
 
     local cmd="$RUNTIME_CMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
-    LOG_INFO "$cmd"
-    result=$(wait_cmd "${cmd}")
+    bb_log_info "$cmd"
+    result=$(bb_wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
+        bb_exit_error "${container_name} wait_cmd timeout, exit!"
     fi
 
     local tmp_demo_video_engine="$(basename ${target%%.*})_$container_id"
@@ -1114,453 +526,444 @@ push()
     rm -rf ${tmp_demo_video_engine}
 
     cmd="$RUNTIME_CMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
-    LOG_INFO "$cmd"
-    result=$(wait_cmd "${cmd}")
+    bb_log_info "$cmd"
+    result=$(bb_wait_cmd "${cmd}")
     if [ ${result} -eq -1 ]; then
-        EXIT_ERROR "${container_name} wait_cmd timeout, exit!"
+        bb_exit_error "${container_name} wait_cmd timeout, exit!"
     fi
 
-    LOG_INFO "restarting container: $container_name...."
+    bb_log_info "restarting container: $container_name...."
     cmd="container_restart $container_name"
-    LOG_INFO $cmd
+    bb_log_info $cmd
     $cmd
 }
 
 #===============================================================================
-# Main Start
+# CLI 命令分发函数（每个子命令对应一个独立函数）
 #===============================================================================
-if [ "$(whoami)" != "root" ] ; then
-    EXIT_ERROR "Please run this tool with root account!"
-fi
 
+function cli_start() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            bb_log_warn "${DOCKER_NAME_PREFIX}$container_id exist!"
+        else
+            container_run $DOCKER_IMAGE $container_id
+        fi
+    done
+}
+
+function cli_push() {
+    local MIN=$3 MAX=$4
+    if [ -z $4 ]; then
+        MAX=$3
+    fi
+
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            container_run $DOCKER_IMAGE $container_id
+        fi
+        push $2 "${DOCKER_NAME_PREFIX}$container_id"
+    done
+}
+
+function cli_pushxd() {
+    local MIN=$3 MAX=$4
+    if [ -z $4 ]; then
+        MAX=$3
+    fi
+
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            container_run $DOCKER_IMAGE $container_id
+        fi
+        pushxd $2 "${DOCKER_NAME_PREFIX}$container_id"
+    done
+}
+
+function cli_delete() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            bb_log_warn "no container ${DOCKER_NAME_PREFIX}$container_id!"
+        else
+            container_delete "${DOCKER_NAME_PREFIX}$container_id"
+        fi
+    done
+}
+
+function cli_tstart() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            bb_log_warn "${DOCKER_NAME_PREFIX}$container_id exist!"
+        else
+            container_run $DOCKER_IMAGE $container_id 1
+        fi
+    done
+}
+
+function cli_nstart() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            bb_log_warn "${DOCKER_NAME_PREFIX}$container_id exist!"
+        else
+            container_run $DOCKER_IMAGE $container_id 2
+        fi
+    done
+}
+
+# 批量并发执行子命令的通用辅助函数
+# 用法：_batch_concurrent <subcmd> <min> <max> <count>
+function _batch_concurrent() {
+    local subcmd=$1 MIN=$2 MAX=$3 COUNT=$4
+    local container_id
+    local start_id=$MIN
+    local end_id=$((start_id + $COUNT - 1))
+    if [ $end_id -gt $MAX ]; then
+        end_id=$MAX
+    fi
+    while [ $start_id -le $MAX ]; do
+        for container_id in $(seq $start_id $end_id); do
+            cmd="$THISDIR/cfct_video $subcmd $container_id"
+            bb_log_info $cmd
+            $cmd >/dev/null 2>&1 &
+            pids+=($!)
+        done
+        wait ${pids[@]}
+        start_id=$(($end_id + 1))
+        end_id=$(($start_id + $COUNT - 1))
+        if [ $end_id -gt $MAX ]; then
+            end_id=$MAX
+        fi
+    done
+}
+
+function cli_qtstart() {
+    _batch_concurrent tstart "$2" "$3" "$4"
+}
+
+function cli_tdelete() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            bb_log_warn "no container ${DOCKER_NAME_PREFIX}$container_id!"
+        else
+            container_delete "${DOCKER_NAME_PREFIX}$container_id" "" 1
+        fi
+    done
+}
+
+function cli_ndelete() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            bb_log_warn "no container ${DOCKER_NAME_PREFIX}$container_id!"
+        else
+            container_delete "${DOCKER_NAME_PREFIX}$container_id" "" 2
+        fi
+    done
+}
+
+function cli_qtdelete() {
+    _batch_concurrent tdelete "$2" "$3" "$4"
+}
+
+function cli_restart() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "${DOCKER_NAME_PREFIX}$container_id$")" ]; then
+            bb_log_warn "no container ${DOCKER_NAME_PREFIX}$container_id!"
+        else
+            container_restart "${DOCKER_NAME_PREFIX}$container_id"
+        fi
+    done
+}
+
+# 串行异步执行子命令的通用辅助函数
+# 用法：_serial_async <subcmd> <min> <max> <sleep_sec>
+function _serial_async() {
+    local subcmd=$1 MIN=$2 MAX=$3 SLEEP_SEC=$4
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        cmd="$THISDIR/cfct_video $subcmd $container_id"
+        bb_log_info $cmd
+        nohup $cmd 2>&1 &
+        sleep $SLEEP_SEC
+    done
+}
+
+function cli_qstart() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    _serial_async start "$MIN" "$MAX" 10
+}
+
+function cli_qdelete() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    _serial_async delete "$MIN" "$MAX" 1
+}
+
+function cli_qrestart() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    _serial_async restart "$MIN" "$MAX" 1
+}
+
+function cli_start_game_old() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        cmd="$RUNTIME_CMD exec -i ${DOCKER_NAME_PREFIX}$container_id am start -n com.kiloo.subwaysurf/com.idreamsky.messagechannel.MessageChannelMainActivity"
+        bb_log_info $cmd
+        $cmd
+        sleep 5
+    done
+}
+
+function cli_start_game() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        cmd="$RUNTIME_CMD exec -i ${DOCKER_NAME_PREFIX}$container_id am start -n com.kiloo.subwaysurf/com.sybogames.chili.multidex.ChiliMultidexSupportActivity"
+        bb_log_info $cmd
+        $cmd
+        sleep 10
+    done
+}
+
+# 通用：通过 adb 点击屏幕坐标
+# 用法：_adb_tap <container_id> <x> <y>
+function _adb_tap() {
+    local container_id=$1 x=$2 y=$3
+    adb connect localhost:$(($container_id+8500))
+    sleep 1
+    cmd="adb -s localhost:$(($container_id+8500)) shell input tap $x $y"
+    bb_log_info $cmd
+    $cmd
+    sleep 3
+    adb disconnect localhost:$(($container_id+8500))
+}
+
+function cli_play_game() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        _adb_tap $container_id 853 528
+    done
+}
+
+function cli_start_sgame() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        cmd="$RUNTIME_CMD exec -i ${DOCKER_NAME_PREFIX}$container_id am start -n com.tencent.tmgp.sgame/.SGameActivity"
+        bb_log_info $cmd
+        $cmd
+        sleep 3
+    done
+}
+
+function cli_play_sgame() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        _adb_tap $container_id 853 528
+    done
+}
+
+function cli_start_ygame() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        cmd="$RUNTIME_CMD exec -i ${DOCKER_NAME_PREFIX}$container_id am start -n com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity"
+        bb_log_info $cmd
+        $cmd
+        sleep 3
+    done
+}
+
+function cli_play_ygame() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        _adb_tap $container_id 1347 130
+    done
+}
+
+function cli_start_bgame() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        cmd="$RUNTIME_CMD exec -i ${DOCKER_NAME_PREFIX}$container_id am start -n com.miHoYo.enterprise.NGHSoDBak/com.miHoYo.overridenativeactivity.OverrideNativeActivity"
+        bb_log_info $cmd
+        $cmd
+        sleep 2
+    done
+}
+
+function cli_play_bgame() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        adb connect localhost:$(($container_id+8500))
+        sleep 1
+        if [ ${BUILD_WIDTH} -eq 720 ]; then
+            cmd="adb -s localhost:$(($container_id+8500)) shell input tap 370 370"
+        else
+            #1080P
+            cmd="adb -s localhost:$(($container_id+8500)) shell input tap 540 540"
+        fi
+        bb_log_info $cmd
+        $cmd
+        sleep 1
+        adb disconnect localhost:$(($container_id+8500))
+    done
+}
+
+function cli_check_cap() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        $RUNTIME_CMD exec -i ${DOCKER_NAME_PREFIX}$container_id logcat -c
+        local count=`timeout 0.5 $RUNTIME_CMD exec ${DOCKER_NAME_PREFIX}$container_id logcat | grep -E "Capture latency" | wc -l`
+        bb_log_info "${DOCKER_NAME_PREFIX}$container_id $count"
+    done
+}
+
+function cli_check_res() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        if [ $DEFAULT_RUNTIME == "docker" ]; then
+            $RUNTIME_CMD inspect --format='{{.Name}} CPU[{{.HostConfig.CpusetCpus}}] NUMA[{{.HostConfig.CpusetMems}}] Devices[ {{range .HostConfig.Devices}}{{.PathOnHost}} {{end}}]' ${DOCKER_NAME_PREFIX}$container_id
+        else
+            $RUNTIME_CMD inspect --mode=native --format='{{.Spec.hostname}} CPU[{{.Spec.linux.resources.cpu.cpus}}] NUMA[{{.Spec.linux.resources.cpu.mems}}] Devices[{{range .Spec.linux.devices}} {{.path}}{{end}}]' ${DOCKER_NAME_PREFIX}$container_id
+        fi
+    done
+}
+
+function cli_screencap() {
+    local MIN=$2 MAX=$3
+    if [ -z $3 ]; then
+        MAX=$2
+    fi
+    local screencap_dir=$THISDIR/screencap
+    if [ ! -d ${screencap_dir} ];then
+        mkdir -p ${screencap_dir}
+    fi
+    local container_id
+    for container_id in $(seq $MIN $MAX); do
+        cmd="$RUNTIME_CMD exec -i ${DOCKER_NAME_PREFIX}$container_id screencap -p /data/${DOCKER_NAME_PREFIX}${container_id}.png"
+        bb_log_info $cmd
+        $cmd
+        sleep 1
+        cmd="$RUNTIME_CMD cp ${DOCKER_NAME_PREFIX}${container_id}:/data/${DOCKER_NAME_PREFIX}${container_id}.png ${screencap_dir}"
+        bb_log_info $cmd
+        $cmd
+        sleep 1
+        cmd="$RUNTIME_CMD exec -i ${DOCKER_NAME_PREFIX}$container_id rm /data/${DOCKER_NAME_PREFIX}${container_id}.png"
+        bb_log_info $cmd
+        $cmd
+    done
+}
+
+function cli_qscreencap() {
+    _batch_concurrent screencap "$2" "$3" "$4"
+}
+
+#===============================================================================
+# Main
+#===============================================================================
 main() {
-    if [ ! -e "$THISDIR/base_box.sh" ]; then
-        EXIT_ERROR "Can not find file base_box.sh"
-    fi
+    init_video_env
+    check_hardware_map
 
-    if [ ! -e "$CFCT_CFG" ]; then
-        EXIT_ERROR "Can not find file $CFCT_CFG"
-    fi
-    # enable config
-    source $CFCT_CFG
-    LOG_INFO "$CFCT_CFG loaded"
-
-    init_config
-    check_parameters
-
-    export ENABLE_ONLY64_KBOX
-
-    if [ $1 = "start" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                LOG_WARN "android_$container_id exist!"
-            else
-                container_run $DOCKER_IMAGE $container_id
-            fi
-        done
-    elif [ $1 = "push" ]; then
-        local MIN=$3 MAX=$4
-        if [ -z $4 ]; then
-            MAX=$3
-        fi
-
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                container_run $DOCKER_IMAGE $container_id
-            fi
-            push $2 "android_$container_id"
-        done
-    elif [ $1 = "pushxd" ]; then
-        local MIN=$3 MAX=$4
-        if [ -z $4 ]; then
-            MAX=$3
-        fi
-
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                container_run $DOCKER_IMAGE $container_id
-            fi
-            pushxd $2 "android_$container_id"
-        done
-    elif [ $1 = "delete" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                LOG_WARN "no container android_$container_id!"
-            else
-                container_delete "android_$container_id"
-            fi
-        done
-    elif [ $1 = "tstart" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                LOG_WARN "android_$container_id exist!"
-            else
-                container_run $DOCKER_IMAGE $container_id 1
-            fi
-        done
-    elif [ $1 = "nstart" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -n "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                LOG_WARN "android_$container_id exist!"
-            else
-                container_run $DOCKER_IMAGE $container_id 2
-            fi
-        done
-    elif [ $1 = "qtstart" ]; then
-        local MIN=$2 MAX=$3 COUNT=$4
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        local start_id=$MIN
-        local end_id=$((start_id + $COUNT - 1))
-        if [ $end_id -gt $MAX ]; then
-            end_id=$MAX
-        fi
-        while [ $start_id -le $MAX ];
-        do
-            for container_id in $(seq $start_id $end_id); do
-                cmd="$THISDIR/cfct_video tstart $container_id"
-                LOG_INFO $cmd
-                $cmd >/dev/null 2>&1 &
-                pids+=($!)
-            done
-            wait ${pids[@]}
-            start_id=$(($end_id + 1))
-            end_id=$(($start_id + $COUNT - 1))
-            if [ $end_id -gt $MAX ]; then
-                end_id=$MAX
-            fi
-        done
-    elif [ $1 = "tdelete" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                LOG_WARN "no container android_$container_id!"
-            else
-                container_delete "android_$container_id" "" 1
-            fi
-        done
-    elif [ $1 = "ndelete" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                LOG_WARN "no container android_$container_id!"
-            else
-                container_delete "android_$container_id" "" 2
-            fi
-        done
-    elif [ $1 = "qtdelete" ]; then
-        local MIN=$2 MAX=$3 COUNT=$4
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        local start_id=$MIN
-        local end_id=$((start_id + $COUNT - 1))
-        if [ $end_id -gt $MAX ]; then
-            end_id=$MAX
-        fi
-        while [ $start_id -le $MAX ];
-        do
-            for container_id in $(seq $start_id $end_id); do
-                cmd="$THISDIR/cfct_video tdelete $container_id"
-                LOG_INFO $cmd
-                $cmd >/dev/null 2>&1 &
-                pids+=($!)
-            done
-            wait ${pids[@]}
-            start_id=$(($end_id + 1))
-            end_id=$(($start_id + $COUNT - 1))
-            if [ $end_id -gt $MAX ]; then
-                end_id=$MAX
-            fi
-        done
-    elif [ $1 = "restart" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ -z "$($RUNTIME_CMD ps -a --format {{.Names}} | grep "android_$container_id$")" ]; then
-                LOG_WARN "no container android_$container_id!"
-            else
-                container_restart "android_$container_id"
-            fi
-        done
-    elif [ $1 = "qstart" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$THISDIR/cfct_video start $container_id"
-            LOG_INFO $cmd
-            nohup $cmd 2>&1 &
-            sleep 10
-        done
-    elif [ $1 = "qdelete" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$THISDIR/cfct_video delete $container_id"
-            LOG_INFO $cmd
-            nohup $cmd 2>&1 &
-            sleep 1
-        done
-    elif [ $1 = "qrestart" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$THISDIR/cfct_video restart $container_id"
-            LOG_INFO $cmd
-            nohup $cmd 2>&1 &
-            sleep 1
-        done
-    elif [ $1 = "start_game_old" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.kiloo.subwaysurf/com.idreamsky.messagechannel.MessageChannelMainActivity"
-            LOG_INFO $cmd
-            $cmd
-            sleep 5
-        done
-    elif [ $1 = "start_game" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.kiloo.subwaysurf/com.sybogames.chili.multidex.ChiliMultidexSupportActivity"
-            LOG_INFO $cmd
-            $cmd
-            sleep 10
-        done
-    elif [ $1 = "play_game" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            adb connect localhost:$(($container_id+8500))
-            sleep 1
-            cmd="adb -s localhost:$(($container_id+8500)) shell input tap 853 528"
-            LOG_INFO $cmd
-            $cmd
-            sleep 3
-            adb disconnect localhost:$(($container_id+8500))
-        done
-    elif [ $1 = "start_sgame" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.tencent.tmgp.sgame/.SGameActivity"
-            LOG_INFO $cmd
-            $cmd
-            sleep 3
-        done
-    elif [ $1 = "play_sgame" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            adb connect localhost:$(($container_id+8500))
-            sleep 1
-            cmd="adb -s localhost:$(($container_id+8500)) shell input tap 853 528"
-            LOG_INFO $cmd
-            $cmd
-            sleep 3
-            adb disconnect localhost:$(($container_id+8500))
-        done
-    elif [ $1 = "start_ygame" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity"
-            LOG_INFO $cmd
-            $cmd
-            sleep 3
-        done
-    elif [ $1 = "play_ygame" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            adb connect localhost:$(($container_id+8500))
-            sleep 1
-            cmd="adb -s localhost:$(($container_id+8500)) shell input tap 1347 130"
-            LOG_INFO $cmd
-            $cmd
-            sleep 3
-            adb disconnect localhost:$(($container_id+8500))
-        done
-    elif [ $1 = "start_bgame" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$RUNTIME_CMD exec -i android_$container_id am start -n com.miHoYo.enterprise.NGHSoDBak/com.miHoYo.overridenativeactivity.OverrideNativeActivity"
-            LOG_INFO $cmd
-            $cmd
-            sleep 2
-        done
-    elif [ $1 = "play_bgame" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            adb connect localhost:$(($container_id+8500))
-            sleep 1
-            if [ ${BUILD_WIDTH} -eq 720 ]; then
-                cmd="adb -s localhost:$(($container_id+8500)) shell input tap 370 370"
-            else
-                #1080P
-                cmd="adb -s localhost:$(($container_id+8500)) shell input tap 540 540"
-            fi
-            LOG_INFO $cmd
-            $cmd
-            sleep 1
-            adb disconnect localhost:$(($container_id+8500))
-         done
-    elif [ $1 = "check_cap" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            $RUNTIME_CMD exec -i android_$container_id logcat -c
-            local count=`timeout 0.5 $RUNTIME_CMD exec android_$container_id logcat | grep -E "Capture latency" | wc -l`
-            LOG_INFO "android_$container_id $count"
-        done
-    elif [ $1 = "check_res" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            if [ $DEFAULT_RUNTIME == "docker" ]; then
-                $RUNTIME_CMD inspect --format='{{.Name}} CPU[{{.HostConfig.CpusetCpus}}] NUMA[{{.HostConfig.CpusetMems}}] Devices[ {{range .HostConfig.Devices}}{{.PathOnHost}} {{end}}]' android_$container_id
-            else
-                $RUNTIME_CMD inspect --mode=native --format='{{.Spec.hostname}} CPU[{{.Spec.linux.resources.cpu.cpus}}] NUMA[{{.Spec.linux.resources.cpu.mems}}] Devices[{{range .Spec.linux.devices}} {{.path}}{{end}}]' android_$container_id
-            fi
-        done
-    elif [ $1 = "screencap" ]; then
-        local MIN=$2 MAX=$3
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local screencap_dir=$THISDIR/screencap
-        if [ ! -d ${screencap_dir} ];then
-            mkdir -p ${screencap_dir}
-        fi
-        local container_id
-        for container_id in $(seq $MIN $MAX); do
-            cmd="$RUNTIME_CMD exec -i android_$container_id screencap -p /data/android_${container_id}.png"
-            LOG_INFO $cmd
-            $cmd
-            sleep 1
-            cmd="$RUNTIME_CMD cp android_${container_id}:/data/android_${container_id}.png ${screencap_dir}"
-            LOG_INFO $cmd
-            $cmd
-	        sleep 1
-            cmd="$RUNTIME_CMD exec -i android_$container_id rm /data/android_${container_id}.png"
-            LOG_INFO $cmd
-            $cmd
-        done
-    elif [ $1 = "qscreencap" ]; then
-        local MIN=$2 MAX=$3 COUNT=$4
-        if [ -z $3 ]; then
-            MAX=$2
-        fi
-        local container_id
-        local start_id=$MIN
-        local end_id=$((start_id + $COUNT - 1))
-        if [ $end_id -gt $MAX ]; then
-            end_id=$MAX
-        fi
-        while [ $start_id -le $MAX ];
-        do
-            for container_id in $(seq $start_id $end_id); do
-                cmd="$THISDIR/cfct_video screencap $container_id"
-                LOG_INFO $cmd
-                $cmd >/dev/null 2>&1 &
-                pids+=($!)
-            done
-            wait ${pids[@]}
-            start_id=$(($end_id + 1))
-            end_id=$(($start_id + $COUNT - 1))
-            if [ $end_id -gt $MAX ]; then
-                end_id=$MAX
-            fi
-        done
-    fi
-
-    unset ENABLE_ONLY64_KBOX
+    case "$1" in
+        start|tstart|nstart|push|pushxd|delete|tdelete|ndelete|qtstart|qtdelete|\
+        restart|qstart|qdelete|qrestart|start_game_old|start_game|play_game|\
+        start_sgame|play_sgame|start_ygame|play_ygame|start_bgame|play_bgame|\
+        check_cap|check_res|screencap|qscreencap)
+            cli_$1 "$@"
+            ;;
+        *)
+            bb_exit_error "Unknown command: $1"
+            ;;
+    esac
 }
 
 main "$@"
