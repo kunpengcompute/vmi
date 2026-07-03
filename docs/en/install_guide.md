@@ -1119,7 +1119,7 @@ Deploy the DaoCloud device plugin image on all worker nodes.
 
 DaoCloud provides this plugin. This document applies to plugin version v0.0.5. Obtain related installation documents and software packages, and deploy the DaoCloud device plugin according to the documents.
 
-1. Obtain the `VAGPU-25.03.01.01-RC20.tgz` GPU driver package based on "Software Deployment > Preparing the Environment" in [Kbox Cloud Phone Container Feature Guide](https://gitcode.com/wyc3111/Kbox-patches/blob/AOSP11/docs/en/install_guide.md). Decompress the package to obtain the `k8s-v0.0.5-1.tar.gz` package.
+1. Obtain the `VAGPU-25.03.01.01-RC20.tgz` GPU driver package based on "Software Deployment > Preparing the Environment" in [Kbox Cloud Phone Container Feature Guide](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/en/install_guide.md). Decompress the package to obtain the `k8s-v0.0.5-1.tar.gz` package.
 2. Decompress `k8s-v0.0.5-1.tar.gz` to obtain installation documents and software packages.
 3. Install Va Docker based on "Installing Va Docker" in the *DC1000 Accelerator Card Va Docker Installation Guide 01*.
 4. Install the device plugin based on chapter 3 in the *DC1000 Accelerator Card Kubernetes Device Plugin Installation Guide 03*.
