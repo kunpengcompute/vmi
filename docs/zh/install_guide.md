@@ -225,7 +225,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     2. 将Kbox-patches-AOSP11文件夹中的deploy_scripts目录上传至服务器的“~/dependency”目录。
     3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox_\*.zip到“~/dependency/deploy_scripts”目录。
-    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC20.tgz，获取va_driver.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
+    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC24.tgz，获取va_driver.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
@@ -1121,7 +1121,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 道客设备插件由道客提供，本文档配套v0.0.5版本。请先获取相关的安装文档和软件包，并按照文档完成道客设备插件的部署。
 
-1. 请参见《[Kbox云手机容器 安装指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-25.03.01.01-RC20.tgz软件包。解压获取k8s-v0.0.5-1.tar.gz压缩包。
+1. 请参见《[Kbox云手机容器 安装指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-25.03.01.01-RC24.tgz软件包。解压获取k8s-v0.0.5-1.tar.gz压缩包。
 2. 解压k8s-v0.0.5-1.tar.gz获取相关的安装文档和软件包。
 3. 请参见《DC1000加速卡Va Docker安装指南  01.pdf》中第四章（安装Va Docker）安装Va Docker。
 4. 请参见《DC1000加速卡Kubernetes设备插件安装指南 03.pdf》中第三章（安装部署）安装设备插件。
