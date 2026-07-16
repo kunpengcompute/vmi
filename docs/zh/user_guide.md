@@ -625,7 +625,7 @@ cd /home/k8s/k8s/script
 |ro.vmi.loglevel|日志级别。|1：default<br>2：verbose<br>3：debug<br>4：info<br>5：warn<br>6：error<br>7：fatal|4：默认info日志级别|
 |ro.hardware.dynamicfps|动态帧率调整功能开关。|0：不生效<br>1：生效|1：默认生效|
 |ro.hardware.downfps|动态帧率调整功能生效，客户端断连后的渲染帧率。|12fps<br>24fps|12：默认的客户端断连后渲染帧率（动态帧率调整功能生效时）|
-|ro.hardware.compositionBypass|合成优化开关，针对应用全屏场景优化。（GPU为DC1000时不支持，不允许打开此开关）|1：生效合成优化<br>其他：不生效|0：默认关闭|
+|ro.hardware.compositionBypass|合成优化开关，针对应用全屏场景优化。（GPU为DC1000/DC1000C时不支持，不允许打开此开关）|1：生效合成优化<br>其他：不生效|0：默认关闭|
 |ro.hardware.compositionBypass.offset|合成优化偏置帧数。在合成优化功能打开时，连续一定帧数满足生效条件后实际生效合成优化功能，可以改善合成优化功能开启后可能出现的画面旋转现象。|大于0|可根据实际情况调整（AMD环境建议0）|
 |ro.vmi.adaptive.vsync|自适应vsync功能开关，打开后可以优化服务端图像渲染阶段的处理时延。|1：生效自适应vsync<br>其他：不生效|默认不生效|
 
@@ -733,7 +733,7 @@ cd /home/k8s/k8s/script
 |ENCODECARD|选择编码卡。|0：T432<br>1：Quadra<br>2：Va1e（暂不支持）<br>3：OpenH264|1：默认选择Quadra编码卡|
 |ENABLE_AMD_C2_DECODE|AMD方案C2软解使能开关|0/其他值：不使能<br>1：使能|0：默认不使能|
 |T432_QUADRA_DECODE_ENABLE|T432/Quadra硬解使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
-|ENABLE_HARD_DECODE|DC1000硬解使能开关。|0/其他值：不使能<br>1：使能|1：默认使能|
+|ENABLE_HARD_DECODE|DC1000/DC1000C硬解使能开关。|0/其他值：不使能<br>1：使能|1：默认使能|
 |ENABLE_WEBRTC_CONNECTION|WebRTC使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
 |ENABLE_F2FS|F2FS文件系统启动使能开关。|0/其他值：不使能1：使能|0：默认不使能|
 |SYSTEM_PARTITION_SIZE_MB|/system分区大小调节使能开关和具体设定数值（单位为MB）。|0：不使能  非0值：使能|0：默认不使能|
@@ -749,7 +749,7 @@ cd /home/k8s/k8s/script
 
 |字段名称|字段描述|取值范围|默认值|
 |--|--|--|--|
-|vmi.video.encodertype|编码器类型配置项，当该项配置为CPU，即使用软编时，若云手机需要运行较大负载应用，为防止默认绑核方式（2容器2核）的CPU资源不足，建议更改绑核方式为绑NUMA，修改方法如下：将cfct_config配置文件中CPU_BIND_MODE字段修改为1。|0：CPU（CPU软编码器编码）<br>1：VPU（外置硬件编码器编码）<br>2：GPU（仅DC1000支持）|1：默认VPU（外置硬件编码器编码）|
+|vmi.video.encodertype|编码器类型配置项，当该项配置为CPU，即使用软编时，若云手机需要运行较大负载应用，为防止默认绑核方式（2容器2核）的CPU资源不足，建议更改绑核方式为绑NUMA，修改方法如下：将cfct_config配置文件中CPU_BIND_MODE字段修改为1。|0：CPU（CPU软编码器编码）<br>1：VPU（外置硬件编码器编码）<br>2：GPU（仅DC1000/DC1000C支持）|1：默认VPU（外置硬件编码器编码）|
 |vmi.video.videoframetype|帧数据输出格式。|0：H264<br>1：YUV（只有当encodertype取值为0时支持）<br>2：RGB（暂不支持）<br>3：H265（vmi.video.encodertype取值为0时不可用）|3：H265|
 |vmi.video.frame.width|自适应分辨率宽度（必须是8的倍数）。|360~2160|720|
 |vmi.video.frame.height|自适应分辨率高度（必须是8的倍数）。|360~3840|1280|
@@ -759,11 +759,11 @@ cd /home/k8s/k8s/script
 |ro.vmi.video.wmcmd|是否使用自适应分辨率功能。|0：不启用<br>1：启用|1|
 |vmi.video.encode.gopsize|编码GOP大小配置项。|30~3000|60：默认编码GOP大小为60|
 |vmi.video.encode.profile|编码profile配置项（H.265编码仅支持配置main）。|0：baseline（仅H264支持）<br>1：main<br>2：high（仅H264支持）|1：main|
-|vmi.video.encode.bitrate|编码码率。|500000~50000000（AMD，一般为W6800）<br>500000~30000000（DC1000）<br>单位bps|8000000|
+|vmi.video.encode.bitrate|编码码率。|500000~50000000（AMD，一般为W6800）<br>500000~30000000（DC1000/DC1000C）<br>单位bps|8000000|
 |vmi.video.encode.forcekeyframe|编码强制I帧配置项。|0：不触发编码强制I帧<br>1：在下一帧强制生成I帧|0：默认不触发编码强制I帧|
 |vmi.video.encode.rcmode|编码格式参数项。|0：ABR平均码率模式（暂不支持）<br>1：CRF画质优先模式（暂不支持）<br>2：CBR恒定码率模式<br>3：CAPPED_CRF画质优先并限制最大码率模式|3：CAPPED_CRF画质优先并限制最大码率模式|
 |vmi.video.encode.crf|CRF码控级别。|0-51|21|
-|vmi.video.encode.maxcrfrate|CRF码率峰值。|500000~100000000（AMD，一般为W6800）<br>500000~30000000（DC1000）|10000000|
+|vmi.video.encode.maxcrfrate|CRF码率峰值。|500000~100000000（AMD，一般为W6800）<br>500000~30000000（DC1000/DC1000C）|10000000|
 |vmi.video.encode.vbvbuffersize|CRF码率缓冲区大小。|-1：自动模式<br>0：禁用峰值比特率限制<br>[min_vbv_size ~ 3000 ]：min_vbv_size = floor(1000 / fps) +1且min_vbv_size >= 10|1000|
 |vmi.video.encode.interpolation|补帧参数项。|0：关闭补帧<br>1：开启补帧|0：关闭补帧|
 |vmi.audio.audiotype|音频输出格式。|0：OPUS<br>1：PCM|0：OPUS|
