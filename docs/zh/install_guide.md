@@ -249,27 +249,21 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 使用硬件配置方案二、三、四每次服务器重启后，都需要重新执行安装显卡驱动步骤。
 
-1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)获取VAGPU-25.03.01.01-RC13-A15.tgz，上传至“~/dependency/”目录，解压后获取显卡内核态驱动。
+1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)获取VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传至“~/dependency/”目录，解压后获取显卡内核态驱动。
 
     ```shell
     cd ~/dependency/
-    tar -zxvf VAGPU-25.03.01.01-RC13-A15.tgz
+    tar -zxvf VAGPU-A15-C-F-26.02.06.00.RC2.tgz
     ```
 
-2. 安装显卡PCIe驱动。
+2. 将驱动包里的固件拷贝到系统的“/lib/firmware/”目录。
 
     ```shell
-    cd ~/dependency/VAGPU-25.03.01.01-RC13-A15/openEuler-6.6.0+/ko_fw
-    insmod va_pci.ko
-    ```
-
-3. 将驱动包里的固件拷贝到系统的“/lib/firmware/”目录。
-
-    ```shell
+    cd ~/dependency/VAGPU-A15-C-F-26.02.06.00.RC2/fw
     cp rgx* /lib/firmware/
     ```
 
-4. 安装显卡图形驱动。
+3. 安装显卡图形驱动。
 
     GPU驱动会为每个显卡节点启动一个kworker进程，道客DC 1000单卡有4个节点。为保障kworker进程性能，建议使用kworkerCores参数为每个kworker进程绑定CPU，kworkerCores参数依次表示每个显卡节点对应kworker进程的绑核。
 
@@ -277,34 +271,38 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     以下绑核方式仅作为参考，请依据实际情况做出调整。
 
+    ```shell
+    cd ~/dependency/VAGPU-A15-C-F-xxx/kmd/GUEST/openEuler-6.6.0+
+    ```
+
     硬件配置方案二（鲲鹏920 7260处理器 + 4\*道客DC 1000）：
 
     ```shell
-    insmod va_gfx.ko kworkerCores=0,0,1,1,32,32,33,33,64,64,65,65,96,96,97,97
+    insmod va_gpu.ko kworkerCores=0,0,1,1,32,32,33,33,64,64,65,65,96,96,97,97
     ```
 
     硬件配置方案三（鲲鹏920 7280Z处理器 + 8\*道客DC 1000）：
 
     ```shell
-    insmod va_gfx.ko kworkerCores=80,80,81,81,82,82,83,83,0,0,1,1,2,2,3,3,240,240,241,241,242,242,243,243,160,160,161,161,162,162,163,163
+    insmod va_gpu.ko kworkerCores=80,80,81,81,82,82,83,83,0,0,1,1,2,2,3,3,240,240,241,241,242,242,243,243,160,160,161,161,162,162,163,163
     ```
 
     硬件配置方案四（鲲鹏920 7260W处理器 + 8\*道客DC 1000）：
 
     ```shell
-    insmod va_gfx.ko kworkerCores=64,64,65,65,66,66,67,67,0,0,1,1,2,2,3,3,192,192,193,193,194,194,195,195,128,128,129,129,130,130,131,131
+    insmod va_gpu.ko kworkerCores=64,64,65,65,66,66,67,67,0,0,1,1,2,2,3,3,192,192,193,193,194,194,195,195,128,128,129,129,130,130,131,131
     ```
 
-5. 等待脚本执行完成，查看内核日志。
+4. 等待脚本执行完成，查看内核日志。
 
     ```shell
     dmesg | grep VAGPU | grep version
     ```
 
-    回显信息中显卡内核态驱动版本号和显卡固件版本号相同，如下加粗内容，则表明显卡驱动安装完成。
+    回显信息中显卡内核态驱动版本号和显卡固件版本号相同，如下内容，则表明显卡驱动安装完成。
 
     ```shell
-    PVR_K:  28823: Meta firmware version: 1.18@6276027 build: release branch:  commit: 67e785a8 tag: VAGPU-25.03.01.01-RC13-A15
+    PVR_K:  28823: Meta firmware version: 1.18@6276027 build: release branch:  commit: 67e785a8 tag: VAGPU-A15-C-F-26.02.06.00.RC2
     ...
     ```
 
@@ -314,10 +312,18 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 >
 >1. 删掉所有的容器，解除对驱动的占用。
 >2. 顺序卸载驱动。
+>3. 新版本的DC驱动取消了va_gfx.ko和va_pci.ko, 合并为了va_gpu.ko, 新版的DC驱动只需要卸载va_gpu.ko即可。
+>
+>
+> ```shell
+> rmmod va_gpu
+> ```
+>
+> 旧版驱动指令如下：
 >
 > ```shell
 > rmmod va_gfx
-> rmmod va_pci
+> rmmod va_pci 
 > ```
 
 #### 1.2.3 制作镜像<a name="ZH-CN_TOPIC_0000002549866429" id="制作镜像"></a>
@@ -349,7 +355,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     2. 将Kbox-patches-AOSP15文件夹中的deploy_scripts目录上传至服务器的“~/dependency”目录。
     3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox_\*.zip到“~/dependency/deploy_scripts”目录。
-    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-25.03.01.01-RC13-A15.tgz，获取va_driver.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
+    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-A15-C-F-26.02.06.00.RC2.tgz，获取va_driver.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
@@ -1232,9 +1238,9 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 道客设备插件由道客提供，本文档配套v0.0.5版本。请先获取相关的安装文档和软件包，并按照文档完成道客设备插件的部署。
 
-1. 请参见《[Kbox云手机容器 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-25.03.01.01-RC13-A15.tgz软件包。解压获取k8s-v0.0.5-1.tar.gz压缩包。
-2. 解压k8s-v0.0.5-1.tar.gz获取相关的安装文档和软件包。
-3. 请参见《DC1000加速卡Va Docker安装指南  01.pdf》中第四章（安装Va Docker）安装Va Docker。
+1. 请参见《[Kbox云手机容器 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-A15-C-F-26.02.06.00.RC2.tgz软件包。解压获取k8s/v0.0.5-1.tar.gz压缩包。
+2. 解压v0.0.5-1.tar.gz获取相关的安装文档和软件包。
+3. 请参见《DC1000加速卡Va Docker安装指南  02.pdf》中第四章（安装Va Docker）安装Va Docker。
 4. 请参见《DC1000加速卡Kubernetes设备插件安装指南 03.pdf》中第三章（安装部署）安装设备插件，安装到“3.2.3导入镜像”章节即可。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
