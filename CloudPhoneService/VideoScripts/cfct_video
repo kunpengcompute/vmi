@@ -223,7 +223,6 @@ container_run() {
     
     # 准备云机属性配置文件
     bb_create_build_prop
-    # bb_create_default_prop
 
     # 数据卷挂载准备
     local no_copy_usr_data=0
@@ -290,7 +289,7 @@ container_run() {
 	    cp $DEFAULT_PROP $tmp_default_prop
 	    local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
 	    if [ ${#amd_gpus[@]} -ne 0 ]; then
-		    local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
+		    local vsync_offset=${VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VSYNC_OFFSET_MAP[*]}))]}
 		    bb_log_info "android_$container_id vsyncoffset=${vsync_offset}"
 		    sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
 	    fi
@@ -342,7 +341,7 @@ container_run() {
         fi
     fi
     if [[ $ENABLE_RENDER_LAYER == "1" ]]; then
-        bash $THISDIR/base_box_aosp15.sh deploy_render_layer ${container_name}
+        bb_deploy_render_layer ${container_name}
     fi
 }
 
@@ -352,7 +351,7 @@ container_restart() {
     echo $container_name
     bb_log_info "Restart container: $container_name"
     param_check_container_name "$container_name"
-
+    bb_create_build_prop
     if [ -f $DEFAULT_PROP ] && $RUNTIME_CMD ps | grep -w -q "$container_name"
     then
         if [ ${ENABLE_WEBRTC_CONNECTION} -eq 1 ]; then
@@ -365,7 +364,7 @@ container_restart() {
 
         local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
         if [ ${#amd_gpus[@]} -ne 0 ]; then
-            local vsync_offset=${VIDEO_VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VIDEO_VSYNC_OFFSET_MAP[*]}))]}
+            local vsync_offset=${VSYNC_OFFSET_MAP[$((($container_id - 1) % ${#VSYNC_OFFSET_MAP[*]}))]}
             bb_log_info "android_$container_id vsyncoffset=${vsync_offset}"
             sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
         fi
