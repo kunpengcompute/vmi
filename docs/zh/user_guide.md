@@ -413,6 +413,7 @@
 2. 进入/home/k8s/k8s/scripts/nri-quota-plugin目录构建插件。
 
     ```shell
+    go mod tidy
     go build -o quota-plugin main.go
     ```
 
@@ -436,7 +437,7 @@
 4. 部署插件。
 
     ```shell
-    mkdir -p /var/log/nri /var/run/nri
+    mkdir -p /var/log/nri /var/run/nri /opt/nri-quota-plugin
     cp quota-plugin /opt/nri-quota-plugin/
     chmod +x /opt/nri-quota-plugin/quota-plugin
     ```
