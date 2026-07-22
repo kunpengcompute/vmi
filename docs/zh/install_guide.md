@@ -194,6 +194,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     ```shell
     wget https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz
     tar -C /usr/local -xzf go1.25.0.linux-arm64.tar.gz
+    echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+
+    配置代理
+
+    ```shell
     go env -w GO111MODULE=on
     go env -w GOPROXY=https://goproxy.cn,direct
     ```
