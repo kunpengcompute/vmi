@@ -1146,12 +1146,6 @@ cfct_config配置文件配置项和配置方法如下所示。
 6. （可选）配置NUMA亲和。
     1. 编译环境配置和插件时需要保证Golang版本1.25或以上，参考[安装Golang](#安装Golang)进行安装。
 
-        ```shell
-        systemctl stop kubeletexport GOROOT=/usr/lib/go
-        go env -w GO111MODULE=on
-        go env -w GOPROXY=https://goproxy.io,direct
-        ```
-
     2. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取K8s NUMA亲和插件软件包topo-affinity-plugin-master.zip，获取后将软件包上传至服务器的“/home/k8s”目录。
     3. 解压topo-affinity-plugin-master.zip，进入软件包目录并编译插件。
 
@@ -1267,7 +1261,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 在所有工作节点完成部署设备插件镜像的操作。
 
-1. 安装golang，未安装则参考[安装Golang](#安装Golang)进行安装。
+1. Golang未安装则参考[安装Golang](#安装Golang)进行安装。
 
 2. 下载device-plugin的代码并切换到指定commitid。
 
