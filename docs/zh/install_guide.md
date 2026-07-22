@@ -21,7 +21,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
 |Riser卡|RISER1与RISER2模组相同，均为：PCIe X16 + PCIe X8|RISER1与RISER2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|
 |编码卡|1\*NETINT Quadra T2A（X8）|无|无|无|
-|GPU|2\*AMD W6800|4\*道客DC 1000|8\*道客DC 1000 或 8\*道客DC1000C|8\*道客DC1000|
+|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000 或 8\*道客DC1000C|8\*道客DC1000|
 |操作系统|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|
 |系统/内核版本|6.6.0-72.0.0|6.6.0-72.0.0|6.6.0-72.0.0|6.6.0-72.0.0|
 
@@ -253,13 +253,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     ```shell
     cd ~/dependency/
-    tar -zxvf VAGPU-A15-C-F-xxx.tgz
+    tar -zxvf VAGPU-A15-C-F-26.02.06.00.RC2.tgz
     ```
 
 2. 将驱动包里的固件拷贝到系统的“/lib/firmware/”目录。
 
     ```shell
-    cd ~/dependency/VAGPU-A15-C-F-xxx/fw
+    cd ~/dependency/VAGPU-A15-C-F-26.02.06.00.RC2/fw
     cp rgx* /lib/firmware/
     ```
 
@@ -269,10 +269,10 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     在安装显卡图形驱动绑核时，**请确保kworker进程绑定的CPU核和GPU渲染节点同属一个CPU片**。GPU渲染节点所属CPU片的查询方式请参见[确定GPU拓扑结构](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0170.html)章节。
 
-    以DC1000为例，以下绑核方式仅作为参考，请依据实际情况做出调整。
+    以DC1000/DC1000C为例，以下绑核方式仅作为参考，请依据实际情况做出调整。
 
     ```shell
-    cd ~/dependency/VAGPU-A15-C-F-xxx/kmd/GUEST/openEuler-6.6.0+
+    cd ~/dependency/VAGPU-A15-C-F-26.02.06.00.RC2/kmd/GUEST/openEuler-6.6.0+
     ```
 
     硬件配置方案二（鲲鹏920 7260处理器 + 4\*道客DC 1000）：
@@ -281,7 +281,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     insmod va_gpu.ko kworkerCores=0,0,1,1,32,32,33,33,64,64,65,65,96,96,97,97
     ```
 
-    硬件配置方案三（鲲鹏920 7280Z处理器 + 8\*道客DC 1000）：
+    硬件配置方案三（鲲鹏920 7280Z处理器 + 8\*道客DC 1000 或 8\*道客DC1000C）：
 
     ```shell
     insmod va_gpu.ko kworkerCores=80,80,81,81,82,82,83,83,0,0,1,1,2,2,3,3,240,240,241,241,242,242,243,243,160,160,161,161,162,162,163,163
@@ -302,7 +302,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     回显信息中显卡内核态驱动版本号和显卡固件版本号相同，如下内容，则表明显卡驱动安装完成。
 
     ```shell
-    PVR_K:  28823: Meta firmware version: 1.18@6276027 build: release branch:  commit: 67e785a8 tag: VAGPU-A15-C-F-xxx
+    PVR_K:  28823: Meta firmware version: 1.18@6276027 build: release branch:  commit: 67e785a8 tag: VAGPU-A15-C-F-26.02.06.00.RC2
     ...
     ```
 
@@ -357,7 +357,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     2. 将Kbox-patches-AOSP15文件夹中的deploy_scripts目录上传至服务器的“~/dependency”目录。
     3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox_\*.zip到“~/dependency/deploy_scripts”目录。
-    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-A15-C-F-xxx.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
+    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
@@ -372,13 +372,12 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
             ```shell
             cd ~/dependency/deploy_scripts
             chmod +x make_image_aosp15.sh
-            ./make_image_aosp15.sh kbox:demo kbox:origin VAGPU-A15-C-F-xxx
+            ./make_image_aosp15.sh kbox:demo kbox:origin VAGPU-A15-C-F-26.02.06.00.RC2
             ```
 
             >![](public_sys-resources/icon-note.gif) **说明：** 
             >
             >执行步骤3后，回显中会出现多行linkerconfig告警，该告警不影响正常功能，可以忽略。
-            >旧版驱动使用指令./make_image_aosp15.sh kbox:demo kbox:origin va_driver.tgz
             >![](figures/zh-cn_image_0000002549746455.png)
 
 4. 查看Kbox镜像（kbox:origin）是否制作成功。
@@ -646,7 +645,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
     - 如何确认当前环境只有一张GPU？
 
-        以DC1000为例，查询服务器中道客DC1000信息。
+        以DC1000/DC1000C为例，查询服务器中道客DC1000/DC1000C信息。
 
         ```shell
         lspci -D | grep 0200
@@ -1241,7 +1240,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 道客设备插件由道客提供，本文档配套v0.0.5版本。请先获取相关的安装文档和软件包，并按照文档完成道客设备插件的部署。
 
-1. 请参见《[Kbox云手机容器 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-A15-C-F-xxx.tgz软件包。解压获取k8s/v0.0.5-1.tar.gz压缩包。
+1. 请参见《[Kbox云手机容器 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-A15-C-F-26.02.06.00.RC2.tgz软件包。解压获取k8s/v0.0.5-1.tar.gz压缩包。
 2. 解压v0.0.5-1.tar.gz获取相关的安装文档和软件包。
 3. 请参见《DC1000加速卡Va Docker安装指南  02.pdf》中第四章（安装Va Docker）安装Va Docker。
 4. 请参见《DC1000加速卡Kubernetes设备插件安装指南 03.pdf》中第三章（安装部署）安装设备插件，安装到“3.2.3导入镜像”章节即可。
@@ -1370,7 +1369,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 |数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
 |网卡|板载|1*（4\*GE接口卡）1\*5902L板载灵活网卡|
 |Riser卡|-|1\*16X SLOT(PCIe X16) + 2\*8X SLOT (PCIe X8)-RISER1&2模组、2\*8X SLOT (PCIe X8)-后置Riser|
-|GPU|-|4\*道客DC 1000 或 4\*道客DC1000C|
+|GPU|-|4\*道客DC1000 或 4\*道客DC1000C|
 |操作系统|-|openEuler 24.03 LTS SP1|
 |系统/内核版本|-|6.6.0-72.0.0|
 
