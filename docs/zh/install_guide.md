@@ -1134,7 +1134,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 1. 请参见《[Kbox云手机容器 安装指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-25.03.01.01-RC24.tgz软件包。解压获取k8s-v0.0.5-1.tar.gz压缩包。
 2. 解压k8s-v0.0.5-1.tar.gz获取相关的安装文档和软件包。
 3. 请参见《DC1000加速卡Va Docker安装指南  01.pdf》中第四章（安装Va Docker）安装Va Docker。
-4. 请参见《DC1000加速卡Kubernetes设备插件安装指南 03.pdf》中第三章（安装部署）安装设备插件。
+4. 请参见《DC1000加速卡Va Docker安装指南 02.pdf》中第五章（配置低级运行时）配置低级运行时。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
