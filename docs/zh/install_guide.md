@@ -21,7 +21,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-225GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
 |Riser卡|Riser1与Riser2模组相同，均为：PCIe X16 + PCIe X8|Riser1与Riser2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）\*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）\*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|
 |编码卡|1\*NETINT Quadra T2A（X8）|无|无|无|
-|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000|8\*道客DC1000|
+|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000 或 8\*道客DC1000C|8\*道客DC1000|
 |操作系统|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
 |内核版本|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
 
@@ -228,11 +228,12 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 制作视频流云手机镜像前需要根据本章节内容完成Kbox镜像的制作。
 
 1. 请参见[部署Kbox容器基础环境](#部署Kbox容器基础环境)获取Kbox容器启动依赖组件android.tar和Kbox-patches-AOSP11.zip，并上传至服务器的“/home/kbox_video”目录（本文以此目录作为示例，用户也可自行设置目录）。
-2. 解压Kbox-patches-AOSP11.zip，获取“deploy_scripts”路径下的组件base_box.sh，并将其拷贝到“/home/kbox_video”目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
+2. 解压Kbox-patches-AOSP11.zip，获取“deploy_scripts”路径下的组件base_box.sh，hardware_bind.cfg，并将其拷贝到“/home/kbox_video”目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
 
     ```shell
     unzip Kbox-patches-AOSP11.zip
     cp Kbox-patches-AOSP11/deploy_scripts/base_box.sh /home/kbox_video/
+    cp Kbox-patches-AOSP11/deploy_scripts/hardware_bind.cfg /home/kbox_video/
     chmod 755 /home/kbox_video/base_box.sh
     ```
 
@@ -561,7 +562,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     >
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
-3. 当前视频流云手机默认使能DC1000 GPU硬解的硬解功能（即默认**ENABLE_HARD_DECODE=1**），如需使用软解，需设置**ENABLE_HARD_DECODE=0**并重启容器。
+3. 当前视频流云手机默认使能DC1000/DC1000C GPU硬解的硬解功能（即默认**ENABLE_HARD_DECODE=1**），如需使用软解，需设置**ENABLE_HARD_DECODE=0**并重启容器。
 4. 如果要使能WebRTC特性，需要更改cfct_config中的ENABLE_WEBRTC_CONNECTION=1。
 5. 绑核和确认绑核生效。针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。
 
@@ -569,7 +570,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
     - 如何确认当前环境只有一张GPU？
 
-        查询服务器中道客DC1000信息。
+        以DC1000为例，查询服务器中道客DC1000信息。
 
         ```shell
         lspci -D | grep 0200
@@ -1284,7 +1285,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 |硬盘数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
 |网卡|1\*（4\*GE接口卡， 1\*5902L板载灵活网卡|
 |Riser卡|1* 16X SLOT(PCIe X16) + 2\*8X SLOT(PCIe X8)-RISER1&2模组， 2\*8X SLOT(PCIe X8)-后置Riser|
-|GPU|4\*DC1000|
+|GPU|4\*DC1000 或 4\*DC1000C|
 |操作系统|openEuler 22.03LTS SP4|
 |系统/内核版本|5.10.0-216.0.0|
 
@@ -1346,7 +1347,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 #### 2.2.2 修改内核模块<a name="ZH-CN_TOPIC_0000002518304960"></a>
 
-使用DC1000 GPU硬件环境时，在虚拟机内安装驱动需要对宿主机内核做适配，请提前获取内核源码。
+使用DC1000/DC1000C GPU硬件环境时，在虚拟机内安装驱动需要对宿主机内核做适配，请提前获取内核源码。
 
 1. 请参见[**表 4** 宿主机操作系统要求](#宿主机操作系统要求)获取内核源码。
 2. 解压内核源码并进入根目录。
