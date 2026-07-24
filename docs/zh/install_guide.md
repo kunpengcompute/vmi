@@ -466,11 +466,11 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     video         latest    40e5f42c17d9    6 seconds ago    2.11GB
     ```
 
-#### 1.2.4 设置cfct_config配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002518386584"></a>
+#### 1.2.4 设置cfct_config，hardware_bind.cfg配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002518386584"></a>
 
-通过cfct_config文件配置参数可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config配置文件中的配置正确。
+通过cfct_config，hardware_bind.cfg文件配置参数可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config，hardware_bind.cfg配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config，hardware_bind.cfg配置文件中的配置正确。
 
-cfct_config配置文件配置项和配置方法如下所示。
+cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示。
 
 1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
 
@@ -486,12 +486,12 @@ cfct_config配置文件配置项和配置方法如下所示。
     >
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
-3. NETINT编码卡的节点在不同服务器中会有区别，请参见[4](#li5561723173614)并结合实际情况修改cfct_config中NETINT的值，保证编码不会因跨片导致性能损失。
-4. 针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。NETINT编码卡芯片节点所属NUMA查询方式请参见[NETINT编码卡芯片节点所属NUMA查询方式](#section2507154233510)。
+3. NETINT编码卡的节点在不同服务器中会有区别，请参见[4](#li5561723173614)并结合实际情况修改hardware_bind.cfg中NETINT的值，保证编码不会因跨片导致性能损失。
+4. 针对1张GPU卡环境：需要修改hardware_bind.cfg配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。NETINT编码卡芯片节点所属NUMA查询方式请参见[NETINT编码卡芯片节点所属NUMA查询方式](#section2507154233510)。
 
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。GPU卡所属NUMA查询方式请参见[AMD GPU渲染节点所属NUMA的查询方式](#section20575115322416)。
 
-5. 针对1张编码卡环境：需要修改cfct_config配置文件中“VIDEO_ENC_MAP_CORE”。
+5. 针对1张编码卡环境：需要修改hardware_bind.cfg配置文件中“VIDEO_ENC_MAP_CORE”。
 6. 当编码卡插在CPU0上时，删除“${NETINT1}”；若编码卡插在CPU1上时，删除“${NETINT0}”。
 7. 若视频帧采用CPU进行软编码，需要将cfct_config中的“CPU_BIND_MODE”设置为“1”，以防卡顿。
 8. 如果需要使能图形加速层，请参见[图形加速层的基本功能和使用说明](#section9932195417616)。
@@ -542,7 +542,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     NUMA node: 0
     ```
 
-4. <a name="li5561723173614"></a>根据编码卡NVMe设备节点对应的NUMA修改cfct_config中NETINT的值。
+4. <a name="li5561723173614"></a>根据编码卡NVMe设备节点对应的NUMA修改hardware_bind.cfg中NETINT的值。
 
     鲲鹏920 7265F/7260服务器：从属于0、1号NUMA的NVMe节点写在NETINT0字段中，从属于2、3号NUMA的NVMe节点写在NETINT1字段中。
 
@@ -619,11 +619,11 @@ cfct_config配置文件配置项和配置方法如下所示。
 >- 宿主机上多容器共享一个着色器缓存路径，可以先启动一路云手机预收集应用尽可能完整的着色器，其他云手机通过将配置文件对应的应用设置为只读模式来使能ShaderCache功能，此时性能最佳。
 >- ShaderCache功能没有缓存淘汰机制，若是缓存文件系统存储已满或者游戏版本更新，为了避免着色器和二进制文件不能对应，请清理整个文件系统的缓存。
 
-#### 1.2.5 设置cfct_config配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518386592"></a>
+#### 1.2.5 设置cfct_config，hardware_bind.cfg配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518386592"></a>
 
-通过设置cfct_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config配置文件中的配置正确。
+通过设置cfct_config，hardware_bind.cfg配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config，hardware_bind.cfg配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config，hardware_bind.cfg配置文件中的配置正确。
 
-cfct_config配置文件配置项和配置方法如下所示。
+cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示。
 
 1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
 
@@ -639,7 +639,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     >
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
-3. 针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。
+3. 针对1张GPU卡环境：需要修改hardware_bind.cfg配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。
 
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。
 
@@ -1909,18 +1909,18 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 ### 2.4 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002550093505"></a>
 
-在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改cfct_video和cfct_config配置文件，以便正确设置视频流的启动与运行参数。
+在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改cfct_video和hardware_bind.cfg配置文件，以便正确设置视频流的启动与运行参数。
 
 请参见《Kbox云手机容器 特性指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0130.html)”以及《视频流引擎 特性指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
 
 具体操作步骤如下所示：
 
-1. 请参见《视频流引擎 特性指南（Android 15）》中的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节解压缩出cfct_video和cfct_config文件。
-2. 修改cfct_config脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
-    1. 打开cfct_config脚本。
+1. 请参见《视频流引擎 特性指南（Android 15）》中的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节解压缩出cfct_video和hardware_bind.cfg文件。
+2. 修改hardware_bind.cfg脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
+    1. 打开hardware_bind.cfg脚本。
 
         ```shell
-        vim cfct_config
+        vim hardware_bind.cfg
         ```
 
     2. 按“i”进入编辑模式，增加以下内容。
@@ -1986,31 +1986,6 @@ cfct_config配置文件配置项和配置方法如下所示。
         >
         >上述的配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
 
-3. 修改cfct_video脚本适配当前虚拟机80核。
-    1. 打开cfct_video脚本。
-
-        ```shell
-        vim cfct_video
-        ```
-
-    2. 按“i”进入编辑模式，新增以下内容至**elif \[ $num_of_cpus -eq 64 \]; then**上方。
-
-        ```shell
-        elif [ $num_of_cpus -eq 80 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-        VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_80CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-        VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_80CORE_MODE1[*]})
-        else
-        EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_80CORE[*]})
-        ```
-
-        ![](figures/zh-cn_image_0000002518185600.png)
-
-    3. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存退出文件。
-
-4. 请参见《视频流引擎 特性指南》的“启动视频流云手机”章节调用cfct_video脚本即可成功在虚拟机启动视频流容器。
+3. 请参见《视频流引擎 特性指南》的“启动视频流云手机”章节调用cfct_video脚本即可成功在虚拟机启动视频流容器。
 
     ![](figures/zh-cn_image_0000002518185616.png)
