@@ -630,7 +630,7 @@ enum EncoderType : uint32_t {
 
 |对应属性字段名称|字段描述|取值范围|默认值|
 |--|--|--|--|
-|encoderType|编码器类型|0：CPU（CPU软编码器编码）1：VPU（外置硬件编码器编码）2：GPU（仅DC1000支持）|0，CPU编码|
+|encoderType|编码器类型|0：CPU（CPU软编码器编码）1：VPU（外置硬件编码器编码）2：GPU（仅DC1000/DC1000C支持）|0，CPU编码|
 
 #### 5.2.2 videoFrameType<a name="ZH-CN_TOPIC_0000002518346298"></a>
 
@@ -769,7 +769,7 @@ enum RCMode : uint32_t  {
 
 |对应属性字段名称|字段描述|取值范围|默认值|
 |--|--|--|--|
-| bitrate | 编码码率 | AMD，一般为W6800：500000~50000000DC1000：500000~30000000单位bps | 3000000 |
+| bitrate | 编码码率 | AMD，一般为W6800：500000~50000000 DC1000/DC1000C：500000~30000000单位bps | 3000000 |
 | gopSize | 编码GOP大小配置项 | 30~3000 | 30 |
 | profile | 编码profile配置项（H.265编码仅支持配置main） | 0：BASELINE（仅H264支持）1：MAIN2：HIGH（仅H264支持） | 0：BASELINE（仅H264支持） |
 | rcMode | 码控模式配置项 | 0：ABR平均码率模式（暂不支持）1：CRF画质优先模式（暂不支持）2：CBR恒定码率模式3：CAPPED_CRF画质优先并限制最大码率模式 | 2：CBR恒定码率模式 |
@@ -783,8 +783,8 @@ enum RCMode : uint32_t  {
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
->1. 码控模式（RCMode）仅支持固定码率模式（CBR）与画质优先并限制最大码率（CAPPED_CRF），Quadra编码卡支持两种码控模式，DC1000暂时仅支持固定码率模式（CBR）；
->2. 码控模式（RCMode）设置为固定码率模式（CBR），可通过bitrate变量来指定固定码率的数值；而Quadra编码卡码控模式（RCMode）设置为画质优先并限制最大码率（CAPPED_CRF）时，会使用crf、maxCrfRate和vbvBufferSize变量来进行码率控制；DC1000控模式（RCMode）会使用crf、maxCrfRate变量来进行码率控制
+>1. 码控模式（RCMode）仅支持固定码率模式（CBR）与画质优先并限制最大码率（CAPPED_CRF），Quadra编码卡支持两种码控模式，DC1000/DC1000C暂时仅支持固定码率模式（CBR）；
+>2. 码控模式（RCMode）设置为固定码率模式（CBR），可通过bitrate变量来指定固定码率的数值；而Quadra编码卡码控模式（RCMode）设置为画质优先并限制最大码率（CAPPED_CRF）时，会使用crf、maxCrfRate和vbvBufferSize变量来进行码率控制；DC1000/DC1000C控模式（RCMode）会使用crf、maxCrfRate变量来进行码率控制
 
 ### 5.3 数据定义<a name="ZH-CN_TOPIC_0000002518346266"></a>
 
@@ -920,7 +920,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
->硬件配置方案二（道客DC 1000）建议选择使用“GPU”进行编码，并且在H.265编码时profile仅支持main。
+>硬件配置方案二（道客DC1000/DC1000C）建议选择使用“GPU”进行编码，并且在H.265编码时profile仅支持main。
 
 ## 6 音频输出开发<a name="ZH-CN_TOPIC_0000002518346272"></a>
 

@@ -72,6 +72,10 @@ ENABLE_SOFT_RENDER=0
 # [RECREATE] 是否使能纯64位，1表示使能，其他值默认不使能
 ENABLE_ONLY64_KBOX=0
 
+# [RECREATE] 是否启动时共享数据盘，0表示不共享，1表示共享
+START_SHARE_DATA=0
+
+
 USERDATA_MAP=(
     "${USERDATA}"
 )

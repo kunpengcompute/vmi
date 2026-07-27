@@ -21,7 +21,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
 |Riser卡|RISER1与RISER2模组相同，均为：PCIe X16 + PCIe X8|RISER1与RISER2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|
 |编码卡|1\*NETINT Quadra T2A（X8）|无|无|无|
-|GPU|2\*AMD W6800|4\*道客DC 1000|8\*道客DC 1000|8\*道客DC1000|
+|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000 或 8\*道客DC1000C|8\*道客DC1000|
 |操作系统|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|openEuler 24.03 LTS SP1|
 |系统/内核版本|6.6.0-72.0.0|6.6.0-72.0.0|6.6.0-72.0.0|6.6.0-72.0.0|
 
@@ -159,8 +159,9 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 |--|--|--|--|
 | Containerd | v1.7.14 | Containerd是一个容器运行时 | Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service) |
 | runc | v1.1.12 | runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件 | [获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64) |
-| /rCNI Plugin | v1.4.1 | 容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口 | [获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
+| CNI Plugin | v1.4.1 | 容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口 | [获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
 | nerdctl | v1.7.5 | nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像 | [获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz) |
+| Golang | v1.25 | Golang是一个系统级编程语言，用于管理和生成NRI插件 | [获取链接](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
 
 **部署Containerd环境<a name="section343716111874"></a>**
 
@@ -237,7 +238,29 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     nerdctl --version
     ```
 
-6. <a id="部署Containerd环境6"></a>重新启动Docker服务，并重新启动一个新的终端以使新的容器运行时生效。
+6. <a id="安装Golang"></a>下载并安装Golang。
+
+    ```shell
+    wget https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz
+    tar -C /usr/local -xzf go1.25.0.linux-arm64.tar.gz
+    echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+
+    配置代理。
+
+    ```shell
+    go env -w GO111MODULE=on
+    go env -w GOPROXY=https://goproxy.cn,direct
+    ```
+
+    确认Golang版本号为1.25。
+
+    ```shell
+    go version
+    ```
+
+7. <a id="部署Containerd环境7"></a>重新启动Docker服务，并重新启动一个新的终端以使新的容器运行时生效。
 
     ```shell
     systemctl restart docker
@@ -265,14 +288,14 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 3. 安装显卡图形驱动。
 
-    GPU驱动会为每个显卡节点启动一个kworker进程，道客DC 1000单卡有4个节点。为保障kworker进程性能，建议使用kworkerCores参数为每个kworker进程绑定CPU，kworkerCores参数依次表示每个显卡节点对应kworker进程的绑核。
+    GPU驱动会为每个显卡节点启动一个kworker进程，道客DC1000/DC1000C单卡有4个节点。为保障kworker进程性能，建议使用kworkerCores参数为每个kworker进程绑定CPU，kworkerCores参数依次表示每个显卡节点对应kworker进程的绑核。
 
     在安装显卡图形驱动绑核时，**请确保kworker进程绑定的CPU核和GPU渲染节点同属一个CPU片**。GPU渲染节点所属CPU片的查询方式请参见[确定GPU拓扑结构](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0170.html)章节。
 
-    以下绑核方式仅作为参考，请依据实际情况做出调整。
+    以DC1000/DC1000C为例，以下绑核方式仅作为参考，请依据实际情况做出调整。
 
     ```shell
-    cd ~/dependency/VAGPU-A15-C-F-xxx/kmd/GUEST/openEuler-6.6.0+
+    cd ~/dependency/VAGPU-A15-C-F-26.02.06.00.RC2/kmd/GUEST/openEuler-6.6.0+
     ```
 
     硬件配置方案二（鲲鹏920 7260处理器 + 4\*道客DC 1000）：
@@ -281,7 +304,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     insmod va_gpu.ko kworkerCores=0,0,1,1,32,32,33,33,64,64,65,65,96,96,97,97
     ```
 
-    硬件配置方案三（鲲鹏920 7280Z处理器 + 8\*道客DC 1000）：
+    硬件配置方案三（鲲鹏920 7280Z处理器 + 8\*道客DC 1000 或 8\*道客DC1000C）：
 
     ```shell
     insmod va_gpu.ko kworkerCores=80,80,81,81,82,82,83,83,0,0,1,1,2,2,3,3,240,240,241,241,242,242,243,243,160,160,161,161,162,162,163,163
@@ -333,12 +356,14 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 制作视频流云手机镜像前需要根据本章节内容完成Kbox镜像的制作。
 
 1. 请参见[部署Kbox容器基础环境](#部署Kbox容器基础环境)获取Kbox容器启动依赖组件android.tar和Kbox-patches-AOSP15.zip，并上传至服务器的“/home/kbox_video”目录（本文以此目录作为示例，用户也可自行设置目录）。
-2. 解压Kbox-patches-AOSP15.zip，获取“deploy_scripts”路径下的2个组件android_kbox_aosp15.sh、base_box_aosp15.sh，并将其拷贝到“/home/kbox_video”目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
+2. 解压Kbox-patches-AOSP15.zip，获取“deploy_scripts”路径下的3个组件android_kbox_aosp15.sh、base_box_aosp15.sh、hardware_bind.cfg， 并将其拷贝到“/home/kbox_video”目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
 
     ```shell
     unzip Kbox-patches-AOSP15.zip
     cp Kbox-patches-AOSP15/deploy_scripts/base_box_aosp15.sh /home/kbox_video/
     cp Kbox-patches-AOSP15/deploy_scripts/android_kbox_aosp15.sh /home/kbox_video/
+    cp Kbox-patches-AOSP15/deploy_scripts/hardware_bind.cfg /home/kbox_video/
+    
     chmod 755 /home/kbox_video/base_box_aosp15.sh
     chmod 755 /home/kbox_video/android_kbox_aosp15.sh
     ```
@@ -355,7 +380,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     2. 将Kbox-patches-AOSP15文件夹中的deploy_scripts目录上传至服务器的“~/dependency”目录。
     3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox_\*.zip到“~/dependency/deploy_scripts”目录。
-    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-A15-C-F-26.02.06.00.RC2.tgz，获取va_driver.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
+    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
@@ -370,7 +395,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
             ```shell
             cd ~/dependency/deploy_scripts
             chmod +x make_image_aosp15.sh
-            ./make_image_aosp15.sh kbox:demo kbox:origin va_driver.tgz
+            ./make_image_aosp15.sh kbox:demo kbox:origin VAGPU-A15-C-F-26.02.06.00.RC2
             ```
 
             >![](public_sys-resources/icon-note.gif) **说明：** 
@@ -643,7 +668,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
     - 如何确认当前环境只有一张GPU？
 
-        查询服务器中道客DC1000信息。
+        以DC1000/DC1000C为例，查询服务器中道客DC1000/DC1000C信息。
 
         ```shell
         lspci -D | grep 0200
@@ -825,7 +850,7 @@ cfct_config配置文件配置项和配置方法如下所示。
     systemctl enable --now kubelet
     ```
 
-7. 请参见[（可选）部署Containerd环境](#部署Containerd环境)的[1](#部署Containerd环境1)至[3](#部署Containerd环境3)安装Containerd和runc组件。在完成Containerd和runc的组件安装后，工作节点需要额外执行[6](#部署Containerd环境6)进行docker服务的重启。
+7. 请参见[（可选）部署Containerd环境](#部署Containerd环境)的[1](#部署Containerd环境1)至[3](#部署Containerd环境3)安装Containerd和runc组件。在完成Containerd和runc的组件安装后，工作节点需要额外执行[7](#部署Containerd环境7)进行docker服务的重启。
 8. 修改Containerd配置。
 
     ```shell
@@ -1128,13 +1153,7 @@ cfct_config配置文件配置项和配置方法如下所示。
         期望是所有的容器状态（STATE）列都是Running
 
 6. （可选）配置NUMA亲和。
-    1. 编译环境配置和插件时需要保证Golang版本1.23或以上，将新的1.23版本的Golang go目录放至“/usr/lib”下，将“go/bin/go”和“go/bin/gofmt”放至“/usr/bin”下。
-
-        ```shell
-        systemctl stop kubeletexport GOROOT=/usr/lib/go
-        go env -w GO111MODULE=on
-        go env -w GOPROXY=https://goproxy.io,direct
-        ```
+    1. 编译环境配置和插件时需要保证Golang版本1.25或以上，请参见[安装Golang](#安装Golang)进行安装。
 
     2. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取K8s NUMA亲和插件软件包topo-affinity-plugin-master.zip，获取后将软件包上传至服务器的“/home/k8s”目录。
     3. 解压topo-affinity-plugin-master.zip，进入软件包目录并编译插件。
@@ -1240,8 +1259,8 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 1. 请参见《[Kbox云手机容器 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-A15-C-F-26.02.06.00.RC2.tgz软件包。解压获取k8s/v0.0.5-1.tar.gz压缩包。
 2. 解压v0.0.5-1.tar.gz获取相关的安装文档和软件包。
-3. 请参见《DC1000加速卡Va Docker安装指南  02.pdf》中第四章（安装Va Docker）安装Va Docker。
-4. 请参见《DC1000加速卡Kubernetes设备插件安装指南 03.pdf》中第三章（安装部署）安装设备插件，安装到“3.2.3导入镜像”章节即可。
+3. 请参见《DC1000加速卡Va Docker安装指南 02.pdf》中第四章（安装Va Docker）安装Va Docker。
+4. 请参见《DC1000加速卡Va Docker安装指南 02.pdf》中第五章（配置低级运行时）配置低级运行时。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -1251,11 +1270,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 在所有工作节点完成部署设备插件镜像的操作。
 
-1. 安装golang，版本需在1.17以上。
-
-    ```shell
-    yum install golang
-    ```
+1. 若Golang未安装，请参见[安装Golang](#安装Golang)进行安装。
 
 2. 下载device-plugin的代码并切换到指定commitid。
 
@@ -1367,7 +1382,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 |数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
 |网卡|板载|1*（4\*GE接口卡）1\*5902L板载灵活网卡|
 |Riser卡|-|1\*16X SLOT(PCIe X16) + 2\*8X SLOT (PCIe X8)-RISER1&2模组、2\*8X SLOT (PCIe X8)-后置Riser|
-|GPU|-|4\*道客DC 1000|
+|GPU|-|4\*道客DC1000 或 4\*道客DC1000C|
 |操作系统|-|openEuler 24.03 LTS SP1|
 |系统/内核版本|-|6.6.0-72.0.0|
 
