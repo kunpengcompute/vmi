@@ -159,8 +159,9 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 |--|--|--|--|
 | Containerd | v1.7.14 | Containerd是一个容器运行时 | Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service) |
 | runc | v1.1.12 | runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件 | [获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64) |
-| /rCNI Plugin | v1.4.1 | 容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口 | [获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
+| CNI Plugin | v1.4.1 | 容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口 | [获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
 | nerdctl | v1.7.5 | nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像 | [获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz) |
+| Golang | v1.25 | Golang是一个系统级编程语言，用于管理和生成NRI插件 | [获取链接](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
 
 **部署Containerd环境<a name="section343716111874"></a>**
 
@@ -237,7 +238,29 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     nerdctl --version
     ```
 
-6. <a id="部署Containerd环境6"></a>重新启动Docker服务，并重新启动一个新的终端以使新的容器运行时生效。
+6. <a id="安装Golang"></a>下载并安装Golang。
+
+    ```shell
+    wget https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz
+    tar -C /usr/local -xzf go1.25.0.linux-arm64.tar.gz
+    echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+
+    配置代理。
+
+    ```shell
+    go env -w GO111MODULE=on
+    go env -w GOPROXY=https://goproxy.cn,direct
+    ```
+
+    确认Golang版本号为1.25。
+
+    ```shell
+    go version
+    ```
+
+7. <a id="部署Containerd环境7"></a>重新启动Docker服务，并重新启动一个新的终端以使新的容器运行时生效。
 
     ```shell
     systemctl restart docker
@@ -827,7 +850,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     systemctl enable --now kubelet
     ```
 
-7. 请参见[（可选）部署Containerd环境](#部署Containerd环境)的[1](#部署Containerd环境1)至[3](#部署Containerd环境3)安装Containerd和runc组件。在完成Containerd和runc的组件安装后，工作节点需要额外执行[6](#部署Containerd环境6)进行docker服务的重启。
+7. 请参见[（可选）部署Containerd环境](#部署Containerd环境)的[1](#部署Containerd环境1)至[3](#部署Containerd环境3)安装Containerd和runc组件。在完成Containerd和runc的组件安装后，工作节点需要额外执行[7](#部署Containerd环境7)进行docker服务的重启。
 8. 修改Containerd配置。
 
     ```shell
@@ -1130,13 +1153,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
         期望是所有的容器状态（STATE）列都是Running
 
 6. （可选）配置NUMA亲和。
-    1. 编译环境配置和插件时需要保证Golang版本1.23或以上，将新的1.23版本的Golang go目录放至“/usr/lib”下，将“go/bin/go”和“go/bin/gofmt”放至“/usr/bin”下。
-
-        ```shell
-        systemctl stop kubeletexport GOROOT=/usr/lib/go
-        go env -w GO111MODULE=on
-        go env -w GOPROXY=https://goproxy.io,direct
-        ```
+    1. 编译环境配置和插件时需要保证Golang版本1.25或以上，请参见[安装Golang](#安装Golang)进行安装。
 
     2. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取K8s NUMA亲和插件软件包topo-affinity-plugin-master.zip，获取后将软件包上传至服务器的“/home/k8s”目录。
     3. 解压topo-affinity-plugin-master.zip，进入软件包目录并编译插件。
@@ -1242,8 +1259,8 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 1. 请参见《[Kbox云手机容器 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-A15-C-F-26.02.06.00.RC2.tgz软件包。解压获取k8s/v0.0.5-1.tar.gz压缩包。
 2. 解压v0.0.5-1.tar.gz获取相关的安装文档和软件包。
-3. 请参见《DC1000加速卡Va Docker安装指南  02.pdf》中第四章（安装Va Docker）安装Va Docker。
-4. 请参见《DC1000加速卡Kubernetes设备插件安装指南 03.pdf》中第三章（安装部署）安装设备插件，安装到“3.2.3导入镜像”章节即可。
+3. 请参见《DC1000加速卡Va Docker安装指南 02.pdf》中第四章（安装Va Docker）安装Va Docker。
+4. 请参见《DC1000加速卡Va Docker安装指南 02.pdf》中第五章（配置低级运行时）配置低级运行时。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -1253,11 +1270,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 在所有工作节点完成部署设备插件镜像的操作。
 
-1. 安装golang，版本需在1.17以上。
-
-    ```shell
-    yum install golang
-    ```
+1. 若Golang未安装，请参见[安装Golang](#安装Golang)进行安装。
 
 2. 下载device-plugin的代码并切换到指定commitid。
 
@@ -1909,7 +1922,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 ### 2.4 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002550093505"></a>
 
-在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改cfct_video和hardware_bind.cfg配置文件，以便正确设置视频流的启动与运行参数。
+在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改hardware_bind.cfg配置文件，以便正确设置视频流的启动与运行参数。
 
 请参见《Kbox云手机容器 特性指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0130.html)”以及《视频流引擎 特性指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
 

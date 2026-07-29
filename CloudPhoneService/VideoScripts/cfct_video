@@ -28,7 +28,7 @@ function init_video_env() {
 
     bb_init_hardware_config
 
-    bb_check_environment
+    bb_check_environment "$1"
     bb_log_info "Default container runtime selected: ${DEFAULT_RUNTIME}"
 }
 
@@ -327,8 +327,7 @@ container_run() {
     rm -f $THISDIR/containerid_${container_name}
 
     bb_prepare_media_codecs_for_amd $container_name
-    sleep 0.5
-    $RUNTIME_CMD exec -i ${container_name} chmod 644 /system/vendor/etc/media_codecs.xml
+    bb_prepare_media_codecs_c2 $container_name ${ENABLE_HARD_DECODE}
 
     local prop_build_file="/system/vendor/build.prop /system/build.prop"
     bb_wait_container_ready "$container_name"
@@ -386,6 +385,8 @@ container_restart() {
         fi
     fi
 
+    bb_prepare_media_codecs_for_amd $container_name
+    bb_prepare_media_codecs_c2 $container_name ${ENABLE_HARD_DECODE}
     local userdata_dir=$(bb_get_mount_dir "$container_name")
 
     bb_log_info "restart using mount path: $userdata_dir"
