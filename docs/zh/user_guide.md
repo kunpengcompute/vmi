@@ -12,7 +12,7 @@
     BUILD_FPS=30
     ```
 
-2. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct_config配置文件中的ENABLE_AMD_C2_DECODE=1。其他值不使能，默认为0。必须在容器第一次启动时配置开/关C2解码器，不支持中途切换。云手机内置应用会根据自身需要自行选择解码器。
+2. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct_config配置文件中的ENABLE_AMD_C2_DECODE=1，其他值不使能，默认为0，同时关闭硬解，将`T432_QUADRA_DECODE_ENABLE`设置为“0”。必须在容器第一次启动时配置开/关C2解码器，不支持启动容器后，再通过kbox_config.cfg文件的“ENABLE_AMD_C2_DECODE”参数修改，重启容器切换。云手机内置应用会根据自身需要自行选择解码器。
 
     ```shell
     ENABLE_AMD_C2_DECODE=0
@@ -732,8 +732,8 @@ cd /home/k8s/k8s/script
 |BUILD_DENSITY|云手机屏幕密度。|120：屏幕密度（360p）<br>160：屏幕密度（480p）<br>320：屏幕密度（720p）<br>480：屏幕密度（1080p）<br>640：屏幕密度（2K）<br>960：屏幕密度（4K）|320：默认屏幕密度|
 |BUILD_FPS|云手机屏幕刷新帧率。|1-120fps|30：默认屏幕刷新帧率|
 |ENCODECARD|选择编码卡。|0：T432<br>1：Quadra<br>2：Va1e（暂不支持）<br>3：OpenH264|1：默认选择Quadra编码卡|
-|ENABLE_AMD_C2_DECODE|AMD方案C2软解使能开关|0/其他值：不使能<br>1：使能|0：默认不使能|
-|T432_QUADRA_DECODE_ENABLE|T432/Quadra硬解使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
+|ENABLE_AMD_C2_DECODE|AMD方案C2软解使能开关，和Quadra硬解使能开关不能同时开启|0/其他值：不使能<br>1：使能|0：默认不使能|
+|T432_QUADRA_DECODE_ENABLE|Quadra硬解使能开关，和AMD方案C2软解使能开关不能同时开启|0/其他值：不使能<br>1：使能|0：默认不使能|
 |ENABLE_HARD_DECODE|DC1000硬解使能开关。|0/其他值：不使能<br>1：使能|1：默认使能|
 |ENABLE_WEBRTC_CONNECTION|WebRTC使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
 |ENABLE_F2FS|F2FS文件系统启动使能开关。|0/其他值：不使能1：使能|0：默认不使能|
