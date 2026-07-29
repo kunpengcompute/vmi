@@ -21,7 +21,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-225GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
 |Riser卡|Riser1与Riser2模组相同，均为：PCIe X16 + PCIe X8|Riser1与Riser2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）\*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）\*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|
 |编码卡|1\*NETINT Quadra T2A（X8）|无|无|无|
-|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000|8\*道客DC1000|
+|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000 或 8\*道客DC1000C|8\*道客DC1000|
 |操作系统|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
 |内核版本|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
 
@@ -228,11 +228,12 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 制作视频流云手机镜像前需要根据本章节内容完成Kbox镜像的制作。
 
 1. 请参见[部署Kbox容器基础环境](#部署Kbox容器基础环境)获取Kbox容器启动依赖组件android.tar和Kbox-patches-AOSP11.zip，并上传至服务器的“/home/kbox_video”目录（本文以此目录作为示例，用户也可自行设置目录）。
-2. 解压Kbox-patches-AOSP11.zip，获取“deploy_scripts”路径下的组件base_box.sh，并将其拷贝到“/home/kbox_video”目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
+2. 解压Kbox-patches-AOSP11.zip，获取“deploy_scripts”路径下的组件base_box.sh，hardware_bind.cfg，并将其拷贝到“/home/kbox_video”目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
 
     ```shell
     unzip Kbox-patches-AOSP11.zip
     cp Kbox-patches-AOSP11/deploy_scripts/base_box.sh /home/kbox_video/
+    cp Kbox-patches-AOSP11/deploy_scripts/hardware_bind.cfg /home/kbox_video/
     chmod 755 /home/kbox_video/base_box.sh
     ```
 
@@ -386,11 +387,11 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     iptables -P FORWARD ACCEPT
     ```
 
-#### 1.2.3 设置cfct_config配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002549706303"></a>
+#### 1.2.3 设置cfct_config，hardware_bind.cfg配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002549706303"></a>
 
-通过设置cfct_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config配置文件中的配置正确。
+通过设置cfct_config和hardware_bind.cfg配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config和hardware_bind.cfg配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config和hardware_bind.cfg配置文件中的配置正确。
 
-**cfct_config文件配置步骤<a name="section9436102613100"></a>**
+**cfct_config和hardware_bind.cfg文件配置步骤<a name="section9436102613100"></a>**
 
 1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
 
@@ -406,13 +407,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     >
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
-3. NETINT编码卡的节点在不同服务器中会有区别，应根据实际情况修改cfct_config中NETINT的值，保证编码不会因跨片导致性能损失。
+3. NETINT编码卡的节点在不同服务器中会有区别，应根据实际情况修改hardware_bind.cfg中NETINT的值，保证编码不会因跨片导致性能损失。
 4. 如果要使能Quadra/T432编码卡硬解，需要将cfct_config中的“T432_QUADRA_DECODE_ENABLE”设置为“1”。
-5. 针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。NETINT编码卡芯片节点所属NUMA查询方式请参见[NETINT编码卡芯片节点所属NUMA查询方式](#section2507154233510)。
+5. 针对1张GPU卡环境：需要修改hardware_bind.cfg配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。NETINT编码卡芯片节点所属NUMA查询方式请参见[NETINT编码卡芯片节点所属NUMA查询方式](#section2507154233510)。
 
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。GPU卡所属NUMA查询方式请参见[AMD GPU渲染节点所属NUMA的查询方式](#section20575115322416)。
 
-6. 针对1张编码卡环境：需要修改cfct_config配置文件中“VIDEO_ENC_MAP_CORE”。
+6. 针对1张编码卡环境：需要修改hardware_bind.cfg配置文件中“VIDEO_ENC_MAP_CORE”。
 7. 当编码卡插在CPU0上时，删除${NETINT1}；若编码卡插在CPU1上时，删除${NETINT0}。
 8. 如果要使能WebRTC特性，需要将cfct_config中的“ENABLE_WEBRTC_CONNECTION”设置为“1”。若视频帧采用CPU进行软编码，需要将cfct_config中的“CPU_BIND_MODE”设置为“1”，以防卡顿。
 9. 如果需要使能图形加速层功能，需要将cfct_config中的“**ENABLE_RENDER_LAYER**”设置为“1”。详细说明请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
@@ -464,7 +465,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     NUMA node: 0
     ```
 
-4. 根据编码卡NVMe设备节点对应的NUMA修改cfct_config中NETINT的值。
+4. 根据编码卡NVMe设备节点对应的NUMA修改hardware_bind.cfg中NETINT的值。
 
     鲲鹏920 7265F/7260服务器：从属于0、1号NUMA的NVMe节点写在NETINT0字段中，从属于2、3号NUMA的NVMe节点写在NETINT1字段中。
 
@@ -541,11 +542,11 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 >- 宿主机上多容器共享一个着色器缓存路径，可以先启动一路云手机预收集应用尽可能完整的着色器，其他云手机通过将配置文件对应的应用设置为只读模式来使能ShaderCache功能，此时性能最佳。
 >- ShaderCache功能没有缓存淘汰机制，若是缓存文件系统存储已满或者游戏版本更新，为了避免着色器和二进制文件不能对应，请清理整个文件系统的缓存。
 
-#### 1.2.4 设置cfct_config配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518186514"></a>
+#### 1.2.4 设置cfct_config，hardware_bind.cfg配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518186514"></a>
 
-通过设置cfct_config配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config配置文件中的配置正确。
+通过设置cfct_config和hardware_bind.cfg配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config和hardware_bind.cfg配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config和hardware_bind.cfg配置文件中的配置正确。
 
-cfct_config配置文件配置项和配置方法如下所示。
+cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示。
 
 1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
 
@@ -561,21 +562,21 @@ cfct_config配置文件配置项和配置方法如下所示。
     >
     >为确保视频流云手机的稳定运行与最佳性能，请保障每个容器所绑定的CPU物理核和GPU渲染节点同属于一个CPU片。
 
-3. 当前视频流云手机默认使能DC1000 GPU硬解的硬解功能（即默认**ENABLE_HARD_DECODE=1**），如需使用软解，需设置**ENABLE_HARD_DECODE=0**并重启容器。
+3. 当前视频流云手机默认使能DC1000/DC1000C GPU硬解的硬解功能（即默认**ENABLE_HARD_DECODE=1**），如需使用软解，需设置**ENABLE_HARD_DECODE=0**并重启容器。
 4. 如果要使能WebRTC特性，需要更改cfct_config中的ENABLE_WEBRTC_CONNECTION=1。
-5. 绑核和确认绑核生效。针对1张GPU卡环境：需要修改cfct_config配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。
+5. 绑核和确认绑核生效。针对1张GPU卡环境：需要修改hardware_bind.cfg配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。
 
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。
 
     - 如何确认当前环境只有一张GPU？
 
-        查询服务器中道客DC1000信息。
+        以DC1000/DC1000C为例，查询服务器中道客DC1000/DC1000C信息。
 
         ```shell
         lspci -D | grep 0200
         ```
 
-        回显如下所示，可知该服务器上只有一张道客DC1000，其中0000:04:00.0为busID。
+        回显如下所示，可知该服务器上只有一张道客DC1000/DC1000C，其中0000:04:00.0为busID。
 
         ```shell
         0000:04:00.0 3D controller: Device 1f4f:0200
@@ -1284,7 +1285,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 |硬盘数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
 |网卡|1\*（4\*GE接口卡， 1\*5902L板载灵活网卡|
 |Riser卡|1* 16X SLOT(PCIe X16) + 2\*8X SLOT(PCIe X8)-RISER1&2模组， 2\*8X SLOT(PCIe X8)-后置Riser|
-|GPU|4\*DC1000|
+|GPU|4\*DC1000 或 4\*DC1000C|
 |操作系统|openEuler 22.03LTS SP4|
 |系统/内核版本|5.10.0-216.0.0|
 
@@ -1346,7 +1347,7 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 #### 2.2.2 修改内核模块<a name="ZH-CN_TOPIC_0000002518304960"></a>
 
-使用DC1000 GPU硬件环境时，在虚拟机内安装驱动需要对宿主机内核做适配，请提前获取内核源码。
+使用DC1000/DC1000C GPU硬件环境时，在虚拟机内安装驱动需要对宿主机内核做适配，请提前获取内核源码。
 
 1. 请参见[**表 4** 宿主机操作系统要求](#宿主机操作系统要求)获取内核源码。
 2. 解压内核源码并进入根目录。
@@ -2040,18 +2041,18 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 ### 2.4 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002549947651" id="视频流启动环境配置"></a>
 
-在搭建好的虚拟机环境中部署云手机容器环境和视频流容器时，需要根据虚拟机内部CPU以及GPU核数对cfct_video和cfct_config文件做相应调整和修改视频流启动和配置文件。
+在搭建好的虚拟机环境中部署云手机容器环境和视频流容器时，需要根据虚拟机内部CPU以及GPU核数对cfct_video，和hardware_bind.cfg文件做相应调整和修改视频流启动和配置文件。
 
 请参见《Kbox云手机容器 特性指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0130.html)”以及《视频流引擎 特性指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
 
 具体操作步骤如下所示：
 
-1. 请参见《视频流引擎 特性指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html)”解压缩出cfct_video和cfct_config文件。
-2. 修改cfct_config脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
-    1. 打开cfct_config脚本。
+1. 请参见《视频流引擎 特性指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html)”解压缩出cfct_video和hardware_bind.cfg文件。
+2. 修改hardware_bind.cfg脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
+    1. 打开hardware_bind.cfg脚本。
 
         ```shell
-        vim cfct_config
+        vim hardware_bind.cfg
         ```
 
     2. 按“i”进入编辑模式，增加以下内容。
@@ -2117,32 +2118,7 @@ cfct_config配置文件配置项和配置方法如下所示。
         >
         >上述的配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
 
-3. 修改cfct_video脚本适配当前虚拟机80核。
-    1. 打开cfct_video脚本。
-
-        ```shell
-        vim cfct_video
-        ```
-
-    2. 按“i”进入编辑模式，新增以下内容至**elif \[ $num_of_cpus -eq 64 \]; then**上方。
-
-        ```shell
-        elif [ $num_of_cpus -eq 80 ]; then
-        if [ ${CPU_BIND_MODE} -eq 0 ]; then
-        VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_80CORE_MODE0[*]})
-        elif [ ${CPU_BIND_MODE} -eq 1 ]; then
-        VIDEO_CPU_MAP=(${VIDEO_CPU_MAP_80CORE_MODE1[*]})
-        else
-        EXIT_ERROR "CPU_BIND_MODE error: ${CPU_BIND_MODE}"
-        fi
-        VIDEO_GPU_MAP=(${VIDEO_GPU_MAP_80CORE[*]})
-        ```
-
-        ![](figures/zh-cn_image_0000002550068157.png)
-
-    3. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存并退出文件。
-
-4. 请参见《视频流引擎 特性指南》的“启动视频流云手机”调用cfct_video脚本即可成功在虚拟机启动视频流容器。
+3. 请参见《视频流引擎 特性指南》的“启动视频流云手机”调用cfct_video脚本即可成功在虚拟机启动视频流容器。
 
     ![](figures/zh-cn_image_0000002518308398.png)
 
