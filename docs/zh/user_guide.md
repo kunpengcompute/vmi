@@ -419,7 +419,7 @@
     > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4} 
     > ```
     >
-    > 通过nstart拉起的k8s容器可以通过如下命令判断是否正常使能NFS，预期是/tmp/nfs/data/video1/data
+    > 通过nstart拉起的k8s容器可以通过如下命令判断是否正常使能NFS，预期是/tmp/nfs/data/video1/data。
     >
     > ```bash
     > kubectl get pod video1 -o jsonpath='{.spec.volumes[?(@.name=="data")].hostPath.path}'
