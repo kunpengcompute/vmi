@@ -285,7 +285,7 @@
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
->删除NFS挂载的容器时，将delete命令替换成ndelete，例：
+>删除NFS挂载的容器时，将delete命令替换成ndelete，ndelete删除后img镜像文件会默认保存，例：
 >
 >```shell
 >./cfct_video ndelete 1 5
@@ -485,6 +485,12 @@
     > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4}
     > ```
     > 
+    > 通过nstart拉起的k8s容器可以通过如下命令判断是否正常使能NFS，预期是/tmp/nfs/data/video1/data。
+    >
+    > ```bash
+    > kubectl get pod video1 -o jsonpath='{.spec.volumes[?(@.name=="data")].hostPath.path}'
+    > ```
+    >
     > `${index1}` 与 `${index2}` 为pod编号，`${index3}`表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。 `${index4}`表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 `${index2}` `${index3}` `${index4}`可缺省。例：
     >- 创建名为video2的pod，里面的文件格式是默认的ext4。
     >
@@ -575,7 +581,7 @@ cd /home/k8s/k8s/script
 > ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
 > ```
 > 
-> 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
+> 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，ndelete删除后img镜像文件会默认保存，例：
 > 
 > ```shell
 > ./k8s-video.sh ndelete 1 5（删除名为video1 -video5 共5个pod）
