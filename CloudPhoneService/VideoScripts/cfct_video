@@ -996,7 +996,7 @@ function cli_qscreencap() {
 #===============================================================================
 
 main() {
-    init_video_env
+    init_video_env "$1"
     check_hardware_map
 
     case "$1" in
