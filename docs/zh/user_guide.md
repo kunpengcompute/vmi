@@ -6,20 +6,28 @@
 
 可根据需求配置cfct_config文件中的参数启动不同分辨率和帧率的视频流云手机实例，配置default.prop文件中的初始视频编码参数。当使用WebRTC进行数据传输时，需要根据需求配置default.prop中的抓图分辨率；当后续使用APK访问视频流云手机时，可以在APK视图中修改抓图分辨率。
 
-1. （可选）若需要启动不同帧率的视频流云手机实例，则需要修改cfct_config配置文件中的帧率属性值。默认帧率为30fps，720p和1080p分辨率下也可支持60fps。
+1. （配置方案五）启动软渲染软编码容器时，请参照如下修改default.prop文件对应选项：
+
+    ```shell
+    vmi.video.encodertype=0
+    vmi.video.videoframetype=0
+    vmi.video.encode.rcmode=2
+    ```
+
+2. （可选）若需要启动不同帧率的视频流云手机实例，则需要修改cfct_config配置文件中的帧率属性值。默认帧率为30fps，720p和1080p分辨率下也可支持60fps。
 
     ```shell
     BUILD_FPS=30
     ```
 
-2. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct_config配置文件中的ENABLE_AMD_C2_DECODE=1，同时关闭硬解，将`T432_QUADRA_DECODE_ENABLE`设置为“0”。必须在容器第一次启动时配置开/关C2解码器，不支持启动容器后，再通过kbox_config.cfg文件的“ENABLE_AMD_C2_DECODE”参数修改，重启容器切换。云手机内置应用会根据自身需要自行选择解码器。
+3. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct_config配置文件中的ENABLE_AMD_C2_DECODE=1，同时关闭硬解，将`T432_QUADRA_DECODE_ENABLE`设置为“0”。必须在容器第一次启动时配置开/关C2解码器，不支持启动容器后，再通过kbox_config.cfg文件的“ENABLE_AMD_C2_DECODE”参数修改，重启容器切换。云手机内置应用会根据自身需要自行选择解码器。
 
     ```shell
     ENABLE_AMD_C2_DECODE=1
     T432_QUADRA_DECODE_ENABLE=0
     ```
 
-3. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式和使用WebRTC方式访问的视频流云手机实例，则需要进行以下配置。
+4. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式和使用WebRTC方式访问的视频流云手机实例，则需要进行以下配置。
     1. 从DemoVideoEngine.tar.gz中解压获取“vendor”文件夹，并将其中的“default.prop”文件拷贝到当前目录。
 
         ```shell
@@ -62,7 +70,7 @@
 
         使用WebRTC方式访问视频流云手机实例时，需要通过default.prop配置云手机服务端的IP地址属性vmi.webrtc.connection.serverip和可用的UDP起始端口vmi.webrtc.connection.udpbeginport，属性字段请参见[启动脚本配置项](#启动脚本配置项)章节的WebRTC属性配置项字段描述表。
 
-4. 启动视频流云手机。
+5. 启动视频流云手机。
 
     ```shell
     cd /home/kbox_video/
@@ -91,7 +99,7 @@
     >./cfct_video nstart 1 5
     >```
 
-5. <a name="li3304181302311"></a>查看视频流云手机。
+6. <a name="li3304181302311"></a>查看视频流云手机。
 
     - 基于Docker容器运行时的视频流云手机。
 
@@ -115,7 +123,7 @@
 
     确认所启动的容器存在，且状态正常。
 
-6. 确认视频流云手机是否启动成功，其中 **`${index}`** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **`${index}`** 即为35。
+7. 确认视频流云手机是否启动成功，其中 **`${index}`** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **`${index}`** 即为35。
 
     - 基于Docker容器运行时的视频流云手机。
 

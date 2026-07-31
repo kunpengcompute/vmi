@@ -12,18 +12,18 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 **表 1** Kbox云手机容器环境部署硬件配置方案要求<a id="Kbox云手机容器环境部署硬件配置方案要求"></a>
 
-|配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|硬件配置方案四|
-|--|--|--|--|--|
-|服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
-|CPU|2\*鲲鹏920 7260处理器，64 Core\@2.6GHz|2\*鲲鹏920 7260处理器，64 Core\@2.6GHz|2\*鲲鹏920 7280Z处理器，80 Core\@2.9GHz|2\*鲲鹏920 7260W处理器，64 Core\@2.2GHz|
-|内存|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR5 DIMM内存-64GB-4800MT/s|16\*DDR5 DIMM内存-64GB-5200MT/s|
-|硬盘|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*固态硬盘-480GB-SATA 6Gb/s-2.5 inch height-读密集型<br>1\*S4510 固态硬盘-960GB-SATA 6Gb/s-读取密集型<br>数据盘：1\*ES3600P V6固态硬盘-6400GB-NVMe 64Gb/s<br>1\*ES3500P V5固态硬盘-4000GB-NVMe 32Gb/s|
-|网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-225GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|
-|Riser卡|Riser1与Riser2模组相同，均为：PCIe X16 + PCIe X8|Riser1与Riser2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）\*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）\*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|
-|编码卡|1\*NETINT Quadra T2A（X8）|无|无|无|
-|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000 或 8\*道客DC1000C|8\*道客DC1000|
-|操作系统|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
-|内核版本|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
+|配置项|硬件配置方案一|硬件配置方案二|硬件配置方案三|硬件配置方案四|硬件配置方案五|
+|--|--|--|--|--|--|
+|服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|鲲鹏服务器|
+|CPU|2\*鲲鹏920 7260处理器，64 Core\@2.6GHz|2\*鲲鹏920 7260处理器，64 Core\@2.6GHz|2\*鲲鹏920 7280Z处理器，80 Core\@2.9GHz|2\*鲲鹏920 7260W处理器，64 Core\@2.2GHz|2\*鲲鹏920 5220处理器，32 Core\@2.6GHz|
+|内存|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR4 RDIMM内存-32GB-2933MT/s|16\*DDR5 DIMM内存-64GB-4800MT/s|16\*DDR5 DIMM内存-64GB-5200MT/s|8\*DDR4 RDIMM内存-32GB-2933MT/s|
+|硬盘|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*S3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|系统盘：1\*固态硬盘-480GB-SATA 6Gb/s-2.5 inch height-读密集型<br>1\*S4510 固态硬盘-960GB-SATA 6Gb/s-读取密集型<br>数据盘：1\*ES3600P V6固态硬盘-6400GB-NVMe 64Gb/s<br>1\*ES3500P V5固态硬盘-4000GB-NVMe 32Gb/s|系统盘：2\*固态硬盘-480GB-SATA 6Gb/s-读取密集型<br>数据盘：2\*ES3521A V6固态硬盘-1920GB-SATA 6Gb/s-读取密集型|
+|网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-225GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-2\*25GE/10GE光口-4端口-SFP28（不含光模块）|板载：1\*（4\*GE接口卡）1\*TM280板载灵活网卡-25GE/10GE光口-4端口-SFP28（不含光模块）<br>外接：1\*Mellanox网卡|
+|Riser卡|Riser1与Riser2模组相同，均为：PCIe X16 + PCIe X8|Riser1与Riser2模组相同，均为：PCIe X8\*3|前置Riser（x8\*2）\*2+后置Riser（x8\*2）\*2+Riser3（x8\*2）\*1|后置Riser（x16+x8\*2）\*2+Riser3（x8\*2）\*1|无|
+|编码卡|1\*NETINT Quadra T2A（X8）|无|无|无|无|
+|GPU|2\*AMD W6800|4\*道客DC1000|8\*道客DC1000 或 8\*道客DC1000C|8\*道客DC1000|无|
+|操作系统|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
+|内核版本|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -44,18 +44,18 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 **表 1** 部署视频流引擎的软件环境要求<a id="部署视频流引擎的软件环境要求"></a>
 
-|序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|
-|--|--|--|--|--|--|--|--|
-|1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#application-soft)|√|√|√|√|
-|2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|请联系华为技术支持获取。|√|√|√|√|
-|3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|√|
-|4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|请联系华为技术支持获取。|√|√|√|√|
-|5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|√|
-|6|VideoClientEmulator.tar.gz|视频流云手机压测工具。|请联系华为技术支持获取。|√|√|√|√|
-|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-adapt。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>下载密码：test123|√|-|-|-|
-|8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br/>下载密码：test123|√|-|-|-|
-|9|WebClient.zip|Web客户端。|请联系华为技术支持获取。|√|√|√|√|
-|10|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|
+|序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|配置方案五|
+|--|--|--|--|--|--|--|--|--|
+|1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#application-soft)|√|√|√|√|√|
+|2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|请联系华为技术支持获取。|√|√|√|√|√|
+|3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|√|√|
+|4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|请联系华为技术支持获取。|√|√|√|√|√|
+|5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的SHA256文件，负责完整性校验。|请联系华为技术支持获取。|√|√|√|√|√|
+|6|VideoClientEmulator.tar.gz|视频流云手机压测工具。|请联系华为技术支持获取。|√|√|√|√|√|
+|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-adapt。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>下载密码：test123|√|-|-|-|-|
+|8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br/>下载密码：test123|√|-|-|-|-|
+|9|WebClient.zip|Web客户端。|请联系华为技术支持获取。|√|√|√|√|-|
+|10|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|-|
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -267,6 +267,14 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
             ./make_image.sh kbox:demo kbox:origin va_driver.tgz
             ```
 
+        - 硬件配置方案五：
+
+        ```shell
+        cd ~/dependency/deploy_scripts
+        chmod +x make_image.sh
+        ./make_image.sh kbox:demo kbox:origin soft
+        ```
+
 4. 查看Kbox镜像（kbox:origin）是否制作成功。
 
     ```shell
@@ -315,7 +323,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
         chmod +x Dockerfile_NoVPU Dockerfile_T432 Dockerfile_QuadraT2A make_image.sh
         ```
 
-    - 配置方案二、三、四：
+    - 配置方案二、三、四、五：
 
         ```shell
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU  make_image.sh
@@ -600,6 +608,32 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
         ```
 
 6. 如果要使能图形加速层，需要将cfct_config中“ENABLE_RENDER_LAYER”设置为“1”。详细说明请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
+
+#### 1.2.4 设置cfct_config，hardware_bind.cfg配置文件（配置方案五）
+
+通过设置cfct_config和hardware_bind.cfg配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config和hardware_bind.cfg配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config和hardware_bind.cfg配置文件中的配置正确。
+
+cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示。
+
+1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
+
+    ```shell
+    cd /home/kbox_video/
+    tar -xvf DemoVideoEngine.tar.gz cfct_config
+    chmod 644 cfct_config
+    ```
+
+2. 修改cfct_config文件，按照如下设置以使能软渲染：
+
+    ```shell
+    ENABLE_SOFT_RENDER=1
+    ```
+
+3. 通过配置CPU、USERDATA等map中对应路数的值，选择该路容器使用的CPU以及数据卷存放路径。
+
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
+    >软渲染软编码方案对CPU压力较高，为确保视频流云手机的稳定运行与最佳性能，请保障每个容器的CPU绑核以整个NUMA的形式绑定。修改cfct_config文件，将"CPU_BIND_MODE"设置为"1"。
 
 #### 1.2.5 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518346430" id="制作基础数据卷"></a>
 
