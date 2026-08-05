@@ -1,8 +1,8 @@
 # 用户指南<a name="ZH-CN_TOPIC_0000002552853353"></a>
 
-## 1 操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002549744217"></a>
+## 操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002549744217"></a>
 
-### 1.1 启动视频流云手机实例<a name="ZH-CN_TOPIC_0000002549744219" id="启动视频流云手机实例"></a>
+### 启动视频流云手机实例<a name="ZH-CN_TOPIC_0000002549744219" id="启动视频流云手机实例"></a>
 
 可根据需求配置cfct_config文件中的参数启动不同分辨率和帧率的视频流云手机实例，配置default.prop文件中的初始视频编码参数。当使用WebRTC进行数据传输时，需要根据需求配置default.prop中的抓图分辨率；当后续使用APK访问视频流云手机时，可以在APK视图中修改抓图分辨率。
 
@@ -19,7 +19,7 @@
     ```
 
 3. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式和使用WebRTC方式访问的视频流云手机实例，则需要进行以下配置。
-    1. 从DemoVideoEngine.tar.gz中解压获取“vendor”文件夹，并将其中的“default.prop”文件拷贝到当前目录。
+    1. 从DemoVideoEngine.tar.gz中解压获取"vendor"文件夹，并将其中的"vendor/default.prop"文件拷贝到当前目录。
 
         ```shell
         cd /home/kbox_video/
@@ -43,7 +43,7 @@
         |1440|640|
         |2160|960|
 
-        >![](public_sys-resources/icon-note.gif) **说明：** 
+        > ![](public_sys-resources/icon-note.gif)说明
         >
         >改变视频输出分辨率（与上次启动时配置不同）时，会改变AOSP系统和应用的渲染分辨率，可能会导致部分应用出现兼容性问题或渲染问题。一般此类问题可以通过重新启动应用解决，因此建议在修改分辨率前返回桌面，同时清空后台应用，以提升用户使用体验。
 
@@ -82,7 +82,7 @@
         ./cfct_video start 1 5
         ```
     
-    >![](public_sys-resources/icon-note.gif) **说明：** 
+    > ![](public_sys-resources/icon-note.gif)说明
     >
     >使用NFS挂载启动时，将start命令替换成nstart，例：
     >
@@ -132,11 +132,11 @@
         getprop sys.boot_completed
         ```
 
-    如果回显信息中sys.boot_completed显示为“1”，则表示启动成功。
+    如果回显信息中sys.boot_completed显示为"1"，则表示启动成功。
 
     ![](figures/zh-cn_image_0000002549864239.png)
 
-### 1.2 查询组件版本号信息<a name="ZH-CN_TOPIC_0000002549744227" id="查询组件版本号信息"></a>
+### 查询组件版本号信息<a name="ZH-CN_TOPIC_0000002549744227" id="查询组件版本号信息"></a>
 
 本章节提供两种方法获取视频流引擎组件版本信息，通过获取的软件包和API对外接口进行查询版本号信息。
 
@@ -163,11 +163,11 @@
 
 方法二：通过视频流引擎对外API获取版本信息
 
-请参见[视频流引擎 开发指南](development_guide.md)中“对外接口”章节的“GetVersion”接口使用方法，通过调用该API获取版本信息，回显示例与方法一中的回显示例相同。
+请参见《[视频流引擎 开发指南](development_guide.md)》中"对外接口"章节的"GetVersion"接口使用方法，通过调用该API获取版本信息，回显示例与方法一中的回显示例相同。
 
-### 1.3 访问视频流云手机<a name="ZH-CN_TOPIC_0000002549864229" id="访问视频流云手机"></a>
+### 访问视频流云手机<a name="ZH-CN_TOPIC_0000002549864229" id="访问视频流云手机"></a>
 
-#### 1.3.1 APK方式访问<a name="ZH-CN_TOPIC_0000002518224464" id="APK方式访问"></a>
+#### APK 方式访问<a name="ZH-CN_TOPIC_0000002518224464" id="APK方式访问"></a>
 
 若使用默认方式启动视频流云手机时，可以通过APK方式访问云手机。
 
@@ -181,19 +181,19 @@
 
     ![](figures/zh-cn_image_0000002549744251.png)
 
-5. 返回至主页面，自上而下依次输入服务器IP地址、**`${port}`**，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
+5. 返回至主页面，自上而下依次输入服务器IP地址、**`${port}`**，单击"开始连接"即可访问云侧的视频流云手机，如下图所示。
 
     **`${port}`** 默认值为 8000 + **`${index}`**。
 
     ![](figures/zh-cn_image_0000002549864241.png)
 
-    >![](public_sys-resources/icon-note.gif) **说明：** 
+    > ![](public_sys-resources/icon-note.gif)说明
     >
     >- 每个视频流云手机实例需要设置端口 **`${port}`** ，部署时可进入cfct_video脚本设置合适的 **`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位安卓系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
-#### 1.3.2 PC端Web网页方式访问<a name="ZH-CN_TOPIC_0000002518384374"></a>
+#### PC 端 Web 网页方式访问<a name="ZH-CN_TOPIC_0000002518384374"></a>
 
 若使用WebRTC进行数据传输的方式启动视频流云手机实例时，可以通过PC端的Web网页访问云手机。
 
@@ -202,13 +202,13 @@
 
     ![](figures/zh-cn_image_0000002518224474.png)
 
-3. 自上而下依次输入服务器IP地址、**`${port}`** ，单击“SUBMIT”即可访问云侧的视频流云手机。其中 **`${port}`** 默认值为8000 + **${index}**。
+3. 自上而下依次输入服务器IP地址、**`${port}`** ，单击"SUBMIT"即可访问云侧的视频流云手机。其中 **`${port}`** 默认值为8000 + **${index}**。
 
-    >![](public_sys-resources/icon-note.gif) **说明：** 
+    > ![](public_sys-resources/icon-note.gif)说明
     >
     >每个视频流云手机实例需要配置映射端口，部署时可进入cfct_video脚本设置合适的**`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
 
-### 1.4 （可选）动态修改云手机参数<a name="ZH-CN_TOPIC_0000002549744243"></a>
+### （可选）动态修改云手机参数<a name="ZH-CN_TOPIC_0000002549744243"></a>
 
 通过CloudPhone.apk可以动态修改云手机运行时的视频编码、音频播放编码参数。
 
@@ -233,7 +233,7 @@
 
     3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
-        >![](public_sys-resources/icon-note.gif) **说明：** 
+        > ![](public_sys-resources/icon-note.gif)说明
         >
         >如果不使能自适应分辨率，启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。如果要改变自适应分辨率的宽高，建议同步修改cfct_config文件中屏幕像素密度以达到最佳显示效果，推荐的配置说明如[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
 
@@ -250,7 +250,7 @@
 
     3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
-### 1.5 重启视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864227"></a>
+### 重启视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864227"></a>
 
 使用cfct_video脚本重启视频流云手机实例。
 
@@ -266,7 +266,7 @@
     ./cfct_video restart ${index1} ${index2}
     ```
 
-### 1.6 删除视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864211"></a>
+### 删除视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864211"></a>
 
 使用cfct_video脚本删除视频流云手机实例。
 
@@ -282,7 +282,7 @@
     ./cfct_video delete ${index1} ${index2}
     ```
 
->![](public_sys-resources/icon-note.gif) **说明：** 
+> ![](public_sys-resources/icon-note.gif)说明
 >
 >删除NFS挂载的容器时，将delete命令替换成ndelete，例：
 >
@@ -290,13 +290,13 @@
 >./cfct_video ndelete 1 5
 >```
 
-## 2 k8s集群下操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002518224466"></a>
+## k8s 集群下操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002518224466"></a>
 
-### 2.1 启动道客设备插件<a name="ZH-CN_TOPIC_0000002549864209"></a>
+### 启动道客设备插件<a name="ZH-CN_TOPIC_0000002549864209"></a>
 
 在master节点下启动道客设备插件，启动前需要获取视频流服务端tar包组件，用于获取Kbox容器音视频数据等。
 
-请参见[部署视频流引擎的软件环境要求](install_guide.md#部署视频流引擎的软件环境要求)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
+请参见[部署视频流引擎的软件环境要求](install_guide.md#部署视频流引擎的软件环境要求)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的"/home/k8s"目录。
 
 1. 解压DemoVideoEngine.tar.gz。
 
@@ -311,9 +311,9 @@
     kubectl label nodes $NODENAME va-device=va-sg100
     ```
 
-    >![](public_sys-resources/icon-note.gif) **说明：** 
+    > ![](public_sys-resources/icon-note.gif)说明
     >
-    >“$NODENAME”为工作节点名称。
+    >"$NODENAME"为工作节点名称。
 
 3. 创建命名空间va-plugin。
 
@@ -345,7 +345,7 @@
     kubectl create -f va-device-plugin.yaml
     ```
 
-    >![](public_sys-resources/icon-note.gif) **说明：** 
+    > ![](public_sys-resources/icon-note.gif)说明
     >
     >执行**kubectl delete -f va-device-plugin.yaml**命令可删除道客设备插件。
 
@@ -357,7 +357,7 @@
 
     预期结果为Pod名称应以va-device-plugin-daemonset开头，其状态（STATUS）列都是Running状态。
 
-### 2.2 启动设备插件<a name="ZH-CN_TOPIC_0000002518224436"></a>
+### 启动设备插件<a name="ZH-CN_TOPIC_0000002518224436"></a>
 
 在master节点下启动设备插件。
 
@@ -368,7 +368,7 @@
     ./start_devices.sh
     ```
 
-    >![](public_sys-resources/icon-note.gif) **说明：** 
+    > ![](public_sys-resources/icon-note.gif)说明
     >
     >执行 **./delete_devices.sh** 命令可删除设备插件。
 
@@ -380,19 +380,19 @@
 
     期望是以k8s-host-device开头的Pod名称，其状态（STATUS）列都是Running状态。
 
-### 2.3 运行hook脚本<a name="ZH-CN_TOPIC_0000002549866525"></a>
+### 运行 hook 脚本<a name="ZH-CN_TOPIC_0000002549866525"></a>
 
 在所有工作节点运行hook脚本。
 
-1. 请参见[视频流引擎 安装指南](install_guide.md)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
-2. 将“/home/k8s/k8s/script”目录下的oci-device-hook.sh脚本拷贝到“/usr/local/sbin/”目录。
+1. 请参见《[视频流引擎 安装指南](install_guide.md)》获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的"/home/k8s"目录。
+2. 将"/home/k8s/k8s/script"目录下的oci-device-hook.sh脚本拷贝到"/usr/local/sbin/"目录。
 
     ```shell
     cd /home/k8s/k8s/script
     cp oci-device-hook.sh /usr/local/sbin/
     ```
 
-3. 更改Containerd配置，将[部署道客设备插件镜像](install_guide.md#部署道客设备插件镜像)新增的容器运行时改成“/usr/local/sbin/oci-device-hook.sh”。
+3. 更改Containerd配置，将[部署道客设备插件镜像](install_guide.md#部署道客设备插件镜像)新增的容器运行时改成"/usr/local/sbin/oci-device-hook.sh"。
 
     ```shell
     sed -i 's|BinaryName = "/usr/bin/va-container-runtime"|BinaryName ="/usr/local/sbin/oci-device-hook.sh"|g' /etc/containerd/config.toml
@@ -404,11 +404,11 @@
     systemctl restart containerd
     ```
 
-### 2.4 运行nri插件
+### 运行 nri 插件
 
 在所有工作节点运行nri插件。
 
-1. 请参见[视频流引擎 安装指南](install_guide.md)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
+1. 请参见《[视频流引擎 安装指南](install_guide.md)》获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的"/home/k8s"目录。
 
 2. 进入/home/k8s/k8s/scripts/nri-quota-plugin目录构建插件。
 
@@ -451,7 +451,7 @@
     systemctl start quota-plugin
     ```
 
-### 2.5 启动K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864215"></a>
+### 启动 K8s 视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864215"></a>
 
 启动K8s视频流云手机实例需要在工作节点下操作。
 
@@ -470,13 +470,13 @@
 
 2. 启动K8s视频流云手机。
    
-   注意：如果提前创建的数据卷格式为f2fs，那么需要配置f2fs开关为1；如果提前创建的数据卷格式为ext4，需要配置f2fs开关为0。
+    注意：如果提前创建的数据卷格式为f2fs，那么需要配置f2fs开关为1；如果提前创建的数据卷格式为ext4，需要配置f2fs开关为0。
 
     ```shell
     ./k8s-video.sh start ${index1} ${index2} ${index3} ${index4}
     ```
 
-    >![](public_sys-resources/icon-note.gif) **说明：** 
+    > ![](public_sys-resources/icon-note.gif)说明
     > 
     > 若需要使用NFS挂载启动，则将start改成nstart。例：
     >
@@ -550,13 +550,13 @@
         kubectl exec -it video1 -- sh
         ```
 
-    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中“`{CONTAINER}`”是**crictl ps**返回的第一列。
+    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中"`{CONTAINER}`"是**crictl ps**返回的第一列。
 
         ```shell
         crictl exec -it ${CONTAINER} sh
         ```
 
-### 2.6 删除K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002518384356"></a>
+### 删除 K8s 视频流云手机实例<a name="ZH-CN_TOPIC_0000002518384356"></a>
 
 删除K8s视频流云手机实例需要在工作节点下操作。
 
@@ -565,7 +565,7 @@ cd /home/k8s/k8s/script
 ./k8s-video.sh delete ${index1} ${index2}
 ```
 
->![](public_sys-resources/icon-note.gif) **说明：** 
+> ![](public_sys-resources/icon-note.gif)说明
 >
 > `${index1}` 与 `${index2}` 为pod编号，其中 `${index2}` 可缺省，例：
 >
@@ -581,7 +581,7 @@ cd /home/k8s/k8s/script
 > ```
 > 
 
-### 2.7 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
+### 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518224462"></a>
 
 通过本章节步骤制作基础数据卷，用于工作节点的容器存储隔离和大小设置。
 
@@ -600,13 +600,13 @@ cd /home/k8s/k8s/script
     在回显信息中找到NAME为video1的行，NODE列的值即为video1所在节点。
 
 3. 将所需的应用（例地铁跑酷等）预装到该云手机容器中。
-4. 登录云手机video1所在节点，基础数据卷所在位置为“/home/mount/img/video1.img”，将img文件重命名为videobase.img并拷贝到每个工作节点的“/home/mount/img”目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
+4. 登录云手机video1所在节点，基础数据卷所在位置为"/home/mount/img/video1.img"，将img文件重命名为videobase.img并拷贝到每个工作节点的"/home/mount/img"目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
 
-## 3 可配置项功能说明<a name="ZH-CN_TOPIC_0000002549864233"></a>
+## 可配置项功能说明<a name="ZH-CN_TOPIC_0000002549864233"></a>
 
-### 3.1 视频流引擎商用部分<a name="ZH-CN_TOPIC_0000002518384362"></a>
+### 视频流引擎商用部分<a name="ZH-CN_TOPIC_0000002518384362"></a>
 
-#### 3.1.1 系统属性说明<a name="ZH-CN_TOPIC_0000002518224460"></a>
+#### 系统属性说明<a name="ZH-CN_TOPIC_0000002518224460"></a>
 
 视频流服务端引擎可通过系统属性配置视频，音频，网络等功能引擎参数，本章节对相关配置参数进行配置说明。
 
@@ -630,7 +630,7 @@ cd /home/k8s/k8s/script
 |ro.hardware.compositionBypass.offset|合成优化偏置帧数。在合成优化功能打开时，连续一定帧数满足生效条件后实际生效合成优化功能，可以改善合成优化功能开启后可能出现的画面旋转现象。|大于0|可根据实际情况调整（AMD环境建议0）|
 |ro.vmi.adaptive.vsync|自适应vsync功能开关，打开后可以优化服务端图像渲染阶段的处理时延。|1：生效自适应vsync<br>其他：不生效|默认不生效|
 
-#### 3.1.2 图形加速层配置项<a name="ZH-CN_TOPIC_0000002518224442" id="图形加速层配置项"></a>
+#### 图形加速层配置项<a name="ZH-CN_TOPIC_0000002518224442" id="图形加速层配置项"></a>
 
 当前图形加速层使能了GPUMock和ShaderCache两个可配置功能，本章节对两个可配置功能的配置项、配置规则进行说明，并且提供配置示例以供参考。
 
@@ -668,7 +668,7 @@ cd /home/k8s/k8s/script
 
 **配置规则<a name="section18753121811614"></a>**
 
-- 为了方便进行全局配置，除了支持对具体应用进行独立配置外，也支持系统通用配置。系统通用配置的Application名固定为“system”，具体应用的配置可以覆盖系统通用配置；系统通用配置支持GPUMock，不支持ShaderCache进行配置。
+- 为了方便进行全局配置，除了支持对具体应用进行独立配置外，也支持系统通用配置。系统通用配置的Application名固定为"system"，具体应用的配置可以覆盖系统通用配置；系统通用配置支持GPUMock，不支持ShaderCache进行配置。
 - GPUMock是个基础功能，可供图形加速层其他功能使用，应用使能ShaderCache功能会自动使能GPUMock功能。
 
 **配置示例<a name="section18450203117618"></a>**
@@ -709,9 +709,9 @@ cd /home/k8s/k8s/script
 </Application>
 ```
 
-### 3.2 视频流引擎非商用部分<a name="ZH-CN_TOPIC_0000002549744215"></a>
+### 视频流引擎非商用部分<a name="ZH-CN_TOPIC_0000002549744215"></a>
 
-#### 3.2.1 启动脚本配置项<a name="ZH-CN_TOPIC_0000002549864225" id="启动脚本配置项"></a>
+#### 启动脚本配置项<a name="ZH-CN_TOPIC_0000002549864225" id="启动脚本配置项"></a>
 
 视频流服务端引擎可通过启动脚本cfct_config文件中的配置项，配置硬件解码、WebRTC等功能，本章节提供视频流启动脚本cfct_config默认功能配置项说明。
 
@@ -740,7 +740,7 @@ cd /home/k8s/k8s/script
 |SYSTEM_PARTITION_SIZE_MB|/system分区大小调节使能开关和具体设定数值（单位为MB）。|0：不使能  非0值：使能|0：默认不使能|
 |NFS_DIR|客户端NFS挂载服务端的目录|可用的NFS挂载目录|/tmp/nfs：默认NFS挂载目录|
 
-#### 3.2.2 视频流引擎属性配置项<a name="ZH-CN_TOPIC_0000002518384388"></a>
+#### 视频流引擎属性配置项<a name="ZH-CN_TOPIC_0000002518384388"></a>
 
 本章节提供非商用部分音视频等模块的系统属性说明，开发者可以通过修改属性说明中的不同属性，配置视频流引擎音视频等模块的默认运行参数。
 
@@ -785,7 +785,7 @@ cd /home/k8s/k8s/script
 
 本章节提供非商用部分音视频等模块的系统属性说明，开发者可以通过修改属性说明中的不同属性，配置视频流引擎音视频等模块的默认运行参数。
 
-#### 3.2.3 WebRTC属性配置项<a name="ZH-CN_TOPIC_0000002549744223" id="WebRTC属性配置项"></a>
+#### WebRTC 属性配置项<a name="ZH-CN_TOPIC_0000002549744223" id="WebRTC属性配置项"></a>
 
 本章节提供非商用部分WebRTC模块的系统属性说明，开发者可以通过修改属性说明中的不同属性，配置视频流引擎WebRTC模块的默认运行参数。
 
@@ -807,84 +807,84 @@ cd /home/k8s/k8s/script
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|
 |vmi.webrtc.connection.udpmaxport|服务端使用的UDP最大端口。|可用的最大端口。|
 
-#### 3.2.4 容器内cpu频率动态调节<a name="ZH-CN_TOPIC_0000002549744226" id="容器内cpu频率动态调节"></a>
+#### 容器内 cpu 频率动态调节<a name="ZH-CN_TOPIC_0000002549744226" id="容器内cpu频率动态调节"></a>
 
-##### 3.2.4.1 功能背景
+##### 功能背景
 
 在真机中，系统为了平衡负载和功耗，会动态调节 CPU 的运行频率，而云机依托于服务器宿主机的容器化环境运行，其底层物理 CPU 的频率通常处于恒定状态，与真机存在差异。下面步骤说明如何实现云手机cpu频率动态调节，提高仿真能力。
 
-##### 3.2.4.2 **具体步骤**<a name="ZH-CN_TOPIC_000000254983255011"></a>
+##### 具体步骤<a name="ZH-CN_TOPIC_000000254983255011"></a>
 
-   当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改。
-   
-   在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限。
+    当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改。
+    
+    在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限。
 
-   ```shell
-   ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/scaling_cur_freq
-   ```
+    ```shell
+    ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/scaling_cur_freq
+    ```
 
-   ```shell
-   ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
-   ```
+    ```shell
+    ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
+    ```
 
-   如果包含 w（如 -rw-r--r--），说明文件的所有者（通常是 root）拥有写入权限。
+    如果包含 w（如 -rw-r--r--），说明文件的所有者（通常是 root）拥有写入权限。
 
-   如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。
-   则在容器内执行如下命令新增权限。
-   输入如下命令给scaling_cur_freq添加写入（w）权限。
+    如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。
+    则在容器内执行如下命令新增权限。
+    输入如下命令给scaling_cur_freq添加写入（w）权限。
 
-   ```shell
-   chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
-   ```
+    ```shell
+    chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
+    ```
 
-   输入如下命令给cpuinfo_cur_freq添加写入（w）权限。
+    输入如下命令给cpuinfo_cur_freq添加写入（w）权限。
 
-   ```shell
-   chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
-   ```
-   
-   随后在容器内输入如下命令读取cpu所支持的频率列表。
+    ```shell
+    chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
+    ```
+    
+    随后在容器内输入如下命令读取cpu所支持的频率列表。
 
-   ```shell
-   cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
-   ```
+    ```shell
+    cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
+    ```
 
-   随后在容器内输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值。
+    随后在容器内输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值。
 
-   ```shell
-   echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_cur_freq
-   ```
+    ```shell
+    echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_cur_freq
+    ```
 
-   ```shell
-   echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/cpuinfo_cur_freq
-   ```
+    ```shell
+    echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/cpuinfo_cur_freq
+    ```
 
-   如果容器重启，那么之前的修改值会失效，CPU频率值会恢复默认。
+    如果容器重启，那么之前的修改值会失效，CPU频率值会恢复默认。
 
-   要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如“手机设备信息大全”这样的第三方应用中观察到cpu频率的动态变化，此处的“sleep 1”表示每隔1s变化一次，此处的“1”可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改。
+    要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如"手机设备信息大全"这样的第三方应用中观察到cpu频率的动态变化，此处的"sleep 1"表示每隔1s变化一次，此处的"1"可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改。
 
-   ```shell
-   CPU_ID=0
-   FREQS=(554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000)
-   while true; do
-      for FREQ in "${FREQS[@]}"; do
-         echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/scaling_cur_freq 2>/dev/null
-         echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/cpuinfo_cur_freq 2>/dev/null
-         echo "CPU${CPU_ID} 频率已动态调节为: $FREQ"
-         sleep 1
-      done
-   done
-   ```
+    ```shell
+    CPU_ID=0
+    FREQS=(554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000)
+    while true; do
+       for FREQ in "${FREQS[@]}"; do
+          echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/scaling_cur_freq 2>/dev/null
+          echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/cpuinfo_cur_freq 2>/dev/null
+          echo "CPU${CPU_ID} 频率已动态调节为: $FREQ"
+          sleep 1
+       done
+    done
+    ```
 
-##### 3.2.4.3 **校验是否生效。**
+##### 校验是否生效
 
-   启动容器后，在容器内安装如“手机设备信息大全”的应用，查看cpu频率是否等于预期，若等于预期值即表示cpu频率调节生效。
+    启动容器后，在容器内安装如"手机设备信息大全"的应用，查看cpu频率是否等于预期，若等于预期值即表示cpu频率调节生效。
 
-## 4 故障处理<a name="ZH-CN_TOPIC_0000002549864199"></a>
+## 故障处理<a name="ZH-CN_TOPIC_0000002549864199"></a>
 
-### 4.1 概述<a name="ZH-CN_TOPIC_0000002549864223"></a>
+### 概述<a name="ZH-CN_TOPIC_0000002549864223"></a>
 
-#### 4.1.1 故障处理原则<a name="ZH-CN_TOPIC_0000002549744235"></a>
+#### 故障处理原则<a name="ZH-CN_TOPIC_0000002549744235"></a>
 
 - 故障分析、定位和处理原则：
     - 以尽快恢复业务为原则。
@@ -912,12 +912,12 @@ cd /home/k8s/k8s/script
     - 了解基本故障相关定位和处理方法。
     - 掌握远程接入方式的使用。
 
-#### 4.1.2 故障处理流程<a name="ZH-CN_TOPIC_0000002518224434"></a>
+#### 故障处理流程<a name="ZH-CN_TOPIC_0000002518224434"></a>
 
 故障处理总体流程主要分为四个过程：故障信息收集、故障判断、故障定位、故障排除。
 
 **图 1** 故障处理流程<a name="fig4128162522010"></a><a id="故障处理流程"></a>
-![](figures/故障处理流程.png "故障处理流程")
+![](figures/TroubleshootingProcess.png "故障处理流程")
 
 **故障信息收集<a name="section196271610142212"></a>**
 
@@ -944,22 +944,22 @@ cd /home/k8s/k8s/script
 
 故障排除是指根据不同的故障原因清除故障的过程。故障排除包括检修设备、修改配置数据、重启相关进程、重启容器、重启服务器等。
 
->![](public_sys-resources/icon-note.gif) **说明：** 
+> ![](public_sys-resources/icon-note.gif)说明
 >
 >处理重大故障前，请先联系技术支持工程师协助解决。
 >在故障处理过程中，维护人员可能需要执行修改配置数据、重启虚拟机等重大操作，为确保数据安全，首先应该保存现场数据，备份相关数据库、告警信息和日志文件等。
 >当系统维护人员无法自行排除故障时，请联系技术支持工程师协助解决。
 
-### 4.2 信息收集<a name="ZH-CN_TOPIC_0000002518224450"></a>
+### 信息收集<a name="ZH-CN_TOPIC_0000002518224450"></a>
 
-#### 4.2.1 声明<a name="ZH-CN_TOPIC_0000002549864205"></a>
+#### 声明<a name="ZH-CN_TOPIC_0000002549864205"></a>
 
 在信息收集操作过程中，请严格遵守以下原则：
 
 - 任何维护操作必须得到客户的授权，禁止进行超出客户审批范围的任何维护操作。
 - 将问题定位数据传出客户网络必须得到客户的授权。
 
-#### 4.2.2 基本信息收集<a name="ZH-CN_TOPIC_0000002549864231"></a>
+#### 基本信息收集<a name="ZH-CN_TOPIC_0000002549864231"></a>
 
 **收集局点信息<a name="section4323131116418"></a>**
 

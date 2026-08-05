@@ -1,4 +1,4 @@
-# auto_install_tools.sh脚本
+# auto_install_tools.sh 脚本
 
 ## 使用命令
 
@@ -38,15 +38,15 @@ source ~/.bashrc
 
 ### DelOldEnv()
 
-在~/.bashrc中删除之前设置的环境变量。
+在 ~/.bashrc 中删除之前设置的环境变量。
 
-auto_install_tools.sh设置的环境变量，以 **#tools_env_start:** 标志开头，以 **#tools_env_end:** 标志结尾。此函数将在~/.bashrc中查找这两个标志，并删除中间的内容。
+auto_install_tools.sh 设置的环境变量，以 **#tools_env_start:** 标志开头，以 **#tools_env_end:** 标志结尾。此函数将在 ~/.bashrc 中查找这两个标志，并删除中间的内容。
 
 若发现 **#tools_env_end:** 出现在 **#tools_env_start:** 之前，则脚本无法自动删除，请用户手动解决冲突。
 
 ### CheckEnvConflict()
 
-查看~/.bashrc中是否已存在准备设定的环境变量，若已存在则报错并退出，此时请用户手动清除或注释之前设定的环境变量。
+查看 ~/.bashrc 中是否已存在准备设定的环境变量，若已存在则报错并退出，此时请用户手动清除或注释之前设定的环境变量。
 
 需要设定的环境变量有：
 
@@ -67,23 +67,23 @@ ANDROID_NDK
 
 ### SetEnvConfig()
 
-在~/.bashrc中添加环境变量，以 **#tools_env_start:** 标志开头，以 **#tools_env_end:** 标志结尾。
+在 ~/.bashrc 中添加环境变量，以 **#tools_env_start:** 标志开头，以 **#tools_env_end:** 标志结尾。
 
-# download_open_source.sh脚本
+# download_open_source.sh 脚本
 
 ## 总体流程
 
-下载开源软件压缩包到open_source_download目录，再解压到unpack_open_source下的对应目录中。
+下载开源软件压缩包到 open_source_download 目录，再解压到 unpack_open_source 下的对应目录中。
 
-若open_source_download目录已存在下载好的压缩包，则不会重复下载。但是无论unpack_open_source下是否存在已解压的文件，每次编译代码都会重复解压并覆盖之前解压的文件。
+若 open_source_download 目录已存在下载好的压缩包，则不会重复下载。但是无论 unpack_open_source 下是否存在已解压的文件，每次编译代码都会重复解压并覆盖之前解压的文件。
 
 <a id="opensource_repo.conf"></a>
 
-## opensource_repo.conf文件介绍
+## opensource_repo.conf 文件介绍
 
-opensource_repo.conf是用于记录开源软件下载链接和解压方式的文件，每次download_open_source.sh执行时都会调用opensource_repo.conf。
+opensource_repo.conf 是用于记录开源软件下载链接和解压方式的文件，每次 download_open_source.sh 执行时都会调用 opensource_repo.conf。
 
-若需要在opensource_repo.conf中添加新的开源软件下载链接，则需要根据格式设定4个参数，各个参数解释如下：
+若需要在 opensource_repo.conf 中添加新的开源软件下载链接，则需要根据格式设定 4 个参数，各个参数解释如下：
 
 ```shell
 参数[0]：下载链接，使用wget下载。
@@ -99,20 +99,20 @@ opensource_repo.conf是用于记录开源软件下载链接和解压方式的文
 
 ### open_sources
 
-设定需要下载的开源软件，成员变量名与opensource_repo.conf文件中的名字须保持一致。
+设定需要下载的开源软件，成员变量名与 opensource_repo.conf 文件中的名字须保持一致。
 
 ### check_download_file_exist()
 
-检查open_source_download目录中是否已存在需要下载的压缩包。
+检查 open_source_download 目录中是否已存在需要下载的压缩包。
 
 ### download_open_source()
 
-使用wget命令从下载链接中下载压缩包到open_source_download目录。
+使用 wget 命令从下载链接中下载压缩包到 open_source_download 目录。
 
-wget下载文件时，会自动将文件重命名为下载链接最后一个"/"后的部分，这可能导致文件名甚至不是压缩包格式而无法解压，因此在opensource_repo.conf需要设定下载后的文件名。
+wget 下载文件时，会自动将文件重命名为下载链接最后一个"/"后的部分，这可能导致文件名甚至不是压缩包格式而无法解压，因此在 opensource_repo.conf 需要设定下载后的文件名。
 
 ### unpack_source()
 
-解压压缩包到unpack_open_source目录中，解压路径受opensource_repo.conf中设置的参数\[2\]和参数\[3\]影响，具体可以参考 [opensource_repo.conf文件介绍](#opensource_repo.conf) 章节。
+解压压缩包到 unpack_open_source 目录中，解压路径受 opensource_repo.conf 中设置的参数\[2\]和参数\[3\]影响，具体可以参考 [opensource_repo.conf 文件介绍](#opensource_repo.conf) 章节。
 
 另外，脚本会自动判断解压后的文件是否只有一个文件夹，如果解压后只有一个文件夹，则判定为压缩包内嵌套了一层多余的文件夹，则将此文件夹中的所有文件移动至上一级，并删除此文件夹。

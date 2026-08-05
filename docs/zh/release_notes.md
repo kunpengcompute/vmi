@@ -1,34 +1,17 @@
 # 版本说明书<a name="ZH-CN_TOPIC_0000002552848875"></a>
 
-## 1 版本配套说明<a name="ZH-CN_TOPIC_0000002518186576"></a>
+## 版本配套说明<a name="ZH-CN_TOPIC_0000002518186576"></a>
 
-### 1.1 产品版本信息<a name="ZH-CN_TOPIC_0000002518346470"></a>
+### 产品版本信息<a name="ZH-CN_TOPIC_0000002518346470"></a>
 
-<a name="table229mcpsimp"></a>
-<table><tbody><tr id="row234mcpsimp"><th class="firstcol" valign="top" width="14.000000000000002%" id="mcps1.1.3.1.1"><p id="p236mcpsimp"><a name="p236mcpsimp"></a><a name="p236mcpsimp"></a>产品名称</p>
-</th>
-<td class="cellrowborder" valign="top" width="86%" headers="mcps1.1.3.1.1 "><p id="p6308719427"><a name="p6308719427"></a><a name="p6308719427"></a>Kunpeng BoostKit</p>
-</td>
-</tr>
-<tr id="row239mcpsimp"><th class="firstcol" valign="top" width="14.000000000000002%" id="mcps1.1.3.2.1"><p id="p241mcpsimp"><a name="p241mcpsimp"></a><a name="p241mcpsimp"></a>产品版本</p>
-</th>
-<td class="cellrowborder" valign="top" width="86%" headers="mcps1.1.3.2.1 "><p id="p243mcpsimp"><a name="p243mcpsimp"></a><a name="p243mcpsimp"></a><span id="text10760143210428"><a name="text10760143210428"></a><a name="text10760143210428"></a>26.0.RC1</span></p>
-</td>
-</tr>
-<tr id="row244mcpsimp"><th class="firstcol" valign="top" width="14.000000000000002%" id="mcps1.1.3.3.1"><p id="p246mcpsimp"><a name="p246mcpsimp"></a><a name="p246mcpsimp"></a>软件名称</p>
-</th>
-<td class="cellrowborder" valign="top" width="86%" headers="mcps1.1.3.3.1 "><p id="p248mcpsimp"><a name="p248mcpsimp"></a><a name="p248mcpsimp"></a>视频流引擎</p>
-</td>
-</tr>
-<tr id="row143655718466"><th class="firstcol" valign="top" width="14.000000000000002%" id="mcps1.1.3.4.1"><p id="p173652078469"><a name="p173652078469"></a><a name="p173652078469"></a>软件包版本</p>
-</th>
-<td class="cellrowborder" valign="top" width="86%" headers="mcps1.1.3.4.1 "><p id="p936514714612"><a name="p936514714612"></a><a name="p936514714612"></a>8.0.RC1_11</p>
-</td>
-</tr>
-</tbody>
-</table>
+| 项目 | 内容 |
+|--|--|
+| 产品名称 | Kunpeng BoostKit |
+| 产品版本 | 26.0.RC1 |
+| 软件名称 | 视频流引擎 |
+| 软件包版本 | 8.0.RC1_11 |
 
-### 1.2 软件版本配套说明<a name="ZH-CN_TOPIC_0000002549826339"></a>
+### 软件版本配套说明<a name="ZH-CN_TOPIC_0000002549826339"></a>
 
 |软件类型|版本|备注|
 |--|--|--|
@@ -36,7 +19,7 @@
 |OS|openEuler-22.03-LTS-SP4-aarch64 （内核5.10.0-216.0.0）|-|
 |ExaGear|ExaGear ARM32-ARM64 V2.5|转码软件|
 
-### 1.3 硬件版本配套说明<a name="ZH-CN_TOPIC_0000002549826331"></a>
+### 硬件版本配套说明<a name="ZH-CN_TOPIC_0000002549826331"></a>
 
 |服务器类型|处理器型号|BIOS版本|CPLD版本|BMC版本|
 |--|--|--|--|--|
@@ -44,7 +27,7 @@
 |鲲鹏服务器|鲲鹏920 7280Z处理器|20.55|5.08|5.05.12.15|
 |鲲鹏服务器|鲲鹏920 7260W处理器|21.52|7.08|5.05.12.31|
 
-### 1.4 病毒扫描结果<a name="ZH-CN_TOPIC_0000002518186560"></a>
+### 病毒扫描结果<a name="ZH-CN_TOPIC_0000002518186560"></a>
 
 本软件包及相关文档经过防病毒软件扫描，没有发现病毒。
 
@@ -54,13 +37,13 @@
 |Bitdefender|7.5.1.200224|7.100367|2026-03-17 17:34:56|OK|
 |Kaspersky|12.0.0.6672|2026-03-17 10:04:00|2026-03-17 17:34:39|OK|
 
-## 2 版本使用注意事项<a name="ZH-CN_TOPIC_0000002549706329"></a>
+## 版本使用注意事项<a name="ZH-CN_TOPIC_0000002549706329"></a>
 
-版本使用注意事项详见《视频流引擎 特性指南》中“[约束与限制](feature_guide.md)”章节。
+版本使用注意事项详见《视频流引擎 特性指南》中"[约束与限制](feature_guide.md)"章节。
 
-## 3 版本配套表<a name="ZH-CN_TOPIC_0000002549706328"></a>
+## 版本配套表<a name="ZH-CN_TOPIC_0000002549706328"></a>
 
-### 3.1 内嵌平台版本配套关系<a name="ZH-CN_TOPIC_0000002518346481"></a>
+### 内嵌平台版本配套关系<a name="ZH-CN_TOPIC_0000002518346481"></a>
 
 | 本软件名称           | 详细版本号                       | 配套硬件平台 | 平台软件名称   | 平台软件版本号                                                                   | 处理器类型操作系统                                                                                                                 | 备注          |
 |------------------|------------------------------|---------|-----------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|-------------|
@@ -73,22 +56,22 @@
 |                  |                              |         | BIOS      | TS200-2180_2280_5180_5280-BIOS-V656<br>                                    |                                                                                                                            |             |
 |                  |                              |         | Exagear软件 | ExaGear_ARM32-ARM64_V2.5                                                   | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                                                     | v2.5        |
 
-### 3.2 产品内配套关系<a name="ZH-CN_TOPIC_0000002518346482"></a>
+### 产品内配套关系<a name="ZH-CN_TOPIC_0000002518346482"></a>
 
-| 1          版本信息                   |                              |       |                                                       |       |
+| 1          版本信息                   |                              |       |                                                       |       |
 |-----------------------------------|------------------------------|-------|-------------------------------------------------------|-------|
 | 产品名称                              | Kunpeng BoostKit             |       |                                                       |       |
 | 产品版本                              | Kunpeng BoostKit 25.3.0      |       |                                                       |       |
 | 详细版本号                             | Kunpeng BoostKit 25.3.0.B016 |       |                                                       |       |
 
-| 2          软件版本配套表                |                              |       |                                                       |       |
+| 2          软件版本配套表                |                              |       |                                                       |       |
 |-----------------------------------|------------------------------|-------|-------------------------------------------------------|-------|
 | 表1 软件版本配套表                        |                              |       |                                                       |       |
 | 软件名称                              | 版本号                          | 硬件平台  | 操作系统                                                  | 数据库系统 |
 | BoostKit-videoengine_7.3.0_11.zip | B016                         | 鲲鹏服务器 | openEuler-22.03-LTS-SP4-aarch64<br>android-11.0.0_r48 | /     |
 | Kbox-AOSP11.zip                   | B016                         |       |                                                       |       |
 
-### 3.3 应用兼容性列表<a name="ZH-CN_TOPIC_0000002518346483"></a>
+### 应用兼容性列表<a name="ZH-CN_TOPIC_0000002518346483"></a>
 
 | AOSP11应用兼容性列表 |      |    |         |      |                                                                     |                                |      | 
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------|------|----|---------|------|---------------------------------------------------------------------|--------------------------------|------|
@@ -106,14 +89,14 @@
 | 11                                                                                                                                                                | 爱奇艺  | 应用 | 跟随应用宝更新 | 应用宝  | 无                                                                   |                                |      | 
 | 12                                                                                                                                                                | 蛋仔派对 | 应用 | 跟随应用宝更新 | 应用宝  | 在AMD环境上，配置为软解时，登录界面背景视频无法正常播放，游戏内直播无法正常播放，会发生黑屏（游戏UI正常）。配置为硬解可解决此问题 |
 
->![](public_sys-resources/icon-note.gif) **说明：** 
+> ![](public_sys-resources/icon-note.gif)说明
 >
 > 应用兼容性测试条件说明：<br>1.测试环境应为2280服务器的标准硬件环境<br>2.测云手机规格(8核1路/16g内存/64g存储)<br>3.兼容性测试场景，单个容器在测试期间只运行一款游戏，不同时运行多款游戏<br>4.当前版本暂不支持WIFI设置和WIFI搜索等操作；<br>5.当前版本不支持蓝牙设备；<br> 
 >
 
-## 4 8.0.RC1_11<a name="ZH-CN_TOPIC_0000002549706331"></a>
+## 8.0.RC1_11<a name="ZH-CN_TOPIC_0000002549706331"></a>
 
-### 4.1 更新说明<a name="ZH-CN_TOPIC_0000002518346480"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002518346480"></a>
 
 **新增特性<a name="section402mcpsimp"></a>**
 
@@ -127,17 +110,17 @@
 
 无
 
-### 4.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518346476"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518346476"></a>
 
 无
 
-### 4.3 遗留问题<a name="ZH-CN_TOPIC_0000002518346478"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002518346478"></a>
 
 无
 
-## 5 V7.3.0_11<a name="ZH-CN_TOPIC_0000002549706331"></a>
+## V7.3.0_11<a name="ZH-CN_TOPIC_0000002549706331"></a>
 
-### 5.1 更新说明<a name="ZH-CN_TOPIC_0000002518346480"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002518346480"></a>
 
 **新增特性<a name="section402mcpsimp"></a>**
 
@@ -151,54 +134,25 @@
 
 无
 
-### 5.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518346476"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518346476"></a>
 
-<a name="zh-cn_topic_0000001498002964_table1077520124617"></a>
-<table><tbody><tr id="zh-cn_topic_0000001498002964_row07751817464"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001498002964_p177751174618"><a name="zh-cn_topic_0000001498002964_p177751174618"></a><a name="zh-cn_topic_0000001498002964_p177751174618"></a>问题单号</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.1.1 "><p id="p12376102249"><a name="p12376102249"></a><a name="p12376102249"></a>DTS2025090442627</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row157751511464"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001498002964_p167751810462"><a name="zh-cn_topic_0000001498002964_p167751810462"></a><a name="zh-cn_topic_0000001498002964_p167751810462"></a>严重级别</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.2.1 "><p id="p5376142147"><a name="p5376142147"></a><a name="p5376142147"></a>一般</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row11775191144616"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.3.1"><p id="zh-cn_topic_0000001498002964_p20775919467"><a name="zh-cn_topic_0000001498002964_p20775919467"></a><a name="zh-cn_topic_0000001498002964_p20775919467"></a>问题描述</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.3.1 "><p id="p37315810478"><a name="p37315810478"></a><a name="p37315810478"></a>鲲鹏服务器搭载瀚博GPU搭配驱动版本VAGPU-25.03.01.01-RC6时，视频流云手机使用xplayer播放特定ts格式视频文件，跳转时间点会必然出现播放卡顿问题，仅有一个特定视频文件会触发该问题现象。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row12775151134619"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.4.1"><p id="zh-cn_topic_0000001498002964_p197756111466"><a name="zh-cn_topic_0000001498002964_p197756111466"></a><a name="zh-cn_topic_0000001498002964_p197756111466"></a>根因分析</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.4.1 "><p id="p856219144476"><a name="p856219144476"></a><a name="p856219144476"></a>使用xplayer播放问题视频文件，在跳转时间点时xplayer重启解码器，由于该视频只在视频开头存了一个sps/pps，导致跳转后解码器无法读取到sps/pps，解码失败。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row1677518118466"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.5.1"><p id="zh-cn_topic_0000001498002964_p97756164616"><a name="zh-cn_topic_0000001498002964_p97756164616"></a><a name="zh-cn_topic_0000001498002964_p97756164616"></a>影响评估</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.5.1 "><p id="p53778219413"><a name="p53778219413"></a><a name="p53778219413"></a>仅使用瀚博GPU搭配驱动VAGPU-25.03.01.01-RC6，使用跳转时触发解码器reset的播放器（如xplayer）播放仅开头存有一个sps/pps的视频时存在该问题。该问题仅会导致播放停止，可通过重启xplayer应用恢复，不会导致其他功能/性能问题。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row1177581134617"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.6.1"><p id="zh-cn_topic_0000001498002964_p677517114617"><a name="zh-cn_topic_0000001498002964_p677517114617"></a><a name="zh-cn_topic_0000001498002964_p677517114617"></a>规避和应急措施</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.6.1 "><p id="p53771212415"><a name="p53771212415"></a><a name="p53771212415"></a>播放其他视频，或通过其他视频播放器（如系统自带的图库）播放该视频，均可正常播放。使用AMD GPU配置的服务器，也可正常播放该视频。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row1777511154617"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.7.1"><p id="p168758055115"><a name="p168758055115"></a><a name="p168758055115"></a>解决方案</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.7.1 "><p id="p83771424412"><a name="p83771424412"></a><a name="p83771424412"></a>瀚博驱动VAGPU-25.03.01.01-RC20 已解决</p>
-</td>
-</tr>
-</tbody>
-</table>
+| 项目 | 内容 |
+|--|--|
+| 问题单号 | DTS2025090442627 |
+| 严重级别 | 一般 |
+| 问题描述 | 鲲鹏服务器搭载瀚博GPU搭配驱动版本VAGPU-25.03.01.01-RC6时，视频流云手机使用xplayer播放特定ts格式视频文件，跳转时间点会必然出现播放卡顿问题，仅有一个特定视频文件会触发该问题现象。 |
+| 根因分析 | 使用xplayer播放问题视频文件，在跳转时间点时xplayer重启解码器，由于该视频只在视频开头存了一个sps/pps，导致跳转后解码器无法读取到sps/pps，解码失败。 |
+| 影响评估 | 仅使用瀚博GPU搭配驱动VAGPU-25.03.01.01-RC6，使用跳转时触发解码器reset的播放器（如xplayer）播放仅开头存有一个sps/pps的视频时存在该问题。该问题仅会导致播放停止，可通过重启xplayer应用恢复，不会导致其他功能/性能问题。 |
+| 规避和应急措施 | 播放其他视频，或通过其他视频播放器（如系统自带的图库）播放该视频，均可正常播放。使用AMD GPU配置的服务器，也可正常播放该视频。 |
+| 解决方案 | 瀚博驱动VAGPU-25.03.01.01-RC20 已解决 |
 
-### 5.3 遗留问题<a name="ZH-CN_TOPIC_0000002518346478"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002518346478"></a>
 
 无
 
-## 6 V7.2.RC1<a name="ZH-CN_TOPIC_0000002518186570"></a>
+## V7.2.RC1<a name="ZH-CN_TOPIC_0000002518186570"></a>
 
-### 6.1 更新说明<a name="ZH-CN_TOPIC_0000002518186562"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002518186562"></a>
 
 **新增特性<a name="section402mcpsimp"></a>**
 
@@ -214,54 +168,25 @@
 
 无
 
-### 6.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518346494"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518346494"></a>
 
 无
 
-### 6.3 遗留问题<a name="ZH-CN_TOPIC_0000002518186572"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002518186572"></a>
 
-<a name="zh-cn_topic_0000001498002964_table1077520124617"></a>
-<table><tbody><tr id="zh-cn_topic_0000001498002964_row07751817464"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001498002964_p177751174618"><a name="zh-cn_topic_0000001498002964_p177751174618"></a><a name="zh-cn_topic_0000001498002964_p177751174618"></a>问题单号</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.1.1 "><p id="p12376102249"><a name="p12376102249"></a><a name="p12376102249"></a>DTS2025090442627</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row157751511464"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001498002964_p167751810462"><a name="zh-cn_topic_0000001498002964_p167751810462"></a><a name="zh-cn_topic_0000001498002964_p167751810462"></a>严重级别</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.2.1 "><p id="p5376142147"><a name="p5376142147"></a><a name="p5376142147"></a>一般</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row11775191144616"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.3.1"><p id="zh-cn_topic_0000001498002964_p20775919467"><a name="zh-cn_topic_0000001498002964_p20775919467"></a><a name="zh-cn_topic_0000001498002964_p20775919467"></a>问题描述</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.3.1 "><p id="p37315810478"><a name="p37315810478"></a><a name="p37315810478"></a>鲲鹏服务器搭载瀚博GPU搭配驱动版本VAGPU-25.03.01.01-RC6时，视频流云手机使用xplayer播放特定ts格式视频文件，跳转时间点会必然出现播放卡顿问题，仅有一个特定视频文件会触发该问题现象。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row12775151134619"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.4.1"><p id="zh-cn_topic_0000001498002964_p197756111466"><a name="zh-cn_topic_0000001498002964_p197756111466"></a><a name="zh-cn_topic_0000001498002964_p197756111466"></a>根因分析</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.4.1 "><p id="p856219144476"><a name="p856219144476"></a><a name="p856219144476"></a>使用xplayer播放问题视频文件，在跳转时间点时xplayer重启解码器，由于该视频只在视频开头存了一个sps/pps，导致跳转后解码器无法读取到sps/pps，解码失败。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row1677518118466"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.5.1"><p id="zh-cn_topic_0000001498002964_p97756164616"><a name="zh-cn_topic_0000001498002964_p97756164616"></a><a name="zh-cn_topic_0000001498002964_p97756164616"></a>影响评估</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.5.1 "><p id="p53778219413"><a name="p53778219413"></a><a name="p53778219413"></a>仅使用瀚博GPU搭配驱动VAGPU-25.03.01.01-RC6，使用跳转时触发解码器reset的播放器（如xplayer）播放仅开头存有一个sps/pps的视频时存在该问题。该问题仅会导致播放停止，可通过重启xplayer应用恢复，不会导致其他功能/性能问题。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row1177581134617"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.6.1"><p id="zh-cn_topic_0000001498002964_p677517114617"><a name="zh-cn_topic_0000001498002964_p677517114617"></a><a name="zh-cn_topic_0000001498002964_p677517114617"></a>规避和应急措施</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.6.1 "><p id="p53771212415"><a name="p53771212415"></a><a name="p53771212415"></a>播放其他视频，或通过其他视频播放器（如系统自带的图库）播放该视频，均可正常播放。使用AMD GPU配置的服务器，也可正常播放该视频。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001498002964_row1777511154617"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.7.1"><p id="zh-cn_topic_0000001498002964_p87762154616"><a name="zh-cn_topic_0000001498002964_p87762154616"></a><a name="zh-cn_topic_0000001498002964_p87762154616"></a>解决计划</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.7.1 "><p id="p83771424412"><a name="p83771424412"></a><a name="p83771424412"></a>瀚博厂商提供新驱动用于修复问题，计划1030解决。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| 项目 | 内容 |
+|--|--|
+| 问题单号 | DTS2025090442627 |
+| 严重级别 | 一般 |
+| 问题描述 | 鲲鹏服务器搭载瀚博GPU搭配驱动版本VAGPU-25.03.01.01-RC6时，视频流云手机使用xplayer播放特定ts格式视频文件，跳转时间点会必然出现播放卡顿问题，仅有一个特定视频文件会触发该问题现象。 |
+| 根因分析 | 使用xplayer播放问题视频文件，在跳转时间点时xplayer重启解码器，由于该视频只在视频开头存了一个sps/pps，导致跳转后解码器无法读取到sps/pps，解码失败。 |
+| 影响评估 | 仅使用瀚博GPU搭配驱动VAGPU-25.03.01.01-RC6，使用跳转时触发解码器reset的播放器（如xplayer）播放仅开头存有一个sps/pps的视频时存在该问题。该问题仅会导致播放停止，可通过重启xplayer应用恢复，不会导致其他功能/性能问题。 |
+| 规避和应急措施 | 播放其他视频，或通过其他视频播放器（如系统自带的图库）播放该视频，均可正常播放。使用AMD GPU配置的服务器，也可正常播放该视频。 |
+| 解决计划 | 瀚博厂商提供新驱动用于修复问题，计划1030解决。 |
 
-## 7 V7.1.RC1<a name="ZH-CN_TOPIC_0000002518346486"></a>
+## V7.1.RC1<a name="ZH-CN_TOPIC_0000002518346486"></a>
 
-### 7.1 更新说明<a name="ZH-CN_TOPIC_0000002549826345"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002549826345"></a>
 
 **新增特性<a name="section402mcpsimp"></a>**
 
@@ -280,17 +205,17 @@
 
 无
 
-### 7.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518346488"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518346488"></a>
 
 无
 
-### 7.3 遗留问题<a name="ZH-CN_TOPIC_0000002518346474"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002518346474"></a>
 
 无
 
-## 8 V7.0.RC1<a name="ZH-CN_TOPIC_0000002518346472"></a>
+## V7.0.RC1<a name="ZH-CN_TOPIC_0000002518346472"></a>
 
-### 8.1 更新说明<a name="ZH-CN_TOPIC_0000002549706351"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002549706351"></a>
 
 **新增特性<a name="section402mcpsimp"></a>**
 
@@ -307,17 +232,17 @@
 
 无
 
-### 8.2 已解决的问题<a name="ZH-CN_TOPIC_0000002549706349"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002549706349"></a>
 
 无
 
-### 8.3 遗留问题<a name="ZH-CN_TOPIC_0000002549706337"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002549706337"></a>
 
 无
 
-## 9 V6.0.0<a name="ZH-CN_TOPIC_0000002518346496"></a>
+## V6.0.0<a name="ZH-CN_TOPIC_0000002518346496"></a>
 
-### 9.1 更新说明<a name="ZH-CN_TOPIC_0000002549826335"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002549826335"></a>
 
 **新增特性<a name="section402mcpsimp"></a>**
 
@@ -333,17 +258,17 @@
 
 无
 
-### 9.2 已解决的问题<a name="ZH-CN_TOPIC_0000002549826353"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002549826353"></a>
 
 无
 
-### 9.3 遗留问题<a name="ZH-CN_TOPIC_0000002549826351"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002549826351"></a>
 
 无
 
-## 10 V6.0.RC2<a name="ZH-CN_TOPIC_0000002549826349"></a>
+## V6.0.RC2<a name="ZH-CN_TOPIC_0000002549826349"></a>
 
-### 10.1 更新说明<a name="ZH-CN_TOPIC_0000002518186558"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002518186558"></a>
 
 **新增特性<a name="section402mcpsimp"></a>**
 
@@ -363,17 +288,17 @@
 
 无
 
-### 10.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518186582"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518186582"></a>
 
 无
 
-### 10.3 遗留问题<a name="ZH-CN_TOPIC_0000002549826337"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002549826337"></a>
 
 无
 
-## 11 V6.0.RC1<a name="ZH-CN_TOPIC_0000002549826357"></a>
+## V6.0.RC1<a name="ZH-CN_TOPIC_0000002549826357"></a>
 
-### 11.1 更新说明<a name="ZH-CN_TOPIC_0000002549706339"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002549706339"></a>
 
 **新增特性<a name="section402mcpsimp"></a>**
 
@@ -394,17 +319,17 @@
 
 无
 
-### 11.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518186564"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518186564"></a>
 
 无
 
-### 11.3 遗留问题<a name="ZH-CN_TOPIC_0000002518346492"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002518346492"></a>
 
 无
 
-## 12 V5.0.0<a name="ZH-CN_TOPIC_0000002518186554"></a>
+## V5.0.0<a name="ZH-CN_TOPIC_0000002518186554"></a>
 
-### 12.1 更新说明<a name="ZH-CN_TOPIC_0000002549706343"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002549706343"></a>
 
 **新增特性<a name="zh-cn_topic_0000001691765529_section402mcpsimp"></a>**
 
@@ -420,56 +345,25 @@
 
 视频流引擎支持AMD GPU编码。
 
-### 12.2 已解决的问题<a name="ZH-CN_TOPIC_0000002549706335"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002549706335"></a>
 
-<a name="zh-cn_topic_0000001691765525_table5817144218195"></a>
-<table><tbody><tr id="zh-cn_topic_0000001691765525_row586944271918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001691765525_p118691042181914"><a name="zh-cn_topic_0000001691765525_p118691042181914"></a><a name="zh-cn_topic_0000001691765525_p118691042181914"></a>问题单号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001691765525_p138690421191"><a name="zh-cn_topic_0000001691765525_p138690421191"></a><a name="zh-cn_topic_0000001691765525_p138690421191"></a>DTS2023021615441</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001691765525_row0869142131918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001691765525_p786910421194"><a name="zh-cn_topic_0000001691765525_p786910421194"></a><a name="zh-cn_topic_0000001691765525_p786910421194"></a>严重级别</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001691765525_p4869174231912"><a name="zh-cn_topic_0000001691765525_p4869174231912"></a><a name="zh-cn_topic_0000001691765525_p4869174231912"></a>提示</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001691765525_row586904221912"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.3.1"><p id="zh-cn_topic_0000001691765525_p186944218191"><a name="zh-cn_topic_0000001691765525_p186944218191"></a><a name="zh-cn_topic_0000001691765525_p186944218191"></a>问题描述</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.3.1 "><p id="zh-cn_topic_0000001691765525_p128706421198"><a name="zh-cn_topic_0000001691765525_p128706421198"></a><a name="zh-cn_topic_0000001691765525_p128706421198"></a>使用Kbox11当客户端出流视频流云手机，运行10分钟后画面卡住，接收帧率解码帧率均为0，重连可恢复，影响视频流长稳的可测试性。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001691765525_row16870164218197"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.4.1"><p id="zh-cn_topic_0000001691765525_p887084291920"><a name="zh-cn_topic_0000001691765525_p887084291920"></a><a name="zh-cn_topic_0000001691765525_p887084291920"></a>根因分析</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.4.1 "><p id="zh-cn_topic_0000001691765525_p1587004210193"><a name="zh-cn_topic_0000001691765525_p1587004210193"></a><a name="zh-cn_topic_0000001691765525_p1587004210193"></a>Kbox11仿真机软解码性能不足，存在解码时延冲高的问题。</p>
-<p id="zh-cn_topic_0000001691765525_p1487084216194"><a name="zh-cn_topic_0000001691765525_p1487084216194"></a><a name="zh-cn_topic_0000001691765525_p1487084216194"></a>当系统软解码接口卡顿时，视频流客户端解码线程无法获取新buffer用于接收服务端码流包。</p>
-<p id="zh-cn_topic_0000001691765525_p38701142191913"><a name="zh-cn_topic_0000001691765525_p38701142191913"></a><a name="zh-cn_topic_0000001691765525_p38701142191913"></a>在多次重试超时后，视频流客户端解码功能进入错误处理流程，解码线程退出。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001691765525_row387094291917"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.5.1"><p id="zh-cn_topic_0000001691765525_p6870142121916"><a name="zh-cn_topic_0000001691765525_p6870142121916"></a><a name="zh-cn_topic_0000001691765525_p6870142121916"></a>影响评估</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.5.1 "><p id="zh-cn_topic_0000001691765525_p1187014271913"><a name="zh-cn_topic_0000001691765525_p1187014271913"></a><a name="zh-cn_topic_0000001691765525_p1187014271913"></a>当前Kbox11自带软解只有本身图库会使用，主流视频播放器xplayer、腾讯视频、抖音、爱奇艺等在Kbox中运行均使用自身集成的FFmpeg软解或自研的软解，不会使用Kbox自带的软解，软解性能差的影响范围有限。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001691765525_row17870642191919"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.6.1"><p id="zh-cn_topic_0000001691765525_p1870184210193"><a name="zh-cn_topic_0000001691765525_p1870184210193"></a><a name="zh-cn_topic_0000001691765525_p1870184210193"></a>规避和应急措施</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.6.1 "><p id="zh-cn_topic_0000001691765525_p68701842121911"><a name="zh-cn_topic_0000001691765525_p68701842121911"></a><a name="zh-cn_topic_0000001691765525_p68701842121911"></a>使用Kbox9仿真机做客户端。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001691765525_row12870144216195"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.7.1"><p id="zh-cn_topic_0000001691765525_p2087013427198"><a name="zh-cn_topic_0000001691765525_p2087013427198"></a><a name="zh-cn_topic_0000001691765525_p2087013427198"></a>解决方案</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.7.1 "><p id="zh-cn_topic_0000001691765525_p11870142181919"><a name="zh-cn_topic_0000001691765525_p11870142181919"></a><a name="zh-cn_topic_0000001691765525_p11870142181919"></a>客户端解码线程取消超时机制，避免因为系统解码接口卡顿退出。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| 项目 | 内容 |
+|--|--|
+| 问题单号 | DTS2023021615441 |
+| 严重级别 | 提示 |
+| 问题描述 | 使用Kbox11当客户端出流视频流云手机，运行10分钟后画面卡住，接收帧率解码帧率均为0，重连可恢复，影响视频流长稳的可测试性。 |
+| 根因分析 | Kbox11仿真机软解码性能不足，存在解码时延冲高的问题。<br>当系统软解码接口卡顿时，视频流客户端解码线程无法获取新buffer用于接收服务端码流包。<br>在多次重试超时后，视频流客户端解码功能进入错误处理流程，解码线程退出。 |
+| 影响评估 | 当前Kbox11自带软解只有本身图库会使用，主流视频播放器xplayer、腾讯视频、抖音、爱奇艺等在Kbox中运行均使用自身集成的FFmpeg软解或自研的软解，不会使用Kbox自带的软解，软解性能差的影响范围有限。 |
+| 规避和应急措施 | 使用Kbox9仿真机做客户端。 |
+| 解决方案 | 客户端解码线程取消超时机制，避免因为系统解码接口卡顿退出。 |
 
-### 12.3 遗留问题<a name="ZH-CN_TOPIC_0000002549706333"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002549706333"></a>
 
 无
 
-## 13 V5.0.RC2<a name="ZH-CN_TOPIC_0000002549826329"></a>
+## V5.0.RC2<a name="ZH-CN_TOPIC_0000002549826329"></a>
 
-### 13.1 更新说明<a name="ZH-CN_TOPIC_0000002518346484"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002518346484"></a>
 
 **新增特性<a name="zh-cn_topic_0000001498482656_section402mcpsimp"></a>**
 
@@ -488,57 +382,25 @@
 
 视频流引擎支持AMD GPU编码。
 
-### 13.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518186556"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518186556"></a>
 
 无
 
-### 13.3 遗留问题<a name="ZH-CN_TOPIC_0000002549826333"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002549826333"></a>
 
-<a name="zh-cn_topic_0000001549442493_table5817144218195"></a>
-<table><tbody><tr id="zh-cn_topic_0000001549442493_row586944271918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001549442493_p118691042181914"><a name="zh-cn_topic_0000001549442493_p118691042181914"></a><a name="zh-cn_topic_0000001549442493_p118691042181914"></a>问题单号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001549442493_p138690421191"><a name="zh-cn_topic_0000001549442493_p138690421191"></a><a name="zh-cn_topic_0000001549442493_p138690421191"></a>DTS2023021615441</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001549442493_row0869142131918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001549442493_p786910421194"><a name="zh-cn_topic_0000001549442493_p786910421194"></a><a name="zh-cn_topic_0000001549442493_p786910421194"></a>严重级别</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001549442493_p4869174231912"><a name="zh-cn_topic_0000001549442493_p4869174231912"></a><a name="zh-cn_topic_0000001549442493_p4869174231912"></a>提示</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001549442493_row586904221912"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.3.1"><p id="zh-cn_topic_0000001549442493_p186944218191"><a name="zh-cn_topic_0000001549442493_p186944218191"></a><a name="zh-cn_topic_0000001549442493_p186944218191"></a>问题描述</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.3.1 "><p id="zh-cn_topic_0000001549442493_p128706421198"><a name="zh-cn_topic_0000001549442493_p128706421198"></a><a name="zh-cn_topic_0000001549442493_p128706421198"></a>使用Kbox11当客户端出流视频流云手机，运行10分钟后画面卡住，接收帧率解码帧率均为0，重连可恢复，影响视频流长稳的可测试性。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001549442493_row16870164218197"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.4.1"><p id="zh-cn_topic_0000001549442493_p887084291920"><a name="zh-cn_topic_0000001549442493_p887084291920"></a><a name="zh-cn_topic_0000001549442493_p887084291920"></a>根因分析</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.4.1 "><p id="zh-cn_topic_0000001549442493_p1587004210193"><a name="zh-cn_topic_0000001549442493_p1587004210193"></a><a name="zh-cn_topic_0000001549442493_p1587004210193"></a>Kbox11仿真机软解码性能不足，存在解码时延冲高的问题。</p>
-<p id="zh-cn_topic_0000001549442493_p1487084216194"><a name="zh-cn_topic_0000001549442493_p1487084216194"></a><a name="zh-cn_topic_0000001549442493_p1487084216194"></a>当系统软解码接口卡顿时，视频流客户端解码线程无法获取新buffer用于接收服务端码流包。</p>
-<p id="zh-cn_topic_0000001549442493_p38701142191913"><a name="zh-cn_topic_0000001549442493_p38701142191913"></a><a name="zh-cn_topic_0000001549442493_p38701142191913"></a>在多次重试超时后，视频流客户端解码功能进入错误处理流程，解码线程退出。</p>
-<p id="zh-cn_topic_0000001549442493_p128701427195"><a name="zh-cn_topic_0000001549442493_p128701427195"></a><a name="zh-cn_topic_0000001549442493_p128701427195"></a>Kbox11自带Android解码器性能差问题需进一步分析。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001549442493_row387094291917"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.5.1"><p id="zh-cn_topic_0000001549442493_p6870142121916"><a name="zh-cn_topic_0000001549442493_p6870142121916"></a><a name="zh-cn_topic_0000001549442493_p6870142121916"></a>影响评估</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.5.1 "><p id="zh-cn_topic_0000001549442493_p1187014271913"><a name="zh-cn_topic_0000001549442493_p1187014271913"></a><a name="zh-cn_topic_0000001549442493_p1187014271913"></a>当前Kbox11自带软解只有本身图库会使用，主流视频播放器xplayer、腾讯视频、抖音、爱奇艺等在Kbox中运行均使用自身集成的<span id="zh-cn_topic_0000001549442493_ph122933341588"><a name="zh-cn_topic_0000001549442493_ph122933341588"></a><a name="zh-cn_topic_0000001549442493_ph122933341588"></a>FF</span>mpeg软解或自研的软解，不会使用Kbox自带的软解，软解性能差的影响范围有限。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001549442493_row17870642191919"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.6.1"><p id="zh-cn_topic_0000001549442493_p1870184210193"><a name="zh-cn_topic_0000001549442493_p1870184210193"></a><a name="zh-cn_topic_0000001549442493_p1870184210193"></a>规避和应急措施</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.6.1 "><p id="zh-cn_topic_0000001549442493_p68701842121911"><a name="zh-cn_topic_0000001549442493_p68701842121911"></a><a name="zh-cn_topic_0000001549442493_p68701842121911"></a>使用Kbox9仿真机做客户端。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001549442493_row12870144216195"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.7.1"><p id="zh-cn_topic_0000001549442493_p2087013427198"><a name="zh-cn_topic_0000001549442493_p2087013427198"></a><a name="zh-cn_topic_0000001549442493_p2087013427198"></a>解决计划</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.7.1 "><p id="zh-cn_topic_0000001549442493_p11870142181919"><a name="zh-cn_topic_0000001549442493_p11870142181919"></a><a name="zh-cn_topic_0000001549442493_p11870142181919"></a>继续分析<span id="zh-cn_topic_0000001549442493_ph13334226407"><a name="zh-cn_topic_0000001549442493_ph13334226407"></a><a name="zh-cn_topic_0000001549442493_ph13334226407"></a>开源</span>软件解码性能问题，定位到根因，若为<span id="zh-cn_topic_0000001549442493_ph10919955406"><a name="zh-cn_topic_0000001549442493_ph10919955406"></a><a name="zh-cn_topic_0000001549442493_ph10919955406"></a>开源软件</span>问题可不解决，若为集成问题需要继续解决。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| 项目 | 内容 |
+|--|--|
+| 问题单号 | DTS2023021615441 |
+| 严重级别 | 提示 |
+| 问题描述 | 使用Kbox11当客户端出流视频流云手机，运行10分钟后画面卡住，接收帧率解码帧率均为0，重连可恢复，影响视频流长稳的可测试性。 |
+| 根因分析 | Kbox11仿真机软解码性能不足，存在解码时延冲高的问题。<br>当系统软解码接口卡顿时，视频流客户端解码线程无法获取新buffer用于接收服务端码流包。<br>在多次重试超时后，视频流客户端解码功能进入错误处理流程，解码线程退出。<br>Kbox11自带Android解码器性能差问题需进一步分析。 |
+| 影响评估 | 当前Kbox11自带软解只有本身图库会使用，主流视频播放器xplayer、腾讯视频、抖音、爱奇艺等在Kbox中运行均使用自身集成的FFmpeg软解或自研的软解，不会使用Kbox自带的软解，软解性能差的影响范围有限。 |
+| 规避和应急措施 | 使用Kbox9仿真机做客户端。 |
+| 解决计划 | 继续分析开源软件解码性能问题，定位到根因，若为开源软件问题可不解决，若为集成问题需要继续解决。 |
 
-## 14 V5.0.RC3<a name="ZH-CN_TOPIC_0000002549706341"></a>
+## V5.0.RC3<a name="ZH-CN_TOPIC_0000002549706341"></a>
 
-### 14.1 更新说明<a name="ZH-CN_TOPIC_0000002518186578"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002518186578"></a>
 
 **新增特性<a name="zh-cn_topic_0000001525082429_section402mcpsimp"></a>**
 
@@ -552,96 +414,35 @@
 
 本版本不支持Android 9，故删除Android 9内容。
 
-### 14.2 已解决的问题<a name="ZH-CN_TOPIC_0000002549706345"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002549706345"></a>
 
 无
 
-### 14.3 遗留问题<a name="ZH-CN_TOPIC_0000002518346482"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002518346482"></a>
 
-<a name="zh-cn_topic_0000001524642921_table5817144218195"></a>
-<table><tbody><tr id="zh-cn_topic_0000001524642921_row586944271918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001524642921_p118691042181914"><a name="zh-cn_topic_0000001524642921_p118691042181914"></a><a name="zh-cn_topic_0000001524642921_p118691042181914"></a>问题单号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001524642921_p138690421191"><a name="zh-cn_topic_0000001524642921_p138690421191"></a><a name="zh-cn_topic_0000001524642921_p138690421191"></a>DTS2023021615441</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row0869142131918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001524642921_p786910421194"><a name="zh-cn_topic_0000001524642921_p786910421194"></a><a name="zh-cn_topic_0000001524642921_p786910421194"></a>严重级别</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001524642921_p4869174231912"><a name="zh-cn_topic_0000001524642921_p4869174231912"></a><a name="zh-cn_topic_0000001524642921_p4869174231912"></a>提示</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row586904221912"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.3.1"><p id="zh-cn_topic_0000001524642921_p186944218191"><a name="zh-cn_topic_0000001524642921_p186944218191"></a><a name="zh-cn_topic_0000001524642921_p186944218191"></a>问题描述</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.3.1 "><p id="zh-cn_topic_0000001524642921_p128706421198"><a name="zh-cn_topic_0000001524642921_p128706421198"></a><a name="zh-cn_topic_0000001524642921_p128706421198"></a>使用Kbox11当客户端出流视频流云手机，运行10分钟后画面卡住，接收帧率解码帧率均为0，重连可恢复，影响视频流长稳的可测试性。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row16870164218197"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.4.1"><p id="zh-cn_topic_0000001524642921_p887084291920"><a name="zh-cn_topic_0000001524642921_p887084291920"></a><a name="zh-cn_topic_0000001524642921_p887084291920"></a>根因分析</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.4.1 "><p id="zh-cn_topic_0000001524642921_p1587004210193"><a name="zh-cn_topic_0000001524642921_p1587004210193"></a><a name="zh-cn_topic_0000001524642921_p1587004210193"></a>Kbox11仿真机软解码性能不足，存在解码时延冲高的问题。</p>
-<p id="zh-cn_topic_0000001524642921_p1487084216194"><a name="zh-cn_topic_0000001524642921_p1487084216194"></a><a name="zh-cn_topic_0000001524642921_p1487084216194"></a>当系统软解码接口卡顿时，视频流客户端解码线程无法获取新buffer用于接收服务端码流包。</p>
-<p id="zh-cn_topic_0000001524642921_p38701142191913"><a name="zh-cn_topic_0000001524642921_p38701142191913"></a><a name="zh-cn_topic_0000001524642921_p38701142191913"></a>在多次重试超时后，视频流客户端解码功能进入错误处理流程，解码线程退出。</p>
-<p id="zh-cn_topic_0000001524642921_p128701427195"><a name="zh-cn_topic_0000001524642921_p128701427195"></a><a name="zh-cn_topic_0000001524642921_p128701427195"></a>Kbox11自带Android解码器性能差问题需进一步分析。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row387094291917"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.5.1"><p id="zh-cn_topic_0000001524642921_p6870142121916"><a name="zh-cn_topic_0000001524642921_p6870142121916"></a><a name="zh-cn_topic_0000001524642921_p6870142121916"></a>影响评估</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.5.1 "><p id="zh-cn_topic_0000001524642921_p1187014271913"><a name="zh-cn_topic_0000001524642921_p1187014271913"></a><a name="zh-cn_topic_0000001524642921_p1187014271913"></a>当前Kbox11自带软解只有本身图库会使用，主流视频播放器xplayer、腾讯视频、抖音、爱奇艺等在Kbox中运行均使用自身集成的<span id="zh-cn_topic_0000001524642921_ph189012531588"><a name="zh-cn_topic_0000001524642921_ph189012531588"></a><a name="zh-cn_topic_0000001524642921_ph189012531588"></a>FF</span>mpeg软解或自研的软解，不会使用Kbox自带的软解，软解性能差的影响范围有限。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row17870642191919"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.6.1"><p id="zh-cn_topic_0000001524642921_p1870184210193"><a name="zh-cn_topic_0000001524642921_p1870184210193"></a><a name="zh-cn_topic_0000001524642921_p1870184210193"></a>规避和应急措施</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.6.1 "><p id="zh-cn_topic_0000001524642921_p68701842121911"><a name="zh-cn_topic_0000001524642921_p68701842121911"></a><a name="zh-cn_topic_0000001524642921_p68701842121911"></a>使用Kbox9仿真机做客户端。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row12870144216195"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.7.1"><p id="zh-cn_topic_0000001524642921_p2087013427198"><a name="zh-cn_topic_0000001524642921_p2087013427198"></a><a name="zh-cn_topic_0000001524642921_p2087013427198"></a>解决计划</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.7.1 "><p id="zh-cn_topic_0000001524642921_p11870142181919"><a name="zh-cn_topic_0000001524642921_p11870142181919"></a><a name="zh-cn_topic_0000001524642921_p11870142181919"></a>继续分析<span id="zh-cn_topic_0000001524642921_ph137419569408"><a name="zh-cn_topic_0000001524642921_ph137419569408"></a><a name="zh-cn_topic_0000001524642921_ph137419569408"></a>开源</span>软件解码性能问题，定位到根因，若为<span id="zh-cn_topic_0000001524642921_ph98144144120"><a name="zh-cn_topic_0000001524642921_ph98144144120"></a><a name="zh-cn_topic_0000001524642921_ph98144144120"></a>开源软件</span>问题可不解决，若为集成问题需要继续解决。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| 项目 | 内容 |
+|--|--|
+| 问题单号 | DTS2023021615441 |
+| 严重级别 | 提示 |
+| 问题描述 | 使用Kbox11当客户端出流视频流云手机，运行10分钟后画面卡住，接收帧率解码帧率均为0，重连可恢复，影响视频流长稳的可测试性。 |
+| 根因分析 | Kbox11仿真机软解码性能不足，存在解码时延冲高的问题。<br>当系统软解码接口卡顿时，视频流客户端解码线程无法获取新buffer用于接收服务端码流包。<br>在多次重试超时后，视频流客户端解码功能进入错误处理流程，解码线程退出。<br>Kbox11自带Android解码器性能差问题需进一步分析。 |
+| 影响评估 | 当前Kbox11自带软解只有本身图库会使用，主流视频播放器xplayer、腾讯视频、抖音、爱奇艺等在Kbox中运行均使用自身集成的FFmpeg软解或自研的软解，不会使用Kbox自带的软解，软解性能差的影响范围有限。 |
+| 规避和应急措施 | 使用Kbox9仿真机做客户端。 |
+| 解决计划 | 继续分析开源软件解码性能问题，定位到根因，若为开源软件问题可不解决，若为集成问题需要继续解决。 |
 
-<a name="zh-cn_topic_0000001524642921_table11710428153217"></a>
-<table><tbody><tr id="zh-cn_topic_0000001524642921_row671052815323"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001524642921_p8710928153218"><a name="zh-cn_topic_0000001524642921_p8710928153218"></a><a name="zh-cn_topic_0000001524642921_p8710928153218"></a>问题单号</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001524642921_p15710182816328"><a name="zh-cn_topic_0000001524642921_p15710182816328"></a><a name="zh-cn_topic_0000001524642921_p15710182816328"></a>DTS2023030902437</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row117101828163215"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001524642921_p47108284329"><a name="zh-cn_topic_0000001524642921_p47108284329"></a><a name="zh-cn_topic_0000001524642921_p47108284329"></a>严重级别</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001524642921_p771017282324"><a name="zh-cn_topic_0000001524642921_p771017282324"></a><a name="zh-cn_topic_0000001524642921_p771017282324"></a>一般</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row20711202819324"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.3.1"><p id="zh-cn_topic_0000001524642921_p9711132820321"><a name="zh-cn_topic_0000001524642921_p9711132820321"></a><a name="zh-cn_topic_0000001524642921_p9711132820321"></a>问题描述</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.3.1 "><p id="zh-cn_topic_0000001524642921_p156111710113515"><a name="zh-cn_topic_0000001524642921_p156111710113515"></a><a name="zh-cn_topic_0000001524642921_p156111710113515"></a>构建工具gradle 7.5.1版本存在漏洞（CVE-2023-26053）。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row67111928143210"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.4.1"><p id="zh-cn_topic_0000001524642921_p1711328143210"><a name="zh-cn_topic_0000001524642921_p1711328143210"></a><a name="zh-cn_topic_0000001524642921_p1711328143210"></a>根因分析</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.4.1 "><p id="zh-cn_topic_0000001524642921_p77111828133214"><a name="zh-cn_topic_0000001524642921_p77111828133214"></a><a name="zh-cn_topic_0000001524642921_p77111828133214"></a>3月9号，报告构建工具gradle 7.5.1存在漏洞（CVE-2023-26053），本次版本交付中视频流引擎使用了构建工具gradle 7.5.1。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row1571112284322"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.5.1"><p id="zh-cn_topic_0000001524642921_p7711182810328"><a name="zh-cn_topic_0000001524642921_p7711182810328"></a><a name="zh-cn_topic_0000001524642921_p7711182810328"></a>影响评估</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.5.1 "><a name="zh-cn_topic_0000001524642921_ol1752507192215"></a><a name="zh-cn_topic_0000001524642921_ol1752507192215"></a><ol id="zh-cn_topic_0000001524642921_ol1752507192215"><li>构建工具的漏洞不影响最终二进制，故现网不存在风险。</li><li>经过分析漏洞，本次交付不受此漏洞影响。</li></ol>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row18711172863212"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.6.1"><p id="zh-cn_topic_0000001524642921_p19711102819325"><a name="zh-cn_topic_0000001524642921_p19711102819325"></a><a name="zh-cn_topic_0000001524642921_p19711102819325"></a>规避和应急措施</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.6.1 "><p id="zh-cn_topic_0000001524642921_p5711728153210"><a name="zh-cn_topic_0000001524642921_p5711728153210"></a><a name="zh-cn_topic_0000001524642921_p5711728153210"></a>本次交付不受此漏洞的影响，无需消减。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001524642921_row771132811325"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.7.1"><p id="zh-cn_topic_0000001524642921_p1071232843217"><a name="zh-cn_topic_0000001524642921_p1071232843217"></a><a name="zh-cn_topic_0000001524642921_p1071232843217"></a>解决计划</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.7.1 "><p id="zh-cn_topic_0000001524642921_p187122289325"><a name="zh-cn_topic_0000001524642921_p187122289325"></a><a name="zh-cn_topic_0000001524642921_p187122289325"></a>因当前没有可用gradle版本，同时此漏洞无影响，待gradle 8.0.1入库后，构建工具版本将由7.5.1升级至8.0.1版本以解决此漏洞。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| 项目 | 内容 |
+|--|--|
+| 问题单号 | DTS2023030902437 |
+| 严重级别 | 一般 |
+| 问题描述 | 构建工具gradle 7.5.1版本存在漏洞（CVE-2023-26053）。 |
+| 根因分析 | 3月9号，报告构建工具gradle 7.5.1存在漏洞（CVE-2023-26053），本次版本交付中视频流引擎使用了构建工具gradle 7.5.1。 |
+| 影响评估 | 1. 构建工具的漏洞不影响最终二进制，故现网不存在风险。<br>2. 经过分析漏洞，本次交付不受此漏洞影响。 |
+| 规避和应急措施 | 本次交付不受此漏洞的影响，无需消减。 |
+| 解决计划 | 因当前没有可用gradle版本，同时此漏洞无影响，待gradle 8.0.1入库后，构建工具版本将由7.5.1升级至8.0.1版本以解决此漏洞。 |
 
-## 15 V3.0.0<a name="ZH-CN_TOPIC_0000002549826343"></a>
+## V3.0.0<a name="ZH-CN_TOPIC_0000002549826343"></a>
 
-### 15.1 更新说明<a name="ZH-CN_TOPIC_0000002549706327"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002549706327"></a>
 
 **新增特性<a name="zh-cn_topic_0000001518929401_section402mcpsimp"></a>**
 
@@ -661,65 +462,32 @@
 
 无
 
-### 15.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518186566"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518186566"></a>
 
 无
 
-### 15.3 遗留问题<a name="ZH-CN_TOPIC_0000002518186574"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002518186574"></a>
 
-<a name="zh-cn_topic_0000001468008732_table476315617294"></a>
-<table><tbody><tr id="zh-cn_topic_0000001468008732_row68081665299"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001468008732_p880915602910"><a name="zh-cn_topic_0000001468008732_p880915602910"></a><a name="zh-cn_topic_0000001468008732_p880915602910"></a><strong id="zh-cn_topic_0000001468008732_b1480966122914"><a name="zh-cn_topic_0000001468008732_b1480966122914"></a><a name="zh-cn_topic_0000001468008732_b1480966122914"></a>问题单号</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001468008732_p4809136152917"><a name="zh-cn_topic_0000001468008732_p4809136152917"></a><a name="zh-cn_topic_0000001468008732_p4809136152917"></a>DTS2022120612498</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001468008732_row2080915617299"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001468008732_p118091861298"><a name="zh-cn_topic_0000001468008732_p118091861298"></a><a name="zh-cn_topic_0000001468008732_p118091861298"></a><strong id="zh-cn_topic_0000001468008732_b1380915619299"><a name="zh-cn_topic_0000001468008732_b1380915619299"></a><a name="zh-cn_topic_0000001468008732_b1380915619299"></a>严重级别</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001468008732_p380912618293"><a name="zh-cn_topic_0000001468008732_p380912618293"></a><a name="zh-cn_topic_0000001468008732_p380912618293"></a>一般</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001468008732_row1680926162916"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.3.1"><p id="zh-cn_topic_0000001468008732_p6809461297"><a name="zh-cn_topic_0000001468008732_p6809461297"></a><a name="zh-cn_topic_0000001468008732_p6809461297"></a><strong id="zh-cn_topic_0000001468008732_b148099617293"><a name="zh-cn_topic_0000001468008732_b148099617293"></a><a name="zh-cn_topic_0000001468008732_b148099617293"></a>责任领域</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.3.1 "><p id="zh-cn_topic_0000001468008732_p1280936142919"><a name="zh-cn_topic_0000001468008732_p1280936142919"></a><a name="zh-cn_topic_0000001468008732_p1280936142919"></a>视频流引擎原型</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001468008732_row1180906142911"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.4.1"><p id="zh-cn_topic_0000001468008732_p880917642916"><a name="zh-cn_topic_0000001468008732_p880917642916"></a><a name="zh-cn_topic_0000001468008732_p880917642916"></a><strong id="zh-cn_topic_0000001468008732_b780912692913"><a name="zh-cn_topic_0000001468008732_b780912692913"></a><a name="zh-cn_topic_0000001468008732_b780912692913"></a>问题描述</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.4.1 "><p id="zh-cn_topic_0000001468008732_p0861111143019"><a name="zh-cn_topic_0000001468008732_p0861111143019"></a><a name="zh-cn_topic_0000001468008732_p0861111143019"></a>【Kunpeng BoostKit 22.0.0.B095】【视频流功能】【CI日构建问题，环境部署完成后，服务端网络异常一直连不上】</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001468008732_row178092612298"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.5.1"><p id="zh-cn_topic_0000001468008732_p10809116122919"><a name="zh-cn_topic_0000001468008732_p10809116122919"></a><a name="zh-cn_topic_0000001468008732_p10809116122919"></a><strong id="zh-cn_topic_0000001468008732_b98091692913"><a name="zh-cn_topic_0000001468008732_b98091692913"></a><a name="zh-cn_topic_0000001468008732_b98091692913"></a>根因分析</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.5.1 "><p id="zh-cn_topic_0000001468008732_p178094682915"><a name="zh-cn_topic_0000001468008732_p178094682915"></a><a name="zh-cn_topic_0000001468008732_p178094682915"></a>CI服务器部分网络端口问题。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001468008732_row180911642915"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.6.1"><p id="zh-cn_topic_0000001468008732_p1280910672914"><a name="zh-cn_topic_0000001468008732_p1280910672914"></a><a name="zh-cn_topic_0000001468008732_p1280910672914"></a><strong id="zh-cn_topic_0000001468008732_b1680919622915"><a name="zh-cn_topic_0000001468008732_b1680919622915"></a><a name="zh-cn_topic_0000001468008732_b1680919622915"></a>影响评估</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.6.1 "><p id="zh-cn_topic_0000001468008732_p1280906192915"><a name="zh-cn_topic_0000001468008732_p1280906192915"></a><a name="zh-cn_topic_0000001468008732_p1280906192915"></a>单点端口问题，重新部署容器可解决。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001468008732_row480916614295"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.7.1"><p id="zh-cn_topic_0000001468008732_p38090614291"><a name="zh-cn_topic_0000001468008732_p38090614291"></a><a name="zh-cn_topic_0000001468008732_p38090614291"></a><strong id="zh-cn_topic_0000001468008732_b2080918619295"><a name="zh-cn_topic_0000001468008732_b2080918619295"></a><a name="zh-cn_topic_0000001468008732_b2080918619295"></a>规避和应急措施</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.7.1 "><p id="zh-cn_topic_0000001468008732_p188091967299"><a name="zh-cn_topic_0000001468008732_p188091967299"></a><a name="zh-cn_topic_0000001468008732_p188091967299"></a>单点端口问题，重新部署容器可解决。</p>
-</td>
-</tr>
-<tr id="zh-cn_topic_0000001468008732_row18809569291"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.8.1"><p id="zh-cn_topic_0000001468008732_p1080917619295"><a name="zh-cn_topic_0000001468008732_p1080917619295"></a><a name="zh-cn_topic_0000001468008732_p1080917619295"></a><strong id="zh-cn_topic_0000001468008732_b680920612298"><a name="zh-cn_topic_0000001468008732_b680920612298"></a><a name="zh-cn_topic_0000001468008732_b680920612298"></a>解决计划</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.8.1 "><p id="zh-cn_topic_0000001468008732_p2809563291"><a name="zh-cn_topic_0000001468008732_p2809563291"></a><a name="zh-cn_topic_0000001468008732_p2809563291"></a>初步确认为第三方网络问题，复现后修复CI机器端口问题解决。</p>
-</td>
-</tr>
-</tbody>
-</table>
+| 项目 | 内容 |
+|--|--|
+| 问题单号 | DTS2022120612498 |
+| 严重级别 | 一般 |
+| 责任领域 | 视频流引擎原型 |
+| 问题描述 | 【Kunpeng BoostKit 22.0.0.B095】【视频流功能】【CI日构建问题，环境部署完成后，服务端网络异常一直连不上】 |
+| 根因分析 | CI服务器部分网络端口问题。 |
+| 影响评估 | 单点端口问题，重新部署容器可解决。 |
+| 规避和应急措施 | 单点端口问题，重新部署容器可解决。 |
+| 解决计划 | 初步确认为第三方网络问题，复现后修复CI机器端口问题解决。 |
 
-## 16 V2.0.0<a name="ZH-CN_TOPIC_0000002549826355"></a>
+## V2.0.0<a name="ZH-CN_TOPIC_0000002549826355"></a>
 
-### 16.1 更新说明<a name="ZH-CN_TOPIC_0000002518186568"></a>
+### 更新说明<a name="ZH-CN_TOPIC_0000002518186568"></a>
 
 **新增特性<a name="zh-cn_topic_0000001470294425_section402mcpsimp"></a>**
 
 |编号|描述|目的|
 |--|--|--|
-|1|开源软件可信整改|将开源软件定制补丁迁移至开源源码中心仓的产品版本分支。支持开源软件“源代码”必须从开源中心仓下载的整改。|
+|1|开源软件可信整改|将开源软件定制补丁迁移至开源源码中心仓的产品版本分支。支持开源软件"源代码"必须从开源中心仓下载的整改。|
 
 **修改特性<a name="zh-cn_topic_0000001470294425_section451mcpsimp"></a>**
 
@@ -729,10 +497,10 @@
 
 无
 
-### 16.2 已解决的问题<a name="ZH-CN_TOPIC_0000002518346490"></a>
+### 已解决的问题<a name="ZH-CN_TOPIC_0000002518346490"></a>
 
 无
 
-### 16.3 遗留问题<a name="ZH-CN_TOPIC_0000002549706353"></a>
+### 遗留问题<a name="ZH-CN_TOPIC_0000002549706353"></a>
 
 无
