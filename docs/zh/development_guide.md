@@ -10,7 +10,7 @@
 
 ## 获取软件包
 
-**软件要求**
+### 软件要求
 
 |序号|软件|说明|获取地址|
 |--|--|--|--|
@@ -21,7 +21,7 @@
 |5|SDK build tools|版本：r33.0.1|[获取链接](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
 |6|BoostKit-boostcph-videoengine_*_15.zip|Android 15视频流引擎开发包|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=%E8%A7%86%E9%A2%91%E6%B5%81%E5%BC%95%E6%93%8E#application-soft)|
 
-**软件包完整性校验**
+### 软件包完整性校验
 
 为了防止软件包在传递过程或存储期间被恶意篡改，从鲲鹏社区获取软件包时需下载对应的数字签名文件用于完整性验证。
 
