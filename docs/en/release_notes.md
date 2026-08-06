@@ -93,6 +93,7 @@ For details, see "Constraints" in [Video Stream Engine Feature Guide (Android 15
 
 > [!NOTE]
 > Application compatibility test conditions:
+>
 > 1. The test environment is the standard hardware environment on the 2280 server.
 > 2. Cloud phone specifications: 8 cores and 1 channel, 16 GB memory, and 64 GB storage.
 > 3. A single container runs only one game app during the test.
