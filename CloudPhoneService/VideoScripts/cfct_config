@@ -51,7 +51,7 @@ ENCODECARD=1
 # [RESTART] AMDGPU硬件配置下，T432/Quadra硬解使能开关, 1表示使能，其他值默认不使能
 T432_QUADRA_DECODE_ENABLE=0
 
-# [RESTART] AMDGPU硬件配置下，C2解码器使能开关, 1表示使能，其他值默认不使能
+# [RECREATE] AMDGPU硬件配置下，C2解码器使能开关, 1表示使能，其他值默认不使能
 ENABLE_AMD_C2_DECODE=0
 
 # [RESTART] DC1000硬件配置下，硬解使能开关, 1表示使能，其他值默认不使能

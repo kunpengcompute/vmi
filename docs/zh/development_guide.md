@@ -2,7 +2,7 @@
 
 ## 介绍<a name="ZH-CN_TOPIC_0000002549825809"></a>
 
-云手机是指虚拟出带有AOSP （Android Open Source Project）系统，具有虚拟手机功能的云服务器。作为一种新型应用，它对物理手机起到了有效的延伸和扩展作用，可以用在云手游、移动办公等诸多场景。
+云手机是指虚拟出带有AOSP（Android Open Source Project）系统，具有虚拟手机功能的云服务器。作为一种新型应用，它对物理手机起到了有效的延伸和扩展作用，可以用在云手游、移动办公等诸多场景。
 
 端云引擎顾名思义可以分为端侧和云侧两个部分：云侧运行于服务器上；端侧一般为云手机APK，可以被安装在用户的Android手机上，用于和云侧进行交互，进而对云侧容器进行正常的操作。
 
@@ -10,10 +10,10 @@
 
 ## 获取软件包<a name="ZH-CN_TOPIC_0000002518345972" id="获取软件包"></a>
 
-**表 1** 软件要求<a id="软件要求"></a>
+**表1**软件要求<a id="软件要求"></a>
 
 |序号|软件|说明|获取地址|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |1|AOSP源码|版本：android-11.0.0_r48|[获取链接](https://android.googlesource.com/platform/manifest)|
 |2|Android NDK|版本：r25b|[获取链接](https://dl.google.com/android/repository/android-ndk-r25b-linux.zip)|
 |3|SDK platform|版本：33_r02|[获取链接](https://dl.google.com/android/repository/platform-33_r02.zip)|
@@ -25,7 +25,7 @@
 
 为了防止软件包在传递过程或存储期间被恶意篡改，从鲲鹏社区获取软件包时需下载对应的数字签名文件用于完整性验证。
 
-1. 请参见[**表 1** 软件要求](#软件要求)获取软件包。
+1. 请参见[**表1**软件要求](#软件要求)获取软件包。
 2. <a name="li1273482318125"></a>从[华为企业业务网站](https://support.huawei.com/enterprise/zh/tool/pgp-verify-TL1000000054)或[运营商网站](http://support.huawei.com/carrier/digitalSignatureAction)获取校验工具和校验方法。
 3. 使用[2](#li1273482318125)获取到的签名验证指南文档对下载的软件包进行PGP数字签名校验。
 
@@ -33,7 +33,7 @@
 >
 > 如果校验失败，请不要使用该软件包，先联系华为技术支持工程师解决。
 > 使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
-> 使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议 2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
+> 使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
 
 ## 配置开发环境<a name="ZH-CN_TOPIC_0000002518345920"></a>
 
@@ -42,7 +42,7 @@
 视频流引擎的软件包名称为BoostKit-boostcph-videoengine_\*_11.zip，获取方式请参见[获取软件包](#获取软件包)，获取到软件zip包后，将zip包解压获得.tar.gz开发包。
 
 |软件|说明|
-|--|--|
+| :---: | :---: |
 |VideoEngine.tar.gz|视频流引擎服务端开发包。|
 
 ### 服务端编译环境部署<a name="ZH-CN_TOPIC_0000002518186072"></a>
@@ -51,12 +51,12 @@
 
 本文基于x86_64服务器和Ubuntu 22.04 LTS操作系统进行服务端的编译，编译前请确保您的硬件环境满足要求。
 
-服务端编译构建的硬件环境要求如[**表 1** 服务端编译构建硬件环境要求](#服务端编译构建硬件环境要求)所示。
+服务端编译构建的硬件环境要求如[**表1**服务端编译构建硬件环境要求](#服务端编译构建硬件环境要求)所示。
 
-**表 1** 服务端编译构建硬件环境要求<a id="服务端编译构建硬件环境要求"></a>
+**表1**服务端编译构建硬件环境要求<a id="服务端编译构建硬件环境要求"></a>
 
 |设备型号|用途|服务器OS版本|
-|--|--|--|
+| :---: | :---: | :---: |
 |x86_64服务器|服务端编译制作|Ubuntu 22.04 LTS推荐：[ubuntu-22.04-live-server-amd64.iso](https://old-releases.ubuntu.com/releases/22.04/ubuntu-22.04-live-server-amd64.iso)|
 
 > ![](public_sys-resources/icon-note.gif)说明
@@ -68,7 +68,7 @@
 
 1. 安装依赖库。
 
-    ```shell
+    ```bash
     sudo apt install -y git 
     sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg
     sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev
@@ -85,14 +85,14 @@
 
 2. 下载vmi代码，进入vmi代码目录。
 
-    ```shell
+    ```bash
     git clone https://gitee.com/kunpengcompute/vmi.git
     cd vmi
     ```
 
 3. 使用自动部署脚本，部署编译工具。
 
-    ```shell
+    ```bash
     chmod +x scripts/auto_install_tools.sh
     ./scripts/auto_install_tools.sh ${安装目录}
     ```
@@ -101,7 +101,7 @@
 
     脚本执行成功后，使用以下命令引入环境变量。
 
-    ```shell
+    ```bash
     source ~/.bashrc
     ```
 
@@ -115,13 +115,13 @@
 1. 将VideoEngine.tar.gz放至“/home/VideoEngine/Cloud”目录下。
 2. 解压视频流引擎服务端开发包。
 
-    ```shell
+    ```bash
     tar xzvf VideoEngine.tar.gz
     ```
 
 3. 再将解压出来的二进制文件复制至云手机（以_cloudphone_1_云手机为例）内。
 
-    ```shell
+    ```bash
     docker cp system/bin cloudphone_1:/system/
     docker cp system/etc cloudphone_1:/system/
     docker cp system/lib cloudphone_1:/system/
@@ -131,12 +131,12 @@
     docker cp vendor/etc cloudphone_1:/vendor/
     ```
 
-4. 复制视频流云手机对外依赖库到云手机（以_cloudphone_1_云手机为例）内，需要提供的依赖库列表如[**表 1** 视频流云手机对外依赖库](#视频流云手机对外依赖库)所示。
+4. 复制视频流云手机对外依赖库到云手机（以_cloudphone_1_云手机为例）内，需要提供的依赖库列表如[**表1**视频流云手机对外依赖库](#视频流云手机对外依赖库)所示。
 
-    **表 1** 视频流云手机对外依赖库<a id="视频流云手机对外依赖库"></a>
+    **表1**视频流云手机对外依赖库<a id="视频流云手机对外依赖库"></a>
 
     |描述|库名|路径|
-    |--|--|--|
+| :---: | :---: | :---: |
     |对外依赖的编码库|libVideoCodec.so|/vendor/lib、/vendor/lib64|
     |对外依赖的解码库|libVideoDecoder.so|/vendor/lib、/vendor/lib64|
     |对外依赖的GPU加速库|libVmiEncTurbo.so|/vendor/lib、/vendor/lib64|
@@ -250,7 +250,7 @@ enum VmiErrCode : int32_t {
 
 #### VmiCmd（命令字定义）<a name="ZH-CN_TOPIC_0000002549825785"></a>
 
-模块数据输入、数据输出、参数设置等功能均需要指定命令字作为接口的入参。命令字是一个枚举值为uint32_t类型的枚举类型。每个32位的命令字枚举值由三部分按顺序拼接而成，分别为VmiDataType（模块数据类型）uint8_t枚举值、VmiCmdType（命令字类型）uint8_t枚举值、模块具体命令字（VmiVideoCmdId 、VmiAudioCmdId等）uint16_t枚举值。具体定义如下：
+模块数据输入、数据输出、参数设置等功能均需要指定命令字作为接口的入参。命令字是一个枚举值为uint32_t类型的枚举类型。每个32位的命令字枚举值由三部分按顺序拼接而成，分别为VmiDataType（模块数据类型）uint8_t枚举值、VmiCmdType（命令字类型）uint8_t枚举值、模块具体命令字（VmiVideoCmdId、VmiAudioCmdId等）uint16_t枚举值。具体定义如下：
 
 ```c++
 enum VmiCmdType : uint8_t {
@@ -361,7 +361,7 @@ VmiErrCode InitVmiEngine\(VmiConfigEngine \*config\);
 **参数说明<a name="section739mcpsimp"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |config|输入|VmiConfigEngine|该结构体由DataCallback和DataTypeConfig数组构成。|
 
 启动引擎需要的配置项为VmiConfigEngine，包含DataCallback（数据回调）和需要启动的模块列表。
@@ -435,7 +435,7 @@ VmiModuleStatus GetStatus\(VmiDataType module\)
 **参数说明<a name="section828mcpsimp"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |module|输入|VmiDataType|模块数据类型名。|
 
 **返回值说明<a name="section856mcpsimp"></a>**
@@ -455,7 +455,7 @@ VmiErrCode StartModule\(VmiDataType module, uint8_t\*config, uint32_t size\)
 **参数说明<a name="section878mcpsimp"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |module|输入|VmiDataType|模块数据类型名。|
 |config|输入|uint8_t*|启动模块时使用的配置。|
 |size|输入|uint32_t|config所指向的内存长度。|
@@ -494,7 +494,7 @@ VmiErrCode StopModule\(VmiDataType module\)
 **参数说明<a name="section932mcpsimp"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |module|输入|VmiDataType|模块数据类型名。|
 
 **返回值说明<a name="section960mcpsimp"></a>**
@@ -519,7 +519,7 @@ VmiErrCode InjectData\(VmiDataType module, VmiCmd cmd, uint8_t \*data, uint32_t 
 **参数说明<a name="section977mcpsimp"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |module|输入|VmiDataType|模块数据类型名。|
 |cmd|输入|VmiCmd|注入数据时的操作指令|
 |data|输入|uint8_t*|需要发送的数据指针。|
@@ -547,7 +547,7 @@ VmiErrCode SetParam\(VmiDataType module, VmiCmd cmd, uint8_t \*param, uint32_t s
 **参数说明<a name="section1048mcpsimp"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |module|输入|VmiDataType|模块数据类型名。|
 |cmd|输入|VmiCmd|设置参数的操作指令。|
 |param|输入|uint8_t*|设置参数的数据指针。|
@@ -575,7 +575,7 @@ VmiErrCode GetParam\(VmiDataType module, VmiCmd cmd, uint8_t \*param, uint32_t s
 **参数说明<a name="section1048mcpsimp"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |module|输入|VmiDataType|模块数据类型名。|
 |cmd|输入|VmiCmd|获取参数的操作指令。|
 |param|输入|uint8_t*|输出参数的数据指针。|
@@ -629,7 +629,7 @@ enum EncoderType : uint32_t {
 **约束说明<a name="section2011449181"></a>**
 
 |对应属性字段名称|字段描述|取值范围|默认值|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |encoderType|编码器类型|0：CPU（CPU软编码器编码）1：VPU（外置硬件编码器编码）2：GPU（仅DC1000/DC1000C支持）|0，CPU编码|
 
 #### videoFrameType<a name="ZH-CN_TOPIC_0000002518186056"></a>
@@ -655,7 +655,7 @@ enum VideoFrameType {
 RGB中RGBA8888暂不支持。
 
 |对应属性字段名称|字段描述|取值范围|默认值|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |videoFrameType|视频数据输出格式。|0：H2641：YUV（encoderType取值为0时才支持）2：RGB（暂不支持）3：H265（encodertype取值为0时不支持）|0：H264|
 
 #### resolution<a name="ZH-CN_TOPIC_0000002549825831"></a>
@@ -680,7 +680,7 @@ struct FrameSize {
 width和height的取值范围也支持互换。
 
 |对应属性字段名称|字段描述|取值范围|默认值|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |width|自适应分辨率宽度（必须是8的倍数）。|360~2160|720|
 |height|自适应分辨率高度（必须是8的倍数）。|360~3840|1280|
 |widthAligned|对齐后分辨率宽度（暂不支持配置）。|360~2160|720|
@@ -703,7 +703,7 @@ uint32_t类型，默认值为320。
 **约束说明<a name="section2021618526388"></a>**
 
 |对应属性字段名称|字段描述|取值范围|默认值|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |density|屏幕密度。|[120~960]：包括120与960边界值。0：表示不启用自适应分辨率功能。|320|
 
 > ![](public_sys-resources/icon-note.gif)说明
@@ -766,7 +766,7 @@ enum RCMode : uint32_t  {
 流控模式暂时只支持CBR恒定码率模式与CAPPED_CRF（画质优先，但限制码率）模式。
 
 |对应属性字段名称|字段描述|取值范围|默认值|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |bitrate|编码码率。|AMD，一般为W6800：500000~50000000 DC1000/DC1000C：500000~30000000单位bps|3000000|
 |gopSize|编码GOP大小配置项。|30~3000|30|
 |profile|编码profile配置项（H.265编码仅支持配置main）。|0：BASELINE（仅H264支持）1：MAIN2：HIGH（仅H264支持）|0：BASELINE（仅H264支持）|
@@ -776,8 +776,8 @@ enum RCMode : uint32_t  {
 |crf|CRF码控级别。|0-51|34|
 |maxCrfRate|CRF码率峰值。|500000~100000000|20000000|
 |vbvBufferSize|CRF码率缓冲区大小。|-1：自动模式0：禁用峰值比特率限制[min_vbv_size ~ 3000 ]：min_vbv_size = ceil(1000 / fps) +1且min_vbv_size >= 10|1000|
-|streamWidth|出流帧宽度。|[240, 云手机渲染分辨率]，并且出流帧宽度需要为8的倍数。|720|
-|streamHeight|出流帧高度。|[240, 云手机渲染分辨率]，并且出流帧高度需要为8的倍数。|1080|
+|streamWidth|出流帧宽度。|[240,云手机渲染分辨率]，并且出流帧宽度需要为8的倍数。|720|
+|streamHeight|出流帧高度。|[240,云手机渲染分辨率]，并且出流帧高度需要为8的倍数。|1080|
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
@@ -868,7 +868,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 #### 分辨率与屏幕密度推荐搭配<a name="ZH-CN_TOPIC_0000002549825775"></a>
 
 |规格|分辨率宽度（width）|分辨率长度（height）|屏幕密度（density）|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |360p|360|640|120|
 |480p|480|856|160|
 |720p|720|1280|320|
@@ -882,18 +882,18 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 **硬件配置方案一<a name="section1175422174614"></a>**
 
-**表 1** CBR编码模式编码参数<a id="CBR编码模式编码参数"></a>
+**表1** CBR编码模式编码参数<a id="CBR编码模式编码参数"></a>
 
 |编码参数|推荐值|
-|--|--|
+| :---: | :---: |
 |bitrate|8000000|
 |gopsize|60|
 |profile|main|
 
-**表 2** CAPPED_CRF编码模式编码参数<a id="CAPPED_CRF编码模式编码参数"></a>
+**表2** CAPPED_CRF编码模式编码参数<a id="CAPPED_CRF编码模式编码参数"></a>
 
 |编码参数|推荐值|
-|--|--|
+| :---: | :---: |
 |gopsize|60|
 |profile|main|
 |crf|21|
@@ -906,10 +906,10 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 **硬件配置方案二<a name="section1827916308460"></a>**
 
-**表 3** CBR编码模式编码参数<a id="CBR编码模式编码参数_1"></a>
+**表3** CBR编码模式编码参数<a id="CBR编码模式编码参数_1"></a>
 
 |编码参数|推荐值|
-|--|--|
+| :---: | :---: |
 |bitrate|8000000|
 |gopsize|60|
 |profile|main|
@@ -942,7 +942,7 @@ struct VmiConfigAudio : public VmiConfig  {
 **约束说明<a name="section1134mcpsimp"></a>**
 
 |对应属性字段名称|字段描述|取值范围|默认值|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |audioType|音频输出格式。|0：OPUS1：PCM|0：OPUS|
 
 **变量数据定义<a name="section1137mcpsimp"></a>**
@@ -965,7 +965,7 @@ enum AudioType : uint32_t {
 bitrate参数只在OPUS格式下有效，sampleInterval参数在OPUS和PCM模式均有效。
 
 |对应属性字段名称|字段描述|取值范围|默认值|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |sampleInterval|音频输出采样间隔。|5：5ms（暂不支持）10：10ms20：20ms（暂不支持）|10：10ms|
 |bitrate|音频OPUS编码码率（bps）。|13200~512000|192000|
 
@@ -1083,7 +1083,7 @@ struct VmiConfigMic : public VmiConfig {
 **约束说明<a name="section1134mcpsimp"></a>**
 
 |对应属性字段名称|字段描述|取值范围|默认值|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |audioType|麦克风输入格式。|0：OPUS1：PCM|0：OPUS|
 
 **变量数据定义<a name="section1137mcpsimp"></a>**
@@ -1409,7 +1409,7 @@ EncoderRetCode CreateVideoEncoder\(int32_t\*fd, EncoderFormat encoderFormat\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t*|编码器标记符。|
 |encoderFormat|输入|EncoderFormat枚举|要创建的编码器的类型。|
 
@@ -1435,7 +1435,7 @@ EncoderRetCode DestroyVideoEncoder\(int32_t fd\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1468,7 +1468,7 @@ EncoderRetCode Config\(int32_t fd, const VmiEncoderConfig& config\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 |config|输入|struct VmiEncoderConfig|要配置的编码器配置。|
 
@@ -1521,7 +1521,7 @@ EncoderRetCode InitEncoder\(int32_t fd\)
 **参数说明<a name="section42241738122511"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1546,7 +1546,7 @@ EncoderRetCode StartEncoder\(int32_t fd\)
 **参数说明<a name="section42241738122511"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1575,7 +1575,7 @@ EncoderRetCode SetParams\(int32_t fd, const VmiEncoderParams& params\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 |params|输入|struct VmiEncoderParams|要设置的编码参数。|
 
@@ -1615,7 +1615,7 @@ EncoderRetCode EncodeOneFrame\(int32_t fd, const uint8_t \*inputData, uint32_t i
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 |inputData|输入|const uint8_t *|待编码数据缓冲区首地址，数据格式为yuv420p。|
 |inputSize|输入|uint32_t|待编码数据长度，单位Byte。|
@@ -1644,7 +1644,7 @@ EncoderRetCode StopEncoder\(int32_t fd\)
 **参数说明<a name="section42241738122511"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1669,7 +1669,7 @@ EncoderRetCode DestoryEncoder\(int32_t fd\)
 **参数说明<a name="section42241738122511"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1694,7 +1694,7 @@ EncoderRetCode ResetEncoder\(int32_t fd\)
 **参数说明<a name="section42241738122511"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|输入|int32_t|编码器标记符。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1727,13 +1727,13 @@ EncoderRetCode FrameScaling\(uint32_t width, uint32_t height\)
 width：uint32_t类型，期望编码宽度。该类字段如下：
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |width|输入|uint32_t|期望编码宽度。|
 
 height：uint32_t类型，期望编码高度。该类字段如下：
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |height|输入|uint32_t|期望编码高度。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1790,7 +1790,7 @@ DecoderRetCode CreateVideoDecoder\(VideoDecoder \*\*decoder\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |decoder|输出|VideoDecoder **|解码器实例二维指针，用于存放接口内创建的解码器实例。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1815,7 +1815,7 @@ DecoderRetCode DestroyVideoDecoder\(VideoDecoder \*decoder\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |decoder|输入|VideoDecoder *|要销毁的解码器实例指针。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -1844,7 +1844,7 @@ DecoderRetCode CreateDecoder\(MediaStreamFormat__decType\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |decType|输入|MediaStreamFormat|解码码流类型。|
 
 MediaStreamFormat的具体定义如下：
@@ -1903,7 +1903,7 @@ DecoderRetCode SetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |index|输入|DecodeParamsIndex|表示要设置的参数的类型。|
 |decParams|输入|void *|对应参数的内存地址。|
 
@@ -1970,7 +1970,7 @@ DecoderRetCode GetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
 **参数说明<a name="section2630616193212"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |index|输入|DecodeParamsIndex|表示要获取的参数类型。|
 |decParams|输入|void *|对应参数的内存地址。|
 
@@ -1998,7 +1998,7 @@ DecoderRetCode SetCallbacks\(std::function<void\(DecodeEventIndex, uint32_t, voi
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |eventCallBack|输入|std::function<void(DecodeEventIndex, uint32_t, void *)>|解码器事件通知回调函数。|
 
 当解码器中有事件需要通知上层时，需要调用此接口中设置的回调函数，其中index表示事件的类型，uint32_t和void \*类型参数分别用于存放对应的数据，详细定义如下：
@@ -2035,7 +2035,7 @@ DecoderRetCode SetCopyFrameFunc\(std::function<uint32_t\(uint8_t\*, uint8_t\*, c
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |copyFrame|输入|std::function<uint32_t(uint8_t*, uint8_t*, const PicInfoParams &, uint32_t)>|设置将解码好的一帧数据拷贝到输出buffer的钩子函数（用于屏蔽输出接口格式差异）。|
 
 该回调中，第一个uint8_t\*表示解码完成后数据地址，第二个uint8_t\*表示拷贝的目标地址，需要填入[11.2.11-RetrieveFrameData](#RetrieveFrameData)中输入的buffer地址，第三个const PicInfoParams &参数表示图像宽高信息，具体定义请参见[11.2.6-SetDecodeParams](#SetDecodeParams)；第四个uint32_t参数表示输出缓冲区最大长度，需要填入[11.2.11-RetrieveFrameData](#RetrieveFrameData)中输入的最大缓冲区大小，该回调返回值为处理数据的实际大小。
@@ -2062,11 +2062,11 @@ DecoderRetCode SendStreamData\(uint8_t \*buffer, uint32_t filledLen\)
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |buffer|输入|uint8_t *|输入码流数据缓存。|
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |filledLen|输入|uint32_t|输入码流数据长度。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -2092,15 +2092,15 @@ DecoderRetCode RetrieveFrameData\(uint8_t \*buffer, uint32_t maxLen, uint32_t \*
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |buffer|输入|uint8_t *|输出数据接收地址。|
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |maxLen|输入|uint32_t|输出缓冲区最大长度。|
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |filledLen|输出|uint32_t *|输出数据的实际长度。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -2199,7 +2199,7 @@ void QueryModule\(ModuleInfo \*\*moduleList, uint32_t \*listSize\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |moduleList|输出|ModuleInfo **|当前系统支持的GPU加速类的列表，每一项包括GPU加速类的ID以及其对应的能力。|
 |listSize|输出|uint32_t *|moduleList的长度。|
 
@@ -2265,7 +2265,7 @@ void \*CreateModule\(uint32_t moduleId\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |moduleId|输入|uint32_t|用于指定要用于GPU加速的GPU卡型号。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -2311,7 +2311,7 @@ void DestroyModule\(void \*module\)
 **参数说明<a name="section47106995"></a>**
 
 |参数名称|输入/输出|参数类型|参数描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |module|输入|void *|要销毁的GPU加速类实例指针。|
 
 #### Init<a name="ZH-CN_TOPIC_0000002518186024" id="Init"></a>
@@ -2327,7 +2327,7 @@ int32_t Init\(EncoderConfig &config\) = 0
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |config|输入|EncoderConfig &|EncoderConfig结构体引用类型，GPU编码配置项。|
 
 EncoderConfig结构体和相关枚举定义如下：
@@ -2464,7 +2464,7 @@ int32_t CreateBuffer\(FrameFormat format, MemType type, GpuEncoderBufferT &buffe
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |format|输入|FrameFormat|要创建的buffer对应的格式。|
 
 FrameFormat定义如下。
@@ -2483,7 +2483,7 @@ enum FrameFormat : uint32_t {
 ```
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |type|输入|MemType|需要为buffer分配空间的位置。|
 
 MemType定义如下。
@@ -2498,7 +2498,7 @@ enum MemType : uint32_t {
 ```
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |buffer|输出|GpuEncoderBufferT  &|分配完成后用于挂载buffer的指针。|
 
 GpuEncoderBufferT定义如下，开发者或厂商实现该接口时需要使用new为GpuEncoderBuffer分配内存，并在ReleaseBuffer接口中进行内存释放。
@@ -2537,7 +2537,7 @@ int32_t ImportBuffer\(FrameFormat format, uint64_t handle, GpuEncoderBufferT &bu
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |format|输入|FrameFormat|要导入的buffer对应的格式。|
 |handle|输入|uint64_t|要导入的buffer对应的句柄或显存地址。|
 |buffer|输出|GpuEncoderBufferT &|导入完成后用于挂载buffer的指针。|
@@ -2564,7 +2564,7 @@ int32_t ReleaseBuffer\(GpuEncoderBufferT &buffer\) = 0
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |buffer|输入|GpuEncoderBufferT &|需要释放的buffer的指针。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -2592,7 +2592,7 @@ int32_t MapBuffer\(GpuEncoderBufferT &buffer, uint32_t flag\) = 0
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |buffer|输出|GpuEncoderBufferT &|需要进行数据映射buffer的指针。|
 |flag|输入|uint32_t|控制映射数据的访问类型，包含可读和可写。|
 
@@ -2627,7 +2627,7 @@ int32_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |buffer|输入|GpuEncoderBufferT &|需要解除数据映射的buffer的指针。|
 
 **返回值说明<a name="section7911548131510"></a>**
@@ -2658,7 +2658,7 @@ int32_t RetriveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t m
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |buffer|输入|GpuEncoderBufferT &|需要进行数据拷贝的buffer的指针。|
 |data|输入|uint8_t *|用于接收buffer数据的内存空间地址。|
 |memLen|输入|uint32_t|用于接收buffer数据的内存空间的最大长度。|
@@ -2686,7 +2686,7 @@ int32_t Convert\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 0
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |inBuffer|输入|GpuEncoderBufferT &|需要进行格式转换的输入buffer。|
 |outBuffer|输出|GpuEncoderBufferT &|接收格式转换后数据的输出buffer。|
 
@@ -2712,7 +2712,7 @@ int32_t Encode\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 0
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |inBuffer|输入|GpuEncoderBufferT &|需要进行编码的输入buffer。|
 |outBuffer|输出|GpuEncoderBufferT &|接收编码后数据的输出buffer。|
 
@@ -2738,7 +2738,7 @@ int32_t SetEncodeParam\(EncodeParamT params\[\], uint32_t num\) = 0
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |params|输入|EncodeParamT[]|要设置的编码参数的列表。|
 |num|输入|uint32_t|要设置编码参数的数量。|
 
@@ -2846,7 +2846,7 @@ int32_t ResetImgSize\(uint32_t width, uint32_t height\) = 0
 **参数说明<a name="section47106995"></a>**
 
 |字段名称|输入/输出|字段类型|字段描述|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |width|输入|uint32_t|要设置的图像宽度（单位为像素，必须为偶数）|
 |height|输入|uint32_t|要设置的图像高度（单位为像素，必须为偶数）|
 

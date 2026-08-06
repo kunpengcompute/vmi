@@ -8,20 +8,21 @@
 
 1. （可选）若需要启动不同帧率的视频流云手机实例，则需要修改cfct_config配置文件中的帧率属性值。默认帧率为30fps，720p和1080p分辨率下也可支持60fps。
 
-    ```shell
+    ```bash
     BUILD_FPS=30
     ```
 
-2. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct_config配置文件中的ENABLE_AMD_C2_DECODE=1。其他值不使能，默认为0。必须在容器第一次启动时配置开/关C2解码器，不支持中途切换。云手机内置应用会根据自身需要自行选择解码器。
+2. （可选）若需要启动使能C2解码器的视频流云手机实例（配置方案一可用），则需要修改cfct_config配置文件中的ENABLE_AMD_C2_DECODE=1，同时关闭硬解，将`T432_QUADRA_DECODE_ENABLE`设置为“0”。必须在容器第一次启动时配置开/关C2解码器，不支持启动容器后，再通过kbox_config.cfg文件的“ENABLE_AMD_C2_DECODE”参数修改，重启容器切换。云手机内置应用会根据自身需要自行选择解码器。
 
-    ```shell
-    ENABLE_AMD_C2_DECODE=0
+    ```bash
+    ENABLE_AMD_C2_DECODE=1
+    T432_QUADRA_DECODE_ENABLE=0
     ```
 
 3. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式和使用WebRTC方式访问的视频流云手机实例，则需要进行以下配置。
     1. 从DemoVideoEngine.tar.gz中解压获取"vendor"文件夹，并将其中的"vendor/default.prop"文件拷贝到当前目录。
 
-        ```shell
+        ```bash
         cd /home/kbox_video/
         tar -xvf DemoVideoEngine.tar.gz vendor
         cp vendor/default.prop .
@@ -30,9 +31,9 @@
     2. 配置初始化编码参数。通过修改default.prop中对应属性值来初始化编码参数，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.encode开头的属性。
     3. 配置抓图分辨率。
 
-        通过修改default.prop中对应属性值来修改抓图分辨率，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.frame开头的属性。如果要改变分辨率，建议同步在cfct_config文件中修改屏幕像素密度以达到最佳显示效果，推荐的配置说明如下[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
+        通过修改default.prop中对应属性值来修改抓图分辨率，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.frame开头的属性。如果要改变分辨率，建议同步在cfct_config文件中修改屏幕像素密度以达到最佳显示效果，推荐的配置说明如下[**表1**不同分辨率配置说明](#不同分辨率配置说明)所示。
 
-        **表 1** 不同分辨率配置说明<a id="不同分辨率配置说明"></a>
+        **表1**不同分辨率配置说明<a id="不同分辨率配置说明"></a>
 
         |屏幕宽度（BUILD_WIDTH）|屏幕密度（BUILD_DENSITY）|
         |--|--|
@@ -53,7 +54,7 @@
 
     5. 使能自适应分辨率开关。
 
-        若使用APK方式访问视频流云手机实例，可在APK的设置页中使能自适应分辨率开关，参见[APK方式访问](#APK方式访问)。若不使能自适应分辨率开关，则需要修改default.prop中对应属性值来修改抓图分辨率，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.frame开头的属性。如果要改变分辨率，建议同步在cfct_config文件中修改屏幕像素密度以达到最佳显示效果，推荐的配置说明如前[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
+        若使用APK方式访问视频流云手机实例，可在APK的设置页中使能自适应分辨率开关，参见[APK方式访问](#APK方式访问)。若不使能自适应分辨率开关，则需要修改default.prop中对应属性值来修改抓图分辨率，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表，参考vmi.video.frame开头的属性。如果要改变分辨率，建议同步在cfct_config文件中修改屏幕像素密度以达到最佳显示效果，推荐的配置说明如前[**表1**不同分辨率配置说明](#不同分辨率配置说明)所示。
 
         ![](figures/zh-cn_image_0000002518384392.png)
 
@@ -63,22 +64,22 @@
 
 4. 启动视频流云手机。
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     ./cfct_video start ${index1} ${index2}
     ```
 
-    上述命令中 `${index1}` 与 `${index2}` 为设备号，其中 `${index2}` 可缺省。启动脚本使用示例：
+    上述命令中`${index1}`与`${index2}`为设备号，其中`${index2}`可缺省。启动脚本使用示例：
 
     - 启动一个编号为1的视频流云手机。
 
-        ```shell
+        ```bash
         ./cfct_video start 1
         ```
 
     - 启动编号为1~5的五个视频流云手机。
 
-        ```shell
+        ```bash
         ./cfct_video start 1 5
         ```
     
@@ -86,7 +87,7 @@
     >
     >使用NFS挂载启动时，将start命令替换成nstart，例：
     >
-    >```shell
+    >```bash
     >./cfct_video nstart 1 5
     >```
 
@@ -94,7 +95,7 @@
 
     - 基于Docker容器运行时的视频流云手机。
 
-        ```shell
+        ```bash
         docker ps -a
         ```
 
@@ -104,7 +105,7 @@
 
     - 基于Containerd容器运行时的视频流云手机。
 
-        ```shell
+        ```bash
         nerdctl ps -a
         ```
 
@@ -114,21 +115,21 @@
 
     确认所启动的容器存在，且状态正常。
 
-6. 确认视频流云手机是否启动成功，其中 **`${index}`** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **`${index}`** 即为35。
+6. 确认视频流云手机是否启动成功，其中**`${index}`**为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如android_35，**`${index}`**即为35。
 
     - 基于Docker容器运行时的视频流云手机。
 
-        ```shell
+        ```bash
         docker exec -it android_${index} sh 
         ```
 
     - 基于Containerd容器运行时的视频流云手机。
 
-        ```shell
+        ```bash
         nerdctl exec -it android_${index} sh
         ```
 
-        ```shell
+        ```bash
         getprop sys.boot_completed
         ```
 
@@ -145,7 +146,7 @@
 1. 请参见[部署视频流引擎的软件环境要求](install_guide.md#部署视频流引擎的软件环境要求)获取BoostKit-boostcph-videoengine_*.zip进行解压缩，获取版本文件。
 2. 查看视频流引擎组件版本。
 
-    ```shell
+    ```bash
     unzip BoostKit-boostcph-videoengine_*.zip
     tar -xvf  VideoEngine.tar.gz vendor/etc/videoengine_version.txt
     cat vendor/etc/videoengine_version.txt
@@ -153,7 +154,7 @@
 
     回显信息即为视频流引擎组件版本号信息，示例如下。
 
-    ```shell
+    ```bash
     Product Name: Kunpeng BoostKit
     Product Version: 26.0.RC1
     Component Name: BoostKit-boostcph-videoengine
@@ -167,7 +168,7 @@
 
 ### 访问视频流云手机<a name="ZH-CN_TOPIC_0000002549864229" id="访问视频流云手机"></a>
 
-#### APK 方式访问<a name="ZH-CN_TOPIC_0000002518224464" id="APK方式访问"></a>
+#### APK方式访问<a name="ZH-CN_TOPIC_0000002518224464" id="APK方式访问"></a>
 
 若使用默认方式启动视频流云手机时，可以通过APK方式访问云手机。
 
@@ -183,17 +184,17 @@
 
 5. 返回至主页面，自上而下依次输入服务器IP地址、**`${port}`**，单击"开始连接"即可访问云侧的视频流云手机，如下图所示。
 
-    **`${port}`** 默认值为 8000 + **`${index}`**。
+    **`${port}`**默认值为8000+**`${index}`**。
 
     ![](figures/zh-cn_image_0000002549864241.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
-    >- 每个视频流云手机实例需要设置端口 **`${port}`** ，部署时可进入cfct_video脚本设置合适的 **`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >- 每个视频流云手机实例需要设置端口**`${port}`**，部署时可进入cfct_video脚本设置合适的**`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位安卓系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
-#### PC 端 Web 网页方式访问<a name="ZH-CN_TOPIC_0000002518384374"></a>
+#### PC端Web网页方式访问<a name="ZH-CN_TOPIC_0000002518384374"></a>
 
 若使用WebRTC进行数据传输的方式启动视频流云手机实例时，可以通过PC端的Web网页访问云手机。
 
@@ -202,7 +203,7 @@
 
     ![](figures/zh-cn_image_0000002518224474.png)
 
-3. 自上而下依次输入服务器IP地址、**`${port}`** ，单击"SUBMIT"即可访问云侧的视频流云手机。其中 **`${port}`** 默认值为8000 + **${index}**。
+3. 自上而下依次输入服务器IP地址、**`${port}`**，单击"SUBMIT"即可访问云侧的视频流云手机。其中**`${port}`**默认值为8000+**${index}**。
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -235,7 +236,7 @@
 
         > ![](public_sys-resources/icon-note.gif)说明
         >
-        >如果不使能自适应分辨率，启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。如果要改变自适应分辨率的宽高，建议同步修改cfct_config文件中屏幕像素密度以达到最佳显示效果，推荐的配置说明如[**表 1** 不同分辨率配置说明](#不同分辨率配置说明)所示。
+        >如果不使能自适应分辨率，启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。如果要改变自适应分辨率的宽高，建议同步修改cfct_config文件中屏幕像素密度以达到最佳显示效果，推荐的配置说明如[**表1**不同分辨率配置说明](#不同分辨率配置说明)所示。
 
 4. 设置音频播放编码参数。
     1. 单击图中音频图标。
@@ -254,15 +255,15 @@
 
 使用cfct_video脚本重启视频流云手机实例。
 
-- 重启编号为 `${index1}` 的视频流云手机。
+- 重启编号为`${index1}`的视频流云手机。
 
-    ```shell
+    ```bash
     ./cfct_video restart ${index1}
     ```
 
-- 重启编号为 `${index1}` ~ `${index2}` 的所有视频流云手机。
+- 重启编号为`${index1}`~`${index2}`的所有视频流云手机。
 
-    ```shell
+    ```bash
     ./cfct_video restart ${index1} ${index2}
     ```
 
@@ -270,27 +271,27 @@
 
 使用cfct_video脚本删除视频流云手机实例。
 
-- 删除编号为 `${index1}` 的视频流云手机。
+- 删除编号为`${index1}`的视频流云手机。
 
-    ```shell
+    ```bash
     ./cfct_video delete ${index1}
     ```
 
-- 删除编号为 `${index1}` ~ `${index2}` 的所有视频流云手机。
+- 删除编号为`${index1}`~`${index2}`的所有视频流云手机。
 
-    ```shell
+    ```bash
     ./cfct_video delete ${index1} ${index2}
     ```
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
->删除NFS挂载的容器时，将delete命令替换成ndelete，例：
+>删除NFS挂载的容器时，将delete命令替换成ndelete，ndelete删除后img镜像文件会默认保存，例：
 >
->```shell
+>```bash
 >./cfct_video ndelete 1 5
 >```
 
-## k8s 集群下操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002518224466"></a>
+## k8s集群下操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002518224466"></a>
 
 ### 启动道客设备插件<a name="ZH-CN_TOPIC_0000002549864209"></a>
 
@@ -300,14 +301,14 @@
 
 1. 解压DemoVideoEngine.tar.gz。
 
-    ```shell
+    ```bash
     cd /home/k8s/
     tar -xvf DemoVideoEngine.tar.gz
     ```
 
 2. 在指定K8s节点创建标签label（va-device=va-sg100）。
 
-    ```shell
+    ```bash
     kubectl label nodes $NODENAME va-device=va-sg100
     ```
 
@@ -317,20 +318,20 @@
 
 3. 创建命名空间va-plugin。
 
-    ```shell
+    ```bash
     kubectl create ns va-plugin
     ```
 
 4. 创建一个名为va-plugin的ConfigMap对象，并将config.yaml文件的内容添加到ConfigMap中。
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     kubectl create cm -n va-plugin va-plugin-configs --from-file=config=config.yaml
     ```
 
 5. 修改道客设备插件镜像名称。
 
-    ```shell
+    ```bash
     vi va-device-plugin.yaml
     ```
 
@@ -340,7 +341,7 @@
 
 6. 启动道客设备插件。
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     kubectl create -f va-device-plugin.yaml
     ```
@@ -351,7 +352,7 @@
 
 7. 启动完成后，查看道客设备插件是否可运行成功。
 
-    ```shell
+    ```bash
     kubectl get pods -A
     ```
 
@@ -363,7 +364,7 @@
 
 1. 启动设备插件。
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     ./start_devices.sh
     ```
@@ -374,45 +375,45 @@
 
 2. 启动完成后，查看设备插件是否运行成功。
 
-    ```shell
+    ```bash
     kubectl get pods -A
     ```
 
     期望是以k8s-host-device开头的Pod名称，其状态（STATUS）列都是Running状态。
 
-### 运行 hook 脚本<a name="ZH-CN_TOPIC_0000002549866525"></a>
+### 运行hook脚本<a name="ZH-CN_TOPIC_0000002549866525"></a>
 
 在所有工作节点运行hook脚本。
 
-1. 请参见《[视频流引擎 安装指南](install_guide.md)》获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的"/home/k8s"目录。
+1. 请参见《[视频流引擎安装指南](install_guide.md)》获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的"/home/k8s"目录。
 2. 将"/home/k8s/k8s/script"目录下的oci-device-hook.sh脚本拷贝到"/usr/local/sbin/"目录。
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     cp oci-device-hook.sh /usr/local/sbin/
     ```
 
 3. 更改Containerd配置，将[部署道客设备插件镜像](install_guide.md#部署道客设备插件镜像)新增的容器运行时改成"/usr/local/sbin/oci-device-hook.sh"。
 
-    ```shell
+    ```bash
     sed -i 's|BinaryName = "/usr/bin/va-container-runtime"|BinaryName ="/usr/local/sbin/oci-device-hook.sh"|g' /etc/containerd/config.toml
     ```
 
 4. 重启Containerd。
 
-    ```shell
+    ```bash
     systemctl restart containerd
     ```
 
-### 运行 nri 插件
+### 运行nri插件
 
 在所有工作节点运行nri插件。
 
-1. 请参见《[视频流引擎 安装指南](install_guide.md)》获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的"/home/k8s"目录。
+1. 请参见《[视频流引擎安装指南](install_guide.md)》获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的"/home/k8s"目录。
 
 2. 进入/home/k8s/k8s/scripts/nri-quota-plugin目录构建插件。
 
-    ```shell
+    ```bash
     go mod tidy
     go build -o quota-plugin main.go
     ```
@@ -430,13 +431,13 @@
 
     重启containerd。
 
-    ```shell
+    ```bash
     systemctl restart containerd
     ```
 
 4. 部署插件。
 
-    ```shell
+    ```bash
     mkdir -p /var/log/nri /var/run/nri /opt/nri-quota-plugin
     cp quota-plugin /opt/nri-quota-plugin/
     chmod +x /opt/nri-quota-plugin/quota-plugin
@@ -444,20 +445,20 @@
 
 5. 启动nri插件。
 
-    ```shell
+    ```bash
     cp quota-plugin.service /etc/systemd/system/quota-plugin.service
     systemctl daemon-reload
     systemctl enable quota-plugin
     systemctl start quota-plugin
     ```
 
-### 启动 K8s 视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864215"></a>
+### 启动K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002549864215"></a>
 
 启动K8s视频流云手机实例需要在工作节点下操作。
 
 1. 修改k8s-video.yaml文件。
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     vi k8s-video.yaml
     ```
@@ -472,7 +473,7 @@
    
     注意：如果提前创建的数据卷格式为f2fs，那么需要配置f2fs开关为1；如果提前创建的数据卷格式为ext4，需要配置f2fs开关为0。
 
-    ```shell
+    ```bash
     ./k8s-video.sh start ${index1} ${index2} ${index3} ${index4}
     ```
 
@@ -480,57 +481,63 @@
     > 
     > 若需要使用NFS挂载启动，则将start改成nstart。例：
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4}
     > ```
     > 
-    > `${index1}` 与 `${index2}` 为pod编号，`${index3}`表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。 `${index4}`表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中 `${index2}` `${index3}` `${index4}`可缺省。例：
+    > 通过nstart拉起的k8s容器可以通过如下命令判断是否正常使能NFS，预期是/tmp/nfs/data/video1/data。
+    >
+    > ```bash
+    > kubectl get pod video1 -o jsonpath='{.spec.volumes[?(@.name=="data")].hostPath.path}'
+    > ```
+    >
+    > `${index1}`与`${index2}`为pod编号，`${index3}`表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。`${index4}`表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中`${index2}``${index3}``${index4}`可缺省。例：
     >- 创建名为video2的pod，里面的文件格式是默认的ext4。
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 2
     > ```
     >
     >- 创建名为video3的pod，里面的文件格式是f2fs。
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 3 3 1
     > ```
     >
     >- 创建名为video3的pod，里面的文件格式是f2fs。
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 3 3 1
     > ```
     >
     >- 创建名为video1~video5共5个pod，里面的文件格式是默认的ext4。
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 1 5
     > ```
     >
     >- 创建名为video2~video6共5个pod，里面的文件格式是f2fs。
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 2 6 1
     > ```
     >
     >- 创建名为video1的pod。里面的文件格式是默认的ext4，system分区大小限制为10240MB。
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 1 1 0 10240
     > ```
     >
     >- 创建名为video2的pod。里面的文件格式是f2fs，system分区大小限制为10240MB。
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 2 2 1 10240
     > ```
     >
 
 3. 启动后，查看是否启动成功。
 
-    ```shell
+    ```bash
     kubectl get pods -o wide
     ```
 
@@ -538,7 +545,7 @@
 
 4. 连接视频流云手机及操作容器，通过NODE列可查看对应的视频流云手机pod调度对应的NODE节点。
 
-    ```shell
+    ```bash
     kubectl get pods -o wide
     ```
 
@@ -546,37 +553,37 @@
 
     - 在任意节点上，可通过如下命令进入容器，以video1为例：
 
-        ```shell
+        ```bash
         kubectl exec -it video1 -- sh
         ```
 
     - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中"`{CONTAINER}`"是**crictl ps**返回的第一列。
 
-        ```shell
+        ```bash
         crictl exec -it ${CONTAINER} sh
         ```
 
-### 删除 K8s 视频流云手机实例<a name="ZH-CN_TOPIC_0000002518384356"></a>
+### 删除K8s视频流云手机实例<a name="ZH-CN_TOPIC_0000002518384356"></a>
 
 删除K8s视频流云手机实例需要在工作节点下操作。
 
-```shell
+```bash
 cd /home/k8s/k8s/script
 ./k8s-video.sh delete ${index1} ${index2}
 ```
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
-> `${index1}` 与 `${index2}` 为pod编号，其中 `${index2}` 可缺省，例：
+> `${index1}`与`${index2}`为pod编号，其中`${index2}`可缺省，例：
 >
-> ```shell
+> ```bash
 > ./k8s-video.sh delete 2（删除名为video2的pod）
 > ./k8s-video.sh delete 1 5（删除名为video1 -video5 共5个pod）
 > ```
 > 
-> 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，例：
+> 若使用NFS挂载启动的云手机实例，删除请用ndelete命令，ndelete删除后img镜像文件会默认保存，例：
 > 
-> ```shell
+> ```bash
 > ./k8s-video.sh ndelete 1 5（删除名为video1 -video5 共5个pod）
 > ```
 > 
@@ -587,13 +594,13 @@ cd /home/k8s/k8s/script
 
 1. 在工作节点使用k8s-video.sh脚本启动一路云手机，以video1为例。
 
-    ```shell
+    ```bash
     ./k8s-video.sh start 1
     ```
 
 2. 在master节点找到云手机video1所在节点。
 
-    ```shell
+    ```bash
     kubectl get pod -A -owide
     ```
 
@@ -673,7 +680,7 @@ cd /home/k8s/k8s/script
 
 **配置示例<a name="section18450203117618"></a>**
 
-```shell
+```bash
 <!-- 配置示例 -->
 <!-- 系统通用配置 -->
 <Application name="system" isEnable="false">
@@ -732,8 +739,8 @@ cd /home/k8s/k8s/script
 |BUILD_DENSITY|云手机屏幕密度。|120：屏幕密度（360p）<br>160：屏幕密度（480p）<br>320：屏幕密度（720p）<br>480：屏幕密度（1080p）<br>640：屏幕密度（2K）<br>960：屏幕密度（4K）|320：默认屏幕密度|
 |BUILD_FPS|云手机屏幕刷新帧率。|1-120fps|30：默认屏幕刷新帧率|
 |ENCODECARD|选择编码卡。|0：T432<br>1：Quadra<br>2：Va1e（暂不支持）<br>3：OpenH264|1：默认选择Quadra编码卡|
-|ENABLE_AMD_C2_DECODE|AMD方案C2软解使能开关|0/其他值：不使能<br>1：使能|0：默认不使能|
-|T432_QUADRA_DECODE_ENABLE|T432/Quadra硬解使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
+|ENABLE_AMD_C2_DECODE|AMD方案C2软解使能开关，和Quadra硬解使能开关不能同时开启|0/其他值：不使能<br>1：使能|0：默认不使能|
+|T432_QUADRA_DECODE_ENABLE|T432/Quadra硬解使能开关，和AMD方案C2软解使能开关不能同时开启|0/其他值：不使能<br>1：使能|0：默认不使能|
 |ENABLE_HARD_DECODE|DC1000/DC1000C硬解使能开关。|0/其他值：不使能<br>1：使能|1：默认使能|
 |ENABLE_WEBRTC_CONNECTION|WebRTC使能开关。|0/其他值：不使能<br>1：使能|0：默认不使能|
 |ENABLE_F2FS|F2FS文件系统启动使能开关。|0/其他值：不使能1：使能|0：默认不使能|
@@ -819,11 +826,11 @@ cd /home/k8s/k8s/script
     
     在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限。
 
-    ```shell
+    ```bash
     ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/scaling_cur_freq
     ```
 
-    ```shell
+    ```bash
     ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
     ```
 
@@ -833,29 +840,29 @@ cd /home/k8s/k8s/script
     则在容器内执行如下命令新增权限。
     输入如下命令给scaling_cur_freq添加写入（w）权限。
 
-    ```shell
+    ```bash
     chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
     ```
 
     输入如下命令给cpuinfo_cur_freq添加写入（w）权限。
 
-    ```shell
+    ```bash
     chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
     ```
     
     随后在容器内输入如下命令读取cpu所支持的频率列表。
 
-    ```shell
+    ```bash
     cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
     ```
 
     随后在容器内输入如下两个命令进行修改，输入的频率值最好是刚刚查询到的当前cpu支持的频率值。
 
-    ```shell
+    ```bash
     echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_cur_freq
     ```
 
-    ```shell
+    ```bash
     echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/cpuinfo_cur_freq
     ```
 
@@ -863,7 +870,7 @@ cd /home/k8s/k8s/script
 
     要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如"手机设备信息大全"这样的第三方应用中观察到cpu频率的动态变化，此处的"sleep 1"表示每隔1s变化一次，此处的"1"可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改。
 
-    ```shell
+    ```bash
     CPU_ID=0
     FREQS=(554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000)
     while true; do

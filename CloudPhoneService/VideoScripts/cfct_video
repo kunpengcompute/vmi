@@ -300,16 +300,26 @@ function container_run() {
     BB_ENABLE_NFS="$enable_nfs"
     BB_NFS_DIR="$NFS_DIR"
     BB_SKIP_DATA_COPY=$no_copy_usr_data
-    bb_start_box
 
-    # 新增拦截逻辑,判断上方base_box是否执行成功 
+    # Step 1: 创建容器（docker create），进程未启动
+    bb_create_box
     if [ $? -ne 0 ]; then
-        bb_log_error "${container_name} 基础环境准备失败，终止后续拉起流程！"
+        bb_log_error "${container_name} 容器创建失败，终止后续拉起流程！"
         return 1
     fi
-    bb_log_info "Initialize container ..."
 
-    bb_prepare_media_codecs_for_amd $container_name
+    # Step 2: 在容器文件系统就绪但 init 未启动的窗口期，注入配置文件
+    bb_prepare_media_codecs_for_amd ${container_name}
+    bb_prepare_render_layer ${container_name} "${userdata_dir}"
+
+    # Step 3: 启动容器并执行后处理（cgroup 权限等）
+    bb_start_box
+    if [ $? -ne 0 ]; then
+        bb_log_error "${container_name} 容器启动失败，终止后续拉起流程！"
+        return 1
+    fi
+
+    bb_log_info "Initialize container ..."
     bb_wait_container_ready "$container_name" 100 0
 
     # 云机启动后处理
