@@ -44,7 +44,7 @@
 | 存储 | 16GB |
 | 分辨率/帧率 | 720*1280/30fps |
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 > 内存和硬盘以满足整机规格为准，可灵活调配。
 
 ## 可获得性
@@ -94,7 +94,7 @@
     echo 3 > /proc/sys/vm/drop_caches
     ```
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 > 清理 cache 会短暂影响当前系统的性能，请控制好清理周期和粒度。
 >
 > - 清理 pagecache。

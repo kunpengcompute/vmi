@@ -29,7 +29,7 @@
 2. 从[华为企业业务网站](https://support.huawei.com/enterprise/zh/tool/pgp-verify-TL1000000054)或[运营商网站](http://support.huawei.com/carrier/digitalSignatureAction)获取校验工具和校验方法。
 3. 使用第2步获取的签名验证指南文档对下载的软件包进行 PGP 数字签名校验。
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > 如果校验失败，请不要使用该软件包，先联系华为技术支持工程师解决。
 > 使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
@@ -59,7 +59,7 @@
 |--|--|--|
 |x86_64 服务器|服务端编译制作|Ubuntu 22.04 LTS 推荐：[ubuntu-22.04-live-server-amd64.iso](https://old-releases.ubuntu.com/releases/22.04/ubuntu-22.04-live-server-amd64.iso)|
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > - 本文档测试服务器型号为 2288H V5。
 > - 服务器需有访问外网权限，以方便下载 OS 镜像。
@@ -107,7 +107,7 @@
 
 ### 服务端调试环境部署
 
-> [!WARNING]
+> [!WARNING]注意
 >
 > - 用户可以根据需求选择文件存放目录。
 > - 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)》。
@@ -339,7 +339,7 @@ enum VmiCmd : uint32_t {
 
 返回值示例请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0065.html)》中的"查询组件版本号信息"章节。
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > 回显示例中的版本号与 VmiVersion 模块版本号无关。
 
@@ -468,7 +468,7 @@ struct VmiConfig {
 } __attribute__((packed));
 ```
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > VmiConfig 需要传入[VmiVersion 模块版本号](#vmiversion-模块版本号)中提到的模块版本号，该版本号每个模块都不同。
 
@@ -686,7 +686,7 @@ width 和 height 的取值范围也支持互换。
 | widthAligned | 对齐后分辨率宽度（暂不支持配置） | 360~2160 | 720 |
 | heightAligned | 对齐后分辨率高度（暂不支持配置） | 360~3840 | 1280 |
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > 在启用自适应分辨率功能时，改变视频输出分辨率（与上次启动时配置不同）时，会改变 AOSP 系统和应用的渲染分辨率，可能会导致部分应用出现兼容性问题或渲染问题。一般此类问题可以通过重新启动应用解决，因此建议在修改分辨率前返回桌面，同时清空后台应用，以提升用户使用体验。
 
@@ -706,7 +706,7 @@ uint32_t 类型，默认值为 320。
 |--|--|--|--|
 | density | 屏幕密度 | [120~960]：包括 120 与 960 边界值。0：表示不启用自适应分辨率功能 | 320 |
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > 1. 当 density 属性设置为 0 时，意味着不启用自适应分辨率功能，既启动视频模块时会使用云手机的现有渲染分辨率和屏幕密度进行渲染与出流。
 > 2. 当 Android 属性（ro.vmi.video.wmcmd）设置为 0 时，同样不会启用自适应分辨率功能；该属性与 density 变量任意一个设置为 0，都将不启用自适应分辨率功能。
@@ -781,7 +781,7 @@ enum RCMode : uint32_t  {
 | streamWidth | 出流帧宽度 | [240, 云手机渲染分辨率]，并且出流帧宽度需要为 8 的倍数 | 720 |
 | streamHeight | 出流帧高度 | [240, 云手机渲染分辨率]，并且出流帧高度需要为 8 的倍数 | 1080 |
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > 1. 码控模式（RCMode）仅支持固定码率模式（CBR）与画质优先并限制最大码率（CAPPED_CRF），Quadra 编码卡支持两种码控模式，DC1000/DC1000C 暂时仅支持固定码率模式（CBR）；
 > 2. 码控模式（RCMode）设置为固定码率模式（CBR），可通过 bitrate 变量来指定固定码率的数值；而 Quadra 编码卡码控模式（RCMode）设置为画质优先并限制最大码率（CAPPED_CRF）时，会使用 crf、maxCrfRate 和 vbvBufferSize 变量来进行码率控制；DC1000/DC1000C 控模式（RCMode）会使用 crf、maxCrfRate 变量来进行码率控制
@@ -904,7 +904,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |maxCrfRate|10000000|
 |vbvBufferSize|1000|
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > 硬件配置方案一（W6800+Quadra）建议选择使用"VPU"进行编码，并且在 H.265 编码时 profile 仅支持 main。
 
@@ -918,7 +918,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |gopSize|60|
 |profile|main|
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > 硬件配置方案二（道客 DC1000/DC1000C）建议选择使用"GPU"进行编码，并且在 H.265 编码时 profile 仅支持 main。
 
@@ -1126,7 +1126,7 @@ struct ExtDataAudio {
 } __attribute__((packed));
 ```
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > timestamp 必须是客户端的时间戳，不能是服务端通过网络收到音频数据包之后的时间戳，否则可能会导致无法过滤因网络波动而严重延迟的包，从而出现音频整体滞后的现象。
 
@@ -1155,7 +1155,7 @@ InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 - 2：要求每 320ms 注入 32 帧，造成 320ms 延迟。
 - 3：要求每 480ms 注入 48 帧，造成 480ms 延迟。
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > - 如果使用 PCM 模式传输麦克风数据，建议客户端到服务端的上行网络带宽不低于 2Mbps。
 > - 注入的麦克风帧之间不能混入空白帧，否则可能会导致声音听起来不连续。
@@ -1226,7 +1226,7 @@ uint8_t* data = &keyData;
 InjectData(module, cmd, data, sizeof(VmiKeyInputData));
 ```
 
-> [!NOTE]
+>![](public_sys-resources/icon-note.gif) **说明：** 
 >
 > - 服务端会对触控数据进行有限的校验，例如判断触控数据的触点位置是否在有效范围内，但不能分辨因为异常行为带来的异常数据，例如手指从客户端所在的屏幕上抬起，但客户端却发送了一个 Down 事件（此处客户端应该发送 UP 事件），因此在编写客户端代码时，需要注意。
 > - 在部分机型（目前发现的有 VIVO 手机）上进行多指操作（3 指及以上），当手指同时按下或手指依次按下的间隔时间很短的时候，客户端会发送 EVENT_CANCEL 事件，导致服务端重置所有触点状态导致触控失效，手指依次按下的间隔时间较长时则没有该问题。
