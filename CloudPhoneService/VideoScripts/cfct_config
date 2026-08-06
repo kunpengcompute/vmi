@@ -42,7 +42,7 @@ BUILD_DENSITY=320
 # [RESTART] 云手机屏幕刷新帧率
 BUILD_FPS=30
 
-# [RESTART] 云手机绑核方式 0：2容器2核(默认)；1：绑NUMA，每NUMA空前2个核
+# [RECREATE] 云手机绑核方式 0：2容器2核(默认)；1：绑NUMA，每NUMA空前2个核
 CPU_BIND_MODE=0
 
 # [RECREATE] 选择编码卡（0:T432 1:Quadra 2:Va1e 3:open264）
