@@ -1,10 +1,10 @@
 # 安装指南<a name="ZH-CN_TOPIC_0000002521895634"></a>
 
-## 1 软件部署<a name="ZH-CN_TOPIC_0000002518386576"></a>
+## 软件部署<a name="ZH-CN_TOPIC_0000002518386576"></a>
 
-### 1.1 环境要求<a name="ZH-CN_TOPIC_0000002518226658"></a>
+### 环境要求<a name="ZH-CN_TOPIC_0000002518226658"></a>
 
-#### 1.1.1 硬件环境<a name="ZH-CN_TOPIC_0000002518226662"></a>
+#### 硬件环境<a name="ZH-CN_TOPIC_0000002518226662"></a>
 
 部署Kbox云手机容器环境前请确保您的环境满足已验证的硬件环境要求。
 
@@ -30,13 +30,13 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 >- 选择鲲鹏服务器兼容的Mellanox网卡，通过[鲲鹏计算兼容性查询工具](https://info.support.huawei.com/computing/tools/compatibility-query/enterprise/kunpeng-computing/component-compatibility)可查询具体型号网卡。
 >- NETINT驱动针对Android15系统仅支持Quadra卡。
 
-#### 1.1.2 软件环境<a name="ZH-CN_TOPIC_0000002549866439"></a>
+#### 软件环境<a name="ZH-CN_TOPIC_0000002549866439"></a>
 
-##### 1.1.2.1 Kbox<a name="ZH-CN_TOPIC_0000002549866441"></a>
+##### Kbox<a name="ZH-CN_TOPIC_0000002549866441"></a>
 
 部署Kbox云手机容器的软件环境要求请参见《[Kbox云手机容器 特性指南（Android 15）](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP15/docs/zh/feature_guide.md)》中软件部署的“软件环境”章节。
 
-##### 1.1.2.2 视频流引擎<a name="ZH-CN_TOPIC_0000002549746419" id="视频流引擎"></a>
+##### 视频流引擎<a name="ZH-CN_TOPIC_0000002549746419" id="视频流引擎"></a>
 
 在部署视频流云手机环境前，请参见本节提供的渠道获取相应的软件包并对华为提供的软件包进行完整性校验，以便进行后续的部署步骤。
 
@@ -75,17 +75,17 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 >使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
 >使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议 2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
 
-### 1.2 部署云手机<a name="ZH-CN_TOPIC_0000002549746425"></a>
+### 部署云手机<a name="ZH-CN_TOPIC_0000002549746425"></a>
 
-#### 1.2.1 环境配置<a name="ZH-CN_TOPIC_0000002518386582"></a>
+#### 环境配置<a name="ZH-CN_TOPIC_0000002518386582"></a>
 
-##### 1.2.1.1 配置BIOS<a name="ZH-CN_TOPIC_0000002518226660"></a>
+##### 配置BIOS<a name="ZH-CN_TOPIC_0000002518226660"></a>
 
 环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
 
 具体配置步骤请参见《[Kbox云手机容器 特性指南（Android 15）](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP15/docs/zh/feature_guide.md)》中“软件部署”的“配置BIOS”章节内容。
 
-##### 1.2.1.2 （硬件配置方案一，可选）升级NVMe固件版本<a name="ZH-CN_TOPIC_0000002518226644"></a>
+##### （硬件配置方案一，可选）升级NVMe固件版本<a name="ZH-CN_TOPIC_0000002518226644"></a>
 
 该章节仅在使用硬件配置方案一，并且需要使能编码卡硬件解码功能时才需要执行。若不需要使能硬件解码则跳过该章节。
 
@@ -93,13 +93,13 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 1. 查看编码卡是否被NVMe驱动正确识别。
 
-    ```shell
+    ```bash
     nvme list
     ```
 
     回显如下说明识别正确。该内容为回显示例，请以实际为准。
 
-    ```shell
+    ```bash
     Node          SN                   Model            Namespace Usage                    Format           FW Rev
     ------------- -------------------- ---------------- --------- ------------------------ ---------------- --------
     /dev/nvme0n1  Q2A325A11DC082-0454A QuadraT2A        1         8.59  TB /   8.59  TB    4 KiB +  0 B     48F6rKr1
@@ -114,7 +114,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 2. 请从**Quadra_V_XXX_.zip**（其中，XXX为版本号信息，仅做示例使用，下列步骤请按实际名称解压）中获取4.8.F-Android15固件升级包并升级固件**。**
 
-    ```shell
+    ```bash
     unzip Quadra_VXXX.zip
     cd Quadra_VXXX/
     tar -zxvf Quadra_FW_VXXX.tar.gz
@@ -127,25 +127,25 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 3. 升级完成后需重启系统生效。
 
-    ```shell
+    ```bash
     reboot
     ```
 
-##### 1.2.1.3 （硬件配置方案一）配置GPU工作模式<a name="ZH-CN_TOPIC_0000002518226676"></a>
+##### （硬件配置方案一）配置GPU工作模式<a name="ZH-CN_TOPIC_0000002518226676"></a>
 
 使用硬件配置方案一时将GPU卡工作模式设置为高性能模式，使GPU运行在最高频率，保持GPU性能最优。该操作每次系统重启都需重新配置一次。
 
 执行如下命令设置GPU卡工作模式为高性能模式。
 
-```shell
+```bash
 find /sys -name power_dpm_force_performance_level | xargs -I {} sh -c "echo high > '{}'"
 ```
 
-##### 1.2.1.4 部署Kbox容器基础环境<a name="ZH-CN_TOPIC_0000002549746421" id="部署Kbox容器基础环境"></a>
+##### 部署Kbox容器基础环境<a name="ZH-CN_TOPIC_0000002549746421" id="部署Kbox容器基础环境"></a>
 
 Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP15/docs/zh/feature_guide.md)》中的“软件部署”章节。按照步骤完成该章节中“启动和卸载云手机实例”小节前的所有部署。
 
-##### 1.2.1.5 （可选）部署Containerd环境<a name="ZH-CN_TOPIC_0000002549866409" id="部署Containerd环境"></a>
+##### （可选）部署Containerd环境<a name="ZH-CN_TOPIC_0000002549866409" id="部署Containerd环境"></a>
 
 视频流云手机除支持以基于Docker的容器运行时启动外，还支持以Containerd容器运行时启动。若选择以Containerd运行时运行视频流云手机，可参考本章节进行Containerd相关软件包的部署。
 
@@ -167,7 +167,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 1. <a id="部署Containerd环境1"></a>下载并解压Containerd二进制软件包到“/usr/local”目录下。
 
-    ```shell
+    ```bash
     mkdir -p /root/containerdenv/downloads
     cd /root/containerdenv/downloads
     wget https://github.com/containerd/containerd/releases/download/v1.7.14/containerd-1.7.14-linux-arm64.tar.gz --no-check-certificate
@@ -176,13 +176,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     确认Containerd版本号为v1.7.14。
 
-    ```shell
+    ```bash
     containerd --version
     ```
 
 2. 下载Containerd Service文件，配置成系统服务。
 
-    ```shell
+    ```bash
     cd /root/containerdenv/downloads
     wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service --no-check-certificate
     mkdir -p /usr/local/lib/systemd/system/
@@ -193,7 +193,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     确认Containerd服务是否已正常启动。
 
-    ```shell
+    ```bash
     systemctl status containerd
     ```
 
@@ -203,7 +203,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 3. <a id="部署Containerd环境3"></a>下载并安装runc。
 
-    ```shell
+    ```bash
     cd /root/containerdenv/downloads
     wget https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64 --no-check-certificate
     install -m 755 runc.arm64 /usr/local/sbin/runc
@@ -211,13 +211,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     确认runc版本号为1.1.12。
 
-    ```shell
+    ```bash
     runc --version
     ```
 
 4. 下载并安装CNI plugin。
 
-    ```shell
+    ```bash
     cd /root/containerdenv/downloads
     mkdir -p /opt/cni/bin
     wget https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz --no-check-certificate
@@ -226,7 +226,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 5. <a id="部署Containerd环境5"></a>下载并安装nerdctl工具。
 
-    ```shell
+    ```bash
     cd /root/containerdenv/downloads
     wget https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz --no-check-certificate
     tar Cxzvf /usr/local/bin nerdctl-1.7.5-linux-arm64.tar.gz
@@ -234,13 +234,13 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     确认nerdctl版本号为1.7.5。
 
-    ```shell
+    ```bash
     nerdctl --version
     ```
 
 6. <a id="安装Golang"></a>下载并安装Golang。
 
-    ```shell
+    ```bash
     wget https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz
     tar -C /usr/local -xzf go1.25.0.linux-arm64.tar.gz
     echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
@@ -249,39 +249,39 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     配置代理。
 
-    ```shell
+    ```bash
     go env -w GO111MODULE=on
     go env -w GOPROXY=https://goproxy.cn,direct
     ```
 
     确认Golang版本号为1.25。
 
-    ```shell
+    ```bash
     go version
     ```
 
 7. <a id="部署Containerd环境7"></a>重新启动Docker服务，并重新启动一个新的终端以使新的容器运行时生效。
 
-    ```shell
+    ```bash
     systemctl restart docker
     ```
 
     若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
 
-#### 1.2.2 （硬件配置方案二、三、四）安装显卡驱动<a name="ZH-CN_TOPIC_0000002549866411"></a>
+#### （硬件配置方案二、三、四）安装显卡驱动<a name="ZH-CN_TOPIC_0000002549866411"></a>
 
 使用硬件配置方案二、三、四每次服务器重启后，都需要重新执行安装显卡驱动步骤。
 
 1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)获取VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传至“~/dependency/”目录，解压后获取显卡内核态驱动。
 
-    ```shell
+    ```bash
     cd ~/dependency/
     tar -zxvf VAGPU-A15-C-F-26.02.06.00.RC2.tgz
     ```
 
 2. 将驱动包里的固件拷贝到系统的“/lib/firmware/”目录。
 
-    ```shell
+    ```bash
     cd ~/dependency/VAGPU-A15-C-F-26.02.06.00.RC2/fw
     cp rgx* /lib/firmware/
     ```
@@ -294,37 +294,37 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     以DC1000/DC1000C为例，以下绑核方式仅作为参考，请依据实际情况做出调整。
 
-    ```shell
+    ```bash
     cd ~/dependency/VAGPU-A15-C-F-26.02.06.00.RC2/kmd/GUEST/openEuler-6.6.0+
     ```
 
     硬件配置方案二（鲲鹏920 7260处理器 + 4\*道客DC 1000）：
 
-    ```shell
+    ```bash
     insmod va_gpu.ko kworkerCores=0,0,1,1,32,32,33,33,64,64,65,65,96,96,97,97
     ```
 
     硬件配置方案三（鲲鹏920 7280Z处理器 + 8\*道客DC 1000 或 8\*道客DC1000C）：
 
-    ```shell
+    ```bash
     insmod va_gpu.ko kworkerCores=80,80,81,81,82,82,83,83,0,0,1,1,2,2,3,3,240,240,241,241,242,242,243,243,160,160,161,161,162,162,163,163
     ```
 
     硬件配置方案四（鲲鹏920 7260W处理器 + 8\*道客DC 1000）：
 
-    ```shell
+    ```bash
     insmod va_gpu.ko kworkerCores=64,64,65,65,66,66,67,67,0,0,1,1,2,2,3,3,192,192,193,193,194,194,195,195,128,128,129,129,130,130,131,131
     ```
 
 4. 等待脚本执行完成，查看内核日志。
 
-    ```shell
+    ```bash
     dmesg | grep VAGPU | grep version
     ```
 
     回显信息中显卡内核态驱动版本号和显卡固件版本号相同，如下内容，则表明显卡驱动安装完成。
 
-    ```shell
+    ```bash
     PVR_K:  28823: Meta firmware version: 1.18@6276027 build: release branch:  commit: 67e785a8 tag: VAGPU-A15-C-F-26.02.06.00.RC2
     ...
     ```
@@ -338,27 +338,27 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 >3. 新版本的DC驱动取消了va_gfx.ko和va_pci.ko, 合并为了va_gpu.ko, 新版的DC驱动只需要卸载va_gpu.ko即可。
 >
 >
-> ```shell
+> ```bash
 > rmmod va_gpu
 > ```
 >
 > 旧版驱动指令如下：
 >
-> ```shell
+> ```bash
 > rmmod va_gfx
 > rmmod va_pci 
 > ```
 
-#### 1.2.3 制作镜像<a name="ZH-CN_TOPIC_0000002549866429" id="制作镜像"></a>
+#### 制作镜像<a name="ZH-CN_TOPIC_0000002549866429" id="制作镜像"></a>
 
-##### 1.2.3.1 制作Kbox镜像<a name="ZH-CN_TOPIC_0000002549866417"></a>
+##### 制作Kbox镜像<a name="ZH-CN_TOPIC_0000002549866417"></a>
 
 制作视频流云手机镜像前需要根据本章节内容完成Kbox镜像的制作。
 
 1. 请参见[部署Kbox容器基础环境](#部署Kbox容器基础环境)获取Kbox容器启动依赖组件android.tar和Kbox-patches-AOSP15.zip，并上传至服务器的“/home/kbox_video”目录（本文以此目录作为示例，用户也可自行设置目录）。
 2. 解压Kbox-patches-AOSP15.zip，获取“deploy_scripts”路径下的3个组件android_kbox_aosp15.sh、base_box_aosp15.sh、hardware_bind.cfg， 并将其拷贝到“/home/kbox_video”目录，赋予文件权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
 
-    ```shell
+    ```bash
     unzip Kbox-patches-AOSP15.zip
     cp Kbox-patches-AOSP15/deploy_scripts/base_box_aosp15.sh /home/kbox_video/
     cp Kbox-patches-AOSP15/deploy_scripts/android_kbox_aosp15.sh /home/kbox_video/
@@ -373,7 +373,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
         镜像的名称和tag可以自行定义，格式为“{名称}:{tag}”，此处设置镜像名为kbox:demo。
 
-        ```shell
+        ```bash
         cd ~/dependency
         docker import android.tar kbox:demo
         ```
@@ -384,7 +384,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
-            ```shell
+            ```bash
             cd ~/dependency/deploy_scripts
             chmod +x make_image_aosp15.sh
             ./make_image_aosp15.sh kbox:demo kbox:origin
@@ -392,7 +392,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
         - 硬件配置方案二、三、四：
 
-            ```shell
+            ```bash
             cd ~/dependency/deploy_scripts
             chmod +x make_image_aosp15.sh
             ./make_image_aosp15.sh kbox:demo kbox:origin VAGPU-A15-C-F-26.02.06.00.RC2
@@ -405,27 +405,27 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 4. 查看Kbox镜像（kbox:origin）是否制作成功。
 
-    ```shell
+    ```bash
     docker images
     ```
 
     回显如下，表示镜像制作成功。
 
-    ```shell
+    ```bash
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     kbox          origin    d1f5cfd2e722    6 seconds ago    2.09GB
     ```
 
-##### 1.2.3.2 制作视频流云手机镜像<a name="ZH-CN_TOPIC_0000002518386578"></a>
+##### 制作视频流云手机镜像<a name="ZH-CN_TOPIC_0000002518386578"></a>
 
 获取视频流客户端tar包组件、视频流服务端tar包组件、视频流引擎二进制软件包和视频流NETINT编码卡tar包组件进行视频流云手机镜像的制作。
 
 **校验软件包完整性<a name="section1286473717216"></a>**
 
-1. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取CloudPhoneApk.tar.gz、DemoVideoEngine.tar.gz和BoostKit-boostcph-videoengine_\*_15.zip软件包，获取后将软件包上传至服务器的“/home/kbox_video”目录。
+1. 请参见[视频流引擎](#视频流引擎)获取CloudPhoneApk.tar.gz、DemoVideoEngine.tar.gz和BoostKit-boostcph-videoengine_\*_15.zip软件包，获取后将软件包上传至服务器的“/home/kbox_video”目录。
 2. 通过以下命令获取如下组件的sha256校验码。
 
-    ```shell
+    ```bash
     sha256sum DemoVideoEngine.tar.gz
     sha256sum CloudPhoneApk.tar.gz
     ```
@@ -434,7 +434,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     如果一致，说明获取的软件包完整，可以继续下一步操作，否则应该暂停部署，重新获取完整的软件包。
 
-4. （硬件配置方案一）使用硬件配置方案一时请参见[1.1.2.2-视频流引擎](#视频流引擎)获取NETINT-vXXX.tar.gz软件包，获取后将软件包上传至服务器的“/home/kbox_video”目录，并重命名为NETINT.tar.gz。
+4. （硬件配置方案一）使用硬件配置方案一时请参见[视频流引擎](#视频流引擎)获取NETINT-vXXX.tar.gz软件包，获取后将软件包上传至服务器的“/home/kbox_video”目录，并重命名为NETINT.tar.gz。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >
@@ -445,14 +445,14 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 1. 解压DemoVideoEngine.tar.gz软件包获取制作镜像的脚本，并赋予可执行权限。
     - 配置方案一：
 
-        ```shell
+        ```bash
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU Dockerfile_QuadraT2A make_image.sh
         chmod +x Dockerfile_NoVPU Dockerfile_QuadraT2A make_image.sh
         ```
 
     - 配置方案二、三、四：
 
-        ```shell
+        ```bash
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU  make_image.sh
         chmod +x Dockerfile_NoVPU  make_image.sh
         ```
@@ -460,36 +460,36 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 2. 制作视频流云手机镜像。镜像名称可以使用默认镜像名也可以自己指定。
     - 使用默认镜像名称，执行命令如下。Kbox基础云手机和视频流云手机默认镜像名称分别为kbox:latest和video:latest。
 
-        ```shell
+        ```bash
         ./make_image.sh
         ```
 
     - 如果镜像名称需要自定义，执行命令如下例所示。通过参数指定Kbox基础云手机和视频流云手机镜像名称，格式均为“{镜像名}:{tag}”，如下例所示kbox、video为镜像名，origin、latest为tag。
 
-        ```shell
+        ```bash
         ./make_image.sh kbox:origin video:latest
         ```
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
         >
-        >镜像名只可包含数字与小写字母，首字符应为小写字母，tag名只可包含数字与字母。若自定义修改了视频流云手机的镜像名称，请参见[1.2.6-制作基础数据卷](#制作基础数据卷)章节中将cfct_config配置文件中的视频流云手机镜像名更新为自定义的镜像名称。
+        >镜像名只可包含数字与小写字母，首字符应为小写字母，tag名只可包含数字与字母。若自定义修改了视频流云手机的镜像名称，请参见[制作基础数据卷](#制作基础数据卷)章节中将cfct_config配置文件中的视频流云手机镜像名更新为自定义的镜像名称。
         >执行该步骤后，回显中会出现多行linkerconfig告警，该告警不影响正常功能，可以忽略。
         >![](figures/zh-cn_image_0000002549866449.png)
 
 3. 查看视频流云手机镜像（video:latest）是否制作成功。
 
-    ```shell
+    ```bash
     docker images
     ```
 
     回显如下，表示镜像制作成功。
 
-    ```shell
+    ```bash
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     video         latest    40e5f42c17d9    6 seconds ago    2.11GB
     ```
 
-#### 1.2.4 设置cfct_config，hardware_bind.cfg配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002518386584"></a>
+#### 设置cfct_config，hardware_bind.cfg配置文件（配置方案一）<a name="ZH-CN_TOPIC_0000002518386584"></a>
 
 通过cfct_config，hardware_bind.cfg文件配置参数可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config，hardware_bind.cfg配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config，hardware_bind.cfg配置文件中的配置正确。
 
@@ -497,7 +497,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     tar -xvf DemoVideoEngine.tar.gz cfct_config
     chmod 644 cfct_config
@@ -524,13 +524,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 1. <a name="li1256022316361"></a>通过**nvme list**命令查看编解码卡芯片对应节点号。
 
-    ```shell
+    ```bash
     nvme list
     ```
 
     以下回显为NETINT编码芯片NVMe节点，该内容为回显示例，请以实际为准。
 
-    ```shell
+    ```bash
     Node          SN                   Model            Namespace Usage                    Format           FW Rev
     ------------- -------------------- ---------------- --------- ------------------------ ---------------- --------
     /dev/nvme0n1  Q2A325A11DC082-0454A QuadraT2A        1         8.59  TB /   8.59  TB    4 KiB +  0 B     48F6rKr1
@@ -541,13 +541,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     {index}为[1](#li1256022316361)回显信息所示的NVMe节点编号。例如/dev/nvme1n1，该节点{index}即为1。
 
-    ```shell
+    ```bash
     find /sys/devices/ -name nvme{index}
     ```
 
     回显如下，其中0000:05:00.0为该设备对应的busID：
 
-    ```shell
+    ```bash
     /sys/devices/pci0000:00/0000:00:0e.0/0000:05:00.0/nvme/nvme1
     /sys/devices/virtual/nvme-subsystem/nvme-subsys1/nvme1
     ```
@@ -556,13 +556,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     {busID}为上一步骤获取的bus号。以nvme1设备的回显为例，{busID}即为0000:05:00.0。
 
-    ```shell
+    ```bash
     lspci -vvvs {busID} | grep NUMA
     ```
 
     回显如下。
 
-    ```shell
+    ```bash
     NUMA node: 0
     ```
 
@@ -572,7 +572,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     字段中每个设备需添加两个节点。例如2号NVMe设备，需添加“/dev/nvme2”、“/dev/nvme2n1”两个节点。
 
-    ```shell
+    ```bash
     # NETINT编码卡设备节点
     NETINT0="/dev/nvme0,/dev/nvme0n1,/dev/nvme1,/dev/nvme1n1"
     NETINT1="/dev/nvme2,/dev/nvme2n1,/dev/nvme3,/dev/nvme3n1"
@@ -586,13 +586,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 1. <a name="li34656503552"></a>获取GPU渲染节点命令。
 
-    ```shell
+    ```bash
     ll /dev/dri/by-path/ | grep renderD
     ```
 
     回显示例如下。
 
-    ```shell
+    ```bash
     lrwxrwxrwx 1 root root 13 Oct 25 10:58 pci-0000:03:00.0-render -> ../renderD128
     lrwxrwxrwx 1 root root 13 Oct 25 10:58 pci-0000:83:00.0-render -> ../renderD129
     ```
@@ -601,19 +601,19 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 2. 查询NUMA节点命令。
 
-    ```shell
+    ```bash
     cat /sys/bus/pci/devices/0000\:XX\:00.0/numa_node 
     ```
 
     其中，指令中的“XX”应按[1](#li34656503552)中的实际回显IP地址进行修改。以回显renderD128为例，查询指令应为：
 
-    ```shell
+    ```bash
     cat /sys/bus/pci/devices/0000\:03\:00.0/numa_node
     ```
 
     回显如下所示。
 
-    ```shell
+    ```bash
     0
     ```
 
@@ -631,7 +631,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 1. 修改云手机启动配置文件cfct_config中“**ENABLE_RENDER_LAYER**”设置为1。
 2. 从软件包Kbox-patches-AOSP15.zip中复制kbox_render_accelerating_configuration.xml配置文件到启动路径/home/kbox_video/。
 
-    ```shell
+    ```bash
     cp /home/kbox_video/Kbox-patches-AOSP15/deploy_scripts/kbox_render_accelerating_configuration.xml /home/kbox_video/
     ```
 
@@ -643,7 +643,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 >- 宿主机上多容器共享一个着色器缓存路径，可以先启动一路云手机预收集应用尽可能完整的着色器，其他云手机通过将配置文件对应的应用设置为只读模式来使能ShaderCache功能，此时性能最佳。
 >- ShaderCache功能没有缓存淘汰机制，若是缓存文件系统存储已满或者游戏版本更新，为了避免着色器和二进制文件不能对应，请清理整个文件系统的缓存。
 
-#### 1.2.5 设置cfct_config，hardware_bind.cfg配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518386592"></a>
+#### 设置cfct_config，hardware_bind.cfg配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518386592"></a>
 
 通过设置cfct_config，hardware_bind.cfg配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config，hardware_bind.cfg配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config，hardware_bind.cfg配置文件中的配置正确。
 
@@ -651,7 +651,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 1. 解压cfct_config配置文件并设置文件权限，使文件拥有者有读写权限而其他属组用户和其他用户只有读权限。
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     tar -xvf DemoVideoEngine.tar.gz cfct_config
     chmod 644 cfct_config
@@ -673,13 +673,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
         以DC1000/DC1000C为例，查询服务器中道客DC1000/DC1000C信息。
 
-        ```shell
+        ```bash
         lspci -D | grep 0200
         ```
 
         回显如下所示，可知该服务器上只有一张道客DC1000，其中0000:04:00.0为busID。
 
-        ```shell
+        ```bash
         0000:04:00.0 3D controller: Device 1f4f:0200
         0000:04:00.1 3D controller: Device 1f4f:0200
         0000:04:00.2 3D controller: Device 1f4f:0200
@@ -690,19 +690,19 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
         查询该显卡所属的NUMA。
 
-        ```shell
+        ```bash
         lspci -vvvs {busID} | grep NUMA
         ```
 
         回显如下所示，说明该卡绑定在cpu的NUMA 0上。
 
-        ```shell
+        ```bash
         NUMA node: 0
         ```
 
 6. 如果需要使能图形加速层，请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
 
-#### 1.2.6 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518386594" id="制作基础数据卷"></a>
+#### 制作基础数据卷<a name="ZH-CN_TOPIC_0000002518386594" id="制作基础数据卷"></a>
 
 确认并根据需要调整默认的镜像名称和数据卷存放目录。删除或备份现有数据卷，解压并设置启动脚本权限，使用脚本启动云手机并预装应用，最后删除初始容器。
 
@@ -710,20 +710,20 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     默认镜像名称为video:latest，默认数据卷存放目录为“/home/mount”，可根据实际情况自行更改，修改方法为将“cfct_config”文件中“DOCKER_IMAGE”和“USERDATA”值调整为实际的名称或目录。
 
-    ```shell
+    ```bash
     DOCKER_IMAGE=video:latest
     USERDATA="/home/mount"
     ```
 
 2. 删除原有数据卷或备份到其他位置，其中{USERDATA}为[1](#li16219132415811)中的实际数据卷存放目录，若存在多个数据卷存放目录，则需要分别对每个数据卷存放目录进行本章节余下所有操作。
 
-    ```shell
+    ```bash
     rm -rf ${USERDATA}/data/android_base
     ```
 
 3. 从DemoVideoEngine.tar.gz中解压获取启动脚本cfct_video，并赋予权限，使文件拥有者有读、写、执行权限而属组用户和其他用户只有读和执行权限。
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     tar -xvf DemoVideoEngine.tar.gz cfct_video
     chmod 755 cfct_video
@@ -731,13 +731,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 4. 使用cfct_video脚本启动1路云手机。
 
-    ```shell
+    ```bash
     ./cfct_video start ${index}  
     ```
 
 5. 将所需的应用（例地铁跑酷等）预装到该云手机容器中，将android_${index}作为新数据卷，供启动视频流云手机时使用。
 
-    ```shell
+    ```bash
     cd ${USERDATA}/data/
     cp -rp android_${index} android_base
     ```
@@ -748,28 +748,28 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >将所需的应用（例如地铁跑酷等）预装到该云手机容器中，将android_${index}.img拷贝为android_base.img作为新数据卷。
     >
-    >```shell
+    >```bash
     >cd ${USERDATA}/img/
     >cp -rp android_${index}.img android_base.img
     >```
     >
     >在启动指定容器前手动拷贝android_base.img为相应容器编号。
     >
-    >```shell
+    >```bash
     >cd ${USERDATA}/img/
     >cp -rp android_base.img android_${index}.img
     >```
 
 6. 删除android_${index}容器。
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     ./cfct_video delete ${index}
     ```
 
-### 1.3 K8s集群下部署视频流云手机（配置方案二）<a name="ZH-CN_TOPIC_0000002518226646"></a>
+### K8s集群下部署视频流云手机（配置方案二）<a name="ZH-CN_TOPIC_0000002518226646"></a>
 
-#### 1.3.1 环境准备<a name="ZH-CN_TOPIC_0000002549866425"></a>
+#### 环境准备<a name="ZH-CN_TOPIC_0000002549866425"></a>
 
 视频流云手机支持使用Containerd启动，使用K8s集群管理。在K8s集群下部署视频流云手机时需准备至少2台服务器，1台作为master节点，1台或者多台作为工作节点。
 
@@ -787,9 +787,9 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 >- K8s是容器编排平台，其工作节点需实际运行云手机业务，在部署K8s前或重启节点后，需确保工作节点完成视频流云手机的环境部署，完成环境部署的校验方式可启动一个视频流云手机验证。
 >- K8s集群环境部署和部署镜像涉及从Docker镜像仓拉取镜像的操作，需确保部署的服务器网络环境能够从Docker镜像仓拉取镜像。
 
-#### 1.3.2 搭建k8s集群<a name="ZH-CN_TOPIC_0000002518386560"></a>
+#### 搭建k8s集群<a name="ZH-CN_TOPIC_0000002518386560"></a>
 
-##### 1.3.2.1 所有节点公共操作<a name="ZH-CN_TOPIC_0000002518386570"></a>
+##### 所有节点公共操作<a name="ZH-CN_TOPIC_0000002518386570"></a>
 
 在所有master和工作节点下完成K8s集群软件安装、Containerd配置以及其他相关操作。
 
@@ -799,14 +799,14 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     - 在master节点上将hostname修改为k8s-master。
 
-        ```shell
+        ```bash
         hostnamectl set-hostname k8s-master
         bash
         ```
 
     - 在工作节点上将hostname修改为k8s-slave1。
 
-        ```shell
+        ```bash
         hostnamectl set-hostname k8s-slave1
         bash
         ```
@@ -814,7 +814,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 2. 将所有服务器密码修改为相同的密码。
 3. 关闭防火墙。
 
-    ```shell
+    ```bash
     systemctl stop firewalld
     systemctl disable firewalld
     ```
@@ -822,19 +822,19 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 4. 关闭交换分区。
     - 单次生效，执行如下命令。
 
-        ```shell
+        ```bash
         swapoff -a   
         ```
 
     - 永久生效，在“fstab”文件中注释swap自动挂载。
 
-        ```shell
+        ```bash
         sed -i "/\/dev\/mapper\/openeuler-swap/ s|^|#|" /etc/fstab
         ```
 
 5. 配置安装K8s集群所需软件的源。
 
-    ```shell
+    ```bash
     touch /etc/yum.repos.d/kubernetes.repo
     cat >/etc/yum.repos.d/kubernetes.repo <<EOF
     [kubernetes]
@@ -848,7 +848,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 6. 安装K8s集群软件。
 
-    ```shell
+    ```bash
     yum install -y kubelet kubeadm kubectl kubernetes-cni --disableexcludes=kubernetes
     systemctl enable --now kubelet
     ```
@@ -856,7 +856,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 7. 请参见[（可选）部署Containerd环境](#部署Containerd环境)的[1](#部署Containerd环境1)至[3](#部署Containerd环境3)安装Containerd和runc组件。在完成Containerd和runc的组件安装后，工作节点需要额外执行[7](#部署Containerd环境7)进行docker服务的重启。
 8. 修改Containerd配置。
 
-    ```shell
+    ```bash
     mkdir -p /etc/containerd/
     cd /etc/containerd/
     containerd config default > /etc/containerd/config.toml
@@ -865,7 +865,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 9. 配置crictl，并重启containerd。
 
-    ```shell
+    ```bash
     echo "runtime-endpoint: unix:///run/containerd/containerd.sock" >> /etc/crictl.yaml
     echo "image-endpoint: unix:///run/containerd/containerd.sock" >> /etc/crictl.yaml
     echo "timeout: 10" >> /etc/crictl.yaml
@@ -875,14 +875,14 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 10. 安装yq工具，用于后续通过脚本动态调整yaml文件
 
-    ```shell
+    ```bash
     wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_arm64 --no-check-certificate -O /usr/local/bin/yq
     chmod +x /usr/local/bin/yq
     ```
 
 11. 配置网络转发。该步骤服务器重启后需重新执行。
 
-    ```shell
+    ```bash
     modprobe overlay
     modprobe br_netfilter
     modprobe xt_multiport
@@ -892,13 +892,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     sysctl -p /etc/sysctl.d/k8s.conf
     ```
 
-##### 1.3.2.2 master节点操作<a name="ZH-CN_TOPIC_0000002549746441"></a>
+##### master节点操作<a name="ZH-CN_TOPIC_0000002549746441"></a>
 
 在master节点上初始化集群。
 
 1. 下载必备镜像。
 
-    ```shell
+    ```bash
     kubeadm config images pull 
     ```
 
@@ -908,35 +908,35 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >国内网络环境需要配置镜像仓，例如：
     >
-    >```shell
+    >```bash
     >kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
     >```
 
 2. 修改containerd镜像配置，根据拉取的镜像中pause的版本更改config.toml的配置，查看pause镜像版本
 
-    ```shell
+    ```bash
     crictl images
     ```
 
     **图 1** 镜像拉取信息<a id="镜像拉取信息"></a>
 
-    ![](figures/镜像拉取信息.png)
+    ![](figures/image_pull_info.png)
 
     以[**图 1** 镜像拉取信息](#镜像拉取信息) 中registry.aliyuncs.com/google_containers/pause:3.9为例：
 
-    ```shell
+    ```bash
     sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
     ```
 
 3. 重启Containerd。
 
-    ```shell
+    ```bash
     systemctl restart containerd
     ```
 
 4. 集群初始化。
 
-    ```shell
+    ```bash
     kubeadm init --pod-network-cidr=10.244.0.0/16
     ```
 
@@ -946,7 +946,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >如果在下载镜像时配置了镜像仓，集群初始化也需要配置相同镜像仓，例如：
     >
-    >```shell
+    >```bash
     >kubeadm init --pod-network-cidr=10.244.0.0/16 --image-repository registry.aliyuncs.com/google_containers
     >```
 
@@ -956,7 +956,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     需执行在[**图 2** 集群初始化成功打印信息](#集群初始化成功打印信息) 中黄框信息命令配置集群，红框信息表示工作节点加入集群的token命令，请保存该段命令。
 
-    ```shell
+    ```bash
     rm -rf $HOME/.kube
     mkdir -p $HOME/.kube
     sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -967,7 +967,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >当在master节点上集群初始化失败后，需按照提示查找原因并进行重置，重置后重新执行初始化命令。重置命令如下。
     >
-    >```shell
+    >```bash
     >kubeadm reset
     >systemctl stop kubelet
     >rm -rf /var/lib/cni/
@@ -981,9 +981,9 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 5. 启动kube-flannel网络插件。
 
-    请参见[1.1.2.2-视频流引擎](#视频流引擎)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
+    请参见[视频流引擎](#视频流引擎)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
 
-    ```shell
+    ```bash
     cd /home/k8s
     tar -xvf DemoVideoEngine.tar.gz
     cd /home/k8s/k8s/script
@@ -994,7 +994,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     1. 查看当前节点的状态。
 
-        ```shell
+        ```bash
         kubectl get nodes -A -o wide
         ```
 
@@ -1002,7 +1002,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     2. 查看pod状态。
 
-        ```shell
+        ```bash
         kubectl get pod -A -o wide
         ```
 
@@ -1012,15 +1012,15 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >若查看当前节点的状态（STATUS）列是NotReady，及查看kubelet服务状态（systemctl status kubelet）时有明显报错（Network plugin returns error: cni plugin not initialized），此情况建议将集群重置并将服务器重启后重新初始化。
 
-##### 1.3.2.3 工作节点操作<a name="ZH-CN_TOPIC_0000002549746443" id="工作节点操作"></a>
+##### 工作节点操作<a name="ZH-CN_TOPIC_0000002549746443" id="工作节点操作"></a>
 
 将工作节点加入到集群中。
 
-请参见[1.1.2.2-视频流引擎](#视频流引擎)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
+请参见[视频流引擎](#视频流引擎)获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的“/home/k8s”目录。
 
 1. 容器存储隔离和大小设置。该步骤服务器重启后需重新执行。
 
-    ```shell
+    ```bash
     cd /home/k8s
     tar -xvf DemoVideoEngine.tar.gz k8s/
     cd /home/k8s/k8s/DevicesPlugin
@@ -1044,49 +1044,49 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
         
     创建100个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video1~video100。
         
-    ```shell
+    ```bash
     ./storage_manager.sh create 1 100 32
     ```
         
     创建100个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video1~video100。
         
-    ```shell
+    ```bash
     ./storage_manager.sh fcreate 1 100 32
     ```
         
     如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为默认的ext4，名称为video101~video120。
         
-    ```shell
+    ```bash
     ./storage_manager.sh create 101 120 32
     ```
 
     如果在此基础上，要增加20个存储大小为32GB的存储隔离数据卷，文件格式为f2fs，名称为video101~video120。
         
-    ```shell
+    ```bash
     ./storage_manager.sh fcreate 101 120 32
     ```
         
     删除名称为video1~video100数据卷。
         
-    ```shell
+    ```bash
     ./storage_manager.sh delete 1 100
     ```
         
     如果在此基础上，要删除名称为video101~video120这剩余20个数据卷。
         
-    ```shell
+    ```bash
     ./storage_manager.sh delete 101 120
     ```
         
     通过videobase.img为基础制作名为video1~video100的数据卷，文件格式为默认的ext4。
         
-    ```shell
+    ```bash
     ./storage_manager.sh create 1 100 /home/mount/img/videobase.img
     ```
 
     通过videobase.img为基础制作名为video1~video100的数据卷，文件格式为f2fs。
         
-    ```shell
+    ```bash
     ./storage_manager.sh fcreate 1 100 /home/mount/img/videobase.img
     ```
         
@@ -1098,7 +1098,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 2. 修改containerd镜像配置，根据master节点拉取的镜像中pause的版本更改config.toml的配置，以[**图 1** 镜像拉取信息](#镜像拉取信息) 中registry.aliyuncs.com/google_containers/pause:3.9为例
 
-    ```shell
+    ```bash
     sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
     ```
 
@@ -1106,7 +1106,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     例如：
 
-    ```shell
+    ```bash
     kubeadm join xx.xx.xx.xx:xxxx --token 7h0hpd.1av4cdcb4fb0on5x \
     --discovery-token-ca-cert-hash sha256:357c6d1dbefe6f7adf3c80987a90d3765965b1c43e1757b655ea8586c8ade10a
     ```
@@ -1117,13 +1117,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >- xx.xx.xx.xx为IP地址，xxxx为映射端口号。
     >- 加入集群的**token**命令若失效可重新在master节点执行如下命令重新生成。
     >
-    >    ```shell
+    >    ```bash
     >    kubeadm token create --print-join-command
     >    ```
 
 4. 拷贝master节点的kube config文件到工作节点
 
-    ```shell
+    ```bash
     rm -rf $HOME/.kube
     mkdir -p $HOME/.kube
     sudo scp root@xxx.xxx.xxx.xxx:$HOME/.kube/config $HOME/.kube/config
@@ -1133,7 +1133,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 5. 查看集群状态。
     1. 需在master节点查看状态。
 
-        ```shell
+        ```bash
         kubectl get nodes -A -o wide
         ```
 
@@ -1141,7 +1141,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     2. 需在master节点查看pod状态。
 
-        ```shell
+        ```bash
         kubectl get pod -A -o wide
         ```
 
@@ -1149,7 +1149,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     3. 在此工作节点查看容器状态。
 
-        ```shell
+        ```bash
         crictl ps
         ```
 
@@ -1158,10 +1158,10 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 6. （可选）配置NUMA亲和。
     1. 编译环境配置和插件时需要保证Golang版本1.25或以上，请参见[安装Golang](#安装Golang)进行安装。
 
-    2. 请参见[1.1.2.2-视频流引擎](#视频流引擎)获取K8s NUMA亲和插件软件包topo-affinity-plugin-master.zip，获取后将软件包上传至服务器的“/home/k8s”目录。
+    2. 请参见[视频流引擎](#视频流引擎)获取K8s NUMA亲和插件软件包topo-affinity-plugin-master.zip，获取后将软件包上传至服务器的“/home/k8s”目录。
     3. 解压topo-affinity-plugin-master.zip，进入软件包目录并编译插件。
 
-        ```shell
+        ```bash
         unzip topo-affinity-plugin-master.zip
         cd topo-affinity-plugin-master
         go mod tidy
@@ -1172,13 +1172,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     4. 安装containerd运行时的版本。
 
-        ```shell
+        ```bash
         make install-service-containerd
         ```
 
         如果需要修改启动参数，则在源代码目录下的“hack/kunpeng-tap.service.containerd”文件的“ExecStart=”下进行修改，用户可根据需求修改相关参数后启动。参数说明请参见[**表 2** 启动参数说明](#启动参数说明)。
 
-        ```shell
+        ```bash
         [Unit]
         Description=Kunpeng Topology-Affinity Plugin Service
         After=network.target
@@ -1204,7 +1204,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     5. 启动TAP服务。
 
-        ```shell
+        ```bash
         make start-service
         ```
 
@@ -1216,19 +1216,19 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
             初始配置内容如下：
 
-            ```shell
+            ```bash
             KUBELET_KUBEADM_ARGS="... --container-runtime=remote --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock ..."
             ```
 
             修改为如下内容：
 
-            ```shell
+            ```bash
             KUBELET_KUBEADM_ARGS="... --container-runtime=remote --container-runtime-endpoint=unix:///var/run/kunpeng/tap-runtime-proxy.sock ..."
             ```
 
     7. 重新启动kubelet并查看，并查看是否重启成功。
 
-        ```shell
+        ```bash
         systemctl daemon-reload
         systemctl restart kubelet
         systemctl status kubelet
@@ -1239,7 +1239,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
         >卸载TAP插件步骤：
         >- “/var/lib/kubelet/kubeadm-flags.env”文件为初始配置内容并重启kubelet。
         >
-        >    ```shell
+        >    ```bash
         >    systemctl daemon-reload
         >    systemctl restart kubelet
         >    systemctl status kubelet
@@ -1247,14 +1247,14 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
         >
         >- 进入“topology-affinity-plugin”源码目录，并执行插件卸载命令。
         >
-        >    ```shell
+        >    ```bash
         >    cd /home/k8s/topo-affinity-plugin-master
         >    make uninstall-service
         >    ```
 
-#### 1.3.3 部署镜像<a name="ZH-CN_TOPIC_0000002549746431"></a>
+#### 部署镜像<a name="ZH-CN_TOPIC_0000002549746431"></a>
 
-##### 1.3.3.1 部署道客设备插件镜像<a name="ZH-CN_TOPIC_0000002518386564" id="部署道客设备插件镜像"></a>
+##### 部署道客设备插件镜像<a name="ZH-CN_TOPIC_0000002518386564" id="部署道客设备插件镜像"></a>
 
 在所有工作节点完成部署道客设备插件镜像的操作。
 
@@ -1269,7 +1269,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 >
 >道客设备插件版本支持v0.0.5版本及以上。
 
-##### 1.3.3.2 部署设备插件镜像<a name="ZH-CN_TOPIC_0000002518226672"></a>
+##### 部署设备插件镜像<a name="ZH-CN_TOPIC_0000002518226672"></a>
 
 在所有工作节点完成部署设备插件镜像的操作。
 
@@ -1277,7 +1277,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 2. 下载device-plugin的代码并切换到指定commitid。
 
-    ```shell
+    ```bash
     git clone https://github.com/everpeace/k8s-host-device-plugin.git
     cd  k8s-host-device-plugin
     git checkout 15e0a180dd4fbea7ea09b563b9e0713d3b90579a
@@ -1287,21 +1287,21 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     将device-plugin.patch（此文件位于DemoVideoEngine.tar.gz中的“k8s/DevicesPlugin”文件夹下）拷贝到“k8s-host-device-plugin”目录。
 
-    ```shell
+    ```bash
     cd k8s-host-device-plugin
     patch -p1 < device-plugin.patch
     ```
 
 4. 编译device-plugin，修改go语言的镜像仓库地址。
 
-    ```shell
+    ```bash
     export GOPROXY=https://goproxy.cn
     go build
     ```
 
 5. 制作镜像。
 
-    ```shell
+    ```bash
     docker build -f Dockerfile  -t k8s-hostdev-plugin:0.1 .
     docker save k8s-hostdev-plugin:0.1 -o k8s-hostdev-plugin.tar
     ```
@@ -1310,17 +1310,17 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     将k8s-hostdev-plugin.tar拷贝到所有工作节点，然后导入镜像。
 
-    ```shell
+    ```bash
     ctr -n k8s.io images import k8s-hostdev-plugin.tar
     ```
 
-##### 1.3.3.3 部署视频流镜像<a name="ZH-CN_TOPIC_0000002549746415"></a>
+##### 部署视频流镜像<a name="ZH-CN_TOPIC_0000002549746415"></a>
 
 选择一台工作节点机器进行镜像制作，然后在所有工作节点导入并完成部署视频流镜像操作。
 
 1. 将DemoVideoEngine.tar.gz软件包放在指定目录下，假设DemoVideoEngine.tar.gz已经放在“/home/k8s”目录下。
 
-    ```shell
+    ```bash
     mkdir -p /home/k8s/tmp 
     cd /home/k8s/tmp 
     tar -xvf  ../DemoVideoEngine.tar.gz
@@ -1332,7 +1332,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     1. 打开“default.prop”文件。
 
-        ```shell
+        ```bash
         vi vendor/default.prop
         ```
 
@@ -1340,28 +1340,28 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     3. 按“Esc”键，输入**:wq!**并按“Enter”键保存并退出编辑。
     4. 重新制作DemoVideoEngine.tar.gz软件包。
 
-        ```shell
+        ```bash
         tar -zcvf DemoVideoEngine.tar.gz  *
         ```
 
-3. 使用[2](#部署视频流镜像2)制作的DemoVideoEngine.tar.gz，请参见[1.2.3-制作镜像](#制作镜像)重新制作视频流镜像。例如：制作出的镜像名为video:version。
+3. 使用[2](#部署视频流镜像2)制作的DemoVideoEngine.tar.gz，请参见[制作镜像](#制作镜像)重新制作视频流镜像。例如：制作出的镜像名为video:version。
 4. 使用**docker**导出视频流镜像。
 
-    ```shell
+    ```bash
     docker save video:version -o video.tar
     ```
 
 5. 将视频流镜像拷贝至所有工作节点并导入。
 
-    ```shell
+    ```bash
     ctr -n k8s.io images import video.tar
     ```
 
     **crictl images**命令可查看镜像名称和tag，例如：镜像名为docker.io/library/video:version。
 
-## 2 虚拟机环境部署<a name="ZH-CN_TOPIC_0000002550093497"></a>
+## 虚拟机环境部署<a name="ZH-CN_TOPIC_0000002550093497"></a>
 
-### 2.1 环境要求<a name="ZH-CN_TOPIC_0000002518653638"></a>
+### 环境要求<a name="ZH-CN_TOPIC_0000002518653638"></a>
 
 建议在鲲鹏920 7280Z处理器上部署视频流引擎的虚拟机环境，部署前，请确保您的硬件环境满足要求。
 
@@ -1427,9 +1427,9 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 |--|--|--|--|
 |Kbox-patches-AOSP15|虚拟机内核补丁|Kbox-patches-AOSP15/deploy_scripts/vm_deploy/patchForKernel/general.patch|[获取链接](https://gitcode.com/boostkit/Kbox-patches/tree/AOSP15)|
 
-### 2.2 宿主机环境配置<a name="ZH-CN_TOPIC_0000002518493742"></a>
+### 宿主机环境配置<a name="ZH-CN_TOPIC_0000002518493742"></a>
 
-#### 2.2.1 修改BIOS配置<a name="ZH-CN_TOPIC_0000002549973491"></a>
+#### 修改BIOS配置<a name="ZH-CN_TOPIC_0000002549973491"></a>
 
 通过在宿主机中修改BIOS相关配置选项，使宿主机达到部署虚拟机环境的最优条件。
 
@@ -1444,34 +1444,34 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 |性能策略|Advanced > Power And Performance Configuration > Power Policy|Performance|
 |GICv4.1|Advanced >Processor Configuration >GIC Version|4.1|
 
-#### 2.2.2 修改内核模块<a name="ZH-CN_TOPIC_0000002550093499"></a>
+#### 修改内核模块<a name="ZH-CN_TOPIC_0000002550093499"></a>
 
 使用道客DC 1000硬件环境时，在虚拟机内安装驱动需要对宿主机内核做适配，请提前获取内核源码。
 
 1. 请参见[**表 4** 宿主机操作系统要求](#宿主机操作系统要求)获取内核源码。
 2. 解压内核源码并进入根目录。
 
-    ```shell
+    ```bash
     unzip kernel-6.6.0-72.0.0.zip
     cd kernel-6.6.0-72.0.0
     ```
 
 3. 抑制本地版本号。
 
-    ```shell
+    ```bash
     touch .scmversion
     ```
 
-4. 请参见[2.1-软件要求](#软件要求)，获取内核patch文件general.patch。
+4. 请参见[软件要求](#软件要求)，获取内核patch文件general.patch。
 5. 在内核源码目录“kernel-6.6.0-72.0.0”下，合入patch。
 
-    ```shell
+    ```bash
     patch -p1 < general.patch
     ```
 
 6. 生成.config文件到源码目录。
 
-    ```shell
+    ```bash
     cp /boot/config-`uname -r` .config
     make menuconfig
     ```
@@ -1508,7 +1508,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 10. 安装依赖并启用LXCFS服务。若命令分多行，需要在行末加上“\\”符号。
 
-    ```shell
+    ```bash
     yum install -y dwarves dpkg dpkg-devel openssl openssl-devel ncurses ncurses-devel bison flex bc libdrm build elfutils-libelf-devel docker lxc lxcfs lxcfs-tools git tar patch make gcc
     systemctl start lxcfs
     systemctl enable lxcfs
@@ -1518,55 +1518,55 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 11. 编译内核代码。
 
-    ```shell
+    ```bash
     make -j72
     ```
 
 12. 安装新内核。
 
-    ```shell
+    ```bash
     make modules_install 
     make install
     ```
 
 13. 设置启动内核。
 
-    ```shell
+    ```bash
     grub2-set-default 'openEuler (6.6.0-patched-vm) 24.03 (LTS-SP1)'
     ```
 
 14. 重启服务器。
 
-    ```shell
+    ```bash
     reboot
     ```
 
 15. 重启完毕后检查内核是否切换为“6.6.0-patched-vm”。
 
-    ```shell
+    ```bash
     uname -r
     ```
 
-#### 2.2.3 安装虚拟机相关依赖<a name="ZH-CN_TOPIC_0000002518493744"></a>
+#### 安装虚拟机相关依赖<a name="ZH-CN_TOPIC_0000002518493744"></a>
 
 在宿主机中安装虚拟机环境所需的依赖。
 
 1. 安装libvirt和virt-manager及相关依赖。
 
-    ```shell
+    ```bash
     yum install libvirt virt-manager edk2-aarch64 sshpass mesa-libGLES-devel mesa-dri-drivers virt-install -y
     systemctl start libvirtd
     ```
 
 2. 安装x11 server用于支持virt-manager图形化管理界面。
 
-    ```shell
+    ```bash
     yum install xorg-x11-server
     ```
 
 3. 打开sshd配置文件。
 
-    ```shell
+    ```bash
     vi /etc/ssh/sshd_config
     ```
 
@@ -1574,7 +1574,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 5. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存退出文件。
 6. 重启sshd服务。
 
-    ```shell
+    ```bash
     systemctl restart sshd
     ```
 
@@ -1582,13 +1582,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >若后续**virt-manager**指令报错则需要重新打开一个ssh界面。
 
-#### 2.2.4 查询GPU卡PCIe节点信息<a name="ZH-CN_TOPIC_0000002549973493"></a>
+#### 查询GPU卡PCIe节点信息<a name="ZH-CN_TOPIC_0000002549973493"></a>
 
 鲲鹏920 7280Z处理器有4个NUMA，总共会创建4个虚拟机，虚拟机所使用的资源分别对应宿主机的4个NUMA。因每个NUMA上都会有两张GPU卡，为避免产生跨NUMA访问而造成性能损失，在创建虚拟机前，需要确认每个虚拟机使用GPU卡的PCIe节点，用于添加设备。
 
 1. <a name="zh-cn_topic_0000002518185514_p644mcpsimp"></a>确认瀚博GPU卡所有PCIe节点的ID。
 
-    ```shell
+    ```bash
     lspci | grep 0200
     ```
 
@@ -1596,19 +1596,19 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 2. 确认所对应的NUMA，此返回顺序符合[1](#zh-cn_topic_0000002518185514_p644mcpsimp)中的ID顺序，即可确定每个GPU卡节点所对应的NUMA ID。下图所示回显信息仅为示例，如17:00.0~18:00.3（即前八个节点）对应宿主机的NUMA 1。
 
-    ```shell
+    ```bash
     lspci -vvv -d 1f4f:0200 | grep NUMA
     ```
 
     ![](figures/zh-cn_image_0000002518185706.png)
 
-#### 2.2.5 配置宿主机网络<a name="ZH-CN_TOPIC_0000002550093501" id="配置宿主机网络"></a>
+#### 配置宿主机网络<a name="ZH-CN_TOPIC_0000002550093501" id="配置宿主机网络"></a>
 
 创建宿主机网络设备，支撑后续虚拟机网络配置。
 
 1. <a name="配置宿主机网络1"></a>查看宿主机使用的网卡。
 
-    ```shell
+    ```bash
     ip a
     ```
 
@@ -1616,7 +1616,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 2. 查看该网卡的PCI节点。
 
-    ```shell
+    ```bash
     lshw -c network -businfo
     ```
 
@@ -1624,7 +1624,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 3. <a name="配置宿主机网络3"></a>查看该网卡最多支持的VF网卡数量。
 
-    ```shell
+    ```bash
     cat /sys/bus/pci/devices/0000:75:00.0/sriov_totalvfs
     ```
 
@@ -1635,7 +1635,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 4. 生成VF虚拟网卡。
 
-    ```shell
+    ```bash
     echo 4 > /sys/bus/pci/devices/0000:75:00.0/sriov_numvfs
     ```
 
@@ -1645,7 +1645,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 5. <a name="配置宿主机网络5"></a>查看生成的VF节点。
 
-    ```shell
+    ```bash
     lshw -c network -businfo
     ```
 
@@ -1661,7 +1661,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 6. <a name="zh-cn_topic_0000002549705251_li9644845123820"></a>查看当前网卡配置文件并备份。
 
-    ```shell
+    ```bash
     cd /etc/sysconfig/network-scripts/
     cp ifcfg-eno5 ifcfg-eno5.bak
     ```
@@ -1670,7 +1670,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     将网卡配置文件的IPADDR，NETMASK，GATEWAY，DNS全部移植到网桥配置文件中。
 
-    ```shell
+    ```bash
     touch ifcfg-br0
     cat >ifcfg-br0 <<EOF
     TYPE=Bridge
@@ -1693,7 +1693,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 8. 重启libvirtd和NetworkManager服务并重启服务器。
 
-    ```shell
+    ```bash
     systemctl restart libvirtd
     systemctl restart NetworkManager
     reboot
@@ -1701,7 +1701,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 9. 查看br0网桥是否成功创建。
 
-    ```shell
+    ```bash
     ip a
     ```
 
@@ -1709,15 +1709,15 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     ![](figures/zh-cn_image_0000002518345676.png)
 
-### 2.3 虚拟机配置<a name="ZH-CN_TOPIC_0000002518653642"></a>
+### 虚拟机配置<a name="ZH-CN_TOPIC_0000002518653642"></a>
 
-#### 2.3.1 使用virt-manager创建虚拟机<a name="ZH-CN_TOPIC_0000002518493746"></a>
+#### 使用virt-manager创建虚拟机<a name="ZH-CN_TOPIC_0000002518493746"></a>
 
 总共需要创建4个虚拟机，需要顺序操作执行4次该章节的操作步骤。
 
 1. 下载openEuler提供的qcow镜像。
 
-    ```shell
+    ```bash
     wget https://mirrors.yacloud.net/openeuler/openEuler-24.03-LTS-SP1/virtual_machine_img/aarch64/openEuler-24.03-LTS-SP1-aarch64.qcow2.xz
     ```
 
@@ -1730,13 +1730,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 2. <a name="zh-cn_topic_0000002518345430_li1862819192232"></a>解压qcow压缩包。
 
-    ```shell
+    ```bash
     unxz -k openEuler-24.03-LTS-SP1-aarch64.qcow2.xz
     ```
 
 3. 打开virt-manager，选择红框所示按钮打开虚拟机配置界面。
 
-    ```shell
+    ```bash
     virt-manager
     ```
 
@@ -1762,13 +1762,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >内存180000仅供参考，用户根据实际情况分配即可。
 
-7. 名称分别起名为vm_X_（X = 0,1,2,3） ，如果[2.2.5-配置宿主机网络](#配置宿主机网络)中宿主机配置了网桥模式，此处Network selection应选择Bridge device...，然后填入网桥名称，最后单击“Finish”。
+7. 名称分别起名为vm_X_（X = 0,1,2,3） ，如果[配置宿主机网络](#配置宿主机网络)中宿主机配置了网桥模式，此处Network selection应选择Bridge device...，然后填入网桥名称，最后单击“Finish”。
 
     ![](figures/zh-cn_image_0000002549705529.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >
-    >如果[2.2.5-配置宿主机网络](#配置宿主机网络)选择了SR-IOV虚拟网卡直通配置，则无需考虑Network selection，后续会将其删除。
+    >如果[配置宿主机网络](#配置宿主机网络)选择了SR-IOV虚拟网卡直通配置，则无需考虑Network selection，后续会将其删除。
 
 8. 系统会自动启动，单击如下按钮，进入外设的配置界面。
 
@@ -1781,7 +1781,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     1. 添加外设1：“Add Hardware \> Input \> USB Keyboard \> Finish”
     2. 添加外设2：“Add Hardware \> Input \> Virtio Tablet \> Finish”
     3. 添加GPU卡PCIe设备（每个虚拟机需要2张GPU卡，4个虚拟机 x 2张GPU卡 = 8个节点，因此总共需要添加8个GPU卡节点） :  “Add Hardware \> PCI Host Device  \> 选择对应节点 \> Finish”
-    4. 如果[2.2.5-配置宿主机网络](#配置宿主机网络)中采用了SR-IOV方案，添加虚拟网卡到虚拟机：“Add Hardware \> PCI Host Device  \> 选择对应节点 \> Finish”。网卡节点请参见[2.2.5-5](#配置宿主机网络5)回显信息。
+    4. 如果[配置宿主机网络](#配置宿主机网络)中采用了SR-IOV方案，添加虚拟网卡到虚拟机：“Add Hardware \> PCI Host Device  \> 选择对应节点 \> Finish”。网卡节点请参见[配置宿主机网络](#配置宿主机网络5)回显信息。
 
         ![](figures/zh-cn_image_0000002549705511.png)
 
@@ -1801,7 +1801,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     1. 挂载磁盘分区进入虚拟机内部作为数据盘。
 
-        ```shell
+        ```bash
         lsblk
         ```
 
@@ -1835,19 +1835,19 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >默认root账号的密码是**openEuler12\#$**，使用该密码登录后可以选择修改密码。
 
-    ```shell
+    ```bash
     passwd root
     ```
 
-#### 2.3.2 配置虚拟机网络<a name="ZH-CN_TOPIC_0000002550093503"></a>
+#### 配置虚拟机网络<a name="ZH-CN_TOPIC_0000002550093503"></a>
 
-##### 2.3.2.1 配置虚拟机网卡配置文件<a name="ZH-CN_TOPIC_0000002518653644"></a>
+##### 配置虚拟机网卡配置文件<a name="ZH-CN_TOPIC_0000002518653644"></a>
 
 通过配置虚拟机内部的网卡文件以启用网络。若采用SR-IOV方案，则需依照本章步骤手动生成该配置文件。
 
 1. 查看虚拟机网卡名称。
 
-    ```shell
+    ```bash
     ip a
     ```
 
@@ -1857,7 +1857,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     - 如果在[配置宿主机网络](#配置宿主机网络)章节中选择了SR-IOV网卡直通，则执行如下指令，生成网络配置文件。
 
-        ```shell
+        ```bash
         nmcli connection add ifname enp1s0 con-name enp1s0 type ethernet
         cd /etc/sysconfig/network-scripts/
         ls
@@ -1877,7 +1877,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     虚拟机和宿主机共用NETMASK，GATEWAY，DNS。IPADDR可自定义，需要和网络管理员确认，请不要与局域网内其他的IP地址冲突。
 
-    ```shell
+    ```bash
     vi ifcfg-enp1s0
     ```
 
@@ -1889,13 +1889,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 4. 重新配置网络连接，建议在virt-manager的Shell中执行，通过SSH远程操作会因为网络配置修改断连。
 
-    ```shell
+    ```bash
     virt-manager
     ```
 
     ![](figures/zh-cn_image_0000002518345624.png)
 
-    ```shell
+    ```bash
     nmcli connection reload
     nmcli connection down enp1s0
     nmcli connection up enp1s0
@@ -1905,7 +1905,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 5. ping网关，SSH远程连接验证配置是否生效，网关的IP地址在br0网桥的配置文件中可以找到。
 
-    ```shell
+    ```bash
     ping 192.168.20.1
     ```
 
@@ -1913,7 +1913,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     同一网段内任意服务器**ssh**连接虚拟机。
 
-    ```shell
+    ```bash
     ssh IP地址
     ```
 
@@ -1923,7 +1923,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >至此已经实现了虚拟机在服务器局域网内的数据通信，如果希望在外网访问局域网内的该虚拟机，请联系网络管理员按照局域网内服务器的相关配置对虚拟机进行配置即可。
 
-### 2.4 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002550093505"></a>
+### 视频流启动环境配置（虚拟机）<a name="ZH-CN_TOPIC_0000002550093505"></a>
 
 在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改hardware_bind.cfg配置文件，以便正确设置视频流的启动与运行参数。
 
@@ -1935,13 +1935,13 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 2. 修改hardware_bind.cfg脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
     1. 打开hardware_bind.cfg脚本。
 
-        ```shell
+        ```bash
         vim hardware_bind.cfg
         ```
 
     2. 按“i”进入编辑模式，增加以下内容。
 
-        ```shell
+        ```bash
         VIDEO_CPU_MAP_80CORE_MODE0=(
         "${MODE0_CPUS0_320[0]}"
         "${MODE0_CPUS0_320[1]}"
