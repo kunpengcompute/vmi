@@ -2018,7 +2018,7 @@ enum DecodeEventIndex : uint32_t {
 };
 ```
 
-INDEX_PIC_INFO_CHANGE 表示解码图像大小变化，此时在 void * 参数处挂载 struct PicInfoParams * 类型，具体定义请参见 [SetDecodeParams](#setdecodeparams)。
+INDEX_PIC_INFO_CHANGE 表示解码图像大小变化，此时在 `void *` 参数处挂载 `struct PicInfoParams * `类型，具体定义请参见 [SetDecodeParams](#setdecodeparams)。
 
 **返回值说明**
 
@@ -2045,7 +2045,7 @@ INDEX_PIC_INFO_CHANGE 表示解码图像大小变化，此时在 void * 参数�
 |--|--|--|--|
 | copyFrame | 输入 | std::function<uint32_t(uint8_t*, uint8_t*, const PicInfoParams &, uint32_t)> | 设置将解码好的一帧数据拷贝到输出 Buffer 的钩子函数（用于屏蔽输出接口格式差异） |
 
-该回调中，第一个 uint8_t* 表示解码完成后数据地址，第二个 uint8_t* 表示拷贝的目标地址，需要填入 [RetrieveFrameData](#retrieveframedata) 中输入的 Buffer 地址，第三个 const PicInfoParams & 参数表示图像宽高信息，具体定义请参见 [SetDecodeParams](#setdecodeparams)；第四个 uint32_t 参数表示输出缓冲区最大长度，需要填入 [RetrieveFrameData](#retrieveframedata) 中输入的最大缓冲区大小，该回调返回值为处理数据的实际大小。
+该回调中，第一个` uint8_t* `表示解码完成后数据地址，第二个 `uint8_t* `表示拷贝的目标地址，需要填入 [RetrieveFrameData](#retrieveframedata) 中输入的 Buffer 地址，第三个 const PicInfoParams & 参数表示图像宽高信息，具体定义请参见 [SetDecodeParams](#setdecodeparams)；第四个 uint32_t 参数表示输出缓冲区最大长度，需要填入 [RetrieveFrameData](#retrieveframedata) 中输入的最大缓冲区大小，该回调返回值为处理数据的实际大小。
 
 **返回值说明**
 
