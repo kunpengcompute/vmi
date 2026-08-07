@@ -368,21 +368,7 @@ container_restart() {
             sed -i 's/\(.*\)ro.hardware.vsyncoffset=\(.*\)/ro.hardware.vsyncoffset='"${vsync_offset}"'/g' $tmp_default_prop
         fi
 
-        local cmd="$RUNTIME_CMD exec -i $container_name mount -o rw,remount / > /dev/null 2>&1 &"
-        bb_log_info "$cmd"
-        local result=$(bb_wait_cmd "${cmd}")
-        if [ ${result} -eq -1 ]; then
-            bb_exit_error "${container_name} wait_cmd timeout, exit!"
-        fi
-        cmd="chmod 755 $tmp_default_prop"
-        bb_log_info "$cmd"
-        $cmd
-        cmd="$RUNTIME_CMD exec -i $container_name mount -o ro,remount / > /dev/null 2>&1 &"
-        bb_log_info "$cmd"
-        local result=$(bb_wait_cmd "${cmd}")
-        if [ ${result} -eq -1 ]; then
-            bb_log_info "${container_name} wait_cmd timeout, exit!"
-        fi
+        chmod 755 $tmp_default_prop
     fi
 
     bb_prepare_media_codecs_for_amd $container_name
