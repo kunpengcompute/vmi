@@ -1,4 +1,4 @@
-# vim CloudPhone15
+# vmi CloudPhone15
 
 - [Release Notes](./release_notes.md)
 - [Feature Guide](./feature_guide.md)
