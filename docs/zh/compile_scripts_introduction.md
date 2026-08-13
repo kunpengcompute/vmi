@@ -1,8 +1,8 @@
-# auto_install_tools.sh脚本
+# auto_install_tools.sh 脚本
 
 ## 使用命令
 
-```shell
+```bash
 ./scripts/auto_install_tools.sh ${安装目录}
 source ~/.bashrc
 ```
@@ -22,7 +22,7 @@ source ~/.bashrc
 若文件已存在，则不会重复下载，因此用户也可以提前创建${安装目录}并下载好下列文件，脚本将跳过下载文件的步骤。
 
 |软件名|版本|下载地址|
-|------|---|--------|
+| :---: | :---: | :---: |
 |Android NDK|r25b|<https://dl.google.com/android/repository/android-ndk-r25b-linux.zip>|
 |Android SDK Build Tools|33.0.1|<https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip>|
 |gradle|8.4.0|<https://mirrors.cloud.tencent.com/gradle/gradle-8.4-bin.zip>|
@@ -40,9 +40,9 @@ source ~/.bashrc
 
 在~/.bashrc中删除之前设置的环境变量。
 
-auto_install_tools.sh设置的环境变量，以 **#tools_env_start:** 标志开头，以 **#tools_env_end:** 标志结尾。此函数将在~/.bashrc中查找这两个标志，并删除中间的内容。
+auto_install_tools.sh设置的环境变量，以**#tools_env_start:**标志开头，以**#tools_env_end:**标志结尾。此函数将在~/.bashrc中查找这两个标志，并删除中间的内容。
 
-若发现 **#tools_env_end:** 出现在 **#tools_env_start:** 之前，则脚本无法自动删除，请用户手动解决冲突。
+若发现**#tools_env_end:**出现在**#tools_env_start:**之前，则脚本无法自动删除，请用户手动解决冲突。
 
 ### CheckEnvConflict()
 
@@ -50,7 +50,7 @@ auto_install_tools.sh设置的环境变量，以 **#tools_env_start:** 标志开
 
 需要设定的环境变量有：
 
-```shell
+```bash
 USER_LOCAL_PATH
 JAVA_HOME
 AN_JDKPATH
@@ -67,9 +67,9 @@ ANDROID_NDK
 
 ### SetEnvConfig()
 
-在~/.bashrc中添加环境变量，以 **#tools_env_start:** 标志开头，以 **#tools_env_end:** 标志结尾。
+在~/.bashrc中添加环境变量，以**#tools_env_start:**标志开头，以**#tools_env_end:**标志结尾。
 
-# download_open_source.sh脚本
+# download_open_source.sh 脚本
 
 ## 总体流程
 
@@ -79,13 +79,13 @@ ANDROID_NDK
 
 <a id="opensource_repo.conf"></a>
 
-## opensource_repo.conf文件介绍
+## opensource_repo.conf 文件介绍
 
 opensource_repo.conf是用于记录开源软件下载链接和解压方式的文件，每次download_open_source.sh执行时都会调用opensource_repo.conf。
 
 若需要在opensource_repo.conf中添加新的开源软件下载链接，则需要根据格式设定4个参数，各个参数解释如下：
 
-```shell
+```bash
 参数[0]：下载链接，使用wget下载。
 参数[1]：下载文件名。
 参数[2]：文件解压目录，下载文件会解压到unpack_open_source/${参数[2]}中，注：解压目录还会受到参数[3]影响。
@@ -113,6 +113,6 @@ wget下载文件时，会自动将文件重命名为下载链接最后一个"/"�
 
 ### unpack_source()
 
-解压压缩包到unpack_open_source目录中，解压路径受opensource_repo.conf中设置的参数\[2\]和参数\[3\]影响，具体可以参考 [opensource_repo.conf文件介绍](#opensource_repo.conf) 章节。
+解压压缩包到unpack_open_source目录中，解压路径受opensource_repo.conf中设置的参数\[2\]和参数\[3\]影响，具体可以参考[opensource_repo.conf 文件介绍](#opensource_repo.conf)章节。
 
 另外，脚本会自动判断解压后的文件是否只有一个文件夹，如果解压后只有一个文件夹，则判定为压缩包内嵌套了一层多余的文件夹，则将此文件夹中的所有文件移动至上一级，并删除此文件夹。
