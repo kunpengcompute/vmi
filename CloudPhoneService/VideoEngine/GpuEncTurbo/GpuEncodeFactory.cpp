@@ -61,13 +61,15 @@ namespace {
             if (m_createFunc == nullptr) {
                 return nullptr;
             }
-            if (useCount < MAX_INSTANCE_PER_LIB) {
-                ++useCount;
-            } else {
+            if (useCount >= MAX_INSTANCE_PER_LIB) {
                 ERR("Create too many module for %d, max: %u", type, MAX_INSTANCE_PER_LIB);
                 return nullptr;
             }
-            return m_createFunc(type);
+            void *instance = m_createFunc(type);
+            if (instance != nullptr) {
+                ++useCount;
+            }
+            return instance;
         }
 
         void Unref()

@@ -162,7 +162,7 @@ int32_t CpuEncoder::ReleaseBuffer(GpuEncoderBufferT &buffer)
     }
     m_buffers.erase(buffer);
     if (buffer->memType == MEM_TYPE_HOST) {
-        delete buffer->data;
+        delete[] buffer->data;
     }
     delete buffer;
     buffer = nullptr;
