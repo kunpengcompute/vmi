@@ -375,7 +375,7 @@ Log management provides log search and log dump capabilities. Log management rec
 
 ### 4.2 Basic Cloud Phone Maintenance Tool<a name="ZH-CN_TOPIC_0000002518345458"></a>
 
-The Kbox cloud phone container provides Kbox_maintainer, an O&M tool. This tool supports functions such as log collection, resource check, and fault rectification to improve the testability, serviceability, and maintainability of the cloud phone prototype. For details about how to obtain and use this tool, see "Maintenance Tool" in [Kbox Cloud Phone Container Routine Maintenance](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_32_0028.html).
+The Kbox cloud phone container provides Kbox_maintainer, an O&M tool. This tool supports functions such as log collection, resource check, and fault rectification to improve the testability, serviceability, and maintainability of the cloud phone prototype. For details about how to obtain and use this tool, see "Maintenance Tool" in [Kbox Cloud Phone Container Routine Maintenance](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc/docs/en/routine_maintenance.md#d44-maintenance-tool).
 
 ### 4.3 Querying Video Stream Cloud Phone Logs<a name="ZH-CN_TOPIC_0000002518185612"></a>
 

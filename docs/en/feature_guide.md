@@ -1,6 +1,6 @@
 # Feature Guide
 
-## 1 Introduction
+## Introduction
 
 The video stream engine is mainly applied to cloud phones. The cloud phone solution implemented based on the video stream engine technology is called video stream cloud phone. This document describes the basic concepts of the video stream engine and provides guidance for setting up the environment and using the video stream engine.
 
@@ -10,7 +10,7 @@ The device-cloud synergy engine consists of the device side and the cloud side. 
 
 The device-cloud synergy engine consists of the video stream engine and instruction stream engine. This document describes the video stream engine.
 
-## 2 Software Architecture
+## Software Architecture
 
 This section describes the context logical structure and modules (including module functions) of the video stream cloud phone.
 
@@ -30,7 +30,7 @@ The video stream engine consists of the server and client. The server provides f
 | Touch data distribution         | Injects touch data into the Android cloud phone on the server.                         |
 | External APIs| External APIs of the video stream engine server.                             |
 
-## 3 Specifications
+## Specifications
 
 [**Table 1**](#video-stream-cloud-phone-specifications) lists the specifications of the video stream cloud phone on Kunpeng servers.
 
@@ -49,17 +49,11 @@ The video stream engine consists of the server and client. The server provides f
 >
 > The memory and drives can be flexibly configured based on the device specifications.
 
-## 4 Reference Standards and Protocols
+## Reference Standards and Protocols
 
 None
 
-## 5 Availability
-
-Version requirements:
-
-For details about the software and hardware versions required for deploying the video stream cloud phone, see [Version Mapping](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine/kunpengcps_video_0003.html).
-
-## 6 Constraints
+## Constraints
 
 You need to fully understand the following constraints on the hardware, system, and applications when you deploy and use the video stream cloud phone.
 
@@ -118,12 +112,12 @@ You need to fully understand the following constraints on the hardware, system, 
 > echo 3 > /proc/sys/vm/drop_caches
 > ```
 
-## 7 Application Scenarios
+## Application Scenarios
 
 The video stream engine is an important component of Kunpeng BoostKit for Cloud Phone and one of the solutions for implementing device-cloud synergy on Android OSs. The video stream solution has advantages such as good compatibility with cloud applications, low requirements on device hardware, mature technologies, and stable network bandwidth. Therefore, the video stream cloud phone is the mainstream solution.
 
 The main application scenarios of video stream cloud phones include cloud phones, cloud gaming, and mobile office.
 
-## 8 Principles
+## Principles
 
 The design of the video stream cloud phone is to divide the video stream engine into the video stream engine server and the video stream engine client. The server obtains and encodes image data, and the client decodes and plays video data. In some scenarios, functions such as obtaining and injecting user touch data, and obtaining and playing audio data are also supported.

@@ -53,12 +53,6 @@
 
 无
 
-## 可获得性
-
-版本支持：
-
-完整部署视频流云手机所需的软件/硬件配套，请参见《[版本配套表](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcps_video_0003.html)》。
-
 ## 约束与限制
 
 视频流云手机部署和使用时在硬件、系统和应用等方面存在一些约束和限制条件，您需要充分了解这些条件，以便在后续部署或使用过程中参考。

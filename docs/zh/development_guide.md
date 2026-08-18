@@ -110,7 +110,7 @@
 > [!WARNING]注意
 >
 > - 用户可以根据需求选择文件存放目录。
-> - 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html)》。
+> - 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/install_guide.md#d11-%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82)》。
 
 1. 将VideoEngine.tar.gz放至“/home/VideoEngine/Cloud”目录下。
 2. 解压视频流引擎服务端开发包。
@@ -878,7 +878,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 #### 编码参数推荐搭配<a name="ZH-CN_TOPIC_0000002549705815"></a>
 
-编码参数与视频流云手机运行的硬件环境相关，硬件环境请参见《[视频流引擎 特性指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html)》“软件部署”中的“硬件环境”章节。
+编码参数与视频流云手机运行的硬件环境相关，硬件环境请参见《[视频流引擎 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/install_guide.md#d1-%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2)》“软件部署”中的“硬件环境”章节。
 
 **硬件配置方案一<a name="section1175422174614"></a>**
 
