@@ -110,7 +110,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 | :---: | :---: | :---: | :---: |
 |Containerd|v1.7.14|Containerd是一个容器运行时。|Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service)|
 |runc|v1.1.12|runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。|[获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64)|
-|/rCNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|[获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
+|CNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|[获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
 |nerdctl|v1.7.5|nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。|[获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz)|
 | Golang | v1.25 | Golang是一个系统级编程语言，用于管理和生成NRI插件| [获取链接](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
 
@@ -1076,7 +1076,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
         **表2**启动参数说明<a id="启动参数说明"></a>
 
         |参数名称|参数描述|默认值|说明|
-| :---: | :---: | :---: | :---: |
+        | :---: | :---: | :---: | :---: |
         |container-runtime-mode|插件对接的容器运行时，对应集群运行时设置Docker或Containerd。|Containerd|依照K8s集群使用的容器运行时决定。|
         |resource-policy|容器资源的优化策略，目前支持numa-aware和topology-aware。numa-aware策略支持Burstable类型容器进行CPU的NUMA亲和。topology-aware策略提供Socket、Die、NUMA等拓扑层次的CPU亲和，支持内存、GPU的优化配置。|topology-aware|依照需求进行选择。|
         |v|日志信息等级，调整范围2至5。|2|等级越高，日志输出越详细。|
@@ -1090,7 +1090,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
         启动成功后回显信息中输出的Status为active。
 
     6. 修改并重启Kubelet。
-        1. 重启前先需确保该节点上未部署容器。
+        1. 重启前需确保该节点上未部署容器。
         2. 修改kubelet参数配置文件“/var/lib/kubelet/kubeadm-flags.env”。
 
             初始配置内容如下：

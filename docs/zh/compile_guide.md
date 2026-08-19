@@ -114,7 +114,7 @@ sudo apt install -y expect
 
 ### 编译源码
 
-进入安卓源码目录，执行如下编译指令。
+进入Android源码目录，执行如下编译指令。
 
 ```bash
 cd ~/ARMNative/aosp11
