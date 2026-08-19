@@ -34,7 +34,7 @@ For details, see [**Table 1** Hardware configuration schemes for deploying the K
 
 ##### 1.1.2.1 Kbox<a name="ZH-CN_TOPIC_0000002549826303"></a>
 
-For details about the software environment for deploying the Kbox cloud phone container, see "Software Deployment > Preparing the Environment > Software Environment" in [Kbox Cloud Phone Container Feature Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0131.html).
+For details about the software environment for deploying the Kbox cloud phone container, see "Software Deployment > Preparing the Environment > Software Environment" in [Kbox Cloud Phone Container Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d22-software-environment).
 
 ##### 1.1.2.2 Video Stream Engine<a name="ZH-CN_TOPIC_0000002518346424" id="video-stream-engine"></a>
 
@@ -84,7 +84,7 @@ To prevent software packages from being maliciously tampered with during transfe
 
 The BIOS version of the specified server has restrictions on the DIMM insertion method. Before configuring the BIOS, ensure that the DIMM insertion method is correct. Then, configure MISC, performance, and memory options according to the hardware configuration scheme to improve server performance.
 
-For details, see "Software Deployment > Configuring the BIOS" in [Kbox Cloud Phone Container Feature Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0167.html).
+For details, see "Software Deployment > Configuring the BIOS" in [Kbox Cloud Phone Container Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d4-configuring-the-bios).
 
 - **[(Configuration Scheme 1, Optional) Upgrading the NVMe Firmware](https://gitcode.com/boostkit/Kbox/blob/AOSP11/docs/en/install_guide.md#upgrading-the-nvme-firmware)**
 
@@ -92,7 +92,7 @@ For details, see "Software Deployment > Configuring the BIOS" in [Kbox Cloud Pho
 
 ##### 1.2.1.2 Deploying the Basic Environment for the Kbox Container<a name="ZH-CN_TOPIC_0000002518186516" id="deploying-the-basic-environment-for-the-kbox-container"></a>
 
-For details about how to deploy a Kbox cloud phone container, see "Software Deployment" in [Kbox Cloud Phone Container Feature Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0130.html). Perform all operations before section "Starting and Uninstalling a Cloud Phone Instance" in this chapter.
+For details about how to deploy a Kbox cloud phone container, see "Software Deployment" in [Kbox Cloud Phone Container Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d21-hardware-environment). Perform all operations before section "Starting and Uninstalling a Cloud Phone Instance" in this chapter.
 
 ##### 1.2.1.3 (Optional) Deploying the Containerd Environment<a name="ZH-CN_TOPIC_0000002549826283" id="deploying-the-containerd-environment"></a>
 
@@ -2027,11 +2027,11 @@ Modify the VM NIC configuration file to enable network communication for the VM.
 
 When deploying the cloud phone container environment and video stream container in the VM environment, you need to adjust the `cfct_video` and `cfct_config` files based on the number of CPU and GPU cores of the VM.
 
-Deploy the cloud phone container environment on the VM and run video stream cloud phones. For details, see [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0130.html) in the *Kbox Cloud Phone Container Feature Guide* and [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html) in the *Video Stream Engine Feature Guide*.
+Deploy the cloud phone container environment on the VM and run video stream cloud phones. For details, see [Hardware Environment](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d21-hardware-environment) in the *Kbox Cloud Phone Container Installation Guide* and [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md) in the *Video Stream Engine Installation Guide*.
 
 The specific steps are as follows:
 
-1. Extract the `cfct_video` and `cfct_config` files. For details, see [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html) in the *Video Stream Engine Feature Guide*.
+1. Extract the `cfct_video` and `cfct_config` files. For details, see [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md) in the *Video Stream Engine Installation Guide*.
 2. Modify the `cfct_config` file to adapt to the VM that uses 80 CPU cores and 4 GPU nodes.
     1. Open the `cfct_config` file.
 
