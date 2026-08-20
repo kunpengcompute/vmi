@@ -1,5 +1,7 @@
 # Video Stream Introduction<a name="ZH-CN_TOPIC_0000002550291729"></a>
 
+English | [简体中文](./README.md)
+
 ## Project Description<a name="ZH-CN_TOPIC_0000002518611972"></a>
 
 ### Overview<a name="ZH-CN_TOPIC_0000002518771870"></a>
