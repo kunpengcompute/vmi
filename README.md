@@ -1,5 +1,7 @@
 # 视频流介绍<a name="ZH-CN_TOPIC_0000002518224780"></a>
 
+简体中文 | [English](./README_EN.md)
+
 ## 项目简介<a name="ZH-CN_TOPIC_0000002550235025"></a>
 
 ### 简介<a name="ZH-CN_TOPIC_0000002518384706"></a>
