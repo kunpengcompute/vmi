@@ -55,30 +55,31 @@
 
     ```bash
     cd /home/kbox_video/
-    ./cfct_video start ${index1} 
+    ./cfct_video start ${index1} ${index2}
     ```
+
+    上述命令中`${index1}`与`${index2}`为设备号，其中`${index2}`可缺省。启动脚本使用示例：
+
+    - 启动一个编号为1的视频流云手机。
+
+        ```bash
+        ./cfct_video start 1
+        ```
+
+    - 启动编号为1~5的五个视频流云手机。
+
+        ```bash
+        ./cfct_video start 1 5
+        ```
     
-    上述命令中 `${index1}` 为启动实例的编号。启动一个编号为1的视频流云手机示例：
-
-    ```bash
-    ./cfct_video start 1
-    ```
-
-    >![](public_sys-resources/icon-note.gif) **说明：** 
+    > ![](public_sys-resources/icon-note.gif)说明
     >
-    >启动容器的过程中可能会出现“writing syncT "procError"、exec /system/bin/chmod: no such file、/system/bin/getprop:no such file”等类似报错，该报错不影响正常功能，忽略即可。
-    >若需要启动多路，则使用如下命令。
+    >使用NFS挂载启动时，将start命令替换成nstart，例：
     >
     >```bash
-    >./cfct_video start ${start_index} ${end_index}
+    >./cfct_video nstart 1 5
     >```
-    > 
-    >若需要使用NFS挂载启动视频流云手机，将start改成nstart，例：
-    >
-    >```bash
-    >./cfct_video nstart ${start_index} ${end_index}
-    >```
-    >
+
 5. <a name="li3304181302311"></a>查看基于Docker容器运行时的视频流云手机。
 
     ```bash
@@ -91,7 +92,7 @@
 
     确认所启动的容器存在，且状态正常。
 
-6. 确认基于Docker容器运行时的视频流云手机是否启动成功，其中 **`${index}`** 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， **`${index}`** 即为35。
+6. 确认基于Docker容器运行时的视频流云手机是否启动成功，其中 `${index}` 为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如 android_35， `${index}` 即为35。
 
     ```bash
     docker exec -it android_${index} sh 
@@ -138,23 +139,23 @@
 
 #### APK方式访问<a name="ZH-CN_TOPIC_0000002518226758"></a>
 
-若使用默认方式启动视频流云手机时，可以通过apk方式访问云手机。
+若使用默认方式启动视频流云手机时，可以通过APK方式访问云手机。
 
 1. 解压CloudPhoneApk.tar.gz。
 2. 在Android手机上安装CloudPhone.apk。
-3. （可选）点击右上角齿轮，进入设置页。
+3. （可选）单击右上角齿轮，进入设置页。
 
     ![](figures/zh-cn_image_0000002518386702.png)
 
-4. 返回至主页面，自上而下依次输入服务器IP地址、**`${port}`**，双击“开始连接”即可访问云侧的视频流云手机，如下图所示。
+4. 返回至主页面，自上而下依次输入服务器IP地址、`${port}`，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
 
-    **`${port}`** 默认值为 8000 + **`${index}`**。
+    `${port}` 默认值为 8000 + `${index}`。
 
     ![](figures/zh-cn_image_0000002549866551.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >
-    >- 每个视频流云手机实例需要设置端口 **`${port}`** ，部署时可进入cfct_video脚本设置合适的 **`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >- 每个视频流云手机实例需要设置端口 `${port}` ，部署时可进入cfct_video脚本设置合适的 `${port}`，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
     >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位Android系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
@@ -162,12 +163,16 @@
 
 通过CloudPhone.apk可以动态修改云手机运行时的视频编码、音频播放编码参数。
 
-1. 连接云手机后，点击屏幕上的齿轮按钮。
+1. 连接云手机前，进入设置页，默认使能自适应分辨率开关。
 
     ![](figures/zh-cn_image_0000002549746563.png)
 
-2. 设置视频编码参数。
-    1. 点击图中视频图标。
+2. 连接云手机后，单击屏幕上的齿轮按钮。
+
+    ![](figures/zh-cn_image_0000002549746563.png)
+
+3. 设置视频编码参数。
+    1. 单击图中视频图标。
 
         ![](figures/zh-cn_image_0000002518386708.png)
 
@@ -177,14 +182,14 @@
 
         ![](figures/zh-cn_image_0000002549866555.png)
 
-    3. 设置完成后，点击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
+    3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
         >
-        >启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。
+        >如果不使能自适应分辨率，启动后需在容器内通过**setprop**命令更改对应属性，属性描述请参见[启动脚本配置项](#启动脚本配置项)章节的视频流引擎属性配置字段描述表。如果要改变自适应分辨率的宽高，建议同步修改cfct_config文件中屏幕像素密度以达到最佳显示效果。
 
-3. 设置音频播放编码参数。
-    1. 点击图中音频图标。
+4. 设置音频播放编码参数。
+    1. 单击图中音频图标。
 
         ![](figures/zh-cn_image_0000002518226794.png)
 
@@ -194,27 +199,39 @@
 
         ![](figures/zh-cn_image_0000002518386706.png)
 
-    3. 设置完成后，点击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
+    3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
 ### 重启视频流云手机实例<a name="ZH-CN_TOPIC_0000002518226762"></a>
 
 使用cfct_video脚本重启视频流云手机实例。
 
-重启编号为 `${index1}` 的视频流云手机。
+- 重启编号为 `${index1}` 的视频流云手机。
 
-```bash
-./cfct_video restart ${index1}
-```
+    ```bash
+    ./cfct_video restart ${index1}
+    ```
+
+- 重启编号为 `${index1}`~`${index2}` 的所有视频流云手机。
+
+    ```bash
+    ./cfct_video restart ${index1} ${index2}
+    ```
 
 ### 删除视频流云手机实例<a name="ZH-CN_TOPIC_0000002549866515"></a>
 
 使用cfct_video脚本删除视频流云手机实例。
 
-删除编号为 `${index1}` 的视频流云手机。
+- 删除编号为 `${index1}` 的视频流云手机。
 
-```bash
-./cfct_video delete ${index1}
-```
+    ```bash
+    ./cfct_video delete ${index1}
+    ```
+
+- 删除编号为 `${index1}`~`${index2}` 的所有视频流云手机。
+
+    ```bash
+    ./cfct_video delete ${index1} ${index2}
+    ```
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -289,7 +306,7 @@
     kubectl get pods -A
     ```
 
-    期望是以va-device-plugin-daemonset开头的pod名称，其状态（STATUS）列都是Running状态。
+    预期结果为以va-device-plugin-daemonset开头的Pod名称，其状态（STATUS）列都是Running状态。
 
 ### 启动设备插件<a name="ZH-CN_TOPIC_0000002518226764"></a>
 
@@ -313,7 +330,7 @@
     kubectl get pods -A
     ```
 
-    期望是以k8s-host-device开头的pod名称，其状态（STATUS）列都是Running状态。
+    预期结果为以k8s-host-device开头的Pod名称，其状态（STATUS）列都是Running状态。
 
 ### 运行hook脚本<a name="ZH-CN_TOPIC_0000002549866525"></a>
 
@@ -465,7 +482,7 @@
     kubectl get pods -o wide
     ```
 
-    期望对应以video开头的pod名称其状态（STATUS）列都是Running。
+    预期结果为以video开头的Pod名称其状态（STATUS）列都是Running。
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >
@@ -730,9 +747,9 @@ cd /home/k8s/k8s/script
 
 ##### 具体步骤<a name="ZH-CN_TOPIC_000000254983255011"></a>
 
-   当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改。
+当前第三方检测应用一般通过读取scaling_cur_freq和cpuinfo_cur_freq这两个文件来获取当前设备的cpu运行频率，为了提高云机设备的仿真能力，这两个文件都要进行修改。
 
-   在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限。
+1. 在修改前先确保相关路径有写入权限，在容器内输入如下命令查看相关路径的权限。
 
    ```bash
    ls -ld /sys/devices/system/cpu/cpu${需要查询权限的cpu的编号}/cpufreq/scaling_cur_freq
@@ -746,19 +763,19 @@ cd /home/k8s/k8s/script
 
    如果没有 w（如 -r--r--r--），说明它是只读的，此时权限不足，无法直接写入。则输入如下命令新增权限。
 
-在容器内输入如下命令给scaling_cur_freq添加写入（w）权限。
+   在容器内输入如下命令给scaling_cur_freq添加写入（w）权限。
 
-```bash
-chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
-```
+   ```bash
+   chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/scaling_cur_freq
+   ```
 
-在容器内输入如下命令给cpuinfo_cur_freq添加写入（w）权限。
+   在容器内输入如下命令给cpuinfo_cur_freq添加写入（w）权限。
 
-```bash
-chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
-```
+   ```bash
+   chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufreq/cpuinfo_cur_freq
+   ```
 
-   随后在容器内输入如下命令读取cpu所支持的频率列表。
+2. 随后在容器内输入如下命令读取cpu所支持的频率列表。
 
    ```bash
    cat /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/scaling_available_frequencies
@@ -774,7 +791,7 @@ chmod u+w /sys/devices/system/cpu/cpu${需要新增权限的cpu的编号}/cpufre
    echo ${预期修改的值} > /sys/devices/system/cpu/cpu${准备进行频率修改的cpu的编号}/cpufreq/cpuinfo_cur_freq
    ```
 
-   如果容器重启，那么之前的修改值会失效，CPU频率值会恢复默认。
+3. 如果容器重启，那么之前的修改值会失效，CPU频率值会恢复默认。
 
    要实现cpu频率的动态调节，可以将如下shell命令直接复制粘贴到容器内任意路径中执行，即可在如“手机设备信息大全”这样的第三方应用中观察到cpu频率的动态变化，此处的“sleep 1”表示每隔1s变化一次，此处的“1”可以修改为其他时间值，FREQS数组里存放的是CPU频率的可能值，CPU_ID存放的是预期进行修改的CPU的编号，这三个值可以根据实际需求进行修改。
 
