@@ -2029,11 +2029,11 @@ cfct_config配置文件配置项和配置方法如下所示。
 
 在搭建好的虚拟机环境中部署云手机容器环境和视频流容器时，需要根据虚拟机内部CPU以及GPU核数对cfct_video和cfct_config文件做相应调整和修改视频流启动和配置文件。
 
-请参见《Kbox云手机容器 特性指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc/kunpengcpskbox_20_0130.html)”以及《视频流引擎 特性指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
+请参见《Kbox云手机容器 安装指南》的“[部署说明](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md)”以及《视频流引擎 安装指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/install_guide.md#d1-%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
 
 具体操作步骤如下所示：
 
-1. 请参见《视频流引擎 特性指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine/kunpengcpsvideo_20_0048.html)”解压缩出cfct_video和cfct_config文件。
+1. 请参见《视频流引擎 安装指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/install_guide.md#d1-%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2)”解压缩出cfct_video和cfct_config文件。
 2. 修改cfct_config脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
     1. 打开cfct_config脚本。
 
