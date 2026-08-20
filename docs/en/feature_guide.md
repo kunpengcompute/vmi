@@ -48,13 +48,7 @@ The video stream engine consists of the server and client. The server provides f
 >
 > The memory and drives can be flexibly configured based on the device specifications.
 
-## 4 Availability
-
-Version requirements:
-
-For details about the software and hardware versions required for deploying the video stream cloud phone, see [Version Mapping (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcps_video_0003.html).
-
-## 5 Constraints
+## 4 Constraints
 
 You need to fully understand the following constraints on the hardware, system, and applications when you deploy and use the video stream cloud phone.
 
@@ -115,12 +109,12 @@ You need to fully understand the following constraints on the hardware, system, 
 > echo 3 > /proc/sys/vm/drop_caches
 > ```
 
-## 7 Application Scenarios
+## 5 Application Scenarios
 
 The video stream engine is an important component of Kunpeng BoostKit for Cloud Phone and one of the solutions for implementing device-cloud synergy on Android OSs. The video stream solution has advantages such as good compatibility with cloud applications, low requirements on device hardware, mature technologies, and stable network bandwidth. Therefore, the video stream cloud phone is the mainstream solution.
 
 The main application scenarios of video stream cloud phones include cloud phones, cloud gaming, and mobile office.
 
-## 8 Principles
+## 6 Principles
 
 The design of the video stream cloud phone is to divide the video stream engine into the video stream engine server and the video stream engine client. The server obtains and encodes image data, and the client decodes and plays video data. In some scenarios, functions such as obtaining and injecting user touch data, and obtaining and playing audio data are also supported.

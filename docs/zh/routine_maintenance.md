@@ -376,7 +376,7 @@ docker stats
 
 ### 4.2 基础云手机维护工具<a name="ZH-CN_TOPIC_0000002518346404"></a>
 
-Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含日志收集、资源检查、故障恢复等功能，提升云手机原型的可测试性、可服务性、可维护性。该工具的获取和使用方法请参见《[Kbox云手机容器 例行维护（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_32_0028.html)》的“维护工具”章节。
+Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含日志收集、资源检查、故障恢复等功能，提升云手机原型的可测试性、可服务性、可维护性。该工具的获取和使用方法请参见《[Kbox云手机容器 例行维护（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc_ad15/docs/zh/routine_maintenance.md#d44-%E7%BB%B4%E6%8A%A4%E5%B7%A5%E5%85%B7)》的“维护工具”章节。
 
 ### 4.3 视频流云手机查询日志操作<a name="ZH-CN_TOPIC_0000002549826255"></a>
 

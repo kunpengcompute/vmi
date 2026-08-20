@@ -110,7 +110,7 @@ This document describes how to compile the server software based on the x86_64 s
 >![](public_sys-resources/icon-notice.gif) **NOTICE**
 >
 >- You can customize a directory for storing the package.
->- For details about the hardware requirements and deployment process of the server debugging environment, refer to [Video Stream Engine Feature Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html).
+>- For details about the hardware requirements and deployment process of the server debugging environment, refer to [Video Stream Engine installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md).
 
 1. Save the `VideoEngine.tar.gz` package to the `/home/VideoEngine/Cloud` directory.
 2. Decompress the development package of the video stream engine server.
@@ -337,7 +337,7 @@ const char \*GetVersion\(\)
 
 Data type: char \*
 
-A return value example is provided in the "Querying Component Version Information" section in [Video Stream Engine Feature Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0065.html).
+A return value example is provided in the "Querying Component Version Information" section in [Video Stream Engine User Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/user_guide.md#d12-querying-component-version-information).
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
@@ -882,7 +882,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 #### 5.6.2 Recommended Encoding Parameters<a name="ZH-CN_TOPIC_0000002549706129"></a>
 
-The encoding parameters are related to the hardware environment of the video stream cloud phone. For details about the hardware environment, see "Software Deployment > Environment Requirements > "Hardware Environment" in [Video Stream Engine Feature Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html).
+The encoding parameters are related to the hardware environment of the video stream cloud phone. For details about the hardware environment, see "Software Deployment > Environment Requirements > "Hardware Environment" in [Video Stream Engine installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md).
 
 **Hardware Configuration Scheme 1<a name="section1175422174614"></a>**
 
