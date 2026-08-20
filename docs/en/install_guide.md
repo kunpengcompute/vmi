@@ -34,7 +34,7 @@ For details, see [**Table 1** Hardware configuration schemes for deploying the K
 
 ##### 1.1.2.1 Kbox<a name="ZH-CN_TOPIC_0000002549866441"></a>
 
-For details about the software environment for deploying the Kbox cloud phone container, see "Software Deployment > Preparing the Environment > Software Environment" in [Kbox Cloud Phone Container Feature Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html).
+For details about the software environment for deploying the Kbox cloud phone container, see "Software Deployment > Preparing the Environment > Software Environment" in [Kbox Cloud Phone Container Installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d22-software-environment).
 
 ##### 1.1.2.2 Video Stream Engine<a name="ZH-CN_TOPIC_0000002549746419" id="video-stream-engine"></a>
 
@@ -83,7 +83,7 @@ To prevent software packages from being maliciously tampered with during transfe
 
 The BIOS version of the specified server has restrictions on the DIMM insertion method. Before configuring the BIOS, ensure that the DIMM insertion method is correct. Then, configure MISC, performance, and memory options according to the hardware configuration scheme to improve server performance.
 
-For details, see "Software Deployment > Configuring the BIOS" in [Kbox Cloud Phone Container Feature Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0167.html).
+For details, see "Software Deployment > Configuring the BIOS" in [Kbox Cloud Phone Container Installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d4-configuring-the-bios).
 
 ##### 1.2.1.2 (Configuration Scheme 1, Optional) Upgrading the NVMe Firmware<a name="ZH-CN_TOPIC_0000002518226644"></a>
 
@@ -143,7 +143,7 @@ find /sys -name power_dpm_force_performance_level | xargs -I {} sh -c "echo high
 
 ##### 1.2.1.4 Deploying the Basic Environment for the Kbox Container<a name="ZH-CN_TOPIC_0000002549746421" id="deploying-the-basic-environment-for-the-kbox-container"></a>
 
-For details about how to deploy a Kbox cloud phone container, see "Software Deployment" in [Kbox Cloud Phone Container Feature Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0130.html). Perform all operations before section "Starting and Uninstalling a Cloud Phone Instance" in this chapter.
+For details about how to deploy a Kbox cloud phone container, see "Software Deployment" in [Kbox Cloud Phone Container Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d21-hardware-environment). Perform all operations before section "Starting and Uninstalling a Cloud Phone Instance" in this chapter.
 
 ##### 1.2.1.5 (Optional) Deploying the Containerd Environment<a name="ZH-CN_TOPIC_0000002549866409" id="deploying-the-containerd-environment"></a>
 
@@ -249,7 +249,7 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
 You need to install the GPU driver each time the server is restarted if you use hardware configuration scheme 2/3/4.
 
-1. Obtain `VAGPU-25.03.01.01-RC13-A15.tgz` according to [Software Environment](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html), upload it to the `~/dependency/` directory, and decompress it to obtain the kernel-space GPU driver.
+1. Obtain `VAGPU-25.03.01.01-RC13-A15.tgz` according to [Software Environment](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d22-software-environment), upload it to the `~/dependency/` directory, and decompress it to obtain the kernel-space GPU driver.
 
     ```shell
     cd ~/dependency/
@@ -273,7 +273,7 @@ You need to install the GPU driver each time the server is restarted if you use 
 
     The GPU driver starts a kworker process for each GPU node. A single DaoCloud DC1000 card has four nodes. To improve the performance of kworker processes, you are advised to use the `kworkerCores` parameter to bind kworker processes to CPU cores. Each value of the `kworkerCores` parameter indicates a core bound to the kworker process of the corresponding GPU node.
 
-    When binding GPU driver processes to CPU cores, **ensure that the CPU cores bound to the kworker processes and GPU rendering nodes belong to the same CPU socket**. For details about how to query the CPU socket to which a GPU rendering node belongs, see [Determining the GPU Topology](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0170.html).
+    When binding GPU driver processes to CPU cores, **ensure that the CPU cores bound to the kworker processes and GPU rendering nodes belong to the same CPU socket**. For details about how to query the CPU socket to which a GPU rendering node belongs, see [Determining the GPU Topology](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d81-determining-the-gpu-topology).
 
     The following core binding methods are for reference only. You can make adjustments based on actual circumstances.
 
@@ -1232,7 +1232,7 @@ Deploy the DaoCloud device plugin image on all worker nodes.
 
 DaoCloud provides this plugin. This document applies to plugin version v0.0.5. Obtain related installation documents and software packages, and deploy the DaoCloud device plugin according to the documents.
 
-1. Obtain the `VAGPU-25.03.01.01-RC13-A15.tgz` GPU driver package according to "Software Deployment > Preparing the Environment" in [Kbox Cloud Phone Container Feature Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html). Decompress the package to obtain the `k8s-v0.0.5-1.tar.gz` package.
+1. Obtain the `VAGPU-25.03.01.01-RC13-A15.tgz` GPU driver package according to "Software Environment" in [Kbox Cloud Phone Container Installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d22-software-environment). Decompress the package to obtain the `k8s-v0.0.5-1.tar.gz` package.
 2. Decompress `k8s-v0.0.5-1.tar.gz` to obtain installation documents and software packages.
 3. Install Va Docker based on "Installing Va Docker" in the *DC1000 Accelerator Card Va Docker Installation Guide 01*.
 4. Install the device plugin based on chapter 3 (from the beginning to section 3.2.3) in the *DC1000 Accelerator Card Kubernetes Device Plugin Installation Guide 03*.
@@ -1903,11 +1903,11 @@ Configure the VM NIC file to enable the network. If you adopt the SR-IOV solutio
 
 After deploying cloud phones and video stream containers in the VM environment, you need to modify the `cfct_video` and `cfct_config` configuration files based on the number of VM CPU and GPU cores to correctly set the video stream startup and running parameters.
 
-Deploy the cloud phone container environment on the VM and run video stream cloud phones. For details, see [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0130.html) in the *Kbox Cloud Phone Container Feature Guide (Android 15)* and [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html) in the *Video Stream Engine Feature Guide (Android 15)*.
+Deploy the cloud phone container environment on the VM and run video stream cloud phones. For details, see [Hardware Environment](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc_ad15/docs/en/install_guide.md#d21-hardware-environment) in the *Kbox Cloud Phone Container Installation Guide (Android 15)* and [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md) in the *Video Stream Engine Installation Guide (Android 15)*.
 
 The specific steps are as follows:
 
-1. Extract the `cfct_video` and `cfct_config` files. For details, see [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html) in the *Video Stream Engine Feature Guide (Android 15)*.
+1. Extract the `cfct_video` and `cfct_config` files. For details, see [Software Deployment](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md) in the *Video Stream Engine Installation Guide (Android 15)*.
 2. Modify the `cfct_config` file to adapt to the VM that uses 80 CPU cores and 4 GPU nodes.
     1. Open the `cfct_config` file.
 

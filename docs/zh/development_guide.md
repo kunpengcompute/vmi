@@ -110,7 +110,7 @@
 > [!WARNING]注意
 >
 > - 用户可以根据需求选择文件存放目录。
-> - 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)》。
+> - 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 安装指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine_ad15/docs/zh/install_guide.md)》。
 
 1. 将 VideoEngine.tar.gz 放至 "/home/VideoEngine/Cloud" 目录下。
 2. 解压视频流引擎服务端开发包。
@@ -337,7 +337,7 @@ enum VmiCmd : uint32_t {
 
 数据类型：`char *`
 
-返回值示例请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0065.html)》中的"查询组件版本号信息"章节。
+返回值示例请参见《[视频流引擎 用户指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine_ad15/docs/zh/user_guide.md#d12-%E6%9F%A5%E8%AF%A2%E7%BB%84%E4%BB%B6%E7%89%88%E6%9C%AC%E5%8F%B7%E4%BF%A1%E6%81%AF)》中的"查询组件版本号信息"章节。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -882,7 +882,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 #### 编码参数推荐搭配
 
-编码参数与视频流云手机运行的硬件环境相关，硬件环境请参见《[视频流引擎 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)》"软件部署"中的"硬件环境"章节。
+编码参数与视频流云手机运行的硬件环境相关，硬件环境请参见《[视频流引擎 安装指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine_ad15/docs/zh/install_guide.md#d1-%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2)》"软件部署"中的"硬件环境"章节。
 
 **硬件配置方案一**
 

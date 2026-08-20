@@ -272,7 +272,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 使用硬件配置方案二、三、四每次服务器重启后，都需要重新执行安装显卡驱动步骤。
 
-1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)获取VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传至“~/dependency/”目录，解压后获取显卡内核态驱动。
+1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc_ad15/docs/zh/install_guide.md#d22-%E8%BD%AF%E4%BB%B6%E7%8E%AF%E5%A2%83)获取VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传至“~/dependency/”目录，解压后获取显卡内核态驱动。
 
     ```bash
     cd ~/dependency/
@@ -290,7 +290,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     GPU驱动会为每个显卡节点启动一个kworker进程，道客DC1000/DC1000C单卡有4个节点。为保障kworker进程性能，建议使用kworkerCores参数为每个kworker进程绑定CPU，kworkerCores参数依次表示每个显卡节点对应kworker进程的绑核。
 
-    在安装显卡图形驱动绑核时，**请确保kworker进程绑定的CPU核和GPU渲染节点同属一个CPU片**。GPU渲染节点所属CPU片的查询方式请参见[确定GPU拓扑结构](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0170.html)章节。
+    在安装显卡图形驱动绑核时，**请确保kworker进程绑定的CPU核和GPU渲染节点同属一个CPU片**。GPU渲染节点所属CPU片的查询方式请参见[确定GPU拓扑结构](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc_ad15/docs/zh/install_guide.md#d81-%E7%A1%AE%E5%AE%9Agpu%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84)章节。
 
     以DC1000/DC1000C为例，以下绑核方式仅作为参考，请依据实际情况做出调整。
 
@@ -1261,7 +1261,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 道客设备插件由道客提供，本文档配套v0.0.5版本。请先获取相关的安装文档和软件包，并按照文档完成道客设备插件的部署。
 
-1. 请参见《[Kbox云手机容器 特性指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0131.html)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-A15-C-F-26.02.06.00.RC2.tgz软件包。解压获取k8s/v0.0.5-1.tar.gz压缩包。
+1. 请参见《[Kbox云手机容器 安装指南（Android 15）](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc_ad15/docs/zh/install_guide.md#d22-%E8%BD%AF%E4%BB%B6%E7%8E%AF%E5%A2%83)》中的“环境准备”章节获取显卡驱动VAGPU-A15-C-F-26.02.06.00.RC2.tgz软件包。解压获取k8s/v0.0.5-1.tar.gz压缩包。
 2. 解压v0.0.5-1.tar.gz获取相关的安装文档和软件包。
 3. 请参见《DC1000加速卡Va Docker安装指南 02.pdf》中第四章（安装Va Docker）安装Va Docker。
 4. 请参见《DC1000加速卡Va Docker安装指南 02.pdf》中第五章（配置低级运行时）配置低级运行时。
@@ -1928,11 +1928,11 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 在虚拟机环境中部署云手机与视频流容器后，需根据虚拟机内部的CPU及GPU核数，修改hardware_bind.cfg配置文件，以便正确设置视频流的启动与运行参数。
 
-请参见《Kbox云手机容器 特性指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/kboxcpc_ad15/kunpengcpskbox_20_0130.html)”以及《视频流引擎 特性指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
+请参见《Kbox云手机容器 安装指南（Android 15）》的“[硬件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc_ad15/docs/zh/install_guide.md#d21-%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83)”以及《视频流引擎 安装指南（Android 15）》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine_ad15/docs/zh/install_guide.md#d1-%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
 
 具体操作步骤如下所示：
 
-1. 请参见《视频流引擎 特性指南（Android 15）》中的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcpsvideo_20_0048.html)”章节解压缩出cfct_video和hardware_bind.cfg文件。
+1. 请参见《视频流引擎 安装指南（Android 15）》中的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine_ad15/docs/zh/install_guide.md)”章节解压缩出cfct_video和hardware_bind.cfg文件。
 2. 修改hardware_bind.cfg脚本适配虚拟机80核CPU和虚拟机4 GPU节点。
     1. 打开hardware_bind.cfg脚本。
 

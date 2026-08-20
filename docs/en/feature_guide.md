@@ -48,12 +48,6 @@ The video stream engine consists of the server and client. The server provides f
 >
 > The memory and drives can be flexibly configured based on the device specifications.
 
-## 4 Availability
-
-Version requirements:
-
-For details about the software and hardware versions required for deploying the video stream cloud phone, see [Version Mapping (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/cpturbokit/videostreamengine_ad15/kunpengcps_video_0003.html).
-
 ## 5 Constraints
 
 You need to fully understand the following constraints on the hardware, system, and applications when you deploy and use the video stream cloud phone.
