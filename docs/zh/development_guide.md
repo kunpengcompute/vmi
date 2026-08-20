@@ -343,7 +343,7 @@ const char \*GetVersion\(\)
 >
 > 回显示例中的版本号与VmiVersion模块版本号无关。
 
-#### nitVmiEngine<a name="ZH-CN_TOPIC_0000002549825823"></a>
+#### InitVmiEngine<a name="ZH-CN_TOPIC_0000002549825823"></a>
 
 **函数功能<a name="section730mcpsimp"></a>**
 
@@ -460,7 +460,7 @@ VmiErrCode StartModule\(VmiDataType module, uint8_t\*config, uint32_t size\)
 |config|输入|uint8_t*|启动模块时使用的配置。|
 |size|输入|uint32_t|config所指向的内存长度。|
 
-不同module的config不同，但是都需要继承自VmiConfig，其中，视频参考VmiConfigVideo，音频播放参考VmiConfigAudio，触控参考VmiConfigTouch，麦克风参考VmiConfigMic，sensor参考VmiConfig，GPS参考VmiConfig。
+不同module的config不同，并且都需要继承自VmiConfig，其中，视频参考VmiConfigVideo，音频播放参考VmiConfigAudio，触控参考VmiConfigTouch，麦克风参考VmiConfigMic，sensor参考VmiConfig，GPS参考VmiConfig。
 
 ```c++
 struct VmiConfig {
@@ -741,9 +741,9 @@ struct EncodeParams {
     RCMode rcMode = CBR;                    // 流控模式
     uint32_t forceKeyFrame = 0;             // 在设置后第N帧强制生成I帧，0表示不生效
     bool interpolation = false;             // 补帧开关
-    uint32_t crf = 34;                      // CRF码控级别
-    uint32_t maxCrfRate = 20000000;         // CRF码率峰值
-    int32_t vbvBufferSize = 1000;           // CRF码率缓冲区大小
+    uint32_t crf = 34;                      // crf码控级别
+    uint32_t maxCrfRate = 20000000;         // crf码率峰值
+    int32_t vbvBufferSize = 1000;           // crf码率缓冲区大小
     uint32_t streamWidth = 720;             // 出流分辨率宽
     uint32_t streamHeight = 1280;           // 出流分辨率高
 } __attribute__((packed));
@@ -902,7 +902,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
-> 硬件配置方案1（W6800+Quadra）建议选择使用“VPU”进行编码，在H.265编码时profile仅支持main。
+> 硬件配置方案一（W6800+Quadra）建议选择使用“VPU”进行编码，在H.265编码时profile仅支持main。
 
 **硬件配置方案二<a name="section1827916308460"></a>**
 
@@ -916,7 +916,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
-> 硬件配置方案二（DC1000）建议选择使用“GPU”进行编码，在H.265编码时profile仅支持main。
+> 硬件配置方案二（道客 DC1000/DC1000C）建议选择使用“GPU”进行编码，在H.265编码时profile仅支持main。
 
 ## 音频输出开发<a name="ZH-CN_TOPIC_0000002518186016"></a>
 
@@ -1753,7 +1753,7 @@ height：uint32_t类型，期望编码高度。该类字段如下：
 
 开发者继承VideoDecoder类并按照本章节中的描述实现对应接口，同时提供[11.2.2-CreateVideoDecoder](#CreateVideoDecoder)、[11.2.3-DestroyVideoDecoder](#DestroyVideoDecoder)接口用于创建具体的实现类实例。
 
-此接口与安卓内部OMX解码组件配套使用，与视频流出流组件不相干扰。
+此接口与Android内部OMX解码组件配套使用，与视频流出流组件不相干扰。
 
 其中，接口调用的返回码定义如下：
 

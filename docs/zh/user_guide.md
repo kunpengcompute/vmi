@@ -20,7 +20,7 @@
     ```
 
 3. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式和使用WebRTC方式访问的视频流云手机实例，则需要进行以下配置。
-    1. 从DemoVideoEngine.tar.gz中解压获取"vendor"文件夹，并将其中的"vendor/default.prop"文件拷贝到当前目录。
+    1. 从DemoVideoEngine.tar.gz中解压获取"vendor"文件夹，并将其中的"vendor/default.prop"文件拷贝至当前目录。
 
         ```bash
         cd /home/kbox_video/
@@ -173,7 +173,7 @@
 若使用默认方式启动视频流云手机时，可以通过APK方式访问云手机。
 
 1. 解压CloudPhoneApk.tar.gz。
-2. 在安卓手机上安装CloudPhone.apk。
+2. 在Android手机上安装CloudPhone.apk。
 3. （可选）单击右上角齿轮，进入设置页。
 
     ![](figures/zh-cn_image_0000002518384394.png)
@@ -182,16 +182,16 @@
 
     ![](figures/zh-cn_image_0000002549744251.png)
 
-5. 返回至主页面，自上而下依次输入服务器IP地址、**`${port}`**，单击"开始连接"即可访问云侧的视频流云手机，如下图所示。
+5. 返回至主页面，自上而下依次输入服务器IP地址、`${port}`，单击"开始连接"即可访问云侧的视频流云手机，如下图所示。
 
-    **`${port}`**默认值为8000+**`${index}`**。
+    `${port}`默认值为8000+`${index}`。
 
     ![](figures/zh-cn_image_0000002549864241.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
-    >- 每个视频流云手机实例需要设置端口**`${port}`**，部署时可进入cfct_video脚本设置合适的**`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
-    >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位安卓系统手机上。
+    >- 每个视频流云手机实例需要设置端口`${port}`，部署时可进入cfct_video脚本设置合适的`${port}`，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >- 视频流引擎客户端为64位，需要运行在鸿蒙系统或Android 7版本以上的64位Android系统手机上。
     >- 请确保手机和服务器之间网络畅通。
 
 #### PC端Web网页方式访问<a name="ZH-CN_TOPIC_0000002518384374"></a>
@@ -291,7 +291,7 @@
 >./cfct_video ndelete 1 5
 >```
 
-## k8s集群下操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002518224466"></a>
+## K8s集群下操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002518224466"></a>
 
 ### 启动道客设备插件<a name="ZH-CN_TOPIC_0000002549864209"></a>
 
@@ -386,7 +386,7 @@
 在所有工作节点运行hook脚本。
 
 1. 请参见《[视频流引擎安装指南](install_guide.md)》获取DemoVideoEngine.tar.gz软件包，获取后将软件包上传至服务器的"/home/k8s"目录。
-2. 将"/home/k8s/k8s/script"目录下的oci-device-hook.sh脚本拷贝到"/usr/local/sbin/"目录。
+2. 将"/home/k8s/k8s/script"目录下的oci-device-hook.sh脚本拷贝至"/usr/local/sbin/"目录。
 
     ```bash
     cd /home/k8s/k8s/script
@@ -549,7 +549,7 @@
     kubectl get pods -o wide
     ```
 
-    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**`${index}`，index为pod编号**。
+    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+`${index}`，index为pod编号。
 
     - 在任意节点上，可通过如下命令进入容器，以video1为例：
 
@@ -557,7 +557,7 @@
         kubectl exec -it video1 -- sh
         ```
 
-    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中"`{CONTAINER}`"是**crictl ps**返回的第一列。
+    - 在工作节点可以通过**crictl ps**查看云手机实例，根据NAME字段可以查看对应的pod。通过如下命令可进入容器，其中"`${CONTAINER}`"是**crictl ps**返回的第一列。
 
         ```bash
         crictl exec -it ${CONTAINER} sh
@@ -607,7 +607,7 @@ cd /home/k8s/k8s/script
     在回显信息中找到NAME为video1的行，NODE列的值即为video1所在节点。
 
 3. 将所需的应用（例地铁跑酷等）预装到该云手机容器中。
-4. 登录云手机video1所在节点，基础数据卷所在位置为"/home/mount/img/video1.img"，将img文件重命名为videobase.img并拷贝到每个工作节点的"/home/mount/img"目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
+4. 登录云手机video1所在节点，基础数据卷所在位置为"/home/mount/img/video1.img"，将img文件重命名为videobase.img并拷贝至每个工作节点的"/home/mount/img"目录下，若需使用此videobase.img作为数据卷，请参见[工作节点操作-1](install_guide.md#工作节点操作1)执行操作。
 
 ## 可配置项功能说明<a name="ZH-CN_TOPIC_0000002549864233"></a>
 
@@ -895,7 +895,7 @@ cd /home/k8s/k8s/script
 
 - 故障分析、定位和处理原则：
     - 以尽快恢复业务为原则。
-    - 定位故障时，应及时采集故障数据信息，并尽量将采集到的故障数据信息保存在移动存储介质中或其它计算机中。
+    - 定位故障时，应及时采集故障数据信息，并尽量将采集到的故障数据信息保存在移动存储介质中或其他计算机中。
     - 在确定故障处理的方案时，应先评估影响，优先保证业务的正常运行。
     - 第三方的硬件故障，可查看第三方的相关资料或拨打第三方公司的服务电话。
     - 如果无法定位出故障点或无法按手册解决故障，及时联系技术支持，最大程度减少业务中断时间。

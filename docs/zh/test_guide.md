@@ -124,7 +124,7 @@
 |测试步骤| 1.使用真机链接云手机客户端并运行已安装的APP。<br>2.启动应用并试玩10min。|
 |预期结果| 1.视频流云手机及APP运行正常，无卡顿、黑屏等不良现象。<br>2.执行**docker exec -it android_*x* sh**进入云手机，接着执行**wm size**命令查看分辨率回显值，1080P分辨率设置成功。|
 |测试结果| |
-|备注|测试步骤中**android_*x***中的*x*为实际创建的视频流云手机容器的容器编号。|
+|备注|测试步骤中`android_x`中的`x`为实际创建的视频流云手机容器的容器编号。|
 
 #### 视频流云手机支持高帧率测试
 
@@ -148,9 +148,9 @@
 |测试组网|无|
 |预置条件| 1.视频流云手机环境部署完成。<br>2.已创建视频流云手机容器，并使用adb连接。|
 |测试步骤| 1.执行**sudo docker exec -it android_*x* sh**进入视频流云手机容器，出现预期结果1。<br>2.执行**cat /vendor/etc/videoengine_version.txt**查询版本号内容，出现预期结果2。|
-|预期结果| 1.容器可以正常进入。<br>2.文件内容包含视频流组件版本信息如下，且版本信息准确。（具体版本号以当前版本为准。）<br><pre>Product Name: Kunpeng BoostKit<br>Product Version: xxx<br>Component Name: BoostKit-boostcph-videoengine<br>Component Version: xxx<br>Component AppendInfo: 11.0.0_r48</pre> |
+|预期结果| 1.容器可以正常进入。<br>2.文件内容包含视频流组件版本信息如下，且版本信息准确。（具体版本号以当前版本为准。）<br>Product Name: Kunpeng BoostKit<br>Product Version: xxx<br>Component Name: BoostKit-boostcph-videoengine<br>Component Version: xxx<br>Component AppendInfo: 11.0.0_r48 |
 |测试结果| |
-|备注|测试步骤中**android_*x***中的*x*为实际创建的视频流云手机容器的容器编号。|
+|备注|测试步骤中`android_x`中的`x`为实际创建的视频流云手机容器的容器编号。|
 
 ### 性能测试
 
