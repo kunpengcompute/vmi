@@ -310,7 +310,6 @@ function container_run() {
 
     # Step 2: 在容器文件系统就绪但 init 未启动的窗口期，注入配置文件
     bb_prepare_media_codecs_for_amd ${container_name}
-    bb_prepare_render_layer ${container_name} "${userdata_dir}"
 
     # Step 3: 启动容器并执行后处理（cgroup 权限等）
     bb_start_box
@@ -321,7 +320,7 @@ function container_run() {
 
     bb_log_info "Initialize container ..."
     bb_wait_container_ready "$container_name" 100 0
-
+    bb_prepare_render_layer ${container_name} "${userdata_dir}"
     # 云机启动后处理
     if bb_has_amd_gpu; then
         if [ ${ENCODECARD} -eq 0 ]; then
