@@ -225,7 +225,7 @@ function container_run() {
     local userdata_dir=${USERDATA_MAP[$((($container_id - 1) % ${#USERDATA_MAP[*]}))]}
     
     # 准备云机属性配置文件
-    bb_create_build_prop
+    bb_create_build_prop $container_name
     bb_create_default_prop
 
     # 数据卷挂载准备
@@ -349,7 +349,7 @@ function container_restart() {
         bb_log_info "Starting on configure WEBRTC connection"
         webrtc_conection_configure restart
     fi
-    bb_create_build_prop
+    bb_create_build_prop $container_name
     bb_create_default_prop
     bb_prepare_media_codecs_for_amd $container_name
 
