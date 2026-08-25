@@ -222,7 +222,7 @@ container_run() {
     local userdata_dir=${USERDATA_MAP[$((($container_id - 1) % ${#USERDATA_MAP[*]}))]}
     
     # 准备云机属性配置文件
-    bb_create_build_prop
+    bb_create_default_prop ${container_name}
 
     # 数据卷挂载准备
     local no_copy_usr_data=0
@@ -285,7 +285,7 @@ container_run() {
 
     if [ -f $DEFAULT_PROP ]; then
 	    sed -i '/zygote\|bionic\|dalvik\|stats/d' $DEFAULT_PROP
-	    local tmp_default_prop=${DEFAULT_PROP}_$container_name
+	    local tmp_default_prop=/var/lib/kbox/props/${container_name}/default.prop
 	    cp $DEFAULT_PROP $tmp_default_prop
 	    local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
 	    if [ ${#amd_gpus[@]} -ne 0 ]; then
@@ -350,7 +350,7 @@ container_restart() {
     echo $container_name
     bb_log_info "Restart container: $container_name"
     param_check_container_name "$container_name"
-    bb_create_build_prop
+    bb_create_default_prop ${container_name}
     if [ -f $DEFAULT_PROP ] && $RUNTIME_CMD ps | grep -w -q "$container_name"
     then
         if [ ${ENABLE_WEBRTC_CONNECTION} -eq 1 ]; then
@@ -358,7 +358,7 @@ container_restart() {
             webrtc_conection_configure restart
         fi
         local container_id=`echo ${container_name:8}`
-        local tmp_default_prop=${DEFAULT_PROP}_$container_name
+        local tmp_default_prop=/var/lib/kbox/props/${container_name}/default.prop
         cp $DEFAULT_PROP $tmp_default_prop
 
         local amd_gpus=($(lspci -D | grep "AMD" | grep -E "VGA|73a3|73a1|73e3" | awk '{print $1}'))
@@ -429,9 +429,6 @@ function container_delete() {
     BB_KEEP_DATA="${keep_data:-0}"
     bb_delete_box
 
-    if [ -f "${DEFAULT_PROP}_${container_name}" ]; then
-        rm -f ${DEFAULT_PROP}_$container_name
-    fi
 }
 
 function pushxd() {
