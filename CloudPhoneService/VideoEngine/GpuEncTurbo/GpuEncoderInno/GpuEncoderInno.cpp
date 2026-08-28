@@ -93,6 +93,7 @@ constexpr uint32_t MAX_WIDTH = 4096;
 constexpr uint32_t MAX_HEIGHT = 4096;
 constexpr uint32_t WIDTH_ALIGN = 32;
 constexpr uint32_t HEIGHT_ALIGN = 32;
+constexpr uint32_t MAX_BUFFER_SIZE = 128 * 1024 * 1024;
 
 }
 
@@ -306,6 +307,10 @@ int32_t GpuEncoderInno::CreateBuffer(FrameFormat format, MemType memType, GpuEnc
     uint32_t bufferSize = GetBufferSize(m_size.widthAligned, m_size.heightAligned, format);
     if (bufferSize == 0) {
         ERR("Invalid buffer size for buffer create, size=%u", bufferSize);
+        return -ERR_INVALID_PARAM;
+    }
+    if (bufferSize > MAX_BUFFER_SIZE) {
+        ERR("Buffer size exceeds limit for buffer create, size=%u max=%u", bufferSize, MAX_BUFFER_SIZE);
         return -ERR_INVALID_PARAM;
     }
     newBuffer->data = new uint8_t[bufferSize];
