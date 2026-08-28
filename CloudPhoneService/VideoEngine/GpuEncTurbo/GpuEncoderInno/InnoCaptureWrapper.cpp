@@ -81,7 +81,11 @@ public:
     {
         std::lock_guard<std::mutex> lk(m_threadLock);
         if (m_captureThread.joinable()) {
-            return true;
+            if (m_running) {
+                return true;
+            }
+            // 上次抓帧线程因硬错误退出但未 join，先回收再重新拉起
+            m_captureThread.join();
         }
         m_running = true;
         m_captureThread = std::thread(&InnoCaptureWrapper::CaptureThreadFunc, this);
@@ -125,7 +129,11 @@ private:
                 continue;   // 超时或屏幕未更新
             } else if (result != IFBC_ERR_NONE) {
                 ERR("ifbc_capture_grab error=%d", result);
-                break;      // 异常错误退出抓帧线程
+                {
+                    std::lock_guard<std::mutex> lk(m_threadLock);
+                    m_running = false;
+                }
+                break;      // 异常错误退出抓帧线程，Start() 可重新拉起
             }
 
             // 分辨率变化检测

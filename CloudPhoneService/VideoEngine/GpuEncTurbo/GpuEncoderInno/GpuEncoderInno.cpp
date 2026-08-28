@@ -7,6 +7,7 @@
 #include <string>
 #include <chrono>
 #include <memory>
+#include <new>
 #include <algorithm>
 #include <unistd.h>
 #include <dlfcn.h>
@@ -232,6 +233,8 @@ int32_t GpuEncoderInno::Init(EncoderConfig &config)
     m_iencEncoder = m_iencOpenEncoder(&m_iencAttr);
     if (!m_iencEncoder) {
         ERR("ienc_open_encoder failed");
+        UnLoadInnoLib();
+        UnlockStatus(m_originalStatus);
         return -ERR_INTERNAL_ERROR;
     }
 
@@ -313,7 +316,7 @@ int32_t GpuEncoderInno::CreateBuffer(FrameFormat format, MemType memType, GpuEnc
         ERR("Buffer size exceeds limit for buffer create, size=%u max=%u", bufferSize, MAX_BUFFER_SIZE);
         return -ERR_INVALID_PARAM;
     }
-    newBuffer->data = new uint8_t[bufferSize];
+    newBuffer->data = new (std::nothrow) uint8_t[bufferSize];
     if (newBuffer->data == nullptr) {
         ERR("Failed to allocate data buffer, size=%u", bufferSize);
         return -ERR_OUT_OF_MEM;
@@ -404,6 +407,11 @@ int32_t GpuEncoderInno::MapBuffer(GpuEncoderBufferT &buffer, uint32_t flag)
     }
 
     auto innoBuffer = static_cast<GpuEncoderBufferInnoT>(*record);
+    if (innoBuffer->data == nullptr) {
+        ERR("Invalid buffer data for buffer map: %p", buffer);
+        return -ERR_INVALID_PARAM;
+    }
+
     ienc_stream_t stream;
     int32_t result_fd = -1;
     int ret = m_iencGetFrame(m_iencEncoder, &result_fd, &stream, -1);
@@ -423,6 +431,11 @@ int32_t GpuEncoderInno::MapBuffer(GpuEncoderBufferT &buffer, uint32_t flag)
     uint32_t dataLen = 0;
     for (uint32_t i = 0; i < stream.pack_count; i++) {
         dataLen += stream.pack[i].len;
+    }
+    if (dataLen > innoBuffer->dataLen) {
+        ERR("Stream data length %u exceeds buffer capacity %u", dataLen, innoBuffer->dataLen);
+        m_iencReleaseFrame(m_iencEncoder, &stream);
+        return -ERR_INVALID_PARAM;
     }
     
     uint32_t offset = 0;
@@ -483,7 +496,7 @@ int32_t GpuEncoderInno::Encode(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &o
 
     auto inInnoBuff = static_cast<GpuEncoderBufferInnoT>(inBuffer);
 
-    ienc_frame_t ienc_frame;
+    ienc_frame_t ienc_frame = {};
     ienc_frame.fd = inInnoBuff->fd;
     int ret = m_iencEncodeOneFrame(m_iencEncoder, &ienc_frame);
 
@@ -587,8 +600,8 @@ int32_t GpuEncoderInno::SetEncodeParam(EncodeParamT params[], uint32_t num)
                 SetMaxCrfRate(params[i], tmpParams);
                 break;
             default:
-                ERR("Hantro set encoder param failed, unsupport param type");
-                return ERR_INVALID_PARAM;
+                ERR("Inno set encoder param failed, unsupport param type");
+                return -ERR_INVALID_PARAM;
         }
     }
     std::lock_guard<std::mutex> lk(m_lock);
@@ -685,6 +698,7 @@ void GpuEncoderInno::ApplyParamsToAttr()
     m_iencAttr.enc_attr.b_frame_num = 0;
     m_iencAttr.enc_attr.csc_mode = IENC_CSC_MODE_BT601;
     m_iencAttr.enc_attr.csc_range = IENC_CSC_RANGE_LIMIT;
+    uint32_t qp = (m_settingParams.crf != UINT32_MAX) ? m_settingParams.crf : 25;
     m_iencAttr.rc_attr.rc_mode = ConvertRcMode(m_settingParams.rcMode);
     switch (m_iencAttr.rc_attr.rc_mode) {
         case IENC_RC_MODE_CBR:
@@ -692,14 +706,14 @@ void GpuEncoderInno::ApplyParamsToAttr()
             m_iencAttr.rc_attr.cbr_attr.intra_idr_period = m_settingParams.gopSize;
             m_iencAttr.rc_attr.cbr_attr.src_frame_rate = m_settingParams.frameRate;
             m_iencAttr.rc_attr.cbr_attr.bit_rate = m_settingParams.bitRate;
-            m_iencAttr.rc_attr.cbr_attr.init_qp = 25;
+            m_iencAttr.rc_attr.cbr_attr.init_qp = qp;
             break;
         case IENC_RC_MODE_VBR:
             m_iencAttr.rc_attr.vbr_attr.intra_period = m_settingParams.gopSize;
             m_iencAttr.rc_attr.vbr_attr.intra_idr_period = m_settingParams.gopSize;
             m_iencAttr.rc_attr.vbr_attr.src_frame_rate = m_settingParams.frameRate;
             m_iencAttr.rc_attr.vbr_attr.max_bit_rate = m_settingParams.bitRate;
-            m_iencAttr.rc_attr.vbr_attr.init_qp = 25;
+            m_iencAttr.rc_attr.vbr_attr.init_qp = qp;
             m_iencAttr.rc_attr.vbr_attr.min_qp = 10;
             m_iencAttr.rc_attr.vbr_attr.max_qp = 51;
             break;
@@ -707,7 +721,7 @@ void GpuEncoderInno::ApplyParamsToAttr()
             m_iencAttr.rc_attr.cqp_attr.intra_period = m_settingParams.gopSize;
             m_iencAttr.rc_attr.cqp_attr.intra_idr_period = m_settingParams.gopSize;
             m_iencAttr.rc_attr.cqp_attr.src_frame_rate = m_settingParams.frameRate;
-            m_iencAttr.rc_attr.cqp_attr.qp = 25;
+            m_iencAttr.rc_attr.cqp_attr.qp = qp;
             break;
     }
 }
@@ -724,6 +738,9 @@ int32_t GpuEncoderInno::Reset()
         m_iencEncoder = nullptr;
     }
 
+    // 使运行期通过 SetEncodeParam 设置的参数在 reset 后生效
+    UpdateSettingParams();
+
     m_iencEncoder = m_iencOpenEncoder(&m_iencAttr);
 
     if (!m_iencEncoder) {
@@ -732,6 +749,7 @@ int32_t GpuEncoderInno::Reset()
         return -ERR_INTERNAL_ERROR;
     }
 
+    UnlockStatus(Status::INITED);
     return OK;
 }
 }
