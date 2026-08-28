@@ -40,17 +40,17 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 
 **表 1** 部署视频流引擎的软件环境要求<a id="部署视频流引擎的软件环境要求"></a>
 
-|序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|
-|--|--|--|--|--|--|--|--|
-| 1 | BoostKit-boostcph-videoengine_*_15.zip | 视频流引擎二进制包 | [获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#application-soft) | √ | √ | √ | √ |
-| 2 | DemoVideoEngine.tar.gz | 视频流服务端tar包组件，负责获取Kbox容器音视频数据等 | 请联系华为技术支持获取 | √ | √ | √ | √ |
-| 3 | DemoVideoEngine_sha256.txt | 视频流服务端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ | √ |
-| 4 | CloudPhoneApk.tar.gz | 视频流客户端tar包组件，负责解码播放音视频数据 | 请联系华为技术支持获取 | √ | √ | √ | √ |
-| 5 | CloudPhoneApk_sha256.txt | 视频流客户端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ | √ |
-| 6 | VideoClientEmulator.tar.gz | 视频流云手机压测工具 | 请联系华为技术支持获取 | √ | √ | √ | √ |
-| 7 | NETINT-v*XXX*.tar.gz | 视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - | - |
-| 8 | Quadra_V*XXX*.zip | NETINT编码卡Quadra软固件及文档包 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - | - |
-| 9 | topo-affinity-plugin-master.zip | K8s NUMA亲和插件 | [获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin) | √ | √ | √ | √ |
+|序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|配置方案五|
+|--|--|--|--|--|--|--|--|--|
+| 1 | BoostKit-boostcph-videoengine_*_15.zip | 视频流引擎二进制包 | [获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=视频流引擎#application-soft) | √ | √ | √ | √ |√ |
+| 2 | DemoVideoEngine.tar.gz | 视频流服务端tar包组件，负责获取Kbox容器音视频数据等 | 请联系华为技术支持获取 | √ | √ | √ | √ |√ |
+| 3 | DemoVideoEngine_sha256.txt | 视频流服务端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ | √ |√ |
+| 4 | CloudPhoneApk.tar.gz | 视频流客户端tar包组件，负责解码播放音视频数据 | 请联系华为技术支持获取 | √ | √ | √ | √ |√ |
+| 5 | CloudPhoneApk_sha256.txt | 视频流客户端tar包组件对应的sha256文件，负责完整性校验 | 请联系华为技术支持获取 | √ | √ | √ | √ |√ |
+| 6 | VideoClientEmulator.tar.gz | 视频流云手机压测工具 | 请联系华为技术支持获取 | √ | √ | √ | √ |√ |
+| 7 | NETINT-v*XXX*.tar.gz | 视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - | - |- |
+| 8 | Quadra_V*XXX*.zip | NETINT编码卡Quadra软固件及文档包 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - | - | - |
+| 9 | topo-affinity-plugin-master.zip | K8s NUMA亲和插件 | [获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin) | √ | √ | √ | √ |√ |
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -264,9 +264,9 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
 
-#### （硬件配置方案二、三、四）安装显卡驱动<a name="ZH-CN_TOPIC_0000002549866411"></a>
+#### （硬件配置方案二、三、四、五）安装显卡驱动<a name="ZH-CN_TOPIC_0000002549866411"></a>
 
-使用硬件配置方案二、三、四每次服务器重启后，都需要重新执行安装显卡驱动步骤。
+使用硬件配置方案二、三、四、五每次服务器重启后，都需要重新执行安装显卡驱动步骤。
 
 1. 请参见[软件环境](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc_ad15/docs/zh/install_guide.md#d22-%E8%BD%AF%E4%BB%B6%E7%8E%AF%E5%A2%83)获取VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传至“~/dependency/”目录，解压后获取显卡内核态驱动。
 
@@ -312,6 +312,11 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
     insmod va_gpu.ko kworkerCores=64,64,65,65,66,66,67,67,0,0,1,1,2,2,3,3,192,192,193,193,194,194,195,195,128,128,129,129,130,130,131,131
     ```
 
+    硬件配置方案五（鲲鹏920 7282C处理器 + 8\*道客DC 1000）：
+
+    ```bash
+    insmod va_gpu.ko kworkerCores=80,80,80,80,81,81,81,81,0,0,0,0,1,1,1,1,240,240,240,240,241,241,241,241,160,160,160,160,161,161,161,161
+    ```
 4. 等待脚本执行完成，查看内核日志。
 
     ```bash
@@ -376,7 +381,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
     2. 将Kbox-patches-AOSP15文件夹中的deploy_scripts目录上传至服务器的“~/dependency”目录。
     3. 上传Android Kbox二进制文件包BoostKit-boostcph-kbox_\*.zip到“~/dependency/deploy_scripts”目录。
-    4. （硬件配置方案二、三、四）使用硬件配置方案二、三、四时需要解压显卡驱动压缩包VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
+    4. （硬件配置方案二、三、四、五）使用硬件配置方案二、三、四、五时需要解压显卡驱动压缩包VAGPU-A15-C-F-26.02.06.00.RC2.tgz，上传到服务器的“~/dependency/deploy_scripts”目录。
     5. 制作包含Android Kbox二进制的Kbox镜像，其中kbox:demo为导入的官方Kbox Demo镜像，kbox:origin为包含Android Kbox二进制的新镜像。
         - 硬件配置方案一：
 
@@ -386,7 +391,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
             ./make_image_aosp15.sh kbox:demo kbox:origin
             ```
 
-        - 硬件配置方案二、三、四：
+        - 硬件配置方案二、三、四、五：
 
             ```bash
             cd ~/dependency/deploy_scripts
@@ -446,7 +451,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
         chmod +x Dockerfile_NoVPU Dockerfile_QuadraT2A make_image.sh
         ```
 
-    - 配置方案二、三、四：
+    - 配置方案二、三、四、 五：
 
         ```bash
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU  make_image.sh
@@ -640,7 +645,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 >- 宿主机上多容器共享一个着色器缓存路径，可以先启动一路云手机预收集应用尽可能完整的着色器，其他云手机通过将配置文件对应的应用设置为只读模式来使能ShaderCache功能，此时性能最佳。
 >- ShaderCache功能没有缓存淘汰机制，若是缓存文件系统存储已满或者游戏版本更新，为了避免着色器和二进制文件不能对应，请清理整个文件系统的缓存。
 
-#### 设置cfct_config，hardware_bind.cfg配置文件（配置方案二、三、四）<a name="ZH-CN_TOPIC_0000002518386592"></a>
+#### 设置cfct_config，hardware_bind.cfg配置文件（配置方案二、三、四、五）<a name="ZH-CN_TOPIC_0000002518386592"></a>
 
 通过设置cfct_config，hardware_bind.cfg配置文件可以灵活配置视频流云手机使用的资源，使性能达到最优。云手机启动时必须在启动路径下存放cfct_config，hardware_bind.cfg配置文件，云手机容器会使用该文件中的配置，使用时应确保cfct_config，hardware_bind.cfg配置文件中的配置正确。
 
