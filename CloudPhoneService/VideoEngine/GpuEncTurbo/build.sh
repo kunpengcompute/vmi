@@ -25,7 +25,6 @@ source_dirs="
 system_so_list="
     libVmiEncTurboSys.so \
     libVmiEncTurboAcard.so \
-    libVmiEncTurboInno.so \
     libVmiEncTurboCpuSys.so "
 
 gen_head_files()

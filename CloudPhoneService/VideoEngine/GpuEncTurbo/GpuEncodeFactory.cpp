@@ -102,6 +102,7 @@ namespace {
         {GPU_A_LIB, "/system/lib64/libVmiEncTurboAcard.so"},
         {GPU_SOFT_LIB, "/system/lib64/libVmiEncTurboCpuSys.so"}
 #else
+        {GPU_INNO_LIB, "/vendor/lib64/libVmiEncTurboInno.so"},
         {GPU_HANTRO_LIB, "/vendor/lib64/libVmiEncTurboHantro.so"},
         {GPU_SOFT_LIB, "/vendor/lib64/libVmiEncTurboCpu.so"}
 #endif
@@ -111,6 +112,8 @@ namespace {
         {GPU_A_LIB, "/system/lib/libVmiEncTurboAcard.so"},
         {GPU_SOFT_LIB, "/system/lib/libVmiEncTurboCpuSys.so"}
 #else
+        {GPU_INNO_LIB, "/vendor/lib/libVmiEncTurboInno.so"},
+        {GPU_HANTRO_LIB, "/vendor/lib/libVmiEncTurboHantro.so"},
         {GPU_SOFT_LIB, "/vendor/lib/libVmiEncTurboCpu.so"}
 #endif
 #endif

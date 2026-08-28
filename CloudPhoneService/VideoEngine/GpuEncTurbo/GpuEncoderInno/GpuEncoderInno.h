@@ -16,11 +16,23 @@
 #include <future>
 #include <condition_variable>
 #include "../GpuEncoderBase.h"
-#include "VaEncInno.h"
 #include "InnoFbcApi.h"
 
 namespace Vmi {
 namespace GpuEncoder {
+struct InnoEncodeParams {
+    uint32_t frameRate = 0;
+    uint32_t gopSize = 0;
+    uint32_t bitRate = 0;
+    uint32_t keyFrame = 0;
+    uint32_t profile = 0;
+    uint32_t streamWidth = 0;
+    uint32_t streamHeight = 0;
+    uint32_t crf = UINT32_MAX;
+    uint32_t maxCrfRate = UINT32_MAX;
+    uint32_t rcMode = UINT32_MAX;
+};
+
 class GpuEncoderInno : public GpuEncoderBase {
 public:
     int32_t Init(EncoderConfig &config) override;
@@ -59,18 +71,17 @@ private:
         STARTED,
     };
 
-    // va编码相关
-    struct InnoEncodeParam {
-        uint32_t profile = VAProfileH264ConstrainedBaseline; // 默认baseline profile
-        uint32_t vbrMode = false; // 默认使用固定码率模式
-        uint32_t bitrate = 5000000; // 5000000：默认使用5Mbps码率
-        uint32_t frameRate = 30; // 30：默认30帧
-        uint32_t gopSize = 30; // 30：默认I帧间隔30帧
-        uint32_t entropy = ENTROPY_CAVLC; // baseline仅支持CAVLC编码
-    };
-    InnoEncodeParam m_encodeParam {};
-    std::unique_ptr<VaEncInno> m_encoder {nullptr};
-    void InitEncodeParam();
+    // // va编码相关
+    // struct InnoEncodeParam {
+    //     uint32_t profile = VAProfileH264ConstrainedBaseline; // 默认baseline profile
+    //     uint32_t vbrMode = false; // 默认使用固定码率模式
+    //     uint32_t bitrate = 5000000; // 5000000：默认使用5Mbps码率
+    //     uint32_t frameRate = 30; // 30：默认30帧
+    //     uint32_t gopSize = 30; // 30：默认I帧间隔30帧
+    //     uint32_t entropy = ENTROPY_CAVLC; // baseline仅支持CAVLC编码
+    // };
+    // InnoEncodeParam m_encodeParam {};
+    // void InitEncodeParam();
 
     class GpuBufferFence {
     public:
@@ -87,49 +98,65 @@ private:
 
     // Buffer相关
     struct GpuEncoderBufferInno : public GpuEncoderBuffer {
-        bool mapped = false;
-        bool external = false;
-        uint32_t slot = 0;
-        int32_t fd = 0;
-        VACodedBufferSegment *bufList = nullptr;
-        bool needWaitFence = false;
-        GpuBufferFence fence;
+        int32_t fd = -1;           // DMA-BUF fd
+        bool external = false;     // 是否是外部导入
     };
+
     using GpuEncoderBufferInnoT = GpuEncoderBufferInno *;
     std::set<GpuEncoderBufferT> m_buffers {};
 
     bool CheckAndLockStatus(Status status);
     void UnlockStatus(Status status);
     void ReleaseAllBuffer();
-    uint32_t MapStreamBuffer(GpuEncoderBufferInnoT &buffer);
 
-    // RGB转YUV相关
-    struct InnoYuvLib {
-        void *lib = nullptr;
-        std::function<InnoConvertHandle(EglInfoT, uint32_t *)> init = {};
-        std::function<void(InnoConvertHandle)> deinit = {};
-        std::function<int(InnoConvertHandle, const IfbcFrameT, IfbcFrameT)> convert = {};
-    };
-    InnoYuvLib m_innoYuvLib {};
-    InnoConvertHandle m_convertHandle {nullptr};
     bool LoadInnoLib();
-    bool UnLoadInnoLib();
+    void UnLoadInnoLib();
 
-    IfbcFrame m_inFrame;
-    IfbcFrame m_outFrame;
-    std::packaged_task<bool()> m_convertTask {};
-    bool DoConvert(GpuEncoderBufferInnoT inBuffer, GpuEncoderBufferInnoT outBuffer);
-    void ConvertThreadFunc();
-    bool m_hasNewFrame { false };
-    std::mutex m_convertLock {};
-    std::condition_variable m_convertCtl {};
-    std::thread m_convertThread; // 转换操作在OpenGL中完成，需要保证在同一个线程
+    typedef void* ienc_encoder_t;
+
+    void* m_iencLibHandle {nullptr};
+
+    using IencOpenEncoder = ienc_encoder_t(*)(const ienc_attr_t*);
+    using IencCloseEncoder = void(*)(ienc_encoder_t);
+    using IencEncodeOneFrame = int(*)(ienc_encoder_t, ienc_frame_t*);
+    using IencGetFrame = int(*)(ienc_encoder_t, int32_t*, ienc_stream_t*, int32_t);
+    using IencReleaseFrame = void(*)(ienc_encoder_t, const ienc_stream_t*);
+
+    IencOpenEncoder m_iencOpenEncoder {nullptr};
+    IencCloseEncoder m_iencCloseEncoder {nullptr};
+    IencEncodeOneFrame m_iencEncodeOneFrame {nullptr};
+    IencGetFrame m_iencGetFrame {nullptr};
+    IencReleaseFrame m_iencReleaseFrame {nullptr};
+
+    void SetFrameRate(EncodeParamT &param, InnoEncodeParams &params);
+    void SetBitRate(EncodeParamT &param, InnoEncodeParams &params);
+    void SetGopsize(EncodeParamT &param, InnoEncodeParams &params);
+    void SetKeyFrame(InnoEncodeParams &params);
+    void SetProfile(EncodeParamT &param, InnoEncodeParams &params);
+    void SetRcmode(EncodeParamT &param, InnoEncodeParams &params);
+    void SetStreamWidth(EncodeParamT &param, InnoEncodeParams &params);
+    void SetStreamHeight(EncodeParamT &param, InnoEncodeParams &params);
+    void SetCrfLevel(EncodeParamT &param, InnoEncodeParams &params);
+    void SetMaxCrfRate(EncodeParamT &param, InnoEncodeParams &params);
+    void UpdateSettingParams();
+    ienc_profile_e ConvertProfile(uint32_t profileCode);
+    ienc_rc_mode_e ConvertRcMode(uint32_t rcMode);
+    void ApplyParamsToAttr();
 
     // 类参数
     GpuEncoder::FrameSize m_size {};
     Status m_status { Status::INVALID };
     Status m_originalStatus { Status::INVALID };
     std::mutex m_lock {};
+
+    ienc_encoder_t m_iencEncoder {nullptr};
+    ienc_attr_t m_iencAttr {};
+    
+    // bool m_needRestart = false;
+    // bool m_needSetWidthOrHeight = false;
+    InnoEncodeParams m_settingParams {30, 30, 5000000, 0, Vmi::GpuEncoder::ENC_PROFILE_IDC_MAIN,
+        0, 0, 21, 10000000, 0};
+    InnoEncodeParams m_receiveParams;
 };
 }
 }

@@ -218,7 +218,6 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := \
     GpuEncoderInno/GpuEncoderInno.cpp \
-    GpuEncoderInno/VaEncInno.cpp \
     ../../../Common/Log/LogInfo.cpp \
     ../../../Common/Log/logging.cpp
 
@@ -226,6 +225,7 @@ LOCAL_SRC_FILES := \
 LOCAL_LDLIBS := -llog
 LOCAL_SHARED_LIBRARIES := libva libva-android
 
+LOCAL_VENDOR_MODULE := true
 LOCAL_MODULE := libVmiEncTurboInno
 LOCAL_MODULE_TAGS := optional
 LOCAL_C_INCLUDES := \
@@ -246,6 +246,36 @@ ifeq ($(ENABLE_ASAN), 1)
 LOCAL_SANITIZE := hwaddress alignment bounds null unreachable integer
 LOCAL_SANITIZE_DIAG := alignment bounds null unreachable integer
 endif
+
+include $(BUILD_SHARED_LIBRARY)
+########################################################################
+
+########################################################################
+# InnoCapture
+########################################################################
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+    GpuEncoderInno/InnoCaptureWrapper.cpp \
+    ../../../Common/Log/LogInfo.cpp \
+    ../../../Common/Log/logging.cpp
+
+#add shared libraries
+LOCAL_LDLIBS := -llog
+
+LOCAL_VENDOR_MODULE := true
+LOCAL_MODULE := libVmiInnoCapture
+LOCAL_MODULE_TAGS := optional
+LOCAL_C_INCLUDES := \
+    $(LOCAL_PATH)/GpuEncTurbo \
+    $(COMMON_DIR) \
+    $(LOCAL_PATH)/GpuEncTurbo/GpuEncoderInno
+
+LOCAL_CFLAGS += -DANDROID_PLATFORM_SDK_VERSION=$(PLATFORM_SDK_VERSION)
+LOCAL_CFLAGS += -Wno-address-of-packed-member -DLOG_TAG=\"INativeGpuEncTurbo\"
+LOCAL_CFLAGS   += -fstack-protector-strong --param ssp-buffer-size=4 -fPIE -pie -D_FORTIFY_SOURCE=2 -O2 -fPIC -Wformat -Werror -Wall
+LOCAL_CPPFLAGS += -fstack-protector-strong --param ssp-buffer-size=4 -fPIE -pie -D_FORTIFY_SOURCE=2 -O2 -fPIC -Wformat -Werror -Wall -fexceptions
+LOCAL_LDFLAGS  += -Wl,--build-id=none -Wl,-z,relro -fPIE  -Wl,-z,now,-z,noexecstack -Wformat
 
 include $(BUILD_SHARED_LIBRARY)
 ########################################################################
