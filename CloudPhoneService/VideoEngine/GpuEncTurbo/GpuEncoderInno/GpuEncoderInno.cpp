@@ -73,23 +73,6 @@ inline uint32_t AlignUp(uint32_t val, uint32_t align)
     return (val + (align - 1)) & ~(align - 1);
 }
 
-// inline VAProfile GetProfile(uint32_t profile)
-// {
-//     switch (profile) {
-//         case Vmi::GpuEncoder::ENC_PROFILE_IDC_BASELINE:
-//             return VAProfileH264ConstrainedBaseline;
-//         case Vmi::GpuEncoder::ENC_PROFILE_IDC_MAIN:
-//             return VAProfileH264Main;
-//         case Vmi::GpuEncoder::ENC_PROFILE_IDC_HIGH:
-//             return VAProfileH264High;
-//         case Vmi::GpuEncoder::ENC_PROFILE_IDC_HEVC_MAIN:
-//             return VAProfileHEVCMain;
-//         default:
-//             // 默认使用H264 baseline
-//             return VAProfileH264ConstrainedBaseline;
-//     }
-// }
-
 constexpr uint32_t MAX_WIDTH = 4096;
 constexpr uint32_t MAX_HEIGHT = 4096;
 constexpr uint32_t WIDTH_ALIGN = 32;
@@ -431,11 +414,6 @@ int32_t GpuEncoderInno::MapBuffer(GpuEncoderBufferT &buffer, uint32_t flag)
     uint32_t dataLen = 0;
     for (uint32_t i = 0; i < stream.pack_count; i++) {
         dataLen += stream.pack[i].len;
-    }
-    if (dataLen > innoBuffer->dataLen) {
-        ERR("Stream data length %u exceeds buffer capacity %u", dataLen, innoBuffer->dataLen);
-        m_iencReleaseFrame(m_iencEncoder, &stream);
-        return -ERR_INVALID_PARAM;
     }
     
     uint32_t offset = 0;
