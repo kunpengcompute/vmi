@@ -30,7 +30,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表1** Kbo
 
 ##### Kbox<a name="ZH-CN_TOPIC_0000002549826303"></a>
 
-部署Kbox云手机容器的软件环境要求请参见《[Kbox云手机容器 特性指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/feature_guide.md)》中软件部署的“软件环境”章节。
+部署Kbox云手机容器的软件环境要求请参见《[Kbox云手机容器 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md)》中软件准备的“软件环境”章节。
 
 ##### 视频流引擎<a name="ZH-CN_TOPIC_0000002518346424" id="视频流引擎"></a>
 
@@ -80,7 +80,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表1** Kbo
 
 环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
 
-具体配置步骤请参见《[Kbox云手机容器 特性指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/feature_guide.md)》中“软件部署”的“配置BIOS”章节内容。
+具体配置步骤请参见《[Kbox云手机容器 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md#d4-%E9%85%8D%E7%BD%AEbios)》中的“配置BIOS”章节内容。
 
 环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
 
@@ -90,7 +90,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表1** Kbo
 
 ##### 部署Kbox容器基础环境<a name="ZH-CN_TOPIC_0000002518186516" id="部署Kbox容器基础环境"></a>
 
-Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/feature_guide.md)》中的“软件部署”章节。按照步骤完成该章节中“启动和卸载云手机实例”小节前的所有部署。
+Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md)》。
 
 ##### （可选）部署Containerd环境<a name="ZH-CN_TOPIC_0000002549826283" id="部署Containerd环境"></a>
 
@@ -1135,7 +1135,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 道客设备插件由道客提供，本文档配套v0.0.5版本。请先获取相关的安装文档和软件包，并按照文档完成道客设备插件的部署。
 
-1. 请参见《[Kbox云手机容器 安装指南](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md)》中软件部署的“环境准备”章节获取显卡驱动VAGPU-25.03.01.01-RC24.tgz软件包。解压获取k8s-v0.0.5-1.tar.gz压缩包。
+1. 请参见《[Kbox云手机容器 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md#d22-%E8%BD%AF%E4%BB%B6%E7%8E%AF%E5%A2%83)》中的“软件环境”章节获取显卡驱动VAGPU-25.03.01.01-RC24.tgz软件包。解压获取k8s-v0.0.5-1.tar.gz压缩包。
 2. 解压k8s-v0.0.5-1.tar.gz获取相关的安装文档和软件包。
 3. 请参见《DC1000加速卡Va Docker安装指南01.pdf》中第四章（安装Va Docker）安装Va Docker。
 4. 请参见《DC1000加速卡Va Docker安装指南02.pdf》中第五章（配置低级运行时）配置低级运行时。
@@ -1311,7 +1311,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 |项目|版本|下载地址|
 | :---: | :---: | :---: |
 |openEuler|22.03 LTS SP4|[获取链接](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler%2022.03%20LTS%20SP4)|
-|Kernel|基于5.10.0-216.0.0|请参见《Kbox云手机容器 特性指南》“软件部署”中的“编译内核”章节进行编译。|
+|Kernel|基于5.10.0-216.0.0|请参见《[Kbox云手机容器 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md#d7-%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8)》中的“编译内核”章节进行编译。|
 
 **获取虚拟机软件包<a name="section1543425619147" id="获取虚拟机软件包"></a>**
 
@@ -2114,7 +2114,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
         >
         >上述的配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
 
-3. 请参见《视频流引擎 特性指南》的“启动视频流云手机”调用cfct_video脚本即可成功在虚拟机启动视频流容器。
+3. 请参见《[视频流引擎 用户指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/user_guide.md#d11-%E5%90%AF%E5%8A%A8%E8%A7%86%E9%A2%91%E6%B5%81%E4%BA%91%E6%89%8B%E6%9C%BA%E5%AE%9E%E4%BE%8B)》的“启动视频流云手机实例”调用cfct_video脚本即可成功在虚拟机启动视频流容器。
 
     ![](figures/zh-cn_image_0000002518308398.png)
 
