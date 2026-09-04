@@ -31,7 +31,7 @@
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
-> 如果校验失败，请不要使用该软件包，先联系华为技术支持工程师解决。
+> 如果校验失败，请不要使用该软件包，请提交ISSUE反馈。
 > 使用软件包安装/升级之前，也需要按上述过程先验证软件包的数字签名，确保软件包未被篡改。
 > 使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
 

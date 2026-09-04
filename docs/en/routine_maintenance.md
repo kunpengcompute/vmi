@@ -63,9 +63,9 @@ After a video stream cloud phone is deployed for the first time, you are advised
     dockerd --debug
     ```
 
-    If the fault persists, restart the Docker service (for details, see [4](#li65832418453)) or contact Huawei technical support.
+    If the fault persists, restart the Docker service (for details, see [4](#li65832418453)) or Please submit an ISSUE feedback.
 
-4. <a name="li65832418453"></a>Restart the Docker service. After the restart, check whether the service status is `active`. If the restart fails or the service status is not `active`, contact Huawei technical support.
+4. <a name="li65832418453"></a>Restart the Docker service. After the restart, check whether the service status is `active`. If the restart fails or the service status is not `active`, Please submit an ISSUE feedback.
 
     ```shell
     systemctl daemon-reload
@@ -122,7 +122,7 @@ During the running of the video stream cloud phone container, you can check whet
     ```
 
 4. Check the process status.
-    - If the parent process of a large number of processes changes to `sh` (process ID: 1), as shown in the following figure, the container crashes. In this case, contact Huawei technical support.
+    - If the parent process of a large number of processes changes to `sh` (process ID: 1), as shown in the following figure, the container crashes. In this case, Please submit an ISSUE feedback.
 
         ```shell
         ps -elf
@@ -130,7 +130,7 @@ During the running of the video stream cloud phone container, you can check whet
 
         ![](figures/zh-cn_image_0000002518345548.png)
 
-    - Check whether the `VmiAgent` process exists. If the process is not found, it indicates that `VmiAgent` is stopped and the video stream cloud phone cannot work normally. In this case, contact Huawei technical support.
+    - Check whether the `VmiAgent` process exists. If the process is not found, it indicates that `VmiAgent` is stopped and the video stream cloud phone cannot work normally. In this case, Please submit an ISSUE feedback.
 
 #### 2.4.2 Container Resource Consumption<a name="ZH-CN_TOPIC_0000002549825327"></a>
 
@@ -168,7 +168,7 @@ During the running of the video stream cloud phone container, you can check whet
     ```
 
 3. Check the process status.
-    - Check the `VmiAgent` process. If the `VmiAgent` process is not found, this process has been terminated and the video stream cloud phone cannot be used. In this case, contact Huawei technical support.
+    - Check the `VmiAgent` process. If the `VmiAgent` process is not found, this process has been terminated and the video stream cloud phone cannot be used. In this case, Please submit an ISSUE feedback.
 
         ```shell
         ps -elf |grep VmiAgent
@@ -207,7 +207,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     ![](figures/zh-cn_image_0000002549825427.png)
 
-    If the memory usage of some processes is higher than 85% and the CPU usage remains higher than 90%, check whether the processes are abnormal or contact Huawei technical support.
+    If the memory usage of some processes is higher than 85% and the CPU usage remains higher than 90%, check whether the processes are abnormal or Please submit an ISSUE feedback.
 
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
@@ -234,7 +234,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     ![](figures/unnaming.png)
 
-    If the memory usage is higher than 85% and the CPU usage remains higher than 90%, contact Huawei technical support.
+    If the memory usage is higher than 85% and the CPU usage remains higher than 90%, Please submit an ISSUE feedback.
 
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
@@ -266,7 +266,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     ![](figures/zh-cn_image_0000002549705447.png)
 
-    If the memory usage of some processes is higher than 85% and the CPU usage remains higher than 90%, check whether the processes are abnormal or contact Huawei technical support.
+    If the memory usage of some processes is higher than 85% and the CPU usage remains higher than 90%, check whether the processes are abnormal or Please submit an ISSUE feedback.
 
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
@@ -365,7 +365,7 @@ The system load indicates the current CPU workload, which measures the average n
 
     Generally, the system load in the last 1 minute (load1) is a temporary phenomenon. The system load in the last 15 minutes (load15) is a continuous phenomenon. If load15 is high and load1 is low, the situation is improved. Otherwise, the situation may deteriorate.
 
-    High load may be caused by hardware or software issues. Hardware issues typically arise from inadequate device performance, while software issues might result from prolonged thread occupation, high memory usage, and other factors. If the problem persists, contact Huawei technical support for assistance.
+    High load may be caused by hardware or software issues. Hardware issues typically arise from inadequate device performance, while software issues might result from prolonged thread occupation, high memory usage, and other factors. If the problem persists, Please submit an ISSUE feedback for assistance.
 
 ## 4 Log Management<a name="ZH-CN_TOPIC_0000002549825375"></a>
 
@@ -627,7 +627,7 @@ Periodically record parameter settings of external APIs of the video stream engi
 
 ### 5.1 Forbidden Operations<a name="ZH-CN_TOPIC_0000002518345522"></a>
 
-Currently, no forbidden operations are involved. If you have any questions, contact Huawei technical support.
+Currently, no forbidden operations are involved. If you have any questions, Please submit an ISSUE feedback.
 
 ### 5.2 Risky Operations<a name="ZH-CN_TOPIC_0000002549825369"></a>
 
