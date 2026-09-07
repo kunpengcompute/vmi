@@ -21,7 +21,7 @@ This document describes the integrated development of the device and cloud engin
 |3|SDK platform|Version: 33_r02|[Link](https://dl.google.com/android/repository/platform-33_r02.zip)|
 |4|SDK platform tools|Version: r33.0.3|[Link](https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip)|
 |5|SDK build tools|Version: r33.0.1|[Link](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
-|6|BoostKit-boostcph-videoengine_*_11.zip|Android 11 video stream engine development kit|Contact Huawei technical support.|
+|6|BoostKit-boostcph-videoengine_*_11.zip|Android 11 video stream engine development kit|Please submit an ISSUE feedback.|
 
 **Verifying Software Package Integrity<a name="section16873181764512"></a>**
 
@@ -35,7 +35,7 @@ To prevent software packages from being maliciously tampered with during transfe
 
 > ![](public_sys-resources/icon-note.gif)**NOTE**
 >
->If the verification fails, do not use the software package. Contact Huawei technical support.
+>If the verification fails, do not use the software package. Please submit an ISSUE feedback.
 >Before a software package is used for installation or upgrade, its digital signature also needs to be verified to ensure that the software package is not tampered with.
 >Before using the software package, read and agree to [Kunpeng BoostKit User License Agreement 2.0](https://www.hikunpeng.com/en/legal/developer/boostkit/software/protocol).
 
