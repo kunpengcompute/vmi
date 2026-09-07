@@ -157,3 +157,9 @@ cd ~/ARMNative/VMIEngine
 ```
 
 命令执行后，将在output/native/release_imgs/下生成VideoEngine.tar.gz。
+
+## 修订记录
+
+|文档版本| 发布日期   | 修改说明         |
+|----------| ---------- | ---------------- |
+|01| 2026-09-30 | 第一次正式发布。 |

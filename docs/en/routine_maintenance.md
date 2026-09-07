@@ -712,3 +712,9 @@ If information similar to the following is displayed, the server is connected. O
 ## References<a name="ZH-CN_TOPIC_0000002518345476"></a>
 
 None
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|

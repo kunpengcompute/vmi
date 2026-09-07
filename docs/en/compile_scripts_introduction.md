@@ -118,3 +118,10 @@ When downloading files, `wget` automatically renames a file to the segment follo
 Extracts the packages into the `unpack_open_source` directory. The extraction path is determined by parameter [2] and parameter [3] configured in `opensource_repo.conf`. For details, see [Introduction to opensource_repo.conf](#opensource_repo.conf).
 
 Additionally, the script automatically checks whether the extracted content consists of only a single top-level folder. If so, it assumes that the package contains a redundant nested folder level. It will then move all files within that folder up one level and delete the empty folder.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|
+

@@ -2325,3 +2325,10 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
     ```
 
     ![](figures/zh-cn_image_0000002549948173.png)
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|
+

@@ -1000,3 +1000,9 @@ Collect alarm information related to the fault for further analyzing, locating, 
 **Collecting Log Information<a name="section168781199405"></a>**
 
 Collect system logs and view details about user operations and operation time in the system to analyze and locate the fault.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|

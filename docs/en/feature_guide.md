@@ -124,3 +124,9 @@ The main application scenarios of video stream cloud phones include cloud phones
 ## Principles
 
 The design of the video stream cloud phone is to divide the video stream engine into the video stream engine server and the video stream engine client. The server obtains and encodes image data, and the client decodes and plays video data. In some scenarios, functions such as obtaining and injecting user touch data, and obtaining and playing audio data are also supported.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|

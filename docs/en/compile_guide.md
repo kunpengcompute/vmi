@@ -159,3 +159,9 @@ cd ~/ARMNative/VMIEngine
 ```
 
 After command execution, `VideoEngine.tar.gz` is generated in `output/native/release_imgs/`.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|

@@ -3076,3 +3076,10 @@ This API is similar to the opus_strerror interface in Opus 1.3.1. For details, r
 **Return Value Description<a name="section7911548131510"></a>**
 
 This API is similar to the opus_strerror interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|
+

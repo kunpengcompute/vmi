@@ -511,3 +511,9 @@ None
 ### Known Issues<a name="ZH-CN_TOPIC_0000002549706353"></a>
 
 None
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|
