@@ -1,15 +1,17 @@
 # auto_install_tools.sh
 
+<!-- md-trans-meta sourceCommit=98996e95cca45e7a6ce35559eba64329d9532638 translatedAt=2026-08-29T08:15:08.503Z pushedAt=2026-08-29T09:18:29.931Z -->
+
 ## Usage Command
 
-```shell
+```bash
 ./scripts/auto_install_tools.sh ${installation_directory}
 source ~/.bashrc
 ```
 
 ## Overall Workflow
 
-1. Download the compilation tool package to *${installation_directory}*. If *${installation_directory}* is not specified, the installation directory defaults to `~/NativeCompileToolsDir`.
+1. Download the compilation tool package to *${installation_directory}*. If not specified, the installation directory defaults to `~/NativeCompileToolsDir`.
 2. Extract the compilation tool within *${installation_directory}*.
 3. Configure the environment variables in the `.bashrc` file to map the paths of each compilation tool to its corresponding directory under *${installation_directory}*.
 
@@ -21,8 +23,8 @@ Downloads the following files to *${installation_directory}*.
 
 If a file already exists, it will not be downloaded repeatedly. Therefore, you can create an installation directory in advance and download the following files. Then the script will skip the file download step.
 
-|Software|Version|How to Obtain|
-|------|---|--------|
+|Software Name|Version|Download URL|
+| :---: | :---: | :---: |
 |Android NDK|r25b|<https://dl.google.com/android/repository/android-ndk-r25b-linux.zip>|
 |Android SDK Build Tools|33.0.1|<https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip>|
 |gradle|8.4.0|<https://mirrors.cloud.tencent.com/gradle/gradle-8.4-bin.zip>|
@@ -40,9 +42,9 @@ Extracts the downloaded packages and organizes them within *${installation_direc
 
 Deletes previously configured environment variables from `~/.bashrc`.
 
-The environment variables configured by `auto_install_tools.sh` start with the `#tools_env_start:` marker and end with the `#tools_env_end:` marker. This function locates these two markers in `~/.bashrc` and deletes content between them.
+The environment variables configured by `auto_install_tools.sh` start with the **#tools_env_start:** marker and end with the **#tools_env_end:** marker. This function locates these two markers in `~/.bashrc` and deletes the content between them.
 
-If `#tools_env_end:` is found before `#tools_env_start:`, the script cannot automatically delete the content, and you must resolve the conflict manually.
+If **#tools_env_end:** appears before **#tools_env_start:**, the script cannot automatically delete the content, and you must resolve the conflict manually.
 
 ### CheckEnvConflict()
 
@@ -50,7 +52,7 @@ Checks whether the environment variables intended for configuration already exis
 
 The environment variables to be configured are as follows:
 
-```shell
+```bash
 USER_LOCAL_PATH
 JAVA_HOME
 AN_JDKPATH
@@ -67,13 +69,13 @@ ANDROID_NDK
 
 ### SetEnvConfig()
 
-Appends the environment variables to `~/.bashrc`, starting with the `#tools_env_start:` marker and ending with the `#tools_env_end:` marker.
+Adds environment variables to `~/.bashrc`, starting with the **#tools_env_start:** marker and ending with the **#tools_env_end:** marker.
 
 # download_open_source.sh
 
 ## Overall Workflow
 
-Download open-source software packages to the `open_source_download` directory, and then extracts them into the corresponding directories under `unpack_open_source`.
+Download open-source software packages to the `open_source_download` directory, and then extract them into the corresponding directories under `unpack_open_source`.
 
 If a package already exists in the `open_source_download` directory, it will not be downloaded again. However, regardless of whether extracted files already exist under `unpack_open_source`, the script will re-extract and overwrite the previously extracted files during each code compilation.
 
@@ -85,7 +87,7 @@ The `opensource_repo.conf` file is used to record the download URLs and extracti
 
 To add a new download URL for an open-source software package in `opensource_repo.conf`, you must configure four parameters based on the required format. The parameters are explained as follows:
 
-```shell
+```bash
 Parameter [0]: Download URL, used by wget for downloading.
 Parameter [1]: Downloaded file name.
 Parameter [2]: Extraction directory. The downloaded file will be extracted to unpack_open_source/${Parameter [2]}. Note that the extraction directory is also affected by Parameter [3].
@@ -113,6 +115,6 @@ When downloading files, `wget` automatically renames a file to the segment follo
 
 ### unpack_source()
 
-Extracts the packages into the `unpack_open_source` directory. The extraction path is determined by parameter [2] and parameter [3] configured in `opensource_repo.conf`. For details, see the [Introduction to opensource_repo.conf](#opensource_repo.conf) section.
+Extracts the packages into the `unpack_open_source` directory. The extraction path is determined by parameter [2] and parameter [3] configured in `opensource_repo.conf`. For details, see [Introduction to opensource_repo.conf](#opensource_repo.conf).
 
 Additionally, the script automatically checks whether the extracted content consists of only a single top-level folder. If so, it assumes that the package contains a redundant nested folder level. It will then move all files within that folder up one level and delete the empty folder.

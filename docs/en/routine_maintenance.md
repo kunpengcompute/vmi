@@ -1,6 +1,8 @@
 # Routine Maintenance<a name="ZH-CN_TOPIC_0000002552733333"></a>
 
-## 1 O&M Overview<a name="ZH-CN_TOPIC_0000002549705369"></a>
+<!-- md-trans-meta sourceCommit=8137c5c6f22411c010ac7e5e01f7b05f199cf237 translatedAt=2026-08-29T08:19:14.743Z pushedAt=2026-09-03T03:18:47.968Z -->
+
+## O&M Overview<a name="ZH-CN_TOPIC_0000002549705369"></a>
 
 A cloud phone is a cloud server with an Android Open Source Project (AOSP) and functions as a virtual phone. It extends the functions of a physical phone and can be used in various scenarios such as cloud mobile gaming and mobile office.
 
@@ -18,13 +20,13 @@ The video stream engine consists of a server and a client. The server provides f
 
     Inspection, performance monitoring, log management, risky operations, and routine maintenance
 
-## 2 Inspection<a name="ZH-CN_TOPIC_0000002549825359"></a>
+## Inspection<a name="ZH-CN_TOPIC_0000002549825359"></a>
 
-### 2.1 Overview<a name="ZH-CN_TOPIC_0000002549705345"></a>
+### Overview<a name="ZH-CN_TOPIC_0000002549705345"></a>
 
 Inspection is a manual routine check. Through inspection, you can learn about the running status and environment changes of the video stream cloud phone in real time, detect potential risks, and take measures in a timely manner to improve the efficiency of handling emergencies and ensure the security and stability of the system. This document uses the Docker container runtime as an example to demonstrate inspection items.
 
-### 2.2 Inspection Items and Periods<a name="ZH-CN_TOPIC_0000002518345530"></a>
+### Inspection Items and Periods<a name="ZH-CN_TOPIC_0000002518345530"></a>
 
 Generate a report based on the inspection operations, as shown in [**Table 1**](#video-stream-cloud-phone-inspection-report).
 
@@ -33,23 +35,23 @@ After a video stream cloud phone is deployed for the first time, you are advised
 **Table 1** Video stream cloud phone inspection report<a id="video-stream-cloud-phone-inspection-report"></a>
 
 |Category|Item|Recommended Period|Result|Remarks|
-|--|--|--|--|--|
+| :---: | :---: | :---: | :---: | :---: |
 |Server configuration|Hardware configuration|Before deploying a video stream cloud phone|
 |Server configuration|Server indicators, such as the temperature, CPU usage, and memory usage|Before deploying a video stream cloud phone|
 |Software configuration|Software package verification|Before deploying a video stream cloud phone|
 |Alarm check|Server alarms|After a service fault occurs|
-|Operating environment|Status of the Kbox operating environment and Docker service|Before running the video stream cloud phone|
+|Operating environment|Status of the operating environment and Docker service|Before running the video stream cloud phone|
 |Video stream cloud phone status|Container status|Before or during the running of the video stream cloud phone|
 |Video stream cloud phone status|Container resource consumption|Before or during the running of the video stream cloud phone|
 
-### 2.3 Checking the Operating Environment Status<a name="ZH-CN_TOPIC_0000002549705329"></a>
+### Checking the Operating Environment Status<a name="ZH-CN_TOPIC_0000002549705329"></a>
 
-#### 2.3.1 Docker Service Status<a name="ZH-CN_TOPIC_0000002549705375"></a>
+#### Docker Service Status<a name="ZH-CN_TOPIC_0000002549705375"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Query the Docker service status.
 
-    ```shell
+    ```bash
     systemctl status docker
     ```
 
@@ -59,7 +61,7 @@ After a video stream cloud phone is deployed for the first time, you are advised
 
 3. If the service status is abnormal, run the following command to check the cause of the Docker service startup failure:
 
-    ```shell
+    ```bash
     dockerd --debug
     ```
 
@@ -67,7 +69,7 @@ After a video stream cloud phone is deployed for the first time, you are advised
 
 4. <a name="li65832418453"></a>Restart the Docker service. After the restart, check whether the service status is `active`. If the restart fails or the service status is not `active`, contact Huawei technical support.
 
-    ```shell
+    ```bash
     systemctl daemon-reload
     systemctl restart docker
     ```
@@ -77,54 +79,54 @@ After a video stream cloud phone is deployed for the first time, you are advised
     >- `systemctl daemon-reload`: Start the Docker daemon.
     >- `systemctl restart docker`: Restart the Docker service.
 
-### 2.4 Checking the Video Stream Cloud Phone Status<a name="ZH-CN_TOPIC_0000002549825337"></a>
+### Checking the Video Stream Cloud Phone Status<a name="ZH-CN_TOPIC_0000002549825337"></a>
 
-#### 2.4.1 Container Status<a name="ZH-CN_TOPIC_0000002518185572"></a>
+#### Container Status<a name="ZH-CN_TOPIC_0000002518185572"></a>
 
-##### 2.4.1.1 Container Startup Status<a name="ZH-CN_TOPIC_0000002518185580"></a>
+##### Container Startup Status<a name="ZH-CN_TOPIC_0000002518185580"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Query the ID of the cloud phone container instance.
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-3. Access the video stream cloud phone container. *{android_id}* indicates the ID of the started instance.
+3. Access the video stream cloud phone container. ${android_id} indicates the ID of the started instance.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} sh
     ```
 
 4. Check the status of the `sys.boot_completed` property.
 
-    ```shell
+    ```bash
     getprop sys.boot_completed
     ```
 
     If the value of `sys.boot_completed` is `1` in the command output, the startup is successful.
 
-##### 2.4.1.2 Container Running Status<a name="ZH-CN_TOPIC_0000002549825353"></a>
+##### Container Running Status<a name="ZH-CN_TOPIC_0000002549825353"></a>
 
 During the running of the video stream cloud phone container, you can check whether the container is normal by checking the process status.
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Query the ID of the cloud phone container instance.
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-3. Access the video stream cloud phone container. *{android_id}* indicates the user-defined ID of the started instance, which usually starts from 1.
+3. Access the video stream cloud phone container. ${android_id} indicates the user-defined ID of the started instance, which usually starts from 1.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} sh
     ```
 
 4. Check the process status.
     - If the parent process of a large number of processes changes to `sh` (process ID: 1), as shown in the following figure, the container crashes. In this case, contact Huawei technical support.
 
-        ```shell
+        ```bash
         ps -elf
         ```
 
@@ -132,11 +134,11 @@ During the running of the video stream cloud phone container, you can check whet
 
     - Check whether the `VmiAgent` process exists. If the process is not found, it indicates that `VmiAgent` is stopped and the video stream cloud phone cannot work normally. In this case, contact Huawei technical support.
 
-#### 2.4.2 Container Resource Consumption<a name="ZH-CN_TOPIC_0000002549825327"></a>
+#### Container Resource Consumption<a name="ZH-CN_TOPIC_0000002549825327"></a>
 
 During the running of the video stream cloud phone container, you need to know about the system resources used by the container in a timely manner. Run the following command to dynamically view the resource consumption of the video stream cloud phone:
 
-```shell
+```bash
 docker stats
 ```
 
@@ -156,52 +158,52 @@ docker stats
 >- `BLOCK I/O`: drive I/O data
 >- `PIDS`: Process IDs
 
-#### 2.4.3 Engine Service Status<a name="ZH-CN_TOPIC_0000002518345526"></a>
+#### Engine Service Status<a name="ZH-CN_TOPIC_0000002518345526"></a>
 
 During the running of the video stream cloud phone container, you can check whether the container is normal by checking the process status.
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
-2. Access the video stream cloud phone container. *{android_id}* indicates the ID of the started instance.
+2. Access the video stream cloud phone container. ${android_id} indicates the ID of the started instance.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} sh
     ```
 
 3. Check the process status.
     - Check the `VmiAgent` process. If the `VmiAgent` process is not found, this process has been terminated and the video stream cloud phone cannot be used. In this case, contact Huawei technical support.
 
-        ```shell
+        ```bash
         ps -elf |grep VmiAgent
         ```
 
         ![](figures/zh-cn_image_0000002518185694.png)
 
-    - Check the `VmiAgent` process. If the `VmiAgent` process is found, check its process ID. In the example highlighted in the figure above, the process ID is `283`. Run the following command to check the process status, CPU usage, and memory usage. In the command, *${pid}* indicates the `VmiAgent` process ID. The command output is shown in the following figure.
+    - Check the `VmiAgent` process. If the `VmiAgent` process is found, check its process ID. In the example highlighted in the figure above, the process ID is `283`. Run the following command to check the process status, CPU usage, and memory usage. In the command, ${pid} indicates the `VmiAgent` process ID. The command output is shown in the following figure.
 
-        ```shell
+        ```bash
         top -p ${pid}
         ```
 
         ![](figures/zh-cn_image_0000002518345598.png)
 
-## 3 Monitoring<a name="ZH-CN_TOPIC_0000002549825319"></a>
+## Monitoring<a name="ZH-CN_TOPIC_0000002549825319"></a>
 
-### 3.1 Overview<a name="ZH-CN_TOPIC_0000002549825345"></a>
+### Overview<a name="ZH-CN_TOPIC_0000002549825345"></a>
 
 Monitoring is performed on video stream cloud phone resources and applications. Through application monitoring, you can learn about the resource usage, trends, and alarms in a timely manner.
 
-### 3.2 Host CPU and Memory Usage<a name="ZH-CN_TOPIC_0000002518345494"></a>
+### Host CPU and Memory Usage<a name="ZH-CN_TOPIC_0000002518345494"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the CPU and memory usage of processes within the containers on the host. See the following figure.
 
-    ```shell
+    ```bash
     top
     ```
 
@@ -228,7 +230,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     If you want to monitor the processes running in the system and the complete commands, you can install and use the `htop` utility. After the installation is complete, run the following command:
 
-    ```shell
+    ```bash
     htop
     ```
 
@@ -243,24 +245,24 @@ Monitoring is performed on video stream cloud phone resources and applications. 
     >In the right part (yellow box), `Tasks` indicates the total number of processes and the number of running processes. `Load average` indicates the average system load in 1 minute, 5 minutes, and 15 minutes. `Uptime` indicates the system uptime.
     >Other parameters are similar to those of the `top` command.
 
-### 3.3 Container CPU and Memory Usage<a name="ZH-CN_TOPIC_0000002518185588"></a>
+### Container CPU and Memory Usage<a name="ZH-CN_TOPIC_0000002518185588"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
-3. Access the Docker container and check the CPU and memory usage. In the command, *{android_id}* indicates the ID of the started instance.
+3. Access the Docker container and check the CPU and memory usage. In the command, ${android_id} indicates the ID of the started instance.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} sh
     ```
 
 4. Query the CPU and memory usage of the processes in the Docker container. See the following figure.
 
-    ```shell
+    ```bash
     top
     ```
 
@@ -274,7 +276,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     To view the real-time information about the CPU load and memory usage, run the following command:
 
-    ```shell
+    ```bash
     ctop
     ```
 
@@ -288,66 +290,66 @@ Monitoring is performed on video stream cloud phone resources and applications. 
     >- `CID`: container ID
     >- `CPU`: CPU usage of the container
     >- `MEM`: memory usage of the container
-    >- `NET RX/TX`: volume of data transmitted and received by the container network
-    >- `IO R/W`: I/O read and write data volume of the container drive
+    >- `NET RX/TX`: volume of data received and transmitted by the container network
+    >- `IO`: I/O read and write data volume of the container drive
     >- `PIDS`: process ID of the container
 
-### 3.4 System Memory<a name="ZH-CN_TOPIC_0000002518345486"></a>
+### System Memory<a name="ZH-CN_TOPIC_0000002518345486"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Check the drive usage of the video stream cloud phone server.
 
-    ```shell
+    ```bash
     free
     ```
 
     You can run the `free` command to query the system memory usage, including the physical memory, virtual swap memory, and shared memory regions, as well as buffers used by the system kernel. The memory usage of the video stream cloud phone can also be queried by using this command.
 
-### 3.5 Drive Usage<a name="ZH-CN_TOPIC_0000002518185538"></a>
+### Drive Usage<a name="ZH-CN_TOPIC_0000002518185538"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Check the drive usage of the video stream cloud phone server.
 
-    ```shell
+    ```bash
     df -h
     ```
 
     ![](figures/zh-cn_image_0000002549705465.png)
 
-    In the preceding figure, the video stream cloud phone container data is stored in `/home/mount/data/`. The content in the red box show the data storage information of container `android_1`. The storage size is `16G`, and the current usage is `4%`. If the value of `Use%` is less than or equal to 85%, the drive usage is normal. Otherwise, you need to clear the drive space.
+    In the preceding figure, the video stream cloud phone container data is stored in `/home/mount/data/`. The content in the red box shows the data storage information of container `android_1`. The storage size is `16G`, and the current usage is `4%`. If the value of `Use%` is less than or equal to 85%, the drive usage is normal. Otherwise, you need to clear the drive space.
 
-### 3.6 System Load<a name="ZH-CN_TOPIC_0000002518345502"></a>
+### System Load<a name="ZH-CN_TOPIC_0000002518345502"></a>
 
 The system load indicates the current CPU workload, which measures the average number of threads in the running queue during a specific time interval. If the load is too high, the server cannot process requests and operations, or even breaks down.
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the system load:
 
-    ```shell
+    ```bash
     uptime
     ```
 
     Command output:
 
-    ```shell
+    ```bash
     19:49:12 up 25 days,  5:04,  9 users,  load average: 8.17, 8.16, 8.07
     ```
 
@@ -356,43 +358,43 @@ The system load indicates the current CPU workload, which measures the average n
     >Parameters in the command output are described as follows:
     >- `19:49:12`: current time
     >- `up 25 days, 5:04`: system uptime
-    >- `9 users`: number of current online user
+    >- `9 users`: number of current online users
     >- `load average: 8.17, 8.16, 8.07`: average system load in the last 1, 5, and 15 minutes
 
-    - If the number of active processes of each CPU core is less than or equal to 0.7 times the average load, the system load is within the secure range.
-    - If the number of active processes of each CPU core is less than three times the average load, the system load is not too heavy.
-    - If the number of active processes of each CPU core exceeds five times the average load, the system load is heavy. In this case, the script execution is slow.
+    - If the current load average is no more than 0.7 times the number of CPU cores, the system load is within a safe range.
+    - If the load average is less than 3 times the number of CPU cores, the system load is not severe.
+    - If the load average reaches 5 times the number of CPU cores, the system load is extremely high, and scripts launched at this point will run very slowly.
 
-    Generally, the system load in the last 1 minute (load1) is a temporary phenomenon. The system load in the last 15 minutes (load15) is a continuous phenomenon. If load15 is high and load1 is low, the situation is improved. Otherwise, the situation may deteriorate.
+    Generally, the system load in the last 1 minute (load1) is a temporary condition. The system load in the last 15 minutes (load15) is a sustained condition. If load15 is high and load1 is low, the situation can be considered to be improving. Conversely, the situation may be worsening.
 
     High load may be caused by hardware or software issues. Hardware issues typically arise from inadequate device performance, while software issues might result from prolonged thread occupation, high memory usage, and other factors. If the problem persists, contact Huawei technical support for assistance.
 
-## 4 Log Management<a name="ZH-CN_TOPIC_0000002549825375"></a>
+## Log Management<a name="ZH-CN_TOPIC_0000002549825375"></a>
 
-### 4.1 Overview<a name="ZH-CN_TOPIC_0000002549705353"></a>
+### Overview<a name="ZH-CN_TOPIC_0000002549705353"></a>
 
 Log management provides log search and log dump capabilities. Log management records user operation audit logs, helps quickly locate causes of problems, traces program execution, collects data statistics, and analyzes performance.
 
-### 4.2 Basic Cloud Phone Maintenance Tool<a name="ZH-CN_TOPIC_0000002518345458"></a>
+### Basic Cloud Phone Maintenance Tool<a name="ZH-CN_TOPIC_0000002518345458"></a>
 
-The Kbox cloud phone container provides Kbox_maintainer, an O&M tool. This tool supports functions such as log collection, resource check, and fault rectification to improve the testability, serviceability, and maintainability of the cloud phone prototype. For details about how to obtain and use this tool, see "Maintenance Tool" in [Kbox Cloud Phone Container Routine Maintenance](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc/docs/en/routine_maintenance.md#d44-maintenance-tool).
+The Kbox cloud phone container provides Kbox_maintainer, a maintenance tool. This tool supports functions such as log collection, resource check, and fault rectification to improve the testability, serviceability, and maintainability of the cloud phone prototype. For details about how to obtain and use this tool, see "Maintenance Tool" in [Kbox Cloud Phone Container Routine Maintenance](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc/docs/en/routine_maintenance.md#d44-maintenance-tool).
 
-### 4.3 Querying Video Stream Cloud Phone Logs<a name="ZH-CN_TOPIC_0000002518185612"></a>
+### Querying Video Stream Cloud Phone Logs<a name="ZH-CN_TOPIC_0000002518185612"></a>
 
-#### 4.3.1 Querying Logs on the Android Device<a name="ZH-CN_TOPIC_0000002549825389"></a>
+#### Querying Logs on the Android Device<a name="ZH-CN_TOPIC_0000002549825389"></a>
 
-##### 4.3.1.1 Application Stack Information During ANR<a name="ZH-CN_TOPIC_0000002549825383"></a>
+##### Application Stack Information During ANR<a name="ZH-CN_TOPIC_0000002549825383"></a>
 
 If an application not responding (ANR) event occurs in the video stream cloud phone container, you need to collect related application stack information. The information is stored in the `/data/anr/` directory of the container.
 
-#### 4.3.2 Querying Logs on the Server<a name="ZH-CN_TOPIC_0000002549705307"></a>
+#### Querying Logs on the Server<a name="ZH-CN_TOPIC_0000002549705307"></a>
 
-##### 4.3.2.1 System Log Information<a name="ZH-CN_TOPIC_0000002549705337"></a>
+##### System Log Information<a name="ZH-CN_TOPIC_0000002549705337"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
@@ -403,12 +405,12 @@ If an application not responding (ANR) event occurs in the video stream cloud ph
     >The `syslog` file records alarm information, which is usually the information about system faults.
     >Other kernel files include core startup logs (`dmesg`), system error logs (`messages`), login records (`wtmp`), and boot logs (`boot.log`).
 
-##### 4.3.2.2 Operating Environment Log Information<a name="ZH-CN_TOPIC_0000002518185558"></a>
+##### Operating Environment Log Information<a name="ZH-CN_TOPIC_0000002518185558"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
@@ -416,155 +418,155 @@ If an application not responding (ANR) event occurs in the video stream cloud ph
 
     The `dmesg` logs contain device initialization logs, kernel module logs, and application crash information, which are helpful for subsequent cause analysis and fault location.
 
-    ```shell
+    ```bash
     dmesg -T
     ```
 
-#### 4.3.3 Querying Docker Container Logs<a name="ZH-CN_TOPIC_0000002549705383"></a>
+#### Querying Docker Container Logs<a name="ZH-CN_TOPIC_0000002549705383"></a>
 
-##### 4.3.3.1 Metadata Information<a name="ZH-CN_TOPIC_0000002518185618"></a>
+##### Metadata Information<a name="ZH-CN_TOPIC_0000002518185618"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the container ID:
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-4. Run the `inspect` command provided by Docker to view container details. In the following command, *${android_id}* indicates the ID of the started instance.
+4. Run the `inspect` command provided by Docker to view container details. In the following command, ${android_id} indicates the ID of the started instance.
 
-    ```shell
+    ```bash
     docker inspect android_${android_id}
     ```
 
     After the preceding command is executed, all metadata information of the container is returned in JSON array format. In most cases, if you only need to obtain a specific piece of data about the container, you can extract the required data from the JSON data. For example, to obtain the IP address of the container, run the following command:
 
-    ```shell
+    ```bash
     docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' android_${index}
     ```
 
     Example:
 
-    ```shell
+    ```bash
     docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' android_11
     ```
 
     Command output:
 
-    ```shell
+    ```bash
     172.17.0.4
     ```
 
-##### 4.3.3.2 logcat Log Information<a name="ZH-CN_TOPIC_0000002518185602"></a>
+##### logcat Log Information<a name="ZH-CN_TOPIC_0000002518185602"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the container ID:
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-4. Run the following command to query real-time server logs. In the command, *${android_id}* indicates the container ID, and `VMI` indicates the log tag prefix of the video stream cloud phone.
+4. Run the following command to query real-time server logs. In the command, ${android_id} indicates the container ID, and VMI is the log tag prefix of the video stream cloud phone.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} logcat |grep -i VMI
     ```
 
-##### 4.3.3.3 Process Information<a name="ZH-CN_TOPIC_0000002518185548"></a>
+##### Process Information<a name="ZH-CN_TOPIC_0000002518185548"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the container ID:
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-4. Run the following command to query the information about the running processes. In the command, *${android_id}* indicates the container ID.
+4. Run the following command to query the information about the running processes. In the command, ${android_id} indicates the container ID.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} ps -elf
     ```
 
-##### 4.3.3.4 Top Information<a name="ZH-CN_TOPIC_0000002549825379"></a>
+##### Top Information<a name="ZH-CN_TOPIC_0000002549825379"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the container ID:
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-4. Run the following command to query the resource usage of each process in the container in real time. In the command, *${android_id}* indicates the container ID.
+4. Run the following command to query the resource usage of each process in the container in real time. In the command, ${android_id} indicates the container ID.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} top
     ```
 
-##### 4.3.3.5 Container Property Information<a name="ZH-CN_TOPIC_0000002549705359"></a>
+##### Property Information<a name="ZH-CN_TOPIC_0000002549705359"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the container ID:
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-4. Run the following command to query the system property information of the container. In the command, *${android_id}* indicates the container ID.
+4. Run the following command to query the system property information of the container. In the command, ${android_id} indicates the container ID.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} getprop
     ```
 
-##### 4.3.3.6 dumpsys Information<a name="ZH-CN_TOPIC_0000002518185566"></a>
+##### dumpsys Information<a name="ZH-CN_TOPIC_0000002518185566"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the container ID:
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-4. Run the following command to obtain the diagnosis output of all system services in the container. In the command, *${android_id}* indicates the ID of the started instance.
+4. Run the following command to obtain the diagnosis output of all system services in the container. In the command, ${android_id} indicates the ID of the started instance.
 
     `dumpsys` is a tool running on Android devices. It provides information about system services.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} dumpsys
     ```
 
@@ -572,13 +574,13 @@ If an application not responding (ANR) event occurs in the video stream cloud ph
 
     - To obtain the complete list of system services supported by `dumpsys`, run the following command:
 
-        ```shell
+        ```bash
         docker exec -it android_${android_id} dumpsys -l
         ```
 
     - To obtain the container memory information, run the following command:
 
-        ```shell
+        ```bash
         docker exec -it android_${android_id} dumpsys meminfo
         ```
 
@@ -586,26 +588,26 @@ If an application not responding (ANR) event occurs in the video stream cloud ph
 
         ![](figures/zh-cn_image_0000002518185650.png)
 
-### 4.4 Exporting Video Stream Cloud Phone Logs<a name="ZH-CN_TOPIC_0000002518345508"></a>
+### Exporting Video Stream Cloud Phone Logs<a name="ZH-CN_TOPIC_0000002518345508"></a>
 
 The log export function enables you to view logs on the local IDE and quickly locate faults, preventing real-time log printing from affecting fault location.
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to query the container ID:
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
-4. Run the following command to query real-time server logs. In the command, *${android_id}* indicates the container ID.
+4. Run the following command to query real-time server logs. In the command, ${android_id} indicates the container ID.
 
-    ```shell
+    ```bash
     docker exec -it android_${android_id} logcat -d >> /home/file.log
     ```
 
@@ -615,21 +617,21 @@ The log export function enables you to view logs on the local IDE and quickly lo
     >
     >`/home/file.log` is the log output path.
 
-### 4.5 Log Overflow Dump<a name="ZH-CN_TOPIC_0000002549825309"></a>
+### Log Overflow Dump<a name="ZH-CN_TOPIC_0000002549825309"></a>
 
 The implementation of the log overflow dump function depends on ISVs. The video stream engine does not involve the log overflow dump design.
 
-### 4.6 Log Audit<a name="ZH-CN_TOPIC_0000002518345444"></a>
+### Log Audit<a name="ZH-CN_TOPIC_0000002518345444"></a>
 
 Periodically record parameter settings of external APIs of the video stream engine and external APIs on which the video stream engine depends. For details, see [Developer Guide](development_guide.md).
 
-## 5 Risky Operations<a name="ZH-CN_TOPIC_0000002549705379"></a>
+## Risky Operations<a name="ZH-CN_TOPIC_0000002549705379"></a>
 
-### 5.1 Forbidden Operations<a name="ZH-CN_TOPIC_0000002518345522"></a>
+### Forbidden Operations<a name="ZH-CN_TOPIC_0000002518345522"></a>
 
 Currently, no forbidden operations are involved. If you have any questions, contact Huawei technical support.
 
-### 5.2 Risky Operations<a name="ZH-CN_TOPIC_0000002549825369"></a>
+### Risky Operations<a name="ZH-CN_TOPIC_0000002549825369"></a>
 
 Risky operations are classified into the following levels:
 
@@ -642,7 +644,7 @@ For details about risky operations on server hardware, see [**Table 1**](#risky-
 **Table 1** Risky operations on hardware<a id="risky-operations-on-hardware"></a>
 
 |No.|Operation|Impact|Risk Level|Operation Requirements in Production Environment|Operation Requirements in Test Environment|
-|--|--|--|--|--|--|
+| :---: | :---: | :---: | :---: | :---: | :---: |
 |1|Replacing server parts|Perform this operation in strict accordance with the operation instructions to avoid function failure and hardware damage.|Critical|This operation must be performed within the maintenance and test period approved by the customer. This operation must be performed by maintenance personnel. This operation must be approved by the customer.|This operation must be performed by maintenance personnel or approved by the customer.|
 |2|Powering off unexpectedly during the CPLD upgrade|AC power failure during CPLD upgrade may cause CPLD file corruption and affect functionality, requiring a re-upgrade for recovery.|Critical|This operation must be performed within the maintenance and test period approved by the customer. This operation must be performed by maintenance personnel. This operation must be approved by the customer.|This operation must be performed by maintenance personnel or approved by the customer.|
 |3|Powering off unexpectedly during the BIOS upgrade|AC power failure during BIOS upgrade may cause BIOS damage and affect functionality, requiring a re-upgrade for recovery.|Critical|This operation must be performed within the maintenance and test period approved by the customer. This operation must be performed by maintenance personnel. This operation must be approved by the customer.|This operation must be performed by maintenance personnel or approved by the customer.|
@@ -652,7 +654,7 @@ For details about risky operations on server hardware, see [**Table 1**](#risky-
 **Table 2** Risky operations on software<a id="risky-operations-on-software"></a>
 
 |No.|Operation|Operation Entry|Impact|Risk Level|Workaround|Operation Requirements in Production Environment|Operation Requirements in Test Environment|
-|--|--|--|--|--|--|--|--|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 |1|Running the `service network restart` command during the normal operation of the system|Log in to the host and run the `service network restart` command.|The host, service provisioning, and VM startup may fail.|Critical|None|This operation must be performed within the maintenance and test period approved by the customer. This operation must be performed by maintenance personnel. This operation must be approved by the customer.|This operation must be performed by maintenance personnel or approved by the customer.|
 |2|Running the `ping -I` command on the host (specifying a network interface)|Log in to the host and run the `ping -I` command.|Host network communication may be interrupted. Running the `ping` command to check the network is recommended.|Critical|None|This operation must be performed within the maintenance and test period approved by the customer. This operation must be performed by maintenance personnel. This operation must be approved by the customer.|This operation must be performed by maintenance personnel or approved by the customer.|
 |3|Manually deleting or modifying the message log files|Log in to the host and run the `rm` command to delete message logs from `/var/log`.|Logs cannot be printed.|Critical|None|This operation must be performed within the maintenance and test period approved by the customer. This operation must be performed by maintenance personnel. This operation must be approved by the customer.|This operation must be performed by maintenance personnel or approved by the customer.|
@@ -661,9 +663,9 @@ For details about risky operations on server hardware, see [**Table 1**](#risky-
 |6|Changing the IP address of a server|Log in to the host and run the `ifconfig` command to change the IP address.|This operation may affect service processes on the host and current service operations.|Critical|None|This operation must be performed within the maintenance and test period approved by the customer. This operation must be performed by maintenance personnel. This operation must be approved by the customer.|This operation must be performed by maintenance personnel or approved by the customer.|
 |7|Running the `rm -rf` command to delete files|Log in to the host and delete files on the host or files required by the commercial release package.|This operation may affect service processes on the host and the video stream cloud phone service.|Critical|None|This operation must be performed within the maintenance and test period approved by the customer. This operation must be performed by maintenance personnel. This operation must be approved by the customer.|This operation must be performed by maintenance personnel or approved by the customer.|
 
-## 6 Routine O&M<a name="ZH-CN_TOPIC_0000002549705389"></a>
+## Routine O&M<a name="ZH-CN_TOPIC_0000002549705389"></a>
 
-### 6.1 Overview<a name="ZH-CN_TOPIC_0000002518185596"></a>
+### Overview<a name="ZH-CN_TOPIC_0000002518185596"></a>
 
 You need to perform routine maintenance on project operations and output O&M reports. For details, see [**Table 1**](#video-stream-routine-maintenance-report).
 
@@ -671,16 +673,16 @@ After a video stream cloud phone is deployed for the first time, you are advised
 
 **Table 1** Video stream cloud phone routine maintenance report<a id="video-stream-routine-maintenance-report"></a>
 
-|No.|Item|Recommended O&M Period|Result|Remarks|
-|--|--|--|--|--|
+|No.|Item|Recommended O&M Interval|Result|Remarks|
+| :---: | :---: | :---: | :---: | :---: |
 |1|Viewing the server status|Once a day|
 |2|Viewing the container status|Once a week|
 
-### 6.2 Server Status<a name="ZH-CN_TOPIC_0000002518345468"></a>
+### Server Status<a name="ZH-CN_TOPIC_0000002518345468"></a>
 
 Use a server query tool and run the following command to connect to the server IP address:
 
-```shell
+```bash
 ssh root@xxx.xxx.xxx.xxx
 ```
 
@@ -688,18 +690,18 @@ If information similar to the following is displayed, the server is connected. O
 
 ![](figures/unnaming-0.png)
 
-### 6.3 Container Status<a name="ZH-CN_TOPIC_0000002518185608"></a>
+### Container Status<a name="ZH-CN_TOPIC_0000002518185608"></a>
 
 1. Use an SSH tool such as Xshell to log in to the server where the video stream cloud phone is deployed as the cloud phone O&M user (for example, `root`).
 2. Switch to the `root` user.
 
-    ```shell
+    ```bash
     su - root
     ```
 
 3. Run the following command to list containers. The following figure shows the running status of Docker containers.
 
-    ```shell
+    ```bash
     docker ps -a
     ```
 
@@ -707,6 +709,6 @@ If information similar to the following is displayed, the server is connected. O
 
     As shown in the preceding figure, all containers are in the Up state. You can delete containers in other states as required to release resources.
 
-## 7 References<a name="ZH-CN_TOPIC_0000002518345476"></a>
+## References<a name="ZH-CN_TOPIC_0000002518345476"></a>
 
 None

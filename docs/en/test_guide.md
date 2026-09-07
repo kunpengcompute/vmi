@@ -1,5 +1,7 @@
 # Test Guide
 
+<!-- md-trans-meta sourceCommit=f8f96e5f62319dc95ee2a6caf995177c9be932ff translatedAt=2026-08-29T08:19:00.389Z pushedAt=2026-09-02T11:25:12.273Z -->
+
 ## Introduction
 
 ### Acceptance Criteria
@@ -9,11 +11,14 @@ This document provides guidance for accepting cloud phone products. Before the a
 ### Important Notes
 
 1. Before the acceptance, ensure that the physical environment, system environment, and software version are correct and matched.
+
 2. Before executing the acceptance test cases, deploy the end-to-end environment of the video stream cloud phone. For details, see [Installation Guide](install_guide.md).
+
 3. Ensure that the acceptance items are confirmed by Huawei and the customer.
+
 4. During the product acceptance and preliminary acceptance tests, both parties should strictly observe applicable test criteria. Because some items have been tested before delivery, you can omit or sample such items if site conditions are limited.
 
-> **Note:**
+> ![](public_sys-resources/icon-note.gif)**NOTE**
 >
 > Perform the acceptance in accordance with the contract and agreement reached by both parties. This document serves as a reference only.
 
@@ -28,7 +33,9 @@ For details about the server hardware and software package information, environm
 The test results are defined as follows:
 
 - **PASS**: The test result is consistent with the expected result after a test is performed based on the prerequisites and preset procedure.
+
 - **FAIL**: The test result is inconsistent with the expected result after a test is performed based on the prerequisites and preset procedure.
+
 - **NT**: The test is not implemented because the requirements have changed or the test environment does not meet the requirements.
 
 ## Test Cases and Records
@@ -37,8 +44,8 @@ The test results are defined as follows:
 
 #### Video Stream Cloud Phone Codec Test
 
-| Item| Content|
-| :--- | :--- |
+|Item|Content|
+| :---: | :---: |
 | Case No.| 4.1.1 |
 | Test Objective| Verify the video codec function of the video stream cloud phone.|
 | Test Networking| None|
@@ -50,8 +57,8 @@ The test results are defined as follows:
 
 #### Video Stream Cloud Phone Touch Test
 
-| Item| Content|
-| :--- | :--- |
+|Item|Content|
+| :---: | :---: |
 | Case No.| 4.1.2 |
 | Test Objective| Verify the touch control function of the video stream cloud phone.|
 | Test Networking| None|
@@ -63,8 +70,8 @@ The test results are defined as follows:
 
 #### Video Stream Cloud Phone Audio Test
 
-| Item| Content|
-| :--- | :--- |
+|Item|Content|
+| :---: | :---: |
 | Case No.| 4.1.3 |
 | Test Objective| Verify the audio function of the video stream cloud phone.|
 | Test Networking| None|
@@ -76,8 +83,8 @@ The test results are defined as follows:
 
 #### Video Stream Cloud Phone Microphone Test
 
-| Item| Content|
-| :--- | :--- |
+|Item|Content|
+| :---: | :---: |
 | Case No.| 4.1.4 |
 | Test Objective| Verify the microphone function of the video stream cloud phone.|
 | Test Networking| None|
@@ -90,7 +97,7 @@ The test results are defined as follows:
 #### Video Stream Cloud Phone GPS Passthrough Test
 
 | Item| Content|
-| :--- | :--- |
+| :---: | :---: |
 | Case No.| 4.1.5 |
 | Test Objective| Verify the GPS passthrough function of the video stream cloud phone.|
 | Test Networking| None|
@@ -103,7 +110,7 @@ The test results are defined as follows:
 #### Video Stream Cloud Phone Sensor Passthrough Test
 
 | Item| Content|
-| :--- | :--- |
+| :---: | :---: |
 | Case No.| 4.1.6 |
 | Test Objective| Verify the sensor passthrough function of the video stream cloud phone.|
 | Test Networking| None|
@@ -116,7 +123,7 @@ The test results are defined as follows:
 #### Video Stream Cloud Phone High Resolution Test
 
 | Item| Content|
-| :--- | :--- |
+| :---: | :---: |
 | Case No.| 4.1.7 |
 | Test Objective| Verify that the video stream cloud phone supports high resolution.|
 | Test Networking| None|
@@ -129,7 +136,7 @@ The test results are defined as follows:
 #### Video Stream Cloud Phone High Frame Rate Test
 
 | Item| Content|
-| :--- | :--- |
+| :---: | :---: |
 | Case No.| 4.1.8 |
 | Test Objective| Verify that the video stream cloud phone supports a high frame rate.|
 | Test Networking| None|
@@ -142,13 +149,13 @@ The test results are defined as follows:
 #### Video Stream Component Version Query
 
 | Item| Content|
-| :--- | :--- |
+| :---: | :---: |
 | Case No.| 4.1.9 |
 | Test Objective| Verify the function of querying the video stream component version.|
 | Test Networking| None|
 | Prerequisites| 1. The video stream cloud phone environment has been deployed.<br>2. A video stream cloud phone container has been created and connected to the ADB.|
-| Test Procedure| 1. Run the `sudo docker exec -it android_x` sh command to access the video stream cloud phone container. Expected result 1 is displayed.<br>2. Run the `cat /vendor/etc/videoengine_version.txt` command to query the version information. Expected result 2 is displayed.|
-| Expected Result| 1. The container can be accessed.<br>2. The correct version information of the video stream component is displayed as follows. (The actual version number prevails.)<br><pre>Product Name: Kunpeng BoostKit<br>Product Version: xxx<br>Component Name: BoostKit-boostcph-videoengine<br>Component Version: xxx<br>Component AppendInfo: 11.0.0_r48</pre> |
+| Test Procedure| 1. Run the `sudo docker exec -it android_x sh` command to access the video stream cloud phone container. Expected result 1 is displayed.<br>2. Run the `cat /vendor/etc/videoengine_version.txt` command to query the version information. Expected result 2 is displayed.|
+| Expected Result| 1. The container can be accessed.<br>2. The correct version information of the video stream component is displayed as follows. (The actual version number prevails.)<br>Product Name: Kunpeng BoostKit<br>Product Version: xxx<br>Component Name: BoostKit-boostcph-videoengine<br>Component Version: xxx<br>Component AppendInfo: 11.0.0_r48 |
 | Test Result| |
 | Remarks| In the test procedure, `x` in `android_x` indicates the ID of the created video stream cloud phone container.|
 
@@ -157,9 +164,9 @@ The test results are defined as follows:
 #### Video Stream Cloud Phone Density Test
 
 | Item| Content|
-| :--- | :--- |
+| :---: | :---: |
 | Case No.| 4.2.1 |
-| Test Objective| Verify the density of the video stream cloud phone.|
+| Test Objective| Verify the video stream cloud phone density.|
 | Test Networking| None|
 | Prerequisites| The video stream cloud phone environment has been deployed.|
 | Test Procedure| Start 120 video stream cloud phones with the specification of 720 x 1280@30 fps. Run Honor of Kings stably on the login page for 30 minutes. Then connect the client to the video stream cloud phones and collect frame rate statistics using a self-developed pressure test tool.|
@@ -172,7 +179,7 @@ The test results are defined as follows:
 ### Basic Test Information
 
 | Item| Content|
-| :--- | :--- |
+| :---: | :---: |
 | Device Manufacturer| |
 | Device Model| |
 | Test Location| |
@@ -183,8 +190,8 @@ The test results are defined as follows:
 ### Test Result List
 
 | Test Type| Case No.| Test Case| Test Result (PASS/FAIL/NT)|
-| :--- | :--- | :--- | :--- |
-| Basic functional tests| 4.1.1 | Video Stream Cloud Phone Codec Test| |
+| :---: | :---: | :---: | :---: |
+| Basic functional test| 4.1.1 | Video Stream Cloud Phone Codec Test| |
 | | 4.1.2 | Video Stream Cloud Phone Touch Test| |
 | | 4.1.3 | Video Stream Cloud Phone Audio Test| |
 | | 4.1.4 | Video Stream Cloud Phone Microphone Test| |
@@ -202,6 +209,6 @@ The test results are defined as follows:
 ### Result Confirmation
 
 | Tested Party: Huawei Technologies Co., Ltd.| Testing Party:|
-| :--- | :--- |
+| :---: | :---: |
 | Test Personnel Signature:| Test Personnel Signature:|
 | Time:| Time:|

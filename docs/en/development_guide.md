@@ -1,6 +1,8 @@
 # Developer Guide<a name="ZH-CN_TOPIC_0000002552853357"></a>
 
-## 1 Introduction<a name="ZH-CN_TOPIC_0000002549825809"></a>
+<!-- md-trans-meta sourceCommit=8137c5c6f22411c010ac7e5e01f7b05f199cf237 translatedAt=2026-08-29T08:17:06.018Z pushedAt=2026-09-01T06:15:56.008Z -->
+
+## Introduction<a name="ZH-CN_TOPIC_0000002549825809"></a>
 
 A cloud phone is a cloud server with an Android Open Source Project (AOSP) and functions as a virtual phone. It extends the functions of a physical phone and can be used in various scenarios such as cloud mobile gaming and mobile office.
 
@@ -8,7 +10,7 @@ The device-cloud engine consists of the device side and the cloud side. The clou
 
 This document describes the integrated development of the device and cloud engines used in the video stream cloud phone.
 
-## 2 Obtaining Software Packages<a name="ZH-CN_TOPIC_0000002518345972" id="obtaining-software-packages"></a>
+## Obtaining Software Packages<a name="ZH-CN_TOPIC_0000002518345972" id="obtaining-software-packages"></a>
 
 **Table 1** Software requirements<a id="software-requirements"></a>
 
@@ -26,26 +28,28 @@ This document describes the integrated development of the device and cloud engin
 To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding digital signature files for integrity verification while obtaining the software packages from the Kunpeng community.
 
 1. Obtain the software packages by referring to [**Table 1** Software requirements](#software-requirements).
+
 2. <a name="li1273482318125"></a>Obtain the verification tool and guide from the [Huawei enterprise website](https://support.huawei.com/enterprise/en/tool/pgp-verify-TL1000000054) or [Huawei carrier website](http://support.huawei.com/carrier/digitalSignatureAction).
+
 3. Based on the *OpenPGP Signature Verification Guide* obtained in [2](#li1273482318125), verify the PGP digital signatures of the software packages.
 
->![](public_sys-resources/icon-note.gif) **NOTE**
+> ![](public_sys-resources/icon-note.gif)**NOTE**
 >
 >If the verification fails, do not use the software package. Contact Huawei technical support.
 >Before a software package is used for installation or upgrade, its digital signature also needs to be verified to ensure that the software package is not tampered with.
 >Before using the software package, read and agree to [Kunpeng BoostKit User License Agreement 2.0](https://www.hikunpeng.com/en/legal/developer/boostkit/software/protocol).
 
-## 3 Configuring the Development Environment<a name="ZH-CN_TOPIC_0000002518345920"></a>
+## Configuring the Development Environment<a name="ZH-CN_TOPIC_0000002518345920"></a>
 
-### 3.1 Decompressing the Software Package<a name="ZH-CN_TOPIC_0000002518345962"></a>
+### Decompressing the Software Package<a name="ZH-CN_TOPIC_0000002518345962"></a>
 
 The software package of the video stream engine is **BoostKit-boostcph-videoengine_*_11.zip**. To obtain it, see [Obtaining Software Packages](#obtaining-software-packages). After obtaining the .zip package, decompress it to obtain the .tar.gz package.
 
 |Software|Description|
-|--|--|
-|VideoEngine.tar.gz|Development package of the video stream engine server.|
+| :---: | :---: |
+|VideoEngine.tar.gz|Development package of the video stream engine server|
 
-### 3.2 Deploying the Server Compilation Environment<a name="ZH-CN_TOPIC_0000002518186072"></a>
+### Deploying the Server Compilation Environment<a name="ZH-CN_TOPIC_0000002518186072"></a>
 
 **Environment Requirements<a name="section183915472144"></a>**
 
@@ -57,18 +61,18 @@ This document describes how to compile the server software based on the x86_64 s
 
 |Device Model|Description|Server OS|
 |--|--|--|
-|x86_64 server|Used to compile and build the server software.|Recommended: Ubuntu 22.04 LTS ([ubuntu-22.04-live-server-amd64.iso](https://old-releases.ubuntu.com/releases/22.04/ubuntu-22.04-live-server-amd64.iso))|
+|x86_64 server|Used to compile and build the server software|Recommended: Ubuntu 22.04 LTS ([ubuntu-22.04-live-server-amd64.iso](https://old-releases.ubuntu.com/releases/22.04/ubuntu-22.04-live-server-amd64.iso))|
 
->![](public_sys-resources/icon-note.gif) **NOTE**
+> ![](public_sys-resources/icon-note.gif) **NOTE**
 >
->- In this document, the server model is 2288H V5.
->- Ensure that the server can connect to the Internet so that the OS image can be downloaded.
+> - In this document, the server model is 2288H V5.
+> - Ensure that the server can connect to the Internet so that the OS image can be downloaded.
 
 **Deployment Procedure<a name="section039914210159"></a>**
 
 1. Install the dependencies.
 
-    ```shell
+    ```bash
     sudo apt install -y git 
     sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg
     sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev
@@ -85,14 +89,14 @@ This document describes how to compile the server software based on the x86_64 s
 
 2. Download the VMI code and go to the `vmi` directory.
 
-    ```shell
+    ```bash
     git clone https://gitee.com/kunpengcompute/vmi.git
     cd vmi
     ```
 
 3. Use the automatic deployment script to deploy the compilation tool.
 
-    ```shell
+    ```bash
     chmod +x scripts/auto_install_tools.sh
     ./scripts/auto_install_tools.sh ${installation_directory}
     ```
@@ -101,27 +105,28 @@ This document describes how to compile the server software based on the x86_64 s
 
     After the script is executed successfully, import environment variables.
 
-    ```shell
+    ```bash
     source ~/.bashrc
     ```
 
-### 3.3 Deploying the Server Debugging Environment<a name="ZH-CN_TOPIC_0000002518186070"></a>
+### Deploying the Server Debugging Environment<a name="ZH-CN_TOPIC_0000002518186070"></a>
 
->![](public_sys-resources/icon-notice.gif) **NOTICE**
+> [!WARNING]
 >
 >- You can customize a directory for storing the package.
->- For details about the hardware requirements and deployment process of the server debugging environment, refer to [Video Stream Engine Feature Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine/docs/en/install_guide.md#d11-environment-requirements).
+>- For details about the hardware requirements and deployment process of the server debugging environment, refer to [Video Stream Engine Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine/docs/en/install_guide.md).
 
 1. Save the `VideoEngine.tar.gz` package to the `/home/VideoEngine/Cloud` directory.
+
 2. Decompress the development package of the video stream engine server.
 
-    ```shell
+    ```bash
     tar xzvf VideoEngine.tar.gz
     ```
 
 3. Copy the extracted binary files to a cloud phone (for example, `cloudphone_1`).
 
-    ```shell
+    ```bash
     docker cp system/bin cloudphone_1:/system/
     docker cp system/etc cloudphone_1:/system/
     docker cp system/lib cloudphone_1:/system/
@@ -131,12 +136,12 @@ This document describes how to compile the server software based on the x86_64 s
     docker cp vendor/etc cloudphone_1:/vendor/
     ```
 
-4. Copy the external dependency libraries to a cloud phone (`cloudphone_1` for example). [**Table 1**](#external-dependency-libraries-of-the-video-stream-cloud-phone) lists the required dependency libraries.
+4. Copy the external dependency libraries to the cloud phone (`cloudphone_1` for example). [**Table 1**](#external-dependency-libraries-of-the-video-stream-cloud-phone) lists the required dependency libraries.
 
     **Table 1** External dependency libraries of the video stream cloud phone<a id="external-dependency-libraries-of-the-video-stream-cloud-phone"></a>
 
     |Item|Library Name|Path|
-    |--|--|--|
+    | :---: | :---: | :---: |
     |Encoding dependency library|libVideoCodec.so|/vendor/lib, /vendor/lib64|
     |Decoding dependency library|libVideoDecoder.so|/vendor/lib, /vendor/lib64|
     |GPU acceleration dependency library|libVmiEncTurbo.so|/vendor/lib, /vendor/lib64|
@@ -145,17 +150,17 @@ This document describes how to compile the server software based on the x86_64 s
 
 5. Restart the cloud phone, and then the video stream cloud phone can run. You can debug the functions by calling the corresponding APIs according to the subsequent development process.
 
-## 4 External APIs<a name="ZH-CN_TOPIC_0000002549825821"></a>
+## External APIs<a name="ZH-CN_TOPIC_0000002549825821"></a>
 
-### 4.1 Conventions<a name="ZH-CN_TOPIC_0000002518345990"></a>
+### Conventions<a name="ZH-CN_TOPIC_0000002518345990"></a>
 
 The dynamic link libraries (DLLs) provided by external interfaces are compiled using the AOSP 11.0.0_r48 source code and must be used in the AOSP 11.0.0_r48 environment.
 
 External interfaces are public for all modules to exchange data. Data type definitions are provided in this document. For example, you can refer to [Video Output Development](#video-output-development) to learn about video output data.
 
-### 4.2 Basic Data Types<a name="ZH-CN_TOPIC_0000002549825795"></a>
+### Basic Data Types<a name="ZH-CN_TOPIC_0000002549825795"></a>
 
-#### 4.2.1 VmiDataType (Module Data Type)<a name="ZH-CN_TOPIC_0000002549825803"></a>
+#### VmiDataType (Module Data Type)<a name="ZH-CN_TOPIC_0000002549825803"></a>
 
 `VmiDataType` defines the supported data types. Each data type corresponds to a module. Available modules include: video output, audio output, microphone input, touch input, sensor, and GPS. The data types are defined as follows:
 
@@ -171,7 +176,7 @@ enum VmiDataType : uint8_t {
 };
 ```
 
-#### 4.2.2 VmiModuleStatus (Module Status)<a name="ZH-CN_TOPIC_0000002518186046"></a>
+#### VmiModuleStatus (Module Status)<a name="ZH-CN_TOPIC_0000002518186046"></a>
 
 Enumeration of `VmiModuleStatus`:
 
@@ -184,7 +189,7 @@ enum VmiModuleStatus : uint32_t {
 };
 ```
 
-#### 4.2.3 VmiVersion (Module Version)<a name="ZH-CN_TOPIC_0000002549705831" id="module-version"></a>
+#### VmiVersion (Module Version)<a name="ZH-CN_TOPIC_0000002549705831" id="module-version"></a>
 
 The version number of a module consists of the module type and the minor version number of the module. This parameter can be used to support module-level version control. Enumeration of `VmiVersion`:
 
@@ -248,7 +253,7 @@ enum VmiErrCode : int32_t {
 };
 ```
 
-#### 4.2.4 VmiCmd (Command Word)<a name="ZH-CN_TOPIC_0000002549825785"></a>
+#### VmiCmd (Command Word)<a name="ZH-CN_TOPIC_0000002549825785"></a>
 
 Command words need to be specified as interface input parameters for functions such as module data input, data output, and parameter setting. `VmiCmd` is an enumeration type of uint32_t. Each 32-bit enumeration value consists of three parts that are sequentially concatenated as follows: `VmiDataType` (module data type, uint8_t), `VmiCmdType` (command word type, uint8_t), and specific command word (such as `VmiVideoCmdId` and `VmiAudioCmdId`, uint16_t). The definition is as follows:
 
@@ -266,7 +271,7 @@ enum VmiVideoCmdId : uint16_t {
 enum VmiAudioCmdId : uint16_t {
     SET_AUDIOPLAY_PARAM = 0,                         // The client sets audio playback parameters to the server.
     RETURN_AUDIO_PLAY_DATA,                          // The server sends audio playback data to the client.
-    SET_CLIENT_VOLUME,                               // The server sends the volume size to the client.
+    SET_CLIENT_VOLUME,                               // The server sends the volume to the client.
     GET_AUDIOPLAY_PARAM,                             // The client obtains audio playback parameters from the server.
 };
 enum VmiMicCmdId : uint16_t {
@@ -321,9 +326,9 @@ enum VmiCmd : uint32_t {
 };
 ```
 
-### 4.3 Function APIs<a name="ZH-CN_TOPIC_0000002549825817"></a>
+### Function APIs<a name="ZH-CN_TOPIC_0000002549825817"></a>
 
-#### 4.3.1 GetVersion<a name="ZH-CN_TOPIC_0000002518186078"></a>
+#### GetVersion<a name="ZH-CN_TOPIC_0000002518186078"></a>
 
 **Function Usage<a name="section713mcpsimp"></a>**
 
@@ -343,7 +348,7 @@ For return value examples, see [Querying Component Version Information](user_gui
 >
 >The version number in the example command output is irrelevant to the `VmiVersion` module version number.
 
-#### 4.3.2 nitVmiEngine<a name="ZH-CN_TOPIC_0000002549825823"></a>
+#### InitVmiEngine<a name="ZH-CN_TOPIC_0000002549825823"></a>
 
 **Function Usage<a name="section730mcpsimp"></a>**
 
@@ -352,6 +357,7 @@ Initializes the cloud phone server.
 **Restrictions<a name="section733mcpsimp"></a>**
 
 - This API cannot be called repeatedly. That is, it cannot be called after the initialization is complete.
+
 - The data output callback cannot be blocked for a long time. It is recommended that the callback return within 1 ms.
 
 **Prototype<a name="section736mcpsimp"></a>**
@@ -360,9 +366,9 @@ VmiErrCode InitVmiEngine\(VmiConfigEngine \*config\);
 
 **Parameters<a name="section739mcpsimp"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
-|config|Input|VmiConfigEngine|This structure consists of the `DataCallback` and `DataTypeConfig` arrays.|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
+|config|Input|VmiConfigEngine|This structure consists of `DataCallback` and `DataTypeConfig` arrays.|
 
 The `VmiConfigEngine` structure is required for starting the engine. It includes `DataCallback` and the list of modules to be started.
 
@@ -397,9 +403,10 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The initialization is successful.
+
 - Other values: The initialization fails, and an error code is returned.
 
-#### 4.3.3 DeInitVmiEngine<a name="ZH-CN_TOPIC_0000002518186032"></a>
+#### DeInitVmiEngine<a name="ZH-CN_TOPIC_0000002518186032"></a>
 
 **Function Usage<a name="section799mcpsimp"></a>**
 
@@ -420,9 +427,10 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The deinitialization is successful.
+
 - Other values: The deinitialization fails, and an error code is returned.
 
-#### 4.3.4 GetStatus<a name="ZH-CN_TOPIC_0000002518345982"></a>
+#### GetStatus<a name="ZH-CN_TOPIC_0000002518345982"></a>
 
 **Function Usage<a name="section819mcpsimp"></a>**
 
@@ -434,15 +442,15 @@ VmiModuleStatus GetStatus\(VmiDataType module\)
 
 **Parameters<a name="section828mcpsimp"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |module|Input|VmiDataType|Module data type.|
 
 **Return Value Description<a name="section856mcpsimp"></a>**
 
 Data type: enum VmiModuleStatus: uint32_t
 
-#### 4.3.5 StartModule<a name="ZH-CN_TOPIC_0000002518345992"></a>
+#### StartModule<a name="ZH-CN_TOPIC_0000002518345992"></a>
 
 **Function Usage<a name="section869mcpsimp"></a>**
 
@@ -454,8 +462,8 @@ VmiErrCode StartModule\(VmiDataType module, uint8_t\*config, uint32_t size\)
 
 **Parameters<a name="section878mcpsimp"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |module|Input|VmiDataType|Module data type.|
 |config|Input|uint8_t*|Configuration used for module startup.|
 |size|Input|uint32_t|Length of the memory pointed to by `config`.|
@@ -479,9 +487,10 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The module is successfully started.
+
 - Other values: The module fails to be started, and an error code is returned.
 
-#### 4.3.6 StopModule<a name="ZH-CN_TOPIC_0000002549705845"></a>
+#### StopModule<a name="ZH-CN_TOPIC_0000002549705845"></a>
 
 **Function Usage<a name="section923mcpsimp"></a>**
 
@@ -493,8 +502,8 @@ VmiErrCode StopModule\(VmiDataType module\)
 
 **Parameters<a name="section932mcpsimp"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |module|Input|VmiDataType|Module data type.|
 
 **Return Value Description<a name="section960mcpsimp"></a>**
@@ -504,9 +513,10 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The module is successfully stopped.
+
 - Other values: The module fails to be stopped, and an error code is returned.
 
-#### 4.3.7 InjectData<a name="ZH-CN_TOPIC_0000002549705781"></a>
+#### InjectData<a name="ZH-CN_TOPIC_0000002549705781"></a>
 
 **Function Usage<a name="section968mcpsimp"></a>**
 
@@ -518,10 +528,10 @@ VmiErrCode InjectData\(VmiDataType module, VmiCmd cmd, uint8_t \*data, uint32_t 
 
 **Parameters<a name="section977mcpsimp"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |module|Input|VmiDataType|Module data type.|
-|cmd|Input|VmiCmd|Operation instruction during data injection.|
+|cmd|Input|VmiCmd|Operation command for data injection.|
 |data|Input|uint8_t*|Pointer to the data to be sent.|
 |size|Input|uint32_t|Size of the data to be injected.|
 
@@ -532,9 +542,10 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The data injection is successful.
+
 - Other values: The data injection fails, and an error code is returned.
 
-#### 4.3.8 SetParam<a name="ZH-CN_TOPIC_0000002518345938"></a>
+#### SetParam<a name="ZH-CN_TOPIC_0000002518345938"></a>
 
 **Function Usage<a name="section1039mcpsimp"></a>**
 
@@ -546,10 +557,10 @@ VmiErrCode SetParam\(VmiDataType module, VmiCmd cmd, uint8_t \*param, uint32_t s
 
 **Parameters<a name="section1048mcpsimp"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |module|Input|VmiDataType|Module data type.|
-|cmd|Input|VmiCmd|Operation instruction for setting the parameter values.|
+|cmd|Input|VmiCmd|Operation command for setting parameters.|
 |param|Input|uint8_t*|Pointer to the parameters to be set.|
 |size|Input|uint32_t|Size of the data to be set.|
 
@@ -560,9 +571,10 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The parameters are set successfully.
+
 - Other values: The parameters fail to be set, and an error code is returned.
 
-#### 4.3.9 GetParam<a name="ZH-CN_TOPIC_0000002549705805"></a>
+#### GetParam<a name="ZH-CN_TOPIC_0000002549705805"></a>
 
 **Function Usage<a name="section1039mcpsimp"></a>**
 
@@ -574,10 +586,10 @@ VmiErrCode GetParam\(VmiDataType module, VmiCmd cmd, uint8_t \*param, uint32_t s
 
 **Parameters<a name="section1048mcpsimp"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |module|Input|VmiDataType|Module data type.|
-|cmd|Input|VmiCmd|Operation instruction for obtaining the parameter values.|
+|cmd|Input|VmiCmd|Operation command for obtaining parameters.|
 |param|Input|uint8_t*|Pointer to the output parameter data.|
 |size|Input|uint32_t|Size of the output data.|
 
@@ -588,11 +600,12 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The parameters are obtained successfully.
+
 - Other values: The parameters fail to be obtained, and an error code is returned.
 
-## 5 Video Output Development<a name="ZH-CN_TOPIC_0000002518186012" id="video-output-development"></a>
+## Video Output Development<a name="ZH-CN_TOPIC_0000002518186012" id="video-output-development"></a>
 
-### 5.1 Conventions<a name="ZH-CN_TOPIC_0000002549825833"></a>
+### Convention<a name="ZH-CN_TOPIC_0000002549825833"></a>
 
 The video output (VO) configuration structure `VmiConfigVideo` is inherited from the `VmiConfig` structure. The structure of `VmiConfigVideo` is as follows:
 
@@ -607,9 +620,9 @@ struct VmiConfigVideo : public VmiConfig {
 } __attribute__((packed));
 ```
 
-### 5.2 Configuration Parameters<a name="ZH-CN_TOPIC_0000002518186018" id="video-configuration-parameters"></a>
+### Configuration Parameters<a name="ZH-CN_TOPIC_0000002518186018" id="video-configuration-parameters"></a>
 
-#### 5.2.1 encoderType<a name="ZH-CN_TOPIC_0000002549705801"></a>
+#### encoderType<a name="ZH-CN_TOPIC_0000002549705801"></a>
 
 **Variable Description<a name="section1131mcpsimp"></a>**
 
@@ -629,10 +642,10 @@ enum EncoderType : uint32_t {
 **Restrictions<a name="section2011449181"></a>**
 
 |Property Field Name|Description|Value Range|Default Value|
-|--|--|--|--|
-|encoderType|Encoder type.|`0`: CPU (software encoding via CPU); `1`: VPU (hardware encoding via external hardware); `2`: GPU (available only when DC1000 is used)|0|
+| :---: | :---: | :---: | :---: |
+|encoderType|Encoder type|`0`: CPU (software encoding via CPU); `1`: VPU (hardware encoding via external hardware); `2`: GPU (available only when DC1000/DC1000C is used)|0|
 
-#### 5.2.2 videoFrameType<a name="ZH-CN_TOPIC_0000002518186056"></a>
+#### videoFrameType<a name="ZH-CN_TOPIC_0000002518186056"></a>
 
 **Variable Description<a name="section1131mcpsimp"></a>**
 
@@ -642,7 +655,7 @@ VO type.
 
 ```c++
 enum VideoFrameType {
-    H264,                                             // H.264 (default)
+    H264,　　　　　　　　　　　// H.264 (default)
     YUV,                       // YV12
     RGB,                       // RGBA8888 (not supported currently)
     H265,
@@ -655,10 +668,10 @@ enum VideoFrameType {
 RGBA8888 in RGB is not supported currently.
 
 |Property Field Name|Description|Value Range|Default Value|
-|--|--|--|--|
-|videoFrameType|Video data output format.|`0`: H.264; `1`: YUV (supported only when `encoderType` is set to `0`); `2`: RGB (not supported currently); `3`: H.265 (not supported when `encoderType` is set to `0`)|0|
+| :---: | :---: | :---: | :---: |
+|videoFrameType|Video data output format|`0`: H.264; `1`: YUV (supported only when `encoderType` is set to `0`); `2`: RGB (not supported currently); `3`: H.265 (not supported when `encoderType` is set to `0`)|0|
 
-#### 5.2.3 resolution<a name="ZH-CN_TOPIC_0000002549825831"></a>
+#### resolution<a name="ZH-CN_TOPIC_0000002549825831"></a>
 
 **Variable Description<a name="section1131mcpsimp"></a>**
 
@@ -680,17 +693,17 @@ struct FrameSize {
 The value ranges of `width` and `height` can be exchanged.
 
 |Property Field Name|Description|Value Range|Default Value|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |width|Width of the adaptive resolution. The value must be a multiple of 8.|360 to 2160|720|
 |height|Height of the adaptive resolution. The value must be a multiple of 8.|360 to 3840|1280|
 |widthAligned|Aligned width of the resolution (not configurable currently).|360 to 2160|720|
-|heightAligned|Aligned height of the resolution (not configurable currently).|360 to 3840|1280|
+|heightAligned|Aligned width of the resolution (not configurable currently).|360 to 3840|1280|
 
->![](public_sys-resources/icon-note.gif) **NOTE**
+> ![](public_sys-resources/icon-note.gif) **NOTE**
 >
 >When adaptive resolution is enabled, after you change the video output resolution (to a resolution different from the configuration at the last startup), the rendering resolution of the AOSP system and apps is changed. In this case, a compatibility issue or rendering problem may occur in some apps. Generally, this problem can be solved by restarting apps. It is recommended that you return to the home screen and clear background apps before changing the resolution.
 
-#### 5.2.4 density<a name="ZH-CN_TOPIC_0000002518345940"></a>
+#### density<a name="ZH-CN_TOPIC_0000002518345940"></a>
 
 **Variable Description<a name="section111994488367"></a>**
 
@@ -703,15 +716,15 @@ The value is of the uint32_t type and defaults to `320`.
 **Restrictions<a name="section2021618526388"></a>**
 
 |Property Field Name|Description|Value Range|Default Value|
-|--|--|--|--|
-|density|Screen density.|[120, 960] `0`: The adaptive resolution function is disabled.|320|
+| :---: | :---: | :---: | :---: |
+|density|Screen density|[120, 960] `0`: The adaptive resolution function is disabled.|320|
 
->![](public_sys-resources/icon-note.gif) **NOTE**
+> ![](public_sys-resources/icon-note.gif) **NOTE**
 >
 >1. When the `density` property is set to `0`, adaptive resolution is disabled. That is, when the video module is started, the existing rendering resolution and screen density of the cloud phone are used for rendering and stream output.
 >2. When `ro.vmi.video.wmcmd` (an Android property) is set to `0`, adaptive resolution is also disabled. That is, if either this property or `density` is set to `0`, adaptive resolution is disabled.
 
-#### 5.2.5 renderOptimize<a name="ZH-CN_TOPIC_0000002518345928"></a>
+#### renderOptimize<a name="ZH-CN_TOPIC_0000002518345928"></a>
 
 **Variable Description<a name="section1131mcpsimp"></a>**
 
@@ -766,8 +779,8 @@ enum RCMode : uint32_t  {
 Only the constant bit rate (CBR) and CAPPED_CRF modes are supported in rate control.
 
 |Property Field Name|Description|Value Range|Default Value|
-|--|--|--|--|
-|bitrate|Encoding bit rate.|For AMD (usually W6800): 500000 to 50000000; for DC1000: 500000 to 30000000. Unit: bit/s|3000000|
+| :---: | :---: | :---: | :---: |
+|bitrate|Encoding bit rate.|For AMD (usually W6800): 500000 to 50000000; for DC1000/DC1000C: 500000 to 30000000. Unit: bit/s|3000000|
 |gopSize|Encoding GOP size.|30 to 3000|30|
 |profile|Encoding profile. (Only `main` can be used for H.265 encoding.)|`0`: baseline (supported only in H.264 encoding); `1`: main; `2`: high (supported only in H.264 encoding)|0|
 |rcMode|Bit rate control mode.|`0`: average bit rate (ABR) (not supported currently); `1`: constant rate factor (CRF) (not supported currently); `2`: constant bit rate (CBR); `3`: capped CRF|2|
@@ -779,12 +792,12 @@ Only the constant bit rate (CBR) and CAPPED_CRF modes are supported in rate cont
 |streamWidth|Output frame width.|[240, *cloud phone rendering resolution*]. The output frame width must be a multiple of 8.|720|
 |streamHeight|Output frame height.|[240, *cloud phone rendering resolution*]. The output frame height must be a multiple of 8.|1080|
 
->![](public_sys-resources/icon-note.gif) **NOTE**
+> ![](public_sys-resources/icon-note.gif) **NOTE**
 >
->1. The `rcMode` parameter supports the CBR mode and capped CRF mode. Both Quadra and DC1000 support the two rate control modes.
+>1. The `rcMode` parameter supports the CBR mode and capped CRF mode. Quadra, DC1000, and DC1000C all support the two rate control modes.
 >2. If `rcMode` is set to CBR, you can use the `bitrate` variable to specify the constant bit rate. If `rcMode` is set to capped CRF, use the `crf`, `maxCrfRate`, and `vbvBufferSize` variables to control the bit rate when Quadra is used, or use the `crf` and `maxCrfRate` variables to control the bit rate when DC1000 is used.
 
-### 5.3 Data Definitions<a name="ZH-CN_TOPIC_0000002549825807"></a>
+### Data Definitions<a name="ZH-CN_TOPIC_0000002549825807"></a>
 
 The output data structure of the VO module consists of the extra data packet information (`extData`), data packet size, and actual data. The data is specified by the `VIDEO_RETURN_VIDEO_DATA` command word in the `VmiCmd` enumeration and returned to developers through callbacks. Example:
 
@@ -831,7 +844,7 @@ struct ExtDataVideo {
 } __attribute__((packed));
 ```
 
-### 5.4 Parameter Obtaining<a name="ZH-CN_TOPIC_0000002518186062"></a>
+### Parameter Obtaining<a name="ZH-CN_TOPIC_0000002518186062"></a>
 
 The VO module provides the feature of obtaining parameters through the GetParam API.
 
@@ -847,7 +860,7 @@ uint8_t* param = &encodeParams;
 GetParam(module, cmd, param, sizeof(EncodeParams));
 ```
 
-### 5.5 Parameter Setting<a name="ZH-CN_TOPIC_0000002549705811"></a>
+### Parameter Setting<a name="ZH-CN_TOPIC_0000002549705811"></a>
 
 The VO module provides the feature of setting parameters through the SetParam API.
 
@@ -863,12 +876,12 @@ uint8_t* param = &encodeParams;
 SetParam(module, cmd, param, sizeof(EncodeParams));
 ```
 
-### 5.6 Recommended Configurations<a name="ZH-CN_TOPIC_0000002549705795"></a>
+### Recommended Configurations<a name="ZH-CN_TOPIC_0000002549705795"></a>
 
-#### 5.6.1 Recommended Resolution and Screen Density<a name="ZH-CN_TOPIC_0000002549825775"></a>
+#### Recommended Resolution and Screen Density<a name="ZH-CN_TOPIC_0000002549825775"></a>
 
 |Specification|Resolution Width|Resolution Height|Screen Density|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |360p|360|640|120|
 |480p|480|856|160|
 |720p|720|1280|320|
@@ -876,24 +889,24 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |2K|1440|2560|640|
 |4K|2160|3840|960|
 
-#### 5.6.2 Recommended Encoding Parameters<a name="ZH-CN_TOPIC_0000002549705815"></a>
+#### Recommended Encoding Parameters<a name="ZH-CN_TOPIC_0000002549705815"></a>
 
-The encoding parameters are related to the hardware environment of the video stream cloud phone. For details about the hardware environment, see "Software Deployment > Environment Requirements > "Hardware Environment" in [Video Stream Engine Feature Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine/docs/en/install_guide.md#d11-environment-requirements).
+The encoding parameters are related to the hardware environment of the video stream cloud phone. For details about the hardware environment, see "Software Deployment > Environment Requirements > Hardware Environment" in [Video Stream Engine Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine/docs/en/install_guide.md#d11-environment-requirements).
 
 **Hardware Configuration Scheme 1<a name="section1175422174614"></a>**
 
 **Table 1** Encoding parameters in CBR mode<a id="cbr-encoding-parameters"></a>
 
-|Parameter|Recommended Value|
-|--|--|
+|Encoding Parameter|Recommended Value|
+| :---: | :---: |
 |bitrate|8000000|
 |gopsize|60|
 |profile|main|
 
 **Table 2** Encoding parameters in CAPPED_CRF mode<a id="capped-crf-encoding-parameters"></a>
 
-|Parameter|Recommended Value|
-|--|--|
+|Encoding Parameter|Recommended Value|
+| :---: | :---: |
 |gopsize|60|
 |profile|main|
 |crf|21|
@@ -908,19 +921,19 @@ The encoding parameters are related to the hardware environment of the video str
 
 **Table 3** Encoding parameters in CBR mode<a id="cbr-encoding-parameters-1"></a>
 
-|Parameter|Recommended Value|
-|--|--|
+|Encoding Parameter|Recommended Value|
+| :---: | :---: |
 |bitrate|8000000|
 |gopsize|60|
 |profile|main|
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->In hardware configuration scheme 2 (DC1000), you are advised to use GPU for encoding. During H.265 encoding, only `main` is supported as the encoding profile.
+>In hardware configuration scheme 2 (DC1000/DC1000C), you are advised to use GPU for encoding. During H.265 encoding, only `main` is supported as the encoding profile.
 
-## 6 Audio Output Development<a name="ZH-CN_TOPIC_0000002518186016"></a>
+## Audio Output Development<a name="ZH-CN_TOPIC_0000002518186016"></a>
 
-### 6.1 Conventions<a name="ZH-CN_TOPIC_0000002518345954"></a>
+### Conventions<a name="ZH-CN_TOPIC_0000002518345954"></a>
 
 The audio output (AO) configuration structure `VmiConfigAudio` is inherited from the `VmiConfig` structure. The structure of `VmiConfigAudio` is as follows:
 
@@ -931,9 +944,9 @@ struct VmiConfigAudio : public VmiConfig  {
 } __attribute__((packed));
 ```
 
-### 6.2 Configuration Parameters<a name="ZH-CN_TOPIC_0000002549705847"></a>
+### Configuration Parameters<a name="ZH-CN_TOPIC_0000002549705847"></a>
 
-#### 6.2.1 AudioType<a name="ZH-CN_TOPIC_0000002518186060"></a>
+#### AudioType<a name="ZH-CN_TOPIC_0000002518186060"></a>
 
 **Variable Description<a name="section1131mcpsimp"></a>**
 
@@ -942,7 +955,7 @@ Audio type.
 **Restrictions<a name="section1134mcpsimp"></a>**
 
 |Property Field Name|Description|Value Range|Default Value|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |audioType|Audio output format.|`0`: OPUS; `1`: PCM|0|
 
 **Variable Data Definition<a name="section1137mcpsimp"></a>**
@@ -954,7 +967,7 @@ enum AudioType : uint32_t {
 };
 ```
 
-#### 6.2.2 AudioPlayParams<a name="ZH-CN_TOPIC_0000002549825847"></a>
+#### AudioPlayParams<a name="ZH-CN_TOPIC_0000002549825847"></a>
 
 **Variable Description<a name="section1131mcpsimp"></a>**
 
@@ -965,7 +978,7 @@ Audio playback parameters.
 The `bitrate` parameter is valid only in OPUS format, and the `sampleInterval` parameter is valid in both OPUS and PCM formats.
 
 |Property Field Name|Description|Value Range|Default Value|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |sampleInterval|Audio output sampling interval.|`5`: 5 ms (not supported currently); `10`: 10 ms; `20`: 20 ms (not supported currently)|10|
 |bitrate|Audio OPUS encoding bit rate (bit/s).|13200 to 512000|192000|
 
@@ -978,7 +991,7 @@ struct AudioPlayParams {
 } __attribute__((packed));
 ```
 
-### 6.3 Data Definitions<a name="ZH-CN_TOPIC_0000002518345924"></a>
+### Data Definitions<a name="ZH-CN_TOPIC_0000002518345924"></a>
 
 The output data structure of the AO module consists of the extra stream packet information (`extData`), packet size, and actual data. The data is specified by the `AUDIO_RETURN_AUDIO_PLAY_DATA` command word in the `VmiCmd` enumeration and returned to developers through callbacks.
 
@@ -1028,7 +1041,7 @@ struct AudioVolume {
 } __attribute__((packed));
 ```
 
-### 6.4 Parameter Obtaining<a name="ZH-CN_TOPIC_0000002518186010"></a>
+### Parameter Obtaining<a name="ZH-CN_TOPIC_0000002518186010"></a>
 
 The AO module provides the feature of obtaining parameters through the GetParam API.
 
@@ -1044,7 +1057,7 @@ uint8_t* param = &audioPlayParams;
 GetParam(module, cmd, param, sizeof(AudioPlayParams));
 ```
 
-### 6.5 Parameter Setting<a name="ZH-CN_TOPIC_0000002549705807"></a>
+### Parameter Setting<a name="ZH-CN_TOPIC_0000002549705807"></a>
 
 The AO module provides the feature of setting parameters through the SetParam API.
 
@@ -1060,9 +1073,9 @@ uint8_t* param = &audioPlayParams;
 SetParam(module, cmd, param, sizeof(AudioPlayParams));
 ```
 
-## 7 Microphone Input Development<a name="ZH-CN_TOPIC_0000002518345946"></a>
+## Microphone Input Development<a name="ZH-CN_TOPIC_0000002518345946"></a>
 
-### 7.1 Conventions<a name="ZH-CN_TOPIC_0000002518345936"></a>
+### Conventions<a name="ZH-CN_TOPIC_0000002518345936"></a>
 
 The microphone input (MI) configuration structure `VmiConfigMic` is inherited from the `VmiConfig` structure. The structure of `VmiConfigMic` is as follows:
 
@@ -1072,9 +1085,9 @@ struct VmiConfigMic : public VmiConfig {
 } __attribute__((packed));
 ```
 
-### 7.2 Configuration Parameters<a name="ZH-CN_TOPIC_0000002549705819"></a>
+### Configuration Parameters<a name="ZH-CN_TOPIC_0000002549705819"></a>
 
-#### 7.2.1 AudioType<a name="ZH-CN_TOPIC_0000002549825779"></a>
+#### AudioType<a name="ZH-CN_TOPIC_0000002549825779"></a>
 
 **Variable Description<a name="section1131mcpsimp"></a>**
 
@@ -1083,7 +1096,7 @@ Audio type.
 **Restrictions<a name="section1134mcpsimp"></a>**
 
 |Property Field Name|Description|Value Range|Default Value|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |audioType|Microphone input format.|`0`: OPUS; `1`: PCM|0|
 
 **Variable Data Definition<a name="section1137mcpsimp"></a>**
@@ -1095,7 +1108,7 @@ enum AudioType : uint32_t {
 };
 ```
 
-### 7.3 Data Definitions<a name="ZH-CN_TOPIC_0000002549825799"></a>
+### Data Definitions<a name="ZH-CN_TOPIC_0000002549825799"></a>
 
 The MI data structure is the same as the AO data structure, that is, `AudioData`, which consists of the extra stream packet information (`extData`), packet size, and actual data.
 
@@ -1126,7 +1139,7 @@ struct ExtDataAudio {
 >
 >The timestamp must be the timestamp of the client instead of the timestamp after the server receives audio data packets transmitted through the network. Otherwise, the packets that are severely delayed due to network fluctuation may fail to be filtered out, resulting in audio lagging.
 
-### 7.4 Data Injection<a name="ZH-CN_TOPIC_0000002549825843"></a>
+### Data Injection<a name="ZH-CN_TOPIC_0000002549825843"></a>
 
 Different from data output, the InjectData API needs to be invoked for data input. You can specify data using the `MIC_SEND_MIC_DATA` command word in the `VmiCmd` enumeration, and inject data to the server through the InjectData API. Example:
 
@@ -1147,8 +1160,11 @@ InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 Microphone frames need to be injected stably. Otherwise, the sound may be intermittent. The specific restrictions are subject to the value of `vmi.mic.cachefactor` in the `default.prop` configuration file. This configuration item indicates the buffer size of the microphone frame queue. The options are as follows:
 
 - `0`: One frame needs to be injected every 10 ms, causing no extra delay.
+
 - `1`: 16 frames need to be injected every 160 ms, causing a 160 ms delay.
+
 - `2`: 32 frames need to be injected every 320 ms, causing a 320 ms delay.
+
 - `3`: 48 frames need to be injected every 480 ms, causing a 480 ms delay.
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
@@ -1156,9 +1172,9 @@ Microphone frames need to be injected stably. Otherwise, the sound may be interm
 >- If microphone data is transmitted in PCM mode, it is recommended that the upstream bandwidth from the client to the server be greater than or equal to 2 Mbit/s.
 >- Injected microphone frames cannot contain blank frames. Otherwise, the sound may be intermittent.
 
-## 8 Touch Input Development<a name="ZH-CN_TOPIC_0000002518345934"></a>
+## Touch Input Development<a name="ZH-CN_TOPIC_0000002518345934"></a>
 
-### 8.1 Conventions<a name="ZH-CN_TOPIC_0000002518186028"></a>
+### Conventions<a name="ZH-CN_TOPIC_0000002518186028"></a>
 
 The touch input (TI) configuration structure `VmiConfigTouch` is inherited from the `VmiConfig` structure. The structure of `VmiConfigTouch` is as follows:
 
@@ -1166,7 +1182,7 @@ The touch input (TI) configuration structure `VmiConfigTouch` is inherited from 
 struct VmiConfigTouch : public VmiConfig {} __attribute__((packed));
 ```
 
-### 8.2 Data Definitions<a name="ZH-CN_TOPIC_0000002518186058"></a>
+### Data Definitions<a name="ZH-CN_TOPIC_0000002518186058"></a>
 
 The TI data types include `VmiTouchInputData` (touchpad) and `VmiKeyInputData` (keyboard).
 
@@ -1204,7 +1220,7 @@ struct VmiKeyInputData {
 } __attribute__((packed));
 ```
 
-### 8.3 Data Injection<a name="ZH-CN_TOPIC_0000002549705785"></a>
+### Data Injection<a name="ZH-CN_TOPIC_0000002549705785"></a>
 
 Different from data output, the InjectData API needs to be invoked for data input. You can specify data using the `SEND_TOUCH_EVENT` and `SEND_KEY_EVENT` command words in the `VmiCmdTouch` enumeration, and inject data to the server through the InjectData API. Example:
 
@@ -1226,9 +1242,9 @@ InjectData(module, cmd, data, sizeof(VmiKeyInputData));
 >- The server performs limited verification on touch data, for example, determining whether a touch point in the touch data is within an effective area. However, the server cannot distinguish abnormal data caused by abnormal behavior. For example, a finger is lifted from the client screen but the client sends a Down event (which should be an UP event). Therefore, pay attention to this issue when writing client code.
 >- On some mobile phone models (vivo phones detected), if three or more fingers press the screen simultaneously or sequentially within a short interval, the client sends an EVENT_CANCEL event. As a result, the server resets the status of all touch points, causing a touch control failure. This issue does not occur if the interval between finger pressing is longer.
 
-## 9 Sensor Input Development<a name="ZH-CN_TOPIC_0000002518345976"></a>
+## Sensor Input Development<a name="ZH-CN_TOPIC_0000002518345976"></a>
 
-### 9.1 Conventions<a name="ZH-CN_TOPIC_0000002518186026"></a>
+### Conventions<a name="ZH-CN_TOPIC_0000002518186026"></a>
 
 Use the `VmiConfig` structure to configure the sensor input. The structure of `VmiConfig` is as follows:
 
@@ -1238,7 +1254,7 @@ struct VmiConfig {
 } __attribute__((packed));
 ```
 
-### 9.2 Data Definitions<a name="ZH-CN_TOPIC_0000002518186074"></a>
+### Data Definitions<a name="ZH-CN_TOPIC_0000002518186074"></a>
 
 The input data structure of the sensor input module consists of four parts: `x`, `y`, `z`, and `type`. The data is provided for developers through callbacks.
 
@@ -1282,7 +1298,7 @@ struct SensorActivateData {
 } __attribute__((packed));
 ```
 
-### 9.3 Data Injection<a name="ZH-CN_TOPIC_0000002549825805"></a>
+### Data Injection<a name="ZH-CN_TOPIC_0000002549825805"></a>
 
 The InjectData API needs to be invoked for data input. You can specify data using the `SENSOR_SEND_SENSOR_DATA` command word in the `VmiCmd` enumeration and inject data to the server through the InjectData API. Example:
 
@@ -1294,7 +1310,7 @@ uint8_t* data = &sensorData;
 InjectData(module, cmd, data, sizeof(SensorData));
 ```
 
-### 9.4 Data Output<a name="ZH-CN_TOPIC_0000002518345922"></a>
+### Data Output<a name="ZH-CN_TOPIC_0000002518345922"></a>
 
 The SetParam API needs to be invoked for data output. You can specify data using the `SENSOR_RETURN_REGISTER_CLIENT_SENSOR`, `SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR`, and `SENSOR_RETURN_UPDATE_CLIENT_SENSOR_RATE` command words in the `VmiCmd` enumeration and output data to the client through the SetParam API. Example:
 
@@ -1308,9 +1324,9 @@ uint8_t* data = &sensorActivateData;
 SetParam(module, cmd, param, sizeof(SensorActivateData));
 ```
 
-## 10 GPS Input Development<a name="ZH-CN_TOPIC_0000002549705797"></a>
+## GPS Input Development<a name="ZH-CN_TOPIC_0000002549705797"></a>
 
-### 10.1 Conventions<a name="ZH-CN_TOPIC_0000002549825791"></a>
+### Conventions<a name="ZH-CN_TOPIC_0000002549825791"></a>
 
 Use the `VmiConfig` structure to configure the GPS input. The structure of `VmiConfig` is as follows:
 
@@ -1320,7 +1336,7 @@ struct VmiConfig {
 } __attribute__((packed));
 ```
 
-### 10.2 Data Definitions<a name="ZH-CN_TOPIC_0000002518186022"></a>
+### Data Definitions<a name="ZH-CN_TOPIC_0000002518186022"></a>
 
 The GPS input data types include the longitude and latitude data in the `VmiGpsLocationData` structure.
 
@@ -1340,7 +1356,7 @@ struct VmiGpsLocationData {
 } __attribute__((packed));
 ```
 
-### 10.3 Data Injection<a name="ZH-CN_TOPIC_0000002518186020"></a>
+### Data Injection<a name="ZH-CN_TOPIC_0000002518186020"></a>
 
 The InjectData API needs to be invoked for data input. You can specify data using the `GPS_SEND_LOCATION_DATA` command word in the `VmiCmd` enumeration, and inject data to the server through the InjectData API. Example:
 
@@ -1352,11 +1368,11 @@ uint8_t* data = &locationData;
 InjectData(module, cmd, data, sizeof(VmiGpsLocationData));
 ```
 
-## 11 APIs for Non-commercial Implementation<a name="ZH-CN_TOPIC_0000002549705787"></a>
+## APIs for Non-commercial Implementation<a name="ZH-CN_TOPIC_0000002549705787"></a>
 
-### 11.1 Encoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002518186014"></a>
+### Encoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002518186014"></a>
 
-#### 11.1.1 API Description<a name="ZH-CN_TOPIC_0000002518345944"></a>
+#### API Description<a name="ZH-CN_TOPIC_0000002518345944"></a>
 
 The video encoding module provides external video encoding APIs required for the normal running of the video stream engine server. These APIs are implemented by secondary developers and provided as a DLL. The name of the DLL is `libVideoCodec.so`.
 
@@ -1396,64 +1412,66 @@ enum EncoderFormat: uint32_t {
 };
 ```
 
-#### 11.1.2 CreateVideoEncoder<a name="ZH-CN_TOPIC_0000002518345930" id="CreateVideoEncoder"></a>
+#### CreateVideoEncoder<a name="ZH-CN_TOPIC_0000002518345930" id="CreateVideoEncoder"></a>
 
-**Function Usage<a name="section20501062"></a>**
+int OpusDecodeApi\(OpusDecoder \*st, const unsigned char \*data, opus_int32 len, opus_int16 \*pcm, int frame_size, int decode_fec\)
 
 Creates an encoder instance.
 
-**Prototype<a name="section49973353"></a>**
+#### OpusDecodeApi<a name="ZH-CN_TOPIC_0000002549825837"></a>
 
 EncoderRetCode CreateVideoEncoder\(int32_t\*fd, EncoderFormat encoderFormat\)
 
-**Parameters<a name="section47106995"></a>**
+Performs Opus decoding. This API is similar to the opus_decode interface in Opus 1.3.1.
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t*|Encoder descriptor.|
 |encoderFormat|Input|`EncoderFormat` enumeration|Type of the encoder to be created.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+OpusDecoder \*OpusDecoderCreateApi\(opus_int32 Fs, int channels, int \*error\)
 
 Data type: EncoderRetCode
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder instance is successfully created.
+
 - `VIDEO_ENCODER_CREATE_FAIL`: Failed to create an encoder instance.
 
-#### 11.1.3 DestroyVideoEncoder<a name="ZH-CN_TOPIC_0000002549825789" id="DestroyVideoEncoder"></a>
+#### DestroyVideoEncoder<a name="ZH-CN_TOPIC_0000002549825789" id="DestroyVideoEncoder"></a>
 
-**Function Usage<a name="section20501062"></a>**
+int OpusDecoderCtlApi\(OpusDecoder \*st, int request, opus_int32 par\)
 
 Destroys an encoder instance.
 
-**Prototype<a name="section49973353"></a>**
+#### OpusDecoderCtlApi<a name="ZH-CN_TOPIC_0000002549825827"></a>
 
 EncoderRetCode DestroyVideoEncoder\(int32_t fd\)
 
-**Parameters<a name="section47106995"></a>**
+Controls Opus decoding. This API is similar to the opus_decoder_ctl interface in Opus 1.3.1.
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+void OpusDecoderDestroyApi\(OpusDecoder \*st\)
 
 Data type: EncoderRetCode
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder instance is successfully destroyed.
+
 - `VIDEO_ENCODER_DESTROY_FAIL`: Failed to destroy the encoder instance.
 
 **Involved APIs of the VideoEncoder Class<a name="section97621346152119"></a>**
 
-For details about involved APIs of the VideoEncoder class, see [11.1.4-Config](#Config), [11.1.5-InitEncoder](#InitEncoder), [11.1.6-StartEncoder](#StartEncoder), [11.1.7-SetParams](#SetParams), [11.1.8-EncodeOneFrame], [11.1.9-StopEncoder](#StopEncoder), [11.1.10-DestroyEncoder](#DestroyEncoder), and [11.1.11-ResetEncoder](#ResetEncoder).
+For details about involved APIs of the VideoEncoder class, see [11.1.4-Config](#Config), [11.1.5-InitEncoder](#InitEncoder), [11.1.6-StartEncoder](#StartEncoder), [11.1.7-SetParams](#SetParams), [11.1.8-EncodeOneFrame](#EncodeOneFrame), [11.1.9-StopEncoder](#StopEncoder), [11.1.10-DestroyEncoder](#DestroyEncoder), and [11.1.11-ResetEncoder](#ResetEncoder).
 
-#### 11.1.4 Config<a name="ZH-CN_TOPIC_0000002518345986" id="Config"></a>
+#### Config<a name="ZH-CN_TOPIC_0000002518345986" id="Config"></a>
 
-**Function Usage<a name="section20501062"></a>**
+const char \*OpusStrerrorApi\(int error\)
 
 Inputs the initial configuration of the encoder. This API needs to be called before [11.1.5-InitEncoder](#InitEncoder).
 
@@ -1461,14 +1479,14 @@ Inputs the initial configuration of the encoder. This API needs to be called bef
 
 This parameter passes through the parameters listed in [5.2-Configuration Parameters](#video-configuration-parameters) to `VmiEncoderConfig` and `VmiEncoderParams`. The restrictions on these parameters are still valid.
 
-**Prototype<a name="section49973353"></a>**
+#### OpusDecoderDestroyApi<a name="ZH-CN_TOPIC_0000002518345984"></a>
 
 EncoderRetCode Config\(int32_t fd, const VmiEncoderConfig& config\)
 
-**Parameters<a name="section47106995"></a>**
+Destroys the Opus decoder. This API is similar to the opus_decoder_destroy interface in Opus 1.3.1.
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 |config|Input|struct VmiEncoderConfig|Encoder configuration.|
 
@@ -1504,9 +1522,9 @@ The value can be any of the following:
 
 `VIDEO_ENCODER_SUCCESS`: The encoder is successfully configured.
 
-#### 11.1.5 InitEncoder<a name="ZH-CN_TOPIC_0000002549705789" id="InitEncoder"></a>
+#### InitEncoder<a name="ZH-CN_TOPIC_0000002549705789" id="InitEncoder"></a>
 
-**Function Usage<a name="section20501062"></a>**
+**Return Value Description<a name="section7911548131510"></a>**
 
 Initializes the encoder.
 
@@ -1514,14 +1532,14 @@ Initializes the encoder.
 
 The [11.1.4-Config](#Config) API must have been invoked to input valid configurations.
 
-**Prototype<a name="section49973353"></a>**
+#### OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549825845"></a>
 
 EncoderRetCode InitEncoder\(int32_t fd\)
 
 **Parameters<a name="section42241738122511"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -1531,9 +1549,10 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully initialized.
-- `VIDEO_ENCODER_INIT_FAIL`: The encoder fails to be initialized.
 
-#### 11.1.6 StartEncoder<a name="ZH-CN_TOPIC_0000002549825829" id="StartEncoder"></a>
+- `VIDEO_ENCODER_INIT_FAIL`: Failed to initialize the encoder.
+
+#### StartEncoder<a name="ZH-CN_TOPIC_0000002549825829" id="StartEncoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1546,7 +1565,7 @@ EncoderRetCode StartEncoder\(int32_t fd\)
 **Parameters<a name="section42241738122511"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -1556,9 +1575,10 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully started.
-- `VIDEO_ENCODER_INIT_FAIL`: The encoder fails to be initialized.
 
-#### 11.1.7 SetParams<a name="ZH-CN_TOPIC_0000002549705835" id="SetParams"></a>
+- `VIDEO_ENCODER_INIT_FAIL`: Failed to initialize the encoder.
+
+#### SetParams<a name="ZH-CN_TOPIC_0000002549705835" id="SetParams"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1572,10 +1592,10 @@ This parameter passes through the parameters listed in [5.2-Configuration Parame
 
 EncoderRetCode SetParams\(int32_t fd, const VmiEncoderParams& params\)
 
-**Parameters<a name="section47106995"></a>**
+Converts an Opus error code into a human-readable string. This API is similar to the opus_strerror interface in Opus 1.3.1.
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 |params|Input|struct VmiEncoderParams|Encoding parameters to be set.|
 
@@ -1602,7 +1622,7 @@ The value can be any of the following:
 
 `VIDEO_ENCODER_SUCCESS`: The encoder is successfully set.
 
-#### 11.1.8 EncodeOneFrame<a name="ZH-CN_TOPIC_0000002518186034" id="EncodeOneFrame"></a>
+#### EncodeOneFrame<a name="ZH-CN_TOPIC_0000002518186034" id="EncodeOneFrame"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1615,7 +1635,7 @@ EncoderRetCode EncodeOneFrame\(int32_t fd, const uint8_t \*inputData, uint32_t i
 **Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 |inputData|Input|const uint8_t *|Start address of the buffer for storing data to be encoded. The data format is YUV420p.|
 |inputSize|Input|uint32_t|Length of the data to be encoded, in bytes.|
@@ -1629,9 +1649,10 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: Data of one frame is successfully encoded.
+
 - `VIDEO_ENCODER_ENCODE_FAIL`: Failed to encode data of one frame.
 
-#### 11.1.9 StopEncoder<a name="ZH-CN_TOPIC_0000002518186044" id="StopEncoder"></a>
+#### StopEncoder<a name="ZH-CN_TOPIC_0000002518186044" id="StopEncoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1644,7 +1665,7 @@ EncoderRetCode StopEncoder\(int32_t fd\)
 **Parameters<a name="section42241738122511"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -1654,9 +1675,10 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully stopped.
+
 - `VIDEO_ENCODER_STOP_FAIL`: Failed to stop the encoder.
 
-#### 11.1.10 DestroyEncoder<a name="ZH-CN_TOPIC_0000002518186050" id="DestroyEncoder"></a>
+#### DestroyEncoder<a name="ZH-CN_TOPIC_0000002518186050" id="DestroyEncoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1669,7 +1691,7 @@ EncoderRetCode DestoryEncoder\(int32_t fd\)
 **Parameters<a name="section42241738122511"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -1679,9 +1701,10 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully stopped.
+
 - `VIDEO_ENCODER_DESTROY_FAIL`: Failed to destroy the encoder.
 
-#### 11.1.11 ResetEncoder<a name="ZH-CN_TOPIC_0000002518345970" id="ResetEncoder"></a>
+#### ResetEncoder<a name="ZH-CN_TOPIC_0000002518345970" id="ResetEncoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1694,7 +1717,7 @@ EncoderRetCode ResetEncoder\(int32_t fd\)
 **Parameters<a name="section42241738122511"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -1704,9 +1727,10 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully reset.
+
 - `VIDEO_ENCODER_RESET_FAIL`: Failed to reset the encoder.
 
-#### 11.1.12 FrameScaling<a name="ZH-CN_TOPIC_0000002518186040"></a>
+#### FrameScaling<a name="ZH-CN_TOPIC_0000002518186040"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1726,14 +1750,14 @@ EncoderRetCode FrameScaling\(uint32_t width, uint32_t height\)
 
 `width`: expected encoding width. Its value type is uint32_t. This field is described as follows.
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |width|Input|uint32_t|Expected encoding width.|
 
 `height`: expected encoding height. Its value type is uint32_t. This field is described as follows.
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |height|Input|uint32_t|Expected encoding height.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -1743,17 +1767,18 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: success
+
 - `VIDEO_ENCODER_SET_ENCODE_PARAMS_FAIL`: failure
 
-### 11.2 Decoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549825849"></a>
+### Decoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549825849"></a>
 
-#### 11.2.1 API Description<a name="ZH-CN_TOPIC_0000002549825815"></a>
+#### API Description<a name="ZH-CN_TOPIC_0000002549825815"></a>
 
 The video decoding module provides external video decoding APIs required for the normal running of the video stream engine server. These APIs are implemented by secondary developers and provided as a DLL. The name of the DLL is `libVideoDecoder.so`.
 
-Developers can inherit the `VideoDecoder` class and implement the APIs according to the description in this section. In addition, [11.2.2-CreateVideoDecoder] and [11.2.3-DestroyVideoDecoder](#DestroyVideoDecoder) are provided for creating specific instances of this implementation class.
+Developers can inherit the `VideoDecoder` class and implement the APIs according to the description in this section. In addition, [11.2.2-CreateVideoDecoder](#CreateVideoDecoder) and [11.2.3-DestroyVideoDecoder](#DestroyVideoDecoder) are provided for creating specific instances of this implementation class.
 
-This API is used with the internal OMX decoding component of the Android system and does not interfere with the video stream output component.
+This API is used together with the internal OMX decoding component of Android and does not interfere with the video stream output component.
 
 The return codes are defined as follows:
 
@@ -1777,7 +1802,7 @@ enum DecoderRetCode : uint32_t {
 };
 ```
 
-#### 11.2.2 CreateVideoDecoder<a name="ZH-CN_TOPIC_0000002549705791" id="CreateVideoDecoder"></a>
+#### CreateVideoDecoder<a name="ZH-CN_TOPIC_0000002549705791" id="CreateVideoDecoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1790,7 +1815,7 @@ DecoderRetCode CreateVideoDecoder\(VideoDecoder \*\*decoder\)
 **Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |decoder|Output|VideoDecoder **|Two-dimensional pointer to the decoder instance. It is used to store the decoder instance created in the API.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -1800,9 +1825,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder instance is successfully created.
+
 - `VIDEO_DECODER_CREATE_FAIL`: Failed to create a decoder instance.
 
-#### 11.2.3 DestroyVideoDecoder<a name="ZH-CN_TOPIC_0000002549825781" id="DestroyVideoDecoder"></a>
+#### DestroyVideoDecoder<a name="ZH-CN_TOPIC_0000002549825781" id="DestroyVideoDecoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1815,7 +1841,7 @@ DecoderRetCode DestroyVideoDecoder\(VideoDecoder \*decoder\)
 **Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |decoder|Input|VideoDecoder *|Pointer to the decoder instance to be destroyed.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -1825,13 +1851,14 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder instance is successfully destroyed.
+
 - `VIDEO_DECODER_DESTROY_FAIL`: Failed to destroy the decoder instance.
 
 **Involved APIs of the VideoDecoder Class<a name="section97621346152119"></a>**
 
 For details about involved APIs of the VideoDecoder class, see [11.2.4-CreateDecoder](#CreateDecoder), [11.2.5-InitDecoder](#InitDecoder), [11.2.6-SetDecodeParams](#SetDecodeParams), [11.2.7-GetDecodeParams](#GetDecodeParams), [11.2.8-SetCallbacks](#SetCallbacks), [11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc), [11.2.10-SendStreamData](#SendStreamData), [11.2.12-Flush](#Flush), [11.2.13-StartDecoder](#StartDecoder), [11.2.14-StopDecoder](#StopDecoder), and [11.2.15-DestroyDecoder](#DestroyDecoder).
 
-#### 11.2.4 CreateDecoder<a name="ZH-CN_TOPIC_0000002518345956" id="CreateDecoder"></a>
+#### CreateDecoder<a name="ZH-CN_TOPIC_0000002518345956" id="CreateDecoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1844,7 +1871,7 @@ DecoderRetCode CreateDecoder\(MediaStreamFormat__decType\)
 **Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |decType|Input|MediaStreamFormat|To-be-decoded stream type.|
 
 Enumeration of `MediaStreamFormat`:
@@ -1865,9 +1892,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully created.
+
 - `VIDEO_DECODER_CREATE_FAIL`: Failed to create a decoder.
 
-#### 11.2.5 InitDecoder<a name="ZH-CN_TOPIC_0000002518186064" id="InitDecoder"></a>
+#### InitDecoder<a name="ZH-CN_TOPIC_0000002518186064" id="InitDecoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1888,9 +1916,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully initialized.
+
 - `VIDEO_DECODER_INIT_FAIL`: Failed to initialize the decoder.
 
-#### 11.2.6 SetDecodeParams<a name="ZH-CN_TOPIC_0000002518186030" id="SetDecodeParams"></a>
+#### SetDecodeParams<a name="ZH-CN_TOPIC_0000002518186030" id="SetDecodeParams"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1903,7 +1932,7 @@ DecoderRetCode SetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
 **Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |index|Input|DecodeParamsIndex|Type of a parameter to be set.|
 |decParams|Input|void *|Memory address of the parameter.|
 
@@ -1955,9 +1984,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully configured.
+
 - `VIDEO_DECODER_SET_DECODE_PARAMS_FAIL`: Failed to configure the decoder.
 
-#### 11.2.7 GetDecodeParams<a name="ZH-CN_TOPIC_0000002518345942" id="GetDecodeParams"></a>
+#### GetDecodeParams<a name="ZH-CN_TOPIC_0000002518345942" id="GetDecodeParams"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1970,7 +2000,7 @@ DecoderRetCode GetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
 **Parameters<a name="section2630616193212"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |index|Input|DecodeParamsIndex|Type of a parameter to be got.|
 |decParams|Input|void *|Memory address of the parameter.|
 
@@ -1983,9 +2013,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoding parameters are successfully obtained.
+
 - `VIDEO_DECODER_GET_DECODE_PARAMS_FAIL`: Failed to obtain the decoding parameters.
 
-#### 11.2.8 SetCallbacks<a name="ZH-CN_TOPIC_0000002549705825" id="SetCallbacks"></a>
+#### SetCallbacks<a name="ZH-CN_TOPIC_0000002549705825" id="SetCallbacks"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -1997,8 +2028,8 @@ DecoderRetCode SetCallbacks\(std::function<void\(DecodeEventIndex, uint32_t, voi
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |eventCallBack|Input|std::function<void(DecodeEventIndex, uint32_t, void *)>|Callback for notifying decoder events.|
 
 When an event in the decoder needs to be notified to the upper layer, the callback set in this API is invoked. `index` indicates the event type, and `uint32_t` and `void *` parameters are used to store corresponding data. Definition:
@@ -2020,9 +2051,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The callback is successfully set.
+
 - `VIDEO_DECODER_SET_FUNC_FAIL`: Failed to set the callback.
 
-#### 11.2.9 SetCopyFrameFunc<a name="ZH-CN_TOPIC_0000002549705803" id="SetCopyFrameFunc"></a>
+#### SetCopyFrameFunc<a name="ZH-CN_TOPIC_0000002549705803" id="SetCopyFrameFunc"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2034,8 +2066,8 @@ DecoderRetCode SetCopyFrameFunc\(std::function<uint32_t\(uint8_t\*, uint8_t\*, c
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |copyFrame|Input|std::function<uint32_t(uint8_t*, uint8_t*, const PicInfoParams &, uint32_t)>|Sets the hook function for copying decoded data of one frame to the output buffer. This function is used to shield format differences of the output API.|
 
 In the callback, the first `uint8_t*` indicates the address of decoded data and the second `uint8_t*` indicates the destination of the copied data, which needs to be the same as the buffer address entered in [11.2.11-RetrieveFrameData](#RetrieveFrameData). `const PicInfoParams &` indicates the image width and height (see [11.2.6-SetDecodeParams](#SetDecodeParams)). `uint32_t` indicates the maximum length of the output buffer, which needs to be the same as the maximum buffer size entered in [11.2.11-RetrieveFrameData](#RetrieveFrameData). The return value of this callback is the actual size of processed data.
@@ -2047,9 +2079,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The callback is successfully set.
+
 - `VIDEO_DECODER_SET_FUNC_FAIL`: Failed to set the callback.
 
-#### 11.2.10 SendStreamData<a name="ZH-CN_TOPIC_0000002518345964" id="SendStreamData"></a>
+#### SendStreamData<a name="ZH-CN_TOPIC_0000002518345964" id="SendStreamData"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2061,12 +2094,9 @@ DecoderRetCode SendStreamData\(uint8_t \*buffer, uint32_t filledLen\)
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |buffer|Input|uint8_t *|Buffer of the input stream data.|
-
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
 |filledLen|Input|uint32_t|Length of the input stream data.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -2076,10 +2106,12 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: Stream data is sent successfully.
+
 - `VIDEO_DECODER_DECODE_FAIL`: Failed to send stream data.
+
 - `VIDEO_DECODER_WRITE_OVERFLOW`: Write overflow.
 
-#### 11.2.11 RetrieveFrameData<a name="ZH-CN_TOPIC_0000002549705823" id="RetrieveFrameData"></a>
+#### RetrieveFrameData<a name="ZH-CN_TOPIC_0000002549705823" id="RetrieveFrameData"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2091,16 +2123,10 @@ DecoderRetCode RetrieveFrameData\(uint8_t \*buffer, uint32_t maxLen, uint32_t \*
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |buffer|Input|uint8_t *|Buffer for receiving output data.|
-
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
 |maxLen|Input|uint32_t|Maximum length of the output buffer.|
-
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
 |filledLen|Output|uint32_t *|Actual length of the output data.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -2110,10 +2136,12 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoded data is successfully retrieved.
+
 - `VIDEO_DECODER_DECODE_FAIL`: Failed to retrieve the decoded data.
+
 - `VIDEO_DECODER_READ_UNDERFLOW`: Read underflow.
 
-#### 11.2.12 Flush<a name="ZH-CN_TOPIC_0000002549705829" id="Flush"></a>
+#### Flush<a name="ZH-CN_TOPIC_0000002549705829" id="Flush"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2130,9 +2158,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoding buffer status is successfully reset.
+
 - `VIDEO_DECODER_RESET_FAIL`: Failed to reset the decoding buffer status.
 
-#### 11.2.13 StartDecoder<a name="ZH-CN_TOPIC_0000002518186038" id="StartDecoder"></a>
+#### StartDecoder<a name="ZH-CN_TOPIC_0000002518186038" id="StartDecoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2149,9 +2178,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully started.
+
 - `VIDEO_DECODER_START_FAIL`: Failed to start the decoder.
 
-#### 11.2.14 StopDecoder<a name="ZH-CN_TOPIC_0000002518345952" id="StopDecoder"></a>
+#### StopDecoder<a name="ZH-CN_TOPIC_0000002518345952" id="StopDecoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2168,9 +2198,10 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is stopped successfully.
+
 - `VIDEO_DECODER_STOP_FAIL`: Failed to stop the decoder.
 
-#### 11.2.15 DestroyDecoder<a name="ZH-CN_TOPIC_0000002518345932" id="DestroyDecoder"></a>
+#### DestroyDecoder<a name="ZH-CN_TOPIC_0000002518345932" id="DestroyDecoder"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2180,13 +2211,13 @@ Destroys the decoder.
 
 void DestroyDecoder\(\)
 
-### 11.3 GPU Acceleration APIs (C and C++)<a name="ZH-CN_TOPIC_0000002518186076"></a>
+### GPU Acceleration APIs (C and C++)<a name="ZH-CN_TOPIC_0000002518186076"></a>
 
-#### 11.3.1 API Description<a name="ZH-CN_TOPIC_0000002518345974"></a>
+#### API Description<a name="ZH-CN_TOPIC_0000002518345974"></a>
 
-The GPU acceleration module provides GPU acceleration APIs required for the normal running of the video stream engine server, including the RGB-to-YUV conversion and GPU encoding functions. These APIs are implemented by secondary developers or the GPU vendor and provided as a DLL. The DLLs are `libVmiEncTurbo.so` (vendor library) and `libVmiEncTurboSys.so` (system library).
+The GPU acceleration module provides GPU acceleration APIs required for the normal running of the video stream engine server, including the RGB-to-YUV conversion and GPU encoding functions. These APIs are implemented by secondary developers or the GPU vendor and provided as DLLs, including `libVmiEncTurbo.so` (vendor library) and `libVmiEncTurboSys.so` (system library).
 
-#### 11.3.2 QueryModule<a name="ZH-CN_TOPIC_0000002549705799" id="QueryModule"></a>
+#### QueryModule<a name="ZH-CN_TOPIC_0000002549705799" id="QueryModule"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2199,7 +2230,7 @@ void QueryModule\(ModuleInfo \*\*moduleList, uint32_t \*listSize\)
 **Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |moduleList|Output|ModuleInfo **|List of GPU acceleration classes supported by the system. Each item contains the ID and capability of a GPU acceleration class.|
 |listSize|Output|uint32_t *|`moduleList` length.|
 
@@ -2248,7 +2279,7 @@ enum GpuType : uint32_t {
 };
 ```
 
-#### 11.3.3 CreateModule<a name="ZH-CN_TOPIC_0000002518186042" id="CreateModule"></a>
+#### CreateModule<a name="ZH-CN_TOPIC_0000002518186042" id="CreateModule"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2265,7 +2296,7 @@ void \*CreateModule\(uint32_t moduleId\)
 **Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
+| :---: | :---: | :---: | :---: |
 |moduleId|Input|uint32_t|Specifies the GPU model to be used for GPU acceleration.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -2294,11 +2325,11 @@ enum GpuEncoderErrorCode : uint32_t {
 };
 ```
 
-#### 11.3.4 DestroyModule<a name="ZH-CN_TOPIC_0000002518345926"></a>
+#### DestroyModule<a name="ZH-CN_TOPIC_0000002518345926"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
-Destroys a GPU acceleration instance.
+Destroys a GPU acceleration class instance.
 
 **Restrictions<a name="section50291837"></a>**
 
@@ -2311,10 +2342,10 @@ void DestroyModule\(void \*module\)
 **Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
-|--|--|--|--|
-|module|Input|void *|Pointer to the instance to be destroyed.|
+| :---: | :---: | :---: | :---: |
+|module|Input|void *|Pointer to the GPU acceleration class instance to be destroyed.|
 
-#### 11.3.5 Init<a name="ZH-CN_TOPIC_0000002518186024" id="Init"></a>
+#### Init<a name="ZH-CN_TOPIC_0000002518186024" id="Init"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2326,8 +2357,8 @@ int32_t Init\(EncoderConfig &config\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |config|Input|EncoderConfig &|A reference to the `EncoderConfig` structure, representing GPU encoding configuration items.|
 
 The `EncoderConfig` structure and its enumeration are defined as follows:
@@ -2388,13 +2419,14 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is successfully initialized.
+
 - Other: Failed to initialize the GPU acceleration instance.
 
-#### 11.3.6 Deinit<a name="ZH-CN_TOPIC_0000002549705809" id="Deinit"></a>
+#### Deinit<a name="ZH-CN_TOPIC_0000002549705809" id="Deinit"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
-Destroys a GPU acceleration class instance.
+Destroys a GPU acceleration instance.
 
 **Prototype<a name="section49973353"></a>**
 
@@ -2406,10 +2438,11 @@ Data type: GpuEncoderErrorCode
 
 The value can be any of the following:
 
-- `OK`: The GPU acceleration class instance is successfully destroyed.
-- Other: Failed to destroy the GPU acceleration class instance.
+- `OK`: The GPU acceleration instance is successfully destroyed.
 
-#### 11.3.7 Start<a name="ZH-CN_TOPIC_0000002549705843" id="Start"></a>
+- Other: Failed to destroy the GPU acceleration instance.
+
+#### Start<a name="ZH-CN_TOPIC_0000002549705843" id="Start"></a>
 
 Starts a GPU acceleration instance.
 
@@ -2428,9 +2461,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is started successfully.
+
 - Other: Failed to start the GPU acceleration instance.
 
-#### 11.3.8 Stop<a name="ZH-CN_TOPIC_0000002549825841" id="Stop"></a>
+#### Stop<a name="ZH-CN_TOPIC_0000002549825841" id="Stop"></a>
 
 Stops a GPU acceleration instance.
 
@@ -2449,9 +2483,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is stopped successfully.
+
 - Other: Failed to stop the GPU acceleration instance.
 
-#### 11.3.9 CreateBuffer<a name="ZH-CN_TOPIC_0000002518186066" id="CreateBuffer"></a>
+#### CreateBuffer<a name="ZH-CN_TOPIC_0000002518186066" id="CreateBuffer"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2463,8 +2498,8 @@ int32_t CreateBuffer\(FrameFormat format, MemType type, GpuEncoderBufferT &buffe
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |format|Input|FrameFormat|Format of the buffer to be created.|
 
 Enumeration of `FrameFormat`:
@@ -2482,8 +2517,8 @@ enum FrameFormat : uint32_t {
 };
 ```
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |type|Input|MemType|Location of space to be allocated to the buffer.|
 
 Enumeration of `MemType`:
@@ -2497,11 +2532,11 @@ enum MemType : uint32_t {
 };
 ```
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |buffer|Output|GpuEncoderBufferT  &|Pointer used to mount the buffer after allocation.|
 
-The definition of `GpuEncoderBufferT` is as follows. When implementing this API, developers or the vendor need to use `new` to allocate memory for `GpuEncoderBuffer` and release the memory in the ReleaseBuffer API.
+The definition of `GpuEncoderBufferT` is as follows. When implementing this API, developers or the vendor needs to use `new` to allocate memory for `GpuEncoderBuffer` and release the memory in the ReleaseBuffer API.
 
 ```c++
 struct GpuEncoderBuffer {
@@ -2522,9 +2557,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer is successfully created.
+
 - Other: Failed to create a buffer.
 
-#### 11.3.10 ImportBuffer<a name="ZH-CN_TOPIC_0000002549825793" id="ImportBuffer"></a>
+#### ImportBuffer<a name="ZH-CN_TOPIC_0000002549825793" id="ImportBuffer"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2536,8 +2572,8 @@ int32_t ImportBuffer\(FrameFormat format, uint64_t handle, GpuEncoderBufferT &bu
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |format|Input|FrameFormat|Format of the buffer to be imported.|
 |handle|Input|uint64_t|Handle or video RAM address corresponding to the buffer to be imported.|
 |buffer|Output|GpuEncoderBufferT &|Pointer used to mount the buffer after the import.|
@@ -2549,9 +2585,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer is successfully imported.
+
 - Other: Failed to import the buffer.
 
-#### 11.3.11 ReleaseBuffer<a name="ZH-CN_TOPIC_0000002518186052" id="ReleaseBuffer"></a>
+#### ReleaseBuffer<a name="ZH-CN_TOPIC_0000002518186052" id="ReleaseBuffer"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2563,8 +2600,8 @@ int32_t ReleaseBuffer\(GpuEncoderBufferT &buffer\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |buffer|Input|GpuEncoderBufferT &|Pointer to the buffer to be released.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -2574,15 +2611,17 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer is successfully released.
+
 - Other: Failed to release the buffer.
 
-#### 11.3.12 MapBuffer<a name="ZH-CN_TOPIC_0000002549705793" id="MapBuffer"></a>
+#### MapBuffer<a name="ZH-CN_TOPIC_0000002549705793" id="MapBuffer"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
-Maps data in a buffer to the memory.
+Maps data in a buffer to memory.
 
 - If data in the buffer can be mapped to contiguous memory in user space, fill in `data` and `dataLen` in the `buffer` field for this API.
+
 - If data in the buffer cannot be mapped to contiguous memory, leave `data` in the `buffer` field empty and fill in the `dataLen` field.
 
 **Prototype<a name="section49973353"></a>**
@@ -2591,10 +2630,10 @@ int32_t MapBuffer\(GpuEncoderBufferT &buffer, uint32_t flag\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |buffer|Output|GpuEncoderBufferT &|Pointer to the buffer whose data needs to be mapped.|
-|flag|Input|uint32_t|Configures the access type of the mapping data, including read and write.|
+|flag|Input|uint32_t|Configures the access type of the mapped data, including read and write.|
 
 The value of `flag` is `FLAG_READ | FLAG_WRITE` when both read and write are enabled.
 
@@ -2612,13 +2651,14 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: Data in the buffer is successfully mapped.
+
 - Other: Failed to map data in the buffer.
 
-#### 11.3.13 UnmapBuffer<a name="ZH-CN_TOPIC_0000002549825797" id="UnmapBuffer"></a>
+#### UnmapBuffer<a name="ZH-CN_TOPIC_0000002549825797" id="UnmapBuffer"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
-Unmaps data in a buffer from the memory.
+Unmaps data in a buffer from memory.
 
 **Prototype<a name="section49973353"></a>**
 
@@ -2626,8 +2666,8 @@ int32_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |buffer|Input|GpuEncoderBufferT &|Pointer to the buffer whose data needs to be unmapped.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -2637,9 +2677,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The data in the buffer is successfully unmapped.
+
 - Other: Failed to unmap data in the buffer.
 
-#### 11.3.14 RetriveBufferData<a name="ZH-CN_TOPIC_0000002549825777" id="RetriveBufferData"></a>
+#### RetriveBufferData<a name="ZH-CN_TOPIC_0000002549825777" id="RetriveBufferData"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2657,8 +2698,8 @@ int32_t RetriveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t m
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |buffer|Input|GpuEncoderBufferT &|Pointer to the buffer whose data needs to be copied.|
 |data|Input|uint8_t *|Address of the memory space for receiving buffer data.|
 |memLen|Input|uint32_t|Maximum length of the memory space for receiving buffer data.|
@@ -2671,9 +2712,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer data is successfully retrieved.
+
 - Other: Failed to retrieve data in the buffer.
 
-#### 11.3.15 Convert<a name="ZH-CN_TOPIC_0000002549705817" id="Convert"></a>
+#### Convert<a name="ZH-CN_TOPIC_0000002549705817" id="Convert"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2685,8 +2727,8 @@ int32_t Convert\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |inBuffer|Input|GpuEncoderBufferT &|Input buffer whose data format is to be converted.|
 |outBuffer|Output|GpuEncoderBufferT &|Output buffer for receiving data after format conversion.|
 
@@ -2697,9 +2739,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer format is successfully converted.
+
 - Other: Failed to convert the buffer format.
 
-#### 11.3.16 Encode<a name="ZH-CN_TOPIC_0000002549705779" id="Encode"></a>
+#### Encode<a name="ZH-CN_TOPIC_0000002549705779" id="Encode"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2711,8 +2754,8 @@ int32_t Encode\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |inBuffer|Input|GpuEncoderBufferT &|Input buffer whose data is to be encoded.|
 |outBuffer|Output|GpuEncoderBufferT &|Output buffer for receiving encoded data.|
 
@@ -2723,9 +2766,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The encoding is successful.
+
 - Other: The encoding fails.
 
-#### 11.3.17 SetEncodeParam<a name="ZH-CN_TOPIC_0000002518345966" id="SetEncodeParam"></a>
+#### SetEncodeParam<a name="ZH-CN_TOPIC_0000002518345966" id="SetEncodeParam"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2737,10 +2781,10 @@ int32_t SetEncodeParam\(EncodeParamT params\[\], uint32_t num\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
-|params|Input|EncodeParamT[]|List of the encoding parameters to be configured.|
-|num|Input|uint32_t|Number of the encoding parameters to be configured.|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
+|params|Input|EncodeParamT[]|List of encoding parameters to be set.|
+|num|Input|uint32_t|Number of encoding parameters to be set.|
 
 Enumeration of `EncodeParamT`:
 
@@ -2805,10 +2849,12 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The encoding parameters are set successfully.
+
 - `ERR_NEED_RESET`: The encoding parameters take effect only after the Reset API is called.
+
 - Other: Failed to set the encoding parameters.
 
-#### 11.3.18 Reset<a name="ZH-CN_TOPIC_0000002549825811" id="Reset"></a>
+#### Reset<a name="ZH-CN_TOPIC_0000002549825811" id="Reset"></a>
 
 Resets the encoder. Some encoding parameter configurations take effect only after this API is called.
 
@@ -2827,9 +2873,10 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The encoder is successfully reset.
+
 - Other: Failed to reset the encoder.
 
-#### 11.3.19 ResetImgSize<a name="ZH-CN_TOPIC_0000002549705841"></a>
+#### ResetImgSize<a name="ZH-CN_TOPIC_0000002549705841"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2845,8 +2892,8 @@ int32_t ResetImgSize\(uint32_t width, uint32_t height\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |width|Input|uint32_t|Image width in pixels, which must be an even number.|
 |height|Input|uint32_t|Image height in pixels, which must be an even number.|
 
@@ -2857,17 +2904,18 @@ Data type: int32_t
 The value can be any of the following:
 
 - `0`: The image size is successfully set.
+
 - Other: Failed to set the image size.
 
-### 11.4 Opus Encoding and Decoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549705849"></a>
+### Opus Encoding and Decoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549705849"></a>
 
-#### 11.4.1 API Description<a name="ZH-CN_TOPIC_0000002518186008"></a>
+#### API Description<a name="ZH-CN_TOPIC_0000002518186008"></a>
 
 The audio playback and microphone input functions of the video stream engine support the input and output of Opus streams. This requires the Opus encoding and decoding library to provide encoding and decoding capabilities. This library is implemented by secondary developers and is provided as a DLL. The name of the DLL is `libVmiOpus.so`.
 
 These APIs are similar to those of open-source software [Opus 1.3.1](https://github.com/xiph/opus/tree/v1.3.1). You can refer to the APIs and data interface definitions of Opus.
 
-#### 11.4.2 OpusEncoderCreateApi<a name="ZH-CN_TOPIC_0000002549705783"></a>
+#### OpusEncoderCreateApi<a name="ZH-CN_TOPIC_0000002549705783"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2885,7 +2933,7 @@ This API is similar to the opus_encoder_create interface in Opus 1.3.1. For deta
 
 This API is similar to the opus_encoder_create interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.3 OpusEncodeApi<a name="ZH-CN_TOPIC_0000002518345978"></a>
+#### OpusEncodeApi<a name="ZH-CN_TOPIC_0000002518345978"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2903,7 +2951,7 @@ This API is similar to the opus_encode interface in Opus 1.3.1. For details, ref
 
 This API is similar to the opus_encode interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.4 OpusEncoderCtlApi<a name="ZH-CN_TOPIC_0000002549825825"></a>
+#### OpusEncoderCtlApi<a name="ZH-CN_TOPIC_0000002549825825"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2921,7 +2969,7 @@ This API is similar to the opus_encoder_ctl interface in Opus 1.3.1. For details
 
 This API is similar to the opus_encoder_ctl interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.5 OpusEncoderDestroyApi<a name="ZH-CN_TOPIC_0000002549705837"></a>
+#### OpusEncoderDestroyApi<a name="ZH-CN_TOPIC_0000002549705837"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2939,7 +2987,7 @@ This API is similar to the opus_encoder_destroy interface in Opus 1.3.1. For det
 
 This API is similar to the opus_encoder_destroy interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.6 OpusDecoderCreateApi<a name="ZH-CN_TOPIC_0000002549825787"></a>
+#### OpusDecoderCreateApi<a name="ZH-CN_TOPIC_0000002549825787"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2957,7 +3005,7 @@ This API is similar to the opus_decoder_create interface in Opus 1.3.1. For deta
 
 This API is similar to the opus_decoder_create interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.7 OpusDecodeApi<a name="ZH-CN_TOPIC_0000002549825837"></a>
+#### OpusDecodeApi<a name="ZH-CN_TOPIC_0000002549825837"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2975,7 +3023,7 @@ This API is similar to the opus_decode interface in Opus 1.3.1. For details, ref
 
 This API is similar to the opus_decode interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.8 OpusDecoderCtlApi<a name="ZH-CN_TOPIC_0000002549825827"></a>
+#### OpusDecoderCtlApi<a name="ZH-CN_TOPIC_0000002549825827"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2993,7 +3041,7 @@ This API is similar to the opus_decoder_ctl interface in Opus 1.3.1. For details
 
 This API is similar to the opus_decoder_ctl interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.9 OpusDecoderDestroyApi<a name="ZH-CN_TOPIC_0000002518345984"></a>
+#### OpusDecoderDestroyApi<a name="ZH-CN_TOPIC_0000002518345984"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -3011,7 +3059,7 @@ This API is similar to the opus_decoder_destroy interface in Opus 1.3.1. For det
 
 This API is similar to the opus_decoder_destroy interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.10 OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549825845"></a>
+#### OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549825845"></a>
 
 **Function Usage<a name="section20501062"></a>**
 

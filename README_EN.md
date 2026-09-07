@@ -1,5 +1,7 @@
 # Video Stream Introduction<a name="ZH-CN_TOPIC_0000002518224780"></a>
 
+<!-- md-trans-meta sourceCommit=aacb7196e617c49af4449f88dc33d5357da81129 translatedAt=2026-08-29T08:33:57.177Z pushedAt=2026-08-29T10:52:39.359Z -->
+
 English | [简体中文](./README.md)
 
 ## Project Description<a name="ZH-CN_TOPIC_0000002550235025"></a>
@@ -23,10 +25,10 @@ This section describes the context logical structure and modules (including modu
 
 The video stream engine consists of the server and client. The server provides functions such as image capture and encoding, and the client decodes and plays video data. In some scenarios, functions such as obtaining and injecting user touch data, and obtaining and playing audio data are also supported.
 
-|Module Name|Function|
+|Module Name|Function Description|
 |--|--|
 |Capture module|Obtains image data. The output format is the RGBA video RAM address or RGBA memory address.|
-|Encoding module|Encodes YUV data into H.264/H.265 streams and sends the streams through external APIs of the video stream engine.|
+|Encoding module|Encodes YUV data into H.264/H.265 streams and sends them through external APIs of the video stream engine.|
 |GPU acceleration module|Converts the RGBA data obtained by the capture module into YUV data or video streams by utilizing GPU capabilities.|
 |Audio data collection|Obtains audio data, outputs audio data in OPUS or PCM format, and sends the data through external APIs of the video stream engine.|
 |Microphone injection|Obtains OPUS or PCM data from external APIs of the video stream engine and injects the data to the Android system.|
@@ -54,12 +56,12 @@ The video stream engine consists of the server and client. The server provides f
 
 ## Directory Structure<a name="ZH-CN_TOPIC_0000002518595280"></a>
 
-```txt
-├── docs                                          # Project document directory
+```text
+├── docs                                          # Project documentation
 │   └── en                                       # English document directory
 │       ├── figures                              # Directory of figures in documents
 │       ├── quick_start.md                       # Quick start
-│       ├── release_notes.md                    # Release notes
+│       ├── release_notes.md                     # Release notes
 │       ├── installation_guide.md                # Installation guide
 │       ├── user_guide.md                        # User guide
 │       ├── best_practices.md                    # Best practices
@@ -88,21 +90,21 @@ The video stream engine consists of the server and client. The server provides f
 │   │   ├── PacketHandle                        # Packet handler for packet queuing and reassembly functions
 │   │   ├── PacketManager                       # Packet manager; creates packet queues to store reassembled packets awaiting further processing.
 │   │   ├── Socket                              # Encapsulates sockets into VmiSockets for engine use.
-│   │   └── StreamParse                         # Message data decapsulation
+│   │   └── StreamParse                         # Packet decapsulation
 │   ├── Connection                               # Communication library implemented based on the TCP protocol
 │   ├── Log                                      # Log module
 │   └── Utils                                    # Other common utilities, including unified engine event reporting, packet queue implementation, and version validation
 ├── open_source_download                          # Directory for downloaded open-source software packages
 ├── scripts                                       # Directory for build scripts
 └── unpack_open_source                            # Directory for unpacked open-source software
-├── hantro                                        # Hantro GPU encoding module
+├── hantro                                        # DaoCloud GPU encoding module
 ├── libdrm                                        # Provides kernel subsystems interacting with the GPU.
 ├── libva                                         # Provides hardware acceleration for video processing.
 ├── openH264                                      # Supports H.264 video format encoding and decoding.
 └── opus                                          # Audio encoding and decoding software
 ```
 
-## Version Description<a name="ZH-CN_TOPIC_0000002518755186"></a>
+## Release Notes<a name="ZH-CN_TOPIC_0000002518755186"></a>
 
 The video stream engine has two branch versions: Android 11 and Android 15. This section describes the differences and feature changes between the two versions.
 
@@ -110,7 +112,7 @@ The video stream engine is developed based on AOSP and currently supports AOSP 1
 
 **Table 1** Code branch differences<a id="code-branch-differences"></a>
 
-|Code Branch|AOSP11|AOSP15|
+|Code Branch|AOSP 11|AOSP 15|
 |--|--|--|
 |Supported kernel version|5.10|6.6|
 |Supported Docker version|18.0|24.0|
@@ -118,7 +120,7 @@ The video stream engine is developed based on AOSP and currently supports AOSP 1
 
 **Change Description<a name="section4408930144513"></a>**
 
-For details about feature changes in each release, see the *Release Notes*.
+For detailed information about feature changes in each release, see the *Release Notes*.
 
 ## Environment Deployment<a name="ZH-CN_TOPIC_0000002550275031"></a>
 
@@ -137,14 +139,20 @@ The video stream cloud phone supports bare metal servers and VMs. For details, s
 
 ## Disclaimer<a name="ZH-CN_TOPIC_0000002550275033"></a>
 
+This repository contains only feature demonstrations and development sample code, intended to showcase the usage and integration methods of specific features. Do not use the code in this repository directly in production environments. All code is provided solely as technical reference and does not inherit or guarantee any security design or protection mechanisms of upstream or downstream software. The sample code in this repository may contain security defects, vulnerabilities, or incomplete implementations. The Kunpeng Computing Community assumes no responsibility for the security, stability, or compliance of the code. Users should assess risks on their own and perform security hardening based on actual scenarios. Any security issues arising from the use of the code in this repository shall be borne solely by the user. It is recommended to keep track of security advisories and version updates from upstream open-source projects.
+
 **To Users of This Project**
 
 - This project is intended solely for debugging and development. You are responsible for any risks and should carefully review the following information:
+
     - Data processing and deletion: Users are responsible for managing and deleting any data generated while using this tool. You are advised to promptly delete any related data after use to prevent information leaks.
+
     - Data confidentiality and transmission: Users understand and agree not to share or transmit any data generated by this tool. Neither the tool nor its developers are responsible for any information leaks, data breaches, or other negative consequences.
+
     - User input security: Users are responsible for the security of any commands they enter and for any risks or losses resulting from improper input. The tool and its developers are not liable for issues caused by incorrect command usage.
 
 - Disclaimer scope: This disclaimer applies to all individuals and entities using this tool. By using the tool, you acknowledge and accept this statement and assume all risks and responsibilities arising from its use. If you do not agree, please stop using the tool immediately.
+
 - Before using this tool, **please read and understand the preceding disclaimer**. If you have any questions, contact the developer.
 
 **To Data Owners**
