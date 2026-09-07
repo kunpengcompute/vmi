@@ -118,7 +118,7 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
 1. <a id="deploying-the-containerd-environment-1"></a>Download and decompress the containerd binary package to the `/usr/local` directory.
 
-    ```shell
+    ```bash
     mkdir -p /root/containerdenv/downloads
     cd /root/containerdenv/downloads
     wget https://github.com/containerd/containerd/releases/download/v1.7.14/containerd-1.7.14-linux-arm64.tar.gz --no-check-certificate
@@ -127,13 +127,13 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
     Check that the containerd version is v1.7.14.
 
-    ```shell
+    ```bash
     containerd --version
     ```
 
 2. <a id="deploying-the-containerd-environment-2"></a>Download the containerd service file and configure it as a system service.
 
-    ```shell
+    ```bash
     cd /root/containerdenv/downloads
     wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service --no-check-certificate
     mkdir -p /usr/local/lib/systemd/system/
@@ -144,7 +144,7 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
     Check whether the containerd service is started.
 
-    ```shell
+    ```bash
     systemctl status containerd
     ```
 
@@ -154,7 +154,7 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
 3. <a id="deploying-the-containerd-environment-3"></a>Download and install runC.
 
-    ```shell
+    ```bash
     cd /root/containerdenv/downloads
     wget https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64 --no-check-certificate
     install -m 755 runc.arm64 /usr/local/sbin/runc
@@ -162,13 +162,13 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
     Check that the runC version is 1.1.12.
 
-    ```shell
+    ```bash
     runc --version
     ```
 
 4. <a id="deploying-the-containerd-environment-4"></a>Download and install the CNI plugin.
 
-    ```shell
+    ```bash
     cd /root/containerdenv/downloads
     mkdir -p /opt/cni/bin
     wget https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz --no-check-certificate
@@ -177,7 +177,7 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
 5. <a id="deploying-the-containerd-environment-5"></a>Download and install nerdctl.
 
-    ```shell
+    ```bash
     cd /root/containerdenv/downloads
     wget https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz --no-check-certificate
     tar Cxzvf /usr/local/bin nerdctl-1.7.5-linux-arm64.tar.gz
@@ -185,13 +185,13 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
     Check that the nerdctl version is 1.7.5.
 
-    ```shell
+    ```bash
     nerdctl --version
     ```
 
 6. <a id="installing-golang"></a>Download and install Golang.
 
-    ```shell
+    ```bash
     wget https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz
     tar -C /usr/local -xzf go1.25.0.linux-arm64.tar.gz
     echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
@@ -200,20 +200,20 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
     Configure the proxy.
 
-    ```shell
+    ```bash
     go env -w GO111MODULE=on
     go env -w GOPROXY=https://goproxy.cn,direct
     ```
 
     Check that the Golang version is 1.25.
 
-    ```shell
+    ```bash
     go version
     ```
 
 7. <a id="deploying-the-containerd-environment-7"></a>Restart the Docker service and start a new terminal for the new container runtime to take effect.
 
-    ```shell
+    ```bash
     systemctl restart docker
     ```
 
@@ -230,7 +230,7 @@ Before creating a video stream cloud phone image, create a Kbox image first.
 1. Obtain the Kbox container startup dependency components `android.tar` and `Kbox-patches-AOSP11.zip` based on [Deploying the Basic Environment for the Kbox Container](#deploying-the-basic-environment-for-the-kbox-container), and upload them to the `/home/kbox_video` directory on the server. (This directory is used as an example. You can customize a directory as required.)
 2. Decompress the `Kbox-patches-AOSP11.zip` package, extract the `base_box.sh` and `hardware_bind.cfg` files from `deploy_scripts` to the`/home/kbox_video` directory, and grant permissions on the files. Ensure that the file owner has the read, write, and execute permissions while users in the owner group and others have only the read and execute permissions.
 
-    ```shell
+    ```bash
     unzip Kbox-patches-AOSP11.zip
     cp Kbox-patches-AOSP11/deploy_scripts/base_box.sh /home/kbox_video/
     cp Kbox-patches-AOSP11/deploy_scripts/hardware_bind.cfg /home/kbox_video/
@@ -242,7 +242,7 @@ Before creating a video stream cloud phone image, create a Kbox image first.
 
         You can customize the image name and tag in the format of *{Name}:{Tag}*. In this example, the image name is `kbox:demo`.
 
-        ```shell
+        ```bash
         cd ~/dependency
         docker import android.tar kbox:demo
         ```
@@ -253,7 +253,7 @@ Before creating a video stream cloud phone image, create a Kbox image first.
     5. Create a Kbox image that contains the Android Kbox binary. In the following commands, `kbox:demo` is the official Kbox demo image, and `kbox:origin` is the new image that contains the Android Kbox binary.
         - For configuration scheme 1:
 
-            ```shell
+            ```bash
             cd ~/dependency/deploy_scripts
             chmod +x make_image.sh
             ./make_image.sh kbox:demo kbox:origin
@@ -261,7 +261,7 @@ Before creating a video stream cloud phone image, create a Kbox image first.
 
         - For configuration scheme 2/3/4:
 
-            ```shell
+            ```bash
             cd ~/dependency/deploy_scripts
             chmod +x make_image.sh
             ./make_image.sh kbox:demo kbox:origin va_driver.tgz
@@ -269,13 +269,13 @@ Before creating a video stream cloud phone image, create a Kbox image first.
 
 4. Check whether the Kbox image (`kbox:origin`) is successfully created.
 
-    ```shell
+    ```bash
     docker images
     ```
 
     The image is created successfully if information similar to the following is displayed:
 
-    ```shell
+    ```bash
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     kbox          origin    d1f5cfd2e722    6 seconds ago    2.09GB
     ```
@@ -289,7 +289,7 @@ Obtain the TAR packages of the video stream engine client and server, binary pac
 1. Obtain `CloudPhoneApk.tar.gz`, `DemoVideoEngine.tar.gz`, and `BoostKit-boostcph-videoengine_*.zip` based on [Video Stream Engine](#video-stream-engine) and upload them to the `/home/kbox_video` directory on the server.
 2. Obtain the SHA256 checksums of the following components.
 
-    ```shell
+    ```bash
     sha256sum DemoVideoEngine.tar.gz
     sha256sum CloudPhoneApk.tar.gz
     ```
@@ -310,14 +310,14 @@ Obtain the TAR packages of the video stream engine client and server, binary pac
 1. Decompress the `DemoVideoEngine.tar.gz` package to obtain the image creation script and grant the execute permission on the script.
     - For configuration scheme 1:
 
-        ```shell
+        ```bash
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU Dockerfile_T432 Dockerfile_QuadraT2A make_image.sh
         chmod +x Dockerfile_NoVPU Dockerfile_T432 Dockerfile_QuadraT2A make_image.sh
         ```
 
     - For configuration scheme 2/3/4:
 
-        ```shell
+        ```bash
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU  make_image.sh
         chmod +x Dockerfile_NoVPU  make_image.sh
         ```
@@ -325,13 +325,13 @@ Obtain the TAR packages of the video stream engine client and server, binary pac
 2. Create a video stream cloud phone image. You can use the default image name or specify an image name.
     - If the default image name is used, run the following command. The default image names of the Kbox basic cloud phone and video stream cloud phone are `kbox:latest` and `video:latest`, respectively.
 
-        ```shell
+        ```bash
         ./make_image.sh
         ```
 
     - If a customized image name is used, run the following command. Specify the image names of the Kbox basic cloud phone and video stream cloud phone in the format of *{image_name}:{tag}*. In the following command, `kbox` and `video` are image names, and `origin` and `latest` are tags.
 
-        ```shell
+        ```bash
         ./make_image.sh kbox:origin video:latest
         ```
 
@@ -341,13 +341,13 @@ Obtain the TAR packages of the video stream engine client and server, binary pac
 
 3. Check whether the video stream cloud phone image (`video:latest`) is successfully created.
 
-    ```shell
+    ```bash
     docker images
     ```
 
     The image is created successfully if information similar to the following is displayed:
 
-    ```shell
+    ```bash
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     video         latest    40e5f42c17d9    6 seconds ago    2.11GB
     ```
@@ -356,25 +356,25 @@ If you want to start a video stream cloud phone with containerd, perform the fol
 
 1. Export the prepared video stream cloud phone image. The following uses image `video:latest` as an example. (The name of the TAR package can be customized.)
 
-    ```shell
+    ```bash
     docker save video:latest > videolatest_oci.tar
     ```
 
 2. Use nerdctl to import the video stream cloud phone image that complies with the OCI.
 
-    ```shell
+    ```bash
     nerdctl load -i videolatest_oci.tar
     ```
 
 3. Confirm that the image has been successfully imported.
 
-    ```shell
+    ```bash
     nerdctl images
     ```
 
 4. Create a `containerd_config` file so that the script can identify containerd as the runtime.
 
-    ```shell
+    ```bash
     cd /home/kbox_video
     touch containerd_config
     ```
@@ -383,7 +383,7 @@ If you want to start a video stream cloud phone with containerd, perform the fol
 
 5. Allow the network packet forwarding policy.
 
-    ```shell
+    ```bash
     iptables -P FORWARD ACCEPT
     ```
 
@@ -395,7 +395,7 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
 
 1. Extract the `cfct_config` file and grant permissions on the file. Ensure that the file owner has read and write permissions while users in the owner group and others have only the read permission.
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     tar -xvf DemoVideoEngine.tar.gz cfct_config
     chmod 644 cfct_config
@@ -423,13 +423,13 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
 
 1. <a name="li1256022316361"></a>Run the `nvme list` command to view the nodes of the encoding card chips.
 
-    ```shell
+    ```bash
     nvme list
     ```
 
     The following command output is an example of the NVMe nodes of the NETINT card chips.
 
-    ```shell
+    ```bash
     Node          SN                   Model            Namespace Usage                    Format           FW Rev
     ------------- -------------------- ---------------- --------- ------------------------ ---------------- --------
     /dev/nvme0n1  Q2A325A11DC082-0454A QuadraT2A        1         8.59  TB /   8.59  TB    4 KiB +  0 B     48F6rKr1
@@ -440,13 +440,13 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
 
     *{index}* indicates the NVMe node number returned in [1](#li1256022316361). For example, for `/dev/nvme1n1`, the value of *{index}* is `1`.
 
-    ```shell
+    ```bash
     find /sys/devices/ -name nvme{index}
     ```
 
     In the following command output, `0000:05:00.0` indicates the bus number of the device.
 
-    ```shell
+    ```bash
     /sys/devices/pci0000:00/0000:00:0e.0/0000:05:00.0/nvme/nvme1
     /sys/devices/virtual/nvme-subsystem/nvme-subsys1/nvme1
     ```
@@ -455,13 +455,13 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
 
     *{busID}* indicates the bus number obtained in the previous step. For example, in the command output for `nvme1`, *{busID}* is `0000:05:00.0`.
 
-    ```shell
+    ```bash
     lspci -vvvs {busID} | grep NUMA
     ```
 
     Command output:
 
-    ```shell
+    ```bash
     NUMA node: 0
     ```
 
@@ -471,7 +471,7 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
 
     Two nodes need to be added for each device in a field. For example, for NVMe device 2, you need to add nodes `/dev/nvme2` and `/dev/nvme2n1`.
 
-    ```shell
+    ```bash
     # Nodes of NETINT encoding card devices
     NETINT0="/dev/nvme0,/dev/nvme0n1,/dev/nvme1,/dev/nvme1n1"
     NETINT1="/dev/nvme2,/dev/nvme2n1,/dev/nvme3,/dev/nvme3n1"
@@ -485,13 +485,13 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
 
 1. <a name="li34656503552"></a>Query GPU rendering nodes.
 
-    ```shell
+    ```bash
     ll /dev/dri/by-path/ | grep renderD
     ```
 
     Example command output:
 
-    ```shell
+    ```bash
     lrwxrwxrwx 1 root root 13 Oct 25 10:58 pci-0000:03:00.0-render -> ../renderD128
     lrwxrwxrwx 1 root root 13 Oct 25 10:58 pci-0000:83:00.0-render -> ../renderD129
     ```
@@ -500,19 +500,19 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
 
 2. Query the NUMA node to which a GPU rendering node belongs.
 
-    ```shell
+    ```bash
     cat /sys/bus/pci/devices/0000\:XX\:00.0/numa_node 
     ```
 
     Replace *XX* in the command with the IP address of a node queried in [1](#li34656503552). Take `renderD128` as an example. The query command is as follows:
 
-    ```shell
+    ```bash
     cat /sys/bus/pci/devices/0000\:03\:00.0/numa_node
     ```
 
     Command output:
 
-    ```shell
+    ```bash
     0
     ```
 
@@ -530,7 +530,7 @@ To enable the graphics acceleration layer, perform the following steps:
 1. Set `ENABLE_RENDER_LAYER` in the cloud phone startup configuration file `cfct_config` to `1`.
 2. Copy the `kbox_render_accelerating_configuration.xml` configuration file from the `Kbox-patches-AOSP11.zip` software package to the `/home/kbox_video/` startup path.
 
-    ```shell
+    ```bash
     cp /home/kbox_video/Kbox-patches-AOSP11/deploy_scripts/kbox_render_accelerating_configuration.xml /home/kbox_video/
     ```
 
@@ -550,7 +550,7 @@ The configuration items and configuration methods for `cfct_config` and `hardwar
 
 1. Extract the `cfct_config` file and grant permissions on the file. Ensure that the file owner has read and write permissions while users in the owner group and others have only the read permission.
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     tar -xvf DemoVideoEngine.tar.gz cfct_config
     chmod 644 cfct_config
@@ -572,13 +572,13 @@ The configuration items and configuration methods for `cfct_config` and `hardwar
 
         Take DC1000/DC1000C as an example. Query the DaoCloud DC1000/DC1000C information on the server.
 
-        ```shell
+        ```bash
         lspci -D | grep 0200
         ```
 
         The following example output indicates that only one DaoCloud DC1000/DC1000C GPU exists on the server. `0000:04:00.0` is the bus number.
 
-        ```shell
+        ```bash
         0000:04:00.0 3D controller: Device 1f4f:0200
         0000:04:00.1 3D controller: Device 1f4f:0200
         0000:04:00.2 3D controller: Device 1f4f:0200
@@ -589,13 +589,13 @@ The configuration items and configuration methods for `cfct_config` and `hardwar
 
         Query the NUMA node to which the GPU belongs.
 
-        ```shell
+        ```bash
         lspci -vvvs {busID} | grep NUMA
         ```
 
         The following example output indicates that the GPU is bound to CPUs in NUMA node 0.
 
-        ```shell
+        ```bash
         NUMA node: 0
         ```
 
@@ -609,20 +609,20 @@ Confirm or adjust the default image name and data volume storage directory as re
 
     The default image name is `video:latest`, and the default directory for storing the data volume is `/home/mount`. You can change the values of `DOCKER_IMAGE` and `USERDATA` in the `cfct_config` file to the actual name and directory, respectively.
 
-    ```shell
+    ```bash
     DOCKER_IMAGE=video:latest
     USERDATA="/home/mount"
     ```
 
 2. Delete the original data volume or back up the data volume to another location. *{USERDATA}* indicates the directory for storing the data volume configured in [1](#li16219132415811). If there are multiple directories, perform the following operations in this section for each directory.
 
-    ```shell
+    ```bash
     rm -rf {USERDATA}/data/android_base
     ```
 
 3. Extract the `cfct_video` startup script from `DemoVideoEngine.tar.gz` and grant permissions on the script. Ensure that the file owner has the read, write, and execute permissions while users in the owner group and others have only read and execute permissions.
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     tar -xvf DemoVideoEngine.tar.gz cfct_video
     chmod 755 cfct_video
@@ -630,13 +630,13 @@ Confirm or adjust the default image name and data volume storage directory as re
 
 4. Use the `cfct_video` script to start a cloud phone. This document uses `android_1` as an example.
 
-    ```shell
+    ```bash
     ./cfct_video start 1  
     ```
 
 5. Pre-install an app (for example, Subway Surfers) in the cloud phone container, and use `android_1` as a new data volume for starting the video stream cloud phone.
 
-    ```shell
+    ```bash
     cd {USERDATA}/data/
     cp -rp android_1 android_base
     ```
@@ -647,21 +647,21 @@ Confirm or adjust the default image name and data volume storage directory as re
     >
     >Pre-install the required application (such as Subway Surfers) into the cloud phone container, then copy `android_1.img` as `android_base.img` to serve as the new data volume.
     >
-    >```shell
+    >```bash
     >cd ${USERDATA}/img/
     >cp -rp android_1.img android_base.img
     >```
     >
     >Manually copy `android_base.img` to the corresponding container index before starting the specified container.
     >
-    >```shell
+    >```bash
     >cd ${USERDATA}/img/
     >cp -rp android_base.img android_${index}.img
     >```
 
 6. Delete the `android_1` container.
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     ./cfct_video delete 1
     ```
@@ -698,14 +698,14 @@ Install Kubernetes cluster software, configure containerd, and perform other rel
 
     - On the master node, change the host name to `k8s-master`.
 
-        ```shell
+        ```bash
         hostnamectl set-hostname k8s-master
         bash
         ```
 
     - On a worker node, change the host name to `k8s-slave1`.
 
-        ```shell
+        ```bash
         hostnamectl set-hostname k8s-slave1
         bash
         ```
@@ -713,7 +713,7 @@ Install Kubernetes cluster software, configure containerd, and perform other rel
 2. Change the passwords of all servers to the same.
 3. Disable the firewall.
 
-    ```shell
+    ```bash
     systemctl stop firewalld
     systemctl disable firewalld
     ```
@@ -721,19 +721,19 @@ Install Kubernetes cluster software, configure containerd, and perform other rel
 4. Disable SWAP partitions.
     - Run the following command. The setting becomes invalid after the server restarts.
 
-        ```shell
+        ```bash
         swapoff -a   
         ```
 
     - Comment out the code for automatic mounting of SWAP partitions in the `fstab` file. The setting is still valid after the server restarts.
 
-        ```shell
+        ```bash
         sed -i "/\/dev\/mapper\/openeuler-swap/ s|^|#|" /etc/fstab
         ```
 
 5. Configure the repository for installing Kubernetes cluster software.
 
-    ```shell
+    ```bash
     touch /etc/yum.repos.d/kubernetes.repo
     cat >/etc/yum.repos.d/kubernetes.repo <<EOF
     [kubernetes]
@@ -747,7 +747,7 @@ Install Kubernetes cluster software, configure containerd, and perform other rel
 
 6. Install Kubernetes cluster software.
 
-    ```shell
+    ```bash
     yum install -y kubelet kubeadm kubectl kubernetes-cni --disableexcludes=kubernetes
     systemctl enable --now kubelet
     ```
@@ -755,7 +755,7 @@ Install Kubernetes cluster software, configure containerd, and perform other rel
 7. Install containerd and runC based on [1](#deploying-the-containerd-environment-1) to [3](#deploying-the-containerd-environment-3) in [(Optional) Deploying the Containerd Environment](#deploying-the-containerd-environment). After the installation is successful, restart the Docker service based on [7](#deploying-the-containerd-environment-7) on the worker node.
 8. Modify the containerd configuration file.
 
-    ```shell
+    ```bash
     mkdir -p /etc/containerd/
     cd /etc/containerd/
     containerd config default > /etc/containerd/config.toml
@@ -764,7 +764,7 @@ Install Kubernetes cluster software, configure containerd, and perform other rel
 
 9. Configure crictl and restart containerd.
 
-    ```shell
+    ```bash
     echo "runtime-endpoint: unix:///run/containerd/containerd.sock" >> /etc/crictl.yaml
     echo "image-endpoint: unix:///run/containerd/containerd.sock" >> /etc/crictl.yaml
     echo "timeout: 10" >> /etc/crictl.yaml
@@ -774,7 +774,7 @@ Install Kubernetes cluster software, configure containerd, and perform other rel
 
 10. Configure network forwarding. Perform this step again after the server is restarted.
 
-    ```shell
+    ```bash
     modprobe overlay
     modprobe br_netfilter
     echo "net.bridge.bridge-nf-call-ip6tables=1" >> /etc/sysctl.d/k8s.conf
@@ -789,7 +789,7 @@ Initialize the cluster on the master node.
 
 1. Download necessary images.
 
-    ```shell
+    ```bash
     kubeadm config images pull 
     ```
 
@@ -799,13 +799,13 @@ Initialize the cluster on the master node.
     >
     >Configure an image repository if required, for example:
     >
-    > ```shell
+    > ```bash
     > kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
     > ```
 
 2. Modify the containerd image configuration in the `config.toml` configuration file based on the `pause` version in the pulled image information. Run the following command to check the `pause` version:
 
-    ```shell
+    ```bash
     crictl images
     ```
 
@@ -814,19 +814,19 @@ Initialize the cluster on the master node.
 
     ​    The following uses `registry.aliyuncs.com/google_containers/pause:3.9` in [**Figure 1**](#image-pull-information) as an example:
 
-        ```shell
+        ```bash
         sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
         ```
 
 3. Restart containerd.
 
-    ```shell
+    ```bash
     systemctl restart containerd
     ```
 
 4. Initialize the cluster.
 
-    ```shell
+    ```bash
     kubeadm init --pod-network-cidr=10.244.0.0/16
     ```
 
@@ -836,7 +836,7 @@ Initialize the cluster on the master node.
     >
     >If an image repository is configured for image download, the same image repository must be configured during cluster initialization. For example:
     >
-    > ```shell
+    > ```bash
     > kubeadm init --pod-network-cidr=10.244.0.0/16 --image-repository registry.aliyuncs.com/google_containers
     > ```
 
@@ -846,7 +846,7 @@ Initialize the cluster on the master node.
 
     Run the commands in the yellow box in [**Figure 2**](#cluster-initialization-success) to configure the cluster. Content in the red box indicates the token command for a worker node to join the cluster. Please save this command.
 
-    ```shell
+    ```bash
     rm -rf $HOME/.kube
     mkdir -p $HOME/.kube
     sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -857,7 +857,7 @@ Initialize the cluster on the master node.
     >
     >If cluster initialization fails on the master node, locate the cause as prompted, reset the node, and run the initialization command again. Reset commands:
     >
-    > ```shell
+    > ```bash
     > kubeadm reset
     > systemctl stop kubelet
     > rm -rf /var/lib/cni/
@@ -873,7 +873,7 @@ Initialize the cluster on the master node.
 
     Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-engine) and upload it to the `/home/k8s` directory on the server.
 
-    ```shell
+    ```bash
     cd /home/k8s
     tar -xvf DemoVideoEngine.tar.gz
     cd /home/k8s/k8s/script
@@ -884,7 +884,7 @@ Initialize the cluster on the master node.
 
     1. Check the status of the current node.
 
-        ```shell
+        ```bash
         kubectl get nodes -A -o wide
         ```
 
@@ -892,7 +892,7 @@ Initialize the cluster on the master node.
 
     2. Check the Pod status.
 
-        ```shell
+        ```bash
         kubectl get pod -A -o wide
         ```
 
@@ -910,7 +910,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
 1. <a id="worker-node-operation-1"></a>Configure container storage isolation and storage size. Perform this step again after the server is restarted.
 
-    ```shell
+    ```bash
     cd /home/k8s
     tar -xvf DemoVideoEngine.tar.gz k8s/
     cd /home/k8s/k8s/DevicesPlugin
@@ -934,37 +934,37 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
     - Create 100 isolated data volumes from `video1` to `video100` whose storage size is 32 GB each.
 
-        ```shell
+        ```bash
         ./storage_manager.sh create 1 100 32
         ```
 
     - Create one isolated data volume `video1` whose storage size is 32 GB and boot the container internally in f2fs format.
 
-        ```shell
+        ```bash
         ./storage_manager.sh fcreate 1 1 32
         ```
 
     - Add 20 isolated data volumes from `video101` to `video120` whose storage size is 32 GB each.
 
-        ```shell
+        ```bash
         ./storage_manager.sh create 101 120 32
         ```
 
     - Delete data volumes `video1` to `video100`.
 
-        ```shell
+        ```bash
         ./storage_manager.sh delete 1 100
         ```
 
     - Delete the remaining 20 data volumes (`video101` to `video120`).
 
-        ```shell
+        ```bash
         ./storage_manager.sh delete 101 120
         ```
 
     - Use `videobase.img` to create data volumes `video1` to `video100`.
 
-        ```shell
+        ```bash
         ./storage_manager.sh create 1 100 /home/mount/img/videobase.img
         ```
 
@@ -976,7 +976,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
 2. Modify the containerd image configuration in the `config.toml` configuration file based on the `pause` version in the image information pulled on the master node. `registry.aliyuncs.com/google_containers/pause:3.9` in [**Figure 1** Image pull information](#image-pull-information) is used as an example.
 
-    ```shell
+    ```bash
     sed -i 's|sandbox_image =.*|sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.9"|g' /etc/containerd/config.toml
     systemctl restart containerd
     ```
@@ -985,7 +985,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
     For example:
 
-    ```shell
+    ```bash
     kubeadm join xx.xx.xx.xx:xxxx --token 7h0hpd.1av4cdcb4fb0on5x \
     --discovery-token-ca-cert-hash sha256:357c6d1dbefe6f7adf3c80987a90d3765965b1c43e1757b655ea8586c8ade10a
     ```
@@ -996,13 +996,13 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
     >- *xx*.*xx*.*xx*.*xx* indicates the IP address, and *xxxx* indicates the mapped port.
     >- If the token command for joining the cluster is invalid, run the following command on the master node to generate a new one:
     >
-    > ```shell
+    > ```bash
     > kubeadm token create --print-join-command
     > ```
 
 4. Copy the kube configuration file of the master node to the worker node.
 
-    ```shell
+    ```bash
     rm -rf $HOME/.kube
     mkdir -p $HOME/.kube
     sudo scp root@xxx.xxx.xxx.xxx:$HOME/.kube/config $HOME/.kube/config
@@ -1012,7 +1012,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 5. Check the cluster status.
     1. Check the status on the master node.
 
-        ```shell
+        ```bash
         kubectl get nodes -A -o wide
         ```
 
@@ -1020,7 +1020,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
     2. Check the Pod status on the master node.
 
-        ```shell
+        ```bash
         kubectl get pod -A -o wide
         ```
 
@@ -1028,7 +1028,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
     3. Check the container status on the worker node.
 
-        ```shell
+        ```bash
         crictl ps
         ```
 
@@ -1040,7 +1040,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
     2. Obtain the Kubernetes NUMA affinity plugin package `topo-affinity-plugin-master.zip` based on [Video Stream Engine](#video-stream-engine) and upload it to the `/home/k8s` directory on the server.
     3. Decompress `topo-affinity-plugin-master.zip`, go to the package directory, and compile the plugin.
 
-        ```shell
+        ```bash
         unzip topo-affinity-plugin-master.zip
         cd topo-affinity-plugin-master
         go mod tidy
@@ -1051,13 +1051,13 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
     4. Install the containerd runtime.
 
-        ```shell
+        ```bash
         make install-service-containerd
         ```
 
         If you need to modify the startup parameters, modify the parameters under `ExecStart=` in the `hack/kunpeng-tap.service.containerd` file in the source code directory. [**Table 2**](#startup-parameters) describes the parameters.
 
-        ```shell
+        ```bash
         [Unit]
         Description=Kunpeng Topology-Affinity Plugin Service
         After=network.target
@@ -1083,7 +1083,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
     5. Start the TAP service.
 
-        ```shell
+        ```bash
         make start-service
         ```
 
@@ -1095,19 +1095,19 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
 
             The initial configuration is as follows:
 
-            ```shell
+            ```bash
             KUBELET_KUBEADM_ARGS="... --container-runtime=remote --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock ..."
             ```
 
             Modify the file as follows:
 
-            ```shell
+            ```bash
             KUBELET_KUBEADM_ARGS="... --container-runtime=remote --container-runtime-endpoint=unix:///var/run/kunpeng/tap-runtime-proxy.sock ..."
             ```
 
     7. Restart kubelet and check whether the restart is successful.
 
-        ```shell
+        ```bash
         systemctl daemon-reload
         systemctl restart kubelet
         systemctl status kubelet
@@ -1118,7 +1118,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
         >To uninstall the TAP plugin, perform the following steps:
         >- Restore the `/var/lib/kubelet/kubeadm-flags.env` file to its initial content, and then restart kubelet.
         >
-        > ```shell
+        > ```bash
         > systemctl daemon-reload
         > systemctl restart kubelet
         > systemctl status kubelet
@@ -1126,7 +1126,7 @@ Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine](#video-stream-eng
         >
         >- Go to the `topology-affinity-plugin` source code directory and run the following commands to uninstall the plugin:
         >
-        > ```shell
+        > ```bash
         > cd /home/k8s/topo-affinity-plugin-master
         > make uninstall-service
         > ```
@@ -1156,7 +1156,7 @@ Deploy the device plugin image on all worker nodes.
 
 2. Download the device plugin code and switch to the specified commit ID.
 
-    ```shell
+    ```bash
     git clone https://github.com/everpeace/k8s-host-device-plugin.git
     cd  k8s-host-device-plugin
     git checkout 15e0a180dd4fbea7ea09b563b9e0713d3b90579a
@@ -1166,21 +1166,21 @@ Deploy the device plugin image on all worker nodes.
 
     Copy `device-plugin.patch` (in the `k8s/DevicesPlugin` folder of `DemoVideoEngine.tar.gz`) to the `k8s-host-device-plugin` directory.
 
-    ```shell
+    ```bash
     cd k8s-host-device-plugin
     patch -p1 < device-plugin.patch
     ```
 
 4. Change the Go image repository address and compile the device plugin.
 
-    ```shell
+    ```bash
     export GOPROXY=https://goproxy.cn
     go build
     ```
 
 5. Build an image.
 
-    ```shell
+    ```bash
     docker build -f Dockerfile  -t k8s-hostdev-plugin:0.1 .
     docker save k8s-hostdev-plugin:0.1 -o k8s-hostdev-plugin.tar
     ```
@@ -1189,7 +1189,7 @@ Deploy the device plugin image on all worker nodes.
 
     Copy `k8s-hostdev-plugin.tar` to all worker nodes and import the image.
 
-    ```shell
+    ```bash
     ctr -n k8s.io images import k8s-hostdev-plugin.tar
     ```
 
@@ -1201,7 +1201,7 @@ After the video stream cloud phone is started, a virtual input device is generat
 
 1. Create an image of the plugin for writing the input device permission and import this image.
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/InputPermission
     ./make_image.sh
     ```
@@ -1210,7 +1210,7 @@ After the video stream cloud phone is started, a virtual input device is generat
 
 2. Copy `input-device-permission.tar` to other worker nodes and import it.
 
-    ```shell
+    ```bash
     ctr -n k8s.io images import input-device-permission.tar
     ```
 
@@ -1220,7 +1220,7 @@ Create a video stream image on a worker node, and import and deploy the image on
 
 1. Place the `DemoVideoEngine.tar.gz` software package in a specified directory. Assume that this package is placed in `/home/k8s`.
 
-    ```shell
+    ```bash
     mkdir -p /home/k8s/tmp 
     cd /home/k8s/tmp 
     tar -xvf  ../DemoVideoEngine.tar.gz
@@ -1232,7 +1232,7 @@ Create a video stream image on a worker node, and import and deploy the image on
 
     1. Open the `default.prop` file.
 
-        ```shell
+        ```bash
         vi vendor/default.prop
         ```
 
@@ -1240,20 +1240,20 @@ Create a video stream image on a worker node, and import and deploy the image on
     3. Press **Esc**, type `:wq!`, and press **Enter** to save the settings and exit.
     4. Re-create a `DemoVideoEngine.tar.gz` software package.
 
-        ```shell
+        ```bash
         tar -zcvf DemoVideoEngine.tar.gz  *
         ```
 
 3. Use `DemoVideoEngine.tar.gz` created in [2](#deploying-the-video-stream-image-2) to re-create a video stream image based on [Creating an Image](#creating-an-image). Assume that the name of the created image is `video:version`.
 4. Run `docker` to export the video stream image.
 
-    ```shell
+    ```bash
     docker save video:version -o video.tar
     ```
 
 5. Copy the video stream image to all worker nodes and import the image.
 
-    ```shell
+    ```bash
     ctr -n k8s.io images import video.tar
     ```
 
@@ -1352,7 +1352,7 @@ In the DC1000/DC1000C GPU hardware environment, the host kernel needs to be adap
 1. Obtain the kernel source code. See [Table 4](#host-os-requirements).
 2. Decompress the kernel source code and go to the root directory.
 
-    ```shell
+    ```bash
     unzip 5.10.0-216.0.0.zip
     cd 5.10.0-216.0.0
     ```
@@ -1360,13 +1360,13 @@ In the DC1000/DC1000C GPU hardware environment, the host kernel needs to be adap
 3. Obtain the kernel patch file `general.patch` according to [Obtaining VM Software Packages](#obtaining-vm-software-packages).
 4. Apply the patch in the kernel source code directory `5.10.0-216.0.0`.
 
-    ```shell
+    ```bash
     patch -p1 < general.patch
     ```
 
 5. Generate a .config file in the source code directory.
 
-    ```shell
+    ```bash
     cp /boot/config-5.10.0-216.0.0.115.oe2203sp4.aarch64 .config
     make menuconfig
     ```
@@ -1402,7 +1402,7 @@ In the DC1000/DC1000C GPU hardware environment, the host kernel needs to be adap
 
 9. Install dependencies and enable the LXCFS service. If you need to divide the command into multiple lines, add a backslash `\` at the end of each line.
 
-    ```shell
+    ```bash
     yum install -y dwarves dpkg dpkg-devel openssl openssl-devel ncurses ncurses-devel bison flex bc libdrm build elfutils-libelf-devel docker lxc lxcfs lxcfs-tools git tar patch make gcc
     systemctl start lxcfs
     systemctl enable lxcfs
@@ -1412,13 +1412,13 @@ In the DC1000/DC1000C GPU hardware environment, the host kernel needs to be adap
 
 10. Compile the kernel code.
 
-    ```shell
+    ```bash
     make -j72
     ```
 
 11. Install the new kernel.
 
-    ```shell
+    ```bash
     make modules_install 
     make install
     ```
@@ -1429,13 +1429,13 @@ In the GRUB configuration file, enable huge pages on the host to enhance memory 
 
 1. Open the `grub` configuration file in the host system.
 
-    ```shell
+    ```bash
     vim /etc/default/grub
     ```
 
 2. Press **i** to enter the insert mode and add the following content to `GRUB_CMDLINE_LINUX`:
 
-    ```shell
+    ```bash
     "default_hugepagesz=1G hugepagesz=1G hugepages=800 pci=realloc transparent_hugepage=never iommu.passthrough=1 arm64.nopauth kvm-arm.vgic_v4_enable=1 kvm-arm.virt_msi_bypass=1 irqchip.gicv3_rsv_buses_start=30 irqchip.gicv3_rsv_buses_count=10"
     ```
 
@@ -1446,31 +1446,31 @@ In the GRUB configuration file, enable huge pages on the host to enhance memory 
 3. Press **Esc** to exit the insert mode. Type `:wq!` and press **Enter** to save the settings and exit.
 4. Update the `grub` configuration file.
 
-    ```shell
+    ```bash
     grub2-mkconfig -o /boot/efi/EFI/openEuler/grub.cfg
     ```
 
 5. Set the boot kernel.
 
-    ```shell
+    ```bash
     grub2-set-default 'openEuler (5.10.0-patched-vm) 22.03 (LTS-SP4)'
     ```
 
 6. Reboot the server.
 
-    ```shell
+    ```bash
     reboot
     ```
 
 7. After the reboot, confirm that the kernel is switched to `5.10.0-patched-vm`.
 
-    ```shell
+    ```bash
     uname -r
     ```
 
 8. <a id="modifying-grub-settings-8"></a>Check whether the hugepage configuration takes effect.
 
-    ```shell
+    ```bash
     cat /sys/devices/system/node/node*/meminfo | grep Huge
     ```
 
@@ -1480,7 +1480,7 @@ In the GRUB configuration file, enable huge pages on the host to enhance memory 
 
 9. Check whether IOMMU passthrough is successfully configured.
 
-    ```shell
+    ```bash
     dmesg | grep iommu | head -n 10
     ```
 
@@ -1490,7 +1490,7 @@ In the GRUB configuration file, enable huge pages on the host to enhance memory 
 
 10. Check whether GICv4.1 is successfully configured.
 
-    ```shell
+    ```bash
     dmesg | grep GICv4.1
     ```
 
@@ -1500,7 +1500,7 @@ In the GRUB configuration file, enable huge pages on the host to enhance memory 
 
 11. After the VM is started, run the following command:
 
-    ```shell
+    ```bash
     dmesg | grep "Create shadow device"
     ```
 
@@ -1514,19 +1514,19 @@ Install required dependencies on the host where the VM environment is set up.
 
 1. Install libvirt, virt-manager, and other dependencies.
 
-    ```shell
+    ```bash
     yum install libvirt virt-manager edk2-aarch64 sshpass mesa-libGLES-devel mesa-dri-drivers virt-install -y
     ```
 
 2. Install the x11 server to enable the virt-manager GUI.
 
-    ```shell
+    ```bash
     yum install xorg-x11-server
     ```
 
 3. Open the sshd configuration file.
 
-    ```shell
+    ```bash
     vi /etc/ssh/sshd_config
     ```
 
@@ -1534,7 +1534,7 @@ Install required dependencies on the host where the VM environment is set up.
 5. Press **Esc** to exit the insert mode. Type `:wq!` and press **Enter** to save the settings and exit.
 6. Restart the sshd service.
 
-    ```shell
+    ```bash
     systemctl restart sshd
     ```
 
@@ -1548,7 +1548,7 @@ The new Kunpeng 920 processor model has four NUMA nodes. Four VMs will be create
 
 1. <a name="pcie-info-query-1"></a>Check the IDs of all PCIe nodes of the DaoCloud GPUs.
 
-    ```shell
+    ```bash
     lspci | grep 0200
     ```
 
@@ -1556,7 +1556,7 @@ The new Kunpeng 920 processor model has four NUMA nodes. Four VMs will be create
 
 2. Check the NUMA node of each GPU node. The NUMA IDs in the command output map to the GPU node IDs queried in [1](#pcie-info-query-1). The command output in the following figure is only an example. 17:00.0 to 18:00.3 (the first eight nodes) correspond to NUMA node 1 of the host.
 
-    ```shell
+    ```bash
     lspci -vvv -d 1f4f:0200 | grep NUMA
     ```
 
@@ -1568,7 +1568,7 @@ Create a host network device to support subsequent VM network configuration.
 
 1. <a id="configuring-the-host-network-1"></a>Check the NIC used on the host.
 
-    ```shell
+    ```bash
     ip a
     ```
 
@@ -1576,7 +1576,7 @@ Create a host network device to support subsequent VM network configuration.
 
 2. Check the PCI node of the NIC.
 
-    ```shell
+    ```bash
     lshw -c network -businfo
     ```
 
@@ -1584,7 +1584,7 @@ Create a host network device to support subsequent VM network configuration.
 
 3. <a id="configuring-the-host-network-3"></a>Check the maximum number of VFs allowed by the NIC.
 
-    ```shell
+    ```bash
     cat /sys/bus/pci/devices/0000:75:00.0/sriov_totalvfs
     ```
 
@@ -1595,7 +1595,7 @@ Create a host network device to support subsequent VM network configuration.
 
 4. Create VFs.
 
-    ```shell
+    ```bash
     echo 4 > /sys/bus/pci/devices/0000:75:00.0/sriov_numvfs
     ```
 
@@ -1605,7 +1605,7 @@ Create a host network device to support subsequent VM network configuration.
 
 5. <a id="configuring-the-host-network-5"></a>Check the created VF nodes.
 
-    ```shell
+    ```bash
     lshw -c network -businfo
     ```
 
@@ -1621,7 +1621,7 @@ Create a host network device to support subsequent VM network configuration.
 
 6. <a id="configuring-the-host-network-6"></a>Check and back up the configuration file of the current NIC.
 
-    ```shell
+    ```bash
     cd /etc/sysconfig/network-scripts/
     cp ifcfg-eno5 ifcfg-eno5.bak
     ```
@@ -1630,7 +1630,7 @@ Create a host network device to support subsequent VM network configuration.
 
     Migrate the `IPADDR`, `NETMASK`, `GATEWAY`, and `DNS` information in the NIC configuration file to the bridge configuration file.
 
-    ```shell
+    ```bash
     touch ifcfg-br0
     cat >ifcfg-br0 <<EOF
     TYPE=Bridge
@@ -1653,7 +1653,7 @@ Create a host network device to support subsequent VM network configuration.
 
 8. Restart the libvirtd and NetworkManager services and reboot the server.
 
-    ```shell
+    ```bash
     systemctl restart libvirtd
     systemctl restart NetworkManager
     reboot
@@ -1661,7 +1661,7 @@ Create a host network device to support subsequent VM network configuration.
 
 9. Check whether `br0` is successfully created.
 
-    ```shell
+    ```bash
     ip a
     ```
 
@@ -1679,7 +1679,7 @@ For details, see [VM Copying](#vm-copying).
 
 1. Open virt-manager and click the icon in the red box to open the VM configuration page.
 
-    ```shell
+    ```bash
     virt-manager
     ```
 
@@ -1713,7 +1713,7 @@ For details, see [VM Copying](#vm-copying).
 
     1. Create a drive image file `vm0.qcow2`.
 
-        ```shell
+        ```bash
         qemu-img create -f qcow2 vm0.qcow2 1024G
         ```
 
@@ -1779,13 +1779,13 @@ For details, see [VM Copying](#vm-copying).
 
 13. Check free memory of the server before the installation.
 
-    ```shell
+    ```bash
     free -h
     ```
 
     If the free memory is less than the VM memory set in [4](#virt-manager-4), perform [2.3.2-3](#tuning-vm-configurations-3) and [2.3.2-5](#tuning-vm-configurations-5) in advance. Obtain the VM tuning script `setup_vm.sh` according to [Obtaining VM Software Packages](#obtaining-vm-software-packages) and enable hugepage memory for the VM. If the free memory is sufficient, skip this step.
 
-    ```shell
+    ```bash
     ./setup_vm.sh vm0 --numatune {bind NUMA}
     ./setup_vm.sh vm0 --enable_hugepages
     ```
@@ -1810,7 +1810,7 @@ For details, see [VM Copying](#vm-copying).
 
     1. View drive partition information of the host.
 
-        ```shell
+        ```bash
         lsblk
         ```
 
@@ -1848,7 +1848,7 @@ Perform operations in this section on all the four VMs. `vm0` corresponding to N
 
 1. Open the VM XML file.
 
-    ```shell
+    ```bash
     virsh edit vm0
     ```
 
@@ -1864,13 +1864,13 @@ Perform operations in this section on all the four VMs. `vm0` corresponding to N
     >
     >You can also run the following command instead:
     >
-    > ```shell
+    > ```bash
     > ./setup_vm.sh vm0 --cputune 80,159
     > ```
 
 3. <a id="tuning-vm-configurations-3"></a>Add the following content under `</cputune>` to bind the VM to the NUMA memory of the host. (In this example, NUMA1 is bound to the VM.)
 
-    ```shell
+    ```bash
     <numatune>
           <memory mode='strict' nodeset='1'/>
     </numatune>
@@ -1882,13 +1882,13 @@ Perform operations in this section on all the four VMs. `vm0` corresponding to N
     >
     >You can also run the following command instead:
     >
-    > ```shell
+    > ```bash
     > ./setup_vm.sh vm0 --numatune 1
     > ```
 
 4. Add the following content above `</cputune>` to bind the QEMU emulator:
 
-    ```shell
+    ```bash
     <emulatorpin cpuset='80-159' />
     ```
 
@@ -1898,13 +1898,13 @@ Perform operations in this section on all the four VMs. `vm0` corresponding to N
     >
     >You can also run the following command instead:
     >
-    > ```shell
+    > ```bash
     > ./setup_vm.sh vm0 --emulatorpin 80-159
     > ```
 
 5. <a id="tuning-vm-configurations-5"></a>Use huge pages. Add the content in the red box to the position shown in the following figure.
 
-    ```shell
+    ```bash
     <memoryBacking>
          <hugepages/>
     </memoryBacking>
@@ -1916,7 +1916,7 @@ Perform operations in this section on all the four VMs. `vm0` corresponding to N
     >
     >You can also run the following command instead:
     >
-    > ```shell
+    > ```bash
     > ./setup_vm.sh vm0 --enable_hugepages
     > ```
 
@@ -1924,7 +1924,7 @@ Perform operations in this section on all the four VMs. `vm0` corresponding to N
 
     Find the <cpu mode='host-passthrough' check='none'\> element and modify the content as follows.
 
-    ```shell
+    ```bash
     <cpu mode='host-passthrough' check='none'>
       <topology sockets='1' dies='1' clusters='10' cores='4' threads='2'/>
     </cpu>
@@ -1939,7 +1939,7 @@ Perform operations in this section on all the four VMs. `vm0` corresponding to N
 
 9. Run the following command on the VM. If `0-7` is displayed in the command output, CPU topology takes effect.
 
-    ```shell
+    ```bash
     cat /sys/devices/system/cpu/cpu0/topology/cluster_cpus_list
     ```
 
@@ -1947,7 +1947,7 @@ Perform operations in this section on all the four VMs. `vm0` corresponding to N
 
 10. Run the following command to enable cluster scheduling optimization:
 
-    ```shell
+    ```bash
     echo 1 > /proc/sys/kernel/sched_cluster
     ```
 
@@ -1963,7 +1963,7 @@ Modify the VM NIC configuration file to enable network communication for the VM.
 
 1. Check the VM NIC name.
 
-    ```shell
+    ```bash
     ip a
     ```
 
@@ -1973,7 +1973,7 @@ Modify the VM NIC configuration file to enable network communication for the VM.
 
     - If the SR-IOV solution is adopted in [2.2.6-Configuring the Host Network](#configuring-the-host-network), run the following commands to create a network configuration file:
 
-        ```shell
+        ```bash
         nmcli connection add ifname enp1s0 con-name enp1s0 type ethernet
         cd /etc/sysconfig/network-scripts/
         ls
@@ -1993,7 +1993,7 @@ Modify the VM NIC configuration file to enable network communication for the VM.
 
     The VM and host share the values of `NETMASK`, `GATEWAY`, and `DNS`. `IPADDR` can be customized. Confirm with the network administrator to ensure that the IP address does not conflict with other IP addresses on the LAN.
 
-    ```shell
+    ```bash
     vi ifcfg-enp1s0
     ```
 
@@ -2003,15 +2003,15 @@ Modify the VM NIC configuration file to enable network communication for the VM.
 
     ![](figures/zh-cn_image_0000002550068149.png)
 
-4. Reload network connections. You are advised to run the commands in the shell of virt-manager. If you perform remote operations through SSH, connections will be interrupted due to network configuration modification.
+4. Reload network connections. You are advised to run the commands in the bash of virt-manager. If you perform remote operations through SSH, connections will be interrupted due to network configuration modification.
 
-    ```shell
+    ```bash
     virt-manager
     ```
 
     ![](figures/zh-cn_image_0000002518308392.png)
 
-    ```shell
+    ```bash
     nmcli connection reload
     nmcli connection down enp1s0
     nmcli connection up enp1s0
@@ -2021,7 +2021,7 @@ Modify the VM NIC configuration file to enable network communication for the VM.
 
 5. Ping the gateway and check whether the configuration takes effect over SSH remote connection. The gateway can be queried in the configuration file of bridge `br0`.
 
-    ```shell
+    ```bash
     ping 192.168.20.1
     ```
 
@@ -2029,7 +2029,7 @@ Modify the VM NIC configuration file to enable network communication for the VM.
 
     On any server in the same network segment, connect to the VM using `ssh`.
 
-    ```shell
+    ```bash
     ssh 192.168.20.150
     ```
 
@@ -2051,13 +2051,13 @@ The specific steps are as follows:
 2. Modify the `hardware_bind.cfg` script to adapt it to the VM's 80-core CPU and 4 GPU nodes.
     1. Open the `hardware_bind.cfg` script.
 
-        ```shell
+        ```bash
         vim hardware_bind.cfg
         ```
 
     2. Press **i** to enter the insert mode and add the following content:
 
-        ```shell
+        ```bash
         VIDEO_CPU_MAP_80CORE_MODE0=(
         "${MODE0_CPUS0_320[0]}"
         "${MODE0_CPUS0_320[1]}"
@@ -2137,7 +2137,7 @@ This section describes how to copy a VM, involving virtual drive copy and config
 
 1. Check the location of the virtual drive to be copied.
 
-    ```shell
+    ```bash
     virsh dumpxml vm0 | grep "source file"
     ```
 
@@ -2145,38 +2145,38 @@ This section describes how to copy a VM, involving virtual drive copy and config
 
 2. <a name="li14352145276"></a>Copy the virtual drive. Ensure that the drive space for storing the new virtual drive is sufficient.
 
-    ```shell
+    ```bash
     cd Custom_path_to_the_new_virtual_drive
     cp /var/lib/libvirt/images/vm0.qcow2 vm1.qcow2
     ```
 
 3. Copy the VM configuration file.
 
-    ```shell
+    ```bash
     virsh dumpxml vm0 > vm1.xml
     ```
 
 4. Modify the configuration file.
     1. Open the configuration file.
 
-        ```shell
+        ```bash
         vim vm1.xml
         ```
 
     2. Press **i** to enter the insert mode. Change the values of `name`, `uuid`, and `mac` to ensure that the name, UUID, and MAC address of each VM is unique. In addition, change the value of `source` to the path configured in [2](#li14352145276).
 
-        ```shell
+        ```bash
         <name>vm1</name>
         <uuid>dfbd8ad1-34ef-423d-8b9c-f7551654b09f</uuid>
         ```
 
         ![](figures/zh-cn_image_0000002549948165.png)
 
-        ```shell
+        ```bash
         <mac address='52:54:00:be:e7:69' />
         ```
 
-        ```shell
+        ```bash
         <source file=' /Drive_image_directory/vm1.qcow2' index='2' />
         ```
 
@@ -2184,7 +2184,7 @@ This section describes how to copy a VM, involving virtual drive copy and config
 
 5. Create a VM.
 
-    ```shell
+    ```bash
     virsh define vm1.xml
     ```
 
@@ -2192,14 +2192,14 @@ This section describes how to copy a VM, involving virtual drive copy and config
 
 6. Verify that the VM has been created.
 
-    ```shell
+    ```bash
     virsh list --all
     ```
 
 7. Obtain the GPU nodes corresponding to the NUMA node bound to the VM based on [Querying PCIe Node Information of a GPU](#querying-pcie-node-information-of-a-gpu).
 8. Log in to the VM and remove current GPU nodes.
 
-    ```shell
+    ```bash
     virt-manager
     ```
 
@@ -2239,7 +2239,7 @@ Configure the network of the copied VMs.
 
 1. Log in to a VM.
 
-    ```shell
+    ```bash
     virsh start vm1
     virt-manager
     ```
@@ -2248,7 +2248,7 @@ Configure the network of the copied VMs.
 
 2. Change the VM IP address.
 
-    ```shell
+    ```bash
     vi /etc/sysconfig/network-scripts/ifcfg-enp1s0
     ```
 
@@ -2256,7 +2256,7 @@ Configure the network of the copied VMs.
 
 3. Reload network connections.
 
-    ```shell
+    ```bash
     nmcli connection reload
     nmcli connection down enp1s0
     nmcli connection up enp1s0
@@ -2264,7 +2264,7 @@ Configure the network of the copied VMs.
 
 4. Ping the gateway and check whether the configuration takes effect over SSH remote connection. The gateway can be queried in the configuration file of bridge `br0`.
 
-    ```shell
+    ```bash
     ping 192.168.20.1
     ```
 
@@ -2276,7 +2276,7 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
 
 1. Check the location of the virtual drive.
 
-    ```shell
+    ```bash
     virsh dumpxml <domain>
     ```
 
@@ -2284,7 +2284,7 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
 
 2. Adjust the virtual drive space.
 
-    ```shell
+    ```bash
     qemu-img resize /home/VirtualMachine/Disks/oe22.03-lts-sp1-64cores.qcow2 600G
     ```
 
@@ -2293,7 +2293,7 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
 3. Log in to the VM and adjust the VM partition size.
     1. Check the partition where the root directory is located. This partition is to be expanded.
 
-        ```shell
+        ```bash
         lsblk
         ```
 
@@ -2301,7 +2301,7 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
 
     2. Select a drive and check its partition information.
 
-        ```shell
+        ```bash
         parted /dev/sda
         print
         ```
@@ -2312,7 +2312,7 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
 
     3. Expand partition 4.
 
-        ```shell
+        ```bash
         resizepart 4 -1
         ```
 
@@ -2320,7 +2320,7 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
 
 4. Press **Ctrl+C** to exit `parted` and adjust the file system size.
 
-    ```shell
+    ```bash
     resize2fs /dev/sda4
     ```
 

@@ -99,19 +99,19 @@ You need to fully understand the following constraints on the hardware, system, 
 >
 >- Clear the page cache.
 >
-> ```shell
+> ```bash
 > echo 1 > /proc/sys/vm/drop_caches
 > ```
 >
 >- Clear kernel slab objects (including inode and dentry).
 >
-> ```shell
+> ```bash
 > echo 2 > /proc/sys/vm/drop_caches
 > ```
 >
 >- Clear both the page cache and kernel slab objects.
 >
-> ```shell
+> ```bash
 > echo 3 > /proc/sys/vm/drop_caches
 > ```
 
