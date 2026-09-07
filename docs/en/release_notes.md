@@ -148,11 +148,7 @@ None
 ### 5.2 Resolved Issues<a name="ZH-CN_TOPIC_0000002518346476"></a>
 
 <a name="zh-cn_topic_0000001498002964_table1077520124617"></a>
-<table><tbody><tr id="zh-cn_topic_0000001498002964_row07751817464"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001498002964_p177751174618"><a name="zh-cn_topic_0000001498002964_p177751174618"></a><a name="zh-cn_topic_0000001498002964_p177751174618"></a>Trouble Ticket No.</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.1.1 "><p id="p12376102249"><a name="p12376102249"></a><a name="p12376102249"></a>DTS2025090442627</p>
-</td>
-</tr>
+<table><tbody>
 <tr id="zh-cn_topic_0000001498002964_row157751511464"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001498002964_p167751810462"><a name="zh-cn_topic_0000001498002964_p167751810462"></a><a name="zh-cn_topic_0000001498002964_p167751810462"></a>Severity</p>
 </th>
 <td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.2.1 "><p id="p5376142147"><a name="p5376142147"></a><a name="p5376142147"></a>Minor</p>
@@ -215,11 +211,7 @@ None
 ### 6.3 Known Issues<a name="ZH-CN_TOPIC_0000002518186572"></a>
 
 <a name="zh-cn_topic_0000001498002964_table1077520124617"></a>
-<table><tbody><tr id="zh-cn_topic_0000001498002964_row07751817464"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001498002964_p177751174618"><a name="zh-cn_topic_0000001498002964_p177751174618"></a><a name="zh-cn_topic_0000001498002964_p177751174618"></a>Trouble Ticket No.</p>
-</th>
-<td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.1.1 "><p id="p12376102249"><a name="p12376102249"></a><a name="p12376102249"></a>DTS2025090442627</p>
-</td>
-</tr>
+<table><tbody>
 <tr id="zh-cn_topic_0000001498002964_row157751511464"><th class="firstcol" valign="top" width="20.830000000000002%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001498002964_p167751810462"><a name="zh-cn_topic_0000001498002964_p167751810462"></a><a name="zh-cn_topic_0000001498002964_p167751810462"></a>Severity</p>
 </th>
 <td class="cellrowborder" valign="top" width="79.17%" headers="mcps1.1.3.2.1 "><p id="p5376142147"><a name="p5376142147"></a><a name="p5376142147"></a>Minor</p>
@@ -417,11 +409,7 @@ Support for AMD GPU encoding
 ### 12.2 Resolved Issues<a name="ZH-CN_TOPIC_0000002549706335"></a>
 
 <a name="zh-cn_topic_0000001691765525_table5817144218195"></a>
-<table><tbody><tr id="zh-cn_topic_0000001691765525_row586944271918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001691765525_p118691042181914"><a name="zh-cn_topic_0000001691765525_p118691042181914"></a><a name="zh-cn_topic_0000001691765525_p118691042181914"></a>Trouble Ticket No.</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001691765525_p138690421191"><a name="zh-cn_topic_0000001691765525_p138690421191"></a><a name="zh-cn_topic_0000001691765525_p138690421191"></a>DTS2023021615441</p>
-</td>
-</tr>
+<table><tbody>
 <tr id="zh-cn_topic_0000001691765525_row0869142131918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001691765525_p786910421194"><a name="zh-cn_topic_0000001691765525_p786910421194"></a><a name="zh-cn_topic_0000001691765525_p786910421194"></a>Severity</p>
 </th>
 <td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001691765525_p4869174231912"><a name="zh-cn_topic_0000001691765525_p4869174231912"></a><a name="zh-cn_topic_0000001691765525_p4869174231912"></a>Suggestion</p>
@@ -489,11 +477,7 @@ None
 ### 13.3 Known Issues<a name="ZH-CN_TOPIC_0000002549826333"></a>
 
 <a name="zh-cn_topic_0000001549442493_table5817144218195"></a>
-<table><tbody><tr id="zh-cn_topic_0000001549442493_row586944271918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001549442493_p118691042181914"><a name="zh-cn_topic_0000001549442493_p118691042181914"></a><a name="zh-cn_topic_0000001549442493_p118691042181914"></a>Trouble Ticket No.</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001549442493_p138690421191"><a name="zh-cn_topic_0000001549442493_p138690421191"></a><a name="zh-cn_topic_0000001549442493_p138690421191"></a>DTS2023021615441</p>
-</td>
-</tr>
+<table><tbody>
 <tr id="zh-cn_topic_0000001549442493_row0869142131918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001549442493_p786910421194"><a name="zh-cn_topic_0000001549442493_p786910421194"></a><a name="zh-cn_topic_0000001549442493_p786910421194"></a>Severity</p>
 </th>
 <td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001549442493_p4869174231912"><a name="zh-cn_topic_0000001549442493_p4869174231912"></a><a name="zh-cn_topic_0000001549442493_p4869174231912"></a>Suggestion</p>
@@ -553,11 +537,7 @@ None
 ### 14.3 Known Issues<a name="ZH-CN_TOPIC_0000002518346482"></a>
 
 <a name="zh-cn_topic_0000001524642921_table5817144218195"></a>
-<table><tbody><tr id="zh-cn_topic_0000001524642921_row586944271918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001524642921_p118691042181914"><a name="zh-cn_topic_0000001524642921_p118691042181914"></a><a name="zh-cn_topic_0000001524642921_p118691042181914"></a>Trouble Ticket No.</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001524642921_p138690421191"><a name="zh-cn_topic_0000001524642921_p138690421191"></a><a name="zh-cn_topic_0000001524642921_p138690421191"></a>DTS2023021615441</p>
-</td>
-</tr>
+<table><tbody>
 <tr id="zh-cn_topic_0000001524642921_row0869142131918"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001524642921_p786910421194"><a name="zh-cn_topic_0000001524642921_p786910421194"></a><a name="zh-cn_topic_0000001524642921_p786910421194"></a>Severity</p>
 </th>
 <td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001524642921_p4869174231912"><a name="zh-cn_topic_0000001524642921_p4869174231912"></a><a name="zh-cn_topic_0000001524642921_p4869174231912"></a>Suggestion</p>
@@ -595,11 +575,7 @@ None
 </table>
 
 <a name="zh-cn_topic_0000001524642921_table11710428153217"></a>
-<table><tbody><tr id="zh-cn_topic_0000001524642921_row671052815323"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001524642921_p8710928153218"><a name="zh-cn_topic_0000001524642921_p8710928153218"></a><a name="zh-cn_topic_0000001524642921_p8710928153218"></a>Trouble Ticket No.</p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001524642921_p15710182816328"><a name="zh-cn_topic_0000001524642921_p15710182816328"></a><a name="zh-cn_topic_0000001524642921_p15710182816328"></a>DTS2023030902437</p>
-</td>
-</tr>
+<table><tbody>
 <tr id="zh-cn_topic_0000001524642921_row117101828163215"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001524642921_p47108284329"><a name="zh-cn_topic_0000001524642921_p47108284329"></a><a name="zh-cn_topic_0000001524642921_p47108284329"></a>Severity</p>
 </th>
 <td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001524642921_p771017282324"><a name="zh-cn_topic_0000001524642921_p771017282324"></a><a name="zh-cn_topic_0000001524642921_p771017282324"></a>Minor</p>
@@ -662,11 +638,7 @@ None
 ### 15.3 Known Issues<a name="ZH-CN_TOPIC_0000002518186574"></a>
 
 <a name="zh-cn_topic_0000001468008732_table476315617294"></a>
-<table><tbody><tr id="zh-cn_topic_0000001468008732_row68081665299"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.1.1"><p id="zh-cn_topic_0000001468008732_p880915602910"><a name="zh-cn_topic_0000001468008732_p880915602910"></a><a name="zh-cn_topic_0000001468008732_p880915602910"></a><strong id="zh-cn_topic_0000001468008732_b1480966122914"><a name="zh-cn_topic_0000001468008732_b1480966122914"></a><a name="zh-cn_topic_0000001468008732_b1480966122914"></a>Trouble Ticket No.</strong></p>
-</th>
-<td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.1.1 "><p id="zh-cn_topic_0000001468008732_p4809136152917"><a name="zh-cn_topic_0000001468008732_p4809136152917"></a><a name="zh-cn_topic_0000001468008732_p4809136152917"></a>DTS2022120612498</p>
-</td>
-</tr>
+<table><tbody>
 <tr id="zh-cn_topic_0000001468008732_row2080915617299"><th class="firstcol" valign="top" width="23%" id="mcps1.1.3.2.1"><p id="zh-cn_topic_0000001468008732_p118091861298"><a name="zh-cn_topic_0000001468008732_p118091861298"></a><a name="zh-cn_topic_0000001468008732_p118091861298"></a><strong id="zh-cn_topic_0000001468008732_b1380915619299"><a name="zh-cn_topic_0000001468008732_b1380915619299"></a><a name="zh-cn_topic_0000001468008732_b1380915619299"></a>Severity</strong></p>
 </th>
 <td class="cellrowborder" valign="top" width="77%" headers="mcps1.1.3.2.1 "><p id="zh-cn_topic_0000001468008732_p380912618293"><a name="zh-cn_topic_0000001468008732_p380912618293"></a><a name="zh-cn_topic_0000001468008732_p380912618293"></a>Minor</p>
