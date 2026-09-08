@@ -1532,6 +1532,12 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     make install
     ```
 
+13. 更新内核启动项。
+
+    ```bash
+    grub2-mkconfig -o /boot/efi/EFI/openEuler/grub.cfg
+    ```
+
 13. 设置启动内核。
 
     ```bash
