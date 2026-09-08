@@ -124,7 +124,6 @@ None
 
 | Item | Details |
 | ---- | ------- |
-| Trouble Ticket No. | DTS2025120110758 |
 | Severity | Minor |
 | Symptom | In the AMD environment of Android 15, after the system has run for four days under high load, the CPU load abnormally decreases and the container cannot be deleted. |
 | Cause Analysis | There is a low probability that the amdgpu driver in kernel 6.6 encounters a page fault, causing the GPU to restart. After the application exits, the CPU load decreases. There is a low probability that the restart fails. In this case, the Android system processes that use GPU resources are suspended. As a result, the container cannot clear the processes and fails to be deleted. |
@@ -158,7 +157,6 @@ None
 
 | Item | Details |
 | ---- | ------- |
-| Trouble Ticket No. | DTS2025120110758 |
 | Severity | Minor |
 | Symptom | In the AMD environment of Android 15, after the system has run for four days under high load, the CPU load abnormally decreases and the container cannot be deleted. |
 | Cause Analysis | There is a low probability that the amdgpu driver in kernel 6.6 encounters a page fault, causing the GPU to restart. After the application exits, the CPU load decreases. There is a low probability that the restart fails. In this case, the Android system processes that use GPU resources are suspended. As a result, the container cannot clear the processes and fails to be deleted. |

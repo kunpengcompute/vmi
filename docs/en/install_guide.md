@@ -46,12 +46,12 @@ Before deploying the video stream cloud phone, obtain the required software pack
 
 |No.|Software Package|Description|How to Obtain|Configuration Scheme 1|Configuration Scheme 2|Configuration Scheme 3|Configuration Scheme 4|
 |--|--|--|--|--|--|--|--|
-| 1 | BoostKit-boostcph-videoengine_*_15.zip | Binary package of the video stream engine.| Contact Huawei technical support. | √ | √ | √ | √ |
-| 2 | DemoVideoEngine.tar.gz | TAR package of the video stream engine server. It is used to obtain the audio and video data of the Kbox container.| Contact Huawei technical support.| √ | √ | √ | √ |
-| 3 | DemoVideoEngine_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine server. It is used to check the software integrity.| Contact Huawei technical support.| √ | √ | √ | √ |
-| 4 | CloudPhoneApk.tar.gz | TAR package of the video stream engine client. It is used to decode and play audio and video data.| Contact Huawei technical support.| √ | √ | √ | √ |
-| 5 | CloudPhoneApk_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine client. It is used to check the software integrity.| Contact Huawei technical support.| √ | √ | √ | √ |
-| 6 | VideoClientEmulator.tar.gz | Stress test tool for the video stream cloud phone.| Contact Huawei technical support.| √ | √ | √ | √ |
+| 1 | BoostKit-boostcph-videoengine_*_15.zip | Binary package of the video stream engine.| Please submit an ISSUE feedback. | √ | √ | √ | √ |
+| 2 | DemoVideoEngine.tar.gz | TAR package of the video stream engine server. It is used to obtain the audio and video data of the Kbox container.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
+| 3 | DemoVideoEngine_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine server. It is used to check the software integrity.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
+| 4 | CloudPhoneApk.tar.gz | TAR package of the video stream engine client. It is used to decode and play audio and video data.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
+| 5 | CloudPhoneApk_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine client. It is used to check the software integrity.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
+| 6 | VideoClientEmulator.tar.gz | Stress test tool for the video stream cloud phone.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
 | 7 | NETINT-v*XXX*.tar.gz | TAR package of the video stream NETINT encoding card for hardware encoding. The matching version is 4.8.F-Android15.| [Link](https://www.netint.cn/quadra-firmware-downloads-android15)<br>Download password: **test123**| √ | - | - | - |
 | 8 | Quadra_V*XXX*.zip | Quadra software, firmware, and document packages of the NETINT encoding card.| [Link](https://www.netint.cn/quadra-firmware-downloads-android15)<br>Download password: **test123**| √ | - | - | - |
 | 9 | topo-affinity-plugin-master.zip | Kubernetes NUMA affinity plugin.| [Link](https://gitee.com/kunpeng_compute/topo-affinity-plugin)| √ | √ | √ | √ |
@@ -71,7 +71,7 @@ To prevent software packages from being maliciously tampered with during transfe
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->If the verification fails, do not use the software package, and contact Huawei technical support engineers.
+>If the verification fails, do not use the software package. Please submit an ISSUE feedback.
 >Before a software package is used for installation or upgrade, its digital signature also needs to be verified to ensure that the software package is not tampered with.
 >Before using the software package, read and agree to [Kunpeng BoostKit User License Agreement 2.0](https://www.hikunpeng.com/en/legal/developer/boostkit/software/protocol).
 
