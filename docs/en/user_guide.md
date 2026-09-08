@@ -1,27 +1,30 @@
 # User Guide<a name="ZH-CN_TOPIC_0000002552853353"></a>
 
-## 1 Operating a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549744217"></a>
+<!-- md-trans-meta sourceCommit=41a1a976d550af475fa400f09eb69f540cee3709 translatedAt=2026-08-29T08:35:21.683Z pushedAt=2026-09-04T07:25:38.323Z -->
 
-### 1.1 Starting a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549744219" id="starting-a-video-stream-cloud-phone-instance"></a>
+## Operating a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549744217"></a>
+
+### Starting a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549744219" id="starting-a-video-stream-cloud-phone-instance"></a>
 
 You can set parameters in the `cfct_config` file to start video stream cloud phone instances with different resolution and frame rates, and set the initial video encoding parameters in the `default.prop` file. If WebRTC is used for data transmission, you can modify the `default.prop` file to change the snapshot resolution; if you use an APK to access the video stream cloud phone, you can configure the snapshot resolution in the APK settings.
 
 1. (Optional) To start video stream cloud phone instances with custom frame rates, modify the frame rate property in the `cfct_config` file. The default frame rate is 30 fps. 60 fps is also supported when the resolution is 720p or 1080p.
 
-    ```shell
+    ```bash
     BUILD_FPS=30
     ```
 
-2. (Optional) To start video stream cloud phone instances with the C2 decoder enabled (applicable to configuration scheme 1), configure `ENABLE_AMD_C2_DECODE=1` in the `cfct_config` file. `0` (default) and any other values indicate disabled. The C2 decoder needs to be enabled or disabled during the initial container startup; dynamic switching is not supported. Built-in cloud phone applications will automatically select the appropriate decoder based on their specific requirements.
+2. (Optional) To start video stream cloud phone instances with the C2 decoder enabled (applicable for configuration scheme 1), set `ENABLE_AMD_C2_DECODE=1` in the `cfct_config` configuration file and disable hardware decoding by setting `T432_QUADRA_DECODE_ENABLE=0`. The C2 decoder must be enabled or disabled before the container is started for the first time. After the container has started, switching by modifying the `ENABLE_AMD_C2_DECODE` parameter in `kbox_config.cfg` and restarting the container is not supported. Built-in apps in the cloud phone will choose the decoder on their own as needed.
 
-    ```shell
-    ENABLE_AMD_C2_DECODE=0
+    ```bash
+    ENABLE_AMD_C2_DECODE=1
+    T432_QUADRA_DECODE_ENABLE=0
     ```
 
-3. To start video stream cloud phone instances with different initial encoding parameters, snapshot resolution, and audio and video output formats over WebRTC, perform the following operations:
-    1. Decompress `DemoVideoEngine.tar.gz` to obtain the `vendor` folder and copy the `default.prop` file in the folder to the current directory.
+3. To start video stream cloud phone instances with different initial encoding parameters, snapshot resolutions, and audio and video output formats over WebRTC, perform the following operations:
+    1. Decompress `DemoVideoEngine.tar.gz` to obtain the `vendor` folder and copy the `vendor/default.prop` file to the current directory.
 
-        ```shell
+        ```bash
         cd /home/kbox_video/
         tar -xvf DemoVideoEngine.tar.gz vendor
         cp vendor/default.prop .
@@ -48,20 +51,20 @@ You can set parameters in the `cfct_config` file to start video stream cloud pho
         >After you change the video output resolution (to a resolution different from the configuration at the last startup), the rendering resolution of the AOSP system and apps is changed. In this case, a compatibility issue or rendering problem may occur in some apps. Generally, this problem can be solved by restarting apps. It is recommended that you return to the home screen and clear background apps before changing the resolution.
 
     4. Set the audio and video output formats.
-        - If you access a video stream cloud phone instance over WebRTC, configure property fields in `default.prop` within the allowed value range to set video and audio output formats. For details, see [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script).
-        - If you access a video stream cloud phone instance using an APK, configure property fields in `default.prop` to set video and audio output formats. For details, see [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script).
+        - If you access a video stream cloud phone instance over WebRTC, configure property fields in `default.prop` within the allowed value range to set video and audio output formats. For details, see [WebRTC property fields](#webrtc-property-fields).
+        - If you access a video stream cloud phone instance using an APK, configure property fields in `default.prop` to set video and audio output formats. For details, see [video stream engine property fields](#video-stream-engine-property-fields).
 
     5. Enable the adaptive resolution function.
 
         If you access the video stream cloud phone instance using an APK, you can enable the adaptive resolution function on the APK settings page. For details, see [Using an APK](#using-an-apk). If adaptive resolution is disabled, configure property fields started with `vmi.video.frame` in `default.prop` to change the snapshot resolution. For details about the property fields, see [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script). After changing the resolution, you are advised to change the screen pixel density in the `cfct_config` file as well to achieve the optimal display effect. [**Table 1**](#recommended-configurations) lists the recommended configurations.
 
-    6. If you use the WebRTC method, configure the IP address and the start UDP port.
+    6. If you use the WebRTC method, configure the IP address and the UDP start port.
 
-        In `default.prop`, configure property fields `vmi.webrtc.connection.serverip` (IP address of the cloud phone server) and `vmi.webrtc.connection.udpbeginport` (available UDP start port). For details, see [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script).
+        In `default.prop`, configure property fields `vmi.webrtc.connection.serverip` (IP address of the cloud phone server) and `vmi.webrtc.connection.udpbeginport` (available UDP start port). For details, see [WebRTC property fields](#webrtc-property-fields).
 
-4. Start a video stream cloud phone.
+4. Start video stream cloud phones.
 
-    ```shell
+    ```bash
     cd /home/kbox_video/
     ./cfct_video start ${index1} ${index2}
     ```
@@ -70,21 +73,21 @@ You can set parameters in the `cfct_config` file to start video stream cloud pho
 
     - Start a video stream cloud phone whose index is 1.
 
-        ```shell
+        ```bash
         ./cfct_video start 1
         ```
 
     - Start five video stream cloud phones indexed from 1 to 5.
 
-        ```shell
+        ```bash
         ./cfct_video start 1 5
         ```
-    
+
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
     >When using NFS for mounting, replace the `start` command with `nstart`. For example:
     >
-    >```shell
+    >```bash
     >./cfct_video nstart 1 5
     >```
 
@@ -92,7 +95,7 @@ You can set parameters in the `cfct_config` file to start video stream cloud pho
 
     - Video stream cloud phone with Docker:
 
-        ```shell
+        ```bash
         docker ps -a
         ```
 
@@ -102,7 +105,7 @@ You can set parameters in the `cfct_config` file to start video stream cloud pho
 
     - Video stream cloud phone with containerd:
 
-        ```shell
+        ```bash
         nerdctl ps -a
         ```
 
@@ -112,21 +115,21 @@ You can set parameters in the `cfct_config` file to start video stream cloud pho
 
     Make sure that the started container can be found and is in normal state.
 
-6. Check whether the video stream cloud phone is successfully started. `${index}` indicates the index of the instance to be started. For example, in the last column in the command output of [5](#li3304181302311), the `${index}` of `android_35` is 35.
+6. Check whether the video stream cloud phone is successfully started. `${index}` indicates the index of the started instance. For example, in the last column in the command output of [5](#li3304181302311), the `${index}` of `android_35` is 35.
 
     - Video stream cloud phone with Docker:
 
-        ```shell
+        ```bash
         docker exec -it android_${index} sh 
         ```
 
     - Video stream cloud phone with containerd:
 
-        ```shell
+        ```bash
         nerdctl exec -it android_${index} sh
         ```
 
-        ```shell
+        ```bash
         getprop sys.boot_completed
         ```
 
@@ -134,7 +137,7 @@ You can set parameters in the `cfct_config` file to start video stream cloud pho
 
     ![](figures/zh-cn_image_0000002549864239.png)
 
-### 1.2 Querying Component Version Information<a name="ZH-CN_TOPIC_0000002549744227" id="querying-component-version-information"></a>
+### Querying Component Version Information<a name="ZH-CN_TOPIC_0000002549744227" id="querying-component-version-information"></a>
 
 This section provides the following two methods to obtain the version of the video stream engine component.
 
@@ -143,7 +146,7 @@ Method 1: using the obtained software package
 1. Refer to [Software requirements for deploying the video stream engine](install_guide.md#software-requirements-for-deploying-the-video-stream-engine) to obtain `BoostKit-boostcph-videoengine_*.zip` and decompress it to obtain the version file.
 2. Check the version of the video stream engine component.
 
-    ```shell
+    ```bash
     unzip BoostKit-boostcph-videoengine_*.zip
     tar -xvf  VideoEngine.tar.gz vendor/etc/videoengine_version.txt
     cat vendor/etc/videoengine_version.txt
@@ -151,7 +154,7 @@ Method 1: using the obtained software package
 
     The command output is the version information of the video stream engine component. An example is as follows:
 
-    ```shell
+    ```bash
     Product Name: Kunpeng BoostKit
     Product Version: 26.0.RC1
     Component Name: BoostKit-boostcph-videoengine
@@ -163,18 +166,16 @@ Method 2: calling an external API of the video stream engine
 
 Call the `GetVersion` API to obtain the version information. For details, refer to "External APIs > Function APIs > GetVersion" in [Video Stream Engine Developer Guide](development_guide.md). The command output example is the same as that in method 1.
 
-### 1.3 Accessing a Video Stream Cloud Phone<a name="ZH-CN_TOPIC_0000002549864229" id="accessing-a-video-stream-cloud-phone"></a>
+### Accessing a Video Stream Cloud Phone<a name="ZH-CN_TOPIC_0000002549864229" id="accessing-a-video-stream-cloud-phone"></a>
 
-#### 1.3.1 Using an APK<a name="ZH-CN_TOPIC_0000002518224464" id="using-an-apk"></a>
+#### Using an APK<a name="ZH-CN_TOPIC_0000002518224464" id="using-an-apk"></a>
 
 If the video stream cloud phone is started in the default mode, you can access the cloud phone using an APK.
 
 1. Decompress `CloudPhoneApk.tar.gz`.
 2. Install `CloudPhone.apk` on an Android phone.
 3. (Optional) Tap the gear icon in the upper right corner to access the settings screen.
-
 4. (Optional) Enable the adaptive resolution function. This function is enabled by default. If adaptive resolution is disabled, you need to modify the rendering resolution in `default.prop`. For details, see step 2 in [Starting a Video Stream Cloud Phone Instance](#starting-a-video-stream-cloud-phone-instance).
-
 5. Return to the home page, enter the server IP address and port in top-down order, and tap **Connect** to access the video stream cloud phone.
 
     The default port is 8000 + `${index}`.
@@ -185,7 +186,7 @@ If the video stream cloud phone is started in the default mode, you can access t
     >- The video stream engine client is 64-bit and must run on 64-bit Android mobile phones running HarmonyOS or Android 7 or later.
     >- Ensure that the network connection between the mobile phone and the server is normal.
 
-#### 1.3.2 From a Web Page on a PC<a name="ZH-CN_TOPIC_0000002518384374"></a>
+#### From a Web Page on a PC<a name="ZH-CN_TOPIC_0000002518384374"></a>
 
 If the video stream cloud phone instance is started with the WebRTC feature enabled for data transmission, you can access the cloud phone from a web page on the PC.
 
@@ -200,9 +201,9 @@ If the video stream cloud phone instance is started with the WebRTC feature enab
     >
     >A mapping port must be configured for each video stream cloud phone instance. This can be set in the `cfct_video` script during deployment. The port number ranges from 1024 to 65535 and cannot be an occupied port to avoid port contention and video stream cloud phone access failure.
 
-### 1.4 (Optional) Dynamically Modifying Cloud Phone Parameters<a name="ZH-CN_TOPIC_0000002549744243"></a>
+### (Optional) Dynamically Modifying Cloud Phone Parameters<a name="ZH-CN_TOPIC_0000002549744243"></a>
 
-You can use `CloudPhone.apk` to dynamically modify the video and audio encoding parameters when the cloud phone is running.
+You can use `CloudPhone.apk` to dynamically modify the video encoding and audio playback encoding parameters when the cloud phone is running.
 
 1. Before connecting to the cloud phone, go to the settings page to confirm that adaptive resolution is enabled by default.
 
@@ -219,60 +220,60 @@ You can use `CloudPhone.apk` to dynamically modify the video and audio encoding 
 
         >![](public_sys-resources/icon-note.gif) **NOTE**
         >
-        >If adaptive resolution is disabled, you can run the `setprop` command in the container after starting the cloud phone to change property settings. For details about the property fields, see [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script). To change the width and height of the adaptive resolution, you are advised to change the screen pixel density in the `cfct_config` file as well to achieve the optimal display effect. [**Table 1** Recommended configurations](#recommended-configurations) lists the recommended configurations for different resolutions.
+        >If adaptive resolution is disabled, you can run the `setprop` command in the container after starting the cloud phone to change property settings. For details, refer to property fields of the video stream engine in [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script). If the width and height of the adaptive resolution is changed, you are advised to change the screen pixel density in the `cfct_config` file as well to achieve the optimal display effect. [**Table 1** Recommended configurations](#recommended-configurations) lists the recommended configurations for different resolutions.
 
-4. Set audio encoding parameters.
+4. Set audio playback encoding parameters.
     1. Tap the audio icon.
 
-    2. Set the audio encoding parameters.
+    2. Set the audio playback encoding parameters.
 
         For details about the value range of each parameter, see the properties starting with `vmi.audio.encode` in [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script).
 
     3. After the setting is complete, tap **Send** to send the parameter values to the server. If the values are valid, they take effect immediately.
 
-### 1.5 Restarting a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549864227"></a>
+### Restarting a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549864227"></a>
 
 Run the `cfct_video` script to restart a video stream cloud phone instance.
 
 - Restart a video stream cloud phone whose index is `${index1}`.
 
-    ```shell
+    ```bash
     ./cfct_video restart ${index1}
     ```
 
 - Restart video stream cloud phones indexed from `${index1}` to `${index2}`.
 
-    ```shell
+    ```bash
     ./cfct_video restart ${index1} ${index2}
     ```
 
-### 1.6 Deleting a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549864211"></a>
+### Deleting a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549864211"></a>
 
 Run the `cfct_video` script to delete a video stream cloud phone instance.
 
 - Delete a video stream cloud phone whose index is `${index1}`.
 
-    ```shell
+    ```bash
     ./cfct_video delete ${index1}
     ```
 
 - Delete video stream cloud phones indexed from `${index1}` to `${index2}`.
 
-    ```shell
+    ```bash
     ./cfct_video delete ${index1} ${index2}
     ```
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->When deleting a container mounted using NFS, replace the `delete` command with `ndelete`. For example:
+>When deleting a container with an NFS mount, use `ndelete` instead of `delete`. After deletion with `ndelete`, the image file is saved by default. Example:
 >
->```shell
+>```bash
 >./cfct_video ndelete 1 5
 >```
 
-## 2 Operating a Video Stream Cloud Phone Instance in the Kubernetes Cluster<a name="ZH-CN_TOPIC_0000002518224466"></a>
+## Operating a Video Stream Cloud Phone Instance in the Kubernetes Cluster<a name="ZH-CN_TOPIC_0000002518224466"></a>
 
-### 2.1 Starting the DaoCloud Device Plugin<a name="ZH-CN_TOPIC_0000002549864209"></a>
+### Starting the DaoCloud Device Plugin<a name="ZH-CN_TOPIC_0000002549864209"></a>
 
 Start the DaoCloud device plugin on the master node. Before starting the plugin, obtain the TAR package of the video stream engine server for obtaining the audio and video data of the Kbox container.
 
@@ -280,14 +281,14 @@ Obtain the `DemoVideoEngine.tar.gz` software package based on [Software requirem
 
 1. Decompress `DemoVideoEngine.tar.gz`.
 
-    ```shell
+    ```bash
     cd /home/k8s/
     tar -xvf DemoVideoEngine.tar.gz
     ```
 
 2. Create a label (`va-device=va-sg100`) on the specified Kubernetes node.
 
-    ```shell
+    ```bash
     kubectl label nodes $NODENAME va-device=va-sg100
     ```
 
@@ -297,20 +298,20 @@ Obtain the `DemoVideoEngine.tar.gz` software package based on [Software requirem
 
 3. Create a namespace `va-plugin`.
 
-    ```shell
+    ```bash
     kubectl create ns va-plugin
     ```
 
 4. Create a ConfigMap object `va-plugin` and add the content of the `config.yaml` file to the ConfigMap.
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     kubectl create cm -n va-plugin va-plugin-configs --from-file=config=config.yaml
     ```
 
 5. Change the name of the DaoCloud device plugin image.
 
-    ```shell
+    ```bash
     vi va-device-plugin.yaml
     ```
 
@@ -320,7 +321,7 @@ Obtain the `DemoVideoEngine.tar.gz` software package based on [Software requirem
 
 6. Start the DaoCloud device plugin.
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     kubectl create -f va-device-plugin.yaml
     ```
@@ -331,19 +332,19 @@ Obtain the `DemoVideoEngine.tar.gz` software package based on [Software requirem
 
 7. After the startup is complete, check whether the DaoCloud device plugin can run properly.
 
-    ```shell
+    ```bash
     kubectl get pods -A
     ```
 
     It is expected that the Pod names should start with `va-device-plugin-daemonset` and their status in the `STATUS` column should all be `Running`.
 
-### 2.2 Starting the Device Plugin<a name="ZH-CN_TOPIC_0000002518224436"></a>
+### Starting the Device Plugin<a name="ZH-CN_TOPIC_0000002518224436"></a>
 
 Start the device plugin on the master node.
 
 1. Start the device plugin.
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     ./start_devices.sh
     ```
@@ -354,37 +355,37 @@ Start the device plugin on the master node.
 
 2. After the startup is complete, check whether the device plugin can run properly.
 
-    ```shell
+    ```bash
     kubectl get pods -A
     ```
 
-    It is expected that the `STATUS` column of Pods whose names start with `k8s-host-device` is `Running`.
+    It is expected that the `STATUS` column of Pods whose name starts with `k8s-host-device` is `Running`.
 
-### 2.3 Running the Hook Script<a name="ZH-CN_TOPIC_0000002549866525"></a>
+### Running the Hook Script<a name="ZH-CN_TOPIC_0000002549866525"></a>
 
 Run the hook script on all worker nodes.
 
 1. Obtain `DemoVideoEngine.tar.gz` based on [Video Stream Engine Installation Guide](install_guide.md) and upload it to the `/home/k8s` directory on the server.
 2. Copy the `oci-device-hook.sh` script in the `/home/k8s/k8s/script` directory to the `/usr/local/sbin/` directory.
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     cp oci-device-hook.sh /usr/local/sbin/
     ```
 
 3. Modify the containerd configuration by changing the container runtime added in [Deploying the DaoCloud Device Plugin Image](install_guide.md#deploying-the-daocloud-device-plugin-image) to `/usr/local/sbin/oci-device-hook.sh`.
 
-    ```shell
+    ```bash
     sed -i 's|BinaryName = "/usr/bin/va-container-runtime"|BinaryName ="/usr/local/sbin/oci-device-hook.sh"|g' /etc/containerd/config.toml
     ```
 
 4. Restart containerd.
 
-    ```shell
+    ```bash
     systemctl restart containerd
     ```
 
-### 2.4 Running the NRI Plugin
+### Running the NRI Plugin
 
 Run the NRI plugin on all worker nodes.
 
@@ -392,7 +393,8 @@ Run the NRI plugin on all worker nodes.
 
 2. Go to the `/home/k8s/k8s/scripts/nri-quota-plugin` directory and build the plugin.
 
-    ```shell
+    ```bash
+    go mod tidy
     go build -o quota-plugin main.go
     ```
 
@@ -409,34 +411,34 @@ Run the NRI plugin on all worker nodes.
 
     Restart containerd.
 
-    ```shell
+    ```bash
     systemctl restart containerd
     ```
 
 4. Deploy the plugin.
 
-    ```shell
-    mkdir -p /var/log/nri /var/run/nri
+    ```bash
+    mkdir -p /var/log/nri /var/run/nri /opt/nri-quota-plugin
     cp quota-plugin /opt/nri-quota-plugin/
     chmod +x /opt/nri-quota-plugin/quota-plugin
     ```
 
 5. Start the NRI plugin.
 
-    ```shell
+    ```bash
     cp quota-plugin.service /etc/systemd/system/quota-plugin.service
     systemctl daemon-reload
     systemctl enable quota-plugin
     systemctl start quota-plugin
     ```
 
-### 2.5 Starting a Kubernetes Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549864215"></a>
+### Starting a Kubernetes Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549864215"></a>
 
 Perform the following operations on worker nodes.
 
 1. Modify the `k8s-video.yaml` file.
 
-    ```shell
+    ```bash
     cd /home/k8s/k8s/script
     vi k8s-video.yaml
     ```
@@ -448,10 +450,10 @@ Perform the following operations on worker nodes.
     - `spec.containers.resources.limits.memory` and `spec.containers.resources.requests.memory`: container memory. The two fields need to be modified together.
 
 2. Start a Kubernetes video stream cloud phone.
-   
-   Note: If the created data volume is in f2fs format, the f2fs switch must be configured to 1. If the created data volume is in ext4 format, the f2fs switch must be configured to 0.
 
-    ```shell
+    Note: If the created data volume is in f2fs format, the f2fs switch must be configured to 1. If the created data volume is in ext4 format, the f2fs switch must be configured to 0.
+
+    ```bash
     ./k8s-video.sh start ${index1} ${index2} ${index3} ${index4}
     ```
 
@@ -459,120 +461,126 @@ Perform the following operations on worker nodes.
     > 
     > To use NFS for mounting, change `start` to `nstart`. Example:
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh nstart ${index1} ${index2} ${index3} ${index4}
     > ```
     > 
-    > In the command, `${index1}` and `${index2}` indicate the Pod indexes, and `${index3}` indicates whether to enable the f2fs file format. If you enter `0` or leave it blank, the f2fs file format is disabled. The default value is `0`. `${index4}` indicates the size allocated to the `/system` partition inside the container, in MB. Entering a value greater than 0 enables it, while entering `0` or leaving it blank disables it. This configuration defaults to `0`. `${index2}`, `${index3}`, and `${index4}` can be left blank. Example:
+    > For a Kubernetes container started through `nstart`, you can use the following command to check whether NFS is enabled normally. The expected result is `/tmp/nfs/data/video1/data`.
+    >
+    > ```bash
+    > kubectl get pod video1 -o jsonpath='{.spec.volumes[?(@.name=="data")].hostPath.path}'
+    > ```
+    >
+    > `${index1}` and `${index2}` indicate the Pod indexes, and `${index3}` indicates whether to enable the f2fs file format. If you enter `0` or leave it blank, the f2fs file format is disabled. The default value is `0`. `${index4}` indicates the size allocated to the `/system` partition inside the container, in MB. Entering a value greater than 0 enables it, while entering `0` or leaving it blank disables it. This configuration defaults to `0`. `${index2}`, `${index3}`, and `${index4}` can be left blank. Example:
     >- Create a Pod named `video2` with the default ext4 file format.
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 2
     > ```
     >
     >- Create a Pod named `video3` with the f2fs file format.
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 3 3 1
     > ```
     >
     >- Create a Pod named `video3` with the f2fs file format.
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 3 3 1
     > ```
     >
     >- Create a total of 5 Pods named `video1` to `video5` with the default ext4 file format.
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 1 5
     > ```
     >
     >- Create a total of 5 Pods named `video2` to `video6` with the default f2fs file format.
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 2 6 1
     > ```
     >
     >- Create a Pod named `video1` with the default ext4 file format and a system partition size limit of 10240 MB.
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 1 1 0 10240
     > ```
     >
     >- Create a Pod named `video2` with the f2fs file format and a system partition size limit of 10240 MB.
     >
-    > ```shell
+    > ```bash
     > ./k8s-video.sh start 2 2 1 10240
     > ```
     >
 
 3. Check whether the Pods are successfully started.
 
-    ```shell
+    ```bash
     kubectl get pods -o wide
     ```
 
-    It is expected that the `STATUS` column of Pods whose names start with `video` is `Running`.
+    It is expected that the `STATUS` column of Pods whose name starts with `video` is `Running`.
 
-4. Connect to the video stream cloud phone and container. In the `NODE` column, you can view the node corresponding to the Pod of the video stream cloud phone.
+4. To connect to a video stream cloud phone and operate on its container, check the `NODE` column to find the node where the corresponding Pod is scheduled.
 
-    ```shell
+    ```bash
     kubectl get pods -o wide
     ```
 
-    Access the video stream cloud phone based on [Accessing a Video Stream Cloud Phone](#accessing-a-video-stream-cloud-phone). The client connection port is 8000 + `${index}`, where `${index}` indicates the Pod ID.
+    Access the video stream cloud phone based on [Accessing a Video Stream Cloud Phone](#accessing-a-video-stream-cloud-phone). The client connection port is 8000 + `${index}`, where `${index}` indicates the Pod index.
 
     - On any node, run the following command to access the container. The following uses `video1` as an example:
 
-        ```shell
+        ```bash
         kubectl exec -it video1 -- sh
         ```
 
     - On the worker node, run the `crictl ps` command to view the cloud phone instance. The corresponding Pod is displayed in the `NAME` field. Run the following command to access the container. Replace `${CONTAINER}` with the value in the first column in the `crictl ps` command output.
 
-        ```shell
+        ```bash
         crictl exec -it ${CONTAINER} sh
         ```
 
-### 2.6 Deleting a Kubernetes Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002518384356"></a>
+### Deleting a Kubernetes Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002518384356"></a>
 
 Run the following commands on worker nodes:
 
-```shell
+```bash
 cd /home/k8s/k8s/script
 ./k8s-video.sh delete ${index1} ${index2}
 ```
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
-> `${index1}` and `${index2}` indicate Pod indexes, and `${index2}` can be left blank.
+> `${index1}` and `${index2}` indicate Pod indexes, and `${index2}` can be left blank. Example:
 >
-> ```shell
-> ./k8s-video.sh delete 2 (Delete the Pod named video2.)
-> ./k8s-video.sh delete 1 5 (Delete five Pods from video1 to video5.)
+> ```bash
+> ./k8s-video.sh delete 2 (delete the Pod named video2)
+> ./k8s-video.sh delete 1 5 (delete 5 Pods from video1 to video5)
 > ```
 > 
-> To delete a cloud phone instance that is mounted and started using NFS, run the `ndelete` command. For example:
+> To delete a cloud phone instance that is started with an NFS mount, use the `ndelete` command. After deletion with `ndelete`, the image file is saved by default. Example:
 > 
-> ```shell
-> ./k8s-video.sh ndelete 1 5 (Delete five Pods from video1 to video5.)
+> ```bash
+> ./k8s-video.sh ndelete 1 5 (delete 5 Pods from video1 to video5)
 > ```
 > 
 
-### 2.7 Creating a Base Data Volume<a name="ZH-CN_TOPIC_0000002518224462"></a>
+### Creating a Base Data Volume<a name="ZH-CN_TOPIC_0000002518224462"></a>
 
 This section demonstrates how to create a base data volume for setting storage isolation and size of a container on a worker node.
 
-1. On the worker node, run the `k8s-video.sh` script to start a cloud phone. The following uses `video1` as an example:
+1. On a worker node, run the `k8s-video.sh` script to start a cloud phone. The following uses `video1` as an example:
 
-    ```shell
+    ```bash
     ./k8s-video.sh start 1
     ```
 
 2. On the master node, find the node where `video1` resides.
 
-    ```shell
+    ```bash
     kubectl get pod -A -owide
     ```
 
@@ -581,11 +589,11 @@ This section demonstrates how to create a base data volume for setting storage i
 3. Pre-install required applications (such as Subway Surfers) in the cloud phone container.
 4. Log in to the node where `video1` resides. The base data volume is stored in `/home/mount/img/video1.img`. Rename the image file `videobase.img` and copy it to the `/home/mount/img` directory on each worker node. If you want to use `videobase.img` as the data volume, perform operations based on [worker node operation 1](install_guide.md#worker-node-operation-1).
 
-## 3 Functional Specifications of Configuration Items<a name="ZH-CN_TOPIC_0000002549864233"></a>
+## Functional Specifications of Configuration Items<a name="ZH-CN_TOPIC_0000002549864233"></a>
 
-### 3.1 Commercial Modules of the Video Stream Engine<a name="ZH-CN_TOPIC_0000002518384362"></a>
+### Commercial Modules of the Video Stream Engine<a name="ZH-CN_TOPIC_0000002518384362"></a>
 
-#### 3.1.1 System Properties<a name="ZH-CN_TOPIC_0000002518224460"></a>
+#### System Properties<a name="ZH-CN_TOPIC_0000002518224460"></a>
 
 You can configure video, audio, network functions of the video stream engine server using system properties. This section describes how to configure related properties.
 
@@ -605,11 +613,11 @@ You can configure video, audio, network functions of the video stream engine ser
 |ro.vmi.loglevel|Log level.|**1**: default<br>**2**: verbose<br>**3**: debug<br>**4**: info<br>**5**: warn<br>**6**: error<br>**7**: fatal|4|
 |ro.hardware.dynamicfps|Dynamic frame rate adjustment.|**0**: disabled<br>**1**: enabled|1|
 |ro.hardware.downfps|Rendering frame rate (in fps) after the client is disconnected when the dynamic frame rate adjustment function is enabled.|12fps<br>24fps|12|
-|ro.hardware.compositionBypass|Composition bypass, which is used to optimize application full-screen display. (Disable this function if DC1000 is used.)|**1**: enabled<br>Other: disabled|**0**|
+|ro.hardware.compositionBypass|Composition bypass, which is used to optimize application full-screen display. (You must disable this function if DC1000/DC1000C GPUs are used.)|**1**: enabled<br>Other: disabled|0|
 |ro.hardware.compositionBypass.offset|Composition bypass offset (number of frames). When the composition bypass function is enabled, it takes effect after the specified number of consecutive frames. This helps to mitigate image rotation caused by composition bypass.|Greater than 0|You can adjust the value as required. `0` is recommended in the AMD environment.|
 |ro.vmi.adaptive.vsync|Adaptive vertical synchronization (vsync). After this function is enabled, the processing delay in the image rendering phase on the server can be optimized.|**1**: enabled<br>Other: disabled|Disabled|
 
-#### 3.1.2 Configuration Items of the Graphics Acceleration Layer<a name="ZH-CN_TOPIC_0000002518224442" id="configuration-items-of-the-graphics-acceleration-layer"></a>
+#### Configuration Items of the Graphics Acceleration Layer<a name="ZH-CN_TOPIC_0000002518224442" id="configuration-items-of-the-graphics-acceleration-layer"></a>
 
 The graphics acceleration layer supports two configurable functions: GPU mock and shader cache. This section describes the configuration items and rules of the two functions, and provides configuration examples for reference.
 
@@ -652,7 +660,7 @@ You can configure the functions in the `kbox_render_accelerating_configuration.x
 
 **Configuration Example<a name="section18450203117618"></a>**
 
-```shell
+```bash
 <!-- Configuration Example -->
 <!-- General system settings -->
 <Application name="system" isEnable="false">
@@ -688,9 +696,9 @@ You can configure the functions in the `kbox_render_accelerating_configuration.x
 </Application>
 ```
 
-### 3.2 Non-commercial Modules of the Video Stream Engine<a name="ZH-CN_TOPIC_0000002549744215"></a>
+### Non-commercial Modules of the Video Stream Engine<a name="ZH-CN_TOPIC_0000002549744215"></a>
 
-#### 3.2.1 Configuration Items in the Startup Script<a name="ZH-CN_TOPIC_0000002549864225" id="configuration-items-in-the-startup-script"></a>
+#### Configuration Items in the Startup Script<a name="ZH-CN_TOPIC_0000002549864225" id="configuration-items-in-the-startup-script"></a>
 
 You can configure video stream engine server functions such as hardware decoding and WebRTC by setting configuration items in the startup script `cfct_config`. This section describes the default configuration items in this file.
 
@@ -698,7 +706,7 @@ You can configure video stream engine server functions such as hardware decoding
 
 Configure the default running parameters for audio and video modules of the video stream engine based on this table.
 
-Configure the default running parameters of the WebRTC module of the video stream engine based on [WebRTC Configuration Items](#webrtc-configuration-items).
+Configure the default running parameters for the WebRTC module of the video stream engine based on [WebRTC Configuration Items](#webrtc-configuration-items).
 
 **Table 1** Configuration items in the script<a id="non-commercial-configuration-items"></a>
 
@@ -711,15 +719,15 @@ Configure the default running parameters of the WebRTC module of the video strea
 |BUILD_DENSITY|Cloud phone screen density.|**120** for 360p<br>**160** for 480p<br>**320** for 720p<br>**480** for 1080p<br>**640** for 2K<br>**960** for 4K|320|
 |BUILD_FPS|Cloud phone screen frame rate, in fps.|1 to 120|30|
 |ENCODECARD|Encoding card.|**0**: T432<br>**1**: Quadra<br>**2**: Va1e (not supported currently)<br>**3**: OpenH264|1|
-|ENABLE_AMD_C2_DECODE|C2 software decoding in the AMD solution.|**0** or other values: disabled<br>**1**: enabled|0|
-|T432_QUADRA_DECODE_ENABLE|T432/Quadra hardware decoding.|**0** or other values: disabled<br>**1**: enabled|0|
-|ENABLE_HARD_DECODE|DC1000 hardware decoding.|**0** or other values: disabled<br>**1**: enabled|1|
+|ENABLE_AMD_C2_DECODE|C2 software decoding in the AMD solution. Mutually exclusive with Quadra hardware decoding.|**0** or other values: disabled<br>**1**: enabled|0|
+|T432_QUADRA_DECODE_ENABLE|T432/Quadra hardware decoding. Mutually exclusive with C2 software decoding.|**0** or other values: disabled<br>**1**: enabled|0|
+|ENABLE_HARD_DECODE|DC1000/DC1000C hardware decoding.|**0** or other values: disabled<br>**1**: enabled|1|
 |ENABLE_WEBRTC_CONNECTION|WebRTC connection.|**0** or other values: disabled<br>**1**: enabled|0|
 |ENABLE_F2FS|F2FS file system.|**0** or other values: disabled; **1**: enabled|0|
 |SYSTEM_PARTITION_SIZE_MB|Switch and specific value for adjusting the size of the `/system` partition (in MB).|**0**: disabled; other values: enabled|0|
 |NFS_DIR|Client directory where the NFS server directory is mounted.|Valid NFS mount directory|/tmp/nfs|
 
-#### 3.2.2 Video Stream Engine Property Configuration Items<a name="ZH-CN_TOPIC_0000002518384388"></a>
+#### Video Stream Engine Property Configuration Items<a name="ZH-CN_TOPIC_0000002518384388"></a>
 
 This section describes the system properties of non-commercial modules of the video stream engine, such as the video and audio modules. You can change property settings to configure the default running parameters of these modules.
 
@@ -729,7 +737,7 @@ This section describes the system properties of non-commercial modules of the vi
 
 |Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-|vmi.video.encodertype|Encoder type. When this item is set to CPU, that is, when software encoding is used, if the cloud phones need to run heavy-load applications, you are advised to change the core binding mode to NUMA to prevent insufficient CPU resources in the default core binding mode (two containers, two cores). The modification method is as follows: Change the value of **CPU_BIND_MODE** in the **cfct_config** file to **1**.|**0**: CPU (software encoding via CPU)<br>**1**: VPU (hardware encoding via external hardware)<br>**2**: GPU (available only when DC1000 is used)|1|
+|vmi.video.encodertype|Encoder type. When this item is set to CPU, that is, when software encoding is used, if the cloud phones need to run heavy-load applications, you are advised to change the core binding mode to NUMA to prevent insufficient CPU resources in the default core binding mode (two containers, two cores). The modification method is as follows: Change the value of **CPU_BIND_MODE** in the **cfct_config** file to **1**.|**0**: CPU (software encoding via CPU)<br>**1**: VPU (hardware encoding via external hardware)<br>**2**: GPU (available only when DC1000/DC1000C is used)|1|
 |vmi.video.videoframetype|Frame data output format.|**0**: H.264<br>**1**: YUV (available only if **encodertype** is set to **0**)<br>**2**: RGB (not supported currently)<br>**3**: H.265 (unavailable if **vmi.video.encodertype** is set to **0**)|3|
 |vmi.video.frame.width|Width of the adaptive resolution. The value must be a multiple of 8.|360 to 2160|720|
 |vmi.video.frame.height|Height of the adaptive resolution. The value must be a multiple of 8.|360 to 3840|1280|
@@ -739,11 +747,11 @@ This section describes the system properties of non-commercial modules of the vi
 |ro.vmi.video.wmcmd|Adaptive resolution option.|**0**: disabled<br>**1**: enabled|1|
 |vmi.video.encode.gopsize|Encoding GOP size.|30 to 3000|60|
 |vmi.video.encode.profile|Encoding profile. (Only **main** can be used for H.265 encoding.)|**0**: baseline (supported only in H.264 encoding)<br>**1**: main<br>**2**: high (supported only in H.264 encoding)|1|
-|vmi.video.encode.bitrate|Encoding bit rate.|500000 to 50000000 (AMD, usually W6800)<br>500000 to 30000000 (DC1000)<br>Unit: bit/s|8000000|
+|vmi.video.encode.bitrate|Encoding bit rate.|500000 to 50000000 (AMD, usually W6800)<br>500000 to 30000000 (DC1000/DC1000C)<br>Unit: bit/s|8000000|
 |vmi.video.encode.forcekeyframe|Forced I-frame encoding.|**0**: Disable forced I-frame encoding.<br>**1**: Forcibly generate an I-frame as the next frame.|0|
 |vmi.video.encode.rcmode|Encoding mode.|**0**: average bit rate (ABR) (not supported currently)<br>**1**: constant rate factor (CRF) (not supported currently)<br>**2**: constant bit rate (CBR)<br>**3**: capped CRF|3|
 |vmi.video.encode.crf|CRF bit rate control level.|0 to 51|21|
-|vmi.video.encode.maxcrfrate|Maximum CRF bit rate.|500000 to 100000000 (AMD, usually W6800)<br>500000 to 30000000 (DC1000)|10000000|
+|vmi.video.encode.maxcrfrate|Maximum CRF bit rate.|500000 to 100000000 (AMD, usually W6800)<br>500000 to 30000000 (DC1000/DC1000C)|10000000|
 |vmi.video.encode.vbvbuffersize|Size of the CRF bit rate buffer.|**-1**: auto mode.<br>**0**: Disable the maximum bit rate restriction.<br>[*min_vbv_size*, 3000]: *min_vbv_size* = floor(1000/fps) + 1 and *min_vbv_size* ≥ 10|1000|
 |vmi.video.encode.interpolation|Frame interpolation.|**0**: disabled<br>**1**: enabled|0|
 |vmi.audio.audiotype|Audio output format.|**0**: OPUS<br>**1**: PCM|0|
@@ -762,7 +770,7 @@ This section describes the system properties of non-commercial modules of the vi
 |vmi.sys.network.latency.average|Average maximum network latency.|Specific average maximum latency|-1|
 |ro.vmi.loglevel|Log level.|**1**: default<br>**2**: verbose<br>**3**: debug<br>**4**: info<br>**5**: warn<br>**6**: error<br>**7**: fatal|4|
 
-#### 3.2.3 WebRTC Configuration Items<a name="ZH-CN_TOPIC_0000002549744223" id="webrtc-configuration-items"></a>
+#### WebRTC Configuration Items<a name="ZH-CN_TOPIC_0000002549744223" id="webrtc-configuration-items"></a>
 
 This section describes the system properties of the non-commercial WebRTC module. You can change property settings to configure the default running parameters of this module.
 
@@ -784,84 +792,84 @@ This section describes the system properties of the non-commercial WebRTC module
 |vmi.webrtc.connection.udpminport|Minimum UDP port used by the server.|Available minimum port|
 |vmi.webrtc.connection.udpmaxport|Maximum UDP port used by the server.|Available maximum port|
 
-#### 3.2.4 Dynamic CPU Frequency Regulation Within Containers<a name="ZH-CN_TOPIC_0000002549744226" id="dynamic-cpu-frequency-regulation-within-containers"></a>
+#### Dynamic CPU Frequency Regulation Within Containers<a name="ZH-CN_TOPIC_0000002549744226" id="dynamic-cpu-frequency-regulation-within-containers"></a>
 
-##### 3.2.4.1 Background
+##### Background
 
 On physical devices, the system dynamically regulates the CPU frequency to balance load and power consumption. In contrast, cloud phones run in a containerized environment relying on the host, where the underlying physical CPU frequency typically remains constant, differing from physical devices. The following steps describe how to implement dynamic CPU frequency regulation for cloud phones to improve emulation fidelity.
 
-##### 3.2.4.2 Procedure<a name="ZH-CN_TOPIC_000000254983255011"></a>
+##### Procedure<a name="ZH-CN_TOPIC_000000254983255011"></a>
 
-   Currently, third-party detection applications typically retrieve the current CPU frequency of a device by reading two files: `scaling_cur_freq` and `cpuinfo_cur_freq`. To enhance the emulation fidelity of cloud phone devices, both files need to be modified.
-   
-   Before making modifications, ensure that you have write permissions for the relevant paths. Run the following commands inside the container to check the permissions for these paths:
+    Currently, third-party detection applications typically retrieve the current CPU frequency of a device by reading two files: `scaling_cur_freq` and `cpuinfo_cur_freq`. To enhance the emulation fidelity of cloud phone devices, both files need to be modified.
 
-   ```shell
-   ls -ld /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/scaling_cur_freq
-   ```
+    Before making modifications, ensure that you have write permissions for the relevant paths. Run the following commands inside the container to check the permissions for these paths:
 
-   ```shell
-   ls -ld /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/cpuinfo_cur_freq
-   ```
+    ```bash
+    ls -ld /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/scaling_cur_freq
+    ```
 
-   If the output contains `w` (such as `-rw-r--r--`), the file owner (typically `root`) possesses write permissions.
+    ```bash
+    ls -ld /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/cpuinfo_cur_freq
+    ```
 
-   If the output does not contain `w` (for example, the output contains `-r--r--r--`), the file is read-only.
-   In this case, execute the following commands inside the container to grant write permissions.
-   Run the following command to add write (`w`) permissions to `scaling_cur_freq`:
+    If the output contains `w` (such as `-rw-r--r--`), the file owner (typically `root`) possesses write permissions.
 
-   ```shell
-   chmod u+w /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/scaling_cur_freq
-   ```
+    If the output does not contain `w` (for example, `-r--r--r--`), the file is read-only.
+    In this case, execute the following commands inside the container to grant write permissions.
+    Run the following command to add write (`w`) permissions to `scaling_cur_freq`:
 
-   Run the following command to add write (`w`) permissions to `cpuinfo_cur_freq`:
+    ```bash
+    chmod u+w /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/scaling_cur_freq
+    ```
 
-   ```shell
-   chmod u+w /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/cpuinfo_cur_freq
-   ```
-   
-   Then, run the following command inside the container to read the list of supported CPU frequencies:
+    Run the following command to add write (`w`) permissions to `cpuinfo_cur_freq`:
 
-   ```shell
-   cat /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/scaling_available_frequencies
-   ```
+    ```bash
+    chmod u+w /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/cpuinfo_cur_freq
+    ```
 
-   Next, run the following two commands inside the container to modify the frequencies. It is recommended that the input frequency values match one of the supported CPU frequencies retrieved in the previous step.
+    Then, run the following command inside the container to read the list of supported CPU frequencies:
 
-   ```shell
-   echo ${target_frequency} > /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/scaling_cur_freq
-   ```
+    ```bash
+    cat /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/scaling_available_frequencies
+    ```
 
-   ```shell
-   echo ${target_frequency} > /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/cpuinfo_cur_freq
-   ```
+    Next, run the following two commands inside the container to modify the frequencies. It is recommended that the input frequency values match one of the supported CPU frequencies retrieved in the previous step.
 
-   If the container restarts, the previous modifications will become invalid, and the CPU frequency values will restore to defaults.
+    ```bash
+    echo ${target_frequency} > /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/scaling_cur_freq
+    ```
 
-   To achieve dynamic CPU frequency regulation, you can copy and paste the following shell script to any path inside the container and execute it. This allows you to observe dynamic CPU frequency changes in third-party applications (such as "Device Info"). In this script, `sleep 1` specifies a 1-second interval between changes, which can be modified as required. The `FREQS` array stores the potential CPU frequency values, and `CPU_ID` specifies the index of the CPU to be modified. These three values can be adjusted based on your actual requirements.
+    ```bash
+    echo ${target_frequency} > /sys/devices/system/cpu/cpu${cpu_id}/cpufreq/cpuinfo_cur_freq
+    ```
 
-   ```shell
-   CPU_ID=0
-   FREQS=(554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000)
-   while true; do
-      for FREQ in "${FREQS[@]}"; do
-         echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/scaling_cur_freq 2>/dev/null
-         echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/cpuinfo_cur_freq 2>/dev/null
-         echo "CPU${CPU_ID} frequency dynamically regulated to: $FREQ"
-         sleep 1
-      done
-   done
-   ```
+    If the container restarts, the previous modifications will become invalid, and the CPU frequency values will restore to defaults.
 
-##### 3.2.4.3 Verifying Whether the Configuration Takes Effect
+    To achieve dynamic CPU frequency regulation, you can copy and paste the following shell script to any path inside the container and execute it. This allows you to observe dynamic CPU frequency changes in third-party applications (such as "Device Info"). In this script, `sleep 1` specifies a 1-second interval between changes, which can be modified as required. The `FREQS` array stores the potential CPU frequency values, and `CPU_ID` specifies the index of the CPU to be modified. These three values can be adjusted based on your actual requirements.
 
-   After starting the container, install a third-party application (such as "Device Info") inside the container to check whether the CPU frequency matches the expected value. If it matches, the CPU frequency regulation has successfully taken effect.
+    ```bash
+    CPU_ID=0
+    FREQS=(554000 860000 956000 1042000 1128000 1224000 1320000 1397000 1512000 1628000 1748000 1858000 1954000)
+    while true; do
+       for FREQ in "${FREQS[@]}"; do
+          echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/scaling_cur_freq 2>/dev/null
+          echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/cpuinfo_cur_freq 2>/dev/null
+          echo "CPU${CPU_ID} frequency has been dynamically adjusted to: $FREQ"
+          sleep 1
+       done
+    done
+    ```
 
-## 4 Troubleshooting<a name="ZH-CN_TOPIC_0000002549864199"></a>
+##### Verifying Whether the Configuration Takes Effect
 
-### 4.1 Overview<a name="ZH-CN_TOPIC_0000002549864223"></a>
+    After starting the container, install a third-party application (such as "Device Info") inside the container to check whether the CPU frequency matches the expected value. If it matches, the CPU frequency regulation has successfully taken effect.
 
-#### 4.1.1 Troubleshooting Principles<a name="ZH-CN_TOPIC_0000002549744235"></a>
+## Troubleshooting<a name="ZH-CN_TOPIC_0000002549864199"></a>
+
+### Overview<a name="ZH-CN_TOPIC_0000002549864223"></a>
+
+#### Troubleshooting Principles<a name="ZH-CN_TOPIC_0000002549744235"></a>
 
 - Fault analysis, locating, and troubleshooting principles:
     - Restore services as soon as possible.
@@ -877,19 +885,19 @@ On physical devices, the system dynamically regulates the CPU frequency to balan
     - To ensure customer network security and privacy, obtain the customer's consent and authorization before collecting fault logs.
     - Before making any modifications, back up data manually or using a script.
     - Take electrostatic discharge (ESD) prevention measures, for example, wearing an ESD wrist strap when replacing or maintaining devices.
-    - Record original information in detail when any problem occurs during maintenance.
-    - All major operations such as restarting processes must be documented. In addition, these operations must be performed by qualified personnel who have confirmed the feasibility of the operations, backed up necessary files, and taken contingency and security measures.
-    - When the system recovers, check the system running status to confirm that the fault has been rectified. Write associated troubleshooting reports in a timely manner.
+    - Record raw information in detail when any issue occurs during maintenance.
+    - All major operations such as restarting processes must be documented. In addition, these operations must be performed by qualified personnel who have confirmed the feasibility of the operations, backed up necessary files, and prepared contingency and security measures.
+    - After the system recovers, check the system running status to confirm that the fault has been rectified. Write associated troubleshooting reports in a timely manner.
     - Exercise caution when performing risky operations and running risky commands.
 
 - Requirements for maintenance personnel:
     - Have basic knowledge of network devices, OSs, and databases, and be skilled at running common commands for maintenance.
     - Understand the logical structure of the on-site service system, mapping relationship between components and on-site devices, and physical connections between on-site devices.
-    - Be familiar with the service processes and system structure and be skilled at operating the software and hardware related to a specific service.
+    - Be familiar with the service processes and system structure and be skilled at operating the software and hardware related to the service.
     - Know how to locate and rectify common faults.
     - Be adept with remote access.
 
-#### 4.1.2 Troubleshooting Process<a name="ZH-CN_TOPIC_0000002518224434"></a>
+#### Troubleshooting Process<a name="ZH-CN_TOPIC_0000002518224434"></a>
 
 The troubleshooting process consists of the following operations: collecting fault information, diagnosing the fault, locating the fault, and rectifying the fault.
 
@@ -898,7 +906,7 @@ The troubleshooting process consists of the following operations: collecting fau
 
 **Fault Information Collection<a name="section196271610142212"></a>**
 
-Collect as much fault information as possible to facilitate fault location and rectification, such as Logcat logs in AOSP.
+Collect as much fault information as possible to facilitate fault location and rectification, such as logcat logs in AOSP.
 
 **Fault Diagnosis<a name="section4572941192214"></a>**
 
@@ -927,20 +935,20 @@ Fault rectification refers to the process of rectifying a fault according to dif
 >During the troubleshooting, the maintenance personnel may perform operations that may affect service data, such as modifying configurations and restarting VMs. Therefore, to ensure data security, save onsite data and back up related databases, alarm information, and log files before the troubleshooting.
 >If system maintenance personnel cannot rectify the fault, contact technical support for assistance.
 
-### 4.2 Information Collection<a name="ZH-CN_TOPIC_0000002518224450"></a>
+### Information Collection<a name="ZH-CN_TOPIC_0000002518224450"></a>
 
-#### 4.2.1 Statement<a name="ZH-CN_TOPIC_0000002549864205"></a>
+#### Statement<a name="ZH-CN_TOPIC_0000002549864205"></a>
 
 Observe the following principles during information collection:
 
-- Perform maintenance operations only after receiving explicit approval from the customer. Any operation without explicit customer approval is prohibited.
-- Do not transfer fault locating data out of the customer's network without the customer's approval.
+- All maintenance operations must be authorized by the customer. Any maintenance operation beyond the scope of the customer's approval is prohibited.
+- Transferring fault location data outside the customer's network must be authorized by the customer.
 
-#### 4.2.2 Basic Information Collection<a name="ZH-CN_TOPIC_0000002549864231"></a>
+#### Basic Information Collection<a name="ZH-CN_TOPIC_0000002549864231"></a>
 
 **Collecting Site Information<a name="section4323131116418"></a>**
 
-After a fault occurs, collect site information for technical support and R&D engineers to learn about the site. In addition, provide the phone numbers of onsite engineers to ensure smooth communication.
+After a fault occurs, collect site information for technical support and R&D engineers to learn about the situation. In addition, provide the phone numbers of onsite engineers to ensure smooth communication.
 
 The following table lists the site information to be collected.
 
@@ -953,7 +961,7 @@ The following table lists the site information to be collected.
 
 **Collecting Basic Fault Information<a name="section19389174953610"></a>**
 
-Collect basic fault information to learn about the site, current device status, device status before the fault occurred, and possible causes of the fault. For details, see the following table.
+Collect basic fault information to learn about the fault, current status, device status before the fault occurred, and possible causes of the fault. For details, see the following table.
 
 **Table 2** Basic fault information to be collected<a id="basic-fault-information-to-be-collected"></a>
 
@@ -962,16 +970,16 @@ Collect basic fault information to learn about the site, current device status, 
 |Symptom|-|
 |Fault occurrence time|-|
 |Fault occurrence frequency|-|
-|Impacts on services|-|
+|Impact on services|-|
 |Fault handling progress|-|
 |Operations performed in the system when the fault occurs|-|
-|Operations performed for rectifying the fault that occurred during maintenance|-|
+|Operations performed for resolving issues that occurred during maintenance|-|
 |Measures taken to handle the fault|-|
 |Effect of the measures taken to handle the fault|-|
 |Whether alarms are generated|-|
 |Whether site alarm information is collected|-|
 
-**Collecting Fault-related Alarm Information<a name="section350713449381"></a>**
+**Collecting Fault-Related Alarm Information<a name="section350713449381"></a>**
 
 Collect alarm information related to the fault for further analyzing, locating, and rectifying the fault. For details, see the following table.
 
@@ -981,7 +989,7 @@ Collect alarm information related to the fault for further analyzing, locating, 
 |--|--|
 |Alarm ID|-|
 |Alarm severity|-|
-|Alert name|-|
+|Alarm name|-|
 |Alarm source/object|-|
 |Generated at|-|
 |Region|-|
@@ -992,3 +1000,9 @@ Collect alarm information related to the fault for further analyzing, locating, 
 **Collecting Log Information<a name="section168781199405"></a>**
 
 Collect system logs and view details about user operations and operation time in the system to analyze and locate the fault.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|
