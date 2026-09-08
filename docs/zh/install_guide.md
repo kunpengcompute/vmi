@@ -1538,19 +1538,19 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     grub2-mkconfig -o /boot/efi/EFI/openEuler/grub.cfg
     ```
 
-13. 设置启动内核。
+14. 设置启动内核。
 
     ```bash
     grub2-set-default 'openEuler (6.6.0-patched-vm) 24.03 (LTS-SP1)'
     ```
 
-14. 重启服务器。
+15. 重启服务器。
 
     ```bash
     reboot
     ```
 
-15. 重启完毕后检查内核是否切换为“6.6.0-patched-vm”。
+16. 重启完毕后检查内核是否切换为“6.6.0-patched-vm”。
 
     ```bash
     uname -r
