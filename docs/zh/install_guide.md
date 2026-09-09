@@ -1491,23 +1491,24 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     **表 1** 内核编译选项配置说明<a id="内核编译选项配置说明"></a>
 
-|配置项|配置要求|
-|--|--|
-|LOCALVERSION|-patched-vm|
-|DEBUG_INFO_BTF|N|
-|SYSTEM_TRUSTED_KEYS|清空内容配置结果应该如下：( ) Additional X.509 keys for default system keyring|
+    |配置项|配置要求|
+    |--|--|
+    |LOCALVERSION|-patched-vm|
+    |DEBUG_INFO_BTF|N|
+    |SYSTEM_TRUSTED_KEYS|清空内容配置结果应该如下：( ) Additional X.509 keys for default system keyring|
 
->![](public_sys-resources/icon-note.gif) **说明：** 
->
->配置方法说明：
->-   “/”用于搜索。
->-   “Y”将选中项编译进内核，对应项显示为：\[\*\]。
->-   “N”将选中项排除，对应项显示为：\[\]。
->-   “M”键将选中的项编译成模块（编译成ko的形式），对应项显示为：<M\>。
->-   “Enter”编辑选中项内容。
->-   数字选择搜索结果。
->-   修改完成后单击最下方<Save\>保存修改。
->-   保存后单击最下方<Exit\>选项退出。
+    >![](public_sys-resources/icon-note.gif) **说明：** 
+    >
+    >配置方法说明：
+    >
+    >- “/”用于搜索。
+    >- “Y”将选中项编译进内核，对应项显示为：\[\*\]。
+    >- “N”将选中项排除，对应项显示为：\[\]。
+    >- “M”键将选中的项编译成模块（编译成ko的形式），对应项显示为：<M\>。
+    >- “Enter”编辑选中项内容。
+    >- 数字选择搜索结果。
+    >- 修改完成后单击最下方<Save\>保存修改。
+    >- 保存后单击最下方<Exit\>选项退出。
 
 10. 安装依赖并启用LXCFS服务。若命令分多行，需要在行末加上“\\”符号。
 
