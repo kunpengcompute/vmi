@@ -1847,11 +1847,12 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     ```bash
     passwd root
     ```
+
 #### 虚拟机配置调优<a name="ZH-CN_TOPIC_0000002518464886" id="虚拟机配置调优"></a>
 
 虚拟机配置调优需要根据GPU和NUMA的对应关系进行。
 
-**此小节4个虚拟机均需执行，本章节根据GPU与NUMA的对应关系示例vm0对应NUMA 1进行修改。**请参见[查询GPU卡PCIe节点信息](#查询GPU卡PCIe节点信息)查询GPU与NUMA的对应关系，请参见[获取虚拟机软件包](#获取虚拟机软件包)获取虚拟机调优脚本。
+**此小节4个虚拟机均需执行，本章节根据GPU与NUMA的对应关系示例vm0对应NUMA 1进行修改。**请参见[查询GPU卡PCIe节点信息](#查询GPU卡PCIe节点信息)查询GPU与NUMA的对应关系，请参见[软件要求](#软件要求)获取虚拟机调优脚本。
 
 1. 编辑虚拟机xml文件。
 
@@ -1961,6 +1962,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     > ![](public_sys-resources/icon-note.gif)说明
     >
     >每次虚拟机重启都需要执行该步骤操作使能cluster调度优化，建议将其配置在“~/.bashrc”等同类型文件中，确保每次重启后都会自动执行。
+
 #### 配置虚拟机网络<a name="ZH-CN_TOPIC_0000002550093503"></a>
 
 ##### 配置虚拟机网卡配置文件<a name="ZH-CN_TOPIC_0000002518653644"></a>
