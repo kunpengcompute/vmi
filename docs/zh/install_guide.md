@@ -153,11 +153,11 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 特性�
 
 |软件名|版本号|软件描述|获取方式|
 |--|--|--|--|
-| Containerd | v1.7.14 | Containerd是一个容器运行时。 | Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service) |
-| runc | v1.1.12 | runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。 | [获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64) |
-| CNI Plugin | v1.4.1 | 容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。 | [获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
-| nerdctl | v1.7.5 | nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。 | [获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz) |
-| Golang | v1.25 | Golang是一个系统级编程语言，用于管理和生成NRI插件。 | [获取链接](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
+| Containerd | v1.7.14 | Containerd是一个容器运行时。 | Containerd二进制软件包：[containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service) |
+| runc | v1.1.12 | runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。 | [runc 1.1.12]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64) |
+| CNI Plugin | v1.4.1 | 容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。 | [CNI Plugin 1.4.1]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
+| nerdctl | v1.7.5 | nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。 | [nerdctl 1.7.5](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz) |
+| Golang | v1.25 | Golang是一个系统级编程语言，用于管理和生成NRI插件。 | [Golang 1.25](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
 
 **部署Containerd环境<a name="section343716111874"></a>**
 
@@ -1497,17 +1497,17 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 |DEBUG_INFO_BTF|N|
 |SYSTEM_TRUSTED_KEYS|清空内容配置结果应该如下：( ) Additional X.509 keys for default system keyring|
 
-    >![](public_sys-resources/icon-note.gif) **说明：** 
-    >
-    >配置方法说明：
-    >-   “/”用于搜索。
-    >-   “Y”将选中项编译进内核，对应项显示为：\[\*\]。
-    >-   “N”将选中项排除，对应项显示为：\[\]。
-    >-   “M”键将选中的项编译成模块（编译成ko的形式），对应项显示为：<M\>。
-    >-   “Enter”编辑选中项内容。
-    >-   数字选择搜索结果。
-    >-   修改完成后单击最下方<Save\>保存修改。
-    >-   保存后单击最下方<Exit\>选项退出。
+>![](public_sys-resources/icon-note.gif) **说明：** 
+>
+>配置方法说明：
+>-   “/”用于搜索。
+>-   “Y”将选中项编译进内核，对应项显示为：\[\*\]。
+>-   “N”将选中项排除，对应项显示为：\[\]。
+>-   “M”键将选中的项编译成模块（编译成ko的形式），对应项显示为：<M\>。
+>-   “Enter”编辑选中项内容。
+>-   数字选择搜索结果。
+>-   修改完成后单击最下方<Save\>保存修改。
+>-   保存后单击最下方<Exit\>选项退出。
 
 10. 安装依赖并启用LXCFS服务。若命令分多行，需要在行末加上“\\”符号。
 
