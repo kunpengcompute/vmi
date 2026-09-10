@@ -87,7 +87,6 @@ To prevent software packages from being maliciously tampered with during transfe
 >
 >If the verification fails, do not use the software package. Please submit an ISSUE feedback.
 >Before a software package is used for installation or upgrade, its SHA256 checksum also needs to be verified to ensure that the software package is not tampered with.
->Before using the software package, read and agree to [Kunpeng BoostKit User License Agreement 2.0](https://www.hikunpeng.com/en/legal/developer/boostkit/software/protocol).
 
 ### 1.2 Deploying a Cloud Phone<a name="ZH-CN_TOPIC_0000002549746425"></a>
 
