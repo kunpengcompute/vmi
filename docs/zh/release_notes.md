@@ -35,16 +35,16 @@
 
 ### 内嵌平台版本配套关系<a name="ZH-CN_TOPIC_0000002518346481"></a>
 
-|本软件名称|详细版本号|配套硬件平台|平台软件名称|平台软件版本号|处理器类型操作系统|备注|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 |鲲鹏服务器| iBMC      | S920X20-S920X21-iBMC_5.05.12.15              | Kunpeng 920 V200 7280Z 2.9GHz<br>Host OS：openEuler-22.03-LTS-SP4-aarch64(内核5.10.0-216.0.0)；<br>Guest OS：android-11.0.0_r48 | openEuler系统|
-|                  |                              |         | CPLD      | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08                            |    |             |
-|                  |                              |         | BIOS      | S920X20-BIOS_20.55                           |    |             |
-|                  |                              |         | Exagear软件| ExaGear_ARM32-ARM64_V2.5                     | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                       | v2.5        |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 |鲲鹏服务器| iBMC      | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596<br>                  | KunPeng920 7260 2.6GHz<br>Host OS：openEuler-22.03-LTS-SP4-aarch64(内核5.10.0-216.0.0)<br>Guest OS：android-11.0.0_r48         | openEuler系统|
-|                  |                              |         | CPLD      | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9<br> |    |             |
-|                  |                              |         | BIOS      | TS200-2180_2280_5180_5280-BIOS-V656<br>      |    |             |
-|                  |                              |         | Exagear软件| ExaGear_ARM32-ARM64_V2.5                     | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                       | v2.5        |
+|本软件名称|配套硬件平台|平台软件名称|平台软件版本号|处理器类型操作系统|备注|
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Kunpeng BoostKit |鲲鹏服务器| iBMC      | S920X20-S920X21-iBMC_5.05.12.15              | Kunpeng 920 V200 7280Z 2.9GHz<br>Host OS：openEuler-22.03-LTS-SP4-aarch64(内核5.10.0-216.0.0)；<br>Guest OS：android-11.0.0_r48 | openEuler系统|
+|                  |         | CPLD      | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08                            |    |             |
+|                  |         | BIOS      | S920X20-BIOS_20.55                           |    |             |
+|                  |         | Exagear软件| ExaGear_ARM32-ARM64_V2.5                     | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                       | v2.5        |
+| Kunpeng BoostKit |鲲鹏服务器| iBMC      | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596<br>                  | KunPeng920 7260 2.6GHz<br>Host OS：openEuler-22.03-LTS-SP4-aarch64(内核5.10.0-216.0.0)<br>Guest OS：android-11.0.0_r48         | openEuler系统|
+|                  |         | CPLD      | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9<br> |    |             |
+|                  |         | BIOS      | TS200-2180_2280_5180_5280-BIOS-V656<br>      |    |             |
+|                  |         | Exagear软件| ExaGear_ARM32-ARM64_V2.5                     | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                       | v2.5        |
 
 ### 产品内配套关系<a name="ZH-CN_TOPIC_0000002518346482"></a>
 
