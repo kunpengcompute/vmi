@@ -564,7 +564,7 @@ The configuration items and configuration methods for `cfct_config` and `hardwar
 
 3. By default, the hardware decoding function of the DC1000/DC1000C GPU is enabled on the video stream cloud phone (`ENABLE_HARD_DECODE=1`). To use software decoding, set `ENABLE_HARD_DECODE=0` and restart the container.
 4. To enable the WebRTC feature, set `ENABLE_WEBRTC_CONNECTION` to `1` in `cfct_config`.
-5. Bind cores and confirm that the core binding takes effect. If only one GPU is used in your environment, change the value of `VIDEO_CPU_MAP_{total_CPU_core_count}CORE_MODE{CPU_BIND_MODE}` in the `hardware_bind.cfg` file.
+5. Bind cores and confirm that the core binding takes effect. If only one GPU is used in your environment, change the value of `VIDEO_CPU_MAP_{total_CPU_core_count}CORE_MODE{CPU_BIND_MODE}` in the `hardware_bind.cfg` file. The value of `CPU_BIND_MODE` can be found in `cfct_config`.
 
     Take `VIDEO_CPU_MAP_128CORE_MODE0` as an example. Retain the configuration of the CPU bound to the GPU and delete other configurations. If the GPU is inserted into CPU 0, delete all references related to `MODE0_CPUS2` and `MODE0_CPUS3`. If the GPU is inserted into CPU 1, delete all references related to `MODE0_CPUS0` and `MODE0_CPUS1`.
 
