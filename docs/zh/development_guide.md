@@ -47,7 +47,6 @@
 >
 > 如果校验失败，请不要使用该软件包，请提交ISSUE反馈。
 > 使用软件包安装/升级之前，也需要按上述过程先校验软件包的SHA256值，确保软件包未被篡改。
-> 使用软件包前请先阅读《[鲲鹏应用使能套件BoostKit用户许可协议2.0](https://www.hikunpeng.com/zh/legal/developer/boostkit/software/protocol)》，如确认继续使用，则默认同意协议的条款和条件。
 
 ## 配置开发环境<a name="ZH-CN_TOPIC_0000002518345920"></a>
 
