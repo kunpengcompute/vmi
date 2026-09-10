@@ -7,15 +7,15 @@
 |项目|内容|
 | :---: | :---: |
 |产品名称| Kunpeng BoostKit |
-|产品版本| 26.0.RC1 |
+|产品版本| 26.2.RC1 |
 |软件名称|视频流引擎|
-|软件包版本| 8.0.RC1_11 |
+|软件包版本| 8.2.RC1_11 |
 
 ### 软件版本配套说明<a name="ZH-CN_TOPIC_0000002549826339"></a>
 
 |软件类型|版本|备注|
 | :---: | :---: | :---: |
-|Kunpeng BoostKit|Kunpeng BoostKit 26.0.RC1|-|
+|Kunpeng BoostKit|Kunpeng BoostKit 26.2.RC1|-|
 |OS|openEuler-22.03-LTS-SP4-aarch64（内核5.10.0-216.0.0）|-|
 |ExaGear|ExaGear ARM32-ARM64 V2.5|转码软件|
 
