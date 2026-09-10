@@ -23,7 +23,7 @@ This document describes the integrated development of the device and cloud engin
 
 **Verifying Software Package Integrity<a name="section16873181764512"></a>**
 
-To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding SHA256 files for integrity verification while obtaining the software packages from the Kunpeng community.
+To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding SHA256 files for integrity verification while obtaining the software packages.
 
 1. Obtain the software packages by referring to [**Table 1** Software requirements](#software-requirements).
 2. Calculate the SHA256 checksum of the file. Run the following command on Linux:
