@@ -7,15 +7,15 @@
 | 项目 | 内容 |
 | ---- | ---- |
 | 产品名称 | Kunpeng BoostKit |
-| 产品版本 | 26.0.RC1 |
+| 产品版本 | 26.2.RC1 |
 | 软件名称 | 视频流引擎 |
-| 软件包版本 | 8.0.RC1_15 |
+| 软件包版本 | 8.2.RC1_15 |
 
 ### 软件版本配套说明
 
 | 软件类型 | 版本 | 备注 |
 | -------- | ---- | ---- |
-| Kunpeng BoostKit | Kunpeng BoostKit 26.0.RC1 | - |
+| Kunpeng BoostKit | Kunpeng BoostKit 26.2.RC1 | - |
 | OS | openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0） | - |
 | ExaGear | ExaGear ARM32-ARM64 | 转码软件 |
 
@@ -27,16 +27,6 @@
 | 鲲鹏服务器 | 鲲鹏 920 新型号处理器 | 20.55 | 5.08 | 5.05.12.15 |
 | 鲲鹏服务器 | 鲲鹏 920 7260W 处理器 | 21.52 | 7.08 | 5.05.12.31 |
 
-### 病毒扫描结果
-
-本软件包及相关文档经过防病毒软件扫描，没有发现病毒。
-
-| 防病毒软件名称 | 防病毒软件版本 | 病毒库版本 | 扫描时间 | 扫描结果 |
-| -------------- | -------------- | ---------- | -------- | -------- |
-| QiAnXin | 8.0.5.5260 | 2026-03-16 08:00:00.0 | 2026-03-17 17:34:38 | OK |
-| Bitdefender | 7.5.1.200224 | 7.100367 | 2026-03-17 17:34:46 | OK |
-| Kaspersky | 12.0.0.6672 | 2026-03-17 10:04:00 | 2026-03-17 17:34:35 | OK |
-
 ## 版本使用注意事项
 
 版本使用注意事项详见《视频流引擎 特性指南（Android 15）》中"[约束与限制](feature_guide.md)"章节。
@@ -45,16 +35,16 @@
 
 ### 内嵌平台版本配套关系
 
-| 本软件名称 | 详细版本号 | 配套硬件平台 | 平台软件名称 | 平台软件版本号 | 处理器类型/操作系统 | 备注 |
-| ---------- | ---------- | ------------ | ------------ | -------------- | ------------------ | ---- |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 | 鲲鹏服务器 | iBMC | S920X20-S920X21-iBMC_5.05.12.15 | 鲲鹏 920 新型号处理器，2.9 GHz<br>Host OS：openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0）<br>Guest OS：Android-15.0.0_r17 | openEuler |
-|  |  |  | CPLD | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08 |  |  |
-|  |  |  | BIOS | S920X20-BIOS_20.55 |  |  |
-|  |  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS：openEuler-24.03-LTS-SP1-AArch64<br>Guest OS：Android-15.0.0_r17 |  |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 | 鲲鹏服务器 | iBMC | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596 | 鲲鹏 920 处理器，2.6 GHz<br>Host OS：openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0）<br>Guest OS：Android-15.0.0_r17 | openEuler |
-|  |  |  | CPLD | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9 |  |  |
-|  |  |  | BIOS | TS200-2180_2280_5180_5280-BIOS-V656 |  |  |
-|  |  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS：openEuler-24.03-LTS-SP1-AArch64<br>Guest OS：Android-15.0.0_r17 |  |
+| 本软件名称 | 配套硬件平台 | 平台软件名称 | 平台软件版本号 | 处理器类型/操作系统 | 备注 |
+| ---------- | ------------ | ------------ | -------------- | ------------------ | ---- |
+| Kunpeng BoostKit | 鲲鹏服务器 | iBMC | S920X20-S920X21-iBMC_5.05.12.15 | 鲲鹏 920 新型号处理器，2.9 GHz<br>Host OS：openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0）<br>Guest OS：Android-15.0.0_r17 | openEuler |
+|  |  | CPLD | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08 |  |  |
+|  |  | BIOS | S920X20-BIOS_20.55 |  |  |
+|  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS：openEuler-24.03-LTS-SP1-AArch64<br>Guest OS：Android-15.0.0_r17 |  |
+| Kunpeng BoostKit | 鲲鹏服务器 | iBMC | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596 | 鲲鹏 920 处理器，2.6 GHz<br>Host OS：openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0）<br>Guest OS：Android-15.0.0_r17 | openEuler |
+|  |  | CPLD | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9 |  |  |
+|  |  | BIOS | TS200-2180_2280_5180_5280-BIOS-V656 |  |  |
+|  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS：openEuler-24.03-LTS-SP1-AArch64<br>Guest OS：Android-15.0.0_r17 |  |
 
 ### 产品内配套关系
 
@@ -63,15 +53,14 @@
 | 项目 | 内容 |
 | ---- | ---- |
 | 产品名称 | Kunpeng BoostKit |
-| 产品版本 | Kunpeng BoostKit 25.3.0 |
-| 详细版本号 | Kunpeng BoostKit 25.3.0.B016 |
+| 产品版本 | Kunpeng BoostKit 26.2.RC1 |
 
 **软件版本配套表**
 
-| 软件名称 | 版本号 | 硬件平台 | 操作系统 | 数据库系统 |
-| -------- | ------ | -------- | -------- | ---------- |
-| BoostKit-videoengine_7.3.0_15.zip | B016 | 鲲鹏服务器 | openEuler-24.03-LTS-SP1-AArch64<br>Android-15.0.0_r17 | / |
-| Kbox-AOSP15.zip | B016 |  |  |  |
+| 软件名称 | 硬件平台 | 操作系统 | 数据库系统 |
+| -------- | -------- | -------- | ---------- |
+| BoostKit-videoengine_8.2.RC1_15.zip | 鲲鹏服务器 | openEuler-24.03-LTS-SP1-AArch64<br>Android-15.0.0_r17 | / |
+| Kbox-patches-AOSP15.zip |  |  |  |
 
 ### 应用兼容性列表
 
@@ -102,27 +91,79 @@
 > 4. 当前版本暂不支持 Wi-Fi 设置和 Wi-Fi 搜索等操作。
 > 5. 当前版本不支持蓝牙设备。
 
-## 8.0.RC1
-
-### 更新说明
-
-**新增特性**
-
+## V8.2.RC1_15<a id="ZH-CN_TOPIC_0000002549825973"></a>
+ 
+### 更新说明<a id="ZH-CN_TOPIC_0000002518186202"></a>
+ 
+#### 新增特性<a id="section78241436103817"></a>
+ 
+|编号|描述|目的|
+|---|---|---|
+|1|支持共享数据卷| 视频流支持共享数据卷 |
+ 
+#### 修改特性<a id="section540mcpsimp"></a>
+ 
 无
-
-**修改特性**
-
+ 
+#### 删除特性<a id="section543mcpsimp"></a>
+ 
 无
-
-**删除特性**
-
+ 
+### 已解决的问题<a id="ZH-CN_TOPIC_0000002549705975"></a>
+ 
 无
-
-### 已解决的问题
-
+ 
+### 遗留问题<a id="ZH-CN_TOPIC_0000002549825953"></a>
+ 
 无
+ 
+## V8.1.RC1_15<a id="ZH-CN_TOPIC_0000002549825973"></a>
+ 
+### 更新说明<a id="ZH-CN_TOPIC_0000002518186202"></a>
+ 
+#### 新增特性<a id="section78241436103817"></a>
+ 
+|编号|描述|目的|
+|---|---|---|
+|1|CPU/F2FS文件系统/System分区/init进程仿真增强| 系统仿真增强 |
 
-### 遗留问题
+#### 修改特性<a id="section540mcpsimp"></a>
+ 
+无
+ 
+#### 删除特性<a id="section543mcpsimp"></a>
+ 
+无
+ 
+### 已解决的问题<a id="ZH-CN_TOPIC_0000002549705975"></a>
+ 
+无
+ 
+### 遗留问题<a id="ZH-CN_TOPIC_0000002549825953"></a>
+ 
+无
+ 
+## V8.0.RC1_15<a id="ZH-CN_TOPIC_0000002549825973"></a>
+ 
+### 更新说明<a id="ZH-CN_TOPIC_0000002518186202"></a>
+ 
+#### 新增特性<a id="section78241436103817"></a>
+ 
+无
+ 
+#### 修改特性<a id="section540mcpsimp"></a>
+ 
+无
+ 
+#### 删除特性<a id="section543mcpsimp"></a>
+ 
+无
+ 
+### 已解决的问题<a id="ZH-CN_TOPIC_0000002549705975"></a>
+ 
+无
+ 
+### 遗留问题<a id="ZH-CN_TOPIC_0000002549825953"></a>
 
 | 项目 | 内容 |
 | ---- | ---- |
@@ -176,3 +217,9 @@
 ### 获取文档方式
 
 您可以通过访问[鲲鹏社区](https://www.hikunpeng.com/document/detail/zh/kunpengcps/overview/kunpengcps.html)浏览和获取相关文档。
+
+## 修订记录
+
+|文档版本|发布日期|修改说明|
+|--|--|--|
+|01|2026-09-30|第一次正式发布。|

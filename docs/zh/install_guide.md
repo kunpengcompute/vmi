@@ -668,7 +668,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 3. 当前视频流云手机默认使能DC1000/DC1000C GPU硬解的硬解功能（即默认**ENABLE_HARD_DECODE=1**），如需使用软解，需设置**ENABLE_HARD_DECODE=0**并重启容器。
 4. 如果要使能WebRTC特性，需要更改cfct_config中的ENABLE_WEBRTC_CONNECTION=1。
-5. 针对1张GPU卡环境：需要修改hardware_bind.cfg配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}。
+5. 针对1张GPU卡环境：需要修改hardware_bind.cfg配置文件中VIDEO_CPU_MAP_{_CPU总核数_}CORE_MODE{_CPU_BIND_MODE变量值_}，`CPU_BIND_MODE`的值可以在cfct_config中找到。
 
     以VIDEO_CPU_MAP_128CORE_MODE0为例，保留该配置变量下与GPU绑定的CPU配置，删除其他配置，当GPU卡插在CPU0上时，删除MODE0_CPUS2和MODE0_CPUS3所有相关引用；若GPU卡插在CPU1上时，删除MODE0_CPUS0和MODE0_CPUS1所有相关引用。
 
@@ -2130,3 +2130,9 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 3. 请参见《视频流引擎 特性指南》的“启动视频流云手机”章节调用cfct_video脚本即可成功在虚拟机启动视频流容器。
 
     ![](figures/zh-cn_image_0000002518185616.png)
+
+## 修订记录
+
+|文档版本|发布日期|修改说明|
+|--|--|--|
+|01|2026-09-30|第一次正式发布。|
