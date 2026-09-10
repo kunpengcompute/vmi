@@ -58,10 +58,10 @@
 
 **软件版本配套表**
 
-| 软件名称 | 版本号 | 硬件平台 | 操作系统 | 数据库系统 |
+| 软件名称 | 硬件平台 | 操作系统 | 数据库系统 |
 | -------- | ------ | -------- | -------- | ---------- |
-| BoostKit-videoengine_8.1.RC1_15.zip | B009 | 鲲鹏服务器 | openEuler-24.03-LTS-SP1-AArch64<br>Android-15.0.0_r17 | / |
-| Kbox-AOSP15.zip | B009 |  |  |  |
+| BoostKit-videoengine_8.2.RC1_15.zip | 鲲鹏服务器 | openEuler-24.03-LTS-SP1-AArch64<br>Android-15.0.0_r17 | / |
+| Kbox-patches-AOSP15.zip |  |  |  |
 
 ### 应用兼容性列表
 
