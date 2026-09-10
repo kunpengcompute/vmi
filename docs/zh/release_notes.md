@@ -35,16 +35,16 @@
 
 ### 内嵌平台版本配套关系
 
-| 本软件名称 | 详细版本号 | 配套硬件平台 | 平台软件名称 | 平台软件版本号 | 处理器类型/操作系统 | 备注 |
-| ---------- | ---------- | ------------ | ------------ | -------------- | ------------------ | ---- |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 | 鲲鹏服务器 | iBMC | S920X20-S920X21-iBMC_5.05.12.15 | 鲲鹏 920 新型号处理器，2.9 GHz<br>Host OS：openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0）<br>Guest OS：Android-15.0.0_r17 | openEuler |
-|  |  |  | CPLD | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08 |  |  |
-|  |  |  | BIOS | S920X20-BIOS_20.55 |  |  |
-|  |  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS：openEuler-24.03-LTS-SP1-AArch64<br>Guest OS：Android-15.0.0_r17 |  |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 | 鲲鹏服务器 | iBMC | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596 | 鲲鹏 920 处理器，2.6 GHz<br>Host OS：openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0）<br>Guest OS：Android-15.0.0_r17 | openEuler |
-|  |  |  | CPLD | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9 |  |  |
-|  |  |  | BIOS | TS200-2180_2280_5180_5280-BIOS-V656 |  |  |
-|  |  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS：openEuler-24.03-LTS-SP1-AArch64<br>Guest OS：Android-15.0.0_r17 |  |
+| 本软件名称 | 配套硬件平台 | 平台软件名称 | 平台软件版本号 | 处理器类型/操作系统 | 备注 |
+| ---------- | ------------ | ------------ | -------------- | ------------------ | ---- |
+| Kunpeng BoostKit | 鲲鹏服务器 | iBMC | S920X20-S920X21-iBMC_5.05.12.15 | 鲲鹏 920 新型号处理器，2.9 GHz<br>Host OS：openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0）<br>Guest OS：Android-15.0.0_r17 | openEuler |
+|  |  | CPLD | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08 |  |  |
+|  |  | BIOS | S920X20-BIOS_20.55 |  |  |
+|  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS：openEuler-24.03-LTS-SP1-AArch64<br>Guest OS：Android-15.0.0_r17 |  |
+| Kunpeng BoostKit | 鲲鹏服务器 | iBMC | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596 | 鲲鹏 920 处理器，2.6 GHz<br>Host OS：openEuler-24.03-LTS-SP1-AArch64（内核 6.6.0-72.0.0）<br>Guest OS：Android-15.0.0_r17 | openEuler |
+|  |  | CPLD | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9 |  |  |
+|  |  | BIOS | TS200-2180_2280_5180_5280-BIOS-V656 |  |  |
+|  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS：openEuler-24.03-LTS-SP1-AArch64<br>Guest OS：Android-15.0.0_r17 |  |
 
 ### 产品内配套关系
 
