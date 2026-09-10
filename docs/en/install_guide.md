@@ -66,7 +66,7 @@ Before deploying the video stream cloud phone, obtain the required software pack
 
 **Verifying Software Package Integrity<a name="section111981239163615"></a>**
 
-To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding digital signature files for integrity verification while obtaining the software packages from the Kunpeng community.
+To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding SHA256 files for integrity verification while obtaining the software packages from the Kunpeng community.
 
 1. Obtain the software packages and the corresponding SHA256 files based on [Table 1 Software requirements for deploying the video stream engine](#software-requirements-for-deploying-the-video-stream-engine).
 
@@ -89,7 +89,7 @@ To prevent software packages from being maliciously tampered with during transfe
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
 >If the verification fails, do not use the software package. Please submit an ISSUE feedback.
->Before a software package is used for installation or upgrade, its digital signature also needs to be verified to ensure that the software package is not tampered with.
+>Before a software package is used for installation or upgrade, its SHA256 checksum also needs to be verified to ensure that the software package is not tampered with.
 >Before using the software package, read and agree to [Kunpeng BoostKit User License Agreement 2.0](https://www.hikunpeng.com/en/legal/developer/boostkit/software/protocol).
 
 ### Deploying a Cloud Phone<a name="ZH-CN_TOPIC_0000002549826291"></a>
