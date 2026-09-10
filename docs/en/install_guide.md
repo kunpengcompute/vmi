@@ -40,7 +40,7 @@ For details about the software environment for deploying the Kbox cloud phone co
 
 ##### Video Stream Engine<a name="ZH-CN_TOPIC_0000002518346424" id="video-stream-engine"></a>
 
-Before deploying the video stream cloud phone, obtain the required software packages from the addresses provided in this section and verify the integrity of the software packages provided by Huawei. For the detailed version number, see *[Product Version](./release_notes.md#product-version)*.
+Before deploying the video stream cloud phone, obtain the required software packages from the addresses provided in this section and verify the integrity of the software packages. For the detailed version number, see *[Product Version](./release_notes.md#product-version)*.
 
 **Obtaining Software Packages<a name="section9155930113616" id="obtaining-software-packages"></a>**
 
