@@ -2345,4 +2345,3 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
 |Document Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
-
