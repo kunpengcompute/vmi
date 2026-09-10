@@ -66,7 +66,7 @@ Before deploying the video stream cloud phone, obtain the required software pack
 
 **Verifying Software Package Integrity<a name="section111981239163615"></a>**
 
-To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding SHA256 files for integrity verification while obtaining the software packages from the Kunpeng community.
+To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding SHA256 files for integrity verification while obtaining the software packages.
 
 1. Obtain the software packages and the corresponding SHA256 files based on [Table 1 Software requirements for deploying the video stream engine](#software-requirements-for-deploying-the-video-stream-engine).
 
