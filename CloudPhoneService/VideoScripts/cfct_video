@@ -408,6 +408,8 @@ function container_delete() {
     bb_log_info "Remove container: $container_name"
     param_check_container_name "$container_name"
 
+    local userdata_dir=$(bb_get_mount_dir "$container_name")
+
     local imageid="$($RUNTIME_CMD ps -a | grep $container_name | awk '{print $2}')"
     $RUNTIME_CMD ps | grep -q "$container_name" && $RUNTIME_CMD stop -t 0 $container_name
     $RUNTIME_CMD rm $container_name
@@ -416,8 +418,6 @@ function container_delete() {
         bb_log_info "Remove container image: $imageid"
         $RUNTIME_CMD rmi $imageid
     fi
-
-    local userdata_dir=$(bb_get_mount_dir "$container_name")
 
     if [ "${keep_data:-0}" -eq 2 ]; then
         userdata_dir=$NFS_DIR
