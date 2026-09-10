@@ -3028,3 +3028,9 @@ const char \*OpusStrerrorApi\(int error\)
 **返回值说明<a name="section7911548131510"></a>**
 
 与Opus 1.3.1中opus_strerror接口一致，请参见Opus 1.3.1中定义。
+
+## 修订记录
+
+|文档版本|发布日期|修改说明|
+|--|--|--|
+|01|2026-09-30|第一次正式发布|
