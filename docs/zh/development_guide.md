@@ -26,8 +26,22 @@
 为了防止软件包在传递过程或存储期间被恶意篡改，从鲲鹏社区获取软件包时需下载对应的数字签名文件用于完整性验证。
 
 1. 请参见[**表1**软件要求](#软件要求)获取软件包。
-2. <a name="li1273482318125"></a>从[华为企业业务网站](https://support.huawei.com/enterprise/zh/tool/pgp-verify-TL1000000054)或[运营商网站](http://support.huawei.com/carrier/digitalSignatureAction)获取校验工具和校验方法。
-3. 使用[2](#li1273482318125)获取到的签名验证指南文档对下载的软件包进行PGP数字签名校验。
+
+2. 计算文件的sha256校验值。linux执行命令如下：
+
+    ```bash
+    sha256sum <package>
+    ```
+
+    windows执行命令如下：
+
+    ```bash
+    certutil -hashfile <package> SHA256
+    ```
+
+    命令执行完成后，输出校验值。
+
+3. 对比计算的校验值和SHA文件中的校验值是否一致，如果校验值一致说明文件完整，如果校验值不一致则可以确认文件完整性已被破坏，需要重新获取。
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
