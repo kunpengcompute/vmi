@@ -54,7 +54,6 @@
 | ---- | ---- |
 | 产品名称 | Kunpeng BoostKit |
 | 产品版本 | Kunpeng BoostKit 26.2.RC1 |
-| 详细版本号 | Kunpeng BoostKit 26.2.RC1.B009 |
 
 **软件版本配套表**
 
