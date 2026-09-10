@@ -38,7 +38,7 @@ For details about the software environment for deploying the Kbox cloud phone co
 
 ##### 1.1.2.2 Video Stream Engine<a name="ZH-CN_TOPIC_0000002549746419" id="video-stream-engine"></a>
 
-Before deploying the video stream cloud phone, obtain the required software packages from the addresses provided in this section and verify the integrity of the software packages provided by Huawei.
+Before deploying the video stream cloud phone, obtain the required software packages from the addresses provided in this section and verify the integrity of the software packages provided by Huawei. For the detailed version number, see *[Product Version](./release_notes.md#product-version)*.
 
 **Obtaining Software Packages<a name="section9155930113616"></a>**
 
@@ -46,11 +46,11 @@ Before deploying the video stream cloud phone, obtain the required software pack
 
 |No.|Software Package|Description|How to Obtain|Configuration Scheme 1|Configuration Scheme 2|Configuration Scheme 3|Configuration Scheme 4|
 |--|--|--|--|--|--|--|--|
-| 1 | BoostKit-boostcph-videoengine_*_15.zip | Binary package of the video stream engine.| Please submit an ISSUE feedback. | √ | √ | √ | √ |
-| 2 | DemoVideoEngine.tar.gz | TAR package of the video stream engine server. It is used to obtain the audio and video data of the Kbox container.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
-| 3 | DemoVideoEngine_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine server. It is used to check the software integrity.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
-| 4 | CloudPhoneApk.tar.gz | TAR package of the video stream engine client. It is used to decode and play audio and video data.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
-| 5 | CloudPhoneApk_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine client. It is used to check the software integrity.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
+| 1 | BoostKit-boostcph-videoengine_*_15.zip | Binary package of the video stream engine.| [Link](https://gitcode.com/boostkit/boostcph/releases) | √ | √ | √ | √ |
+| 2 | DemoVideoEngine.tar.gz | TAR package of the video stream engine server. It is used to obtain the audio and video data of the Kbox container.| [Link](https://gitcode.com/boostkit/boostcph/releases).| √ | √ | √ | √ |
+| 3 | DemoVideoEngine_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine server. It is used to check the software integrity.| [Link](https://gitcode.com/boostkit/boostcph/releases).| √ | √ | √ | √ |
+| 4 | CloudPhoneApk.tar.gz | TAR package of the video stream engine client. It is used to decode and play audio and video data.| [Link](https://gitcode.com/boostkit/boostcph/releases).| √ | √ | √ | √ |
+| 5 | CloudPhoneApk_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine client. It is used to check the software integrity.| [Link](https://gitcode.com/boostkit/boostcph/releases).| √ | √ | √ | √ |
 | 6 | VideoClientEmulator.tar.gz | Stress test tool for the video stream cloud phone.| Please submit an ISSUE feedback.| √ | √ | √ | √ |
 | 7 | NETINT-v*XXX*.tar.gz | TAR package of the video stream NETINT encoding card for hardware encoding. The matching version is 4.8.F-Android15.| [Link](https://www.netint.cn/quadra-firmware-downloads-android15)<br>Download password: **test123**| √ | - | - | - |
 | 8 | Quadra_V*XXX*.zip | Quadra software, firmware, and document packages of the NETINT encoding card.| [Link](https://www.netint.cn/quadra-firmware-downloads-android15)<br>Download password: **test123**| √ | - | - | - |
@@ -65,9 +65,23 @@ Before deploying the video stream cloud phone, obtain the required software pack
 
 To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding digital signature files for integrity verification while obtaining the software packages from the Kunpeng community.
 
-1. Obtain software packages based on [Table 1 Software requirements for deploying the video stream engine](#software-requirements-for-deploying-the-video-stream-engine).
-2. <a name="li1273482318125"></a>Obtain the verification tool and guide from the [Huawei enterprise website](https://support.huawei.com/enterprise/en/tool/pgp-verify-TL1000000054) or [Huawei carrier website](http://support.huawei.com/carrier/digitalSignatureAction).
-3. Based on the *OpenPGP Signature Verification Guide* obtained in [2](#li1273482318125), verify the PGP digital signatures of the software packages.
+1. Obtain the software packages and the corresponding SHA256 files based on [Table 1 Software requirements for deploying the video stream engine](#software-requirements-for-deploying-the-video-stream-engine).
+
+2. Calculate the SHA256 checksum of the file. Run the following command on Linux:
+
+    ```bash
+    sha256sum <package>
+    ```
+
+    Run the following command on Windows:
+
+    ```bash
+    certutil -hashfile <package> SHA256
+    ```
+
+    After the command is executed, the checksum is output.
+
+3. Compare the calculated checksum with the checksum in the SHA file. If the checksums are consistent, the file is intact. If the checksums are inconsistent, the file integrity has been compromised and you need to obtain the file again.
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
@@ -631,7 +645,7 @@ The configuration items in the `cfct_config` file and the configuration method a
     >
     >To ensure the stable running and optimal performance of the video stream cloud phone, ensure that the physical CPU cores and GPU rendering nodes bound to a container belong to the same CPU socket.
 
-3. If only one GPU is used in your environment, change the value of `VIDEO_CPU_MAP_{total_CPU_core_count}CORE_MODE{CPU_BIND_MODE}` in the `cfct_config` file.
+3. If only one GPU is used in your environment, change the value of `VIDEO_CPU_MAP_{total_CPU_core_count}CORE_MODE{CPU_BIND_MODE}` in the `hardware_bind.cfg` file. The value of `CPU_BIND_MODE` can be found in `cfct_config`.
 
     Take `VIDEO_CPU_MAP_128CORE_MODE0` as an example. Retain the configuration of the CPU bound to the GPU and delete other configurations. If the GPU is inserted into CPU 0, delete all references related to `MODE0_CPUS2` and `MODE0_CPUS3`. If the GPU is inserted into CPU 1, delete all references related to `MODE0_CPUS0` and `MODE0_CPUS1`.
 
