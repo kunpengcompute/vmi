@@ -48,10 +48,12 @@
 
 ### 产品内配套关系<a name="ZH-CN_TOPIC_0000002518346482"></a>
 
-| 版本信息 | |
-| :---:| :---: |
-|产品名称| Kunpeng BoostKit             |
-|产品版本| Kunpeng BoostKit 26.2.RC1      |
+**版本信息**
+
+| 项目 | 内容 |
+| ---- | ---- |
+| 产品名称 | Kunpeng BoostKit |
+| 产品版本 | Kunpeng BoostKit 26.2.RC1 |
 
 **软件版本配套表**
 
