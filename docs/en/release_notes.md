@@ -139,7 +139,6 @@ None
 
 |Item|Content|
 | :---: | :---: |
-|Trouble Ticket No.| DTS2025090442627 |
 |Severity|Minor|
 |Symptom|A Kunpeng server uses DaoCloud GPUs and the **VAGPU-25.03.01.01-RC6** driver. When a video stream cloud phone based on this server plays a .ts video file in XPlayer, the playback is suspended when jumping to another time point. This issue occurs only on a specific video file.|
 |Cause Analysis|When XPlayer is used to play this video file, it restarts the decoder when jumping to another time point. Because the video only stores the sequence parameter set (SPS) and picture parameter set (PPS) at the beginning, the decoder is unable to read them after the jump, leading to decoding failure.|
@@ -177,7 +176,6 @@ None
 
 |Item|Content|
 | :---: | :---: |
-|Trouble Ticket No.| DTS2025090442627 |
 |Severity|Minor|
 |Symptom|A Kunpeng server uses DaoCloud GPUs and the **VAGPU-25.03.01.01-RC6** driver. When a video stream cloud phone based on this server plays a .ts video file in XPlayer, the playback is suspended when jumping to another time point. This issue occurs only on a specific video file.|
 |Cause Analysis|When XPlayer is used to play this video file, it restarts the decoder when jumping to another time point. Because the video only stores the sequence parameter set (SPS) and picture parameter set (PPS) at the beginning, the decoder is unable to read them after the jump, leading to decoding failure.|
@@ -350,7 +348,6 @@ Support for AMD GPU encoding
 
 |Item|Content|
 | :---: | :---: |
-|Trouble Ticket No.| DTS2023021615441 |
 |Severity|Suggestion|
 |Symptom|When Kbox 11 is used as the client for a cloud phone to stream video, the screen freezes after 10 minutes of operation. Both the receive frame rate and decoding frame rate drop to 0. The issue can be resolved after reconnection, but it affects the testability of the video stream engine's long-term stability.|
 |Cause Analysis|The software decoding performance of the Kbox 11 emulated device is insufficient, and the decoding delay is high.<br>When the system software decoding interface freezes, the decoding thread of the video stream engine client cannot obtain a new buffer to receive stream packets from the server.<br>After multiple retries time out, the decoding function of the video stream engine client enters the error handling process and the decoding thread exits.|
@@ -391,7 +388,6 @@ None
 
 |Item|Content|
 | :---: | :---: |
-|Trouble Ticket No.| DTS2023021615441 |
 |Severity|Suggestion|
 |Symptom|When Kbox 11 is used as the client for a cloud phone to stream video, the screen freezes after 10 minutes of operation. Both the receive frame rate and decoding frame rate drop to 0. The issue can be resolved after reconnection, but it affects the testability of the video stream engine's long-term stability.|
 |Cause Analysis|The software decoding performance of the Kbox 11 emulated device is insufficient, and the decoding delay is high.<br>When the system software decoding interface freezes, the decoding thread of the video stream engine client cannot obtain a new buffer to receive stream packets from the server.<br>After multiple retries time out, the decoding function of the video stream engine client enters the error handling process and the decoding thread exits.<br>The issue of poor performance with the built-in Android decoder in Kbox 11 requires further analysis.|
@@ -423,7 +419,6 @@ None
 
 |Item|Content|
 | :---: | :---: |
-|Trouble Ticket No.| DTS2023021615441 |
 |Severity|Suggestion|
 |Symptom|When Kbox 11 is used as the client for a cloud phone to stream video, the screen freezes after 10 minutes of operation. Both the receive frame rate and decoding frame rate drop to 0. The issue can be resolved after reconnection, but it affects the testability of the video stream engine's long-term stability.|
 |Cause Analysis|The software decoding performance of the Kbox 11 emulated device is insufficient, and the decoding delay is high.<br>When the system software decoding interface freezes, the decoding thread of the video stream engine client cannot obtain a new buffer to receive stream packets from the server.<br>After multiple retries time out, the decoding function of the video stream engine client enters the error handling process and the decoding thread exits.<br>The issue of poor performance with the built-in Android decoder in Kbox 11 requires further analysis.|
@@ -433,7 +428,6 @@ None
 
 |Item|Content|
 | :---: | :---: |
-|Trouble Ticket No.| DTS2023030902437 |
 |Severity|Minor|
 |Symptom|The build tool Gradle 7.5.1 has a vulnerability (CVE-2023-26053).|
 |Cause Analysis|On March 9, it was reported that Gradle 7.5.1 had a vulnerability (CVE-2023-26053). The video stream engine in this delivery adopts Gradle 7.5.1.|
@@ -477,7 +471,6 @@ None
 
 |Item|Content|
 | :---: | :---: |
-|Trouble Ticket No.| DTS2022120612498 |
 |Severity|Minor|
 |Domain|Video stream engine prototype|
 |Symptom|[Kunpeng BoostKit 22.0.0.B095] [Video stream function] [CI daily build issue. After the environment is deployed, the server network is abnormal.]|

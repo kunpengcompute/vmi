@@ -2,12 +2,7 @@
 
 buildscript {
     repositories {
-        maven { url 'https://cmc.centralrepo.rnd.huawei.com/artifactory/maven-central-repo/' }
         maven { url 'https://developer.huawei.com/repo/' }
-        jcenter {
-            url "http://cmc-cd-mirror.rnd.huawei.com/maven/"
-            allowInsecureProtocol = true
-        }
         maven {
             allowInsecureProtocol = true
             url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
@@ -39,12 +34,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://cmc.centralrepo.rnd.huawei.com/artifactory/maven-central-repo/' }
         maven { url 'https://developer.huawei.com/repo/' }
-        jcenter {
-            url "http://cmc-cd-mirror.rnd.huawei.com/maven/"
-            allowInsecureProtocol = true
-        }
         maven {
             allowInsecureProtocol = true
             url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
