@@ -1425,22 +1425,22 @@ enum EncoderFormat: uint32_t {
 
 #### CreateVideoEncoder<a name="ZH-CN_TOPIC_0000002518345930" id="CreateVideoEncoder"></a>
 
-int OpusDecodeApi\(OpusDecoder \*st, const unsigned char \*data, opus_int32 len, opus_int16 \*pcm, int frame_size, int decode_fec\)
+**Function Usage<a name="section20501062"></a>**
 
 Creates an encoder instance.
 
-#### OpusDecodeApi<a name="ZH-CN_TOPIC_0000002549825837"></a>
+**Prototype<a name="section49973353"></a>**
 
 EncoderRetCode CreateVideoEncoder\(int32_t\*fd, EncoderFormat encoderFormat\)
 
-Performs Opus decoding. This API is similar to the opus_decode interface in Opus 1.3.1.
+**Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
 | :---: | :---: | :---: | :---: |
 |fd|Input|int32_t*|Encoder descriptor.|
 |encoderFormat|Input|`EncoderFormat` enumeration|Type of the encoder to be created.|
 
-OpusDecoder \*OpusDecoderCreateApi\(opus_int32 Fs, int channels, int \*error\)
+**Return Value Description<a name="section7911548131510"></a>**
 
 Data type: EncoderRetCode
 
@@ -1452,21 +1452,21 @@ The value can be any of the following:
 
 #### DestroyVideoEncoder<a name="ZH-CN_TOPIC_0000002549825789" id="DestroyVideoEncoder"></a>
 
-int OpusDecoderCtlApi\(OpusDecoder \*st, int request, opus_int32 par\)
+**Function Usage<a name="section20501062"></a>**
 
 Destroys an encoder instance.
 
-#### OpusDecoderCtlApi<a name="ZH-CN_TOPIC_0000002549825827"></a>
+**Prototype<a name="section49973353"></a>**
 
 EncoderRetCode DestroyVideoEncoder\(int32_t fd\)
 
-Controls Opus decoding. This API is similar to the opus_decoder_ctl interface in Opus 1.3.1.
+**Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
 | :---: | :---: | :---: | :---: |
 |fd|Input|int32_t|Encoder descriptor.|
 
-void OpusDecoderDestroyApi\(OpusDecoder \*st\)
+**Return Value Description<a name="section7911548131510"></a>**
 
 Data type: EncoderRetCode
 
@@ -1482,7 +1482,7 @@ For details about involved APIs of the VideoEncoder class, see [11.1.4-Config](#
 
 #### Config<a name="ZH-CN_TOPIC_0000002518345986" id="Config"></a>
 
-const char \*OpusStrerrorApi\(int error\)
+**Function Usage<a name="section20501062"></a>**
 
 Inputs the initial configuration of the encoder. This API needs to be called before [11.1.5-InitEncoder](#InitEncoder).
 
@@ -1490,11 +1490,11 @@ Inputs the initial configuration of the encoder. This API needs to be called bef
 
 This parameter passes through the parameters listed in [5.2-Configuration Parameters](#video-configuration-parameters) to `VmiEncoderConfig` and `VmiEncoderParams`. The restrictions on these parameters are still valid.
 
-#### OpusDecoderDestroyApi<a name="ZH-CN_TOPIC_0000002518345984"></a>
+**Prototype<a name="section49973353"></a>**
 
 EncoderRetCode Config\(int32_t fd, const VmiEncoderConfig& config\)
 
-Destroys the Opus decoder. This API is similar to the opus_decoder_destroy interface in Opus 1.3.1.
+**Parameters<a name="section47106995"></a>**
 
 |Parameter|Input/Output|Type|Description|
 | :---: | :---: | :---: | :---: |
@@ -1535,7 +1535,7 @@ The value can be any of the following:
 
 #### InitEncoder<a name="ZH-CN_TOPIC_0000002549705789" id="InitEncoder"></a>
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Function Usage<a name="section20501062"></a>**
 
 Initializes the encoder.
 
@@ -1543,7 +1543,7 @@ Initializes the encoder.
 
 The [11.1.4-Config](#Config) API must have been invoked to input valid configurations.
 
-#### OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549825845"></a>
+**Prototype<a name="section49973353"></a>**
 
 EncoderRetCode InitEncoder\(int32_t fd\)
 
@@ -1603,7 +1603,7 @@ This parameter passes through the parameters listed in [5.2-Configuration Parame
 
 EncoderRetCode SetParams\(int32_t fd, const VmiEncoderParams& params\)
 
-Converts an Opus error code into a human-readable string. This API is similar to the opus_strerror interface in Opus 1.3.1.
+**Parameters<a name="section42241738122511"></a>**
 
 |Parameter|Input/Output|Type|Description|
 | :---: | :---: | :---: | :---: |
@@ -2108,6 +2108,9 @@ DecoderRetCode SendStreamData\(uint8_t \*buffer, uint32_t filledLen\)
 |Field Name|Input/Output|Field Type|Field Description|
 | :---: | :---: | :---: | :---: |
 |buffer|Input|uint8_t *|Buffer of the input stream data.|
+
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |filledLen|Input|uint32_t|Length of the input stream data.|
 
 **Return Value Description<a name="section7911548131510"></a>**
@@ -2137,7 +2140,13 @@ DecoderRetCode RetrieveFrameData\(uint8_t \*buffer, uint32_t maxLen, uint32_t \*
 |Field Name|Input/Output|Field Type|Field Description|
 | :---: | :---: | :---: | :---: |
 |buffer|Input|uint8_t *|Buffer for receiving output data.|
+
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |maxLen|Input|uint32_t|Maximum length of the output buffer.|
+
+|Field Name|Input/Output|Field Type|Field Description|
+| :---: | :---: | :---: | :---: |
 |filledLen|Output|uint32_t *|Actual length of the output data.|
 
 **Return Value Description<a name="section7911548131510"></a>**
