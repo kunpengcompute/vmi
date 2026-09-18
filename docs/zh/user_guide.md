@@ -115,7 +115,7 @@
 
     确认所启动的容器存在，且状态正常。
 
-6. 确认视频流云手机是否启动成功，其中**`${index}`**为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如android_35，**`${index}`**即为35。
+6. 确认视频流云手机是否启动成功，其中`${index}`为启动实例的编号，参见[5](#li3304181302311)中命令回显所示的最后一列，如android_35，`${index}`即为35。
 
     - 基于Docker容器运行时的视频流云手机。
 
@@ -203,11 +203,11 @@
 
     ![](figures/zh-cn_image_0000002518224474.png)
 
-3. 自上而下依次输入服务器IP地址、**`${port}`**，单击"SUBMIT"即可访问云侧的视频流云手机。其中**`${port}`**默认值为8000+**${index}**。
+3. 自上而下依次输入服务器IP地址、`${port}`，单击"SUBMIT"即可访问云侧的视频流云手机。其中`${port}`默认值为8000+`${index}`。
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
-    >每个视频流云手机实例需要配置映射端口，部署时可进入cfct_video脚本设置合适的**`${port}`**，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
+    >每个视频流云手机实例需要配置映射端口，部署时可进入cfct_video脚本设置合适的`${port}`，端口号取值范围为1024~65535，且不能使用已占用端口号从而避免出现端口竞争，导致视频流云手机无法访问。
 
 ### （可选）动态修改云手机参数<a name="ZH-CN_TOPIC_0000002549744243"></a>
 
@@ -491,7 +491,7 @@
     > kubectl get pod video1 -o jsonpath='{.spec.volumes[?(@.name=="data")].hostPath.path}'
     > ```
     >
-    > `${index1}`与`${index2}`为pod编号，`${index3}`表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。`${index4}`表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中`${index2}``${index3}``${index4}`可缺省。例：
+    > `${index1}`与`${index2}`为pod编号，`${index3}`表示是否使能f2fs文件格式开关，输入0或无输入则不使能，该配置项默认是0。`${index4}`表示配置给容器内/system分区的大小值，单位为MB，输入大于0的数值则使能，输入0或无输入则不使能，该配置项默认是0。其中`${index2}`、`${index3}`、`${index4}`可缺省。例：
     >- 创建名为video2的pod，里面的文件格式是默认的ext4。
     >
     > ```bash
@@ -680,7 +680,7 @@ cd /home/k8s/k8s/script
 
 **配置示例<a name="section18450203117618"></a>**
 
-```bash
+```xml
 <!-- 配置示例 -->
 <!-- 系统通用配置 -->
 <Application name="system" isEnable="false">
@@ -808,7 +808,7 @@ cd /home/k8s/k8s/script
 |vmi.video.encode.target_bitrate|WebRTC目标编码码率。|3000000~50000000<br>单位bps|
 |vmi.audio.audiotype|音频输出格式。|1（目前WebRTC只支持音频PCM的输出格式）|
 |vmi.webrtc.connection.serverip|云手机服务端的IP地址。|具体IP地址。|
-|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **`${index}`** * 2 - 1，起始端口 + **${index}** * 2。|可用的起始端口。|
+|vmi.webrtc.connection.udpbeginport|云手机服务器UDP可用起始端口，默认使用2个端口，则在确定了起始端口后，云手机使用的udp端口为：起始端口 + **`${index}`** * 2 - 1，起始端口 + **`${index}`** * 2。|可用的起始端口。|
 |vmi.network.type|网络类型。|1：TCP<br>4：WebRTC|
 |vmi.webrtc.httpserver.port|服务端HTTP映射端口号。|具体映射端口号。|
 |vmi.webrtc.connection.udpminport|服务端使用的UDP最小端口。|可用的最小端口。|

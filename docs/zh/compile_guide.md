@@ -37,8 +37,8 @@ git clone https://gitcode.com/boostkit/vmi.git
 
 ```bash
 cd ~/ARMNative/vmi
-./scripts/auto_install_tools.sh ${安装目录} 
-source ~/.bashrc 
+./scripts/auto_install_tools.sh ${安装目录}
+source ~/.bashrc
 ```
 
 其中，${安装目录}可以自己指定，若不输入${安装目录}，则脚本使用默认目录~/NativeCompileToolsDir。
@@ -59,7 +59,7 @@ source ~/.bashrc
 
 ### ccache配置
 
-配置ccahe加快编译速度，查看本地ccache安装位置。
+配置ccache加快编译速度，查看本地ccache安装位置。
 
 ```bash
 sudo apt install ccache
@@ -98,17 +98,17 @@ ln -s ccache /usr/bin/c++
 下载必要依赖，如果已安装，跳过即可。
 
 ```bash
-sudo apt install -y git     
-sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg     
-sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev     
-sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev     
-sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev     
-sudo apt install -y libxml2-utils xsltproc unzip     
-sudo apt install -y libx11-dev libreadline-dev     
-sudo apt install -y libncurses5 libncurses5-dev     
-sudo apt install -y tofrodos python-markdown-doc zlib1g-dev     
-sudo apt install -y dpkg-dev libsdl1.2-dev     
-sudo apt install -y m4 bc python3 python3-mako gettext     
+sudo apt install -y git
+sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg
+sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev
+sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev
+sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev
+sudo apt install -y libxml2-utils xsltproc unzip
+sudo apt install -y libx11-dev libreadline-dev
+sudo apt install -y libncurses5 libncurses5-dev
+sudo apt install -y tofrodos python-markdown-doc zlib1g-dev
+sudo apt install -y dpkg-dev libsdl1.2-dev
+sudo apt install -y m4 bc python3 python3-mako gettext
 sudo apt install -y expect
 ```
 
@@ -120,7 +120,7 @@ sudo apt install -y expect
 cd ~/ARMNative/aosp11
 source build/envsetup.sh
 lunch aosp_arm64-eng
-make -j【线程数】
+make -j<线程数>
 ```
 
 ## 编译视频流
