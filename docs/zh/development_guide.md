@@ -795,8 +795,8 @@ enum RCMode : uint32_t  {
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
-> 1. 码控模式（RCMode）仅支持固定码率模式（CBR）与画质优先并限制最大码率（CAPPED_CRF），Quadra 编码卡支持两种码控模式，DC1000/DC1000C 暂时仅支持固定码率模式（CBR）；
-> 2. 码控模式（RCMode）设置为固定码率模式（CBR），可通过 bitrate 变量来指定固定码率的数值；而 Quadra 编码卡码控模式（RCMode）设置为画质优先并限制最大码率（CAPPED_CRF）时，会使用 crf、maxCrfRate 和 vbvBufferSize 变量来进行码率控制；DC1000/DC1000C 控模式（RCMode）会使用 crf、maxCrfRate 变量来进行码率控制
+> 1. 码控模式（RCMode）仅支持固定码率模式（CBR）与画质优先并限制最大码率（CAPPED_CRF），Quadra编码卡支持两种码控模式，DC1000/DC1000C暂时仅支持固定码率模式（CBR）；
+> 2. 码控模式（RCMode）设置为固定码率模式（CBR），可通过 bitrate 变量来指定固定码率的数值；而 Quadra 编码卡码控模式（RCMode）设置为画质优先并限制最大码率（CAPPED_CRF）时，会使用 crf、maxCrfRate 和 vbvBufferSize 变量来进行码率控制；DC1000/DC1000C的码控模式（RCMode）会使用 crf、maxCrfRate 变量来进行码率控制。
 
 ### 数据定义
 
@@ -1222,7 +1222,7 @@ struct VmiKeyInputData {
 
 ### 数据注入
 
-输入与输出不同，所有的输入都需要使用 InjectData 接口进行数据注入。该数据开发者通过 InjectData 注入到服务端，并通过 VmiCmdTouch 枚举中的 SEND_TOUCH_EVENT、SEND_KEY_EVENT 命令字指定。示例如下：
+输入与输出不同，所有的输入都需要使用 InjectData 接口进行数据注入。该数据由开发者通过 InjectData 注入到服务端，并通过 VmiCmdTouch 枚举中的 SEND_TOUCH_EVENT、SEND_KEY_EVENT 命令字指定。示例如下：
 
 ```c++
 VmiDataType module = TOUCH;
@@ -1770,7 +1770,7 @@ height：uint32_t 类型，期望编码高度。该类字段如下：
 
 开发者继承 VideoDecoder 类并按照本章节中的描述实现对应接口，同时提供 [CreateVideoDecoder](#createvideodecoder)、[DestroyVideoDecoder](#destroyvideodecoder) 接口用于创建具体的实现类实例。
 
-此接口与 Android 内部 OMX 解码组件配套使用，与视频流出流组件不相干扰。
+此接口与 Android 内部 OMX 解码组件配套使用，与视频流出流组件互不干扰。
 
 其中，接口调用的返回码定义如下：
 

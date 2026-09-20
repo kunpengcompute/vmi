@@ -499,7 +499,7 @@
     kubectl get pods -o wide
     ```
 
-    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+**`${index}`，index为Pod编号**。
+    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+`${index}`，index为Pod编号。
 
     - 在master节点和工作节点上，可通过如下命令进入容器，以video1为例：
 
@@ -726,7 +726,7 @@ cd /home/k8s/k8s/script
 | vmi.audio.audiotype | 音频输出格式 | 0：OPUS<br>1：PCM | 0：OPUS |
 | vmi.audio.encode.sampleinterval | 音频输出采样间隔 | 5：5ms（暂不支持）<br>10：10ms<br>20：20ms（暂不支持） | 10：10ms |
 | vmi.audio.encode.bitrate | 音频OPUS编码码率（bps） | 13200~512000 | 192000 |
-| vmi.mic.audiotype | 麦克风输入格式 | 0：OPU<br>S1：PCM | 0：OPUS |
+| vmi.mic.audiotype | 麦克风输入格式 | 0：OPUS<br>S1：PCM | 0：OPUS |
 | vmi.network.type | 网络类型 | 1：tcp<br>4：webrtc | 1：tcp |
 | demo.data.offset | 用于测试网络包预留字段大小 | 0~1024 | 20 |
 | vmi.video.renderoptimize | 出流优化，默认开启 | 0：关闭<br>1：开启 | 1：默认开启 |
@@ -735,7 +735,7 @@ cd /home/k8s/k8s/script
 | ro.vmi.sensor.passthrough | 服务端sensor开关 | 0：关闭<br>1：开启 | 1：默认开启 |
 | ro.hardware.vsyncoffset | vsync优化，该容器vsync信号相比默认值的偏移量，单位ns | 0：偏移量 | 0：默认偏移量 |
 | ro.sys.vmi.cloudphone | 云手机类型 | video：视频流云手机 | video：默认视频流云手机 |
-| heartbeat.max.aveage.latency | 心跳最大平均时延 | 1：1s | 1：默认1s |
+| heartbeat.max.average.latency | 心跳最大平均时延 | 1：1s | 1：默认1s |
 | vmi.sys.network.latency.average | 网络平均最大时延 | 具体网络平均最大时延 | -1：默认-1 |
 | ro.vmi.loglevel | 日志级别 | 1：default<br>2：verbose<br>3：debug<br>4：info<br>5：warn<br>6：error<br>7：fatal | 4：默认info日志级别 |
 

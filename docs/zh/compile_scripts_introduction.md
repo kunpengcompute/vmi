@@ -30,7 +30,7 @@ source ~/.bashrc
 | Android NDK | r25b | <https://dl.google.com/android/repository/android-ndk-r25b-linux.zip> |
 | Android SDK Build Tools | 33.0.1 | <https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip> |
 | Gradle | 8.4 | <https://mirrors.cloud.tencent.com/gradle/gradle-8.4-bin.zip> |
-| CMake | 3.28.2 | <https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-linux-x86_64.tar.gz> |
+| CMake | 4.3.2 | <https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-linux-x86_64.tar.gz> |
 | AdoptOpenJDK | 11+28 | <https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz> |
 | Ninja | v1.12.0 | <https://github.com/ninja-build/ninja/releases/download/v1.12.0/ninja-linux.zip> |
 | SDK Platform | 33_r02 | <https://dl.google.com/android/repository/platform-33_r02.zip> |
