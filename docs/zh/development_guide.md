@@ -1677,7 +1677,7 @@ EncoderRetCode StopEncoder\(int32_t fd\)
 
 **函数原型<a name="section49973353"></a>**
 
-EncoderRetCode DestoryEncoder\(int32_t fd\)
+EncoderRetCode DestroyEncoder\(int32_t fd\)
 
 **参数说明<a name="section42241738122511"></a>**
 
@@ -2287,7 +2287,7 @@ void \*CreateModule\(uint32_t moduleId\)
 
 **GpuEncoderBase接口类涉及接口<a name="section97621346152119"></a>**
 
-GpuEncoderBase接口类涉及接口详细描述请参见[11.3.5-Init](#Init)、[11.3.6-Deinit](#Deinit)、[11.3.7-Start](#Start)、[11.3.8-Stop](#Stop)、[11.3.9-CreateBuffer](#CreateBuffer)、[11.3.10-ImportBuffer](#ImportBuffer)、[11.3.11-ReleaseBuffer](#ReleaseBuffer)、[11.3.12-MapBuffer](#MapBuffer)、[11.3.13-UnmapBuffer](#UnmapBuffer)、[11.3.14-RetriveBufferData](#RetriveBufferData)、[11.3.15-Convert](#Convert)、[11.3.16-Encode](#Encode)、[11.3.17-SetEncodeParam](#SetEncodeParam)、[11.3.18-Reset](#Reset)。
+GpuEncoderBase接口类涉及接口详细描述请参见[11.3.5-Init](#Init)、[11.3.6-Deinit](#Deinit)、[11.3.7-Start](#Start)、[11.3.8-Stop](#Stop)、[11.3.9-CreateBuffer](#CreateBuffer)、[11.3.10-ImportBuffer](#ImportBuffer)、[11.3.11-ReleaseBuffer](#ReleaseBuffer)、[11.3.12-MapBuffer](#MapBuffer)、[11.3.13-UnmapBuffer](#UnmapBuffer)、[11.3.14-RetrieveBufferData](#RetrieveBufferData)、[11.3.15-Convert](#Convert)、[11.3.16-Encode](#Encode)、[11.3.17-SetEncodeParam](#SetEncodeParam)、[11.3.18-Reset](#Reset)。
 
 GpuEncoderBase接口类返回值说明：
 
@@ -2303,7 +2303,7 @@ enum GpuEncoderErrorCode : uint32_t {
     ERR_UNSUPPORT_OPERATION,
     ERR_INTERNAL_ERROR,
     ERR_NEED_RESET, // 部分编码参数设置后需要reset生效
-    ERR_UNKNOW
+    ERR_UNKNOWN
 };
 ```
 
@@ -2652,7 +2652,7 @@ int32_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
 - OK：解除buffer数据映射成功。
 - 其他：解除buffer数据映射失败。
 
-#### RetriveBufferData<a name="ZH-CN_TOPIC_0000002549825777" id="RetriveBufferData"></a>
+#### RetrieveBufferData<a name="ZH-CN_TOPIC_0000002549825777" id="RetrieveBufferData"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2666,7 +2666,7 @@ int32_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
 
 **函数原型<a name="section49973353"></a>**
 
-int32_t RetriveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t memLen, uint32_t &dataLen\) = 0
+int32_t RetrieveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t memLen, uint32_t &dataLen\) = 0
 
 **参数说明<a name="section47106995"></a>**
 
