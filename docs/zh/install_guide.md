@@ -228,7 +228,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
     若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
 
-- **[（硬件配置方案二、三、四、五）安装显卡驱动](https://gitcode.com/boostkit/Kbox/blob/AOSP11/docs/zh/install_guide.md#安装显卡驱动)**  
+- **[（硬件配置方案二、三、四、五）安装显卡驱动](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md#安装显卡驱动)**  
 
 #### 制作镜像<a name="ZH-CN_TOPIC_0000002549826281"></a>
 
