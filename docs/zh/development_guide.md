@@ -2293,7 +2293,7 @@ enum GpuType : uint32_t {
 
 **GpuEncoderBase 接口类涉及接口**
 
-GpuEncoderBase 接口类涉及接口详细描述请参见 [Init](#init)、[Deinit](#deinit)、[Start](#start)、[Stop](#stop)、[CreateBuffer](#createbuffer)、[ImportBuffer](#importbuffer)、[ReleaseBuffer](#releasebuffer)、[MapBuffer](#mapbuffer)、[UnmapBuffer](#unmapbuffer)、[RetriveBufferData](#retrivebufferdata)、[Convert](#convert)、[Encode](#encode)、[SetEncodeParam](#setencodeparam)、[Reset](#reset)。
+GpuEncoderBase 接口类涉及接口详细描述请参见 [Init](#init)、[Deinit](#deinit)、[Start](#start)、[Stop](#stop)、[CreateBuffer](#createbuffer)、[ImportBuffer](#importbuffer)、[ReleaseBuffer](#releasebuffer)、[MapBuffer](#mapbuffer)、[UnmapBuffer](#unmapbuffer)、[RetrieveBufferData](#retrievebufferdata)、[Convert](#convert)、[Encode](#encode)、[SetEncodeParam](#setencodeparam)、[Reset](#reset)。
 
 GpuEncoderBase 接口类返回值说明：
 
@@ -2309,7 +2309,7 @@ enum GpuEncoderErrorCode : uint32_t {
     ERR_UNSUPPORT_OPERATION,
     ERR_INTERNAL_ERROR,
     ERR_NEED_RESET, // 部分编码参数设置后需要reset生效
-    ERR_UNKNOW
+    ERR_UNKNOWN
 };
 ```
 
@@ -2662,7 +2662,7 @@ enum MapFlag : uint32_t {
 - OK：解除 Buffer 数据映射成功。
 - 其他：解除 Buffer 数据映射失败。
 
-#### RetriveBufferData
+#### RetrieveBufferData
 
 **函数功能**
 
@@ -2676,7 +2676,7 @@ enum MapFlag : uint32_t {
 
 **函数原型**
 
-`int32_t RetriveBufferData(GpuEncoderBufferT &buffer, uint8_t *data, uint32_t memLen, uint32_t &dataLen) = 0`
+`int32_t RetrieveBufferData(GpuEncoderBufferT &buffer, uint8_t *data, uint32_t memLen, uint32_t &dataLen) = 0`
 
 **参数说明**
 
