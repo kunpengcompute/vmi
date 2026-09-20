@@ -720,7 +720,7 @@ uint32_t 类型，默认值为 320。
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
-> 1. 当 density 属性设置为 0 时，意味着不启用自适应分辨率功能，既启动视频模块时会使用云手机的现有渲染分辨率和屏幕密度进行渲染与出流。
+> 1. 当 density 属性设置为 0 时，意味着不启用自适应分辨率功能，即启动视频模块时会使用云手机的现有渲染分辨率和屏幕密度进行渲染与出流。
 > 2. 当 Android 属性（ro.vmi.video.wmcmd）设置为 0 时，同样不会启用自适应分辨率功能；该属性与 density 变量任意一个设置为 0，都将不启用自适应分辨率功能。
 
 #### renderOptimize
@@ -1008,7 +1008,7 @@ AudioData audioData;
 audioData.size = sizeof(audioPlayData);
 uint8_t *data = new uint8_t[sizeof(AudioData) + sizeof(audioPlayData)];
 memcpy(data, &audioData, sizeof(AudioData));
-memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData))
+memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData));
 DataCallback(module, cmd, data, sizeof(AudioData) + audioData.size);
 ```
 
@@ -1154,7 +1154,7 @@ AudioData audioData;
 audioData.size = sizeof(micData);
 uint8_t *data = new uint8_t[sizeof(AudioData) + sizeof(micData)];
 memcpy(data, &audioData, sizeof(AudioData));
-memcpy(data + sizeof(AudioData), micData, sizeof(micData))
+memcpy(data + sizeof(AudioData), micData, sizeof(micData));
 InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 ```
 

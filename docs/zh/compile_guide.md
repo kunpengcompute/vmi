@@ -129,7 +129,7 @@ sudo apt install -y expect
 cd ~/ARMNative/aosp11
 source build/envsetup.sh
 lunch aosp_arm64-eng
-make -j【线程数】
+make -j<线程数>
 ```
 
 ## 编译视频流
