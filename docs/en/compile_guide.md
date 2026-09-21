@@ -160,3 +160,9 @@ cd ~/ARMNative/vmi
 ```
 
 After the command execution succeeds, the `DemoVideoEngine.tar.gz` package is generated in the `output` directory.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|

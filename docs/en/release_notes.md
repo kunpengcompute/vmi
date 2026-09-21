@@ -178,3 +178,9 @@ None
 ### Obtaining Documentation
 
 Visit the [Kunpeng community](https://www.hikunpeng.com/document/detail/en/kunpengcps/overview/kunpengcps.html) to view or download related documents.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|

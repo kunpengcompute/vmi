@@ -2010,3 +2010,9 @@ The specific steps are as follows:
 3. Invoke the `cfct_video` script to start the video stream container on the VM. For details, see "Starting a Video Stream Cloud Phone Instance" in the *Video Stream Engine User Guide*.
 
     ![](figures/zh-cn_image_0000002518185616.png)
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|
