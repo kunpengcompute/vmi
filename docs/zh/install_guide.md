@@ -533,7 +533,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 6. 针对1张编码卡环境：需要修改hardware_bind.cfg配置文件中“VIDEO_ENC_MAP_CORE”。
 7. 当编码卡插在CPU0上时，删除“${NETINT1}”；若编码卡插在CPU1上时，删除“${NETINT0}”。
 8. 若视频帧采用CPU进行软编码，需要将cfct_config中的“CPU_BIND_MODE”设置为“1”，以防卡顿。
-9. 如果需要使能图形加速层，请参见[图形加速层的基本功能和使用说明](#section9932195417616)。
+9. 如果需要使能图形加速层，请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
 10. 如果要使能C2解码器，需要将cfct_config中的“ENABLE_AMD_C2_DECODE”设置为“1”。
 
 **NETINT编码卡芯片节点所属NUMA查询方式<a name="section2507154233510"></a>**
@@ -1398,7 +1398,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 |CPU|-|2\*鲲鹏920 7280Z处理器，80 <Core@2.9GHz>|
 |内存|-|16\*DDR5 RDIMM内存-64GB-4800MT/s|
 |硬盘|系统盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
-|数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
+|硬盘|数据盘|ES3600C V5固态硬盘-6400GB-NVMe SSD|
 |网卡|板载|1*（4\*GE接口卡）1\*5902L板载灵活网卡|
 |Riser卡|-|1\*16X SLOT(PCIe X16) + 2\*8X SLOT (PCIe X8)-RISER1&2模组、2\*8X SLOT (PCIe X8)-后置Riser|
 |GPU|-|4\*道客DC1000 或 4\*道客DC1000C|
@@ -1605,7 +1605,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >若后续**virt-manager**指令报错则需要重新打开一个ssh界面。
 
-#### 查询GPU卡PCIe节点信息<a name="ZH-CN_TOPIC_0000002549973493"></a>
+#### 查询GPU卡PCIe节点信息<a name="ZH-CN_TOPIC_0000002549973493" id="查询GPU卡PCIe节点信息"></a>
 
 鲲鹏920 7280Z处理器有4个NUMA，总共会创建4个虚拟机，虚拟机所使用的资源分别对应宿主机的4个NUMA。因每个NUMA上都会有两张GPU卡，为避免产生跨NUMA访问而造成性能损失，在创建虚拟机前，需要确认每个虚拟机使用GPU卡的PCIe节点，用于添加设备。
 
@@ -2138,7 +2138,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
         >![](public_sys-resources/icon-note.gif) **说明：** 
         >
-        >上述的配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
+        >上述配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
 
 3. 请参见《视频流引擎 特性指南》的“启动视频流云手机”章节调用cfct_video脚本即可成功在虚拟机启动视频流容器。
 
