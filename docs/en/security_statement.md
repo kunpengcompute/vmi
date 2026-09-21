@@ -1,5 +1,7 @@
 # Security Statement
 
+<!-- md-trans-meta sourceCommit=e7522df773f2013494b4207047ae922df5c92197 translatedAt=2026-09-08T02:31:49.795Z pushedAt=2026-09-15T06:29:06.135Z -->
+
 Please carefully read the following content to ensure that the security risks of the solution are acceptable.
 
 1. The communication between the device and the cloud depends on a third-party transmission pipe. The pipe bidirectionally transmits the data of the instruction stream engine, audio engine, touch engine, and video stream engine. Therefore, the transmission pipe may include but is not limited to the following functions:

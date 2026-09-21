@@ -1,6 +1,8 @@
-# Developer Guide<a name="ZH-CN_TOPIC_0000002521735642"></a>
+# Developer Guide
 
-## 1 Introduction<a name="ZH-CN_TOPIC_0000002549826163"></a>
+<!-- md-trans-meta sourceCommit=377087a2bd241cd72440e17b86df0cd93ee57185 translatedAt=2026-09-08T02:28:45.771Z pushedAt=2026-09-18T02:19:06.534Z -->
+
+## Introduction
 
 A cloud phone is a cloud server with an Android Open Source Project (AOSP) and functions as a virtual phone. It extends the functions of a physical phone and can be used in various scenarios such as cloud mobile gaming and mobile office.
 
@@ -8,9 +10,9 @@ The device-cloud engine consists of the device side and the cloud side. The clou
 
 This document describes the integrated development of the device and cloud engines used in the video stream cloud phone.
 
-## 2 Obtaining Software Packages<a name="obtaining-software-packages"></a>
+## Obtaining Software Packages
 
-**Table 1** Software requirements<a id="software-requirements"></a>
+### Software Requirements
 
 |No.|Software|Description|How to Obtain|
 |--|--|--|--|
@@ -21,7 +23,7 @@ This document describes the integrated development of the device and cloud engin
 |5|SDK build tools|Version: r33.0.1|[Link](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
 |6|BoostKit-boostcph-videoengine_*_15.zip|Android 15 video stream engine development kit|Please submit an ISSUE feedback.|
 
-**Verifying Software Package Integrity<a name="section16873181764512"></a>**
+### Verifying Software Package Integrity
 
 To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding SHA256 files for integrity verification while obtaining the software packages.
 
@@ -47,25 +49,25 @@ To prevent software packages from being maliciously tampered with during transfe
 >If the verification fails, do not use the software package. Please submit an ISSUE feedback.
 >Before a software package is used for installation or upgrade, its SHA256 checksum also needs to be verified to ensure that the software package is not tampered with.
 
-## 3 Configuring the Development Environment<a name="ZH-CN_TOPIC_0000002518186398"></a>
+## Configuring the Development Environment
 
-### 3.1 Decompressing the Software Package<a name="ZH-CN_TOPIC_0000002518346310"></a>
+### Decompressing the Software Package
 
-The software package of the video stream engine is `BoostKit-boostcph-videoengine_*_15.zip`. To obtain it, see [2-Obtaining Software Packages](#obtaining-software-packages). After obtaining the .zip package, decompress it to obtain the .tar.gz package.
+The software package of the video stream engine is `BoostKit-boostcph-videoengine_*_15.zip`. To obtain it, see [Obtaining Software Packages](#obtaining-software-packages). After obtaining the .zip package, decompress it to obtain the .tar.gz package.
 
 |Software|Description|
 |--|--|
 | VideoEngine.tar.gz | Development package of the video stream engine server.|
 
-### 3.2 Deploying the Server Compilation Environment<a name="ZH-CN_TOPIC_0000002518346308"></a>
+## Deploying the Server Compilation Environment
 
-**Environment Requirements<a name="section183915472144"></a>**
+### Environment Requirements
 
 This document describes how to compile the server software based on the x86_64 server running Ubuntu 22.04 LTS. Before the compilation, ensure that your hardware environment meets the requirements.
 
-[**Table 1**](#hardware-environment) lists the hardware environment requirements for compiling and building the server software.
+For details, see [Hardware Environment](#hardware-environment).
 
-**Table 1** Hardware environment<a id="hardware-environment"></a>
+#### Hardware Environment
 
 |Device Model|Function|Server OS|
 |--|--|--|
@@ -73,14 +75,14 @@ This document describes how to compile the server software based on the x86_64 s
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->- In this document, the server model is 2288H V5.
->- Ensure that the server can access the Internet to download the OS image.
+> - In this document, the server model is 2288H V5.
+> - Ensure that the server can access the internet to download the OS image.
 
-**Deployment Procedure<a name="section039914210159"></a>**
+**Deployment Procedure**
 
 1. Install the dependencies.
 
-    ```shell
+    ```bash
     sudo apt install -y git 
     sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg
     sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev
@@ -97,14 +99,14 @@ This document describes how to compile the server software based on the x86_64 s
 
 2. Download the VMI code and go to the `vmi` directory.
 
-    ```shell
+    ```bash
     git clone https://gitee.com/kunpengcompute/vmi.git
     cd vmi
     ```
 
 3. Use the automatic deployment script to deploy the compilation tool.
 
-    ```shell
+    ```bash
     chmod +x scripts/auto_install_tools.sh
     ./scripts/auto_install_tools.sh ${installation_directory}
     ```
@@ -113,27 +115,28 @@ This document describes how to compile the server software based on the x86_64 s
 
     After the script is executed successfully, import environment variables.
 
-    ```shell
+    ```bash
     source ~/.bashrc
     ```
 
-### 3.3 Deploying the Server Debugging Environment<a name="ZH-CN_TOPIC_0000002549826179"></a>
+### Deploying the Server Debugging Environment
 
->![](public_sys-resources/icon-notice.gif) **NOTICE**
+> [!WARNING]
 >
->- You can customize a directory for storing the package.
->- For details about the hardware requirements and deployment process of the server debugging environment, refer to [Video Stream Engine installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md).
+> - You can customize a directory for storing the package.
+> - For details about the hardware requirements and deployment process of the server debugging environment, refer to [Video Stream Engine Installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md).
 
 1. Save the `VideoEngine.tar.gz` package to the `/home/VideoEngine/Cloud` directory.
+
 2. Decompress the development package of the video stream engine server.
 
-    ```shell
+    ```bash
     tar xzvf VideoEngine.tar.gz
     ```
 
 3. Copy the extracted binary files to a cloud phone (for example, `cloudphone_1`).
 
-    ```shell
+    ```bash
     docker cp system/bin cloudphone_1:/system/
     docker cp system/etc cloudphone_1:/system/
     docker cp system/lib cloudphone_1:/system/
@@ -143,9 +146,9 @@ This document describes how to compile the server software based on the x86_64 s
     docker cp vendor/etc cloudphone_1:/vendor/
     ```
 
-4. Copy the external dependency libraries to a cloud phone (`cloudphone_1` for example). [**Table 1**](#external-dependency-libraries-of-the-video-stream-cloud-phone) lists the required dependency libraries.
+4. Copy the external dependency libraries to a cloud phone (`cloudphone_1` for example). For details, see [External Dependency Libraries of the Video Stream Cloud Phone](#external-dependency-libraries-of-the-video-stream-cloud-phone).
 
-    **Table 1** External dependency libraries of the video stream cloud phone<a id="external-dependency-libraries-of-the-video-stream-cloud-phone"></a>
+#### External Dependency Libraries of the Video Stream Cloud Phone
 
     |Item|Library Name|Paths|
     |--|--|--|
@@ -157,17 +160,17 @@ This document describes how to compile the server software based on the x86_64 s
 
 5. Restart the cloud phone, and then the video stream cloud phone can run. You can debug the functions by calling the corresponding APIs according to the subsequent development process.
 
-## 4 External APIs<a name="ZH-CN_TOPIC_0000002549706167"></a>
+## External APIs
 
-### 4.1 Conventions<a name="ZH-CN_TOPIC_0000002549706165"></a>
+### Conventions
 
-The dynamic libraries provided by external interfaces are compiled using the AOSP 15.0.0_r17 source code and must be used in the AOSP 15.0.0_r17 environment.
+The dynamic link libraries (DLLs) provided by external interfaces are compiled using the AOSP 15.0.0_r17 source code and must be used in the AOSP 15.0.0_r17 environment.
 
-External interfaces are public for all modules to exchange data. Data type definitions are provided in this document. For example, you can refer to [5-Video Output Development](#video-output-development) to learn about video output data.
+External interfaces are public for all modules to exchange data. Data type definitions are provided in this document. For example, you can refer to [Video Output Development](#video-output-development) to learn about video output data.
 
-### 4.2 Basic Data Types<a name="ZH-CN_TOPIC_0000002518186412"></a>
+### Basic Data Types
 
-#### 4.2.1 VmiDataType (Module Data Type)<a name="ZH-CN_TOPIC_0000002549826161"></a>
+#### VmiDataType (Module Data Type)
 
 `VmiDataType` defines the supported data types. Each data type corresponds to a module. Available modules include: video output, audio output, microphone input, touch input, sensor, and GPS. The data types are defined as follows:
 
@@ -183,7 +186,7 @@ enum VmiDataType : uint8_t {
 };
 ```
 
-#### 4.2.2 VmiModuleStatus (Module Status)<a name="ZH-CN_TOPIC_0000002518186404"></a>
+#### VmiModuleStatus (Module Status)
 
 Enumeration of `VmiModuleStatus`:
 
@@ -196,9 +199,9 @@ enum VmiModuleStatus : uint32_t {
 };
 ```
 
-#### 4.2.3 VmiVersion (Module Version)<a name="vmiversion-module-version"></a>
+#### VmiVersion (Module Version)
 
-The version number of a module consists of the module type and the minor version number of the module. This API can be used to support module-level version control. The definition is as follows:
+The version number of a module consists of the module type and the minor version number of the module. This parameter can be used to support module-level version control. Enumeration of `VmiVersion`:
 
 ```c++
 enum VmiVideoVersion : uint16_t {
@@ -230,7 +233,7 @@ enum VmiVersion : uint32_t {
 };
 ```
 
-#### 4.2.4 VmiErrCode (Error Code)<a name="ZH-CN_TOPIC_0000002549706147"></a>
+#### VmiErrCode (Error Code)
 
 Enumeration of `VmiErrCode`:
 
@@ -260,7 +263,7 @@ enum VmiErrCode : int32_t {
 };
 ```
 
-#### 4.2.5 VmiCmd (Command Word)<a name="ZH-CN_TOPIC_0000002518346276"></a>
+#### VmiCmd (Command Word)
 
 Command words need to be specified as interface input parameters for functions such as module data input, data output, and parameter setting. `VmiCmd` is an enumeration type of uint32_t. Each 32-bit enumeration value consists of three parts that are sequentially concatenated as follows: `VmiDataType` (module data type, uint8_t), `VmiCmdType` (command word type, uint8_t), and specific command word (such as `VmiVideoCmdId` and `VmiAudioCmdId`, uint16_t). The definition is as follows:
 
@@ -333,44 +336,45 @@ enum VmiCmd : uint32_t {
 };
 ```
 
-### 4.3 Function APIs<a name="ZH-CN_TOPIC_0000002518346322"></a>
+### Function APIs
 
-#### 4.3.1 GetVersion<a name="ZH-CN_TOPIC_0000002518186356"></a>
+#### GetVersion
 
-**Function Usage<a name="section713mcpsimp"></a>**
+**Function Usage**
 
 Obtains the product version number.
 
-**Prototype<a name="section719mcpsimp"></a>**
+**Prototype**
 
-const char \*GetVersion\(\)
+`const char *GetVersion()`
 
-**Return Value Description<a name="section725mcpsimp"></a>**
+**Return Value Description**
 
-Data type: char \*
+Data type: `char *`
 
 A return value example is provided in the "Querying Component Version Information" section in [Video Stream Engine User Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/user_guide.md#d12-querying-component-version-information).
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->The version number in the example command output is irrelevant to the `VmiVersion` module version number.
+> The version number in the example command output is irrelevant to the `VmiVersion` module version number.
 
-#### 4.3.2 InitVmiEngine<a name="ZH-CN_TOPIC_0000002518346282"></a>
+#### InitVmiEngine
 
-**Function Usage<a name="section730mcpsimp"></a>**
+**Function Usage**
 
 Initializes the cloud phone server.
 
-**Restrictions<a name="section733mcpsimp"></a>**
+**Restrictions**
 
 - This API cannot be called repeatedly. That is, it cannot be called after the initialization is complete.
+
 - The data output callback cannot be blocked for a long time. It is recommended that the callback return within 1 ms.
 
-**Prototype<a name="section736mcpsimp"></a>**
+**Prototype**
 
-VmiErrCode InitVmiEngine\(VmiConfigEngine \*config\);
+`VmiErrCode InitVmiEngine(VmiConfigEngine *config);`
 
-**Parameters<a name="section739mcpsimp"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
@@ -402,75 +406,77 @@ struct DataTypeConfig {
 
 If `sendDataOffset` is not `0`, the memory layout of the `data` pointer (the third parameter) of the `dataCallback` API is as follows: *N* bytes of reserved data (specified by `sendDataOffset`) + *N* bytes of valid data (specified by the fourth parameter `size`).
 
-**Return Value Description<a name="section791mcpsimp"></a>**
+**Return Value Description**
 
-Data type: enum VmiErrCode: int32_t
+Data type: `enum VmiErrCode : int32_t`
 
 The value can be any of the following:
 
 - `OK (0)`: The initialization is successful.
+
 - Other values: The initialization fails, and an error code is returned.
 
-#### 4.3.3 DeInitVmiEngine<a name="ZH-CN_TOPIC_0000002549826123"></a>
+#### DeInitVmiEngine
 
-**Function Usage<a name="section799mcpsimp"></a>**
+**Function Usage**
 
 Deinitializes the cloud phone server.
 
-**Restrictions<a name="section802mcpsimp"></a>**
+**Restrictions**
 
 This API cannot be called repeatedly.
 
-**Prototype<a name="section805mcpsimp"></a>**
+**Prototype**
 
-VmiErrCode DeInitVmiEngine\(\);
+`VmiErrCode DeInitVmiEngine();`
 
-**Return Value Description<a name="section811mcpsimp"></a>**
+**Return Value Description**
 
-Data type: enum VmiErrCode: int32_t
+Data type: `enum VmiErrCode : int32_t`
 
 The value can be any of the following:
 
 - `OK (0)`: The deinitialization is successful.
+
 - Other values: The deinitialization fails, and an error code is returned.
 
-#### 4.3.4 GetStatus<a name="ZH-CN_TOPIC_0000002518346306"></a>
+#### GetStatus
 
-**Function Usage<a name="section819mcpsimp"></a>**
+**Function Usage**
 
 Obtains module status.
 
-**Prototype<a name="section825mcpsimp"></a>**
+**Prototype**
 
-VmiModuleStatus GetStatus\(VmiDataType module\)
+`VmiModuleStatus GetStatus(VmiDataType module)`
 
-**Parameters<a name="section828mcpsimp"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
 | module | Input| VmiDataType | Module data type.|
 
-**Return Value Description<a name="section856mcpsimp"></a>**
+**Return Value Description**
 
-Data type: enum VmiModuleStatus: uint32_t
+Data type: `enum VmiModuleStatus : uint32_t`
 
-#### 4.3.5 StartModule<a name="ZH-CN_TOPIC_0000002549706125"></a>
+#### StartModule
 
-**Function Usage<a name="section869mcpsimp"></a>**
+**Function Usage**
 
 Starts the module.
 
-**Prototype<a name="section875mcpsimp"></a>**
+**Prototype**
 
-VmiErrCode StartModule\(VmiDataType module, uint8_t\*config, uint32_t size\)
+`VmiErrCode StartModule(VmiDataType module, uint8_t* config, uint32_t size)`
 
-**Parameters<a name="section878mcpsimp"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
 | module | Input| VmiDataType | Module data type.|
 | config | Input| uint8_t* | Configuration used for module startup.|
-| size | Input| uint32_t | Length of the memory pointed to by `config`.|
+| size | Input | uint32_t | Length of the memory pointed to by `config`. |
 
 `config` varies with `module` and is inherited from `VmiConfig`. `VmiConfigVideo` corresponds to the video module, `VmiConfigAudio` to the audio module, `VmiConfigTouch` to the touch module, `VmiConfigMic` to the microphone module, and `VmiConfig` to the sensor and GPS modules.
 
@@ -482,53 +488,55 @@ struct VmiConfig {
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->`VmiConfig` needs to transfer the module version number mentioned in [4.2.3-VmiVersion (Module Version)](#vmiversion-module-version). The version number is specific to each module.
+> `VmiConfig` needs to pass in the module version number mentioned in [VmiVersion (Module Version)](#vmiversion-module-version). The version number is specific to each module.
 
-**Return Value Description<a name="section916mcpsimp"></a>**
+**Return Value Description**
 
-Data type: enum VmiErrCode: int32_t
+Data type: `enum VmiErrCode : int32_t`
 
 The value can be any of the following:
 
 - `OK (0)`: The module is successfully started.
+
 - Other values: The module fails to be started, and an error code is returned.
 
-#### 4.3.6 StopModule<a name="ZH-CN_TOPIC_0000002518186350"></a>
+#### StopModule
 
-**Function Usage<a name="section923mcpsimp"></a>**
+**Function Usage**
 
 Stops the module.
 
-**Prototype<a name="section929mcpsimp"></a>**
+**Prototype**
 
-VmiErrCode StopModule\(VmiDataType module\)
+`VmiErrCode StopModule(VmiDataType module)`
 
-**Parameters<a name="section932mcpsimp"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
 | module | Input| VmiDataType | Module data type.|
 
-**Return Value Description<a name="section960mcpsimp"></a>**
+**Return Value Description**
 
-Data type: enum VmiErrCode: int32_t
+Data type: `enum VmiErrCode : int32_t`
 
 The value can be any of the following:
 
 - `OK (0)`: The module is successfully stopped.
+
 - Other values: The module fails to be stopped, and an error code is returned.
 
-#### 4.3.7 InjectData<a name="ZH-CN_TOPIC_0000002518346324"></a>
+#### InjectData
 
-**Function Usage<a name="section968mcpsimp"></a>**
+**Function Usage**
 
 Injects data.
 
-**Prototype<a name="section974mcpsimp"></a>**
+**Prototype**
 
-VmiErrCode InjectData\(VmiDataType module, VmiCmd cmd, uint8_t \*data, uint32_t size\)
+`VmiErrCode InjectData(VmiDataType module, VmiCmd cmd, uint8_t *data, uint32_t size)`
 
-**Parameters<a name="section977mcpsimp"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
@@ -537,26 +545,27 @@ VmiErrCode InjectData\(VmiDataType module, VmiCmd cmd, uint8_t \*data, uint32_t 
 | data | Input| uint8_t* | A pointer pointing to data to be sent.|
 | size | Input| uint32_t | Size of the data to be injected.|
 
-**Return Value Description<a name="section1031mcpsimp"></a>**
+**Return Value Description**
 
-Data type: enum VmiErrCode: int32_t
+Data type: `enum VmiErrCode : int32_t`
 
 The value can be any of the following:
 
 - `OK (0)`: The data injection is successful.
+
 - Other values: The data injection fails, and an error code is returned.
 
-#### 4.3.8 SetParam<a name="ZH-CN_TOPIC_0000002518186368"></a>
+#### SetParam
 
-**Function Usage<a name="section1039mcpsimp"></a>**
+**Function Usage**
 
 Sets parameters.
 
-**Prototype<a name="section1045mcpsimp"></a>**
+**Prototype**
 
-VmiErrCode SetParam\(VmiDataType module, VmiCmd cmd, uint8_t \*param, uint32_t size\)
+`VmiErrCode SetParam(VmiDataType module, VmiCmd cmd, uint8_t *param, uint32_t size)`
 
-**Parameters<a name="section1048mcpsimp"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
@@ -565,26 +574,27 @@ VmiErrCode SetParam\(VmiDataType module, VmiCmd cmd, uint8_t \*param, uint32_t s
 | param | Input| uint8_t* | Pointer to the parameters to be set.|
 | size | Input| uint32_t | Size of the data to be set.|
 
-**Return Value Description<a name="section1103mcpsimp"></a>**
+**Return Value Description**
 
-Data type: enum VmiErrCode: int32_t
+Data type: `enum VmiErrCode : int32_t`
 
 The value can be any of the following:
 
 - `OK (0)`: The parameters are set successfully.
+
 - Other values: The parameters fail to be set, and an error code is returned.
 
-#### 4.3.9 GetParam<a name="ZH-CN_TOPIC_0000002518186372"></a>
+#### GetParam
 
-**Function Usage<a name="section1039mcpsimp"></a>**
+**Function Usage**
 
 Obtains the parameter values of a module.
 
-**Prototype<a name="section1045mcpsimp"></a>**
+**Prototype**
 
-VmiErrCode GetParam\(VmiDataType module, VmiCmd cmd, uint8_t \*param, uint32_t size\)
+`VmiErrCode GetParam(VmiDataType module, VmiCmd cmd, uint8_t *param, uint32_t size)`
 
-**Parameters<a name="section1048mcpsimp"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
@@ -593,20 +603,21 @@ VmiErrCode GetParam\(VmiDataType module, VmiCmd cmd, uint8_t \*param, uint32_t s
 | param | Input| uint8_t* | Pointer to the output parameter data.|
 | size | Input| uint32_t | Size of the output data.|
 
-**Return Value Description<a name="section1103mcpsimp"></a>**
+**Return Value Description**
 
-Data type: enum VmiErrCode: int32_t
+Data type: `enum VmiErrCode : int32_t`
 
 The value can be any of the following:
 
 - `OK (0)`: The parameters are obtained successfully.
+
 - Other values: The parameters fail to be obtained, and an error code is returned.
 
-## 5 Video Output Development<a name="video-output-development"></a>
+## Video Output Development
 
-### 5.1 Conventions<a name="ZH-CN_TOPIC_0000002518346312"></a>
+### Conventions
 
-The video output (VO) configuration structure `VmiConfigVideo` is inherited from the `VmiConfig` structure. The structure is as follows:
+The video output (VO) configuration structure `VmiConfigVideo` is inherited from the `VmiConfig` structure. The structure of `VmiConfigVideo` is as follows:
 
 ```c++
 struct VmiConfigVideo : public VmiConfig {
@@ -619,15 +630,15 @@ struct VmiConfigVideo : public VmiConfig {
 } __attribute__((packed));
 ```
 
-### 5.2 Configuration Parameters<a name="video-configuration-parameters"></a>
+### Configuration Parameters
 
-#### 5.2.1 encoderType<a name="ZH-CN_TOPIC_0000002518186370"></a>
+#### encoderType
 
-**Variable Description<a name="section1131mcpsimp"></a>**
+**Variable Description**
 
 Encoder type.
 
-**Variable Data Definition<a name="section1137mcpsimp"></a>**
+**Variable Data Definition**
 
 ```c++
 enum EncoderType : uint32_t {
@@ -638,23 +649,23 @@ enum EncoderType : uint32_t {
 };
 ```
 
-**Restrictions<a name="section2011449181"></a>**
+**Restrictions**
 
 |Property Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-|encoderType|Encoder type.|`0`: CPU (software encoding via CPU); `1`: VPU (hardware encoding via external hardware); `2`: GPU (available only when DC1000 is used)|0|
+|encoderType|Encoder type|`0`: CPU (software encoding via CPU); `1`: VPU (hardware encoding via external hardware); `2`: GPU (available only when DC1000/DC1000C is used)|0|
 
-#### 5.2.2 videoFrameType<a name="ZH-CN_TOPIC_0000002518346298"></a>
+#### videoFrameType
 
-**Variable Description<a name="section1131mcpsimp"></a>**
+**Variable Description**
 
 VO type.
 
-**Variable Data Definition<a name="section1137mcpsimp"></a>**
+**Variable Data Definition**
 
 ```c++
 enum VideoFrameType {
-    H264,                                             // H.264 (default)
+    H264,　　　　　　　　　　　// H.264 (default)
     YUV,                       // YV12
     RGB,                       // RGBA8888 (not supported currently)
     H265,
@@ -662,21 +673,21 @@ enum VideoFrameType {
 };
 ```
 
-**Restrictions<a name="section686412814243"></a>**
+**Restrictions**
 
 RGBA8888 in RGB is not supported currently.
 
 |Property Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-| videoFrameType | Video data output format.| `0`: H.264; `1`: YUV (supported only when `encoderType` is set to `0`); `2`: RGB (not supported currently); `3`: H.265 (not supported when `encoderType` is set to `0`)| 0|
+| videoFrameType | Video data output format | `0`: H.264; `1`: YUV (supported only when `encoderType` is set to `0`); `2`: RGB (not supported currently); `3`: H.265 (not supported when `encoderType` is set to `0`) | 0 |
 
-#### 5.2.3 resolution<a name="ZH-CN_TOPIC_0000002549826169"></a>
+#### resolution
 
-**Variable Description<a name="section1131mcpsimp"></a>**
+**Variable Description**
 
 Snapshot resolution.
 
-**Variable Data Definition<a name="section1510552312316"></a>**
+**Variable Data Definition**
 
 ```c++
 struct FrameSize {
@@ -687,63 +698,63 @@ struct FrameSize {
 } __attribute__((packed));
 ```
 
-**Restrictions<a name="section1134mcpsimp"></a>**
+**Restrictions**
 
 The value ranges of `width` and `height` can be exchanged.
 
 |Property Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-| width | Width of the adaptive resolution. The value must be a multiple of 8.| 360 to 2160| 720 |
-| height | Height of the adaptive resolution. The value must be a multiple of 8.| 360 to 3840| 1280 |
+| width | Width of the adaptive resolution. The value must be a multiple of 8. | 360 to 2160 | 720 |
+| height | Height of the adaptive resolution. The value must be a multiple of 8. | 360 to 3840 | 1280 |
 | widthAligned | Aligned width of the resolution (not configurable currently).| 360 to 2160| 720 |
 | heightAligned | Aligned height of the resolution (not configurable currently).| 360 to 3840| 1280 |
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->When adaptive resolution is enabled, after you change the video output resolution (to a resolution different from the configuration at the last startup), the rendering resolution of the AOSP system and apps is changed. In this case, a compatibility issue or rendering problem may occur in some apps. Generally, this problem can be solved by restarting apps. It is recommended that you return to the home screen and clear background apps before changing the resolution.
+> When adaptive resolution is enabled, after you change the video output resolution (to a resolution different from the configuration at the last startup), the rendering resolution of the AOSP system and apps is changed. In this case, a compatibility issue or rendering problem may occur in some apps. Generally, this problem can be solved by restarting apps. It is recommended that you return to the home screen and clear background apps before changing the resolution.
 
-#### 5.2.4 density<a name="ZH-CN_TOPIC_0000002549706153"></a>
+#### density
 
-**Variable Description<a name="section111994488367"></a>**
+**Variable Description**
 
 Screen density.
 
-**Variable Data Definition<a name="section11711586375"></a>**
+**Variable Data Definition**
 
 The value is of the uint32_t type and defaults to `320`.
 
-**Restrictions<a name="section2021618526388"></a>**
+**Restrictions**
 
 |Property Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-| density | Screen density.| [120, 960] `0`: The adaptive resolution function is disabled.| 320 |
+| density | Screen density | [120, 960] `0`: The adaptive resolution function is disabled. | 320 |
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->1. When the `density` property is set to `0`, adaptive resolution is disabled. That is, when the video module is started, the existing rendering resolution and screen density of the cloud phone are used for rendering and stream output.
->2. When `ro.vmi.video.wmcmd` (an Android property) is set to `0`, adaptive resolution is also disabled. That is, if either this property or `density` is set to `0`, adaptive resolution is disabled.
+> 1. When the `density` property is set to `0`, adaptive resolution is disabled. That is, when the video module is started, the existing rendering resolution and screen density of the cloud phone are used for rendering and stream output.
+> 2. When `ro.vmi.video.wmcmd` (an Android property) is set to `0`, adaptive resolution is also disabled. That is, if either this property or `density` is set to `0`, adaptive resolution is disabled.
 
-#### 5.2.5 renderOptimize<a name="ZH-CN_TOPIC_0000002549706119"></a>
+#### renderOptimize
 
-**Variable Description<a name="section1131mcpsimp"></a>**
+**Variable Description**
 
 Rendering optimization flag. If enabled, the system rendering load can be reduced.
 
-**Restrictions<a name="section1134mcpsimp"></a>**
+**Restrictions**
 
 Currently, this parameter cannot be disabled.
 
-**Variable Data Definition<a name="section1137mcpsimp"></a>**
+**Variable Data Definition**
 
 The value is of the Boolean type and defaults to `true`, indicating that rendering optimization is performed by default.
 
-#### 5.2.6 encodeParams<a name="ZH-CN_TOPIC_0000002549706179"></a>
+#### encodeParams
 
-**Variable Description<a name="section1131mcpsimp"></a>**
+**Variable Description**
 
 Encoding parameters.
 
-**Variable Data Definition<a name="section1582613465553"></a>**
+**Variable Data Definition**
 
 ```c++
 struct EncodeParams {
@@ -775,13 +786,13 @@ enum RCMode : uint32_t  {
 };
 ```
 
-**Restrictions<a name="section1134mcpsimp"></a>**
+**Restrictions**
 
 Only the constant bit rate (CBR) and CAPPED_CRF modes are supported in rate control.
 
 |Property Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-| bitrate | Encoding bit rate.| For AMD (usually W6800): 500000 to 50000000; for DC1000: 500000 to 30000000. Unit: bit/s| 3000000 |
+| bitrate | Encoding bit rate.| For AMD (usually W6800): 500000 to 50000000; for DC1000/DC1000C: 500000 to 30000000. Unit: bit/s| 3000000 |
 | gopSize | Encoding GOP size.| 30 to 3000| 30 |
 | profile | Encoding profile. (Only `main` can be used for H.265 encoding.)| `0`: baseline (supported only in H.264 encoding); `1`: main; `2`: high (supported only in H.264 encoding)| 0|
 | rcMode | Bit rate control mode.| `0`: average bit rate (ABR) (not supported currently); `1`: constant rate factor (CRF) (not supported currently); `2`: constant bit rate (CBR); `3`: capped CRF| 2|
@@ -795,10 +806,10 @@ Only the constant bit rate (CBR) and CAPPED_CRF modes are supported in rate cont
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->1. Currently, two options are valid for the `rcMode` parameter: CBR mode and capped CRF mode. Quadra supports both modes, and DC1000 supports only the CBR mode.
->2. If `rcMode` is set to CBR, you can use the `bitrate` variable to specify the constant bit rate. If `rcMode` is set to capped CRF, use the `crf`, `maxCrfRate`, and `vbvBufferSize` variables to control the bit rate when Quadra is used, or use the `crf` and `maxCrfRate` variables to control the bit rate when DC1000 is used.
+> 1. The `rcMode` parameter supports the CBR mode and capped CRF mode. Quadra supports both modes, and DC1000/DC1000C supports only the CBR mode.
+> 2. If `rcMode` is set to CBR, you can use the `bitrate` variable to specify the constant bit rate. If `rcMode` is set to capped CRF, use the `crf`, `maxCrfRate`, and `vbvBufferSize` variables to control the bit rate when Quadra is used, or use the `crf` and `maxCrfRate` variables to control the bit rate when DC1000/DC1000C is used.
 
-### 5.3 Data Definitions<a name="ZH-CN_TOPIC_0000002518346266"></a>
+### Data Definitions
 
 The output data structure of the VO module consists of the extra data packet information (`extData`), data packet size, and actual data. The data is specified by the `VIDEO_RETURN_VIDEO_DATA` command word in the `VmiCmd` enumeration and returned to developers through callbacks. Example:
 
@@ -810,7 +821,7 @@ uint8_t* data = &videoData;
 DataCallback(module, cmd, data, sizeof(VideoData));
 ```
 
-**Definition of VideoData<a name="section1643611241814"></a>**
+**Definition of VideoData**
 
 ```c++
 struct VideoData {
@@ -820,7 +831,7 @@ struct VideoData {
 } __attribute__((packed));
 ```
 
-**Definition of ExtDataVideo<a name="section379912203186"></a>**
+**Definition of ExtDataVideo**
 
 ```c++
 struct FrameSize {
@@ -842,16 +853,16 @@ struct ExtDataVideo {
     uint8_t orientation;                // Orientation of the current frame
     FrameSize size;                     // Current frame size
     VideoLatency latencyInfo;           // Snapshotting and encoding time points
-    uint32_t frameRate;                 // Current screen refresh rate
+    uint32_t frameRate;                 // Current screen frame rate
     uint32_t transform;                 // Image rotation, which is 0 if CompositionBypass is disabled and may not be 0 if CompositionBypass is enabled
 } __attribute__((packed));
 ```
 
-### 5.4 Parameter Obtaining<a name="ZH-CN_TOPIC_0000002518186388"></a>
+### Parameter Obtaining
 
 The VO module provides the feature of obtaining parameters through the GetParam API.
 
-**VIDEO_GET_ENCODER_PARAM<a name="section14422058191914"></a>**
+**VIDEO_GET_ENCODER_PARAM**
 
 Set `module` to `DATA_VIDEO` and `cmd` to `VIDEO_GET_ENCODER_PARAM`, and input data of the `EncodeParams` type to obtain encoding parameters. Example:
 
@@ -863,11 +874,11 @@ uint8_t* param = &encodeParams;
 GetParam(module, cmd, param, sizeof(EncodeParams));
 ```
 
-### 5.5 Parameter Setting<a name="ZH-CN_TOPIC_0000002549826121"></a>
+### Parameter Setting
 
 The VO module provides the feature of setting parameters through the SetParam API.
 
-**VIDEO_SET_ENCODER_PARAM<a name="section59471253221"></a>**
+**VIDEO_SET_ENCODER_PARAM**
 
 Set `module` to `DATA_VIDEO` and `cmd` to `VIDEO_SET_ENCODER_PARAM`, and input data of the `EncodeParams` type to set encoding parameters. Example:
 
@@ -879,38 +890,38 @@ uint8_t* param = &encodeParams;
 SetParam(module, cmd, param, sizeof(EncodeParams));
 ```
 
-### 5.6 Recommended Configurations<a name="ZH-CN_TOPIC_0000002518186374"></a>
+### Recommended Configurations
 
-#### 5.6.1 Recommended Resolution and Screen Density<a name="ZH-CN_TOPIC_0000002518186384"></a>
+#### Recommended Resolution and Screen Density
 
 |Specification|Resolution Width|Resolution Height|Screen Density|
 |--|--|--|--|
-|360P|360|640|120|
-|480P|480|856|160|
-|720P|720|1280|320|
-|1080P|1080|1920|480|
+|360p|360|640|120|
+|480p|480|856|160|
+|720p|720|1280|320|
+|1080p|1080|1920|480|
 |2K|1440|2560|640|
 |4K|2160|3840|960|
 
-#### 5.6.2 Recommended Encoding Parameters<a name="ZH-CN_TOPIC_0000002549706129"></a>
+#### Recommended Encoding Parameters
 
-The encoding parameters are related to the hardware environment of the video stream cloud phone. For details about the hardware environment, see "Software Deployment > Environment Requirements > "Hardware Environment" in [Video Stream Engine installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md).
+The encoding parameters are related to the hardware environment of the video stream cloud phone. For details about the hardware environment, see "Software Deployment > Environment Requirements > Hardware Environment" in [Video Stream Engine Installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md#d1-software-deployment).
 
-**Hardware Configuration Scheme 1<a name="section1175422174614"></a>**
+**Hardware Configuration Scheme 1**
 
-**Table 1** Encoding parameters in CBR mode<a id="cbr-encoding-parameters"></a>
+**Encoding Parameters in CBR Mode**
 
 |Parameter|Recommended Value|
 |--|--|
 |bitrate|8000000|
-|gopsize|60|
+|gopSize|60|
 |profile|main|
 
-**Table 2** Encoding parameters in CAPPED_CRF mode<a id="capped-crf-encoding-parameters"></a>
+**Encoding Parameters in CAPPED_CRF Mode**
 
 |Parameter|Recommended Value|
 |--|--|
-|gopsize|60|
+|gopSize|60|
 |profile|main|
 |crf|21|
 |maxCrfRate|10000000|
@@ -918,27 +929,27 @@ The encoding parameters are related to the hardware environment of the video str
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->In hardware configuration scheme 1 (W6800 + Quadra), you are advised to use VPU for encoding. During H.265 encoding, only `main` is supported as the encoding profile.
+> In hardware configuration scheme 1 (W6800 + Quadra), you are advised to use VPU for encoding. During H.265 encoding, only `main` is supported as the encoding profile.
 
-**Hardware Configuration Scheme 2<a name="section1827916308460"></a>**
+**Hardware Configuration Scheme 2**
 
-**Table 3** Encoding parameters in CBR mode<a id="cbr-encoding-parameters-1"></a>
+**Encoding Parameters in CBR Mode**
 
 |Parameter|Recommended Value|
 |--|--|
 |bitrate|8000000|
-|gopsize|60|
+|gopSize|60|
 |profile|main|
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->In hardware configuration scheme 2 (DaoCloud DC1000), you are advised to use GPU for encoding. During H.265 encoding, only `main` is supported as the encoding profile.
+> In hardware configuration scheme 2 (DC1000/DC1000C), you are advised to use GPU for encoding. During H.265 encoding, only `main` is supported as the encoding profile.
 
-## 6 Audio Output Development<a name="ZH-CN_TOPIC_0000002518346272"></a>
+## Audio Output Development
 
-### 6.1 Conventions<a name="ZH-CN_TOPIC_0000002518346280"></a>
+### Conventions
 
-The audio output (AO) configuration structure `VmiConfigAudio` is inherited from the `VmiConfig` structure. The structure is as follows:
+The audio output (AO) configuration structure `VmiConfigAudio` is inherited from the `VmiConfig` structure. The structure of `VmiConfigAudio` is as follows:
 
 ```c++
 struct VmiConfigAudio : public VmiConfig  {
@@ -947,21 +958,21 @@ struct VmiConfigAudio : public VmiConfig  {
 } __attribute__((packed));
 ```
 
-### 6.2 Configuration Parameters<a name="ZH-CN_TOPIC_0000002549706173"></a>
+### Configuration Parameters
 
-#### 6.2.1 AudioType<a name="ZH-CN_TOPIC_0000002518186358"></a>
+#### AudioType
 
-**Variable Description<a name="section1131mcpsimp"></a>**
+**Variable Description**
 
 Audio type.
 
-**Restrictions<a name="section1134mcpsimp"></a>**
+**Restrictions**
 
 |Property Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-| audioType | Audio output format.| `0`: OPUS; `1`: PCM| 0|
+| audioType | Audio output format | `0`: OPUS; `1`: PCM | 0 |
 
-**Variable Data Definition<a name="section1137mcpsimp"></a>**
+**Variable Data Definition**
 
 ```c++
 enum AudioType : uint32_t {
@@ -970,22 +981,22 @@ enum AudioType : uint32_t {
 };
 ```
 
-#### 6.2.2 AudioPlayParams<a name="ZH-CN_TOPIC_0000002518346278"></a>
+#### AudioPlayParams
 
-**Variable Description<a name="section1131mcpsimp"></a>**
+**Variable Description**
 
 Audio playback parameters.
 
-**Restrictions<a name="section1134mcpsimp"></a>**
+**Restrictions**
 
 The `bitrate` parameter is valid only in OPUS format, and the `sampleInterval` parameter is valid in both OPUS and PCM formats.
 
 |Property Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-| sampleInterval | Audio output sampling interval.| `5`: 5 ms (not supported currently); `10`: 10 ms; `20`: 20 ms (not supported currently)| 10|
-| bitrate | Audio OPUS encoding bit rate (bit/s).| 13200 to 512000| 192000 |
+| sampleInterval | Audio output sampling interval | `5`: 5 ms (not supported currently); `10`: 10 ms; `20`: 20 ms (not supported currently) | 10 |
+| bitrate | Audio OPUS encoding bit rate (bit/s) | 13200 to 512000 | 192000 |
 
-**Variable Data Definition<a name="section1137mcpsimp"></a>**
+**Variable Data Definition**
 
 ```c++
 struct AudioPlayParams {
@@ -994,7 +1005,7 @@ struct AudioPlayParams {
 } __attribute__((packed));
 ```
 
-### 6.3 Data Definitions<a name="ZH-CN_TOPIC_0000002518186408"></a>
+### Data Definitions
 
 The output data structure of the AO module consists of the extra stream packet information (`extData`), packet size, and actual data. The data is specified by the `AUDIO_RETURN_AUDIO_PLAY_DATA` command word in the `VmiCmd` enumeration and returned to developers through callbacks.
 
@@ -1012,7 +1023,7 @@ memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData))
 DataCallback(module, cmd, data, sizeof(AudioData) + audioData.size);
 ```
 
-**Definition of AudioData<a name="section425686182512"></a>**
+**Definition of AudioData**
 
 ```c++
 struct AudioData {
@@ -1022,7 +1033,7 @@ struct AudioData {
 } __attribute__((packed));
 ```
 
-**Definition of ExtDataAudio<a name="section541061872519"></a>**
+**Definition of ExtDataAudio**
 
 ```c++
 struct ExtDataAudio {
@@ -1035,7 +1046,7 @@ struct ExtDataAudio {
 } __attribute__((packed));
 ```
 
-**Definition of AudioVolume<a name="section1613302917121"></a>**
+**Definition of AudioVolume**
 
 ```c++
 struct AudioVolume {
@@ -1044,11 +1055,11 @@ struct AudioVolume {
 } __attribute__((packed));
 ```
 
-### 6.4 Parameter Obtaining<a name="ZH-CN_TOPIC_0000002549826129"></a>
+### Parameter Obtaining
 
 The AO module provides the feature of obtaining parameters through the GetParam API.
 
-**AUDIO_GET_AUDIOPLAY_PARAM<a name="section11153139172510"></a>**
+**AUDIO_GET_AUDIOPLAY_PARAM**
 
 Set `module` to `DATA_AUDIO` and `cmd` to `AUDIO_GET_AUDIOPLAY_PARAM`, and input data of the `AudioPlayParams` type to obtain audio playback parameters. Example:
 
@@ -1060,11 +1071,11 @@ uint8_t* param = &audioPlayParams;
 GetParam(module, cmd, param, sizeof(AudioPlayParams));
 ```
 
-### 6.5 Parameter Setting<a name="ZH-CN_TOPIC_0000002549826165"></a>
+### Parameter Setting
 
 The AO module provides the feature of setting parameters through the SetParam API.
 
-**AUDIO_SET_AUDIOPLAY_PARAM<a name="section108503742617"></a>**
+**AUDIO_SET_AUDIOPLAY_PARAM**
 
 Set `module` to `DATA_AUDIO` and `cmd` to `AUDIO_SET_AUDIOPLAY_PARAM`, and input data of the `AudioPlayParams` type to set audio playback parameters. Example:
 
@@ -1076,11 +1087,11 @@ uint8_t* param = &audioPlayParams;
 SetParam(module, cmd, param, sizeof(AudioPlayParams));
 ```
 
-## 7 Microphone Input Development<a name="ZH-CN_TOPIC_0000002518346270"></a>
+## Microphone Input Development
 
-### 7.1 Conventions<a name="ZH-CN_TOPIC_0000002549706137"></a>
+### Conventions
 
-The microphone input (MI) configuration structure `VmiConfigMic` is inherited from the `VmiConfig` structure. The structure is as follows:
+The microphone input (MI) configuration structure `VmiConfigMic` is inherited from the `VmiConfig` structure. The structure of `VmiConfigMic` is as follows:
 
 ```c++
 struct VmiConfigMic : public VmiConfig {
@@ -1088,21 +1099,21 @@ struct VmiConfigMic : public VmiConfig {
 } __attribute__((packed));
 ```
 
-### 7.2 Configuration Parameters<a name="ZH-CN_TOPIC_0000002549826147"></a>
+### Configuration Parameters
 
-#### 7.2.1 AudioType<a name="ZH-CN_TOPIC_0000002549826149"></a>
+#### AudioType
 
-**Variable Description<a name="section1131mcpsimp"></a>**
+**Variable Description**
 
 Audio type.
 
-**Restrictions<a name="section1134mcpsimp"></a>**
+**Restrictions**
 
 |Property Field Name|Description|Value Range|Default Value|
 |--|--|--|--|
-| audioType | Microphone input format.| `0`: OPUS; `1`: PCM| 0|
+| audioType | Microphone input format | `0`: OPUS; `1`: PCM | 0: OPUS |
 
-**Variable Data Definition<a name="section1137mcpsimp"></a>**
+**Variable Data Definition**
 
 ```c++
 enum AudioType : uint32_t {
@@ -1111,11 +1122,11 @@ enum AudioType : uint32_t {
 };
 ```
 
-### 7.3 Data Definitions<a name="ZH-CN_TOPIC_0000002549826119"></a>
+### Data Definitions
 
 The MI data structure is the same as the AO data structure, that is, `AudioData`, which consists of the extra stream packet information (`extData`), packet size, and actual data.
 
-**Definition of AudioData<a name="section9322642132713"></a>**
+**Definition of AudioData**
 
 ```c++
 struct AudioData {
@@ -1125,7 +1136,7 @@ struct AudioData {
 } __attribute__((packed));
 ```
 
-**Definition of ExtDataAudio<a name="section1386435174014"></a>**
+**Definition of ExtDataAudio**
 
 ```c++
 struct ExtDataAudio {
@@ -1140,9 +1151,9 @@ struct ExtDataAudio {
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->The timestamp must be the timestamp of the client instead of the timestamp after the server receives audio data packets transmitted through the network. Otherwise, the packets that are severely delayed due to network fluctuation may fail to be filtered out, resulting in audio lagging.
+> The timestamp must be the timestamp of the client instead of the timestamp after the server receives audio data packets transmitted through the network. Otherwise, the packets that are severely delayed due to network fluctuation may fail to be filtered out, resulting in audio lagging.
 
-### 7.4 Data Injection<a name="ZH-CN_TOPIC_0000002518186410"></a>
+### Data Injection
 
 Different from data output, the InjectData API needs to be invoked for data input. You can specify data using the `MIC_SEND_MIC_DATA` command word in the `VmiCmd` enumeration, and inject data to the server through the InjectData API. Example:
 
@@ -1158,35 +1169,38 @@ memcpy(data + sizeof(AudioData), micData, sizeof(micData))
 InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 ```
 
-**Restrictions<a name="section1134mcpsimp"></a>**
+**Restrictions**
 
 Microphone frames need to be injected stably. Otherwise, the sound may be intermittent. The specific restrictions are subject to the value of `vmi.mic.cachefactor` in the `default.prop` configuration file. This configuration item indicates the buffer size of the microphone frame queue. The options are as follows:
 
 - `0`: One frame needs to be injected every 10 ms, causing no extra delay.
+
 - `1`: 16 frames need to be injected every 160 ms, causing a 160 ms delay.
+
 - `2`: 32 frames need to be injected every 320 ms, causing a 320 ms delay.
+
 - `3`: 48 frames need to be injected every 480 ms, causing a 480 ms delay.
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->- If microphone data is transmitted in PCM mode, it is recommended that the upstream bandwidth from the client to the server be greater than or equal to 2 Mbit/s.
->- Injected microphone frames cannot contain blank frames. Otherwise, the sound may be intermittent.
+> - If microphone data is transmitted in PCM mode, it is recommended that the upstream bandwidth from the client to the server be greater than or equal to 2 Mbit/s.
+> - Injected microphone frames cannot contain blank frames. Otherwise, the sound may be intermittent.
 
-## 8 Touch Input Development<a name="ZH-CN_TOPIC_0000002549826137"></a>
+## Touch Input Development
 
-### 8.1 Conventions<a name="ZH-CN_TOPIC_0000002549826157"></a>
+### Conventions
 
-The touch input (TI) configuration structure `VmiConfigTouch` is inherited from the `VmiConfig` structure. The structure is as follows:
+The touch input (TI) configuration structure `VmiConfigTouch` is inherited from the `VmiConfig` structure. The structure of `VmiConfigTouch` is as follows:
 
 ```c++
 struct VmiConfigTouch : public VmiConfig {} __attribute__((packed));
 ```
 
-### 8.2 Data Definitions<a name="ZH-CN_TOPIC_0000002549706169"></a>
+### Data Definitions
 
 The TI data types include `VmiTouchInputData` (touchpad) and `VmiKeyInputData` (keyboard).
 
-**VmiTouchInputData<a name="section266218297293"></a>**
+**VmiTouchInputData**
 
 Data types of the touchpad input are defined as follows:
 
@@ -1208,7 +1222,7 @@ struct VmiTouchInputData {
 } __attribute__((packed));
 ```
 
-**VmiKeyInputData<a name="section157041843162911"></a>**
+**VmiKeyInputData**
 
 Data types of the keyboard input are defined as follows:
 
@@ -1220,9 +1234,9 @@ struct VmiKeyInputData {
 } __attribute__((packed));
 ```
 
-### 8.3 Data Injection<a name="ZH-CN_TOPIC_0000002549826125"></a>
+### Data Injection
 
-Different from data output, the InjectData API needs to be invoked for data input. You can specify data using the `SEND_TOUCH_EVENT` and `SEND_KEY_EVENT` command words in the `VmiCmdTouch` enumeration and inject data to the server through the InjectData API. Example:
+Different from data output, the InjectData API needs to be invoked for data input. You can specify data using the `SEND_TOUCH_EVENT` and `SEND_KEY_EVENT` command words in the `VmiCmdTouch` enumeration, and inject data to the server through the InjectData API. Example:
 
 ```c++
 VmiDataType module = TOUCH;
@@ -1240,14 +1254,14 @@ InjectData(module, cmd, data, sizeof(VmiKeyInputData));
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->- The server performs limited verification on touch data, for example, determining whether a touch point in the touch data is within an effective area. However, the server cannot distinguish abnormal data caused by abnormal behavior. For example, a finger is lifted from the client screen but the client sends a Down event (which should be an UP event). Therefore, pay attention to this issue when writing client code.
->- On some mobile phone models (vivo phones detected), if three or more fingers press the screen simultaneously or sequentially within a short interval, the client sends an EVENT_CANCEL event. As a result, the server resets the status of all touch points, causing a touch control failure. This issue does not occur if the interval between finger pressing is longer.
+> - The server performs limited verification on touch data, for example, determining whether a touch point in the touch data is within an effective area. However, the server cannot distinguish abnormal data caused by abnormal behavior. For example, a finger is lifted from the client screen but the client sends a Down event (which should be an UP event). Therefore, pay attention to this issue when writing client code.
+> - On some mobile phone models (vivo phones detected), if three or more fingers press the screen simultaneously or sequentially within a short interval, the client sends an EVENT_CANCEL event. As a result, the server resets the status of all touch points, causing touch control failure. This issue does not occur if the interval between finger presses is longer.
 
-## 9 Sensor Input Development<a name="ZH-CN_TOPIC_0000002518346262"></a>
+## Sensor Input Development
 
-### 9.1 Conventions<a name="ZH-CN_TOPIC_0000002518186380"></a>
+### Conventions
 
-Use the `VmiConfig` structure to configure the sensor input. The structure is as follows:
+Use the `VmiConfig` structure to configure the sensor input. The structure of `VmiConfig` is as follows:
 
 ```c++
 struct VmiConfig {
@@ -1255,7 +1269,7 @@ struct VmiConfig {
 } __attribute__((packed));
 ```
 
-### 9.2 Data Definitions<a name="ZH-CN_TOPIC_0000002549826145"></a>
+### Data Definitions
 
 The input data structure of the sensor input module consists of four parts: `x`, `y`, `z`, and `type`. The data is provided for developers through callbacks.
 
@@ -1299,7 +1313,7 @@ struct SensorActivateData {
 } __attribute__((packed));
 ```
 
-### 9.3 Data Injection<a name="ZH-CN_TOPIC_0000002518186406"></a>
+### Data Injection
 
 The InjectData API needs to be invoked for data input. You can specify data using the `SENSOR_SEND_SENSOR_DATA` command word in the `VmiCmd` enumeration and inject data to the server through the InjectData API. Example:
 
@@ -1311,7 +1325,7 @@ uint8_t* data = &sensorData;
 InjectData(module, cmd, data, sizeof(SensorData));
 ```
 
-### 9.4 Data Output<a name="ZH-CN_TOPIC_0000002549826117"></a>
+### Data Output
 
 The SetParam API needs to be invoked for data output. You can specify data using the `SENSOR_RETURN_REGISTER_CLIENT_SENSOR`, `SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR`, and `SENSOR_RETURN_UPDATE_CLIENT_SENSOR_RATE` command words in the `VmiCmd` enumeration and output data to the client through the SetParam API. Example:
 
@@ -1325,11 +1339,11 @@ uint8_t* data = &sensorActivateData;
 SetParam(module, cmd, param, sizeof(SensorActivateData));
 ```
 
-## 10 GPS Input Development<a name="ZH-CN_TOPIC_0000002518346296"></a>
+## GPS Input Development
 
-### 10.1 Conventions<a name="ZH-CN_TOPIC_0000002549706159"></a>
+### Conventions
 
-Use the `VmiConfig` structure to configure the GPS input. The structure is as follows:
+Use the `VmiConfig` structure to configure the GPS input. The structure of `VmiConfig` is as follows:
 
 ```c++
 struct VmiConfig {
@@ -1337,11 +1351,11 @@ struct VmiConfig {
 } __attribute__((packed));
 ```
 
-### 10.2 Data Definitions<a name="ZH-CN_TOPIC_0000002549706171"></a>
+### Data Definitions
 
 The GPS input data types include the longitude and latitude data in the `VmiGpsLocationData` structure.
 
-**VmiGpsLocationData<a name="section266218297293"></a>**
+**VmiGpsLocationData**
 
 The input data types of the longitude and latitude are defined as follows:
 
@@ -1357,9 +1371,9 @@ struct VmiGpsLocationData {
 } __attribute__((packed));
 ```
 
-### 10.3 Data Injection<a name="ZH-CN_TOPIC_0000002549706139"></a>
+### Data Injection
 
-The InjectData API needs to be invoked for data input. You can specify data using the `GPS_SEND_LOCATION_DATA` command word in the `VmiCmd` enumeration and inject data to the server through the InjectData API. Example:
+The InjectData API needs to be invoked for data input. You can specify data using the `GPS_SEND_LOCATION_DATA` command word in the `VmiCmd` enumeration, and inject data to the server through the InjectData API. Example:
 
 ```c++
 VmiDataType module = DATA_GPS;
@@ -1369,15 +1383,15 @@ uint8_t* data = &locationData;
 InjectData(module, cmd, data, sizeof(VmiGpsLocationData));
 ```
 
-## 11 APIs for Non-commercial Implementation<a name="ZH-CN_TOPIC_0000002549826171"></a>
+## APIs for Non-commercial Implementation
 
-### 11.1 Encoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549706127"></a>
+### Encoding APIs (C and C++)
 
-#### 11.1.1 API Description<a name="ZH-CN_TOPIC_0000002518186382"></a>
+#### API Description
 
 The video encoding module provides external video encoding APIs required for the normal running of the video stream engine server. These APIs are implemented by secondary developers and provided as a DLL. The name of the DLL is `libVideoCodec.so`.
 
-Developers can inherit the VideoEncoder class and implement the APIs according to the description in this section. In addition, [11.1.2-CreateVideoEncoder](#CreateVideoEncoder) and [11.1.3-DestroyVideoEncoder](#DestroyVideoEncoder) are provided for creating specific instances of this implementation class.
+Developers can inherit the VideoEncoder class and implement the APIs according to the description in this section. In addition, [CreateVideoEncoder](#createvideoencoder) and [DestroyVideoEncoder](#destroyvideoencoder) are provided for creating specific instances of this implementation class.
 
 The return codes are defined as follows:
 
@@ -1413,76 +1427,78 @@ enum EncoderFormat: uint32_t {
 };
 ```
 
-#### 11.1.2 CreateVideoEncoder<a name="CreateVideoEncoder"></a>
+#### CreateVideoEncoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Creates an encoder instance.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode CreateVideoEncoder\(int32_t\*fd, EncoderFormat encoderFormat\)
+`EncoderRetCode CreateVideoEncoder(int32_t *fd, EncoderFormat encoderFormat)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
-| fd | Input| int32_t* | Encoder descriptor.|
-| encoderFormat | Input| `EncoderFormat` enumeration| Type of the encoder to be created.|
+| fd | Input| int32_t* | Encoder descriptor|
+| encoderFormat | Input | EncoderFormat enum | Type of the encoder to be created |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder instance is successfully created.
+
 - `VIDEO_ENCODER_CREATE_FAIL`: Failed to create an encoder instance.
 
-#### 11.1.3 DestroyVideoEncoder<a name="DestroyVideoEncoder"></a>
+#### DestroyVideoEncoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Destroys an encoder instance.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode DestroyVideoEncoder\(int32_t fd\)
+`EncoderRetCode DestroyVideoEncoder(int32_t fd)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
-| fd | Input| int32_t | Encoder descriptor.|
+| fd | Input| int32_t | Encoder descriptor |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder instance is successfully destroyed.
+
 - `VIDEO_ENCODER_DESTROY_FAIL`: Failed to destroy the encoder instance.
 
-**Involved APIs of the VideoEncoder Class<a name="section97621346152119"></a>**
+**Involved APIs of the VideoEncoder Class**
 
-For details about involved APIs of the VideoEncoder class, see [11.1.4-Config](#Config), [11.1.5-InitEncoder](#InitEncoder), [11.1.6-StartEncoder](#StartEncoder), [11.1.7-SetParams](#SetParams), [11.1.8-EncodeOneFrame], [11.1.9-StopEncoder](#StopEncoder), [11.1.10-DestroyEncoder](#DestroyEncoder), and [11.1.11-ResetEncoder](#ResetEncoder).
+For details about involved APIs of the VideoEncoder class, see [Config](#config), [InitEncoder](#initencoder), [StartEncoder](#startencoder), [SetParams](#setparams), [EncodeOneFrame](#encodeoneframe), [StopEncoder](#stopencoder), [DestroyEncoder](#destroyencoder), and [ResetEncoder](#resetencoder).
 
-#### 11.1.4 Config<a name="Config"></a>
+#### Config
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
-Inputs the initial configuration of the encoder. This API needs to be called before [11.1.5-InitEncoder](#InitEncoder).
+Inputs the initial configuration of the encoder. This API needs to be called before [InitEncoder](#initencoder).
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
-This parameter passes through the parameters listed in [5.2-Configuration Parameters](#video-configuration-parameters) to `VmiEncoderConfig` and `VmiEncoderParams`. The restrictions on these parameters are still valid.
+This parameter passes through the parameters listed in [Configuration Parameters](#configuration-parameters) to `VmiEncoderConfig` and `VmiEncoderParams`. The restrictions on these configuration parameters are still valid.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode Config\(int32_t fd, const VmiEncoderConfig& config\)
+`EncoderRetCode Config(int32_t fd, const VmiEncoderConfig& config)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
@@ -1513,83 +1529,85 @@ struct VmiEncoderConfig {
 };
 ```
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data Type: `EncoderRetCode`
 
 The value can be any of the following:
 
 `VIDEO_ENCODER_SUCCESS`: The encoder is successfully configured.
 
-#### 11.1.5 InitEncoder<a name="InitEncoder"></a>
+#### InitEncoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Initializes the encoder.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
-The [11.1.4-Config](#Config) API must have been invoked to input valid configurations.
+The [Config](#config) API must have been invoked to input valid configurations.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode InitEncoder\(int32_t fd\)
+`EncoderRetCode InitEncoder(int32_t fd)`
 
-**Parameters<a name="section42241738122511"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | fd | Input| int32_t | Encoder descriptor.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully initialized.
-- `VIDEO_ENCODER_INIT_FAIL`: The encoder fails to be initialized.
 
-#### 11.1.6 StartEncoder<a name="StartEncoder"></a>
+- `VIDEO_ENCODER_INIT_FAIL`: Failed to initialize the encoder.
 
-**Function Usage<a name="section20501062"></a>**
+#### StartEncoder
+
+**Function Usage**
 
 Starts the encoder.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode StartEncoder\(int32_t fd\)
+`EncoderRetCode StartEncoder(int32_t fd)`
 
-**Parameters<a name="section42241738122511"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | fd | Input| int32_t | Encoder descriptor.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully started.
-- `VIDEO_ENCODER_INIT_FAIL`: The encoder fails to be initialized.
 
-#### 11.1.7 SetParams<a name="SetParams"></a>
+- `VIDEO_ENCODER_INIT_FAIL`: Failed to initialize the encoder.
 
-**Function Usage<a name="section20501062"></a>**
+#### SetParams
+
+**Function Usage**
 
 Sets the encoding parameters of the encoder.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
-This parameter passes through the parameters listed in [5.2-Configuration Parameters](#video-configuration-parameters) to `VmiEncoderParams`. The restrictions on these parameters are still valid.
+This parameter passes through the parameters listed in [Configuration Parameters](#configuration-parameters) to `VmiEncoderParams`. The restrictions on these parameters are still valid.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode SetParams\(int32_t fd, const VmiEncoderParams& params\)
+`EncoderRetCode SetParams(int32_t fd, const VmiEncoderParams& params)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
@@ -1611,135 +1629,139 @@ struct VmiEncoderParams {
 };
 ```
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 `VIDEO_ENCODER_SUCCESS`: The encoder is successfully set.
 
-#### 11.1.8 EncodeOneFrame<a name="EncodeOneFrame"></a>
+#### EncodeOneFrame
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Encodes data of one frame.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode EncodeOneFrame\(int32_t fd, const uint8_t \*inputData, uint32_t inputSize, uint8_t \*\*outputData, uint32_t \*outputSize\)
+`EncoderRetCode EncodeOneFrame(int32_t fd, const uint8_t *inputData, uint32_t inputSize, uint8_t **outputData, uint32_t *outputSize)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | fd | Input| int32_t | Encoder descriptor.|
-| inputData | Input| const uint8_t * | Start address of the buffer for storing data to be encoded. The data format is YUV420p.|
-| inputSize | Input| uint32_t | Length of the data to be encoded, in bytes.|
+| inputData | Input | const uint8_t * | Start address of the buffer for storing data to be encoded. The data format is YUV420p. |
+| inputSize | Input | uint32_t | Length of the data to be encoded, in bytes. |
 | outputData | Output| uint8_t **| Output data.|
-| outputSize | Output| uint32_t * | Length of the output data, in bytes.|
+| outputSize | Output | uint32_t * | Length of the output data, in bytes. |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: Data of one frame is successfully encoded.
+
 - `VIDEO_ENCODER_ENCODE_FAIL`: Failed to encode data of one frame.
 
-#### 11.1.9 StopEncoder<a name="StopEncoder"></a>
+#### StopEncoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Stops the encoder.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode StopEncoder\(int32_t fd\)
+`EncoderRetCode StopEncoder(int32_t fd)`
 
-**Parameters<a name="section42241738122511"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | fd | Input| int32_t | Encoder descriptor.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully stopped.
+
 - `VIDEO_ENCODER_STOP_FAIL`: Failed to stop the encoder.
 
-#### 11.1.10 DestroyEncoder<a name="DestroyEncoder"></a>
+#### DestroyEncoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Destroys the encoder and releases encoding resources.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode DestoryEncoder\(int32_t fd\)
+`EncoderRetCode DestroyEncoder(int32_t fd)`
 
-**Parameters<a name="section42241738122511"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | fd | Input| int32_t | Encoder descriptor.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
-- `VIDEO_ENCODER_SUCCESS`: The encoder is successfully stopped.
+- `VIDEO_ENCODER_SUCCESS`: The encoder is successfully destroyed.
+
 - `VIDEO_ENCODER_DESTROY_FAIL`: Failed to destroy the encoder.
 
-#### 11.1.11 ResetEncoder<a name="ResetEncoder"></a>
+#### ResetEncoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Resets the encoder.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode ResetEncoder\(int32_t fd\)
+`EncoderRetCode ResetEncoder(int32_t fd)`
 
-**Parameters<a name="section42241738122511"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | fd | Input| int32_t | Encoder descriptor.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully reset.
+
 - `VIDEO_ENCODER_RESET_FAIL`: Failed to reset the encoder.
 
-#### 11.1.12 FrameScaling<a name="ZH-CN_TOPIC_0000002518186362"></a>
+#### FrameScaling
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Sets the expected encoding width and height.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
-This parameter passes through the parameters listed in [5.2-Configuration Parameters](#video-configuration-parameters) to `FrameScaling`. The restrictions on these parameters are still valid.
+This parameter passes through the parameters listed in [Configuration Parameters](#configuration-parameters) to `FrameScaling`. The restrictions on these parameters are still valid.
 
 Secondary developers can directly call this API to implement YUV frame scaling.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-EncoderRetCode FrameScaling\(uint32_t width, uint32_t height\)
+`EncoderRetCode FrameScaling(uint32_t width, uint32_t height)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 `width`: expected encoding width. Its value type is uint32_t. This field is described as follows.
 
@@ -1753,24 +1775,25 @@ EncoderRetCode FrameScaling\(uint32_t width, uint32_t height\)
 |--|--|--|--|
 | height | Input| uint32_t | Expected encoding height.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: EncoderRetCode
+Data type: `EncoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: success
+
 - `VIDEO_ENCODER_SET_ENCODE_PARAMS_FAIL`: failure
 
-### 11.2 Decoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549826141"></a>
+### Decoding APIs (C and C++)
 
-#### 11.2.1 API Description<a name="ZH-CN_TOPIC_0000002518346288"></a>
+#### API Description
 
 The video decoding module provides external video decoding APIs required for the normal running of the video stream engine server. These APIs are implemented by secondary developers and provided as a DLL. The name of the DLL is `libVideoDecoder.so`.
 
-Developers can inherit the `VideoDecoder` class and implement the APIs according to the description in this section. In addition, [11.2.2-CreateVideoDecoder] and [11.2.3-DestroyVideoDecoder](#DestroyVideoDecoder) are provided for creating specific instances of this implementation class.
+Developers can inherit the `VideoDecoder` class and implement the APIs according to the description in this section. In addition, [CreateVideoDecoder](#createvideodecoder) and [DestroyVideoDecoder](#destroyvideodecoder) are provided for creating specific instances of this implementation class.
 
-This API is used with the internal OMX decoding component of the Android system and does not interfere with the video stream output component.
+This API is used together with the internal OMX decoding component of Android and does not interfere with the video stream output component.
 
 The return codes are defined as follows:
 
@@ -1794,71 +1817,73 @@ enum DecoderRetCode : uint32_t {
 };
 ```
 
-#### 11.2.2 CreateVideoDecoder<a name="CreateVideoDecoder"></a>
+#### CreateVideoDecoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Creates a decoder instance.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode CreateVideoDecoder\(VideoDecoder \*\*decoder\)
+`DecoderRetCode CreateVideoDecoder(VideoDecoder **decoder)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | decoder | Output| VideoDecoder **| Two-dimensional pointer to the decoder instance. It is used to store the decoder instance created in the API.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder instance is successfully created.
+
 - `VIDEO_DECODER_CREATE_FAIL`: Failed to create a decoder instance.
 
-#### 11.2.3 DestroyVideoDecoder<a name="DestroyVideoDecoder"></a>
+#### DestroyVideoDecoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Destroys a decoder instance.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode DestroyVideoDecoder\(VideoDecoder \*decoder\)
+`DecoderRetCode DestroyVideoDecoder(VideoDecoder *decoder)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | decoder | Input| VideoDecoder * | Pointer to the decoder instance to be destroyed.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder instance is successfully destroyed.
+
 - `VIDEO_DECODER_DESTROY_FAIL`: Failed to destroy the decoder instance.
 
-**Involved APIs of the VideoDecoder Class<a name="section97621346152119"></a>**
+**Involved APIs of the VideoDecoder Class**
 
-For details about involved APIs of the VideoDecoder class, see [11.2.4-CreateDecoder](#CreateDecoder), [11.2.5-InitDecoder](#InitDecoder), [11.2.6-SetDecodeParams](#SetDecodeParams), [11.2.7-GetDecodeParams](#GetDecodeParams), [11.2.8-SetCallbacks](#SetCallbacks), [11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc), [11.2.10-SendStreamData](#SendStreamData), [11.2.11-Flush](#Flush), [11.2.12-StartDecoder](#StartDecoder), [11.2.13-StopDecoder](#StopDecoder), and [11.2.14-DestroyDecoder](#DestroyDecoder).
+For details about the involved APIs of the VideoDecoder class, see [CreateDecoder](#createdecoder), [InitDecoder](#initdecoder), [SetDecodeParams](#setdecodeparams), [GetDecodeParams](#getdecodeparams), [SetCallbacks](#setcallbacks), [SetCopyFrameFunc](#setcopyframefunc), [SendStreamData](#sendstreamdata), [Flush](#flush), [StartDecoder](#startdecoder), [StopDecoder](#stopdecoder), and [DestroyDecoder](#destroydecoder).
 
-#### 11.2.4 CreateDecoder<a name="CreateDecoder"></a>
+#### CreateDecoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Creates a decoder.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode CreateDecoder\(MediaStreamFormat__decType\)
+`DecoderRetCode CreateDecoder(MediaStreamFormat decType)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
@@ -1875,49 +1900,51 @@ enum MediaStreamFormat : uint32_t {
 };
 ```
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully created.
+
 - `VIDEO_DECODER_CREATE_FAIL`: Failed to create a decoder.
 
-#### 11.2.5 InitDecoder<a name="InitDecoder"></a>
+#### InitDecoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Initializes the decoder.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
-A decoder must have been created through the [11.2.4-CreateDecoder](#CreateDecoder) API before you invoke InitDecoder.
+A decoder must have been created through the [CreateDecoder](#createdecoder) API before you invoke InitDecoder.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode InitDecoder\(\)
+`DecoderRetCode InitDecoder()`
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully initialized.
+
 - `VIDEO_DECODER_INIT_FAIL`: Failed to initialize the decoder.
 
-#### 11.2.6 SetDecodeParams<a name="SetDecodeParams"></a>
+#### SetDecodeParams
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Sets decoder parameters.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode SetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
+`DecoderRetCode SetDecodeParams(DecodeParamsIndex index, void *decParams)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
@@ -1967,54 +1994,56 @@ struct AlignInfoParams {
 };
 ```
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully configured.
+
 - `VIDEO_DECODER_SET_DECODE_PARAMS_FAIL`: Failed to configure the decoder.
 
-#### 11.2.7 GetDecodeParams<a name="GetDecodeParams"></a>
+#### GetDecodeParams
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Obtains the decoding parameters of the decoder.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode GetDecodeParams\(DecodeParamsIndex index, void \*decParams\)
+`DecoderRetCode GetDecodeParams(DecodeParamsIndex index, void *decParams)`
 
-**Parameters<a name="section2630616193212"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
 | index | Input| DecodeParamsIndex | Type of a parameter to be got.|
 | decParams | Input| void * | Memory address of the parameter.|
 
-For details about the parameters, see [11.2.6-SetDecodeParams](#SetDecodeParams).
+For details about the parameters, see [SetDecodeParams](#setdecodeparams).
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoding parameters are successfully obtained.
+
 - `VIDEO_DECODER_GET_DECODE_PARAMS_FAIL`: Failed to obtain the decoding parameters.
 
-#### 11.2.8 SetCallbacks<a name="SetCallbacks"></a>
+#### SetCallbacks
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Sets the callback for notifying decoder events.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode SetCallbacks\(std::function<void\(DecodeEventIndex, uint32_t, void \*\)\> eventCallBack\)
+`DecoderRetCode SetCallbacks(std::function<void(DecodeEventIndex, uint32_t, void *)> eventCallBack)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
@@ -2030,197 +2059,206 @@ enum DecodeEventIndex : uint32_t {
 };
 ```
 
-`INDEX_PIC_INFO_CHANGE` indicates that the size of decoded images changes. In this case, mount `struct PicInfoParams *` to the `void *` parameter. For details, see [11.2.6-SetDecodeParams](#SetDecodeParams).
+`INDEX_PIC_INFO_CHANGE` indicates that the size of decoded images changes. In this case, mount `struct PicInfoParams *` to the `void *` parameter. For details, see [SetDecodeParams](#setdecodeparams).
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The callback is successfully set.
+
 - `VIDEO_DECODER_SET_FUNC_FAIL`: Failed to set the callback.
 
-#### 11.2.9 SetCopyFrameFunc<a name="SetCopyFrameFunc"></a>
+#### SetCopyFrameFunc
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
-Sets the hook function to reduce memory copies when frame data is output. This API is provided for the decoder.
+Provides a callback to the decoder. The decoder invokes it when outputting frame data, which helps reduce memory copies.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode SetCopyFrameFunc\(std::function<uint32_t\(uint8_t\*, uint8_t\*, const PicInfoParams &, uint32_t\)\> copyFrame\)
+`DecoderRetCode SetCopyFrameFunc(std::function<uint32_t(uint8_t*, uint8_t*, const PicInfoParams &, uint32_t)> copyFrame)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| copyFrame | Input| std::function<uint32_t(uint8_t*, uint8_t*, const PicInfoParams &, uint32_t)> | Sets the hook function for copying decoded data of one frame to the output buffer. This function is used to shield format differences of the output API.|
+| copyFrame | Input | std::function<uint32_t(uint8_t*, uint8_t*, const PicInfoParams &, uint32_t)> | Sets the hook function for copying decoded data of one frame to the output buffer. This function is used to shield format differences of the output API. |
 
-In the callback, the first `uint8_t*` indicates the address of decoded data and the second `uint8_t*` indicates the destination of the copied data, which needs to be the same as the buffer address entered in [11.2.11-RetrieveFrameData](#RetrieveFrameData). `const PicInfoParams &` indicates the image width and height (see [11.2.6-SetDecodeParams](#SetDecodeParams)). `uint32_t` indicates the maximum length of the output buffer, which needs to be the same as the maximum buffer size entered in [11.2.11-RetrieveFrameData](#RetrieveFrameData). The return value of this callback is the actual size of processed data.
+In the callback, the first `uint8_t*` indicates the address of decoded data and the second `uint8_t*` indicates the destination of the copied data, which needs to be the same as the buffer address entered in [RetrieveFrameData](#retrieveframedata). `const PicInfoParams &` indicates the image width and height (see [SetDecodeParams](#setdecodeparams)). `uint32_t` indicates the maximum length of the output buffer, which needs to be the same as the maximum buffer size entered in [RetrieveFrameData](#retrieveframedata). The return value of this callback is the actual size of processed data.
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The callback is successfully set.
+
 - `VIDEO_DECODER_SET_FUNC_FAIL`: Failed to set the callback.
 
-#### 11.2.10 SendStreamData<a name="SendStreamData"></a>
+#### SendStreamData
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Sends a copy of stream data to the decoder for decoding. This API is synchronous.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode SendStreamData\(uint8_t \*buffer, uint32_t filledLen\)
+`DecoderRetCode SendStreamData(uint8_t *buffer, uint32_t filledLen)`
 
-**Parameters<a name="section47106995"></a>**
-
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
-| buffer | Input| uint8_t * | Buffer of the input stream data.|
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| filledLen | Input| uint32_t | Length of the input stream data.|
+| buffer | Input | uint8_t * | Buffer of the input stream data. |
 
-**Return Value Description<a name="section7911548131510"></a>**
+|Field Name|Input/Output|Field Type|Description|
+|--|--|--|--|
+| filledLen | Input | uint32_t | Length of the input stream data. |
 
-Data type: DecoderRetCode
+**Return Value Description**
+
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: Stream data is sent successfully.
+
 - `VIDEO_DECODER_DECODE_FAIL`: Failed to send stream data.
+
 - `VIDEO_DECODER_WRITE_OVERFLOW`: Write overflow.
 
-#### 11.2.11 RetrieveFrameData<a name="RetrieveFrameData"></a>
+#### RetrieveFrameData
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
-Retrieves decoded data of one frame. This API is synchronous. The CopyFrame function provided in [11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc) needs to be used for copying data.
+Retrieves decoded data of one frame. This API is synchronous. The CopyFrame function provided in [SetCopyFrameFunc](#setcopyframefunc) needs to be used for copying data.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode RetrieveFrameData\(uint8_t \*buffer, uint32_t maxLen, uint32_t \*filledLen\)
+`DecoderRetCode RetrieveFrameData(uint8_t *buffer, uint32_t maxLen, uint32_t *filledLen)`
 
-**Parameters<a name="section47106995"></a>**
-
-|Field Name|Input/Output|Field Type|Description|
-|--|--|--|--|
-| buffer | Input| uint8_t * | Buffer for receiving output data.|
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| maxLen | Input| uint32_t | Maximum length of the output buffer.|
+| buffer | Input | uint8_t * | Buffer for receiving output data. |
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| filledLen | Output| uint32_t * | Actual length of the output data.|
+| maxLen | Input | uint32_t | Maximum length of the output buffer. |
 
-**Return Value Description<a name="section7911548131510"></a>**
+|Field Name|Input/Output|Field Type|Description|
+|--|--|--|--|
+| filledLen | Output | uint32_t * | Actual length of the output data. |
 
-Data type: DecoderRetCode
+**Return Value Description**
+
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
-- `VIDEO_DECODER_SUCCESS`: The decoded data is successfully retrieved.
+- `VIDEO_DECODER_SUCCESS`: The decoded data is retrieved successfully.
+
 - `VIDEO_DECODER_DECODE_FAIL`: Failed to retrieve the decoded data.
+
 - `VIDEO_DECODER_READ_UNDERFLOW`: Read underflow.
 
-#### 11.2.12 Flush<a name="Flush"></a>
+#### Flush
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Flushes all the current decoding buffers. Generally, this API is invoked when the progress bar is dragged.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode Flush\(\)
+`DecoderRetCode Flush()`
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
-- `VIDEO_DECODER_SUCCESS`: The decoding buffer status is successfully reset.
+- `VIDEO_DECODER_SUCCESS`: The decoding buffer status is reset successfully.
+
 - `VIDEO_DECODER_RESET_FAIL`: Failed to reset the decoding buffer status.
 
-#### 11.2.13 StartDecoder<a name="StartDecoder"></a>
+#### StartDecoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Starts the decoder. After the decoder is started successfully, the decoding process starts.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode StartDecoder\(\)
+`DecoderRetCode StartDecoder()`
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully started.
+
 - `VIDEO_DECODER_START_FAIL`: Failed to start the decoder.
 
-#### 11.2.14 StopDecoder<a name="StopDecoder"></a>
+#### StopDecoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Stops the decoder.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-DecoderRetCode StopDecoder\(\)
+`DecoderRetCode StopDecoder()`
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: DecoderRetCode
+Data type: `DecoderRetCode`
 
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is stopped successfully.
+
 - `VIDEO_DECODER_STOP_FAIL`: Failed to stop the decoder.
 
-#### 11.2.15 DestroyDecoder<a name="DestroyDecoder"></a>
+#### DestroyDecoder
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Destroys the decoder.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-void DestroyDecoder\(\)
+`void DestroyDecoder()`
 
-### 11.3 GPU Acceleration APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549706149"></a>
+### GPU Acceleration APIs (C and C++)
 
-#### 11.3.1 API Description<a name="ZH-CN_TOPIC_0000002518186354"></a>
+#### API Description
 
-The GPU acceleration module provides GPU acceleration APIs required for the normal running of the video stream engine server, including the RGB-to-YUV conversion and GPU encoding functions. These APIs are implemented by secondary developers or the GPU vendor and provided as a DLL. The DLLs are `libVmiEncTurbo.so` (vendor library) and `libVmiEncTurboSys.so` (system library).
+The GPU acceleration module provides GPU acceleration APIs required for the normal running of the video stream engine server, including the RGB-to-YUV conversion and GPU encoding functions. These APIs are implemented by secondary developers or the GPU vendor and provided as DLLs, including `libVmiEncTurbo.so` (vendor library) and `libVmiEncTurboSys.so` (system library).
 
-#### 11.3.2 QueryModule<a name="QueryModule"></a>
+#### QueryModule
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Queries GPU models and acceleration capabilities supported by the current system.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-void QueryModule\(ModuleInfo \*\*moduleList, uint32_t \*listSize\)
+`void QueryModule(ModuleInfo **moduleList, uint32_t *listSize)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
-| moduleList | Output| ModuleInfo **| List of GPU acceleration classes supported by the system. Each item contains the ID and capability of a GPU acceleration class.|
-| listSize | Output| uint32_t * | `moduleList` length.|
+| moduleList | Output | ModuleInfo ** | List of GPU acceleration classes supported by the system. Each item contains the ID and capability of a GPU acceleration class. |
+| listSize | Output | uint32_t * | `moduleList` length. |
 
 Definition of `moduleList`:
 
@@ -2267,33 +2305,33 @@ enum GpuType : uint32_t {
 };
 ```
 
-#### 11.3.3 CreateModule<a name="CreateModule"></a>
+#### CreateModule
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Creates an instance of the specified GPU acceleration class.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
-The value of `moduleId` must be one of the values in `moduleList` returned by [11.3.2-QueryModule](#QueryModule).
+The value of `moduleId` must be one of the values in `moduleList` returned by [QueryModule](#querymodule).
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-void \*CreateModule\(uint32_t moduleId\)
+`void *CreateModule(uint32_t moduleId)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
-| moduleId | Input| uint32_t | Specifies the GPU model to be used for GPU acceleration.|
+| moduleId | Input | uint32_t | Specifies the GPU model to be used for GPU acceleration. |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: void *, which points to the created instance of the specified GPU acceleration class. This instance can be used through APIs defined in GpuEncoderBase.
+Data type: `void *`, which points to the created instance of the specified GPU acceleration class. This instance can be used through APIs defined in GpuEncoderBase.
 
-**Involved APIs of the GpuEncoderBase Class<a name="section97621346152119"></a>**
+**Involved APIs of the GpuEncoderBase Class**
 
-For details about involved APIs of the GpuEncoderBase class, see [11.3.5-Init](#Init), [11.3.6-Deinit](#Deinit), [11.3.7-Start](#Start), [11.3.8-Stop](#Stop), [11.3.9-CreateBuffer](#CreateBuffer), [11.3.10-ImportBuffer](#ImportBuffer), [11.3.11-ReleaseBuffer](#ReleaseBuffer), [11.3.12-MapBuffer](#MapBuffer), [11.3.13-UnmapBuffer](#UnmapBuffer), [11.3.14-RetriveBufferData](#RetriveBufferData), [11.3.15-Convert](#Convert), [11.3.16-Encode](#Encode), [11.3.17-SetEncodeParam](#SetEncodeParam), and [11.3.18-Reset](#Reset).
+For details about involved APIs of the GpuEncoderBase class, see [Init](#init), [Deinit](#deinit), [Start](#start), [Stop](#stop), [CreateBuffer](#createbuffer), [ImportBuffer](#importbuffer), [ReleaseBuffer](#releasebuffer), [MapBuffer](#mapbuffer), [UnmapBuffer](#unmapbuffer), [RetriveBufferData](#retrivebufferdata), [Convert](#convert), [Encode](#encode), [SetEncodeParam](#setencodeparam), and [Reset](#reset).
 
 Return values of the GpuEncoderBase class:
 
@@ -2313,41 +2351,41 @@ enum GpuEncoderErrorCode : uint32_t {
 };
 ```
 
-#### 11.3.4 DestroyModule<a name="ZH-CN_TOPIC_0000002549826151"></a>
+#### DestroyModule
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
-Destroys a GPU acceleration instance.
+Destroys a GPU acceleration class instance.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
-The entered instance must be created by [11.3.3-CreateModule](#CreateModule).
+The entered instance must be created by [CreateModule](#createmodule).
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-void DestroyModule\(void \*module\)
+`void DestroyModule(void *module)`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Parameter|Input/Output|Type|Description|
 |--|--|--|--|
-| module | Input| void * | Pointer to the instance to be destroyed.|
+| module | Input | void * | Pointer to the GPU acceleration class instance to be destroyed |
 
-#### 11.3.5 Init<a name="Init"></a>
+#### Init
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Initializes a GPU acceleration instance.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t Init\(EncoderConfig &config\) = 0
+`int32_t Init(EncoderConfig &config) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| config | Input| EncoderConfig & | A reference to the `EncoderConfig` structure, representing GPU encoding configuration items.|
+| config | Input | EncoderConfig & | A reference to the `EncoderConfig` structure, representing GPU encoding configuration items. |
 
 The `EncoderConfig` structure and its enumeration are defined as follows:
 
@@ -2400,91 +2438,99 @@ struct EncoderConfig {
 };
 ```
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is successfully initialized.
+
 - Other: Failed to initialize the GPU acceleration instance.
 
-#### 11.3.6 Deinit<a name="Deinit"></a>
+#### Deinit
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
-Destroys a GPU acceleration class instance.
+Destroys a GPU acceleration instance.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t DeInit\(\) = 0
+`int32_t DeInit() = 0`
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
-- `OK`: The GPU acceleration class instance is successfully destroyed.
-- Other: Failed to destroy the GPU acceleration class instance.
+- `OK`: The GPU acceleration instance is successfully destroyed.
 
-#### 11.3.7 Start<a name="Start"></a>
+- Other: Failed to destroy the GPU acceleration instance.
+
+#### Start
+
+**Function Usage**
 
 Starts a GPU acceleration instance.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
 Prerequisite: The Init API has been successfully called.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t Start\(\) = 0
+`int32_t Start() = 0`
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is started successfully.
+
 - Other: Failed to start the GPU acceleration instance.
 
-#### 11.3.8 Stop<a name="Stop"></a>
+#### Stop
+
+**Function Usage**
 
 Stops a GPU acceleration instance.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
 Prerequisite: The Start API has been successfully called.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t Stop\(\) = 0
+`int32_t Stop() = 0`
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is stopped successfully.
+
 - Other: Failed to stop the GPU acceleration instance.
 
-#### 11.3.9 CreateBuffer<a name="CreateBuffer"></a>
+#### CreateBuffer
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Creates a buffer.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t CreateBuffer\(FrameFormat format, MemType type, GpuEncoderBufferT &buffer\) = 0
+`int32_t CreateBuffer(FrameFormat format, MemType type, GpuEncoderBufferT &buffer) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| format | Input| FrameFormat | Format of the buffer to be created.|
+| format | Input | FrameFormat | Format of the buffer to be created. |
 
 Enumeration of `FrameFormat`:
 
@@ -2503,7 +2549,7 @@ enum FrameFormat : uint32_t {
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| type | Input| MemType | Location of space to be allocated to the buffer.|
+| type | Input | MemType | Location of space to be allocated to the buffer. |
 
 Enumeration of `MemType`:
 
@@ -2518,9 +2564,9 @@ enum MemType : uint32_t {
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| buffer | Output| GpuEncoderBufferT  & | Pointer used to mount the buffer after allocation.|
+| buffer | Output | GpuEncoderBufferT & | Pointer used to mount the buffer after allocation. |
 
-The definition of `GpuEncoderBufferT` is as follows. When implementing this API, developers or the vendor need to use `new` to allocate memory for `GpuEncoderBuffer` and release the memory in the ReleaseBuffer API.
+The definition of `GpuEncoderBufferT` is as follows. When implementing this API, developers or the vendor needs to use `new` to allocate memory for `GpuEncoderBuffer` and release the memory in the ReleaseBuffer API.
 
 ```c++
 struct GpuEncoderBuffer {
@@ -2534,86 +2580,90 @@ struct GpuEncoderBuffer {
 using GpuEncoderBufferT = GpuEncoderBuffer *;
 ```
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The buffer is successfully created.
+
 - Other: Failed to create a buffer.
 
-#### 11.3.10 ImportBuffer<a name="ImportBuffer"></a>
+#### ImportBuffer
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
-Imports a buffer from an external source.
+Imports a buffer from an external system.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t ImportBuffer\(FrameFormat format, uint64_t handle, GpuEncoderBufferT &buffer\) = 0
+`int32_t ImportBuffer(FrameFormat format, uint64_t handle, GpuEncoderBufferT &buffer) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| format | Input| FrameFormat | Format of the buffer to be imported.|
-| handle | Input| uint64_t | Handle or video RAM address corresponding to the buffer to be imported.|
-| buffer | Output| GpuEncoderBufferT & | Pointer used to mount the buffer after the import.|
+| format | Input | FrameFormat | Format of the buffer to be imported. |
+| handle | Input | uint64_t | Handle or video RAM address corresponding to the buffer to be imported. |
+| buffer | Output | GpuEncoderBufferT & | Pointer used to mount the buffer after the import. |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The buffer is successfully imported.
+
 - Other: Failed to import the buffer.
 
-#### 11.3.11 ReleaseBuffer<a name="ReleaseBuffer"></a>
+#### ReleaseBuffer
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Releases a buffer.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t ReleaseBuffer\(GpuEncoderBufferT &buffer\) = 0
+`int32_t ReleaseBuffer(GpuEncoderBufferT &buffer) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| buffer | Input| GpuEncoderBufferT & | Pointer to the buffer to be released.|
+| buffer | Input | GpuEncoderBufferT & | Pointer to the buffer to be released |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The buffer is successfully released.
+
 - Other: Failed to release the buffer.
 
-#### 11.3.12 MapBuffer<a name="MapBuffer"></a>
+#### MapBuffer
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
-Maps data in a buffer to the memory.
+Maps data in a buffer to memory.
 
 - If data in the buffer can be mapped to contiguous memory in user space, fill in `data` and `dataLen` in the `buffer` field for this API.
+
 - If data in the buffer cannot be mapped to contiguous memory, leave `data` in the `buffer` field empty and fill in the `dataLen` field.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t MapBuffer\(GpuEncoderBufferT &buffer, uint32_t flag\) = 0
+`int32_t MapBuffer(GpuEncoderBufferT &buffer, uint32_t flag) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| buffer | Output| GpuEncoderBufferT & | Pointer to the buffer whose data needs to be mapped.|
-| flag | Input| uint32_t | Configures the access type of the mapping data, including read and write.|
+| buffer | Output | GpuEncoderBufferT & | Pointer to the buffer whose data needs to be mapped. |
+| flag | Input| uint32_t | Configures the access type of the mapped data, including read and write. |
 
 The value of `flag` is `FLAG_READ | FLAG_WRITE` when both read and write are enabled.
 
@@ -2624,142 +2674,147 @@ enum MapFlag : uint32_t {
 };
 ```
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: Data in the buffer is successfully mapped.
+
 - Other: Failed to map data in the buffer.
 
-#### 11.3.13 UnmapBuffer<a name="UnmapBuffer"></a>
+#### UnmapBuffer
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
-Unmaps data in a buffer from the memory.
+Unmaps data in a buffer from memory.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
+`int32_t UnmapBuffer(GpuEncoderBufferT &buffer) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| buffer | Input| GpuEncoderBufferT & | Pointer to the buffer whose data needs to be unmapped.|
+| buffer | Input | GpuEncoderBufferT & | Pointer to the buffer whose data needs to be unmapped. |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The data in the buffer is successfully unmapped.
+
 - Other: Failed to unmap data in the buffer.
 
-#### 11.3.14 RetriveBufferData<a name="RetriveBufferData"></a>
+#### RetriveBufferData
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Retrieves data in a buffer.
 
 This API copies data in the buffer to the memory provided by the caller. It is usually called when the MapBuffer API cannot map data in a buffer to contiguous memory.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
 Data in the buffer must have been mapped through the MapBuffer API.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t RetriveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t memLen, uint32_t &dataLen\) = 0
+`int32_t RetriveBufferData(GpuEncoderBufferT &buffer, uint8_t *data, uint32_t memLen, uint32_t &dataLen) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| buffer | Input| GpuEncoderBufferT & | Pointer to the buffer whose data needs to be copied.|
-| data | Input| uint8_t * | Address of the memory space for receiving data in the buffer.|
-| memLen | Input| uint32_t | Maximum length of the memory space for receiving buffer data.|
+| buffer | Input | GpuEncoderBufferT & | Pointer to the buffer whose data needs to be copied. |
+| data | Input | uint8_t * | Address of the memory space for receiving buffer data. |
+| memLen | Input | uint32_t | Maximum length of the memory space for receiving buffer data. |
 | dataLen | Output| uint32_t & | Actual size of the copied data.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
-- `OK`: The buffer data is successfully retrieved.
-- Other: Failed to retrieve data in the buffer.
+- `OK`: The Buffer data is successfully retrieved.
 
-#### 11.3.15 Convert<a name="Convert"></a>
+- Other: Failed to retrieve data in the Buffer.
 
-**Function Usage<a name="section20501062"></a>**
+#### Convert
+
+**Function Usage**
 
 Calls the GPU to convert the format. It converts data in the input buffer and writes it to the output buffer.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t Convert\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 0
+`int32_t Convert(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| inBuffer | Input| GpuEncoderBufferT & | Input buffer whose data format is to be converted.|
-| outBuffer | Output| GpuEncoderBufferT & | Output buffer for receiving data after format conversion.|
+| inBuffer | Input | GpuEncoderBufferT & | Input buffer whose data format is to be converted. |
+| outBuffer | Output | GpuEncoderBufferT & | Output buffer for receiving data after format conversion. |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The buffer format is successfully converted.
-- Other: Failed to convert the data format.
 
-#### 11.3.16 Encode<a name="Encode"></a>
+- Other: Failed to convert the buffer format.
 
-**Function Usage<a name="section20501062"></a>**
+#### Encode
+
+**Function Usage**
 
 Calls the GPU for video encoding. It encodes data in the input buffer and writes it to the output buffer.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t Encode\(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer\) = 0
+`int32_t Encode(GpuEncoderBufferT &inBuffer, GpuEncoderBufferT &outBuffer) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| inBuffer | Input| GpuEncoderBufferT & | Input buffer whose data is to be encoded.|
-| outBuffer | Output| GpuEncoderBufferT & | Output buffer for receiving encoded data.|
+| inBuffer | Input | GpuEncoderBufferT & | Input buffer whose data is to be encoded. |
+| outBuffer | Output | GpuEncoderBufferT & | Output buffer for receiving encoded data. |
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The encoding is successful.
+
 - Other: The encoding fails.
 
-#### 11.3.17 SetEncodeParam<a name="SetEncodeParam"></a>
+#### SetEncodeParam
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Sets encoding parameters.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t SetEncodeParam\(EncodeParamT params\[\], uint32_t num\) = 0
+`int32_t SetEncodeParam(EncodeParamT params[], uint32_t num) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
-| params | Input| EncodeParamT[] | List of the encoding parameters to be configured.|
-| num | Input| uint32_t | Number of the encoding parameters to be configured.|
+| params | Input| EncodeParamT[] | List of the encoding parameters to be set.|
+| num | Input| uint32_t | Number of the encoding parameters to be set.|
 
 Enumeration of `EncodeParamT`:
 
@@ -2769,8 +2824,8 @@ enum EncodeParamIndex : uint32_t {
     ENCODE_PARAM_RATE_CONTROL, // Sets the bit rate control mode.
     ENCODE_PARAM_BITRATE, // Sets the bit rate.
     ENCODE_PARAM_FRAMERATE, // Sets the frame rate.
-    ENCODE_PARAM_GOPSIZE, // Set the GOP size.
-    ENCODE_PARAM_PROFILE, // Set the profile.
+    ENCODE_PARAM_GOPSIZE, // Sets the GOP size.
+    ENCODE_PARAM_PROFILE, // Sets the profile.
     ENCODE_PARAM_KEYFRAME, // Sets the key frame.
     ENCODE_PARAM_STREAM_WIDTH,// Sets the output stream width.
     ENCODE_PARAM_STREAM_HEIGHT,// Sets the output stream height.
@@ -2815,233 +2870,239 @@ struct EncodeParamStreamHeight : public EncodeParamBase {
 using EncodeParamT = EncodeParamBase *;
 ```
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The encoding parameters are set successfully.
+
 - `ERR_NEED_RESET`: The encoding parameters take effect only after the Reset API is called.
+
 - Other: Failed to set the encoding parameters.
 
-#### 11.3.18 Reset<a name="Reset"></a>
+#### Reset
+
+**Function Usage**
 
 Resets the encoder. Some encoding parameter configurations take effect only after this API is called.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
-None
+None.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t Reset\(\) = 0
+`int32_t Reset() = 0`
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: GpuEncoderErrorCode
+Data type: `GpuEncoderErrorCode`
 
 The value can be any of the following:
 
 - `OK`: The encoder is successfully reset.
+
 - Other: Failed to reset the encoder.
 
-#### 11.3.19 ResetImgSize<a name="ZH-CN_TOPIC_0000002549706143"></a>
+#### ResetImgSize
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Sets the size of the saved image according to the snapshot size. The setting takes effect after GPU Turbo is restarted.
 
-**Restrictions<a name="section50291837"></a>**
+**Restrictions**
 
 The input parameters `width` and `height` must be even numbers.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int32_t ResetImgSize\(uint32_t width, uint32_t height\) = 0
+`int32_t ResetImgSize(uint32_t width, uint32_t height) = 0`
 
-**Parameters<a name="section47106995"></a>**
+**Parameters**
 
 |Field Name|Input/Output|Field Type|Description|
 |--|--|--|--|
 |width|Input|uint32_t|Image width in pixels, which must be an even number.|
 |height|Input|uint32_t|Image height in pixels, which must be an even number.|
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
-Data type: int32_t
+Data type: `int32_t`
 
 The value can be any of the following:
 
 - `0`: The image size is successfully set.
+
 - Other: Failed to set the image size.
 
-### 11.4 Opus Encoding and Decoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002518186360"></a>
+### Opus Encoding and Decoding APIs (C and C++)
 
-#### 11.4.1 API Description<a name="ZH-CN_TOPIC_0000002549706123"></a>
+#### API Description
 
 The audio playback and microphone input functions of the video stream engine support the input and output of Opus streams. This requires the Opus encoding and decoding library to provide encoding and decoding capabilities. This library is implemented by secondary developers and is provided as a DLL. The name of the DLL is `libVmiOpus.so`.
 
 These APIs are similar to those of open-source software [Opus 1.3.1](https://github.com/xiph/opus/tree/v1.3.1). You can refer to the APIs and data interface definitions of Opus.
 
-#### 11.4.2 OpusEncoderCreateApi<a name="ZH-CN_TOPIC_0000002518346286"></a>
+#### OpusEncoderCreateApi
 
-**Function Usage<a name="section20501062"></a>**
+**Function Usage**
 
 Creates an Opus encoder. This API is similar to the opus_encoder_create interface in Opus 1.3.1.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-OpusEncoder \*OpusEncoderCreateApi\(opus_int32 Fs, int channels, int application, int \*error\)
+`OpusEncoder *OpusEncoderCreateApi(opus_int32 Fs, int channels, int application, int *error)`
 
-**Parameters<a name="section47106995"></a>**
-
-This API is similar to the opus_encoder_create interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
-
-**Return Value Description<a name="section7911548131510"></a>**
+**Parameters**
 
 This API is similar to the opus_encoder_create interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.3 OpusEncodeApi<a name="ZH-CN_TOPIC_0000002549826177"></a>
+**Return Value Description**
 
-**Function Usage<a name="section20501062"></a>**
+This API is similar to the opus_encoder_create interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
+
+#### OpusEncodeApi
+
+**Function Usage**
 
 Performs Opus encoding. This API is similar to the opus_encode interface in Opus 1.3.1.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-opus_int32 OpusEncodeApi\(OpusEncoder \*st, const opus_int16 \*pcm, int frame_size, unsigned char \*data, opus_int32 max_data_bytes\)
+`opus_int32 OpusEncodeApi(OpusEncoder *st, const opus_int16 *pcm, int frame_size, unsigned char *data, opus_int32 max_data_bytes)`
 
-**Parameters<a name="section47106995"></a>**
-
-This API is similar to the opus_encode interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
-
-**Return Value Description<a name="section7911548131510"></a>**
+**Parameters**
 
 This API is similar to the opus_encode interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.4 OpusEncoderCtlApi<a name="ZH-CN_TOPIC_0000002549706181"></a>
+**Return Value Description**
 
-**Function Usage<a name="section20501062"></a>**
+This API is similar to the opus_encode interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
+
+#### OpusEncoderCtlApi
+
+**Function Usage**
 
 Controls Opus encoding. This API is similar to the opus_encoder_ctl interface in Opus 1.3.1.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int OpusEncoderCtlApi\(OpusEncoder \*st, int request, opus_int32 par\)
+`int OpusEncoderCtlApi(OpusEncoder *st, int request, opus_int32 par)`
 
-**Parameters<a name="section47106995"></a>**
-
-This API is similar to the opus_encoder_ctl interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
-
-**Return Value Description<a name="section7911548131510"></a>**
+**Parameters**
 
 This API is similar to the opus_encoder_ctl interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.5 OpusEncoderDestroyApi<a name="ZH-CN_TOPIC_0000002549826133"></a>
+**Return Value Description**
 
-**Function Usage<a name="section20501062"></a>**
+This API is similar to the opus_encoder_ctl interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
+
+#### OpusEncoderDestroyApi
+
+**Function Usage**
 
 Destroys the Opus encoder. This API is similar to the opus_encoder_destroy interface in Opus 1.3.1.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-void OpusEncoderDestroyApi\(OpusEncoder \*st\)
+`void OpusEncoderDestroyApi(OpusEncoder *st)`
 
-**Parameters<a name="section47106995"></a>**
-
-This API is similar to the opus_encoder_destroy interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
-
-**Return Value Description<a name="section7911548131510"></a>**
+**Parameters**
 
 This API is similar to the opus_encoder_destroy interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.6 OpusDecoderCreateApi<a name="ZH-CN_TOPIC_0000002549826127"></a>
+**Return Value Description**
 
-**Function Usage<a name="section20501062"></a>**
+This API is similar to the opus_encoder_destroy interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
+
+#### OpusDecoderCreateApi
+
+**Function Usage**
 
 Creates an Opus decoder. This API is similar to the opus_decoder_create interface in Opus 1.3.1.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-OpusDecoder \*OpusDecoderCreateApi\(opus_int32 Fs, int channels, int \*error\)
+`OpusDecoder *OpusDecoderCreateApi(opus_int32 Fs, int channels, int *error)`
 
-**Parameters<a name="section47106995"></a>**
-
-This API is similar to the opus_decoder_create interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
-
-**Return Value Description<a name="section7911548131510"></a>**
+**Parameters**
 
 This API is similar to the opus_decoder_create interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.7 OpusDecodeApi<a name="ZH-CN_TOPIC_0000002549706157"></a>
+**Return Value Description**
 
-**Function Usage<a name="section20501062"></a>**
+This API is similar to the opus_decoder_create interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
+
+#### OpusDecodeApi
+
+**Function Usage**
 
 Performs Opus decoding. This API is similar to the opus_decode interface in Opus 1.3.1.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int OpusDecodeApi\(OpusDecoder \*st, const unsigned char \*data, opus_int32 len, opus_int16 \*pcm, int frame_size, int decode_fec\)
+`int OpusDecodeApi(OpusDecoder *st, const unsigned char *data, opus_int32 len, opus_int16 *pcm, int frame_size, int decode_fec)`
 
-**Parameters<a name="section47106995"></a>**
-
-This API is similar to the opus_decode interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
-
-**Return Value Description<a name="section7911548131510"></a>**
+**Parameters**
 
 This API is similar to the opus_decode interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.8 OpusDecoderCtlApi<a name="ZH-CN_TOPIC_0000002518346284"></a>
+**Return Value Description**
 
-**Function Usage<a name="section20501062"></a>**
+This API is similar to the opus_decode interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
+
+#### OpusDecoderCtlApi
+
+**Function Usage**
 
 Controls Opus decoding. This API is similar to the opus_decoder_ctl interface in Opus 1.3.1.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-int OpusDecoderCtlApi\(OpusDecoder \*st, int request, opus_int32 par\)
+`int OpusDecoderCtlApi(OpusDecoder *st, int request, opus_int32 par)`
 
-**Parameters<a name="section47106995"></a>**
-
-This API is similar to the opus_decoder_ctl interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
-
-**Return Value Description<a name="section7911548131510"></a>**
+**Parameters**
 
 This API is similar to the opus_decoder_ctl interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.9 OpusDecoderDestroyApi<a name="ZH-CN_TOPIC_0000002549826131"></a>
+**Return Value Description**
 
-**Function Usage<a name="section20501062"></a>**
+This API is similar to the opus_decoder_ctl interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
+
+#### OpusDecoderDestroyApi
+
+**Function Usage**
 
 Destroys the Opus decoder. This API is similar to the opus_decoder_destroy interface in Opus 1.3.1.
 
-**Prototype<a name="section49973353"></a>**
+**Prototype**
 
-void OpusDecoderDestroyApi\(OpusDecoder \*st\)
+`void OpusDecoderDestroyApi(OpusDecoder *st)`
 
-**Parameters<a name="section47106995"></a>**
-
-This API is similar to the opus_decoder_destroy interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
-
-**Return Value Description<a name="section7911548131510"></a>**
+**Parameters**
 
 This API is similar to the opus_decoder_destroy interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-#### 11.4.10 OpusStrerrorApi<a name="ZH-CN_TOPIC_0000002549706133"></a>
+**Return Value Description**
 
-**Function Usage<a name="section20501062"></a>**
+This API is similar to the opus_decoder_destroy interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-Converts an Opus error code into a human-readable string. This API is similar to the opus_strerror interface in Opus 1.3.1.
+#### OpusStrerrorApi
 
-**Prototype<a name="section49973353"></a>**
+**Function Usage**
 
-const char \*OpusStrerrorApi\(int error\)
+Converts an error code into a human-readable string. This API is similar to the opus_strerror interface in Opus 1.3.1.
 
-**Parameters<a name="section47106995"></a>**
+**Prototype**
+
+`const char *OpusStrerrorApi(int error)`
+
+**Parameters**
 
 This API is similar to the opus_strerror interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
 
-**Return Value Description<a name="section7911548131510"></a>**
+**Return Value Description**
 
 This API is similar to the opus_strerror interface in Opus 1.3.1. For details, refer to the Opus 1.3.1 documentation.
