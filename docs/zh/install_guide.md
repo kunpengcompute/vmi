@@ -228,7 +228,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
     若要切换至Docker版本的容器运行时，须将[1](#部署Containerd环境1)~[5](#部署Containerd环境5)已安装的相关软件二进制从对应目录中移除。移除完成后，参考以上命令重启Docker服务并重新启动一个新的终端。
 
-- **[（硬件配置方案二、三、四、五）安装显卡驱动](https://gitcode.com/boostkit/Kbox/blob/AOSP11/docs/zh/install_guide.md#安装显卡驱动)**  
+- **[（硬件配置方案二、三、四、五）安装显卡驱动](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md#安装显卡驱动)**  
 
 #### 制作镜像<a name="ZH-CN_TOPIC_0000002549826281"></a>
 
@@ -425,8 +425,8 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 6. 针对1张编码卡环境：需要修改hardware_bind.cfg配置文件中“VIDEO_ENC_MAP_CORE”。
 7. 当编码卡插在CPU0上时，删除${NETINT1}；若编码卡插在CPU1上时，删除${NETINT0}。
 8. 如果要使能WebRTC特性，需要将cfct_config中的“ENABLE_WEBRTC_CONNECTION”设置为“1”。若视频帧采用CPU进行软编码，需要将cfct_config中的“CPU_BIND_MODE”设置为“1”，以防卡顿。
-9. 如果需要使能图形加速层功能，需要将cfct_config中的“**ENABLE_RENDER_LAYER**”设置为“1”。详细说明请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
-10. 如果要使能C2解码器，需要将cfct_config中的“**ENABLE_AMD_C2_DECODE**”设置为“1”
+9. 如果需要使能图形加速层功能，需要将cfct_config中的“ENABLE_RENDER_LAYER”设置为“1”。详细说明请参见[图形加速层的基本功能和使用说明](#图形加速层的基本功能和使用说明)。
+10. 如果要使能C2解码器，需要将cfct_config中的“ENABLE_AMD_C2_DECODE”设置为“1”
 
 **NETINT编码卡芯片节点所属NUMA查询方式<a name="section2507154233510"></a>**
 
@@ -513,7 +513,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
     cat /sys/bus/pci/devices/0000\:XX\:00.0/numa_node 
     ```
 
-    其中，指令中的“XX”应按[1](#li34656503552)中的实际回显IP地址进行修改。以回显renderD128为例，查询指令应为：
+    其中，指令中的“XX”应按[1](#li34656503552)中的实际回显PCI地址进行修改。以回显renderD128为例，查询指令应为：
 
     ```bash
     cat /sys/bus/pci/devices/0000\:03\:00.0/numa_node
@@ -2125,7 +2125,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
         > ![](public_sys-resources/icon-note.gif)说明
         >
-        >上述的配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
+        >上述配置的CPU核心以及GPU节点仅供参考，请根据实际虚拟机的资源分配以及业务的需要，灵活地调整该配置。
 
 3. 请参见《[视频流引擎 用户指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/user_guide.md#d11-%E5%90%AF%E5%8A%A8%E8%A7%86%E9%A2%91%E6%B5%81%E4%BA%91%E6%89%8B%E6%9C%BA%E5%AE%9E%E4%BE%8B)》的“启动视频流云手机实例”调用cfct_video脚本即可成功在虚拟机启动视频流容器。
 

@@ -123,7 +123,7 @@
 > [!WARNING]注意
 >
 > - 用户可以根据需求选择文件存放目录。
-> - 服务端调试环境的硬件要求及部署过程可以请参见《[视频流引擎 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/install_guide.md#d11-%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82)》。
+> - 服务端调试环境的硬件要求及部署过程请参见《[视频流引擎 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/install_guide.md#d11-%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82)》。
 
 1. 将VideoEngine.tar.gz放至“/home/VideoEngine/Cloud”目录下。
 2. 解压视频流引擎服务端开发包。
@@ -780,7 +780,7 @@ enum RCMode : uint32_t  {
 
 |对应属性字段名称|字段描述|取值范围|默认值|
 | :---: | :---: | :---: | :---: |
-|bitrate|编码码率。|AMD，一般为W6800：500000~50000000 DC1000/DC1000C：500000~30000000单位bps|3000000|
+|bitrate|编码码率。|AMD，一般为W6800：500000~50000000 DC1000/DC1000C：500000~30000000单位bit/s|3000000|
 |gopSize|编码GOP大小配置项。|30~3000|30|
 |profile|编码profile配置项（H.265编码仅支持配置main）。|0：BASELINE（仅H264支持）1：MAIN2：HIGH（仅H264支持）|0：BASELINE（仅H264支持）|
 |rcMode|码控模式配置项。|0：ABR平均码率模式（暂不支持）1：CRF画质优先模式（暂不支持）2：CBR恒定码率模式3：CAPPED_CRF画质优先并限制最大码率模式|2：CBR恒定码率模式|
@@ -980,14 +980,14 @@ bitrate参数只在OPUS格式下有效，sampleInterval参数在OPUS和PCM模式
 |对应属性字段名称|字段描述|取值范围|默认值|
 | :---: | :---: | :---: | :---: |
 |sampleInterval|音频输出采样间隔。|5：5ms（暂不支持）10：10ms20：20ms（暂不支持）|10：10ms|
-|bitrate|音频OPUS编码码率（bps）。|13200~512000|192000|
+|bitrate|音频OPUS编码码率（bit/s）。|13200~512000|192000|
 
 **变量数据定义<a name="section1137mcpsimp"></a>**
 
 ```c++
 struct AudioPlayParams {
     uint32_t sampleInterval = 10;               // ms
-    uint32_t bitrate = 192000;                  // bps，只有在OPUS格式下有效
+    uint32_t bitrate = 192000;                  // bit/s，只有在OPUS格式下有效
 } __attribute__((packed));
 ```
 
@@ -1005,7 +1005,7 @@ AudioData audioData;
 audioData.size = sizeof(audioPlayData);
 uint8_t *data = new uint8_t[sizeof(AudioData) + sizeof(audioPlayData)];
 memcpy(data, &audioData, sizeof(AudioData));
-memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData))
+memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData));
 DataCallback(module, cmd, data, sizeof(AudioData) + audioData.size);
 ```
 
@@ -1151,7 +1151,7 @@ AudioData audioData;
 audioData.size = sizeof(micData);
 uint8_t *data = new uint8_t[sizeof(AudioData) + sizeof(micData)];
 memcpy(data, &audioData, sizeof(AudioData));
-memcpy(data + sizeof(AudioData), micData, sizeof(micData))
+memcpy(data + sizeof(AudioData), micData, sizeof(micData));
 InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 ```
 
@@ -1166,7 +1166,7 @@ InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
-> - 如果使用PCM模式传输麦克风数据，建议客户端到服务端的上行网络带宽不低于2Mbps。
+> - 如果使用PCM模式传输麦克风数据，建议客户端到服务端的上行网络带宽不低于2Mbit/s。
 > - 注入的麦克风帧之间不能包含空白帧，否则可能会导致声音听起来不连续。
 
 ## 触控输入开发<a name="ZH-CN_TOPIC_0000002518345934"></a>
@@ -1677,7 +1677,7 @@ EncoderRetCode StopEncoder\(int32_t fd\)
 
 **函数原型<a name="section49973353"></a>**
 
-EncoderRetCode DestoryEncoder\(int32_t fd\)
+EncoderRetCode DestroyEncoder\(int32_t fd\)
 
 **参数说明<a name="section42241738122511"></a>**
 
@@ -1766,7 +1766,7 @@ height：uint32_t类型，期望编码高度。该类字段如下：
 
 开发者继承VideoDecoder类并按照本章节中的描述实现对应接口，同时提供[11.2.2-CreateVideoDecoder](#CreateVideoDecoder)、[11.2.3-DestroyVideoDecoder](#DestroyVideoDecoder)接口用于创建具体的实现类实例。
 
-此接口与Android内部OMX解码组件配套使用，与视频流出流组件不相干扰。
+此接口与Android内部OMX解码组件配套使用，与视频流出流组件互不干扰。
 
 其中，接口调用的返回码定义如下：
 
@@ -2287,7 +2287,7 @@ void \*CreateModule\(uint32_t moduleId\)
 
 **GpuEncoderBase接口类涉及接口<a name="section97621346152119"></a>**
 
-GpuEncoderBase接口类涉及接口详细描述请参见[11.3.5-Init](#Init)、[11.3.6-Deinit](#Deinit)、[11.3.7-Start](#Start)、[11.3.8-Stop](#Stop)、[11.3.9-CreateBuffer](#CreateBuffer)、[11.3.10-ImportBuffer](#ImportBuffer)、[11.3.11-ReleaseBuffer](#ReleaseBuffer)、[11.3.12-MapBuffer](#MapBuffer)、[11.3.13-UnmapBuffer](#UnmapBuffer)、[11.3.14-RetriveBufferData](#RetriveBufferData)、[11.3.15-Convert](#Convert)、[11.3.16-Encode](#Encode)、[11.3.17-SetEncodeParam](#SetEncodeParam)、[11.3.18-Reset](#Reset)。
+GpuEncoderBase接口类涉及接口详细描述请参见[11.3.5-Init](#Init)、[11.3.6-Deinit](#Deinit)、[11.3.7-Start](#Start)、[11.3.8-Stop](#Stop)、[11.3.9-CreateBuffer](#CreateBuffer)、[11.3.10-ImportBuffer](#ImportBuffer)、[11.3.11-ReleaseBuffer](#ReleaseBuffer)、[11.3.12-MapBuffer](#MapBuffer)、[11.3.13-UnmapBuffer](#UnmapBuffer)、[11.3.14-RetrieveBufferData](#RetrieveBufferData)、[11.3.15-Convert](#Convert)、[11.3.16-Encode](#Encode)、[11.3.17-SetEncodeParam](#SetEncodeParam)、[11.3.18-Reset](#Reset)。
 
 GpuEncoderBase接口类返回值说明：
 
@@ -2303,7 +2303,7 @@ enum GpuEncoderErrorCode : uint32_t {
     ERR_UNSUPPORT_OPERATION,
     ERR_INTERNAL_ERROR,
     ERR_NEED_RESET, // 部分编码参数设置后需要reset生效
-    ERR_UNKNOW
+    ERR_UNKNOWN
 };
 ```
 
@@ -2652,7 +2652,7 @@ int32_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
 - OK：解除buffer数据映射成功。
 - 其他：解除buffer数据映射失败。
 
-#### RetriveBufferData<a name="ZH-CN_TOPIC_0000002549825777" id="RetriveBufferData"></a>
+#### RetrieveBufferData<a name="ZH-CN_TOPIC_0000002549825777" id="RetrieveBufferData"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2666,7 +2666,7 @@ int32_t UnmapBuffer\(GpuEncoderBufferT &buffer\) = 0
 
 **函数原型<a name="section49973353"></a>**
 
-int32_t RetriveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t memLen, uint32_t &dataLen\) = 0
+int32_t RetrieveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t memLen, uint32_t &dataLen\) = 0
 
 **参数说明<a name="section47106995"></a>**
 
