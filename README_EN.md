@@ -1,5 +1,7 @@
 # Video Stream Introduction<a name="ZH-CN_TOPIC_0000002550291729"></a>
 
+<!-- md-trans-meta sourceCommit=fe2f8368f5b3453af706fe97ddde2c91de1bd721 translatedAt=2026-09-08T02:25:34.477Z pushedAt=2026-09-08T07:04:39.905Z -->
+
 English | [简体中文](./README.md)
 
 ## Project Description<a name="ZH-CN_TOPIC_0000002518611972"></a>
@@ -14,8 +16,6 @@ The device-cloud synergy engine consists of the device side and the cloud side. 
 
 The device-cloud synergy engine consists of the video stream engine and instruction stream engine. This document describes the video stream engine.
 
-The video stream engine is mainly applied to cloud phones. The cloud phone solution implemented based on the video stream engine technology is called video stream cloud phone. This document describes the basic concepts of the video stream engine and provides guidance for setting up the environment and using the video stream engine.
-
 ### Software Architecture<a name="ZH-CN_TOPIC_0000002518611974"></a>
 
 This section describes the context logical structure and modules (including module functions) of the video stream cloud phone.
@@ -28,14 +28,12 @@ The video stream engine consists of the server and client. The server provides f
 |Module|Description|
 |--|--|
 |Capture module|Obtains image data. The output format is the RGBA video RAM address or RGBA memory address.|
-|Encoding module|Encodes YUV data into H.264/H.265 streams and sends the streams through external APIs of the video stream engine.|
+|Encoding module|Encodes YUV data into H.264/H.265 streams and sends them through external APIs of the video stream engine.|
 |GPU acceleration module|Converts the RGBA data obtained by the capture module into YUV data or video streams by utilizing GPU capabilities.|
 |Audio data collection|Obtains audio data, outputs audio data in OPUS or PCM format, and sends the data through external APIs of the video stream engine.|
 |Microphone injection|Obtains OPUS or PCM data from external APIs of the video stream engine and injects the data to the Android system.|
 |Touch data distribution|Injects touch data into the Android cloud phone on the server.|
 |External APIs|External APIs of the video stream engine server.|
-
-This section describes the context logical structure and modules (including module functions) of the video stream cloud phone.
 
 ### Specifications<a name="ZH-CN_TOPIC_0000002518771874"></a>
 
@@ -63,7 +61,7 @@ This section describes the context logical structure and modules (including modu
 │   └── en                                       # English document directory
 │       ├── figures                              # Directory of figures in documents
 │       ├── quick_start.md                       # Quick start
-│       ├── release_notes.md                    # Release notes
+│       ├── release_notes.md                     # Release notes
 │       ├── installation_guide.md                # Installation guide
 │       ├── user_guide.md                        # User guide
 │       ├── best_practices.md                    # Best practices
@@ -99,7 +97,7 @@ This section describes the context logical structure and modules (including modu
 ├── open_source_download                          # Directory for downloaded open-source software packages
 ├── scripts                                       # Directory for build scripts
 └── unpack_open_source                            # Directory for unpacked open-source software
-├── hantro                                        # Hantro GPU encoding module
+├── hantro                                        # DaoCloud GPU encoding module
 ├── libdrm                                        # Provides kernel subsystems interacting with the GPU.
 ├── libva                                         # Provides hardware acceleration for video processing.
 ├── openH264                                      # Supports H.264 video format encoding and decoding.
@@ -122,7 +120,7 @@ The video stream engine is developed based on AOSP and currently supports AOSP 1
 
 **Change Description<a name="section4408930144513"></a>**
 
-For details about feature changes in each release, see the *Release Notes*.
+For detailed information about feature changes in each release, see the *Release Notes*.
 
 ## Environment Deployment<a name="ZH-CN_TOPIC_0000002518611970"></a>
 
@@ -140,6 +138,8 @@ The video stream cloud phone supports bare metal servers and VMs. For details, s
 |Document|FAQs|Provides answers to frequently asked questions (FAQs) about installing and using the video stream engine.|
 
 ## Disclaimer<a name="ZH-CN_TOPIC_0000002550251723"></a>
+
+This repository contains only feature demonstrations and development sample code, intended to showcase the usage and integration methods of specific features. Do not use the code in this repository directly in production environments. All code is provided solely as technical reference and does not inherit or guarantee any security design or protection mechanisms of upstream or downstream software. The sample code in this repository may contain security defects, vulnerabilities, or incomplete implementations. The Kunpeng Computing Community assumes no responsibility for the security, stability, or compliance of the code. Users should assess risks on their own and perform security hardening based on actual scenarios. Any security issues arising from the use of the code in this repository shall be borne solely by the user. It is recommended to keep track of security advisories and version updates from upstream open-source projects.
 
 **To Users of This Project**
 

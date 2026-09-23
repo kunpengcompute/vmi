@@ -1,54 +1,56 @@
 # Feature Guide
 
-## 1 Introduction
+<!-- md-trans-meta sourceCommit=377087a2bd241cd72440e17b86df0cd93ee57185 translatedAt=2026-09-08T02:25:29.829Z pushedAt=2026-09-15T08:25:26.891Z -->
+
+## Introduction
 
 The video stream engine is mainly applied to cloud phones. The cloud phone solution implemented based on the video stream engine technology is called video stream cloud phone. This document describes the basic concepts of the video stream engine and provides guidance for setting up the environment and using the video stream engine.
 
-The cloud phone solution is a virtual phone service virtualized based on the Arm server and runs the Android Open Source Project (AOSP). In short, cloud phones are Arm servers that run the Android OS and function as virtual phones. You can remotely control the cloud phone in real time to run Android applications on the cloud. Based on the basic computing power of cloud phones, you can also efficiently build applications for scenarios like cloud gaming, mobile office, and live streaming interaction.
+The cloud phone solution is a virtual phone service virtualized based on the Arm server, and runs the Android Open Source Project (AOSP). In short, cloud phones are Arm servers that run the Android OS and function as virtual phones. You can remotely control the cloud phone in real time to run Android applications on the cloud. Based on the basic computing power of cloud phones, you can also efficiently build applications for scenarios like cloud gaming, mobile office, and live streaming interaction.
 
 The device-cloud synergy engine consists of the device side and the cloud side. The cloud side runs on a server; the device side is generally a cloud phone APK, which can be installed on your Android mobile phone to interact with the cloud side and operate the Kbox container.
 
 The device-cloud synergy engine consists of the video stream engine and instruction stream engine. This document describes the video stream engine.
 
-## 2 Software Architecture
+## Software Architecture
 
 This section describes the context logical structure and modules (including module functions) of the video stream cloud phone.
 
-**Figure 1 Video stream cloud phone architecture**
+### Video Stream Cloud Phone Architecture
 
 ![](figures/video-stream-cloud-phone-architecture.png)
 
 The video stream engine consists of the server and client. The server provides functions such as image capture and encoding, and the client decodes and plays video data. In some scenarios, functions such as obtaining and injecting user touch data, and obtaining and playing audio data are also supported.
 
-| Module         | Function                                                    |
-| ----------------- | ------------------------------------------------------------ |
-| Capture module| Obtains image data. The output format is the RGBA video RAM address or RGBA memory address.|
-| Encoding module| Encodes YUV data into H.264/H.265 streams and sends the streams through external APIs of the video stream engine.|
-| GPU acceleration module| Converts the RGBA data obtained by the capture module into YUV data or video streams by utilizing GPU capabilities.|
-| Audio data collection| Obtains audio data, outputs audio data in OPUS or PCM format, and sends the data through external APIs of the video stream engine.|
-| Microphone injection| Obtains OPUS or PCM data from external APIs of the video stream engine and injects the data to the Android system.|
-| Touch data distribution| Injects touch data into the Android cloud phone on the server.|
-| External APIs| External APIs of the video stream engine server.|
+| Module | Function |
+| -------- | -------- |
+|Capture module|Obtains image data. The output format is the RGBA video RAM address or RGBA memory address.|
+|Encoding module|Encodes YUV data into H.264/H.265 streams and sends the streams through external APIs of the video stream engine.|
+|GPU acceleration module|Converts the RGBA data obtained by the capture module into YUV data or video streams by utilizing GPU capabilities.|
+|Audio data collection|Obtains audio data, outputs audio data in OPUS or PCM format, and sends the data through external APIs of the video stream engine.|
+|Microphone injection|Obtains OPUS or PCM data from external APIs of the video stream engine and injects the data to the Android system.|
+|Touch data distribution|Injects touch data into the Android cloud phone on the server.|
+|External APIs|External APIs of the video stream engine server.|
 
-## 3 Specifications
+## Specifications
 
 [**Table 1**](#video-stream-cloud-phone-specifications) lists the specifications of the video stream cloud phone on Kunpeng servers.
 
 **Table 1** Video stream cloud phone specifications<a id="video-stream-cloud-phone-specifications"></a>
 
-| Item       | Configuration                                |
-| ----------- | ------------------------------------ |
-| Scenario       | Hardware encoding for a mid-core game (login page of Honor of Kings)|
-| CPU core binding policy| Bind containers to NUMA nodes. Reserve the first two cores of each NUMA node.|
-| Memory       | 3 GB                                 |
-| Storage       | 16 GB                                |
-| Resolution/Frame rate| 720 x 1280/30 fps                      |
+| Item | Specification |
+| ---- | ---- |
+| Scenario | Hardware encoding for a mid-core game (login page of Honor of Kings) |
+| Core binding policy | Bind containers to NUMA nodes. Reserve the first two cores of each NUMA node. |
+| Memory | 3 GB |
+| Storage | 16 GB |
+| Resolution/Frame rate | 720 x 1280/30 fps |
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
 > The memory and drives can be flexibly configured based on the device specifications.
 
-## 5 Constraints
+## Constraints
 
 You need to fully understand the following constraints on the hardware, system, and applications when you deploy and use the video stream cloud phone.
 
@@ -85,36 +87,44 @@ You need to fully understand the following constraints on the hardware, system, 
 
   - When a video stream cloud phone runs for a long time, it occupies a large amount of cache on the host. Run the following command to periodically clear the cache:
 
-    ```shell
+    ```bash
     echo 3 > /proc/sys/vm/drop_caches
     ```
 
->![](public_sys-resources/icon-note.gif) **NOTE** Clearing the cache will temporarily affect the system performance. Therefore, you need to control the clearing period and granularity.
+>![](public_sys-resources/icon-note.gif) **NOTE**
 >
->- Clear the page cache.
+> Clearing the cache will temporarily affect the system performance. Therefore, you need to control the clearing period and granularity.
 >
-> ```shell
-> echo 1 > /proc/sys/vm/drop_caches
-> ```
+> - Clear the page cache.
 >
->- Clear kernel slab objects (including inode and dentry).
+>   ```bash
+>   echo 1 > /proc/sys/vm/drop_caches
+>   ```
 >
-> ```shell
-> echo 2 > /proc/sys/vm/drop_caches
-> ```
+> - Clear kernel slab objects (including inode and dentry).
 >
->- Clear both the page cache and kernel slab objects.
+>   ```bash
+>   echo 2 > /proc/sys/vm/drop_caches
+>   ```
 >
-> ```shell
-> echo 3 > /proc/sys/vm/drop_caches
-> ```
+> - Clear both the page cache and kernel slab objects.
+>
+>   ```bash
+>   echo 3 > /proc/sys/vm/drop_caches
+>   ```
 
-## 7 Application Scenarios
+## Application Scenarios
 
-The video stream engine is an important component of Kunpeng BoostKit for Cloud Phone and one of the solutions for implementing device-cloud synergy on Android OSs. The video stream solution has advantages such as good compatibility with cloud applications, low requirements on device hardware, mature technologies, and stable network bandwidth. Therefore, the video stream cloud phone is the mainstream solution.
+The video stream engine is an important component of the cloud phone solution and one of the approaches to implementing device-cloud synergy on Android OSs. The video stream solution has advantages such as good compatibility with cloud applications, low requirements on device hardware, mature technologies, and stable network bandwidth. Therefore, the video stream cloud phone is the mainstream solution.
 
 The main application scenarios of video stream cloud phones include cloud phones, cloud gaming, and mobile office.
 
-## 8 Principles
+## Principles
 
 The design of the video stream cloud phone is to divide the video stream engine into the video stream engine server and the video stream engine client. The server obtains and encodes image data, and the client decodes and plays video data. In some scenarios, functions such as obtaining and injecting user touch data, and obtaining and playing audio data are also supported.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the first official release.|

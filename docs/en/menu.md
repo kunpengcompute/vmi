@@ -1,5 +1,6 @@
 # vmi CloudPhone15
 
+- [Project Introduction](../../README_EN.md)
 - [Release Notes](./release_notes.md)
 - [Feature Guide](./feature_guide.md)
 - [Compilation Guide](./compile_guide.md)
