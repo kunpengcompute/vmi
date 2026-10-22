@@ -1,6 +1,6 @@
 # User Guide<a name="ZH-CN_TOPIC_0000002552853353"></a>
 
-<!-- md-trans-meta sourceCommit=41a1a976d550af475fa400f09eb69f540cee3709 translatedAt=2026-08-29T08:35:21.683Z pushedAt=2026-09-04T07:25:38.323Z -->
+<!-- md-trans-meta sourceCommit=f5ae757472d3f7248102cae28fed5ebdd01e6d8e translatedAt=2026-10-14T09:52:40.662Z pushedAt=2026-10-15T08:13:54.846Z -->
 
 ## Operating a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002549744217"></a>
 
@@ -220,7 +220,7 @@ You can use `CloudPhone.apk` to dynamically modify the video encoding and audio 
 
         >![](public_sys-resources/icon-note.gif) **NOTE**
         >
-        >If adaptive resolution is disabled, you can run the `setprop` command in the container after starting the cloud phone to change property settings. For details, refer to property fields of the video stream engine in [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script). If the width and height of the adaptive resolution is changed, you are advised to change the screen pixel density in the `cfct_config` file as well to achieve the optimal display effect. [**Table 1** Recommended configurations](#recommended-configurations) lists the recommended configurations for different resolutions.
+        >If adaptive resolution is disabled, you can run the `setprop` command in the container after starting the cloud phone to change property settings. For details, refer to property fields of the video stream engine in [Configuration Items in the Startup Script](#configuration-items-in-the-startup-script). If the width and height of the adaptive resolution are changed, you are advised to change the screen pixel density in the `cfct_config` file as well to achieve the optimal display effect. [**Table 1** Recommended configurations](#recommended-configurations) lists the recommended configurations for different resolutions.
 
 4. Set audio playback encoding parameters.
     1. Tap the audio icon.
@@ -660,7 +660,7 @@ You can configure the functions in the `kbox_render_accelerating_configuration.x
 
 **Configuration Example<a name="section18450203117618"></a>**
 
-```bash
+```xml
 <!-- Configuration Example -->
 <!-- General system settings -->
 <Application name="system" isEnable="false">
@@ -855,7 +855,7 @@ On physical devices, the system dynamically regulates the CPU frequency to balan
        for FREQ in "${FREQS[@]}"; do
           echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/scaling_cur_freq 2>/dev/null
           echo $FREQ > /sys/devices/system/cpu/cpu${CPU_ID}/cpufreq/cpuinfo_cur_freq 2>/dev/null
-          echo "CPU${CPU_ID} frequency has been dynamically adjusted to: $FREQ"
+          echo "CPU${CPU_ID} frequency dynamically regulated to: $FREQ"
           sleep 1
        done
     done
@@ -1003,6 +1003,6 @@ Collect system logs and view details about user operations and operation time in
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

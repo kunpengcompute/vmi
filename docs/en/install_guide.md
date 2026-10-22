@@ -1,6 +1,6 @@
 # Installation Guide<a name="ZH-CN_TOPIC_0000002521693392"></a>
 
-<!-- md-trans-meta sourceCommit=8137c5c6f22411c010ac7e5e01f7b05f199cf237 translatedAt=2026-08-29T08:18:17.223Z pushedAt=2026-09-02T08:26:58.737Z -->
+<!-- md-trans-meta sourceCommit=39f78efa42b81d8b02018c66a9deeabb8a444cc3 translatedAt=2026-10-14T09:36:37.027Z pushedAt=2026-10-15T09:03:38.104Z -->
 
 ## Software Deployment<a name="ZH-CN_TOPIC_0000002549826277"></a>
 
@@ -14,18 +14,14 @@ For details, see [**Table 1**](#hardware-configuration-schemes-for-deploying-the
 
 **Table 1** Hardware configuration schemes for deploying the Kbox cloud phone container<a id="hardware-configuration-schemes-for-deploying-the-kbox-cloud-phone-container"></a>
 
-|Item|Hardware Configuration Scheme 1|Hardware Configuration Scheme 2|Hardware Configuration Scheme 3|Hardware Configuration Scheme 4|
-| :---: | :---: | :---: | :---: | :---: |
-|Server|Kunpeng server|Kunpeng server|Kunpeng server|Kunpeng server|
-|CPU|2 x Kunpeng 920, 64 cores@2.6 GHz|2 x Kunpeng 920, 64 cores@2.6 GHz|2 x new Kunpeng 920 processor model, 80 cores@2.9 GHz|2 x new Kunpeng 920 processor model, 64 cores@2.2 GHz|
-|Memory|16 x DDR4 RDIMM-32 GB-2933 MT/s|16 x DDR4 RDIMM-32 GB-2933 MT/s|16 x DDR5 DIMM-64 GB-4800 MT/s|16 x DDR5 DIMM-64 GB-5200 MT/s|
-|Drive|System drive: 2 x SSD, 480 GB, SATA 6 Gbit/s, read-intensive<br>Data drive: 2 x ES3521A V6 SSD, 1920 GB, SATA 6 Gbit/s, read-intensive|System drive: 2 x SSD, 480 GB, SATA 6 Gbit/s, read-intensive<br>Data drive: 2 x ES3521A V6 SSD, 1920 GB, SATA 6 Gbit/s, read-intensive|System drive: 1 x S3521A V6 SSD, 1920 GB, SATA 6 Gbit/s, read-intensive<br>Data drive: 2 x S3521A V6 SSD, 1920 GB, SATA 6 Gbit/s, read-intensive|System drive: 1 x SSD, 480 GB, SATA 6 Gbit/s, 2.5-inch height, read-intensive<br>1 x S4510 SSD, 960 GB, SATA 6 Gbit/s, read-intensive<br>Data drive: 1 x ES3600P V6 SSD, 6400 GB, NVMe 64 Gbit/s<br>1 x ES3500P V5 SSD, 4000 GB, NVMe 32 Gbit/s|
-|NIC|Onboard: 1 x NIC (4 x GE); 1 x TM280 FlexIO card, 25GE/10GE optical port, 4 ports, SFP28 (without optical modules)<br>External: 1 x Mellanox NIC|Onboard: 1 x NIC (4 x GE); 1 x TM280 FlexIO card, 25GE/10GE optical port, 4 ports, SFP28 (without optical modules)<br>External: 1 x Mellanox NIC|Onboard: 1 x NIC (4 x GE); 1 x TM280 FlexIO card, 2 x 25GE/10GE optical port, 4 ports, SFP28 (without optical modules)<br>External: 1 x Mellanox NIC|Onboard: 1 x NIC (4 x GE); 1 x TM280 FlexIO card, 2 x 25GE/10GE optical port, 4 ports, SFP28 (without optical modules)|
-|Riser card|PCIe x16 + PCIe x8 for both riser 1 and riser 2|3 x PCIe x8 for both riser 1 and riser 2|2 x front riser (x8 x 2) + 2 x rear riser (x8 x 2) + 1 x riser 3 (x8 x 2)|2 x rear riser (x16 + x8 x 2) + 1 x riser 3 (x8 x 2)|
-|Encoding card|1 x NETINT Quadra T2A (x8)|None|None|None|
-|GPU|2 x AMD W6800|4 x DaoCloud DC1000|8 x DaoCloud DC1000 or 8 x DaoCloud DC1000C|8 x DaoCloud DC1000|
-|OS|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
-|Kernel version|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
+|Item|Hardware Configuration Scheme 1|Hardware Configuration Scheme 2|Hardware Configuration Scheme 3|Hardware Configuration Scheme 4|Hardware Configuration Scheme 5|
+| :---: | :---: | :---: | :---: | :---: | :---: |
+|CPU|2 x Kunpeng 920, 64 cores@2.6 GHz|2 x Kunpeng 920, 64 cores@2.6 GHz|2 x new Kunpeng 920 processor model, 80 cores@2.9 GHz|2 x new Kunpeng 920 processor model, 64 cores@2.2 GHz|2 x new Kunpeng 920 processor model, 80 cores@2.9 GHz|
+|Memory|16 x DDR4 RDIMM-32 GB-2933 MT/s|16 x DDR4 RDIMM-32 GB-2933 MT/s|16 x DDR5 DIMM-64 GB-4800 MT/s|16 x DDR5 DIMM-64 GB-5200 MT/s|16 x DDR4 DIMM-64 GB-3200 MT/s|
+|Encoding card|1 x NETINT Quadra T2A (x8)|None|None|None|None|
+|GPU|2 x AMD W6800|4 x DaoCloud DC1000|8 x DaoCloud DC1000 or 8 x DaoCloud DC1000C|8 x DaoCloud DC1000|8 x DaoCloud DC1000|
+|OS|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|openEuler 22.03 LTS SP4|
+|Kernel version|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|5.10.0-216.0.0|
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
@@ -40,24 +36,24 @@ For details about the software environment for deploying the Kbox cloud phone co
 
 ##### Video Stream Engine<a name="ZH-CN_TOPIC_0000002518346424" id="video-stream-engine"></a>
 
-Before deploying the video stream cloud phone, obtain the required software packages from the addresses provided in this section and verify the integrity of the software packages. For the detailed version number, see *[Product Version](./release_notes.md#product-version)*.
+Before deploying the video stream cloud phone, obtain the required software packages from the addresses provided in this section and verify the integrity of the software packages. For the detailed version number, see [Product Version](./release_notes.md#product-version).
 
 **Obtaining Software Packages<a name="section9155930113616" id="obtaining-software-packages"></a>**
 
 **Table 1** Software requirements for deploying the video stream engine<a id="software-requirements-for-deploying-the-video-stream-engine"></a>
 
-|No.|Software Package|Description|How to Obtain|Configuration Scheme 1|Configuration Scheme 2|Configuration Scheme 3|Configuration Scheme 4|
-|--|--|--|--|--|--|--|--|
-|1|BoostKit-boostcph-videoengine_*.zip|Binary package of the video stream engine.|[Link](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|
-|2|DemoVideoEngine.tar.gz|TAR package of the video stream engine server. It is used to obtain the audio and video data of the Kbox container.|[Link](https://gitcode.com/boostkit/boostcph/releases).|√|√|√|√|
-|3|DemoVideoEngine_sha256.txt|SHA256 file corresponding to the TAR package of the video stream engine server. It is used to check the software integrity.|[Link](https://gitcode.com/boostkit/boostcph/releases).|√|√|√|√|
-|4|CloudPhoneApk.tar.gz|TAR package of the video stream engine client. It is used to decode and play audio and video data.|[Link](https://gitcode.com/boostkit/boostcph/releases).|√|√|√|√|
-|5|CloudPhoneApk_sha256.txt|SHA256 file corresponding to the TAR package of the video stream engine client. It is used to check the software integrity.|[Link](https://gitcode.com/boostkit/boostcph/releases).|√|√|√|√|
-|6|VideoClientEmulator.tar.gz|Stress test tool for the video stream cloud phone.|Please submit an ISSUE feedback.|√|√|√|√|
-|7|NETINT-v*XXX*.tar.gz|TAR package of the video stream NETINT encoding card for hardware encoding. The matching version is 4.8.F-adapt.|[Link](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>Download password: **test123**|√|-|-|-|
-|8|Quadra_V*XXX*.zip|Quadra software, firmware, and document packages of the NETINT encoding card.|[Link](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>Download password: **test123**|√|-|-|-|
-|9|WebClient.zip|Web client.|Please submit an ISSUE feedback.|√|√|√|√|
-|10|topo-affinity-plugin-master.zip|Kubernetes NUMA affinity plugin.|[Link](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|
+|No.|Software Package|Description|How to Obtain|Configuration Scheme 1|Configuration Scheme 2|Configuration Scheme 3|Configuration Scheme 4|Configuration Scheme 5|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|1|BoostKit-boostcph-videoengine_*.zip|Binary package of the video stream engine.|[Link](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|√|
+|2|DemoVideoEngine.tar.gz|TAR package of the video stream engine server. It is used to obtain the audio and video data of the Kbox container.|[Link](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|√|
+|3|DemoVideoEngine_sha256.txt|SHA256 file corresponding to the TAR package of the video stream engine server. It is used to check the software integrity.|[Link](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|√|
+|4|CloudPhoneApk.tar.gz|TAR package of the video stream engine client. It is used to decode and play audio and video data.|[Link](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|√|
+|5|CloudPhoneApk_sha256.txt|SHA256 file corresponding to the TAR package of the video stream engine client. It is used to check the software integrity.|[Link](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|√|
+|6|VideoClientEmulator.tar.gz|Stress test tool for the video stream cloud phone.|Please submit an ISSUE.|√|√|√|√|√|
+|7|NETINT-v*XXX*.tar.gz|TAR package of the video stream NETINT encoding card for hardware encoding. The matching version is 4.8.F-adapt.|[Link](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>Download password: **test123**|√|-|-|-|-|
+|8|Quadra_V*XXX*.zip|Quadra software, firmware, and document packages of the NETINT encoding card.|[Link](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>Download password: **test123**|√|-|-|-|-|
+|9|WebClient.zip|Web client.|Please submit an ISSUE.|√|√|√|√|√|
+|10|topo-affinity-plugin-master.zip|Kubernetes NUMA affinity plugin.|[Link](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|√|
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
@@ -88,7 +84,7 @@ To prevent software packages from being maliciously tampered with during transfe
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->If the verification fails, do not use the software package. Please submit an ISSUE feedback.
+>If the verification fails, do not use the software package. Please submit an ISSUE for feedback.
 >Before a software package is used for installation or upgrade, its SHA256 checksum also needs to be verified to ensure that the software package is not tampered with.
 
 ### Deploying a Cloud Phone<a name="ZH-CN_TOPIC_0000002549826291"></a>
@@ -123,7 +119,7 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 | :---: | :---: | :---: | :---: |
 |Containerd|v1.7.14|A container runtime.|Containerd binary software package: **containerd-1.7.14-linux-arm64.tar.gz**; containerd service file: [Link](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service)|
 |runC|v1.1.12|runC is a lightweight container runtime that complies with the Open Container Initiative (OCI). It is a dependency component of containerd.|[Link](https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64)|
-|CNI Plugin|v1.4.1|The Container Network Interface (CNI) is a specification and libraries for configuring network interfaces in Linux containers.|[Link](https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
+|CNI Plugin|v1.4.1|The Container Network Interface (CNI) is a specification and a set of libraries for configuring network interfaces in Linux containers.|[Link](https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
 |nerdctl|v1.7.5|nerdctl is a Docker-compatible CLI for managing containerd-based containers and images.|[Link](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz)|
 | Golang | v1.25 |Golang is a systems programming language used for developing NRI plugins.| [Link](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
 
@@ -232,7 +228,7 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
     To switch to the Docker container runtime, remove the software binaries installed in [1](#deploying-the-containerd-environment-1) to [5](#deploying-the-containerd-environment-5) from the corresponding directories. After the removal is complete, run the preceding command to restart the Docker service and start a new terminal.
 
-- **[(Hardware Configuration Scheme 2/3/4) Installing the GPU Driver](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/en/install_guide.md#installing-the-gpu-driver)**  
+- **[(Hardware Configuration Scheme 2/3/4/5) Installing the GPU Driver](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/en/install_guide.md#installing-the-gpu-driver)**  
 
 #### Creating an Image<a name="ZH-CN_TOPIC_0000002549826281"></a>
 
@@ -262,7 +258,7 @@ Before creating a video stream cloud phone image, create a Kbox image first.
 
     2. Upload the `deploy_scripts` directory in the `Kbox-patches-AOSP11` folder to the `~/dependency` directory on the server.
     3. Upload the Android Kbox binary package `BoostKit-boostcph-kbox_*.zip` to `~/dependency/deploy_scripts`.
-    4. (Hardware configuration scheme 2/3/4) If hardware configuration scheme 2/3/4 is used, decompress the GPU driver package `VAGPU-25.03.01.01-RC24.tgz` to obtain `va_driver.tgz` and upload `va_driver.tgz` to the `~/dependency/deploy_scripts` directory on the server.
+    4. (Hardware configuration scheme 2/3/4/5) If hardware configuration scheme 2/3/4/5 is used, decompress the GPU driver package `VAGPU-25.03.01.01-RC24.tgz` to obtain `va_driver.tgz` and upload `va_driver.tgz` to the `~/dependency/deploy_scripts` directory on the server.
     5. Create a Kbox image that contains the Android Kbox binary. In the following commands, `kbox:demo` is the official Kbox demo image, and `kbox:origin` is the new image that contains the Android Kbox binary.
         - For configuration scheme 1:
 
@@ -272,7 +268,7 @@ Before creating a video stream cloud phone image, create a Kbox image first.
             ./make_image.sh kbox:demo kbox:origin
             ```
 
-        - For configuration scheme 2/3/4:
+        - For configuration scheme 2/3/4/5:
 
             ```bash
             cd ~/dependency/deploy_scripts
@@ -328,7 +324,7 @@ Obtain the TAR packages of the video stream engine client and server, binary pac
         chmod +x Dockerfile_NoVPU Dockerfile_T432 Dockerfile_QuadraT2A make_image.sh
         ```
 
-    - For configuration scheme 2/3/4:
+    - For configuration scheme 2/3/4/5:
 
         ```bash
         tar -xvf DemoVideoEngine.tar.gz Dockerfile_NoVPU  make_image.sh
@@ -430,7 +426,7 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
 7. If the encoding card is inserted into CPU 0, delete `${NETINT1}`. If the encoding card is inserted into CPU 1, delete `${NETINT0}`.
 8. To enable the WebRTC feature, set `ENABLE_WEBRTC_CONNECTION` to `1` in `cfct_config`. If the CPU is used for software encoding of video frames, set `CPU_BIND_MODE` to `1` in `cfct_config` to prevent frame freezing.
 9. To enable the graphics acceleration layer, set `ENABLE_RENDER_LAYER` in the `cfct_config` file to `1`. For details, see [Basic Functions and Usage of the Graphics Acceleration Layer](#basic-functions-and-usage-of-the-graphics-acceleration-layer).
-10. To enable the C2 decoder if needed, set `ENABLE_AMD_C2_DECODE` in the `cfct_config` file to `1`.
+10. To enable the C2 decoder, set `ENABLE_AMD_C2_DECODE` in the `cfct_config` file to `1`.
 
 **Querying the NUMA Node to Which a NETINT Chip Node Belongs<a name="section2507154233510"></a>**
 
@@ -509,7 +505,7 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
     lrwxrwxrwx 1 root root 13 Oct 25 10:58 pci-0000:83:00.0-render -> ../renderD129
     ```
 
-    This indicates that two AMD GPUs are inserted into the server, and the rendering nodes are `renderD128` and `renderD129`.
+    This indicates that two AMD GPUs are installed in the server, and the rendering nodes are `renderD128` and `renderD129`.
 
 2. Query the NUMA node to which a GPU rendering node belongs.
 
@@ -517,7 +513,7 @@ You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configur
     cat /sys/bus/pci/devices/0000\:XX\:00.0/numa_node 
     ```
 
-    Replace *XX* in the command with the IP address of a node queried in [1](#li34656503552). Take `renderD128` as an example. The query command is as follows:
+    Replace *XX* in the command with the PCI address of a node queried in [1](#li34656503552). Take `renderD128` as an example. The query command is as follows:
 
     ```bash
     cat /sys/bus/pci/devices/0000\:03\:00.0/numa_node
@@ -555,7 +551,7 @@ To enable the graphics acceleration layer, perform the following steps:
 >- Multiple containers on the host share the same shader cache path. You can start a cloud phone to pre-collect as many shaders as possible. For other cloud phones, you can enable the shader cache function by setting the corresponding applications in the configuration file to read-only mode. In this case, the performance is optimal.
 >- The shader cache function has no cache eviction mechanism. If the cache file system storage is full or the game application needs to be updated, clear the entire file system's cache to avoid a mismatch between the shaders and binary files.
 
-#### Setting cfct_config and hardware_bind.cfg (Configuration Schemes 2, 3, and 4)<a name="ZH-CN_TOPIC_0000002518186514"></a>
+#### Setting cfct_config and hardware_bind.cfg (Configuration Schemes 2, 3, 4, and 5)<a name="ZH-CN_TOPIC_0000002518186514"></a>
 
 You can use the `cfct_config` and `hardware_bind.cfg` files to flexibly configure the resources used by the video stream cloud phone to achieve optimal performance. Before starting a cloud phone, ensure that the `cfct_config` and `hardware_bind.cfg` files are stored in the startup path and the configurations in the files are correct. The cloud phone container uses the configurations in these files.
 
@@ -1152,7 +1148,7 @@ Deploy the DaoCloud device plugin image on all worker nodes.
 
 DaoCloud provides this plugin. This document applies to plugin version v0.0.5. Obtain related installation documents and software packages, and deploy the DaoCloud device plugin according to the documents.
 
-1. Obtain the `VAGPU-25.03.01.01-RC24.tgz` GPU driver package based on "Software Environment" in [Kbox Cloud Phone Container Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc/docs/en/install_guide.md#d22-software-environment-). Decompress the package to obtain the `k8s-v0.0.5-1.tar.gz` package.
+1. Obtain the `VAGPU-25.03.01.01-RC24.tgz` GPU driver package based on "Software Environment" in [Kbox Cloud Phone Container Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/kboxcpc/docs/en/install_guide.md#software-environment). Decompress the package to obtain the `k8s-v0.0.5-1.tar.gz` package.
 2. Decompress `k8s-v0.0.5-1.tar.gz` to obtain installation documents and software packages.
 3. Install Va Docker based on chapter 4 in the *DC1000 Accelerator Card Va Docker Installation Guide 01*.
 4. Configure the low-level runtime based on chapter 5 in the *DC1000 Accelerator Card Va Docker Installation Guide 02*.
@@ -2016,7 +2012,7 @@ Modify the VM NIC configuration file to enable network communication for the VM.
 
     ![](figures/zh-cn_image_0000002550068149.png)
 
-4. Reload network connections. You are advised to run the commands in the bash of virt-manager. If you perform remote operations through SSH, connections will be interrupted due to network configuration modification.
+4. Reload network connections. You are advised to run the commands in the shell of virt-manager. If you perform remote operations through SSH, connections will be interrupted due to network configuration modification.
 
     ```bash
     virt-manager
@@ -2341,6 +2337,6 @@ Drive capacity may need to be expanded depending on the scenario (some game appl
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

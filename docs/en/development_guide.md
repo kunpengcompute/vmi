@@ -1,6 +1,6 @@
 # Developer Guide<a name="ZH-CN_TOPIC_0000002552853357"></a>
 
-<!-- md-trans-meta sourceCommit=8137c5c6f22411c010ac7e5e01f7b05f199cf237 translatedAt=2026-08-29T08:17:06.018Z pushedAt=2026-09-01T06:15:56.008Z -->
+<!-- md-trans-meta sourceCommit=3d4cfde45291751bd88393278e95e99a89e74d1b translatedAt=2026-10-14T09:35:50.811Z pushedAt=2026-10-15T08:22:24.820Z -->
 
 ## Introduction<a name="ZH-CN_TOPIC_0000002549825809"></a>
 
@@ -21,7 +21,7 @@ This document describes the integrated development of the device and cloud engin
 |3|SDK platform|Version: 33_r02|[Link](https://dl.google.com/android/repository/platform-33_r02.zip)|
 |4|SDK platform tools|Version: r33.0.3|[Link](https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip)|
 |5|SDK build tools|Version: r33.0.1|[Link](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
-|6|BoostKit-boostcph-videoengine_*_11.zip|Android 11 video stream engine development kit|Please submit an ISSUE feedback.|
+|6|BoostKit-boostcph-videoengine_*_11.zip|Android 11 video stream engine development kit|Please submit an ISSUE.|
 
 **Verifying Software Package Integrity<a name="section16873181764512"></a>**
 
@@ -47,7 +47,7 @@ To prevent software packages from being maliciously tampered with during transfe
 
 > ![](public_sys-resources/icon-note.gif)**NOTE**
 >
->If the verification fails, do not use the software package. Please submit an ISSUE feedback.
+>If the verification fails, do not use the software package. Please submit an ISSUE for feedback.
 >Before a software package is used for installation or upgrade, its SHA256 checksum also needs to be verified to ensure that the software package is not tampered with.
 
 ## Configuring the Development Environment<a name="ZH-CN_TOPIC_0000002518345920"></a>
@@ -128,7 +128,6 @@ This document describes how to compile the server software based on the x86_64 s
 >- For details about the hardware requirements and deployment process of the server debugging environment, refer to [Video Stream Engine Installation Guide](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine/docs/en/install_guide.md).
 
 1. Save the `VideoEngine.tar.gz` package to the `/home/VideoEngine/Cloud` directory.
-
 2. Decompress the development package of the video stream engine server.
 
     ```bash
@@ -368,7 +367,6 @@ Initializes the cloud phone server.
 **Restrictions<a name="section733mcpsimp"></a>**
 
 - This API cannot be called repeatedly. That is, it cannot be called after the initialization is complete.
-
 - The data output callback cannot be blocked for a long time. It is recommended that the callback return within 1 ms.
 
 **Prototype<a name="section736mcpsimp"></a>**
@@ -414,7 +412,6 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The initialization is successful.
-
 - Other values: The initialization fails, and an error code is returned.
 
 #### DeInitVmiEngine<a name="ZH-CN_TOPIC_0000002518186032"></a>
@@ -438,7 +435,6 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The deinitialization is successful.
-
 - Other values: The deinitialization fails, and an error code is returned.
 
 #### GetStatus<a name="ZH-CN_TOPIC_0000002518345982"></a>
@@ -489,7 +485,7 @@ struct VmiConfig {
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->`VmiConfig` needs to transfer the module version number mentioned in [VmiVersion (Module Version)](#module-version). The version number is specific to each module.
+>`VmiConfig` needs to pass in the module version number mentioned in [VmiVersion (Module Version)](#module-version). The version number is specific to each module.
 
 **Return Value Description<a name="section916mcpsimp"></a>**
 
@@ -498,7 +494,6 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The module is successfully started.
-
 - Other values: The module fails to be started, and an error code is returned.
 
 #### StopModule<a name="ZH-CN_TOPIC_0000002549705845"></a>
@@ -524,7 +519,6 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The module is successfully stopped.
-
 - Other values: The module fails to be stopped, and an error code is returned.
 
 #### InjectData<a name="ZH-CN_TOPIC_0000002549705781"></a>
@@ -553,7 +547,6 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The data injection is successful.
-
 - Other values: The data injection fails, and an error code is returned.
 
 #### SetParam<a name="ZH-CN_TOPIC_0000002518345938"></a>
@@ -582,7 +575,6 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The parameters are set successfully.
-
 - Other values: The parameters fail to be set, and an error code is returned.
 
 #### GetParam<a name="ZH-CN_TOPIC_0000002549705805"></a>
@@ -611,7 +603,6 @@ Data type: enum VmiErrCode: int32_t
 The value can be any of the following:
 
 - `OK (0)`: The parameters are obtained successfully.
-
 - Other values: The parameters fail to be obtained, and an error code is returned.
 
 ## Video Output Development<a name="ZH-CN_TOPIC_0000002518186012" id="video-output-development"></a>
@@ -708,7 +699,7 @@ The value ranges of `width` and `height` can be exchanged.
 |width|Width of the adaptive resolution. The value must be a multiple of 8.|360 to 2160|720|
 |height|Height of the adaptive resolution. The value must be a multiple of 8.|360 to 3840|1280|
 |widthAligned|Aligned width of the resolution (not configurable currently).|360 to 2160|720|
-|heightAligned|Aligned width of the resolution (not configurable currently).|360 to 3840|1280|
+|heightAligned|Aligned height of the resolution (not configurable currently).|360 to 3840|1280|
 
 > ![](public_sys-resources/icon-note.gif) **NOTE**
 >
@@ -840,7 +831,7 @@ struct FrameSize {
     uint32_t heightAligned = 1280;      // 1280 (not aligned by default)
 } __attribute__((packed));
 struct VideoLatency {
-     uint64_t startCaptureTimestamp;     // Snapshot capturing start time
+    uint64_t startCaptureTimestamp;     // Snapshot capturing start time
     uint64_t endCaptureTimestamp;       // Snapshot capturing end time
     uint64_t startEncodeTimestamp;      // Encoding start time
     uint64_t endEncodeTimestamp;        // Encoding end time
@@ -850,7 +841,7 @@ struct ExtDataVideo {
     uint8_t orientation;                // Orientation of the current frame
     FrameSize size;                     // Current frame size
     VideoLatency latencyInfo;           // Snapshotting and encoding time points
-    uint32_t frameRate;                 // Current screen refresh rate
+    uint32_t frameRate;                 // Current screen frame rate
     uint32_t transform;                 // Image rotation, which is 0 if CompositionBypass is disabled and may not be 0 if CompositionBypass is enabled
 } __attribute__((packed));
 ```
@@ -1016,7 +1007,7 @@ AudioData audioData;
 audioData.size = sizeof(audioPlayData);
 uint8_t *data = new uint8_t[sizeof(AudioData) + sizeof(audioPlayData)];
 memcpy(data, &audioData, sizeof(AudioData));
-memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData))
+memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData));
 DataCallback(module, cmd, data, sizeof(AudioData) + audioData.size);
 ```
 
@@ -1162,7 +1153,7 @@ AudioData audioData;
 audioData.size = sizeof(micData);
 uint8_t *data = new uint8_t[sizeof(AudioData) + sizeof(micData)];
 memcpy(data, &audioData, sizeof(AudioData));
-memcpy(data + sizeof(AudioData), micData, sizeof(micData))
+memcpy(data + sizeof(AudioData), micData, sizeof(micData));
 InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 ```
 
@@ -1171,11 +1162,8 @@ InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 Microphone frames need to be injected stably. Otherwise, the sound may be intermittent. The specific restrictions are subject to the value of `vmi.mic.cachefactor` in the `default.prop` configuration file. This configuration item indicates the buffer size of the microphone frame queue. The options are as follows:
 
 - `0`: One frame needs to be injected every 10 ms, causing no extra delay.
-
 - `1`: 16 frames need to be injected every 160 ms, causing a 160 ms delay.
-
 - `2`: 32 frames need to be injected every 320 ms, causing a 320 ms delay.
-
 - `3`: 48 frames need to be injected every 480 ms, causing a 480 ms delay.
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
@@ -1251,7 +1239,7 @@ InjectData(module, cmd, data, sizeof(VmiKeyInputData));
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
 >- The server performs limited verification on touch data, for example, determining whether a touch point in the touch data is within an effective area. However, the server cannot distinguish abnormal data caused by abnormal behavior. For example, a finger is lifted from the client screen but the client sends a Down event (which should be an UP event). Therefore, pay attention to this issue when writing client code.
->- On some mobile phone models (vivo phones detected), if three or more fingers press the screen simultaneously or sequentially within a short interval, the client sends an EVENT_CANCEL event. As a result, the server resets the status of all touch points, causing a touch control failure. This issue does not occur if the interval between finger pressing is longer.
+>- On some mobile phone models (vivo phones detected), if three or more fingers press the screen simultaneously or sequentially within a short interval, the client sends an EVENT_CANCEL event. As a result, the server resets the status of all touch points, causing touch control failure. This issue does not occur if the interval between finger presses is longer.
 
 ## Sensor Input Development<a name="ZH-CN_TOPIC_0000002518345976"></a>
 
@@ -1447,7 +1435,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder instance is successfully created.
-
 - `VIDEO_ENCODER_CREATE_FAIL`: Failed to create an encoder instance.
 
 #### DestroyVideoEncoder<a name="ZH-CN_TOPIC_0000002549825789" id="DestroyVideoEncoder"></a>
@@ -1473,7 +1460,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder instance is successfully destroyed.
-
 - `VIDEO_ENCODER_DESTROY_FAIL`: Failed to destroy the encoder instance.
 
 **Involved APIs of the VideoEncoder Class<a name="section97621346152119"></a>**
@@ -1560,7 +1546,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully initialized.
-
 - `VIDEO_ENCODER_INIT_FAIL`: Failed to initialize the encoder.
 
 #### StartEncoder<a name="ZH-CN_TOPIC_0000002549825829" id="StartEncoder"></a>
@@ -1586,7 +1571,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully started.
-
 - `VIDEO_ENCODER_INIT_FAIL`: Failed to initialize the encoder.
 
 #### SetParams<a name="ZH-CN_TOPIC_0000002549705835" id="SetParams"></a>
@@ -1660,7 +1644,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: Data of one frame is successfully encoded.
-
 - `VIDEO_ENCODER_ENCODE_FAIL`: Failed to encode data of one frame.
 
 #### StopEncoder<a name="ZH-CN_TOPIC_0000002518186044" id="StopEncoder"></a>
@@ -1686,7 +1669,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully stopped.
-
 - `VIDEO_ENCODER_STOP_FAIL`: Failed to stop the encoder.
 
 #### DestroyEncoder<a name="ZH-CN_TOPIC_0000002518186050" id="DestroyEncoder"></a>
@@ -1697,7 +1679,7 @@ Destroys the encoder and releases encoding resources.
 
 **Prototype<a name="section49973353"></a>**
 
-EncoderRetCode DestoryEncoder\(int32_t fd\)
+EncoderRetCode DestroyEncoder\(int32_t fd\)
 
 **Parameters<a name="section42241738122511"></a>**
 
@@ -1712,7 +1694,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully stopped.
-
 - `VIDEO_ENCODER_DESTROY_FAIL`: Failed to destroy the encoder.
 
 #### ResetEncoder<a name="ZH-CN_TOPIC_0000002518345970" id="ResetEncoder"></a>
@@ -1738,7 +1719,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully reset.
-
 - `VIDEO_ENCODER_RESET_FAIL`: Failed to reset the encoder.
 
 #### FrameScaling<a name="ZH-CN_TOPIC_0000002518186040"></a>
@@ -1778,7 +1758,6 @@ Data type: EncoderRetCode
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: success
-
 - `VIDEO_ENCODER_SET_ENCODE_PARAMS_FAIL`: failure
 
 ### Decoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549825849"></a>
@@ -1836,7 +1815,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder instance is successfully created.
-
 - `VIDEO_DECODER_CREATE_FAIL`: Failed to create a decoder instance.
 
 #### DestroyVideoDecoder<a name="ZH-CN_TOPIC_0000002549825781" id="DestroyVideoDecoder"></a>
@@ -1862,7 +1840,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder instance is successfully destroyed.
-
 - `VIDEO_DECODER_DESTROY_FAIL`: Failed to destroy the decoder instance.
 
 **Involved APIs of the VideoDecoder Class<a name="section97621346152119"></a>**
@@ -1903,7 +1880,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully created.
-
 - `VIDEO_DECODER_CREATE_FAIL`: Failed to create a decoder.
 
 #### InitDecoder<a name="ZH-CN_TOPIC_0000002518186064" id="InitDecoder"></a>
@@ -1927,7 +1903,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully initialized.
-
 - `VIDEO_DECODER_INIT_FAIL`: Failed to initialize the decoder.
 
 #### SetDecodeParams<a name="ZH-CN_TOPIC_0000002518186030" id="SetDecodeParams"></a>
@@ -1995,7 +1970,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully configured.
-
 - `VIDEO_DECODER_SET_DECODE_PARAMS_FAIL`: Failed to configure the decoder.
 
 #### GetDecodeParams<a name="ZH-CN_TOPIC_0000002518345942" id="GetDecodeParams"></a>
@@ -2024,7 +1998,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoding parameters are successfully obtained.
-
 - `VIDEO_DECODER_GET_DECODE_PARAMS_FAIL`: Failed to obtain the decoding parameters.
 
 #### SetCallbacks<a name="ZH-CN_TOPIC_0000002549705825" id="SetCallbacks"></a>
@@ -2062,14 +2035,13 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The callback is successfully set.
-
 - `VIDEO_DECODER_SET_FUNC_FAIL`: Failed to set the callback.
 
 #### SetCopyFrameFunc<a name="ZH-CN_TOPIC_0000002549705803" id="SetCopyFrameFunc"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
-Sets the hook function to reduce memory copies when frame data is output. This API is provided for the decoder.
+Provides a callback to the decoder. The decoder invokes it when outputting frame data, which helps reduce memory copies.
 
 **Prototype<a name="section49973353"></a>**
 
@@ -2090,7 +2062,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The callback is successfully set.
-
 - `VIDEO_DECODER_SET_FUNC_FAIL`: Failed to set the callback.
 
 #### SendStreamData<a name="ZH-CN_TOPIC_0000002518345964" id="SendStreamData"></a>
@@ -2120,9 +2091,7 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: Stream data is sent successfully.
-
 - `VIDEO_DECODER_DECODE_FAIL`: Failed to send stream data.
-
 - `VIDEO_DECODER_WRITE_OVERFLOW`: Write overflow.
 
 #### RetrieveFrameData<a name="ZH-CN_TOPIC_0000002549705823" id="RetrieveFrameData"></a>
@@ -2156,9 +2125,7 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoded data is successfully retrieved.
-
 - `VIDEO_DECODER_DECODE_FAIL`: Failed to retrieve the decoded data.
-
 - `VIDEO_DECODER_READ_UNDERFLOW`: Read underflow.
 
 #### Flush<a name="ZH-CN_TOPIC_0000002549705829" id="Flush"></a>
@@ -2178,7 +2145,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoding buffer status is successfully reset.
-
 - `VIDEO_DECODER_RESET_FAIL`: Failed to reset the decoding buffer status.
 
 #### StartDecoder<a name="ZH-CN_TOPIC_0000002518186038" id="StartDecoder"></a>
@@ -2198,7 +2164,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully started.
-
 - `VIDEO_DECODER_START_FAIL`: Failed to start the decoder.
 
 #### StopDecoder<a name="ZH-CN_TOPIC_0000002518345952" id="StopDecoder"></a>
@@ -2218,7 +2183,6 @@ Data type: DecoderRetCode
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is stopped successfully.
-
 - `VIDEO_DECODER_STOP_FAIL`: Failed to stop the decoder.
 
 #### DestroyDecoder<a name="ZH-CN_TOPIC_0000002518345932" id="DestroyDecoder"></a>
@@ -2325,7 +2289,7 @@ Data type: void *, which points to the created instance of the specified GPU acc
 
 **Involved APIs of the GpuEncoderBase Class<a name="section97621346152119"></a>**
 
-For details about involved APIs of the GpuEncoderBase class, see [11.3.5-Init](#Init), [11.3.6-Deinit](#Deinit), [11.3.7-Start](#Start), [11.3.8-Stop](#Stop), [11.3.9-CreateBuffer](#CreateBuffer), [11.3.10-ImportBuffer](#ImportBuffer), [11.3.11-ReleaseBuffer](#ReleaseBuffer), [11.3.12-MapBuffer](#MapBuffer), [11.3.13-UnmapBuffer](#UnmapBuffer), [11.3.14-RetriveBufferData](#RetriveBufferData), [11.3.15-Convert](#Convert), [11.3.16-Encode](#Encode), [11.3.17-SetEncodeParam](#SetEncodeParam), and [11.3.18-Reset](#Reset).
+For details about involved APIs of the GpuEncoderBase class, see [11.3.5-Init](#Init), [11.3.6-Deinit](#Deinit), [11.3.7-Start](#Start), [11.3.8-Stop](#Stop), [11.3.9-CreateBuffer](#CreateBuffer), [11.3.10-ImportBuffer](#ImportBuffer), [11.3.11-ReleaseBuffer](#ReleaseBuffer), [11.3.12-MapBuffer](#MapBuffer), [11.3.13-UnmapBuffer](#UnmapBuffer), [11.3.14-RetrieveBufferData](#RetrieveBufferData), [11.3.15-Convert](#Convert), [11.3.16-Encode](#Encode), [11.3.17-SetEncodeParam](#SetEncodeParam), and [11.3.18-Reset](#Reset).
 
 Return values of the GpuEncoderBase class:
 
@@ -2341,7 +2305,7 @@ enum GpuEncoderErrorCode : uint32_t {
     ERR_UNSUPPORT_OPERATION,
     ERR_INTERNAL_ERROR,
     ERR_NEED_RESET, // Some encoding parameters take effect after the encoder is reset.
-    ERR_UNKNOW
+    ERR_UNKNOWN
 };
 ```
 
@@ -2439,7 +2403,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is successfully initialized.
-
 - Other: Failed to initialize the GPU acceleration instance.
 
 #### Deinit<a name="ZH-CN_TOPIC_0000002549705809" id="Deinit"></a>
@@ -2459,7 +2422,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is successfully destroyed.
-
 - Other: Failed to destroy the GPU acceleration instance.
 
 #### Start<a name="ZH-CN_TOPIC_0000002549705843" id="Start"></a>
@@ -2481,7 +2443,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is started successfully.
-
 - Other: Failed to start the GPU acceleration instance.
 
 #### Stop<a name="ZH-CN_TOPIC_0000002549825841" id="Stop"></a>
@@ -2503,7 +2464,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is stopped successfully.
-
 - Other: Failed to stop the GPU acceleration instance.
 
 #### CreateBuffer<a name="ZH-CN_TOPIC_0000002518186066" id="CreateBuffer"></a>
@@ -2577,7 +2537,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer is successfully created.
-
 - Other: Failed to create a buffer.
 
 #### ImportBuffer<a name="ZH-CN_TOPIC_0000002549825793" id="ImportBuffer"></a>
@@ -2605,7 +2564,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer is successfully imported.
-
 - Other: Failed to import the buffer.
 
 #### ReleaseBuffer<a name="ZH-CN_TOPIC_0000002518186052" id="ReleaseBuffer"></a>
@@ -2631,7 +2589,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer is successfully released.
-
 - Other: Failed to release the buffer.
 
 #### MapBuffer<a name="ZH-CN_TOPIC_0000002549705793" id="MapBuffer"></a>
@@ -2641,7 +2598,6 @@ The value can be any of the following:
 Maps data in a buffer to memory.
 
 - If data in the buffer can be mapped to contiguous memory in user space, fill in `data` and `dataLen` in the `buffer` field for this API.
-
 - If data in the buffer cannot be mapped to contiguous memory, leave `data` in the `buffer` field empty and fill in the `dataLen` field.
 
 **Prototype<a name="section49973353"></a>**
@@ -2671,7 +2627,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: Data in the buffer is successfully mapped.
-
 - Other: Failed to map data in the buffer.
 
 #### UnmapBuffer<a name="ZH-CN_TOPIC_0000002549825797" id="UnmapBuffer"></a>
@@ -2697,10 +2652,9 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The data in the buffer is successfully unmapped.
-
 - Other: Failed to unmap data in the buffer.
 
-#### RetriveBufferData<a name="ZH-CN_TOPIC_0000002549825777" id="RetriveBufferData"></a>
+#### RetrieveBufferData<a name="ZH-CN_TOPIC_0000002549825777" id="RetrieveBufferData"></a>
 
 **Function Usage<a name="section20501062"></a>**
 
@@ -2714,7 +2668,7 @@ Data in the buffer must have been mapped through the MapBuffer API.
 
 **Prototype<a name="section49973353"></a>**
 
-int32_t RetriveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t memLen, uint32_t &dataLen\) = 0
+int32_t RetrieveBufferData\(GpuEncoderBufferT &buffer, uint8_t \*data, uint32_t memLen, uint32_t &dataLen\) = 0
 
 **Parameters<a name="section47106995"></a>**
 
@@ -2732,7 +2686,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer data is successfully retrieved.
-
 - Other: Failed to retrieve data in the buffer.
 
 #### Convert<a name="ZH-CN_TOPIC_0000002549705817" id="Convert"></a>
@@ -2759,7 +2712,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The buffer format is successfully converted.
-
 - Other: Failed to convert the buffer format.
 
 #### Encode<a name="ZH-CN_TOPIC_0000002549705779" id="Encode"></a>
@@ -2786,7 +2738,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The encoding is successful.
-
 - Other: The encoding fails.
 
 #### SetEncodeParam<a name="ZH-CN_TOPIC_0000002518345966" id="SetEncodeParam"></a>
@@ -2869,9 +2820,7 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The encoding parameters are set successfully.
-
 - `ERR_NEED_RESET`: The encoding parameters take effect only after the Reset API is called.
-
 - Other: Failed to set the encoding parameters.
 
 #### Reset<a name="ZH-CN_TOPIC_0000002549825811" id="Reset"></a>
@@ -2893,7 +2842,6 @@ Data type: GpuEncoderErrorCode
 The value can be any of the following:
 
 - `OK`: The encoder is successfully reset.
-
 - Other: Failed to reset the encoder.
 
 #### ResetImgSize<a name="ZH-CN_TOPIC_0000002549705841"></a>
@@ -2924,7 +2872,6 @@ Data type: int32_t
 The value can be any of the following:
 
 - `0`: The image size is successfully set.
-
 - Other: Failed to set the image size.
 
 ### Opus Encoding and Decoding APIs (C and C++)<a name="ZH-CN_TOPIC_0000002549705849"></a>
@@ -3099,6 +3046,6 @@ This API is similar to the opus_strerror interface in Opus 1.3.1. For details, r
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
