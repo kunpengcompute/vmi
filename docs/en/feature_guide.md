@@ -1,10 +1,10 @@
 # Feature Guide
 
-<!-- md-trans-meta sourceCommit=8137c5c6f22411c010ac7e5e01f7b05f199cf237 translatedAt=2026-08-29T08:15:02.634Z pushedAt=2026-09-01T06:06:52.021Z -->
+<!-- md-trans-meta sourceCommit=39f78efa42b81d8b02018c66a9deeabb8a444cc3 translatedAt=2026-10-14T09:35:33.414Z pushedAt=2026-10-15T06:37:35.137Z -->
 
 ## Introduction
 
-The video stream engine is mainly applied to cloud phones. The cloud phone solution implemented based on the video stream engine technology is called video stream cloud phone. This document describes the basic concepts of the video stream engine and provides guidance for setting up the environment and using the video stream engine.
+The video stream engine is mainly used in cloud phones. A cloud phone solution implemented based on the video stream engine technology is called a video stream cloud phone. This document describes the basic concepts, software architecture, usage constraints, and application scenarios of the video stream engine.
 
 The cloud phone solution is a virtual phone service virtualized based on the Arm server, and runs the Android Open Source Project (AOSP). In short, cloud phones are Arm servers that run the Android OS and function as virtual phones. You can remotely control the cloud phone in real time to run Android applications on the cloud. Based on the basic computing power of cloud phones, you can also efficiently build applications for scenarios like cloud gaming, mobile office, and live streaming interaction.
 
@@ -127,6 +127,6 @@ The design of the video stream cloud phone is to divide the video stream engine 
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
