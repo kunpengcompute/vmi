@@ -1,6 +1,6 @@
 # Feature Guide
 
-<!-- md-trans-meta sourceCommit=377087a2bd241cd72440e17b86df0cd93ee57185 translatedAt=2026-09-08T02:25:29.829Z pushedAt=2026-09-15T08:25:26.891Z -->
+<!-- md-trans-meta sourceCommit=1ad644758a34e178e16896aa452f6c02b7a57d0d translatedAt=2026-10-15T11:55:45.671Z pushedAt=2026-10-16T03:30:24.733Z -->
 
 ## Introduction
 
@@ -125,6 +125,6 @@ The design of the video stream cloud phone is to divide the video stream engine 
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

@@ -1,6 +1,6 @@
 # User Guide<a name="ZH-CN_TOPIC_0000002552775587"></a>
 
-<!-- md-trans-meta sourceCommit=0175fcf026e5c0903b4079399d64d83a8917a5f7 translatedAt=2026-09-08T02:54:34.438Z pushedAt=2026-09-16T10:36:02.399Z -->
+<!-- md-trans-meta sourceCommit=03311fd24125a60715eae0c61c2a36d90f2cc4fb translatedAt=2026-10-15T12:13:31.990Z pushedAt=2026-10-16T02:34:25.046Z -->
 
 ## Operating a Video Stream Cloud Phone Instance<a name="ZH-CN_TOPIC_0000002518226782"></a>
 
@@ -711,7 +711,7 @@ This section describes the system properties of non-commercial modules of the vi
 |vmi.audio.audiotype|Audio output format.|**0**: OPUS<br>**1**: PCM|0|
 |vmi.audio.encode.sampleinterval|Audio output sampling interval.|**5**: 5 ms (not supported currently)<br>**10**: 10 ms<br>**20**: 20 ms (not supported currently)|10|
 |vmi.audio.encode.bitrate|Audio OPUS encoding bit rate (bit/s).|13200 to 512000|192000|
-|vmi.mic.audiotype|Microphone input format.|**0**: OPU<br>**S1**: PCM|0|
+|vmi.mic.audiotype|Microphone input format.|**0**: OPUS<br>**1**: PCM|0|
 |vmi.network.type|Network type.|**1**: TCP<br>**4**: WebRTC|1|
 |demo.data.offset|Size of the reserved field for testing network packets.|0 to 1024|20|
 |vmi.video.renderoptimize|Rendering optimization.|**0**: disabled<br>**1**: enabled|1|
@@ -720,7 +720,7 @@ This section describes the system properties of non-commercial modules of the vi
 |ro.vmi.sensor.passthrough|Server-side sensor passthrough.|**0**: disabled<br>**1**: enabled|1|
 |ro.hardware.vsyncoffset|Offset of the vsync signal of the container compared against the default value, in ns.|0|0|
 |ro.sys.vmi.cloudphone|Cloud phone type.|**video**: video stream cloud phone|video|
-|heartbeat.max.aveage.latency|Maximum average heartbeat latency.|**1**: 1s|1|
+|heartbeat.max.average.latency|Maximum average heartbeat latency.|**1**: 1s|1|
 |vmi.sys.network.latency.average|Average maximum network latency.|Specific average maximum latency|-1|
 |ro.vmi.loglevel|Log level.|**1**: default<br>**2**: verbose<br>**3**: debug<br>**4**: info<br>**5**: warn<br>**6**: error<br>**7**: fatal|4|
 
@@ -936,6 +936,6 @@ Collect system logs and view details about user operations and operation time in
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

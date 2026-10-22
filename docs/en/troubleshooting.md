@@ -1,6 +1,6 @@
 # Troubleshooting Cases
 
-<!-- md-trans-meta sourceCommit=5bf1870ee699806369ea9a362c9b91057ff285be translatedAt=2026-09-08T02:42:05.167Z pushedAt=2026-09-15T05:52:22.861Z -->
+<!-- md-trans-meta sourceCommit=92b6aaaf3fa1eca8fed5f1fe8433f6d1f0203a51 translatedAt=2026-10-15T12:07:30.162Z pushedAt=2026-10-16T02:34:27.043Z -->
 
 ## Troubleshooting Server Data Faults
 
@@ -65,6 +65,6 @@ An error occurs when the engine server sends parameter settings to the encoder.
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

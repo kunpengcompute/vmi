@@ -1,6 +1,6 @@
 # Test Guide
 
-<!-- md-trans-meta sourceCommit=7c7fc553d1a52c7886c8aa2ddda857d9d7801725 translatedAt=2026-09-08T02:33:20.762Z pushedAt=2026-09-15T07:42:35.692Z -->
+<!-- md-trans-meta sourceCommit=03311fd24125a60715eae0c61c2a36d90f2cc4fb translatedAt=2026-10-15T12:13:31.990Z pushedAt=2026-10-16T02:34:25.046Z -->
 
 ## Introduction
 
@@ -93,7 +93,7 @@ The test results are defined as follows:
 
 | Item| Content|
 | --- | --- |
-| Case No.| 4.1.7 |
+| Case No.| 4.1.5 |
 | Test Objective| Verify that the video stream cloud phone supports high resolution.|
 | Test Networking| None|
 | Prerequisites| 1. The video stream cloud phone environment has been deployed.<br>2. Change the resolution to 1080p by referring to "Software Deployment" in [Installation Guide](install_guide.md), and then start the video stream cloud phone.<br>3. An app has been installed on the video stream cloud phone. (You are advised to select an app from the compatibility list, such as Subway Surfers and KuGou.)|
@@ -106,7 +106,7 @@ The test results are defined as follows:
 
 | Item| Content|
 | --- | --- |
-| Case No.| 4.1.8 |
+| Case No.| 4.1.6 |
 | Test Objective| Verify that the video stream cloud phone supports a high frame rate.|
 | Test Networking| None|
 | Prerequisites| 1. The video stream cloud phone environment has been deployed.<br>2. Change the frame rate to 60 fps by referring to "Software Deployment" in [Installation Guide](install_guide.md), and then start the video stream cloud phone.<br>3. An app has been installed on the video stream cloud phone. (You are advised to select an app from the compatibility list, such as Subway Surfers and KuGou.)|
@@ -119,7 +119,7 @@ The test results are defined as follows:
 
 | Item| Content|
 | --- | --- |
-| Case No.| 4.1.9 |
+| Case No.| 4.1.7 |
 | Test Objective| Verify the function of querying the video stream component version.|
 | Test Networking| None|
 | Prerequisites| 1. The video stream cloud phone environment has been deployed.<br>2. A video stream cloud phone container has been created and connected via ADB.|
@@ -149,11 +149,9 @@ The test results are defined as follows:
 |Basic functional test|4.1.2|Video Stream Cloud Phone Touch Test|
 |Basic functional test|4.1.3|Video Stream Cloud Phone Audio Test|
 |Basic functional test|4.1.4|Video Stream Cloud Phone Microphone Test|
-|Basic functional test|4.1.5|Video Stream Cloud Phone GPS Passthrough Test||
-|Basic functional test|4.1.6|Video Stream Cloud Phone Sensor Passthrough Test|
-|Basic functional test|4.1.7|Video Stream Cloud Phone High Resolution Test|
-|Basic functional test|4.1.8|Video Stream Cloud Phone High Frame Rate Test|
-|Basic functional test|4.1.9|Video Stream Component Version Query|
+|Basic functional test|4.1.5|Video Stream Cloud Phone High Resolution Test|
+|Basic functional test|4.1.6|Video Stream Cloud Phone High Frame Rate Test|
+|Basic functional test|4.1.7|Video Stream Component Version Query|
 |Performance test|4.2.1|Video Stream Cloud Phone Density Test|
 
 ## Customer Suggestions and Result Confirmation
@@ -169,6 +167,6 @@ The test results are defined as follows:
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

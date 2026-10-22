@@ -8,6 +8,6 @@
 - [User Guide](./user_guide.md)
 - [Developer Guide](./development_guide.md)
 - [Routine Maintenance](./routine_maintenance.md)
-- [Troubleshooting Cases](./troubleshooting.md)
+- [Troubleshooting](./troubleshooting.md)
 - [Acceptance Test Guide](./test_guide.md)
 - [Security Statement](./security_statement.md)
