@@ -1,6 +1,6 @@
 # Compilation Guide
 
-<!-- md-trans-meta sourceCommit=5bf1870ee699806369ea9a362c9b91057ff285be translatedAt=2026-09-08T02:25:29.742Z pushedAt=2026-09-08T03:28:25.049Z -->
+<!-- md-trans-meta sourceCommit=1ad644758a34e178e16896aa452f6c02b7a57d0d translatedAt=2026-10-15T11:54:28.967Z pushedAt=2026-10-16T02:26:15.529Z -->
 
 This document describes how to set up the compilation environment for the cloud phone project, as well as the compilation process, helping developers complete project compilation quickly.
 
@@ -131,7 +131,7 @@ Go to the Android source code directory and run the following build commands.
 cd ~/ARMNative/aosp11
 source build/envsetup.sh
 lunch aosp_arm64-eng
-make -j [Number_of_threads]
+make -j <Number_of_threads>
 ```
 
 ## Video Stream Compilation
@@ -163,6 +163,6 @@ After the command execution succeeds, the `DemoVideoEngine.tar.gz` package is ge
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
