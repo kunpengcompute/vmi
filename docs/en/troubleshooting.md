@@ -1,6 +1,6 @@
 # Troubleshooting Cases<a name="ZH-CN_TOPIC_0000002521693396"></a>
 
-<!-- md-trans-meta sourceCommit=d90f0209980538d457ebaa056a3a301b9b357562 translatedAt=2026-08-29T08:23:53.585Z pushedAt=2026-08-29T09:40:13.699Z -->
+<!-- md-trans-meta sourceCommit=0b2fad9fb8edcbabde7e8aea6299c6326d0fd185 translatedAt=2026-10-14T09:46:38.995Z pushedAt=2026-10-15T08:03:57.728Z -->
 
 ## Troubleshooting Server Data Faults<a name="ZH-CN_TOPIC_0000002549825373"></a>
 
@@ -65,6 +65,6 @@ An error occurs when the engine server sends parameter settings to the encoder.
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

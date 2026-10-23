@@ -1,6 +1,6 @@
 # Test Guide
 
-<!-- md-trans-meta sourceCommit=f8f96e5f62319dc95ee2a6caf995177c9be932ff translatedAt=2026-08-29T08:19:00.389Z pushedAt=2026-09-02T11:25:12.273Z -->
+<!-- md-trans-meta sourceCommit=0b2fad9fb8edcbabde7e8aea6299c6326d0fd185 translatedAt=2026-10-14T09:45:40.291Z pushedAt=2026-10-15T07:56:48.562Z -->
 
 ## Introduction
 
@@ -11,11 +11,8 @@ This document provides guidance for accepting cloud phone products. Before the a
 ### Important Notes
 
 1. Before the acceptance, ensure that the physical environment, system environment, and software version are correct and matched.
-
 2. Before executing the acceptance test cases, deploy the end-to-end environment of the video stream cloud phone. For details, see [Installation Guide](install_guide.md).
-
 3. Ensure that the acceptance items are confirmed by Huawei and the customer.
-
 4. During the product acceptance and preliminary acceptance tests, both parties should strictly observe applicable test criteria. Because some items have been tested before delivery, you can omit or sample such items if site conditions are limited.
 
 > ![](public_sys-resources/icon-note.gif)**NOTE**
@@ -33,9 +30,7 @@ For details about the server hardware and software package information, environm
 The test results are defined as follows:
 
 - **PASS**: The test result is consistent with the expected result after a test is performed based on the prerequisites and preset procedure.
-
 - **FAIL**: The test result is inconsistent with the expected result after a test is performed based on the prerequisites and preset procedure.
-
 - **NT**: The test is not implemented because the requirements have changed or the test environment does not meet the requirements.
 
 ## Test Cases and Records
@@ -215,7 +210,6 @@ The test results are defined as follows:
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
-

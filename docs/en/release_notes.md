@@ -1,6 +1,6 @@
 # Release Notes<a name="ZH-CN_TOPIC_0000002552848875"></a>
 
-<!-- md-trans-meta sourceCommit=f8f96e5f62319dc95ee2a6caf995177c9be932ff translatedAt=2026-08-29T08:17:47.238Z pushedAt=2026-09-04T09:51:40.268Z -->
+<!-- md-trans-meta sourceCommit=f5ae757472d3f7248102cae28fed5ebdd01e6d8e translatedAt=2026-10-14T09:41:14.260Z pushedAt=2026-10-15T06:46:51.908Z -->
 
 ## Version Requirements<a name="ZH-CN_TOPIC_0000002518186576"></a>
 
@@ -9,15 +9,15 @@
 |Item|Content|
 | :---: | :---: |
 |Product Name| Kunpeng BoostKit |
-|Product Version| 26.0.RC1 |
+|Product Version| 26.2.RC1 |
 |Software Name|Video stream engine|
-|Software Package Version| 8.0.RC1_11 |
+|Software Package Version| 8.2.RC1_11 |
 
 ### Software Versions<a name="ZH-CN_TOPIC_0000002549826339"></a>
 
 |Software|Version|Remarks|
 | :---: | :---: | :---: |
-|Kunpeng BoostKit|Kunpeng BoostKit 26.0.RC1|-|
+|Kunpeng BoostKit|Kunpeng BoostKit 26.2.RC1|-|
 |OS|openEuler-22.03-LTS-SP4-AArch64 (kernel 5.10.0-216.0.0)|-|
 |ExaGear|ExaGear ARM32-ARM64 V2.5|Transcoding software|
 
@@ -29,16 +29,6 @@
 |Kunpeng server|New Kunpeng 920 processor model|20.55|5.08|5.05.12.15|
 |Kunpeng server|New Kunpeng 920 processor model|21.52|7.08|5.05.12.31|
 
-### Virus Scan Results<a name="ZH-CN_TOPIC_0000002518186560"></a>
-
-The software package and related documents have been scanned by antivirus software and no  viruses have been found.
-
-|Antivirus Software|Antivirus Software Version|Virus Database Version|Scan Time|Scan Result|
-| :---: | :---: | :---: | :---: | :---: |
-|QiAnXin|8.0.5.5260|2026-03-16 08:00:00.0|2026-03-17 17:34:43|OK|
-|Bitdefender|7.5.1.200224|7.100367|2026-03-17 17:34:56|OK|
-|Kaspersky|12.0.0.6672|2026-03-17 10:04:00|2026-03-17 17:34:39|OK|
-
 ## Important Notes<a name="ZH-CN_TOPIC_0000002549706329"></a>
 
 For details, see "Constraints" in [Video Stream Engine Feature Guide](feature_guide.md).
@@ -47,30 +37,32 @@ For details, see "Constraints" in [Video Stream Engine Feature Guide](feature_gu
 
 ### Embedded Platform Mapping<a name="ZH-CN_TOPIC_0000002518346481"></a>
 
-|Software Name|Detailed Version Number|Hardware Platform|Platform Software Name|Platform Software Version|Processor Type/OS|Remarks|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 | Kunpeng server | iBMC | S920X20-S920X21-iBMC_5.05.12.15 | New Kunpeng 920 processor model, 2.9 GHz<br>Host OS: openEuler-22.03-LTS-SP4-AArch64 (kernel 5.10.0-216.0.0)<br>Guest OS: Android-11.0.0_r48 | openEuler|
-|  |  |  | CPLD | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08 |  |  |
-|  |  |  | BIOS | S920X20-BIOS_20.55 |  |  |
-|  |  |  | ExaGear| ExaGear_ARM32-ARM64_V2.5 | Host OS: openEuler-22.03-LTS-SP4-AArch64<br>Guest OS: Android-11.0.0_r48 | v2.5 |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 | Kunpeng server | iBMC | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596 | Kunpeng 920, 2.6 GHz<br>Host OS: openEuler-22.03-LTS-SP4-AArch64 (kernel 5.10.0-216.0.0)<br>Guest OS: Android-11.0.0_r48 | openEuler |
-|  |  |  | CPLD | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9 |  |  |
-|  |  |  | BIOS | TS200-2180_2280_5180_5280-BIOS-V656 |  |  |
-|  |  |  | ExaGear| ExaGear_ARM32-ARM64_V2.5 | Host OS: openEuler-22.03-LTS-SP4-AArch64<br>Guest OS: Android-11.0.0_r48 | v2.5 |
+|Software Name|Hardware Platform|Platform Software Name|Platform Software Version|Processor Type/OS|Remarks|
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Kunpeng BoostKit | Kunpeng server | iBMC | S920X20-S920X21-iBMC_5.05.12.15 | New Kunpeng 920 processor model, 2.9 GHz<br>Host OS: openEuler-22.03-LTS-SP4-AArch64 (kernel 5.10.0-216.0.0)<br>Guest OS: Android-11.0.0_r48 | openEuler|
+|  |  | CPLD | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08 |  |  |
+|  |  | BIOS | S920X20-BIOS_20.55 |  |  |
+|  |  | ExaGear| ExaGear_ARM32-ARM64_V2.5 | Host OS: openEuler-22.03-LTS-SP4-AArch64<br>Guest OS: Android-11.0.0_r48 | v2.5 |
+| Kunpeng BoostKit | Kunpeng server | iBMC | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596 | Kunpeng 920, 2.6 GHz<br>Host OS: openEuler-22.03-LTS-SP4-AArch64 (kernel 5.10.0-216.0.0)<br>Guest OS: Android-11.0.0_r48 | openEuler |
+|  |  | CPLD | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9 |  |  |
+|  |  | BIOS | TS200-2180_2280_5180_5280-BIOS-V656 |  |  |
+|  |  | ExaGear| ExaGear_ARM32-ARM64_V2.5 | Host OS: openEuler-22.03-LTS-SP4-AArch64<br>Guest OS: Android-11.0.0_r48 | v2.5 |
 
 ### Product Version Mapping<a name="ZH-CN_TOPIC_0000002518346482"></a>
 
-| 1 Version Information |  |
-| :---: | :---: |
-|Product Name| Kunpeng BoostKit |
-|Product Version| Kunpeng BoostKit 25.3.0 |
-|Detailed Version Number| Kunpeng BoostKit 25.3.0.B016 |
+**Version Information**
 
-| 2 Software Version Mapping |                              |       |                                                       |       |
-| :---: | :---: | :---: | :---: | :---: |
-|Software Name|Version|Hardware Platform|OS|Database System|
-| BoostKit-videoengine_7.3.0_11.zip | B016 | Kunpeng server | openEuler-22.03-LTS-SP4-AArch64<br>Android-11.0.0_r48| / |
-| Kbox-AOSP11.zip | B016 |  |  |  |
+| Item | Description |
+| ---- | ---- |
+|Product Name| Kunpeng BoostKit |
+|Product Version| Kunpeng BoostKit 26.2.RC1 |
+
+**Software Version Mapping**
+
+|Software Name|Hardware Platform|OS|Database System|
+| :---: | :---: | :---:| :---:|
+| BoostKit-videoengine_8.2.RC1_11.zip |Kunpeng server| openEuler-22.03-LTS-SP4-aarch64<br>android-11.0.0_r48 | |
+| Kbox-patches-AOSP11.zip | | | |
 
 ### Application Compatibility List<a name="ZH-CN_TOPIC_0000002518346483"></a>
 
@@ -88,12 +80,64 @@ For details, see "Constraints" in [Video Stream Engine Feature Guide](feature_gu
 | 9 |Weibo|Application|Updated with the Appstore|Appstore|None|  |  | 
 | 10 |Tencent Video|Application|Updated with the Appstore|Appstore|None|  |  |
 | 11 |iQIYI|Application|Updated with the Appstore|Appstore|None|  |  | 
-| 12 |Eggy Party|Application|Updated with the Appstore|Appstore|In the AMD environment, when software decoding is configured, the background video on the login page cannot be played properly. Additionally, in-game live streams encounter black screen issues (the game UI remains normal). This problem can be solved by configuring hardware decoding.|
+| 12 |Eggy Party|Application|Updated with the Appstore|Appstore|In the AMD environment, when software decoding is configured, the background video on the login page cannot be played properly. Additionally, in-game live streams encounter black screen issues (the game UI remains normal). This problem can be solved by configuring hardware decoding.|  |  |
 
 > ![](public_sys-resources/icon-note.gif) **NOTE**
 >
 > Application compatibility test conditions:<br>1. The test environment is the standard hardware environment on the 2280 server.<br>2. Cloud phone specifications: 8 cores and 1 channel, 16 GB memory, and 64 GB storage<br>3. A single container runs only one game app during the compatibility test.<br>4. The current version does not support Wi-Fi settings and Wi-Fi search.<br>5. The current version does not support Bluetooth devices.<br> 
 >
+## V8.2.RC1_11<a id="ZH-CN_TOPIC_0000002549825973"></a>
+ 
+### Change Description<a id="ZH-CN_TOPIC_0000002518186202"></a>
+ 
+#### New Features<a id="section78241436103817"></a>
+ 
+|No.|Description|Purpose|
+|---|---|---|
+|1|Shared data volume| Added the shared data volume support for the video stream cloud phone. |
+ 
+#### Modified Features<a id="section540mcpsimp"></a>
+ 
+None
+ 
+#### Removed Features<a id="section543mcpsimp"></a>
+ 
+None
+ 
+### Resolved Issues<a id="ZH-CN_TOPIC_0000002549705975"></a>
+ 
+None
+ 
+### Known Issues<a id="ZH-CN_TOPIC_0000002549825953"></a>
+ 
+None
+ 
+## V8.1.RC1_11<a id="ZH-CN_TOPIC_0000002549825973"></a>
+ 
+### Change Description<a id="ZH-CN_TOPIC_0000002518186202"></a>
+ 
+#### New Features<a id="section78241436103817"></a>
+ 
+|No.|Description|Purpose|
+|---|---|---|
+|1|NFS mount| Added the NFS mount support for the video stream cloud phone. |
+|2|Enhanced CPU/F2FS file system/System partition/init process emulation| Enhanced system emulation capabilities. |
+ 
+#### Modified Features<a id="section540mcpsimp"></a>
+ 
+None
+ 
+#### Removed Features<a id="section543mcpsimp"></a>
+ 
+None
+ 
+### Resolved Issues<a id="ZH-CN_TOPIC_0000002549705975"></a>
+ 
+None
+ 
+### Known Issues<a id="ZH-CN_TOPIC_0000002549825953"></a>
+ 
+None
 
 ## 8.0.RC1_11<a name="ZH-CN_TOPIC_0000002549706331"></a>
 
@@ -442,17 +486,11 @@ None
 **New Features<a name="zh-cn_topic_0000001518929401_section402mcpsimp"></a>**
 
 - The video stream engine supports rendering optimization for the primary and secondary screens.
-
 - The video stream engine supports H.265 hardware encoding.
-
 - The video stream engine supports GPU encoding.
-
 - New documents related to the video stream engine are added.
-
 - Performance specifications of the video stream engine are provided based on the Kunpeng 920 processor and Android 11.
-
 - The video stream engine adapts to Android 11 based on the Kunpeng 920 processor.
-
 - The application compatibility test is added for the video stream engine.
 
 **Modified Features<a name="zh-cn_topic_0000001518929401_section451mcpsimp"></a>**
@@ -507,6 +545,6 @@ None
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
