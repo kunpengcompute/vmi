@@ -1,6 +1,6 @@
 # Installation Guide<a name="ZH-CN_TOPIC_0000002521895634"></a>
 
-<!-- md-trans-meta sourceCommit=536398a299a46f062322e447e50a05175f394800 translatedAt=2026-09-08T02:29:07.320Z pushedAt=2026-09-18T09:33:42.168Z -->
+<!-- md-trans-meta sourceCommit=1ad644758a34e178e16896aa452f6c02b7a57d0d translatedAt=2026-10-15T11:56:11.105Z pushedAt=2026-10-16T07:54:36.605Z -->
 
 ## Software Deployment<a name="ZH-CN_TOPIC_0000002518386576"></a>
 
@@ -36,7 +36,7 @@ For details about the software environment for deploying the Kbox cloud phone co
 
 ##### Video Stream Engine<a name="ZH-CN_TOPIC_0000002549746419" id="video-stream-engine"></a>
 
-Before deploying the video stream cloud phone, obtain the required software packages from the addresses provided in this section and verify the integrity of the software packages provided by Huawei.
+Before deploying the video stream cloud phone, obtain the required software packages from the addresses provided in this section and verify the integrity of the software packages. For the detailed version number, see [Product Version](./release_notes.md#product-version).
 
 **Obtaining Software Packages<a name="section9155930113616"></a>**
 
@@ -44,12 +44,12 @@ Before deploying the video stream cloud phone, obtain the required software pack
 
 |No.|Software Package|Description|How to Obtain|Configuration Scheme 1|Configuration Scheme 2|Configuration Scheme 3|Configuration Scheme 4|Configuration Scheme 5|
 |--|--|--|--|--|--|--|--|--|
-| 1 | BoostKit-boostcph-videoengine_*_15.zip | Binary package of the video stream engine.| Please submit an ISSUE feedback. | √ | √ | √ | √ | √ |
-| 2 | DemoVideoEngine.tar.gz | TAR package of the video stream engine server. It is used to obtain the audio and video data of the Kbox container.| Please submit an ISSUE feedback.| √ | √ | √ | √ | √ |
-| 3 | DemoVideoEngine_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine server. It is used to check the software integrity.| Please submit an ISSUE feedback.| √ | √ | √ | √ | √ |
-| 4 | CloudPhoneApk.tar.gz | TAR package of the video stream engine client. It is used to decode and play audio and video data.| Please submit an ISSUE feedback.| √ | √ | √ | √ | √ |
-| 5 | CloudPhoneApk_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine client. It is used to check the software integrity.| Please submit an ISSUE feedback.| √ | √ | √ | √ | √ |
-| 6 | VideoClientEmulator.tar.gz | Stress test tool for the video stream cloud phone.| Please submit an ISSUE feedback.| √ | √ | √ | √ | √ |
+| 1 | BoostKit-boostcph-videoengine_*_15.zip | Binary package of the video stream engine.| [Link](https://gitcode.com/boostkit/boostcph/releases) | √ | √ | √ | √ | √ |
+| 2 | DemoVideoEngine.tar.gz | TAR package of the video stream engine server. It is used to obtain the audio and video data of the Kbox container.| [Link](https://gitcode.com/boostkit/boostcph/releases)| √ | √ | √ | √ | √ |
+| 3 | DemoVideoEngine_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine server. It is used to check the software integrity.| [Link](https://gitcode.com/boostkit/boostcph/releases) | √ | √ | √ | √ | √ |
+| 4 | CloudPhoneApk.tar.gz | TAR package of the video stream engine client. It is used to decode and play audio and video data.| [Link](https://gitcode.com/boostkit/boostcph/releases) | √ | √ | √ | √ | √ |
+| 5 | CloudPhoneApk_sha256.txt | SHA256 file corresponding to the TAR package of the video stream engine client. It is used to check the software integrity.| [Link](https://gitcode.com/boostkit/boostcph/releases) | √ | √ | √ | √ | √ |
+| 6 | VideoClientEmulator.tar.gz | Stress test tool for the video stream cloud phone.| Please submit an ISSUE for feedback.| √ | √ | √ | √ | √ |
 | 7 | NETINT-v*XXX*.tar.gz | TAR package of the video stream NETINT encoding card for hardware encoding. The matching version is 4.8.F-Android15.| [Link](https://www.netint.cn/quadra-firmware-downloads-android15)<br>Download password: **test123**| √ | - | - | - | - |
 | 8 | Quadra_V*XXX*.zip | Quadra software, firmware, and document packages of the NETINT encoding card.| [Link](https://www.netint.cn/quadra-firmware-downloads-android15)<br>Download password: **test123**| √ | - | - | - | - |
 | 9 | topo-affinity-plugin-master.zip | Kubernetes NUMA affinity plugin.| [Link](https://gitee.com/kunpeng_compute/topo-affinity-plugin)| √ | √ | √ | √ | √ |
@@ -61,17 +61,30 @@ Before deploying the video stream cloud phone, obtain the required software pack
 
 **Verifying Software Package Integrity<a name="section111981239163615"></a>**
 
-To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding digital signature files for integrity verification while obtaining the software packages from the Kunpeng community.
+To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding SHA256 files for integrity verification while obtaining the software packages.
 
-1. Obtain software packages based on [Table 1 Software requirements for deploying the video stream engine](#software-requirements-for-deploying-the-video-stream-engine).
-2. <a name="li1273482318125"></a>Obtain the verification tool and guide from the [Huawei enterprise website](https://support.huawei.com/enterprise/en/tool/pgp-verify-TL1000000054) or [Huawei carrier website](http://support.huawei.com/carrier/digitalSignatureAction).
-3. Based on the *OpenPGP Signature Verification Guide* obtained in [2](#li1273482318125), verify the PGP digital signatures of the software packages.
+1. Obtain software packages and the corresponding SHA256 files based on [Table 1 Software requirements for deploying the video stream engine](#software-requirements-for-deploying-the-video-stream-engine).
+
+2. Calculate the SHA256 checksum of the file. Run the following command on Linux:
+
+    ```bash
+    sha256sum <package>
+    ```
+
+    Run the following command on Windows:
+
+    ```bash
+    certutil -hashfile <package> SHA256
+    ```
+
+    After the command is executed, the checksum is output.
+
+3. Compare the calculated checksum with the checksum in the SHA file. If the checksums are consistent, the file is intact. If the checksums are inconsistent, the file integrity has been compromised and you need to obtain the file again.
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->If the verification fails, do not use the software package. Please submit an ISSUE feedback.
->Before a software package is used for installation or upgrade, its digital signature also needs to be verified to ensure that the software package is not tampered with.
->Before using the software package, read [Kunpeng BoostKit User License Agreement 2.0](https://www.hikunpeng.com/en/legal/developer/boostkit/software/protocol). If you choose to continue using the package, you are deemed to have agreed to the terms and conditions of the agreement.
+>If the verification fails, do not use the software package. Please submit an ISSUE for feedback.
+>Before a software package is used for installation or upgrade, its SHA256 checksum also needs to be verified to ensure that the software package is not tampered with.
 
 ### Deploying a Cloud Phone<a name="ZH-CN_TOPIC_0000002549746425"></a>
 
@@ -155,11 +168,11 @@ In addition to the Docker container runtime, the video stream cloud phone also s
 
 |Software|Version|Description|How to Obtain|
 |--|--|--|--|
-| Containerd | v1.7.14 | A container runtime. | Containerd binary software package: **containerd-1.7.14-linux-arm64.tar.gz**; containerd service file: [Link](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service) |
-| runC | v1.1.12 | runC is a lightweight container runtime that complies with the Open Container Initiative (OCI). It is a dependency component of containerd. | [Link](https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64) |
-| CNI Plugin | v1.4.1 | The Container Network Interface (CNI) is a specification and a set of libraries for configuring network interfaces in Linux containers. | [Link](https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
-| nerdctl | v1.7.5 | nerdctl is a Docker-compatible CLI for managing containerd-based containers and images. | [Link](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz) |
-| Golang | v1.25 | Golang is a systems programming language used for developing NRI plugins. | [Link](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
+| Containerd | v1.7.14 | A container runtime. | Containerd binary software package: **containerd-1.7.14-linux-arm64.tar.gz**; [containerd service file](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service) |
+| runC | v1.1.12 | runC is a lightweight container runtime that complies with the Open Container Initiative (OCI). It is a dependency component of containerd. | [runc 1.1.12](https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64) |
+| CNI Plugin | v1.4.1 | The Container Network Interface (CNI) is a specification and a set of libraries for configuring network interfaces in Linux containers. | [CNI Plugin 1.4.1]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz) |
+| nerdctl | v1.7.5 | nerdctl is a Docker-compatible CLI for managing containerd-based containers and images. | [nerdctl 1.7.5](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz) |
+| Golang | v1.25 | Golang is a systems programming language used for developing NRI plugins. | [Golang 1.25](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
 
 **Deploying the Containerd Environment<a name="section343716111874"></a>**
 
@@ -522,7 +535,7 @@ The configuration items and configuration methods for `cfct_config` and `hardwar
 6. If only one encoding card is used in your environment, change the value of `VIDEO_ENC_MAP_CORE` in the `hardware_bind.cfg` file.
 7. If the encoding card is inserted into CPU 0, delete `${NETINT1}`. If the encoding card is inserted into CPU 1, delete `${NETINT0}`.
 8. If the CPU is used for software encoding of video frames, set `CPU_BIND_MODE` to `1` in `cfct_config` to prevent frame freezing.
-9. To enable the graphics acceleration layer, see [Basic Functions and Usage of the Graphics Acceleration Layer](#section9932195417616).
+9. To enable the graphics acceleration layer, see [Basic Functions and Usage of the Graphics Acceleration Layer](#basic-functions-and-usage-of-the-graphics-acceleration-layer).
 10. To enable the C2 decoder, set `ENABLE_AMD_C2_DECODE` in the `cfct_config` file to `1`.
 
 **Querying the NUMA Node to Which a NETINT Chip Node Belongs<a name="section2507154233510"></a>**
@@ -670,7 +683,7 @@ The configuration items and configuration methods for `cfct_config` and `hardwar
 
 3. By default, the hardware decoding function of the DC1000/DC1000C GPU is enabled on the video stream cloud phone (`ENABLE_HARD_DECODE=1`). To use software decoding, set `ENABLE_HARD_DECODE=0` and restart the container.
 4. To enable the WebRTC feature, set `ENABLE_WEBRTC_CONNECTION` to `1` in `cfct_config`.
-5. If only one GPU is used in your environment, change the value of `VIDEO_CPU_MAP_{total_CPU_core_count}CORE_MODE{CPU_BIND_MODE}` in the `hardware_bind.cfg` file.
+5. If only one GPU is used in your environment, change the value of `VIDEO_CPU_MAP_{total_CPU_core_count}CORE_MODE{CPU_BIND_MODE}` in the `hardware_bind.cfg` file. The value of `CPU_BIND_MODE` can be found in `cfct_config`.
 
     Take `VIDEO_CPU_MAP_128CORE_MODE0` as an example. Retain the configuration of the CPU bound to the GPU and delete other configurations. If the GPU is inserted into CPU 0, delete all references related to `MODE0_CPUS2` and `MODE0_CPUS3`. If the GPU is inserted into CPU 1, delete all references related to `MODE0_CPUS0` and `MODE0_CPUS1`.
 
@@ -1387,7 +1400,7 @@ You are advised to set up the VM environment of the video stream engine on the n
 |CPU|-|2 x new Kunpeng 920 processor model, 80 cores@2.9 GHz|
 |Memory|-|16 x DDR5 RDIMM, 64 GB, 4800 MT/s|
 |Drive|System drive|ES3600C V5, 6400 GB, NVMe SSD|
-| |Data drive|ES3600C V5, 6400 GB, NVMe SSD|
+|Drive|Data drive|ES3600C V5, 6400 GB, NVMe SSD|
 |NIC|Onboard|1 x NIC (4 x GE); 1 x 5902L onboard flexible NIC|
 |Riser card|-|1 x x16 slot (PCIe x16) + 2 x x8 slot (PCIe x8)-riser modules 1 and 2, 2 x x8 slot (PCIe x8)-rear riser module|
 |GPU|-| 4 x DC1000 or 4 x DC1000C|
@@ -1493,15 +1506,16 @@ In the DaoCloud DC1000 hardware environment, the host kernel needs to be adapted
 
     **Table 1** Kernel compilation options<a id="kernel-compilation-options"></a>
 
-|Option|Required Value|
-|--|--|
-|LOCALVERSION|-patched-vm|
-|DEBUG_INFO_BTF|N|
-|SYSTEM_TRUSTED_KEYS|Clear the content. The configuration result should be: `( ) Additional X.509 keys for default system keyring`|
+    |Option|Required Value|
+    |--|--|
+    |LOCALVERSION|-patched-vm|
+    |DEBUG_INFO_BTF|N|
+    |SYSTEM_TRUSTED_KEYS|Clear the content. The configuration result should be: `( ) Additional X.509 keys for default system keyring`|
 
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
     >Configuration methods:
+    >
     >- Press **/** for search.
     >- Press **Y** to compile the selected item into the kernel. The corresponding item is displayed as `[*]`.
     >- Press **N** to exclude the selected item. The corresponding item is displayed as `[]`.
@@ -1534,19 +1548,25 @@ In the DaoCloud DC1000 hardware environment, the host kernel needs to be adapted
     make install
     ```
 
-13. Set the boot kernel.
+13. Update kernel boot options.
+
+    ```bash
+    grub2-mkconfig -o /boot/efi/EFI/openEuler/grub.cfg
+    ```
+
+14. Set the boot kernel.
 
     ```bash
     grub2-set-default 'openEuler (6.6.0-patched-vm) 24.03 (LTS-SP1)'
     ```
 
-14. Reboot the server.
+15. Reboot the server.
 
     ```bash
     reboot
     ```
 
-15. After the reboot, confirm that the kernel is switched to `6.6.0-patched-vm`.
+16. After the reboot, confirm that the kernel is switched to `6.6.0-patched-vm`.
 
     ```bash
     uname -r
@@ -1587,7 +1607,7 @@ Install dependencies required for VM environment deployment on the host.
     >
     >In the event of a `virt-manager` execution error, re-initiate an SSH terminal.
 
-#### Querying PCIe Node Information of a GPU<a name="ZH-CN_TOPIC_0000002549973493"></a>
+#### Querying PCIe Node Information of a GPU<a name="ZH-CN_TOPIC_0000002549973493" id="querying-pcie-node-information-of-a-gpu"></a>
 
 The new Kunpeng 920 processor model has four NUMA nodes. Four VMs will be created, and each VM uses resources of a NUMA node of the host. Each NUMA node corresponds to two GPUs. To prevent performance loss caused by cross-NUMA access, you need to confirm the PCIe nodes of GPUs used by each VM before creating VMs.
 
@@ -1844,6 +1864,121 @@ Four VMs are required in this document. You can perform operations in this secti
     passwd root
     ```
 
+#### Tuning VM Configurations<a name="ZH-CN_TOPIC_0000002518464886" id="tuning-vm-configurations"></a>
+
+VM configuration tuning needs to be performed according to the mapping between GPUs and NUMA nodes.
+
+Perform operations in this section on all the four VMs. `vm0` corresponding to NUMA1 is used as an example. For details about the mapping, refer to [Querying PCIe Node Information of a GPU](#querying-pcie-node-information-of-a-gpu). You can download the VM tuning script according to [Software Requirements](#software-requirements).
+
+1. Open the VM XML file.
+
+    ```shell
+    virsh edit vm0
+    ```
+
+2. <a id="tuning-vm-configurations-2"></a>Press **i** to enter the insert mode and add the following content to `</cputune>` to configure the mapping between VM vCPUs and host CPUs.
+
+    The value of `cpuset` is the bound host CPU core ID. The value ranges from 0 to 79 for NUMA0, from 80 to 159 for NUMA1, from 160 to 239 for NUMA2, and from 240 to 319 for NUMA3.
+
+    ![](figures/zh-cn_image_0000002518308382.png)
+
+    ![](figures/zh-cn_image_0000002518468300.png)
+
+    > ![](public_sys-resources/icon-note.gif) **NOTE**
+    >
+    >You can also run the following command instead:
+    >
+    > ```shell
+    > ./setup_vm.sh vm0 --cputune 80,159
+    > ```
+
+3. <a id="tuning-vm-configurations-3"></a>Add the following content under `</cputune>` to bind the VM to the NUMA memory of the host. (In this example, NUMA1 is bound to the VM.)
+
+    ```shell
+    <numatune>
+          <memory mode='strict' nodeset='1'/>
+    </numatune>
+    ```
+
+    ![](figures/zh-cn_image_0000002549948149.png)
+
+    > ![](public_sys-resources/icon-note.gif) **NOTE**
+    >
+    >You can also run the following command instead:
+    >
+    > ```shell
+    > ./setup_vm.sh vm0 --numatune 1
+    > ```
+
+4. Add the following content above `</cputune>` to bind the QEMU emulator:
+
+    ```shell
+    <emulatorpin cpuset='80-159' />
+    ```
+
+    ![](figures/1_zh-cn_image_0000002120702289.png)
+
+    > ![](public_sys-resources/icon-note.gif) **NOTE**
+    >
+    >You can also run the following command instead:
+    >
+    > ```shell
+    > ./setup_vm.sh vm0 --emulatorpin 80-159
+    > ```
+
+5. <a id="tuning-vm-configurations-5"></a>Use huge pages. Add the content in the red box to the position shown in the following figure.
+
+    ```shell
+    <memoryBacking>
+         <hugepages/>
+    </memoryBacking>
+    ```
+
+    ![](figures/zh-cn_image_0000002518308386.png)
+
+    > ![](public_sys-resources/icon-note.gif)**NOTE**
+    >
+    >You can also run the following command instead:
+    >
+    > ```shell
+    > ./setup_vm.sh vm0 --enable_hugepages
+    > ```
+
+6. Enable CPU topology.
+
+    Find the <cpu mode='host-passthrough' check='none'\> element and modify the content as follows.
+
+    ```shell
+    <cpu mode='host-passthrough' check='none'>
+      <topology sockets='1' dies='1' clusters='10' cores='4' threads='2'/>
+    </cpu>
+    ```
+
+    ![](figures/zh-cn_image_0000002518468302.png)
+
+7. Press **Esc** to exit the insert mode. Type `:wq!` and press **Enter** to save the settings and exit.
+8. Start the VM.
+
+    ![](figures/zh-cn_image_0000002549948153.png)
+
+9. Run the following command on the VM. If `0-7` is displayed in the command output, CPU topology takes effect.
+
+    ```shell
+    cat /sys/devices/system/cpu/cpu0/topology/cluster_cpus_list
+    ```
+
+    ![](figures/zh-cn_image_0000002550068147.png)
+
+10. Run the following command to enable cluster scheduling optimization:
+
+    ```shell
+    echo 1 > /proc/sys/kernel/sched_cluster
+    ```
+
+    > ![](public_sys-resources/icon-note.gif) **NOTE**
+    >
+    >This step needs to be performed each time the VM is restarted. You are advised to write this step in a file such as `~/.bashrc` for automatic execution upon each restart.
+
 #### Configuring the VM Network<a name="ZH-CN_TOPIC_0000002550093503"></a>
 
 ##### Configuring the VM NIC Configuration File<a name="ZH-CN_TOPIC_0000002518653644"></a>
@@ -2013,6 +2148,6 @@ The specific steps are as follows:
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

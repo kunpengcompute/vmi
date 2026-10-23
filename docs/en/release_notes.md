@@ -1,6 +1,6 @@
 # Release Notes
 
-<!-- md-trans-meta sourceCommit=5bf1870ee699806369ea9a362c9b91057ff285be translatedAt=2026-09-08T02:28:09.229Z pushedAt=2026-09-15T07:17:27.111Z -->
+<!-- md-trans-meta sourceCommit=1ad644758a34e178e16896aa452f6c02b7a57d0d translatedAt=2026-10-15T11:59:05.662Z pushedAt=2026-10-16T04:42:42.798Z -->
 
 ## Version Requirements
 
@@ -9,15 +9,15 @@
 | Item | Content |
 | ---- | ---- |
 | Product Name | Kunpeng BoostKit |
-| Product Version | 26.0.RC1 |
+| Product Version | 26.2.RC1 |
 | Software Name | Video stream engine |
-| Software Package Version | 8.0.RC1_15 |
+| Software Package Version | 8.2.RC1_15 |
 
 ### Software Versions
 
 | Software | Version | Remarks |
 | -------- | ---- | ---- |
-| Kunpeng BoostKit | Kunpeng BoostKit 26.0.RC1 | - |
+| Kunpeng BoostKit | Kunpeng BoostKit 26.2.RC1 | - |
 | OS | openEuler-24.03-LTS-SP1-AArch64 (Kernel 6.6.0-72.0.0) | - |
 | ExaGear | ExaGear ARM32-ARM64 | Transcoding software |
 
@@ -29,16 +29,6 @@
 | Kunpeng server | New Kunpeng 920 processor model | 20.55 | 5.08 | 5.05.12.15 |
 | Kunpeng server | New Kunpeng 920 processor model | 21.52 | 7.08 | 5.05.12.31 |
 
-### Virus Scan Results
-
-The software package and related documents have been scanned by antivirus software and no viruses have been found.
-
-| Antivirus Software | Antivirus Software Version | Virus Database Version | Scan Time | Scan Result |
-| -------------- | -------------- | ---------- | -------- | -------- |
-| QiAnXin | 8.0.5.5260 | 2026-03-16 08:00:00.0 | 2026-03-17 17:34:38 | OK |
-| Bitdefender | 7.5.1.200224 | 7.100367 | 2026-03-17 17:34:46 | OK |
-| Kaspersky | 12.0.0.6672 | 2026-03-17 10:04:00 | 2026-03-17 17:34:35 | OK |
-
 ## Important Notes
 
 For details, see "Constraints" in [Video Stream Engine Feature Guide (Android 15)](feature_guide.md).
@@ -47,16 +37,16 @@ For details, see "Constraints" in [Video Stream Engine Feature Guide (Android 15
 
 ### Embedded Platform Mapping
 
-| Software Name | Detailed Version | Hardware Platform | Platform Software Name | Platform Software Version | Processor Type/OS | Remarks |
-| ---------- | ---------- | ------------ | ------------ | -------------- | ------------------ | ---- |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 | Kunpeng server | iBMC | S920X20-S920X21-iBMC_5.05.12.15 | New Kunpeng 920 processor model, 2.9 GHz<br>Host OS: openEuler-24.03-LTS-SP1-AArch64 (Kernel 6.6.0-72.0.0)<br>Guest OS: Android-15.0.0_r17 | openEuler |
-|  |  |  | CPLD | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08 |  |  |
-|  |  |  | BIOS | S920X20-BIOS_20.55 |  |  |
-|  |  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS: openEuler-24.03-LTS-SP1-AArch64<br>Guest OS: Android-15.0.0_r17 |  |
-| Kunpeng BoostKit | Kunpeng BoostKit 25.3.0.B016 | Kunpeng server | iBMC | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596 | Kunpeng 920 processor, 2.6 GHz<br>Host OS: openEuler-24.03-LTS-SP1-AArch64 (Kernel 6.6.0-72.0.0)<br>Guest OS: Android-15.0.0_r17 | openEuler |
-|  |  |  | CPLD | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9 |  |  |
-|  |  |  | BIOS | TS200-2180_2280_5180_5280-BIOS-V656 |  |  |
-|  |  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS: openEuler-24.03-LTS-SP1-AArch64<br>Guest OS: Android-15.0.0_r17 |  |
+| Software Name | Hardware Platform | Platform Software Name | Platform Software Version | Processor Type/OS | Remarks |
+| ---------- | ------------ | ------------ | -------------- | ------------------ | ---- |
+| Kunpeng BoostKit | Kunpeng server | iBMC | S920X20-S920X21-iBMC_5.05.12.15 | New Kunpeng 920 processor model, 2.9 GHz<br>Host OS: openEuler-24.03-LTS-SP1-AArch64 (Kernel 6.6.0-72.0.0)<br>Guest OS: Android-15.0.0_r17 | openEuler |
+|  |  | CPLD | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08 |  |  |
+|  |  | BIOS | S920X20-BIOS_20.55 |  |  |
+|  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS: openEuler-24.03-LTS-SP1-AArch64<br>Guest OS: Android-15.0.0_r17 |  |
+| Kunpeng BoostKit | Kunpeng server | iBMC | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596 | Kunpeng 920 processor, 2.6 GHz<br>Host OS: openEuler-24.03-LTS-SP1-AArch64 (Kernel 6.6.0-72.0.0)<br>Guest OS: Android-15.0.0_r17 | openEuler |
+|  |  | CPLD | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9 |  |  |
+|  |  | BIOS | TS200-2180_2280_5180_5280-BIOS-V656 |  |  |
+|  |  | ExaGear | ExaGear_ARM32-ARM64 | Host OS: openEuler-24.03-LTS-SP1-AArch64<br>Guest OS: Android-15.0.0_r17 |  |
 
 ### Product Version Mapping
 
@@ -65,15 +55,14 @@ For details, see "Constraints" in [Video Stream Engine Feature Guide (Android 15
 | Item | Content |
 | ---- | ---- |
 | Product Name | Kunpeng BoostKit |
-| Product Version | Kunpeng BoostKit 25.3.0 |
-| Detailed Version Number | Kunpeng BoostKit 25.3.0.B016 |
+| Product Version | Kunpeng BoostKit 26.2.RC1 |
 
 **Software Version Mapping**
 
-| Software Name | Version | Hardware Platform | OS | Database System |
-| -------- | ------ | -------- | -------- | ---------- |
-| BoostKit-videoengine_7.3.0_15.zip | B016 | Kunpeng server | openEuler-24.03-LTS-SP1-AArch64<br>Android-15.0.0_r17 | / |
-| Kbox-AOSP15.zip | B016 |  |  |  |
+| Software Name | Hardware Platform | OS | Database System |
+| -------- | -------- | -------- | ---------- |
+| BoostKit-videoengine_8.2.RC1_15.zip | Kunpeng server | openEuler-24.03-LTS-SP1-AArch64<br>Android-15.0.0_r17 | / |
+| Kbox-patches-AOSP15.zip |  |  |  |
 
 ### Application Compatibility List
 
@@ -104,27 +93,79 @@ For details, see "Constraints" in [Video Stream Engine Feature Guide (Android 15
 > 4. The current version does not support Wi-Fi settings and Wi-Fi search.
 > 5. The current version does not support Bluetooth devices.
 
-## 8.0.RC1
-
-### Change Description
-
-**New Features**
-
-None
-
-**Modified Features**
-
-None
-
-**Removed Features**
+## V8.2.RC1_15<a id="ZH-CN_TOPIC_0000002549825973"></a>
+ 
+### Change Description<a id="ZH-CN_TOPIC_0000002518186202"></a>
+ 
+#### New Features<a id="section78241436103817"></a>
+ 
+|No.|Description|Purpose|
+|---|---|---|
+|1|Shared data volume| Added the shared data volume support for the video stream cloud phone. |
+ 
+#### Modified Features<a id="section540mcpsimp"></a>
 
 None
-
-### Resolved Issues
-
+ 
+#### Removed Features<a id="section543mcpsimp"></a>
+ 
 None
+ 
+### Resolved Issues<a id="ZH-CN_TOPIC_0000002549705975"></a>
+ 
+None
+ 
+### Known Issues<a id="ZH-CN_TOPIC_0000002549825953"></a>
+ 
+None
+ 
+## V8.1.RC1_15<a id="ZH-CN_TOPIC_0000002549825973"></a>
+ 
+### Change Description<a id="ZH-CN_TOPIC_0000002518186202"></a>
+ 
+#### New Features<a id="section78241436103817"></a>
+ 
+|No.|Description|Purpose|
+|---|---|---|
+|1|Enhanced CPU/F2FS file system/System partition/init process emulation| Enhanced system emulation capabilities. |
 
-### Known Issues
+#### Modified Features<a id="section540mcpsimp"></a>
+ 
+None
+ 
+#### Removed Features<a id="section543mcpsimp"></a>
+ 
+None
+ 
+### Resolved Issues<a id="ZH-CN_TOPIC_0000002549705975"></a>
+ 
+None
+ 
+### Known Issues<a id="ZH-CN_TOPIC_0000002549825953"></a>
+ 
+None
+ 
+## V8.0.RC1_15<a id="ZH-CN_TOPIC_0000002549825973"></a>
+ 
+### Change Description<a id="ZH-CN_TOPIC_0000002518186202"></a>
+ 
+#### New Features<a id="section78241436103817"></a>
+ 
+None
+ 
+#### Modified Features<a id="section540mcpsimp"></a>
+ 
+None
+ 
+#### Removed Features<a id="section543mcpsimp"></a>
+ 
+None
+ 
+### Resolved Issues<a id="ZH-CN_TOPIC_0000002549705975"></a>
+ 
+None
+ 
+### Known Issues<a id="ZH-CN_TOPIC_0000002549825953"></a>
 
 | Item | Details |
 | ---- | ------- |
@@ -163,17 +204,20 @@ None
 
 ## Related Documentation
 
-### V7.3.0_15 Documentation
+### V8.2.RC1_15 Documentation
 
 | No. | Document | Description | How to Obtain |
 | --- | -------- | ----------- | ------------- |
-| 1 | Kunpeng BoostKit 26.0.RC1 Developer Guide | Describes the APIs of the video stream engine and provides development examples. | Kunpeng community |
-| 2 | Kunpeng BoostKit 26.0.RC1 Video Stream Engine Feature Guide (Android 15) | Describes the features of the device- and cloud-side engines. | Kunpeng community |
-| 3 | Kunpeng BoostKit 26.0.RC1 Video Stream Engine VM Environment Deployment Guide (Android 15) | Describes how to deploy video stream cloud phone containers on KVM-based VMs in terms of VM deployment and configuration. | Kunpeng community |
-| 4 | Kunpeng BoostKit 26.0.RC1 Video Stream Engine Release Notes (Android 15) | Provides the release notes of the video stream engine. | Kunpeng community |
-| 5 | Kunpeng BoostKit 26.0.RC1 Video Stream Engine Version Mapping (Android 15) | Describes the version mapping of the video stream engine. | Kunpeng community |
-| 6 | Kunpeng BoostKit 26.0.RC1 Video Stream Engine Personal Data Description | Describes the personal data involved in the video stream engine. | Kunpeng community |
-| 7 | Kunpeng BoostKit 26.0.RC1 Video Stream Engine Routine Maintenance (Android 15) | Describes how to perform routine maintenance on the device- and cloud-side engines. | Kunpeng community |
+| 1 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Release Notes | Provides the basic information and feature update information of each release of the video stream cloud phone. | Kunpeng community |
+| 2 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Feature Guide | Provides an introduction to the functions and features supported by the video stream cloud phone. | Kunpeng community |
+| 3 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Compilation Guide | Provides the compilation and build process and operation instructions for the video stream cloud phone. | Kunpeng community |
+| 4 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Installation Guide | Provides detailed instructions for deploying the video stream cloud phone in both bare metal and virtual machine environments. | Kunpeng community |
+| 5 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) User Guide | Provides operation instructions for starting and uninstalling video stream cloud phone instances.| Kunpeng community |
+| 6 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Developer Guide | Provides guidance for developing the video stream cloud phone. | Kunpeng community |
+| 7 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Routine Maintenance | Provides routine maintenance instructions for the video stream cloud phone container. | Kunpeng community |
+| 8 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Troubleshooting | Provides troubleshooting methods for the video stream cloud phone. | Kunpeng community |
+| 9 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Acceptance Test Guide | Provides guidance for product acceptance of the video stream cloud phone. | Kunpeng community |
+| 10 | Kunpeng BoostKit 26.2.RC1 Video Stream Engine (Android 15) Security Statement | Provides security statement for using the video stream cloud phone. | Kunpeng community |
 
 ### Obtaining Documentation
 
@@ -181,6 +225,6 @@ Visit the [Kunpeng community](https://www.hikunpeng.com/document/detail/en/kunpe
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

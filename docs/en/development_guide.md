@@ -1,6 +1,6 @@
 # Developer Guide
 
-<!-- md-trans-meta sourceCommit=377087a2bd241cd72440e17b86df0cd93ee57185 translatedAt=2026-09-08T02:28:45.771Z pushedAt=2026-09-18T02:19:06.534Z -->
+<!-- md-trans-meta sourceCommit=0582573db858f24d15f192f6813d8fa4690767f9 translatedAt=2026-10-15T11:55:44.930Z pushedAt=2026-10-16T07:54:32.163Z -->
 
 ## Introduction
 
@@ -27,7 +27,7 @@ This document describes the integrated development of the device and cloud engin
 
 To prevent software packages from being maliciously tampered with during transfer or storage, download also the corresponding SHA256 files for integrity verification while obtaining the software packages.
 
-1. Obtain the software packages by referring to [**Table 1** Software requirements](#software-requirements).
+1. Obtain the software packages by referring to [Software Requirements](#software-requirements).
 2. Calculate the SHA256 checksum of the file. Run the following command on Linux:
 
     ```bash
@@ -46,7 +46,7 @@ To prevent software packages from being maliciously tampered with during transfe
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
 >
->If the verification fails, do not use the software package. Please submit an ISSUE feedback.
+>If the verification fails, do not use the software package. Please submit an ISSUE for feedback.
 >Before a software package is used for installation or upgrade, its SHA256 checksum also needs to be verified to ensure that the software package is not tampered with.
 
 ## Configuring the Development Environment
@@ -127,7 +127,6 @@ For details, see [Hardware Environment](#hardware-environment).
 > - For details about the hardware requirements and deployment process of the server debugging environment, refer to [Video Stream Engine Installation Guide (Android 15)](https://www.hikunpeng.com/document/detail/en/kunpengcps/boostcph/videostreamengine_ad15/docs/en/install_guide.md).
 
 1. Save the `VideoEngine.tar.gz` package to the `/home/VideoEngine/Cloud` directory.
-
 2. Decompress the development package of the video stream engine server.
 
     ```bash
@@ -367,7 +366,6 @@ Initializes the cloud phone server.
 **Restrictions**
 
 - This API cannot be called repeatedly. That is, it cannot be called after the initialization is complete.
-
 - The data output callback cannot be blocked for a long time. It is recommended that the callback return within 1 ms.
 
 **Prototype**
@@ -413,7 +411,6 @@ Data type: `enum VmiErrCode : int32_t`
 The value can be any of the following:
 
 - `OK (0)`: The initialization is successful.
-
 - Other values: The initialization fails, and an error code is returned.
 
 #### DeInitVmiEngine
@@ -437,7 +434,6 @@ Data type: `enum VmiErrCode : int32_t`
 The value can be any of the following:
 
 - `OK (0)`: The deinitialization is successful.
-
 - Other values: The deinitialization fails, and an error code is returned.
 
 #### GetStatus
@@ -497,7 +493,6 @@ Data type: `enum VmiErrCode : int32_t`
 The value can be any of the following:
 
 - `OK (0)`: The module is successfully started.
-
 - Other values: The module fails to be started, and an error code is returned.
 
 #### StopModule
@@ -523,7 +518,6 @@ Data type: `enum VmiErrCode : int32_t`
 The value can be any of the following:
 
 - `OK (0)`: The module is successfully stopped.
-
 - Other values: The module fails to be stopped, and an error code is returned.
 
 #### InjectData
@@ -552,7 +546,6 @@ Data type: `enum VmiErrCode : int32_t`
 The value can be any of the following:
 
 - `OK (0)`: The data injection is successful.
-
 - Other values: The data injection fails, and an error code is returned.
 
 #### SetParam
@@ -581,7 +574,6 @@ Data type: `enum VmiErrCode : int32_t`
 The value can be any of the following:
 
 - `OK (0)`: The parameters are set successfully.
-
 - Other values: The parameters fail to be set, and an error code is returned.
 
 #### GetParam
@@ -610,7 +602,6 @@ Data type: `enum VmiErrCode : int32_t`
 The value can be any of the following:
 
 - `OK (0)`: The parameters are obtained successfully.
-
 - Other values: The parameters fail to be obtained, and an error code is returned.
 
 ## Video Output Development
@@ -1019,7 +1010,7 @@ AudioData audioData;
 audioData.size = sizeof(audioPlayData);
 uint8_t *data = new uint8_t[sizeof(AudioData) + sizeof(audioPlayData)];
 memcpy(data, &audioData, sizeof(AudioData));
-memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData))
+memcpy(data + sizeof(AudioData), audioPlayData, sizeof(audioPlayData));
 DataCallback(module, cmd, data, sizeof(AudioData) + audioData.size);
 ```
 
@@ -1165,7 +1156,7 @@ AudioData audioData;
 audioData.size = sizeof(micData);
 uint8_t *data = new uint8_t[sizeof(AudioData) + sizeof(micData)];
 memcpy(data, &audioData, sizeof(AudioData));
-memcpy(data + sizeof(AudioData), micData, sizeof(micData))
+memcpy(data + sizeof(AudioData), micData, sizeof(micData));
 InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 ```
 
@@ -1174,11 +1165,8 @@ InjectData(module, cmd, data, sizeof(AudioData) + sizeof(micData));
 Microphone frames need to be injected stably. Otherwise, the sound may be intermittent. The specific restrictions are subject to the value of `vmi.mic.cachefactor` in the `default.prop` configuration file. This configuration item indicates the buffer size of the microphone frame queue. The options are as follows:
 
 - `0`: One frame needs to be injected every 10 ms, causing no extra delay.
-
 - `1`: 16 frames need to be injected every 160 ms, causing a 160 ms delay.
-
 - `2`: 32 frames need to be injected every 320 ms, causing a 320 ms delay.
-
 - `3`: 48 frames need to be injected every 480 ms, causing a 480 ms delay.
 
 >![](public_sys-resources/icon-note.gif) **NOTE**
@@ -1451,7 +1439,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder instance is successfully created.
-
 - `VIDEO_ENCODER_CREATE_FAIL`: Failed to create an encoder instance.
 
 #### DestroyVideoEncoder
@@ -1477,7 +1464,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder instance is successfully destroyed.
-
 - `VIDEO_ENCODER_DESTROY_FAIL`: Failed to destroy the encoder instance.
 
 **Involved APIs of the VideoEncoder Class**
@@ -1564,7 +1550,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully initialized.
-
 - `VIDEO_ENCODER_INIT_FAIL`: Failed to initialize the encoder.
 
 #### StartEncoder
@@ -1590,7 +1575,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully started.
-
 - `VIDEO_ENCODER_INIT_FAIL`: Failed to initialize the encoder.
 
 #### SetParams
@@ -1664,7 +1648,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: Data of one frame is successfully encoded.
-
 - `VIDEO_ENCODER_ENCODE_FAIL`: Failed to encode data of one frame.
 
 #### StopEncoder
@@ -1690,7 +1673,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully stopped.
-
 - `VIDEO_ENCODER_STOP_FAIL`: Failed to stop the encoder.
 
 #### DestroyEncoder
@@ -1716,7 +1698,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully destroyed.
-
 - `VIDEO_ENCODER_DESTROY_FAIL`: Failed to destroy the encoder.
 
 #### ResetEncoder
@@ -1742,7 +1723,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: The encoder is successfully reset.
-
 - `VIDEO_ENCODER_RESET_FAIL`: Failed to reset the encoder.
 
 #### FrameScaling
@@ -1782,7 +1762,6 @@ Data type: `EncoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_ENCODER_SUCCESS`: success
-
 - `VIDEO_ENCODER_SET_ENCODE_PARAMS_FAIL`: failure
 
 ### Decoding APIs (C and C++)
@@ -1840,7 +1819,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder instance is successfully created.
-
 - `VIDEO_DECODER_CREATE_FAIL`: Failed to create a decoder instance.
 
 #### DestroyVideoDecoder
@@ -1866,7 +1844,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder instance is successfully destroyed.
-
 - `VIDEO_DECODER_DESTROY_FAIL`: Failed to destroy the decoder instance.
 
 **Involved APIs of the VideoDecoder Class**
@@ -1907,7 +1884,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully created.
-
 - `VIDEO_DECODER_CREATE_FAIL`: Failed to create a decoder.
 
 #### InitDecoder
@@ -1931,7 +1907,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully initialized.
-
 - `VIDEO_DECODER_INIT_FAIL`: Failed to initialize the decoder.
 
 #### SetDecodeParams
@@ -2001,7 +1976,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully configured.
-
 - `VIDEO_DECODER_SET_DECODE_PARAMS_FAIL`: Failed to configure the decoder.
 
 #### GetDecodeParams
@@ -2030,7 +2004,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoding parameters are successfully obtained.
-
 - `VIDEO_DECODER_GET_DECODE_PARAMS_FAIL`: Failed to obtain the decoding parameters.
 
 #### SetCallbacks
@@ -2068,7 +2041,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The callback is successfully set.
-
 - `VIDEO_DECODER_SET_FUNC_FAIL`: Failed to set the callback.
 
 #### SetCopyFrameFunc
@@ -2096,7 +2068,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The callback is successfully set.
-
 - `VIDEO_DECODER_SET_FUNC_FAIL`: Failed to set the callback.
 
 #### SendStreamData
@@ -2126,9 +2097,7 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: Stream data is sent successfully.
-
 - `VIDEO_DECODER_DECODE_FAIL`: Failed to send stream data.
-
 - `VIDEO_DECODER_WRITE_OVERFLOW`: Write overflow.
 
 #### RetrieveFrameData
@@ -2162,9 +2131,7 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoded data is retrieved successfully.
-
 - `VIDEO_DECODER_DECODE_FAIL`: Failed to retrieve the decoded data.
-
 - `VIDEO_DECODER_READ_UNDERFLOW`: Read underflow.
 
 #### Flush
@@ -2184,7 +2151,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoding buffer status is reset successfully.
-
 - `VIDEO_DECODER_RESET_FAIL`: Failed to reset the decoding buffer status.
 
 #### StartDecoder
@@ -2204,7 +2170,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is successfully started.
-
 - `VIDEO_DECODER_START_FAIL`: Failed to start the decoder.
 
 #### StopDecoder
@@ -2224,7 +2189,6 @@ Data type: `DecoderRetCode`
 The value can be any of the following:
 
 - `VIDEO_DECODER_SUCCESS`: The decoder is stopped successfully.
-
 - `VIDEO_DECODER_STOP_FAIL`: Failed to stop the decoder.
 
 #### DestroyDecoder
@@ -2331,7 +2295,7 @@ Data type: `void *`, which points to the created instance of the specified GPU a
 
 **Involved APIs of the GpuEncoderBase Class**
 
-For details about involved APIs of the GpuEncoderBase class, see [Init](#init), [Deinit](#deinit), [Start](#start), [Stop](#stop), [CreateBuffer](#createbuffer), [ImportBuffer](#importbuffer), [ReleaseBuffer](#releasebuffer), [MapBuffer](#mapbuffer), [UnmapBuffer](#unmapbuffer), [RetriveBufferData](#retrivebufferdata), [Convert](#convert), [Encode](#encode), [SetEncodeParam](#setencodeparam), and [Reset](#reset).
+For details about involved APIs of the GpuEncoderBase class, see [Init](#init), [Deinit](#deinit), [Start](#start), [Stop](#stop), [CreateBuffer](#createbuffer), [ImportBuffer](#importbuffer), [ReleaseBuffer](#releasebuffer), [MapBuffer](#mapbuffer), [UnmapBuffer](#unmapbuffer), [RetrieveBufferData](#retrievebufferdata), [Convert](#convert), [Encode](#encode), [SetEncodeParam](#setencodeparam), and [Reset](#reset).
 
 Return values of the GpuEncoderBase class:
 
@@ -2347,7 +2311,7 @@ enum GpuEncoderErrorCode : uint32_t {
     ERR_UNSUPPORT_OPERATION,
     ERR_INTERNAL_ERROR,
     ERR_NEED_RESET, // Some encoding parameters take effect after the encoder is reset.
-    ERR_UNKNOW
+    ERR_UNKNOWN
 };
 ```
 
@@ -2445,7 +2409,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is successfully initialized.
-
 - Other: Failed to initialize the GPU acceleration instance.
 
 #### Deinit
@@ -2465,7 +2428,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is successfully destroyed.
-
 - Other: Failed to destroy the GPU acceleration instance.
 
 #### Start
@@ -2489,7 +2451,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is started successfully.
-
 - Other: Failed to start the GPU acceleration instance.
 
 #### Stop
@@ -2513,7 +2474,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The GPU acceleration instance is stopped successfully.
-
 - Other: Failed to stop the GPU acceleration instance.
 
 #### CreateBuffer
@@ -2587,7 +2547,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The buffer is successfully created.
-
 - Other: Failed to create a buffer.
 
 #### ImportBuffer
@@ -2615,7 +2574,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The buffer is successfully imported.
-
 - Other: Failed to import the buffer.
 
 #### ReleaseBuffer
@@ -2641,7 +2599,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The buffer is successfully released.
-
 - Other: Failed to release the buffer.
 
 #### MapBuffer
@@ -2651,7 +2608,6 @@ The value can be any of the following:
 Maps data in a buffer to memory.
 
 - If data in the buffer can be mapped to contiguous memory in user space, fill in `data` and `dataLen` in the `buffer` field for this API.
-
 - If data in the buffer cannot be mapped to contiguous memory, leave `data` in the `buffer` field empty and fill in the `dataLen` field.
 
 **Prototype**
@@ -2681,7 +2637,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: Data in the buffer is successfully mapped.
-
 - Other: Failed to map data in the buffer.
 
 #### UnmapBuffer
@@ -2707,10 +2662,9 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The data in the buffer is successfully unmapped.
-
 - Other: Failed to unmap data in the buffer.
 
-#### RetriveBufferData
+#### RetrieveBufferData
 
 **Function Usage**
 
@@ -2724,7 +2678,7 @@ Data in the buffer must have been mapped through the MapBuffer API.
 
 **Prototype**
 
-`int32_t RetriveBufferData(GpuEncoderBufferT &buffer, uint8_t *data, uint32_t memLen, uint32_t &dataLen) = 0`
+`int32_t RetrieveBufferData(GpuEncoderBufferT &buffer, uint8_t *data, uint32_t memLen, uint32_t &dataLen) = 0`
 
 **Parameters**
 
@@ -2742,7 +2696,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The Buffer data is successfully retrieved.
-
 - Other: Failed to retrieve data in the Buffer.
 
 #### Convert
@@ -2769,7 +2722,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The buffer format is successfully converted.
-
 - Other: Failed to convert the buffer format.
 
 #### Encode
@@ -2796,7 +2748,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The encoding is successful.
-
 - Other: The encoding fails.
 
 #### SetEncodeParam
@@ -2877,9 +2828,7 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The encoding parameters are set successfully.
-
 - `ERR_NEED_RESET`: The encoding parameters take effect only after the Reset API is called.
-
 - Other: Failed to set the encoding parameters.
 
 #### Reset
@@ -2903,7 +2852,6 @@ Data type: `GpuEncoderErrorCode`
 The value can be any of the following:
 
 - `OK`: The encoder is successfully reset.
-
 - Other: Failed to reset the encoder.
 
 #### ResetImgSize
@@ -2934,7 +2882,6 @@ Data type: `int32_t`
 The value can be any of the following:
 
 - `0`: The image size is successfully set.
-
 - Other: Failed to set the image size.
 
 ### Opus Encoding and Decoding APIs (C and C++)
@@ -3109,6 +3056,6 @@ This API is similar to the opus_strerror interface in Opus 1.3.1. For details, r
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

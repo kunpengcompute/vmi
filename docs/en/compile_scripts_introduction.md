@@ -1,6 +1,6 @@
 # Compilation Script Introduction
 
-<!-- md-trans-meta sourceCommit=4da158845ec146a473ea42c5c35b986c11a245e8 translatedAt=2026-09-08T02:25:39.939Z pushedAt=2026-09-08T06:07:33.474Z -->
+<!-- md-trans-meta sourceCommit=03311fd24125a60715eae0c61c2a36d90f2cc4fb translatedAt=2026-10-15T11:54:31.720Z pushedAt=2026-10-16T02:26:17.935Z -->
 
 This document describes the functions and implementation details of the scripts used during compilation, helping developers understand how the compilation toolchain works.
 
@@ -32,7 +32,7 @@ If a file already exists, it will not be downloaded repeatedly. Therefore, you c
 |Android NDK|r25b|<https://dl.google.com/android/repository/android-ndk-r25b-linux.zip>|
 |Android SDK Build Tools|33.0.1|<https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip>|
 |gradle|8.4|<https://mirrors.cloud.tencent.com/gradle/gradle-8.4-bin.zip>|
-|CMake|3.28.2|<https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-linux-x86_64.tar.gz>|
+|CMake|4.3.2|<https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-linux-x86_64.tar.gz>|
 |AdoptOpenJDK|11+28|<https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz>|
 |ninja|v1.12.0|<https://github.com/ninja-build/ninja/releases/download/v1.12.0/ninja-linux.zip>|
 |SDK platform|33_r02|<https://dl.google.com/android/repository/platform-33_r02.zip>|
@@ -123,6 +123,6 @@ Additionally, the script automatically checks whether the extracted content cons
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
