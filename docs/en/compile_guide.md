@@ -1,6 +1,6 @@
 # Compilation Guide
 
-<!-- md-trans-meta sourceCommit=98996e95cca45e7a6ce35559eba64329d9532638 translatedAt=2026-08-29T08:15:08.559Z pushedAt=2026-08-29T08:52:21.335Z -->
+<!-- md-trans-meta sourceCommit=f5ae757472d3f7248102cae28fed5ebdd01e6d8e translatedAt=2026-10-14T09:34:15.478Z pushedAt=2026-10-15T06:23:36.628Z -->
 
 ## Environment Preparation
 
@@ -40,7 +40,7 @@ Go to the VMI source code directory and run `auto_install_tools.sh`. For details
 ```bash
 cd ~/ARMNative/vmi
 ./scripts/auto_install_tools.sh ${installation_directory}
-source ~/.bashrc 
+source ~/.bashrc
 ```
 
 You can specify *${installation_directory}*. If you do not specify it, the script uses the default directory `~/NativeCompileToolsDir`.
@@ -100,17 +100,17 @@ ln -s ccache /usr/bin/c++
 Download necessary dependencies. If they have been installed, skip this step.
 
 ```bash
-sudo apt install -y git     
-sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg     
-sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev     
-sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev     
-sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev     
-sudo apt install -y libxml2-utils xsltproc unzip     
-sudo apt install -y libx11-dev libreadline-dev     
-sudo apt install -y libncurses5 libncurses5-dev     
-sudo apt install -y tofrodos python-markdown-doc zlib1g-dev     
-sudo apt install -y dpkg-dev libsdl1.2-dev     
-sudo apt install -y m4 bc python3 python3-mako gettext     
+sudo apt install -y git
+sudo apt install -y libtool automake tclsh make openjdk-11-jdk git-core gnupg
+sudo apt install -y flex bison gperf build-essential zip curl zlib1g-dev
+sudo apt install -y gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev
+sudo apt install -y x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev
+sudo apt install -y libxml2-utils xsltproc unzip
+sudo apt install -y libx11-dev libreadline-dev
+sudo apt install -y libncurses5 libncurses5-dev
+sudo apt install -y tofrodos python-markdown-doc zlib1g-dev
+sudo apt install -y dpkg-dev libsdl1.2-dev
+sudo apt install -y m4 bc python3 python3-mako gettext
 sudo apt install -y expect
 ```
 
@@ -122,7 +122,7 @@ Go to the Android source code directory and run the following build commands.
 cd ~/ARMNative/aosp11
 source build/envsetup.sh
 lunch aosp_arm64-eng
-make -j [Number_of_threads]
+make -j <Number_of_threads>
 ```
 
 ## Video Stream Compilation
@@ -162,6 +162,6 @@ After command execution, `VideoEngine.tar.gz` is generated in `output/native/rel
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|

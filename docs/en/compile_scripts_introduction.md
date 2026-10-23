@@ -1,6 +1,6 @@
 # auto_install_tools.sh
 
-<!-- md-trans-meta sourceCommit=98996e95cca45e7a6ce35559eba64329d9532638 translatedAt=2026-08-29T08:15:08.503Z pushedAt=2026-08-29T09:18:29.931Z -->
+<!-- md-trans-meta sourceCommit=f5ae757472d3f7248102cae28fed5ebdd01e6d8e translatedAt=2026-10-14T09:34:19.246Z pushedAt=2026-10-15T06:28:23.237Z -->
 
 ## Usage Command
 
@@ -28,7 +28,7 @@ If a file already exists, it will not be downloaded repeatedly. Therefore, you c
 |Android NDK|r25b|<https://dl.google.com/android/repository/android-ndk-r25b-linux.zip>|
 |Android SDK Build Tools|33.0.1|<https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip>|
 |gradle|8.4.0|<https://mirrors.cloud.tencent.com/gradle/gradle-8.4-bin.zip>|
-|CMake|3.28.2|<https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-linux-x86_64.tar.gz>|
+|CMake|4.3.2|<https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-linux-x86_64.tar.gz>|
 |AdoptOpenJDK|11+28|<https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz>|
 |ninja|v1.12.0|<https://github.com/ninja-build/ninja/releases/download/v1.12.0/ninja-linux.zip>|
 |SDK platform|33_r02|<https://dl.google.com/android/repository/platform-33_r02.zip>|
@@ -121,7 +121,6 @@ Additionally, the script automatically checks whether the extracted content cons
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
-

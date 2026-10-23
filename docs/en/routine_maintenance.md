@@ -1,6 +1,6 @@
 # Routine Maintenance<a name="ZH-CN_TOPIC_0000002552733333"></a>
 
-<!-- md-trans-meta sourceCommit=8137c5c6f22411c010ac7e5e01f7b05f199cf237 translatedAt=2026-08-29T08:19:14.743Z pushedAt=2026-09-03T03:18:47.968Z -->
+<!-- md-trans-meta sourceCommit=f5ae757472d3f7248102cae28fed5ebdd01e6d8e translatedAt=2026-10-14T09:42:03.906Z pushedAt=2026-10-15T07:43:41.697Z -->
 
 ## O&M Overview<a name="ZH-CN_TOPIC_0000002549705369"></a>
 
@@ -18,7 +18,7 @@ The video stream engine consists of a server and a client. The server provides f
 
 - O&M types
 
-    Inspection, performance monitoring, log management, risky operations, and routine maintenance
+    Inspection, supervision/recording, log management, risky operations, and routine maintenance
 
 ## Inspection<a name="ZH-CN_TOPIC_0000002549825359"></a>
 
@@ -65,9 +65,9 @@ After a video stream cloud phone is deployed for the first time, you are advised
     dockerd --debug
     ```
 
-    If the fault persists, restart the Docker service (for details, see [4](#li65832418453)) or Please submit an ISSUE feedback.
+    If the fault persists, restart the Docker service (for details, see [4](#li65832418453)) or submit an ISSUE for feedback.
 
-4. <a name="li65832418453"></a>Restart the Docker service. After the restart, check whether the service status is `active`. If the restart fails or the service status is not `active`, Please submit an ISSUE feedback.
+4. <a name="li65832418453"></a>Restart the Docker service. After the restart, check whether the service status is `active`. If the restart fails or the service status is not `active`, please submit an ISSUE for feedback.
 
     ```bash
     systemctl daemon-reload
@@ -124,7 +124,7 @@ During the running of the video stream cloud phone container, you can check whet
     ```
 
 4. Check the process status.
-    - If the parent process of a large number of processes changes to `sh` (process ID: 1), as shown in the following figure, the container crashes. In this case, Please submit an ISSUE feedback.
+    - If the parent process of a large number of processes changes to `sh` (process ID: 1), as shown in the following figure, the container crashes. In this case, please submit an ISSUE for feedback.
 
         ```bash
         ps -elf
@@ -132,7 +132,7 @@ During the running of the video stream cloud phone container, you can check whet
 
         ![](figures/zh-cn_image_0000002518345548.png)
 
-    - Check whether the `VmiAgent` process exists. If the process is not found, it indicates that `VmiAgent` is stopped and the video stream cloud phone cannot work normally. In this case, Please submit an ISSUE feedback.
+    - Check whether the `VmiAgent` process exists. If the process is not found, it indicates that `VmiAgent` is stopped and the video stream cloud phone cannot work normally. In this case, please submit an ISSUE for feedback.
 
 #### Container Resource Consumption<a name="ZH-CN_TOPIC_0000002549825327"></a>
 
@@ -170,7 +170,7 @@ During the running of the video stream cloud phone container, you can check whet
     ```
 
 3. Check the process status.
-    - Check the `VmiAgent` process. If the `VmiAgent` process is not found, this process has been terminated and the video stream cloud phone cannot be used. In this case, Please submit an ISSUE feedback.
+    - Check the `VmiAgent` process. If the `VmiAgent` process is not found, this process has been terminated and the video stream cloud phone cannot be used. In this case, please submit an ISSUE for feedback.
 
         ```bash
         ps -elf |grep VmiAgent
@@ -186,11 +186,11 @@ During the running of the video stream cloud phone container, you can check whet
 
         ![](figures/zh-cn_image_0000002518345598.png)
 
-## Monitoring<a name="ZH-CN_TOPIC_0000002549825319"></a>
+## Supervision/Recording<a name="ZH-CN_TOPIC_0000002549825319"></a>
 
 ### Overview<a name="ZH-CN_TOPIC_0000002549825345"></a>
 
-Monitoring is performed on video stream cloud phone resources and applications. Through application monitoring, you can learn about the resource usage, trends, and alarms in a timely manner.
+Supervision/recording is performed on video stream cloud phone resources and applications. Through application supervision/recording, you can learn about the resource usage, trends, and alarms in a timely manner.
 
 ### Host CPU and Memory Usage<a name="ZH-CN_TOPIC_0000002518345494"></a>
 
@@ -209,7 +209,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     ![](figures/zh-cn_image_0000002549825427.png)
 
-    If the memory usage of some processes is higher than 85% and the CPU usage remains higher than 90%, check whether the processes are abnormal or Please submit an ISSUE feedback.
+    If the memory usage of some processes is higher than 85% and the CPU usage remains higher than 90%, check whether the processes are abnormal or submit an ISSUE for feedback.
 
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
@@ -236,7 +236,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     ![](figures/unnaming.png)
 
-    If the memory usage is higher than 85% and the CPU usage remains higher than 90%, Please submit an ISSUE feedback.
+    If the memory usage is higher than 85% and the CPU usage remains higher than 90%, please submit an ISSUE for feedback.
 
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
@@ -268,7 +268,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     ![](figures/zh-cn_image_0000002549705447.png)
 
-    If the memory usage of some processes is higher than 85% and the CPU usage remains higher than 90%, check whether the processes are abnormal or Please submit an ISSUE feedback.
+    If the memory usage of some processes is higher than 85% and the CPU usage remains higher than 90%, check whether the processes are abnormal or submit an ISSUE for feedback.
 
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
@@ -284,7 +284,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
 
     >![](public_sys-resources/icon-note.gif) **NOTE**
     >
-    >`ctop` is a resource monitoring utility managed by Docker. To install it, download [ctop-0.7.5-linux-arm64](https://github.com/bcicen/ctop/releases/download/v0.7.5/ctop-0.7.5-linux-arm64), rename the downloaded binary file `ctop`, and copy it to the `/usr/bin` directory.
+    >`ctop` is a resource supervision/recording utility managed by Docker. To install it, download [ctop-0.7.5-linux-arm64](https://github.com/bcicen/ctop/releases/download/v0.7.5/ctop-0.7.5-linux-arm64), rename the downloaded binary file `ctop`, and copy it to the `/usr/bin` directory.
     >Parameters in the `ctop` command output are described as follows:
     >- `NAME`: container name
     >- `CID`: container ID
@@ -303,7 +303,7 @@ Monitoring is performed on video stream cloud phone resources and applications. 
     su - root
     ```
 
-3. Check the drive usage of the video stream cloud phone server.
+3. Check the memory usage of the video stream cloud phone server.
 
     ```bash
     free
@@ -367,7 +367,7 @@ The system load indicates the current CPU workload, which measures the average n
 
     Generally, the system load in the last 1 minute (load1) is a temporary condition. The system load in the last 15 minutes (load15) is a sustained condition. If load15 is high and load1 is low, the situation can be considered to be improving. Conversely, the situation may be worsening.
 
-    High load may be caused by hardware or software issues. Hardware issues typically arise from inadequate device performance, while software issues might result from prolonged thread occupation, high memory usage, and other factors. If the problem persists, Please submit an ISSUE feedback for assistance.
+    High load may be caused by hardware or software issues. Hardware issues typically arise from inadequate device performance, while software issues might result from prolonged thread occupation, high memory usage, and other factors. If the problem persists, please submit an ISSUE for assistance.
 
 ## Log Management<a name="ZH-CN_TOPIC_0000002549825375"></a>
 
@@ -629,7 +629,7 @@ Periodically record parameter settings of external APIs of the video stream engi
 
 ### Forbidden Operations<a name="ZH-CN_TOPIC_0000002518345522"></a>
 
-Currently, no forbidden operations are involved. If you have any questions, Please submit an ISSUE feedback.
+Currently, no forbidden operations are involved. If you have any questions, please submit an ISSUE for feedback.
 
 ### Risky Operations<a name="ZH-CN_TOPIC_0000002549825369"></a>
 
@@ -715,6 +715,6 @@ None
 
 ## Change History
 
-|Document Version|Date|Description|
+|Version|Date|Description|
 |--|--|--|
 |01|2026-09-30|This is the first official release.|
