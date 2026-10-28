@@ -1,8 +1,16 @@
 # Video Stream Introduction<a name="ZH-CN_TOPIC_0000002550291729"></a>
 
-<!-- md-trans-meta sourceCommit=fe2f8368f5b3453af706fe97ddde2c91de1bd721 translatedAt=2026-09-08T02:25:34.477Z pushedAt=2026-09-08T07:04:39.905Z -->
+<!-- md-trans-meta sourceCommit=7a9be47c8b0d73507834023b6671a1277c7f0640 translatedAt=2026-10-15T11:54:42.537Z pushedAt=2026-10-16T02:10:21.963Z -->
 
-English | [简体中文](./README.md)
+[简体中文](./README.md) | English
+
+## What's New
+
+\[2026-09-30\]: Added support for the shared data volume feature.
+
+\[2026-06-30\]: Enhanced emulation for the CPU/F2FS file system/system partition/init process.
+
+\[2025-12-30\]: Supports Android 15.
 
 ## Project Description<a name="ZH-CN_TOPIC_0000002518611972"></a>
 
@@ -56,18 +64,23 @@ The video stream engine consists of the server and client. The server provides f
 
 ## Directory Structure<a name="ZH-CN_TOPIC_0000002518771876"></a>
 
-```txt
-├── docs                                          # Project document directory
-│   └── en                                       # English document directory
-│       ├── figures                              # Directory of figures in documents
-│       ├── quick_start.md                       # Quick start
-│       ├── release_notes.md                     # Release notes
-│       ├── installation_guide.md                # Installation guide
-│       ├── user_guide.md                        # User guide
-│       ├── best_practices.md                    # Best practices
-│       ├── api_reference.md                     # API reference
-│       ├── design_guide.md                      # Design guide
-│       ├── faq.md                               # Frequently asked questions
+```text
+├── docs                                           # Project documentation
+│   └── zh                                         # Chinese documentation
+│       ├── figures                                # Figure resources
+│       ├── public_sys-resources                   # Public icons
+│       ├── compile_guide.md                       # Video stream cloud phone compilation guide
+│       ├── compile_scripts_introduction.md        # Introduction to video stream cloud phone compilation scripts
+│       ├── development_guide.md                   # Video stream cloud phone developer guide
+│       ├── feature_guide.md                       # Video stream cloud phone feature guide
+│       ├── install_guide.md                       # Video stream cloud phone installation guide
+│       ├── menu.md                                # Video stream cloud phone document menu
+│       ├── release_notes.md                       # Video stream cloud phone release notes
+│       ├── routine_maintenance.md                 # Video stream cloud phone routine maintenance guide
+│       ├── security_statement.md                  # Video stream cloud phone security statement
+│       ├── test_guide.md                          # Video stream cloud phone test guide
+│       ├── troubleshooting.md                     # Video stream cloud phone troubleshooting cases
+│       ├── user_guide.md                          # Video stream cloud phone user guide
 ├── CloudPhoneClient                              # Build directory for the video stream client APK
 │   ├── AudioPlay                                # Audio module
 │   ├── TouchCapture                             # Touch module
@@ -110,7 +123,7 @@ The video stream engine has two branch versions: Android 11 and Android 15. This
 
 The video stream engine is developed based on AOSP and currently supports AOSP 11 and AOSP 15. Due to differences in Android versions, the video stream engine has two code branches to support different Android code.
 
-**Table 1** Code branch differences<a id="code-branch-differences"></a>
+**Table 2** Code branch differences<a id="code-branch-differences"></a>
 
 |Code Branch|AOSP11|AOSP15|
 |--|--|--|
@@ -132,10 +145,16 @@ The video stream cloud phone supports bare metal servers and VMs. For details, s
 
 |Resource Type|Resource Name|Description|
 |--|--|--|
-|Document|Quick Start|Provides a quick start guide for launching and operating a video stream cloud phone.|
-|Document|Release Notes|Provides basic information and feature updates of each video stream cloud phone version.|
-|Document|Deployment Guide|Provides detailed guidance for deploying the video stream cloud phone in two environments: bare metal and VM.|
-|Document|FAQs|Provides answers to frequently asked questions (FAQs) about installing and using the video stream engine.|
+|Document| [Release Notes](./docs/en/release_notes.md)|Provides the basic information and feature update information of each release of the video stream cloud phone.|
+|Document| [Feature Guide](./docs/en/feature_guide.md)|Provides an introduction to the functions and features supported by the video stream cloud phone.|
+|Document| [Compilation Guide](./docs/en/compile_guide.md)|Provides the compilation and build process and operation instructions for the video stream cloud phone.|
+|Document| [Installation Guide](./docs/en/install_guide.md)|Provides detailed instructions for deploying the video stream cloud phone in both bare metal and virtual machine environments.|
+|Document| [User Guide](./docs/en/user_guide.md)|Provides operation instructions for starting and uninstalling video stream cloud phone instances.|
+|Document| [Developer Guide](./docs/en/development_guide.md)|Provides guidance for developing the video stream cloud phone.|
+|Document| [Routine Maintenance](./docs/en/routine_maintenance.md)|Provides routine maintenance instructions for the video stream cloud phone container.|
+|Document| [Troubleshooting](./docs/en/troubleshooting.md)|Provides troubleshooting methods for the video stream cloud phone.|
+|Document| [Test Guide](./docs/en/test_guide.md)|Provides guidance for product acceptance of the video stream cloud phone.|
+|Document| [Security Statement](./docs/en/security_statement.md)|Provides security statement for using the video stream cloud phone.|
 
 ## Disclaimer<a name="ZH-CN_TOPIC_0000002550251723"></a>
 
@@ -144,12 +163,12 @@ This repository contains only feature demonstrations and development sample code
 **To Users of This Project**
 
 - This project is intended solely for debugging and development. You are responsible for any risks and should carefully review the following information:
-    - Data processing and deletion: Users are responsible for managing and deleting any data generated while using this tool. You are advised to promptly delete any related data after use to prevent information leaks.
-    - Data confidentiality and transmission: Users understand and agree not to share or transmit any data generated by this tool. Neither the tool nor its developers are responsible for any information leaks, data breaches, or other negative consequences.
-    - User input security: Users are responsible for the security of any commands they enter and for any risks or losses resulting from improper input. The tool and its developers are not liable for issues caused by incorrect command usage.
+    - Data processing and deletion: Users are responsible for managing and deleting any data generated while using this project. You are advised to promptly delete any related data after use to prevent information leaks.
+    - Data confidentiality and transmission: Users understand and agree not to share or transmit any data generated by this project. Neither the project nor its developers are responsible for any information leaks, data breaches, or other negative consequences.
+    - User input security: Users are responsible for the security of any commands they enter and for any risks or losses resulting from improper input. The project and its developers are not liable for issues caused by incorrect command usage.
 
-- Disclaimer scope: This disclaimer applies to all individuals and entities using this tool. By using the tool, you acknowledge and accept this statement and assume all risks and responsibilities arising from its use. If you do not agree, please stop using the tool immediately.
-- Before using this tool, **please read and understand the preceding disclaimer**. If you have any questions, contact the developer.
+- Disclaimer scope: This disclaimer applies to all individuals and entities using this project. By using the project, you acknowledge and accept this statement and assume all risks and responsibilities arising from its use. If you do not agree, please stop using the project immediately.
+- Before using this project, **please read and understand the preceding disclaimer**. If you have any questions, contact the developer.
 
 **To Data Owners**
 
@@ -164,14 +183,6 @@ The documents of this project are licensed under CC-BY 4.0. For details, see [LI
 
 We welcome your contributions to the community. If you have any questions/suggestions or want to provide feedback on feature requirements and bug reports, you can submit [issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md). For details, see the [contribution guideline](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md). You are also welcome to share insights in [Discussions](https://gitcode.com/boostkit/community/discussions). Thank you for your support.
 
-## Suggestions and Communication<a name="ZH-CN_TOPIC_0000002550291721"></a>
-
-You are welcome to contribute to the community. If you have any questions or suggestions, submit [issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md). We will reply to you as soon as possible. Thank you for your support.
-
 ## Acknowledgement<a name="ZH-CN_TOPIC_0000002550251725"></a>
-
-Kbox is jointly developed by the following Huawei department:
-
-- Kunpeng Computing BoostKit Development Dept
 
 Thank you to everyone in the community for your PRs. We warmly welcome contributions to Kbox!
