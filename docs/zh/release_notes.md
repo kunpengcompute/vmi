@@ -40,11 +40,11 @@
 | Kunpeng BoostKit |鲲鹏服务器| iBMC      | S920X20-S920X21-iBMC_5.05.12.15              | Kunpeng 920 V200 7280Z 2.9GHz<br>Host OS：openEuler-22.03-LTS-SP4-aarch64(内核5.10.0-216.0.0)；<br>Guest OS：android-11.0.0_r48 | openEuler系统|
 |                  |         | CPLD      | S920X20-BCU(BC83AMDA-BC83AMDB)-CPLD1-CPLD2_5.08                            |    |             |
 |                  |         | BIOS      | S920X20-BIOS_20.55                           |    |             |
-|                  |         | Exagear软件| ExaGear_ARM32-ARM64_V2.5                     | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                       | v2.5        |
-| Kunpeng BoostKit |鲲鹏服务器| iBMC      | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596<br>                  | KunPeng920 7260 2.6GHz<br>Host OS：openEuler-22.03-LTS-SP4-aarch64(内核5.10.0-216.0.0)<br>Guest OS：android-11.0.0_r48         | openEuler系统|
+|                  |         | ExaGear软件| ExaGear_ARM32-ARM64_V2.5                     | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                       | v2.5        |
+| Kunpeng BoostKit |鲲鹏服务器| iBMC      | TS200-1280_2180_2280_5280_2180K_2280K_5280K-iBMC-V596<br>                  | Kunpeng920 7260 2.6GHz<br>Host OS：openEuler-22.03-LTS-SP4-aarch64(内核5.10.0-216.0.0)<br>Guest OS：android-11.0.0_r48         | openEuler系统|
 |                  |         | CPLD      | TS200-2280-2180-5280-2180K-2280K-5280K_Mainboard(BC2AMDD01)_CPLD_5.0.9<br> |    |             |
 |                  |         | BIOS      | TS200-2180_2280_5180_5280-BIOS-V656<br>      |    |             |
-|                  |         | Exagear软件| ExaGear_ARM32-ARM64_V2.5                     | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                       | v2.5        |
+|                  |         | ExaGear软件| ExaGear_ARM32-ARM64_V2.5                     | Host OS：openEuler-22.03-LTS-SP4-aarch64<br>Guest OS：android-11.0.0_r48                       | v2.5        |
 
 ### 产品内配套关系<a name="ZH-CN_TOPIC_0000002518346482"></a>
 
@@ -53,7 +53,7 @@
 | 项目 | 内容 |
 | ---- | ---- |
 | 产品名称 | Kunpeng BoostKit |
-| 产品版本 | Kunpeng BoostKit 26.2.RC1 |
+| 产品版本 | 26.2.RC1 |
 
 **软件版本配套表**
 
@@ -69,7 +69,7 @@
 |序号|名称|类型|游戏版本号|下载来源|问题|详细描述|原因分析|
 | 1 |王者荣耀|游戏|跟随应用宝更新|应用宝|无|  |      | 
 | 2 |原神|游戏|跟随应用宝更新|应用宝|无|  |      | 
-| 3 |星穹铁道|游戏|跟随应用宝更新|应用宝|无|当前对应用禁用Vulkan API规避渲染问题，驱动修复后用户可自行放开|      | 
+| 3 |星穹铁道|游戏|跟随应用宝更新|应用宝|有|当前对应用禁用Vulkan API规避渲染问题，驱动修复后用户可自行放开|      | 
 | 4 |抖音|应用|跟随应用宝更新|应用宝|无|  |      | 
 | 5 |快手|应用|跟随应用宝更新|应用宝|同城：定位在北京|  |      |
 | 6 |微信|应用|跟随应用宝更新|应用宝|无|  |      | 
@@ -78,11 +78,11 @@
 | 9 |微博|应用|跟随应用宝更新|应用宝|无|  |      | 
 | 10 |腾讯视频|应用|跟随应用宝更新|应用宝|无|  |      | 
 | 11 |爱奇艺|应用|跟随应用宝更新|应用宝|无|  |      | 
-| 12 |蛋仔派对|应用|跟随应用宝更新|应用宝|在AMD环境上，配置为软解时，登录界面背景视频无法正常播放，游戏内直播无法正常播放，会发生黑屏（游戏UI正常）。配置为硬解可解决此问题|  |      |
+| 12 |蛋仔派对|应用|跟随应用宝更新|应用宝|有|在AMD环境上，配置为软解时，登录界面背景视频无法正常播放，游戏内直播无法正常播放，会发生黑屏（游戏UI正常）。配置为硬解可解决此问题|      |
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
-> 应用兼容性测试条件说明：<br>1.测试环境应为2280服务器的标准硬件环境<br>2.测试云手机规格(8核1路/16g内存/64g存储)<br>3.兼容性测试场景，单个容器在测试期间只运行一款游戏，不同时运行多款游戏<br>4.当前版本暂不支持WIFI设置和WIFI搜索等操作；<br>5.当前版本不支持蓝牙设备；<br> 
+> 应用兼容性测试条件说明：<br>1.测试环境应为2280服务器的标准硬件环境<br>2.测试云手机规格(8核1路/16g内存/64g存储)<br>3.兼容性测试场景，单个容器在测试期间只运行一款游戏，不同时运行多款游戏<br>4.当前版本暂不支持Wi-Fi设置和Wi-Fi搜索等操作；<br>5.当前版本不支持蓝牙设备；<br> 
 >
 ## V8.2.RC1_11<a id="ZH-CN_TOPIC_0000002549825973"></a>
  
@@ -137,7 +137,7 @@
  
 无
 
-## 8.0.RC1_11<a name="ZH-CN_TOPIC_0000002549706331"></a>
+## V8.0.RC1_11<a name="ZH-CN_TOPIC_0000002549706331"></a>
 
 ### 更新说明<a name="ZH-CN_TOPIC_0000002518346480"></a>
 
@@ -420,8 +420,6 @@
 
 **删除特性<a name="zh-cn_topic_0000001498482656_section454mcpsimp"></a>**
 
-视频流引擎支持AMD GPU编码。
-
 ### 已解决的问题<a name="ZH-CN_TOPIC_0000002518186556"></a>
 
 无
@@ -443,7 +441,9 @@
 
 **新增特性<a name="zh-cn_topic_0000001525082429_section402mcpsimp"></a>**
 
-视频流引擎适配鲲鹏920 7265F处理器。
+|编号|描述|目的|
+| :---: | :---: | :---: |
+|1|视频流引擎适配鲲鹏920 7265F处理器|扩展视频流引擎对鲲鹏920 7265F处理器的硬件适配范围|
 
 **修改特性<a name="zh-cn_topic_0000001525082429_section451mcpsimp"></a>**
 

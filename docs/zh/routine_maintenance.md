@@ -1,12 +1,14 @@
 # 例行维护<a name="ZH-CN_TOPIC_0000002552733333"></a>
 
+本文档介绍视频流云手机的例行维护，涵盖巡检、看管/记录、日志管理、高危操作和日常维护等能力，适用于视频流云手机运维用户。
+
 ## 运维概述<a name="ZH-CN_TOPIC_0000002549705369"></a>
 
 云手机是指虚拟出带有AOSP（Android Open Source Project）系统，具有虚拟手机功能的云服务器。作为一种新型应用，它对物理手机起到了有效的延伸和扩展作用，可以用在云手游、移动办公等诸多场景。
 
 视频流云手机是一种基于Kbox容器和端云协同引擎的虚拟化方案。Kbox容器是指运行于ARM服务器上的Android系统Docker容器。端云协同引擎顾名思义可以分为端侧和云侧两个部分：云侧运行于云手机上；端侧一般为手机APK，可以被安装在用户的Android手机上，用于与云侧进行交互，进而对视频流云手机进行正常的操作。视频流云手机架构图如图所示。
 
-![](figures/zh-cn_image_0000002479923868.png)
+![视频流云手机架构图：云侧Kbox容器与端云协同引擎、端侧APK的分层交互示意](figures/zh-cn_image_0000002479923868.png)
 
 视频流引擎包括服务端和客户端两个部分：服务端提供图像获取、图像数据编码等功能；客户端提供视频数据解码播放功能。在某些场景下还包含用户触控的获取和注入、音频数据的获取和播放等功能。
 
@@ -53,7 +55,7 @@
     systemctl status docker
     ```
 
-    ![](figures/zh-cn_image_0000002518345622.png)
+    ![服务器执行systemctl status docker后的服务状态回显，Active显示为active即正常](figures/zh-cn_image_0000002518345622.png)
 
     当"Active"显示为"active"时，Docker服务状态正常，其他情况则为异常状态。
 
@@ -128,19 +130,19 @@
         ps -elf
         ```
 
-        ![](figures/zh-cn_image_0000002518345548.png)
+        ![容器内执行ps -elf的进程列表回显，大量进程父进程变为sh表明容器已crash](figures/zh-cn_image_0000002518345548.png)
 
     - 查看VmiAgent进程是否存在，若不存在，证明VmiAgent已经被结束，视频流云手机则不能正常使用，请提交ISSUE反馈。
 
 #### 容器资源耗能<a name="ZH-CN_TOPIC_0000002549825327"></a>
 
-在视频流云手机容器运行的过程中，若需要及时掌握容器使用的系统资源。执行以下命令动态查看视频流云手机的资源消耗情况。
+在视频流云手机容器运行的过程中，若需要及时掌握容器使用的系统资源，可执行以下命令动态查看视频流云手机的资源消耗情况。
 
 ```bash
 docker stats
 ```
 
-![](figures/zh-cn_image_0000002549825465.png)
+![容器内执行docker stats的资源占用回显，含CPU%、内存使用率和网络IO等列](figures/zh-cn_image_0000002549825465.png)
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
@@ -174,7 +176,7 @@ docker stats
         ps -elf |grep VmiAgent
         ```
 
-        ![](figures/zh-cn_image_0000002518185694.png)
+        ![容器内执行ps -elf |grep VmiAgent的进程回显，红框标出VmiAgent进程及其PID](figures/zh-cn_image_0000002518185694.png)
 
     - 查看VmiAgent进程。若VmiAgent进程存在，如上图所示红框，查看其对应的PID（对应上图中的283），执行以下命令可以查看进程状态、CPU使用率和内存使用率等，其中"{pid}"为VmiAgent进程编号，如下图所示。
 
@@ -182,7 +184,7 @@ docker stats
         top -p ${pid}
         ```
 
-        ![](figures/zh-cn_image_0000002518345598.png)
+        ![容器内执行top -p ${pid}的监控回显，显示VmiAgent进程的CPU和内存使用率](figures/zh-cn_image_0000002518345598.png)
 
 ## 看管/记录<a name="ZH-CN_TOPIC_0000002549825319"></a>
 
@@ -205,7 +207,7 @@ docker stats
     top
     ```
 
-    ![](figures/zh-cn_image_0000002549825427.png)
+    ![主机执行top命令的回显，列出各进程的PID、%CPU、%MEM和COMMAND等资源占用](figures/zh-cn_image_0000002549825427.png)
 
     若视频流云手机某些进程内存使用率高于85%，CPU使用率持续高于90%，则需要进一步排查该进程是否异常或请提交ISSUE反馈。
 
@@ -232,7 +234,7 @@ docker stats
     htop
     ```
 
-    ![](figures/unnaming.png)
+    ![主机执行htop的回显，左侧为CPU、内存和交换分区占用条，右侧为任务数与平均负载](figures/unnaming.png)
 
     若内存使用率高于85%，CPU使用率持续高于90%，请提交ISSUE反馈。
 
@@ -264,7 +266,7 @@ docker stats
     top
     ```
 
-    ![](figures/zh-cn_image_0000002549705447.png)
+    ![Docker容器内执行top命令的回显，显示容器内各进程的CPU及内存占用率](figures/zh-cn_image_0000002549705447.png)
 
     若视频流云手机某些进程内存占用率高于85%，CPU占用率持续高于90%，则需要进一步排查该进程是否异常或请提交ISSUE反馈。
 
@@ -278,7 +280,7 @@ docker stats
     ctop
     ```
 
-    ![](figures/Snipaste_2023-02-17_14-52-49.png)
+    ![执行ctop命令的容器资源回显，按容器列出CPU、内存、网络IO和磁盘IO占用](figures/Snipaste_2023-02-17_14-52-49.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -324,7 +326,7 @@ docker stats
     df -h
     ```
 
-    ![](figures/zh-cn_image_0000002549705465.png)
+    ![执行df -h的磁盘回显，红框标出容器android_1的数据存储分区及其Use%使用率](figures/zh-cn_image_0000002549705465.png)
 
     上图中视频流云手机容器数据存储在"/home/mount/data/"下，红色矩形圈出来的是容器android_1的数据存储信息，其存储大小为“16GB”，当前使用率为“4%”。若“Use%”的值均不大于85%，则磁盘空间使用率正常。否则，需要处理磁盘空间。
 
@@ -347,7 +349,7 @@ docker stats
 
     回显如下
 
-    ```bash
+    ```output
     19:49:12 up 25 days,  5:04,  9 users,  load average: 8.17, 8.16, 8.07
     ```
 
@@ -446,7 +448,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     上述命令会以JSON数组的格式返回容器的所有元数据信息。多数情况下，只需要获取容器的特定数据信息，则可直接从JSON数据中截取需要的数据，如只获取容器的IP地址可使用如下命令。
 
     ```bash
-    docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' android_${index}
+    docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' android_${android_id}
     ```
 
     例如：
@@ -457,7 +459,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
 
     回显如下：
 
-    ```bash
+    ```output
     172.17.0.4
     ```
 
@@ -584,7 +586,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
 
         结果如下图所示。
 
-        ![](figures/zh-cn_image_0000002518185650.png)
+        ![容器内执行dumpsys meminfo的回显，列出各进程内存占用及内存总量统计信息](figures/zh-cn_image_0000002518185650.png)
 
 ### 视频流云手机导出日志操作<a name="ZH-CN_TOPIC_0000002518345508"></a>
 
@@ -603,7 +605,7 @@ Kbox云手机容器提供了Kbox_maintainer（维护工具）。该工具包含�
     docker ps -a
     ```
 
-4. 执行以下命令，可以查询到实时的服务端日志信息，其中”{android_id}“为对应的容器编号。
+4. 执行以下命令，可以查询到实时的服务端日志信息，其中“${android_id}”为对应的容器编号。
 
     ```bash
     docker exec -it android_${android_id} logcat -d >> /home/file.log
@@ -686,7 +688,7 @@ ssh root@xxx.xxx.xxx.xxx
 
 如下图所示，证明已经连接上服务器，否则请检查相关配置，如网络是否正常，IP地址是否正确等。
 
-![](figures/unnaming-0.png)
+![执行ssh root@服务器IP连接成功后的登录回显，显示已进入服务器命令行界面](figures/unnaming-0.png)
 
 ### 容器状态<a name="ZH-CN_TOPIC_0000002518185608"></a>
 
@@ -703,7 +705,7 @@ ssh root@xxx.xxx.xxx.xxx
     docker ps -a
     ```
 
-    ![](figures/Screenshot.png)
+    ![执行docker ps -a的容器列表回显，各容器STATUS列均为Up运行状态](figures/Screenshot.png)
 
     通过上图可以发现所有容器都为Up状态，若为其他状态，请视实际情况将其删除，避免占用资源。
 

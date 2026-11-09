@@ -1,5 +1,7 @@
 # 编译指南
 
+本文档介绍AOSP源码与视频流的编译流程，涵盖编译服务器环境准备、AOSP源码编译、视频流客户端、服务端与二进制包编译，适用于在Ubuntu 22.04.3 LTS编译服务器上使用自己用户账号完成编译的用户。
+
 ## 环境准备
 
 ### 编译服务器
@@ -28,6 +30,7 @@ tar -xvf aosp11r48.tar
 下载本仓库。
 
 ```bash
+cd ~/ARMNative
 git clone https://gitcode.com/boostkit/vmi.git
 ```
 
@@ -71,7 +74,7 @@ which ccache
 ```bash
 export NDK_CCACHE=ccache
 export CCACHE_DIR=~/.ccache
-export PATH={ccache安装位置}:$PATH #例如export PATH=/usr/bin:$PATH
+export PATH=${ccache安装位置}:$PATH #例如export PATH=/usr/bin:$PATH
 export USR_CCACHE=1
 ```
 

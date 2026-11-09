@@ -1,5 +1,7 @@
 # 安装指南<a name="ZH-CN_TOPIC_0000002521693392"></a>
 
+本文档介绍视频流云手机的环境部署方法，涵盖软件部署、K8s集群部署、虚拟机环境部署与虚拟机拷贝，适用于在鲲鹏服务器上部署视频流云手机的实施人员。
+
 ## 软件部署<a name="ZH-CN_TOPIC_0000002549826277"></a>
 
 ### 环境要求<a name="ZH-CN_TOPIC_0000002549706275"></a>
@@ -42,16 +44,16 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表1** Kbo
 
 |序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|配置方案五
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|√|
+|1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|[boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|√|
 |2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
 |3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的SHA256文件，负责完整性校验。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
 |4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
 |5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的SHA256文件，负责完整性校验。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
 |6|VideoClientEmulator.tar.gz|视频流云手机压测工具。|请提交ISSUE反馈。|√|√|√|√|√|
-|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-adapt。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>下载密码：test123|√|-|-|-|-|
+|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-adapt。|[Quadra编码卡软固件及文档下载页面](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>下载密码：test123|√|-|-|-|-|
 |8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br/>下载密码：test123|√|-|-|-|-|
 |9|WebClient.zip|Web客户端。|请提交ISSUE反馈。|√|√|√|√|√|
-|10|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[获取链接](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|√|
+|10|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[topo-affinity-plugin代码仓库](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|√|
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
@@ -95,8 +97,6 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表1** Kbo
 
 具体配置步骤请参见《[Kbox云手机容器 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md#d4-%E9%85%8D%E7%BD%AEbios)》中的“配置BIOS”章节内容。
 
-环境部署指定的服务器BIOS版本对内存的插入格式有限制。在进行BIOS设置之前，请确保内存插入格式正确，然后根据硬件配置方案需求完成MISC、Performance和Memory等相关选项的配置，用以提高服务器性能。
-
 - **[（硬件配置方案一，可选）升级NVMe固件版本](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md#升级NVMe固件版本)**
 
 - **[（硬件配置方案一）配置GPU工作模式和CPU绑定](https://gitcode.com/boostkit/Kbox-patches/blob/AOSP11/docs/zh/install_guide.md#配置GPU工作模式和CPU绑定)**  
@@ -117,11 +117,11 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
 |软件名|版本号|软件描述|获取方式|
 | :---: | :---: | :---: | :---: |
-|Containerd|v1.7.14|Containerd是一个容器运行时。|Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[获取链接](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service)|
-|runc|v1.1.12|runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。|[获取链接]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64)|
-|CNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|[获取链接]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
-|nerdctl|v1.7.5|nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。|[获取链接](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz)|
-| Golang | v1.25 | Golang是一个系统级编程语言，用于管理和生成NRI插件| [获取链接](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
+|Containerd|v1.7.14|Containerd是一个容器运行时。|Containerd二进制软件包：containerd-1.7.14-linux-arm64.tar.gzContainerd Service文件：[containerd Service文件下载地址](https://raw.githubusercontent.com/containerd/containerd/main/containerd.service)|
+|runc|v1.1.12|runc是一个符合开放容器标准OCI（Open Container Initiative）规范的轻量级容器运行时，是Containerd的一个依赖组件。|[runc v1.1.12二进制包下载地址]( https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.arm64)|
+|CNI Plugin|v1.4.1|容器网络接口CNI（Container Network Interface）是一个规范和库，用于在Linux容器中配置网络接口。|[CNI plugins v1.4.1下载地址]( https://github.com/containernetworking/plugins/releases/download/v1.4.1/cni-plugins-linux-arm64-v1.4.1.tgz)|
+|nerdctl|v1.7.5|nerdctl是一个兼容Docker CLI的命令行工具，用于管理Containerd容器和镜像。|[nerdctl v1.7.5下载地址](https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-arm64.tar.gz)|
+| Golang | v1.25 | Golang是一个系统级编程语言，用于管理和生成NRI插件| [go1.25.0.linux-arm64.tar.gz下载地址](https://golang.google.cn/dl/go1.25.0.linux-arm64.tar.gz) |
 
 **部署Containerd环境<a name="section343716111874"></a>**
 
@@ -157,7 +157,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
     systemctl status containerd
     ```
 
-    ![](figures/zh-cn_image_0000002549706313.png)
+    ![执行systemctl status containerd后回显Containerd服务状态为active的终端输出](figures/zh-cn_image_0000002549706313.png)
 
     回显信息如上图所示表示Containerd服务已经正常启动。
 
@@ -284,7 +284,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
     回显如下，表示镜像制作成功。
 
-    ```bash
+    ```output
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     kbox          origin    d1f5cfd2e722    6 seconds ago    2.09GB
     ```
@@ -356,7 +356,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
     回显如下，表示镜像制作成功。
 
-    ```bash
+    ```output
     REPOSITORY    TAG       IMAGE ID        CREATED          SIZE
     video         latest    40e5f42c17d9    6 seconds ago    2.11GB
     ```
@@ -438,7 +438,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
     以下回显为NETINT编码芯片NVMe节点，该内容为回显示例，请以实际为准。
 
-    ```bash
+    ```output
     Node          SN                   Model            Namespace Usage                    Format           FW Rev
     ------------- -------------------- ---------------- --------- ------------------------ ---------------- --------
     /dev/nvme0n1  Q2A325A11DC082-0454A QuadraT2A        1         8.59  TB /   8.59  TB    4 KiB +  0 B     48F6rKr1
@@ -455,7 +455,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
     回显如下，其中0000:05:00.0为该设备对应的busID：
 
-    ```bash
+    ```output
     /sys/devices/pci0000:00/0000:00:0e.0/0000:05:00.0/nvme/nvme1
     /sys/devices/virtual/nvme-subsystem/nvme-subsys1/nvme1
     ```
@@ -470,7 +470,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
     回显如下。
 
-    ```bash
+    ```output
     NUMA node: 0
     ```
 
@@ -521,7 +521,7 @@ Kbox云手机容器部署的详细操作请参见《[Kbox云手机容器 安装�
 
     回显如下所示。
 
-    ```bash
+    ```output
     0
     ```
 
@@ -587,7 +587,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
         回显如下所示，可知该服务器上只有一张道客DC1000/DC1000C，其中0000:04:00.0为busID。
 
-        ```bash
+        ```output
         0000:04:00.0 3D controller: Device 1f4f:0200
         0000:04:00.1 3D controller: Device 1f4f:0200
         0000:04:00.2 3D controller: Device 1f4f:0200
@@ -819,7 +819,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     ```
 
     ​    **图1**镜像拉取信息<a id="镜像拉取信息"></a>
-    ​    ![](figures/ImagePullInformation.png "镜像拉取信息")
+    ​    ![crictl images回显的镜像拉取列表，含registry.aliyuncs.com/google_containers/pause:3.9条目](figures/ImagePullInformation.png "镜像拉取信息")
 
     ​以[**图1**镜像拉取信息](#镜像拉取信息)中registry.aliyuncs.com/google_containers/pause:3.9为例：
 
@@ -851,9 +851,9 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     **图2**集群初始化成功打印信息<a id="集群初始化成功打印信息"></a>
 
-    ![](figures/zh-cn_image_0000002518346460.png)
+    ![kubeadm init执行成功后打印的集群初始化信息，含工作节点加入集群的token命令](figures/zh-cn_image_0000002518346460.png)
 
-    需执行在[**图1**集群初始化成功打印信息](#集群初始化成功打印信息)中黄框信息命令配置集群，红框信息表示工作节点加入集群的token命令，请保存该段命令。
+    需执行在[**图2**集群初始化成功打印信息](#集群初始化成功打印信息)中黄框信息命令配置集群，红框信息表示工作节点加入集群的token命令，请保存该段命令。
 
     ```bash
     rm -rf $HOME/.kube
@@ -937,7 +937,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     |STORAGE_START_INDEX|数据卷删除或创建起始编号。|
     |STORAGE_END_INDEX|数据卷删除或创建结束编号，结束编号必须大于或者等于起始编号。|
     |STORAGE_SIZE_GB|存储大小，单位为GB。删除时可不传。|
-    |IMG_BASE|基础数据卷img文件，若无基础数据卷可不传，基础数据卷img文件制作请参考。删除时可不传。参数STORAGE_SIZE_GB和IMG_BASE只传其中一个。|
+    |IMG_BASE|基础数据卷img文件，省略STORAGE_SIZE_GB时作为第4个位置参数传入；若无基础数据卷可不传，基础数据卷img文件制作请参考。删除时可不传。参数STORAGE_SIZE_GB和IMG_BASE只传其中一个。|
 
     例如：
 
@@ -1316,8 +1316,8 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 |项目|版本|下载地址|
 | :---: | :---: | :---: |
-|openEuler|22.03 LTS SP4|[获取链接](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler%2022.03%20LTS%20SP4)|
-|Kernel|基于5.10.0-216.0.0|[获取链接](https://gitee.com/openeuler/kernel/repository/archive/5.10.0-216.0.0.zip)|
+|openEuler|22.03 LTS SP4|[openEuler 22.03 LTS SP4下载页面](https://www.openeuler.openatom.cn/zh/download/archive/detail/?version=openEuler%2022.03%20LTS%20SP4)|
+|Kernel|基于5.10.0-216.0.0|[Kernel 5.10.0-216.0.0源码包下载地址](https://gitee.com/openeuler/kernel/repository/archive/5.10.0-216.0.0.zip)|
 
 **表5**虚拟机操作系统要求<a id="虚拟机操作系统要求"></a>
 
@@ -1334,7 +1334,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 |软件包|文件|文件路径|获取地址|
 | :---: | :---: | :---: | :---: |
-|Kbox-AOSP11.zip|虚拟机内核补丁|Kbox-AOSP11/deploy_scripts/vm_deploy/patchForKernel/general.patch|[获取链接](https://mirrors.huaweicloud.com/kunpeng/archive/kunpeng_solution/ARMNative/BoostKit25.1.RC1_Demo/Kbox_Demo/Kbox-AOSP11.zip)|
+|Kbox-AOSP11.zip|虚拟机内核补丁|Kbox-AOSP11/deploy_scripts/vm_deploy/patchForKernel/general.patch|[Kbox-AOSP11.zip下载地址](https://mirrors.huaweicloud.com/kunpeng/archive/kunpeng_solution/ARMNative/BoostKit25.1.RC1_Demo/Kbox_Demo/Kbox-AOSP11.zip)|
 |Kbox-AOSP11.zip|虚拟机调优脚本|Kbox-AOSP11/deploy_scripts/vm_deploy/setup_vm.sh|[获取链接](https://mirrors.huaweicloud.com/kunpeng/archive/kunpeng_solution/ARMNative/BoostKit25.1.RC1_Demo/Kbox_Demo/Kbox-AOSP11.zip)|
 
 ### 宿主机环境配置<a name="ZH-CN_TOPIC_0000002550064713" id="宿主机环境配置"></a>
@@ -1382,11 +1382,11 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 6. 执行命令后，在出现的界面中选择“Load”，如图所示。
 
-    ![](figures/1_zh-cn_image_0000002085094168.png)
+    ![make menuconfig内核配置界面，底部Load按钮用于载入.config配置文件](figures/1_zh-cn_image_0000002085094168.png)
 
 7. 出现如图所示的界面时，选择“OK”。
 
-    ![](figures/1_zh-cn_image_0000002120534141.png)
+    ![make menuconfig载入配置文件后的确认界面，需选择OK完成载入](figures/1_zh-cn_image_0000002120534141.png)
 
 8. 在内核配置界面中，配置如[**表1**内核编译选项配置说明](#内核编译选项配置说明)所示的内核编译选项。
 
@@ -1417,7 +1417,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     systemctl enable lxcfs
     ```
 
-    ![](figures/zh-cn_image_0000002550068121.png)
+    ![安装LXCFS依赖并执行systemctl start lxcfs启动服务的终端输出](figures/zh-cn_image_0000002550068121.png)
 
 10. 编译内核代码。
 
@@ -1485,7 +1485,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     回显如下图所示，“Node  _x_  HugePages_Total”字段总和为“800”则为配置成功。
 
-    ![](figures/1_zh-cn_image_0000002084933924.png)
+    ![grep Huge回显各NUMA节点HugePages_Total总计为800，表示大页配置成功](figures/1_zh-cn_image_0000002084933924.png)
 
 9. 查看iommu passthrough是否成功配置。
 
@@ -1495,7 +1495,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     回显信息中显示“iommu: Default domain type: Passthrough”则配置成功。
 
-    ![](figures/zh-cn_image_0000002518468278.png)
+    ![dmesg回显iommu: Default domain type: Passthrough，表示iommu直通已使能](figures/zh-cn_image_0000002518468278.png)
 
 10. 查看GICv4.1是否成功配置。
 
@@ -1505,7 +1505,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     回显信息中显示“GICv4.1 support enabled”则配置成功。
 
-    ![](figures/zh-cn_image_0000002549948129.png)
+    ![dmesg回显GICv4.1 support enabled，表示GICv4.1中断直通已使能](figures/zh-cn_image_0000002549948129.png)
 
 11. 虚拟机启动后，执行下述指令。
 
@@ -1515,7 +1515,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     回显信息中显示“Create shadow device”字段，则GICv4.1配置成功。
 
-    ![](figures/zh-cn_image_0000002550068123.png)
+    ![虚拟机内dmesg回显Create shadow device信息，表示GICv4.1配置成功](figures/zh-cn_image_0000002550068123.png)
 
 #### 安装虚拟机相关依赖<a name="ZH-CN_TOPIC_0000002550064715"></a>
 
@@ -1555,13 +1555,13 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 鲲鹏920 7280Z处理器有4个NUMA，总共会创建4个虚拟机，所利用的资源分别对应宿主机的4个NUMA。因每个NUMA上都会有两张GPU卡，为避免产生跨NUMA访问而造成性能损失，在创建虚拟机前，需要确认每个虚拟机使用GPU卡的PCIe节点，用于设备的添加。
 
-1. <a name="查询GPU卡PCIe节点信息1"></a>确认瀚博GPU卡所有PCIe节点的ID。
+1. <a name="查询GPU卡PCIe节点信息1"></a>确认道客DC1000/DC1000C GPU卡所有PCIe节点的ID。
 
     ```bash
     lspci | grep 0200
     ```
 
-    ![](figures/zh-cn_image_0000002518308362.png)
+    ![确认GPU卡所有PCIe节点的ID的执行回显](figures/zh-cn_image_0000002518308362.png)
 
 2. 确认所对应的NUMA，此返回顺序符合[1](#查询GPU卡PCIe节点信息1)中的ID顺序，即可确定每个GPU卡节点所对应的NUMA ID。下图所示回显信息仅为示例，如17:00.0~18:00.3（即前八个节点）对应宿主机的NUMA 1。
 
@@ -1569,7 +1569,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     lspci -vvv -d 1f4f:0200 | grep NUMA
     ```
 
-    ![](figures/zh-cn_image_0000002518468280.png)
+    ![lspci -vvv -d 1f4f:0200 | grep NUMA回显，显示各GPU卡PCIe节点对应的NUMA编号](figures/zh-cn_image_0000002518468280.png)
 
 #### 配置宿主机网络<a name="ZH-CN_TOPIC_0000002518304962" id="配置宿主机网络"></a>
 
@@ -1581,7 +1581,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     ip a
     ```
 
-    ![](figures/zh-cn_image_0000002549948131.png)
+    ![查看宿主机网卡名称与IP地址的ip a命令执行回显](figures/zh-cn_image_0000002549948131.png)
 
 2. 查看该网卡的PCI节点。
 
@@ -1589,7 +1589,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     lshw -c network -businfo
     ```
 
-    ![](figures/zh-cn_image_0000002550068125.png)
+    ![lshw -c network -businfo回显的网卡名称与PCI总线地址对应关系](figures/zh-cn_image_0000002550068125.png)
 
 3. <a id="配置宿主机网络3"></a>查看该网卡最多支持的VF网卡数量。
 
@@ -1597,7 +1597,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     cat /sys/bus/pci/devices/0000:75:00.0/sriov_totalvfs
     ```
 
-    ![](figures/zh-cn_image_0000002518308364.png)
+    ![读取sriov_totalvfs后回显该网卡最多支持的VF虚拟网卡数量](figures/zh-cn_image_0000002518308364.png)
 
     - 如果该步骤执行成功，说明设备支持SR-IOV虚拟网卡直通方案。回显为7表示可以生成7个虚拟网卡，最多可以支撑7个虚拟机使用虚拟网卡。
     - 如果该步骤执行失败，或者回显的虚拟网卡数小于准备部署的虚拟机数量，则可以选择第二个方案网桥模式。网桥模式会带来额外的计算性能损耗以及时延。网桥模式配置详情请查看[6](#配置宿主机网络6)~[7](#配置宿主机网络7)。
@@ -1620,7 +1620,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     回显如下图所示，新生成了4个虚拟网卡，表示操作成功。
 
-    ![](figures/zh-cn_image_0000002518468282.png)
+    ![生成4个VF虚拟网卡后lshw回显的新增虚拟网卡节点列表](figures/zh-cn_image_0000002518468282.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -1658,7 +1658,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     > 1.网桥配置文件中的IPADDR，NETMASK，GATEWAY，DNS根据宿主机网卡配置修改。
     > 2.宿主机网卡配置文件中删除IPADDR，NETMASK，GATEWAY，DNS配置并在最后新增配置“BRIDGE=br0”。
-    > ![](figures/zh-cn_image_0000002549948133.png)
+    > ![宿主机网卡配置文件中删除IPADDR、NETMASK等配置并新增BRIDGE=br0的示意](figures/zh-cn_image_0000002549948133.png)
 
 8. 重启libvirtd和NetworkManager服务并重启服务器。
 
@@ -1676,7 +1676,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     出现如下配置说明网桥创建成功。
 
-    ![](figures/zh-cn_image_0000002550068129.png)
+    ![ip a回显中已出现br0网桥及其IP地址，表示网桥创建成功](figures/zh-cn_image_0000002550068129.png)
 
 ### 虚拟机配置<a name="ZH-CN_TOPIC_0000002549944729" id="虚拟机配置"></a>
 
@@ -1692,19 +1692,19 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     virt-manager
     ```
 
-    ![](figures/1_zh-cn_image_0000002120521137.png)
+    ![virt-manager主界面左上角创建虚拟机按钮位置，单击后打开新建虚拟机向导](figures/1_zh-cn_image_0000002120521137.png)
 
 2. 选择“Local install media \(ISO image or COROM\)”后单击“Forward”。
 
-    ![](figures/1_zh-cn_image_0000002120521229.png)
+    ![新建虚拟机向导安装介质页，选中Local install media(ISO image or CDROM)选项](figures/1_zh-cn_image_0000002120521229.png)
 
 3. 单击“Browse”，选择提前下载好的openEuler 22.03 LTS SP4镜像，取消勾选下面的“Automatically detect from installation media / source”，填写“Generic default”，最后单击“Forward”。
 
-    ![](figures/zh-cn_image_0000002549948137.png)
+    ![安装介质选择页的Browse按钮与Automatically detect勾选项，并填写Generic default](figures/zh-cn_image_0000002549948137.png)
 
 4. <a id="使用virt-manager创建虚拟机4"></a>“Memory”分配额度填写“180000”，“CPUs”处填写“80”，然后单击“Forward”。
 
-    ![](figures/1_zh-cn_image_0000002085084878.png)
+    ![内存与CPU分配页，Memory填写180000、CPUs填写80后单击Forward](figures/1_zh-cn_image_0000002085084878.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -1716,7 +1716,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     >
     >此处的512GiB仅作为示例，请根据实际情况分配磁盘空间。如果后续准备直通磁盘分区作为数据盘以提升虚拟机的IO性能，此处可以分配少量空间比如50GiB，将该磁盘仅作为系统盘。
 
-    ![](figures/1_zh-cn_image_0000002120684817.png)
+    ![磁盘存储页为虚拟机分配512GiB容量并单击Forward的界面](figures/1_zh-cn_image_0000002120684817.png)
 
     如果当前磁盘没有足够的空间，可以在其他盘创建虚拟硬盘文件。操作步骤如下所示：
 
@@ -1728,19 +1728,19 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     2. 勾选“Select orcreate custom storage”，单击“Manage”。
 
-        ![](figures/zh-cn_image_0000002518468288.png)
+        ![存储配置页勾选Select or create custom storage后单击Manage的入口](figures/zh-cn_image_0000002518468288.png)
 
     3. 单击“Browse Local”。
 
-        ![](figures/zh-cn_image_0000002549948139.png)
+        ![存储管理弹窗中单击Browse Local浏览本地磁盘目录的入口](figures/zh-cn_image_0000002549948139.png)
 
     4. 选择刚刚创建的vm0.qcow2镜像文件。
 
-        ![](figures/zh-cn_image_0000002550068133.png)
+        ![文件浏览弹窗中选择刚刚创建的vm0.qcow2镜像文件的列表项](figures/zh-cn_image_0000002550068133.png)
 
 6. 名称分别起名为vm_X_（X = 0,1,2,3） ，同时需要勾选“Customize configuration before install”，如果[2.2.6-配置宿主机网络](#配置宿主机网络)中宿主机配置了网桥模式，此处Network selection应选择Bridge br0，然后单击“Finish”。
 
-    ![](figures/zh-cn_image_0000002518308370.png)
+    ![虚拟机命名页填写vm_X并勾选Customize configuration before install后单击Finish](figures/zh-cn_image_0000002518308370.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -1748,33 +1748,33 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 7. 进入界面后单击下方“Add Hardware”依次添加以下相关设备。
 
-    ![](figures/zh-cn_image_0000002518468290.png)
+    ![虚拟机详情页下方Add Hardware按钮，用于依次添加键盘、GPU等设备](figures/zh-cn_image_0000002518468290.png)
 
     1. 添加外设1：“Add Hardware \> Input \> Generic USB Keyboard \> Finish”
     2. 添加外设2：“Add Hardware \> Input \> Virtio Tablet \> Finish”
     3. 添加GPU卡PCIe设备（每个虚拟机需要2张GPU卡，因此依次添加8个节点）:  “Add Hardware \> PCI Host Device  \>选择对应节点\> Finish”。GPU节点和[2.3.2-2](#虚拟机配置调优2)中的NUMA节点需与[查询GPU卡PCIe节点信息](#查询GPU卡PCIe节点信息)对应选择。
-    4. 如果[2.2.6-配置宿主机网络](#配置宿主机网络)中采用了SR-IOV方案，添加虚拟网卡到虚拟机：“Add Hardware \> PCI Host Device  \>选择对应节点\> Finish”。网卡节点请参见[2.2.6-5](#配置宿主机网络5)回显信息。
+    4. 如果[2.2.6-配置宿主机网络](#配置宿主机网络)中采用了SR-IOV方案，添加虚拟网卡到虚拟机：“Add Hardware \> PCI Host Device  \>选择对应节点\> Finish”。网卡节点请参见[5](#配置宿主机网络5)回显信息。
 
-        ![](figures/zh-cn_image_0000002549948141.png)
+        ![通过Add Hardware的PCI Host Device页选择SR-IOV虚拟网卡对应节点的界面](figures/zh-cn_image_0000002549948141.png)
 
     5. 如果默认没有“Display VNC”设备，则需手动添加。单击“Add Hardware \> Graphics”，Type选择“VNC server”，然后单击“Finish”添加该设备。
 
 8. 单击“Begin Installation”，在弹出界面选择第一个选项，开始进行系统的安装。
 9. 在安装主界面选择安装目的地。
 
-    ![](figures/zh-cn_image_0000002550068135.png)
+    ![系统安装主界面中Installation Destination安装目的地的选择入口](figures/zh-cn_image_0000002550068135.png)
 
 10. 在安装目标位置界面选择自定义“Custom”后左上角单击“Done”。
 
-    ![](figures/1_zh-cn_image_0000002084928358.png)
+    ![安装目标位置界面选择自定义Custom后单击左上角Done的界面](figures/1_zh-cn_image_0000002084928358.png)
 
 11. 选择分区方式为“Standard Partition”，即标准分区。
 
-    ![](figures/1_zh-cn_image_0000002084507570.png)
+    ![手动分区页选择分区方式为Standard Partition下拉项](figures/1_zh-cn_image_0000002084507570.png)
 
 12. 单击“+”号后添加对应挂载点，如[**表1**分区对应挂载点](#分区对应挂载点)所示。
 
-    ![](figures/1_zh-cn_image_0000002084931158.png)
+    ![分区配置区域单击+号后填写/boot、/swap等挂载点与容量的界面](figures/1_zh-cn_image_0000002084931158.png)
 
     **表1**分区对应挂载点<a id="分区对应挂载点"></a>
 
@@ -1805,11 +1805,11 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 14. 配置root账号和密码，完成后单击“Begin Installation”开始安装。
 
-    ![](figures/zh-cn_image_0000002550068137.png)
+    ![安装摘要页Root密码配置项，设置root账号与密码后单击Begin Installation](figures/zh-cn_image_0000002550068137.png)
 
 15. <a id="使用virt-manager创建虚拟机15"></a>安装完成后，重新打开virt-manager，关闭虚拟机。
 
-    ![](figures/zh-cn_image_0000002518308374.png)
+    ![virt-manager虚拟机列表中关闭已完成安装的虚拟机的操作入口](figures/zh-cn_image_0000002518308374.png)
 
 16. （可选）直通磁盘分区进入虚拟机内部作为数据盘。
 
@@ -1825,29 +1825,29 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
         选择一个分区作为虚拟机的数据盘，此处以nvme0n1p7为例。
 
-        ![](figures/zh-cn_image_0000002518468294.png)
+        ![lsblk回显宿主机磁盘分区列表，其中nvme0n1p7作为虚拟机数据盘](figures/zh-cn_image_0000002518468294.png)
 
     2. 打开virt-manager，单击“Add Hardware \> Manage”。将“Bus type”配置为“VirtIO”，“Cache mode”配置为“none”，“IO mode”配置为“native”。
 
-        ![](figures/zh-cn_image_0000002549948145.png)
+        ![Add Hardware磁盘页将Bus type设为VirtIO、Cache mode设为none、IO mode设为native](figures/zh-cn_image_0000002549948145.png)
 
     3. 单击“Browse Local \> dev \> nvme0n1p7 \> open”。
 
-        ![](figures/zh-cn_image_0000002550068139.png)
+        ![文件浏览路径Browse Local \> dev \> nvme0n1p7 \> open选择直通分区的界面](figures/zh-cn_image_0000002550068139.png)
 
     4. 单击“Finish”。
 
-        ![](figures/zh-cn_image_0000002518308380.png)
+        ![磁盘设备配置页单击Finish完成直通磁盘分区添加的界面](figures/zh-cn_image_0000002518308380.png)
 
 17. 如果采用了SR-IOV虚拟网卡直通方案，则需要删除多余的虚拟网络接口。
 
-    ![](figures/zh-cn_image_0000002518468298.png)
+    ![SR-IOV直通方案下删除虚拟机多余虚拟网络接口的界面](figures/zh-cn_image_0000002518468298.png)
 
 18. 删除虚拟显卡。
 
-    ![](figures/1_zh-cn_image_0000002084932842.png)
+    ![虚拟机详情页删除默认虚拟显卡Virtio Video设备的操作入口](figures/1_zh-cn_image_0000002084932842.png)
 
-    ![](figures/zh-cn_image_0000002550068143.png)
+    ![删除虚拟显卡后弹窗中确认删除该设备的界面](figures/zh-cn_image_0000002550068143.png)
 
 #### 虚拟机配置调优<a name="ZH-CN_TOPIC_0000002518464886" id="虚拟机配置调优"></a>
 
@@ -1865,9 +1865,9 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
     “cpuset”的值为绑定的宿主机CPU核ID，其中NUMA 0为0-79，NUMA 1为80-159，NUMA 2为160-239，NUMA 3为240-319。
 
-    ![](figures/zh-cn_image_0000002518308382.png)
+    ![虚拟机xml编辑页cputune段中vCPU与宿主机CPU核的映射配置位置](figures/zh-cn_image_0000002518308382.png)
 
-    ![](figures/zh-cn_image_0000002518468300.png)
+    ![cputune段内cpuset取值示例，显示虚拟机vCPU绑定的宿主机CPU核范围](figures/zh-cn_image_0000002518468300.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -1885,7 +1885,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     </numatune>
     ```
 
-    ![](figures/zh-cn_image_0000002549948149.png)
+    ![numatune段内memory元素nodeset为1的内存NUMA绑定配置示例](figures/zh-cn_image_0000002549948149.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -1901,7 +1901,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     <emulatorpin cpuset='80-159' />
     ```
 
-    ![](figures/1_zh-cn_image_0000002120702289.png)
+    ![虚拟机xml中cputune段上方新增emulatorpin元素的位置，红框标注插入点](figures/1_zh-cn_image_0000002120702289.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -1919,7 +1919,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     </memoryBacking>
     ```
 
-    ![](figures/zh-cn_image_0000002518308386.png)
+    ![虚拟机xml中新增memoryBacking与hugepages元素的位置，红框标注配置文本](figures/zh-cn_image_0000002518308386.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -1939,12 +1939,12 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     </cpu>
     ```
 
-    ![](figures/zh-cn_image_0000002518468302.png)
+    ![cpu元素内topology的sockets、clusters、cores、threads参数配置示例](figures/zh-cn_image_0000002518468302.png)
 
 7. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存并退出文件。
 8. 启动虚拟机。
 
-    ![](figures/zh-cn_image_0000002549948153.png)
+    ![virt-manager虚拟机详情页单击启动按钮开机虚拟机的界面](figures/zh-cn_image_0000002549948153.png)
 
 9. 虚拟机内部执行如下指令，回显**0-7**表示CPU拓扑生效。
 
@@ -1952,7 +1952,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     cat /sys/devices/system/cpu/cpu0/topology/cluster_cpus_list
     ```
 
-    ![](figures/zh-cn_image_0000002550068147.png)
+    ![虚拟机内执行cat cluster_cpus_list回显0-7，表示CPU拓扑已生效](figures/zh-cn_image_0000002550068147.png)
 
 10. 执行如下指令使能cluster调度优化。
 
@@ -1976,7 +1976,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     ip a
     ```
 
-    ![](figures/zh-cn_image_0000002518308390.png)
+    ![虚拟机内ip a回显的网卡名称enp1s0与对应的IP地址信息](figures/zh-cn_image_0000002518308390.png)
 
 2. 生成配置文件。
 
@@ -1990,7 +1990,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
         如下图所示虚拟机网卡配置文件生成。
 
-        ![](figures/zh-cn_image_0000002518468304.png)
+        ![nmcli connection add生成配置后ls回显的ifcfg-enp1s0文件名](figures/zh-cn_image_0000002518468304.png)
 
     - 如果[2.2.6-配置宿主机网络](#配置宿主机网络)中采用的网桥模式，那么虚拟机中会自动生成网络配置文件，文件名和**ip a**中网卡名称一致，则跳过该步骤。
 
@@ -2006,11 +2006,11 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     vi ifcfg-enp1s0
     ```
 
-    ![](figures/zh-cn_image_0000002549948157.png)
+    ![虚拟机网卡配置文件编辑界面，需填写IPADDR、NETMASK、GATEWAY、DNS](figures/zh-cn_image_0000002549948157.png)
 
     如果配置文件中有下图红框内容，请删除对应内容。
 
-    ![](figures/zh-cn_image_0000002550068149.png)
+    ![网卡配置文件中需删除的红框内容示例，保留ONBOOT=yes等必要项](figures/zh-cn_image_0000002550068149.png)
 
 4. 重新配置网络连接，建议在virt-manager的Shell中执行，通过SSH远程操作会因为网络配置修改断开连接。
 
@@ -2018,7 +2018,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     virt-manager
     ```
 
-    ![](figures/zh-cn_image_0000002518308392.png)
+    ![virt-manager虚拟机Shell窗口，用于避免SSH断开的情况下重新配置网络](figures/zh-cn_image_0000002518308392.png)
 
     ```bash
     nmcli connection reload
@@ -2026,7 +2026,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     nmcli connection up enp1s0
     ```
 
-    ![](figures/zh-cn_image_0000002518468306.png)
+    ![nmcli执行reload、down、up后回显网卡enp1s0连接已重新激活](figures/zh-cn_image_0000002518468306.png)
 
 5. ping网关，SSH远程连接验证配置是否生效，网关在br0网桥的配置文件中可以看到。
 
@@ -2034,7 +2034,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     ping 192.168.20.1
     ```
 
-    ![](figures/zh-cn_image_0000002549948159.png)
+    ![虚拟机内ping 192.168.20.1网关回显网络可达的终端输出](figures/zh-cn_image_0000002549948159.png)
 
     同一网段内任意服务器**ssh**连接虚拟机。
 
@@ -2042,7 +2042,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     ssh 192.168.20.150
     ```
 
-    ![](figures/zh-cn_image_0000002550068153.png)
+    ![同网段服务器ssh 192.168.20.150连接虚拟机并登录成功的终端回显](figures/zh-cn_image_0000002550068153.png)
 
     > ![](public_sys-resources/icon-note.gif)说明
     >
@@ -2052,7 +2052,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 在搭建好的虚拟机环境中部署云手机容器环境和视频流容器时，需要根据虚拟机内部CPU以及GPU核数对cfct_video，和hardware_bind.cfg文件做相应调整和修改视频流启动和配置文件。
 
-请参见《Kbox云手机容器 安装指南》的“[部署说明](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md)”以及《视频流引擎 安装指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/install_guide.md#d1-%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
+请参见《Kbox云手机容器 安装指南》的“[Kbox云手机容器 安装指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/kboxcpc/docs/zh/install_guide.md)”以及《视频流引擎 安装指南》的“[软件部署](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/install_guide.md#d1-%E8%BD%AF%E4%BB%B6%E9%83%A8%E7%BD%B2)”章节在虚拟机内部署云手机容器环境和运行视频流云手机。
 
 具体操作步骤如下所示：
 
@@ -2119,7 +2119,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
         )
         ```
 
-        ![](figures/zh-cn_image_0000002549948163.png)
+        ![hardware_bind.cfg中新增VIDEO_CPU_MAP_80CORE_MODE0等虚拟机绑核配置内容](figures/zh-cn_image_0000002549948163.png)
 
     3. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存并退出文件。
 
@@ -2129,7 +2129,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
 3. 请参见《[视频流引擎 用户指南](https://www.hikunpeng.com/document/detail/zh/kunpengcps/boostcph/videostreamengine/docs/zh/user_guide.md#d11-%E5%90%AF%E5%8A%A8%E8%A7%86%E9%A2%91%E6%B5%81%E4%BA%91%E6%89%8B%E6%9C%BA%E5%AE%9E%E4%BE%8B)》的“启动视频流云手机实例”调用cfct_video脚本即可成功在虚拟机启动视频流容器。
 
-    ![](figures/zh-cn_image_0000002518308398.png)
+    ![虚拟机内调用cfct_video脚本启动视频流云手机实例后的终端回显](figures/zh-cn_image_0000002518308398.png)
 
 ### 虚拟机拷贝<a name="ZH-CN_TOPIC_0000002518304966" id="虚拟机拷贝"></a>
 
@@ -2150,7 +2150,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     virsh dumpxml vm0 | grep "source file"
     ```
 
-    ![](figures/zh-cn_image_0000002518468316.png)
+    ![virsh dumpxml vm0 | grep source file回显虚拟硬盘的存放路径](figures/zh-cn_image_0000002518468316.png)
 
 2. <a name="li14352145276"></a>拷贝虚拟硬盘，需要确保存放新虚拟硬盘的硬盘空间足够。
 
@@ -2179,7 +2179,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
         <uuid>dfbd8ad1-34ef-423d-8b9c-f7551654b09f</uuid>
         ```
 
-        ![](figures/zh-cn_image_0000002549948165.png)
+        ![vm1.xml编辑界面中name与uuid元素的取值修改位置](figures/zh-cn_image_0000002549948165.png)
 
         ```bash
         <mac address='52:54:00:be:e7:69' />
@@ -2197,7 +2197,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     virsh define vm1.xml
     ```
 
-    ![](figures/zh-cn_image_0000002550068159.png)
+    ![virsh define vm1.xml回显domain vm1 defined，表示虚拟机创建成功](figures/zh-cn_image_0000002550068159.png)
 
 6. 验证虚拟机创建与否。
 
@@ -2212,29 +2212,29 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     virt-manager
     ```
 
-    ![](figures/zh-cn_image_0000002518308400.png)
+    ![virt-manager虚拟机详情页删除当前GPU卡PCI设备节点的入口](figures/zh-cn_image_0000002518308400.png)
 
-    ![](figures/zh-cn_image_0000002518468320.png)
+    ![删除当前GPU卡PCI设备后弹窗中确认删除的界面](figures/zh-cn_image_0000002518468320.png)
 
 9. 请参见[查询GPU卡PCIe节点信息](#查询GPU卡PCIe节点信息)获取当前虚拟机匹配的GPU卡的PCIe节点，再通过“Add Hardware \> PCI Host Device  \>选择对应节点\> Finish”，配置所有的PCIe节点。
 
-    ![](figures/zh-cn_image_0000002549948167.png)
+    ![通过Add Hardware的PCI Host Device页添加匹配NUMA的GPU卡PCIe节点](figures/zh-cn_image_0000002549948167.png)
 
 10. 如果虚拟机使能SR-IOV网卡直通，需要先删除原虚拟机使用的SR-IOV虚拟网卡。
 
-    ![](figures/zh-cn_image_0000002550068161.png)
+    ![虚拟机详情页删除原有SR-IOV虚拟网卡设备的界面](figures/zh-cn_image_0000002550068161.png)
 
-    请参见[配置宿主机网络](#配置宿主机网络)，添加新的SR-IOV虚拟网卡。
+    请参见[2.2.6-配置宿主机网络](#配置宿主机网络)，添加新的SR-IOV虚拟网卡。
 
-    ![](figures/zh-cn_image_0000002518308404.png)
+    ![为拷贝后的虚拟机添加新的SR-IOV虚拟网卡对应的PCI节点界面](figures/zh-cn_image_0000002518308404.png)
 
 11. 如果虚拟机使能了磁盘分区直通，需要先删除原虚拟机直通的磁盘分区。
 
-    ![](figures/zh-cn_image_0000002518468322.png)
+    ![虚拟机详情页删除原有直通磁盘分区设备的入口](figures/zh-cn_image_0000002518468322.png)
 
     请参见[2.3.1-15](#使用virt-manager创建虚拟机15)，添加新的磁盘分区。
 
-    ![](figures/zh-cn_image_0000002549948169.png)
+    ![为拷贝后的虚拟机重新添加直通磁盘分区设备的配置界面](figures/zh-cn_image_0000002549948169.png)
 
 #### 虚拟机配置调优<a name="ZH-CN_TOPIC_0000002518464890"></a>
 
@@ -2253,7 +2253,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     virt-manager
     ```
 
-    ![](figures/zh-cn_image_0000002550068163.png)
+    ![virsh start vm1并打开virt-manager进入拷贝后虚拟机的界面](figures/zh-cn_image_0000002550068163.png)
 
 2. 修改虚拟机IP地址。
 
@@ -2261,7 +2261,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     vi /etc/sysconfig/network-scripts/ifcfg-enp1s0
     ```
 
-    ![](figures/zh-cn_image_0000002518308406.png)
+    ![虚拟机内编辑ifcfg-enp1s0修改IPADDR为新地址的界面](figures/zh-cn_image_0000002518308406.png)
 
 3. 重新配置网络连接。
 
@@ -2277,7 +2277,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     ping 192.168.20.1
     ```
 
-    ![](figures/zh-cn_image_0000002518468324.png)
+    ![拷贝后虚拟机内ping 192.168.20.1网关回显网络可达](figures/zh-cn_image_0000002518468324.png)
 
 #### 虚拟硬盘扩容<a name="ZH-CN_TOPIC_0000002549944735"></a>
 
@@ -2289,7 +2289,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     virsh dumpxml <domain>
     ```
 
-    ![](figures/zh-cn_image_0000002549948171.png)
+    ![virsh dumpxml回显中虚拟硬盘source file的存储路径](figures/zh-cn_image_0000002549948171.png)
 
 2. 调整虚拟硬盘的空间。
 
@@ -2306,7 +2306,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
         lsblk
         ```
 
-        ![](figures/zh-cn_image_0000002550068165.png)
+        ![虚拟机内lsblk回显各磁盘分区，标明根目录所在分区](figures/zh-cn_image_0000002550068165.png)
 
     2. 选定指定的磁盘，查看磁盘当前的分区信息。
 
@@ -2317,7 +2317,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
 
         执行**print**命令后选择修复选项“Fix”。
 
-        ![](figures/zh-cn_image_0000002518308410.png)
+        ![parted中选定磁盘后print回显的分区表，提示选择Fix修复选项](figures/zh-cn_image_0000002518308410.png)
 
     3. 扩展4号分区。
 
@@ -2325,7 +2325,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
         resizepart 4 -1
         ```
 
-        ![](figures/zh-cn_image_0000002518468326.png)
+        ![parted中执行resizepart 4扩展4号分区后的分区信息回显](figures/zh-cn_image_0000002518468326.png)
 
 4. 按“Ctrl+C”键退出parted后调整文件系统大小。
 
@@ -2333,7 +2333,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     resize2fs /dev/sda4
     ```
 
-    ![](figures/zh-cn_image_0000002549948173.png)
+    ![执行resize2fs /dev/sda4调整文件系统大小后的终端回显](figures/zh-cn_image_0000002549948173.png)
 
 ## 修订记录
 

@@ -1,5 +1,7 @@
 # 视频流介绍<a name="ZH-CN_TOPIC_0000002518224780"></a>
 
+本文档介绍视频流引擎的基本概念与视频流云手机方案，涵盖软件架构、规格、目录结构与Android11/Android15版本差异，适用于需要在鲲鹏服务器上部署和使用视频流云手机的开发与维护人员。
+
 简体中文 | [English](./README_EN.md)
 
 ## 最新消息
@@ -29,7 +31,7 @@
 本节介绍视频流云手机的上下文逻辑结构与所包含的模块含义及作用。
 
 **图 1** 视频流云手机架构图<a name="fig0420851397"></a><a id="视频流云手机架构图"></a>
-![](docs/zh/figures/CloudPhoneVideoStreamingArchitectureDiagram.png "视频流云手机架构图")
+![视频流云手机软件架构图：服务端含抓图、编码与GPU加速模块，客户端负责视频解码播放及触控注入](docs/zh/figures/CloudPhoneVideoStreamingArchitectureDiagram.png "视频流云手机架构图")
 
 视频流引擎包括服务端和客户端两个部分：服务端提供图像获取、图像数据编码等功能；客户端提供视频数据解码播放功能。在部分场景下还包含用户触控的获取和注入、音频数据的获取和播放等功能。
 
@@ -136,9 +138,9 @@
 
 ## 环境部署<a name="ZH-CN_TOPIC_0000002550275031"></a>
 
-视频流云手机支持的硬件环境和操作系统，以及环境部署所需的软件包请参见《部署指南》中的“环境要求”。
+视频流云手机支持的硬件环境和操作系统，以及环境部署所需的软件包请参见《安装指南》中的“环境要求”。
 
-视频流云手机支持裸机和虚拟机，详见的环境部署请参见《部署指南》。
+视频流云手机支持裸机和虚拟机，详见的环境部署请参见《安装指南》。
 
 ## 学习文档<a name="ZH-CN_TOPIC_0000002550235029"></a>
 
@@ -180,8 +182,14 @@
 
 ## 贡献声明<a name="ZH-CN_TOPIC_0000002518595284"></a>
 
-欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
+欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)联系我们，具体贡献方法可参考[贡献指南](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
 
 ## 致谢<a name="ZH-CN_TOPIC_0000002550275035"></a>
 
 感谢来自社区的每一个PR，欢迎贡献Kbox！
+
+## 修订记录
+
+| 文档版本 | 发布日期 | 修改说明 |
+| :--- | :--- | :--- |
+| 01 | 2026-09-30 | 第一次正式发布。 |

@@ -1,6 +1,6 @@
 # Security Statement
 
-<!-- md-trans-meta sourceCommit=f5ae757472d3f7248102cae28fed5ebdd01e6d8e translatedAt=2026-10-14T09:56:24.145Z pushedAt=2026-10-15T07:52:33.251Z -->
+<!-- md-trans-meta sourceCommit=1ad644758a34e178e16896aa452f6c02b7a57d0d translatedAt=2026-10-15T12:01:46.911Z pushedAt=2026-10-16T03:16:28.176Z -->
 
 Please carefully read the following content to ensure that the security risks of the solution are acceptable.
 

@@ -1,8 +1,10 @@
 # auto_install_tools.sh 脚本
 
+本文档介绍auto_install_tools.sh脚本，说明使用命令、总体流程与各函数的功能，适用于需要安装Android编译工具的用户。
+
 ## 使用命令
 
-```bash
+```text
 ./scripts/auto_install_tools.sh ${安装目录}
 source ~/.bashrc
 ```
@@ -70,6 +72,8 @@ ANDROID_NDK
 在~/.bashrc中添加环境变量，以**#tools_env_start:**标志开头，以**#tools_env_end:**标志结尾。
 
 # download_open_source.sh 脚本
+
+本文档介绍download_open_source.sh脚本，说明下载开源软件压缩包到open_source_download目录并解压到unpack_open_source的流程，以及opensource_repo.conf的配置方式，适用于需要下载并解压开源软件的用户。
 
 ## 总体流程
 
