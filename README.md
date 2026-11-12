@@ -142,18 +142,18 @@
 
 ## 学习文档<a name="ZH-CN_TOPIC_0000002550291725"></a>
 
-|学习资源类别|学习资源名称|学习资源简介|
-|--|--|--|
-|文档| 《[版本说明书](./docs/zh/release_notes.md)》|提供视频流云手机每个发布版本的基础信息和特性更新信息。|
-|文档| 《[特性指南](./docs/zh/feature_guide.md)》|提供视频流云手机支持的功能与特性介绍。|
-|文档| 《[编译指南](./docs/zh/compile_guide.md)》|提供视频流云手机编译构建流程与操作指导。|
-|文档| 《[安装指南](./docs/zh/install_guide.md)》|提供视频流云手机裸机和虚拟机两种环境部署的详细指导。|
-|文档| 《[用户指南](./docs/zh/user_guide.md)》|提供视频流云手机启动和卸载云手机实例的操作指导。|
-|文档| 《[开发指南](./docs/zh/development_guide.md)》|提供视频流云手机开发相关的指导信息。|
-|文档| 《[例行维护](./docs/zh/routine_maintenance.md)》|提供视频流云手机容器例行维护相关内容。|
-|文档| 《[故障案例](./docs/zh/troubleshooting.md)》|提供视频流云手机的故障处理方法。|
-|文档| 《[验收测试指南](./docs/zh/test_guide.md)》|提供视频流云手机产品验收的指导信息。|
-|文档| 《[安全声明](./docs/zh/security_statement.md)》|提供视频流云手机使用时的安全说明。|
+|学习资源名称|学习资源简介|
+|--|--|
+| [版本说明书](./docs/zh/release_notes.md)|提供视频流云手机每个发布版本的基础信息和特性更新信息。|
+| [特性指南](./docs/zh/feature_guide.md)|提供视频流云手机支持的功能与特性介绍。|
+| [编译指南](./docs/zh/compile_guide.md)|提供视频流云手机编译构建流程与操作指导。|
+| [安装指南](./docs/zh/install_guide.md)|提供视频流云手机裸机和虚拟机两种环境部署的详细指导。|
+| [用户指南](./docs/zh/user_guide.md)|提供视频流云手机启动和卸载云手机实例的操作指导。|
+| [开发指南](./docs/zh/development_guide.md)|提供视频流云手机开发相关的指导信息。|
+| [例行维护](./docs/zh/routine_maintenance.md)|提供视频流云手机容器例行维护相关内容。|
+| [故障案例](./docs/zh/troubleshooting.md)|提供视频流云手机的故障处理方法。|
+| [验收测试指南](./docs/zh/test_guide.md)|提供视频流云手机产品验收的指导信息。|
+| [安全声明](./docs/zh/security_statement.md)|提供视频流云手机使用时的安全说明。|
 
 ## 免责声明<a name="ZH-CN_TOPIC_0000002550251723"></a>
 
