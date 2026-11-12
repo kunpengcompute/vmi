@@ -1,5 +1,7 @@
 # 视频流介绍<a name="ZH-CN_TOPIC_0000002550291729"></a>
 
+本文档介绍视频流引擎的基本概念与云手机软件架构，提供视频流引擎环境部署和使用操作指导，适用于需要部署和使用视频流云手机的开发者。
+
 简体中文 | [English](./README_EN.md)
 
 ## 最新消息
@@ -27,7 +29,7 @@
 本节介绍视频流云手机的上下文逻辑结构与所包含的模块含义及作用。
 
 **图 1** 视频流云手机架构图<a name="fig0420851397"></a><a id="视频流云手机架构图"></a>
-![](docs/zh/figures/videoengine_cloudphone_architecture.png "视频流云手机架构图")
+![视频流云手机端云架构图：服务端由抓图、编码、GPU加速模块提供视频码流，客户端解码播放并注入触控](docs/zh/figures/videoengine_cloudphone_architecture.png "视频流云手机架构图")
 
 视频流引擎包括服务端和客户端两个部分：服务端提供图像获取、图像数据编码等功能；客户端提供视频数据解码播放功能。在部分场景下还包含用户触控的获取和注入、音频数据的获取和播放等功能。
 
@@ -118,7 +120,7 @@
 
 视频流引擎包含Android11和Android15两个分支版本，本节主要介绍两个版本差异和特性变更说明。
 
-视频流是基于AOSP开发的，目前适配了AOSP11和AOSP15，由于Android版本的差异，视频流存在两套代码用于支持不同的Android代码，分别是AOSP11和AOSP15两个代码分支。
+视频流引擎是基于AOSP开发的，目前适配了AOSP11和AOSP15，由于Android版本的差异，视频流引擎存在两套代码用于支持不同的Android代码，分别是AOSP11和AOSP15两个代码分支。
 
 **表 2** Kbox代码分支差异<a id="Kbox代码分支差异"></a>
 
@@ -178,8 +180,14 @@
 
 ## 贡献声明<a name="ZH-CN_TOPIC_0000002550251729"></a>
 
-欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
+欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)联系我们，具体贡献方法可参考[贡献指南](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
 
 ## 致谢<a name="ZH-CN_TOPIC_0000002550251725"></a>
 
 感谢来自社区的每一个PR，欢迎贡献Kbox！
+
+## 修订记录
+
+|文档版本| 发布日期   | 修改说明         |
+|----------| ---------- | ---------------- |
+|01| 2026-09-30 | 第一次正式发布。 |

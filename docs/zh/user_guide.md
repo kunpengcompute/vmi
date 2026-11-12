@@ -1,5 +1,7 @@
 # 用户指南<a name="ZH-CN_TOPIC_0000002552775587"></a>
 
+本文档介绍视频流云手机的操作指导，涵盖视频流云手机实例的启动、访问、重启与删除，K8s集群下的部署操作，可配置项功能说明及常见故障处理，适用于需要部署和操作视频流云手机实例的维护人员。
+
 ## 操作视频流云手机实例<a name="ZH-CN_TOPIC_0000002518226782"></a>
 
 ### 启动视频流云手机实例<a name="ZH-CN_TOPIC_0000002518386672"></a>
@@ -21,7 +23,7 @@
 
 3. 若需要启动不同初始编码参数、抓图分辨率、音频视频输出格式的视频流云手机实例，则需要进行以下配置。
     1. 从DemoVideoEngine.tar.gz中解压获取“vendor”文件夹，并将其中的“default.prop”文件拷贝至当前目录。
-
+ 
         ```bash
         cd /home/kbox_video/
         tar -xvf DemoVideoEngine.tar.gz vendor
@@ -88,7 +90,7 @@
 
     回显示例如下。
 
-    ![](figures/zh-cn_image_0000002549746559.png)
+    ![docker ps -a执行回显：云手机容器列表，可见各容器STATUS与NAMES列](figures/zh-cn_image_0000002549746559.png)
 
     确认所启动的容器存在，且状态正常。
 
@@ -104,7 +106,7 @@
 
     如果回显信息中sys.boot_completed显示为“1”，则表示启动成功。
 
-    ![](figures/zh-cn_image_0000002518226790.png)
+    ![getprop sys.boot_completed执行回显：sys.boot_completed取值为1，表示启动成功](figures/zh-cn_image_0000002518226790.png)
 
 ### 查询组件版本号信息<a name="ZH-CN_TOPIC_0000002549746549"></a>
 
@@ -123,7 +125,7 @@
 
     回显信息即为视频流引擎组件版本号信息，示例如下。
 
-    ```bash
+    ```output
     Product Name: Kunpeng BoostKit
     Product Version: 26.0.RC1
     Component Name: BoostKit-boostcph-videoengine
@@ -145,13 +147,13 @@
 2. 在Android手机上安装CloudPhone.apk。
 3. （可选）单击右上角齿轮，进入设置页。
 
-    ![](figures/zh-cn_image_0000002518386702.png)
+    ![CloudPhone设置页入口：主界面右上角齿轮按钮，点击后进入服务器IP与端口设置](figures/zh-cn_image_0000002518386702.png)
 
 4. 返回至主页面，自上而下依次输入服务器IP地址、`${port}`，单击“开始连接”即可访问云侧的视频流云手机，如下图所示。
 
     `${port}` 默认值为 8000 + `${index}`。
 
-    ![](figures/zh-cn_image_0000002549866551.png)
+    ![CloudPhone主页连接界面：服务器IP地址与端口输入框及开始连接按钮](figures/zh-cn_image_0000002549866551.png)
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
     >
@@ -165,7 +167,7 @@
 
 1. 连接云手机前，进入设置页，默认使能自适应分辨率开关。
 
-    ![](figures/zh-cn_image_0000002549746563.png)
+    ![连接云手机后屏幕上的齿轮按钮，点击可打开视频与音频参数修改菜单](figures/zh-cn_image_0000002549746563.png)
 
 2. 连接云手机后，单击屏幕上的齿轮按钮。
 
@@ -174,13 +176,13 @@
 3. 设置视频编码参数。
     1. 单击图中视频图标。
 
-        ![](figures/zh-cn_image_0000002518386708.png)
+        ![参数修改菜单中的视频图标，点击进入视频编码参数设置界面](figures/zh-cn_image_0000002518386708.png)
 
     2. 进入视频编码参数设置界面。
 
         参数取值范围，请参见[启动脚本配置项](#启动脚本配置项)章节中视频流引擎属性配置项中对应字段，参考vmi.video.encode开头的属性。出流分辨率分为3个可选清晰度档位：360P、720P、1080P。
 
-        ![](figures/zh-cn_image_0000002549866555.png)
+        ![视频编码参数设置界面：出流分辨率360P、720P、1080P档位选择及发送按钮](figures/zh-cn_image_0000002549866555.png)
 
     3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
@@ -191,13 +193,13 @@
 4. 设置音频播放编码参数。
     1. 单击图中音频图标。
 
-        ![](figures/zh-cn_image_0000002518226794.png)
+        ![参数修改菜单中的音频图标，点击进入音频播放编码参数设置界面](figures/zh-cn_image_0000002518226794.png)
 
     2. 进入音频播放编码参数设置界面。
 
         参数取值范围，请参见[启动脚本配置项](#启动脚本配置项)章节中视频流引擎属性配置项中对应字段，参考vmi.audio.encode开头的属性。
 
-        ![](figures/zh-cn_image_0000002518386706.png)
+        ![音频播放编码参数设置界面：vmi.audio.encode相关参数配置项及发送按钮](figures/zh-cn_image_0000002518386706.png)
 
     3. 设置完成后，单击发送按钮后编码参数将会被发送到服务端，如果参数合法，将立即生效。
 
@@ -369,7 +371,7 @@
     go build -o quota-plugin main.go
     ```
 
-3. 配置containerd并重启启用NRI。
+3. 配置Containerd并重启启用NRI。
 
     编辑 `/etc/containerd/config.toml`，将disable改为false。
 
@@ -499,7 +501,7 @@
     kubectl get pods -o wide
     ```
 
-    请参见[访问视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+`${index}`，index为Pod编号。
+    请参见[视频流云手机](#访问视频流云手机)章节访问视频流云手机，其中客户端连接端口为8000+`${index}`，index为Pod编号。
 
     - 在master节点和工作节点上，可通过如下命令进入容器，以video1为例：
 
@@ -576,7 +578,7 @@ cd /home/k8s/k8s/script
 | ro.hardware.fps | 云手机屏幕刷新帧率 | 30fps<br>60fps<br>90fps | 30：默认屏幕刷新帧率 |
 | ro.hardware.width | 云手机屏幕物理宽度。宽、高、密度三者要匹配，关系如下：360p(360 640 120)、480p(480 856 160)、720p(720 1280 320)、1080p(1080 1920 480)、2K(1440 2560 640)、4K(2160 3840  960) | 360：物理宽度360<br>480：物理宽度480<br>720：物理宽度720<br>1080：物理宽度1080<br>1440：物理宽度1440<br>2160：物理宽度2160 | 720：默认物理宽度 |
 | ro.hardware.height | 云手机屏幕物理高度 | 640：物理高度640<br>856：物理高度856<br>1280：物理高度1280<br>1920：物理高度1920<br>2560：物理高度2560<br>3840：物理高度3840 | 1280：默认物理高度 |
-| ro.vmi.video.capture.render_optimizing | 主屏出流使能开关 | 1：默认开启 | 1：默认开启 |
+| ro.vmi.video.capture.render_optimizing | 主屏出流使能开关 | 0：关闭<br>1：开启 | 1：默认开启 |
 | ro.vmi.hardware.vpu | 编码卡类型 | 0：没有编码卡<br>3：Quadra | 3：默认使用Quadra |
 | vmi.mic.cachefactor | 麦克风帧缓存大小 | 0：不缓存<br>1：缓存1帧<br>2：缓存2帧<br>3：缓存3帧 | 2：默认缓存2帧 |
 | vmi.crowd.control.master | 群控开关 | false：关闭 | false：默认关闭 |
@@ -850,7 +852,7 @@ cd /home/k8s/k8s/script
 故障处理总体流程主要分为四个过程：故障信息收集、故障判断、故障定位、故障排除。
 
 **图 1** 故障处理流程<a name="fig4128162522010"></a><a id="故障处理流程"></a>
-![](figures/troubleshooting_process.png "故障处理流程")
+![故障处理总体流程：故障信息收集、故障判断、故障定位、故障排除四个阶段](figures/troubleshooting_process.png "故障处理流程")
 
 **故障信息收集<a name="section196271610142212"></a>**
 

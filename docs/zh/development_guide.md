@@ -1,5 +1,7 @@
 # 开发指南
 
+本文档介绍视频流云手机端侧和云侧引擎的集成开发，涵盖服务端编译环境部署、对外接口、视频输出与音频输出开发等内容，适用于基于视频流引擎进行云手机集成的二次开发人员。
+
 ## 介绍
 
 云手机是指虚拟出带有AOSP （Android Open Source Project）系统，具有虚拟手机功能的云服务器。作为一种新型应用，它对物理手机起到了有效的延伸和扩展作用，可以用在云手游、移动办公等诸多场景。
@@ -14,12 +16,12 @@
 
 |序号|软件|说明|获取地址|
 |--|--|--|--|
-|1|AOSP源码|版本：android-15.0.0_r17|[获取链接](https://android.googlesource.com/platform/manifest)|
-|2|Android NDK|版本：r25b|[获取链接](https://dl.google.com/android/repository/android-ndk-r25b-linux.zip)|
-|3|SDK platform|版本：33_r02|[获取链接](https://dl.google.com/android/repository/platform-33_r02.zip)|
-|4|SDK platform tools|版本：r33.0.3|[获取链接](https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip)|
-|5|SDK build tools|版本：r33.0.1|[获取链接](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
-|6|BoostKit-boostcph-videoengine_*_15.zip|Android 15视频流引擎开发包|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=%E8%A7%86%E9%A2%91%E6%B5%81%E5%BC%95%E6%93%8E#application-soft)|
+|1|AOSP源码|版本：android-15.0.0_r17|[AOSP源码android-15.0.0_r17](https://android.googlesource.com/platform/manifest)|
+|2|Android NDK|版本：r25b|[Android NDK r25b下载](https://dl.google.com/android/repository/android-ndk-r25b-linux.zip)|
+|3|SDK platform|版本：33_r02|[SDK platform 33_r02下载](https://dl.google.com/android/repository/platform-33_r02.zip)|
+|4|SDK platform tools|版本：r33.0.3|[SDK platform tools r33.0.3下载](https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip)|
+|5|SDK build tools|版本：r33.0.1|[SDK build tools r33.0.1下载](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
+|6|BoostKit-boostcph-videoengine_*_15.zip|Android 15视频流引擎开发包|[BoostKit-boostcph-videoengine开发包下载](https://www.hikunpeng.com/boostkit/arm-native?application=%E8%A7%86%E9%A2%91%E6%B5%81%E5%BC%95%E6%93%8E#application-soft)|
 
 ### 软件包完整性校验
 
@@ -326,8 +328,8 @@ enum VmiCmd : uint32_t {
     SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR = MAKE_CMD(DATA_SENSOR, CMD_TRANS_DATA, RETURN_UNREGISTER_CLIENT_SENSOR),
     SENSOR_RETURN_UPDATE_CLIENT_SENSOR_RATE = MAKE_CMD(DATA_SENSOR, CMD_TRANS_DATA, RETURN_UPDATE_CLIENT_SENSOR_RATE),
     // GPS模块的cmd定义
-    GPS_SEND_LOCATION_DATA = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, SEND_LOCATION_DATA), // 传输数据格式参见：VmiGPSLocationData
-    GPS_SEND_NMEA_DATA = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, SEND_NMEA_DATA),         // 传输数据格式参见：VmiGPSLocationData
+    GPS_SEND_LOCATION_DATA = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, SEND_LOCATION_DATA), // 传输数据格式参见：VmiGpsLocationData
+    GPS_SEND_NMEA_DATA = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, SEND_NMEA_DATA),         // 传输数据格式参见：VmiGpsLocationData
     GPS_RETURN_START_GPS = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, RETURN_START_GPS),
     GPS_RETURN_STOP_GPS = MAKE_CMD(DATA_GPS, CMD_TRANS_DATA, RETURN_STOP_GPS),
 };
@@ -791,7 +793,7 @@ enum RCMode : uint32_t  {
 | maxCrfRate | crf 码率峰值 | 500000~100000000 | 20000000 |
 | vbvBufferSize | crf 码率缓冲区大小 | -1：自动模式 0：禁用峰值比特率限制 [min_vbv_size ~ 3000]：min_vbv_size = ceil(1000 / fps) +1 且 min_vbv_size >= 10 | 1000 |
 | streamWidth | 出流帧宽度 | [240, 云手机渲染分辨率]，并且出流帧宽度需要为 8 的倍数 | 720 |
-| streamHeight | 出流帧高度 | [240, 云手机渲染分辨率]，并且出流帧高度需要为 8 的倍数 | 1080 |
+| streamHeight | 出流帧高度 | [240, 云手机渲染分辨率]，并且出流帧高度需要为 8 的倍数 | 1280 |
 
 >![](public_sys-resources/icon-note.gif) **说明：** 
 >
@@ -1193,11 +1195,11 @@ struct VmiConfigTouch : public VmiConfig {} __attribute__((packed));
 ```c++
 // 触控事件
 struct VmiTouchEvent {
-    uint8_t pointerID;
-    uint8_t action;
-    uint16_t x;
-    uint16_t y;
-    uint16_t pressure;
+    uint8_t pointerID;                          // 触点编号
+    uint8_t action;                             // 触控动作类型
+    uint16_t x;                                 // 触点横坐标
+    uint16_t y;                                 // 触点纵坐标
+    uint16_t pressure;                          // 触控压力值
 } __attribute__((packed));
 // 触控输入数据
 struct VmiTouchInputData {
@@ -1222,10 +1224,10 @@ struct VmiKeyInputData {
 
 ### 数据注入
 
-输入与输出不同，所有的输入都需要使用 InjectData 接口进行数据注入。该数据由开发者通过 InjectData 注入到服务端，并通过 VmiCmdTouch 枚举中的 SEND_TOUCH_EVENT、SEND_KEY_EVENT 命令字指定。示例如下：
+输入与输出不同，所有的输入都需要使用 InjectData 接口进行数据注入。该数据由开发者通过 InjectData 注入到服务端，并通过 VmiCmd 枚举中的 SEND_TOUCH_EVENT、SEND_KEY_EVENT 命令字指定。示例如下：
 
 ```c++
-VmiDataType module = TOUCH;
+VmiDataType module = DATA_TOUCH;
 VmiCmd cmd = SEND_TOUCH_EVENT;
 VmiTouchInputData touchData;
 uint8_t* data = &touchData;
@@ -1316,13 +1318,13 @@ InjectData(module, cmd, data, sizeof(SensorData));
 所有的输出都需要使用 SetParam 接口进行流出。开发者通过 SetParam 将该数据输出到客户端，并通过 VmiCmd 枚举中的 SENSOR_RETURN_REGISTER_CLIENT_SENSOR、SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR、SENSOR_RETURN_UPDATE_CLIENT_SENSOR_RATE 命令字指定。示例如下：
 
 ```c++
-VmiDataType module = SENSOR;
+VmiDataType module = DATA_SENSOR;
 VmiCmd cmd = SENSOR_RETURN_REGISTER_CLIENT_SENSOR;
 VmiCmd cmd = SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR;
 VmiCmd cmd = SENSOR_RETURN_UPDATE_CLIENT_SENSOR_RATE;
 SensorActivateData sensorActivateData;
 uint8_t* data = &sensorActivateData;
-SetParam(module, cmd, param, sizeof(SensorActivateData));
+SetParam(module, cmd, data, sizeof(SensorActivateData));
 ```
 
 ## GPS输入开发
