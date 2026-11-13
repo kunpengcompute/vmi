@@ -142,7 +142,7 @@
 docker stats
 ```
 
-![容器内执行docker stats的资源占用回显，含CPU%、内存使用率和网络IO等列](figures/zh-cn_image_0000002549825465.png)
+![主机内执行docker stats后的容器资源占用回显，含CPU%、内存使用率和网络IO等列](figures/zh-cn_image_0000002549825465.png)
 
 > ![](public_sys-resources/icon-note.gif)说明
 >

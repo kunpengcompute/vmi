@@ -907,7 +907,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 
 |编码参数|推荐值|
 | :---: | :---: |
-|gopsize|60|
+|gopSize|60|
 |profile|main|
 |crf|21|
 |maxCrfRate|10000000|
@@ -924,7 +924,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |编码参数|推荐值|
 | :---: | :---: |
 |bitrate|8000000|
-|gopsize|60|
+|gopSize|60|
 |profile|main|
 
 > ![](public_sys-resources/icon-note.gif)说明
@@ -1227,7 +1227,7 @@ VmiCmd cmd = SEND_TOUCH_EVENT;
 VmiTouchInputData touchData;
 uint8_t* data = &touchData;
 InjectData(module, cmd, data, sizeof(VmiTouchInputData));
-VmiDataType module = TOUCH;
+VmiDataType module = DATA_TOUCH;
 VmiCmd cmd = SEND_KEY_EVENT;
 VmiKeyInputData keyData;
 uint8_t* data = &keyData;

@@ -990,7 +990,7 @@ cfct_config和hardware_bind.cfg配置文件配置项和配置方法如下所示�
     systemctl restart containerd
     ```
 
-3. 执行在master初始化成功时保存的[**图1**集群初始化成功打印信息](#集群初始化成功打印信息)红框中加入集群的token命令。
+3. 执行在master初始化成功时保存的[**图2**集群初始化成功打印信息](#集群初始化成功打印信息)红框中加入集群的token命令。
 
     例如：
 
