@@ -1691,7 +1691,7 @@ EncoderRetCode DestroyEncoder\(int32_t fd\)
 
 取值如下：
 
-- VIDEO_ENCODER_SUCCESS：停止编码器成功。
+- VIDEO_ENCODER_SUCCESS：销毁编码器成功。
 - VIDEO_ENCODER_DESTROY_FAIL：销毁编码器失败。
 
 #### ResetEncoder<a name="ZH-CN_TOPIC_0000002518345970" id="ResetEncoder"></a>
