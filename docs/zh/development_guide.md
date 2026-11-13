@@ -1224,17 +1224,17 @@ struct VmiKeyInputData {
 
 ### 数据注入
 
-输入与输出不同，所有的输入都需要使用 InjectData 接口进行数据注入。该数据由开发者通过 InjectData 注入到服务端，并通过 VmiCmd 枚举中的 SEND_TOUCH_EVENT、SEND_KEY_EVENT 命令字指定。示例如下：
+输入与输出不同，所有的输入都需要使用 InjectData 接口进行数据注入。该数据由开发者通过 InjectData 注入到服务端，并通过 VmiCmd 枚举中的 TOUCH_SEND_TOUCH_EVENT、TOUCH_SEND_KEY_EVENT 命令字指定。示例如下：
 
 ```c++
 VmiDataType module = DATA_TOUCH;
-VmiCmd cmd = SEND_TOUCH_EVENT;
+VmiCmd cmd = TOUCH_SEND_TOUCH_EVENT;
 VmiTouchInputData touchData;
 uint8_t* data = &touchData;
 InjectData(module, cmd, data, sizeof(VmiTouchInputData));
 
-VmiDataType module = TOUCH;
-VmiCmd cmd = SEND_KEY_EVENT;
+VmiDataType module = DATA_TOUCH;
+VmiCmd cmd = TOUCH_SEND_KEY_EVENT;
 VmiKeyInputData keyData;
 uint8_t* data = &keyData;
 InjectData(module, cmd, data, sizeof(VmiKeyInputData));

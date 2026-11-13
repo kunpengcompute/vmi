@@ -56,7 +56,7 @@ source ~/.bashrc
 
 ```bash
 # android
-export AN_AOSPDIR=/home/newdisk/XXX/ARMNative/aosp11
+export AN_AOSPDIR=/home/newdisk/XXX/ARMNative/aosp11 # 改成实际存放aosp11源码的绝对路径
 export AN_AOSPOUT=${AN_AOSPDIR}/out
 ```
 

@@ -45,7 +45,7 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|配置方案五|
 |--|--|--|--|--|--|--|--|--|
 | 1 | BoostKit-boostcph-videoengine_*_15.zip | 视频流引擎二进制包 | [boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases) | √ | √ | √ | √ |√ |
-| 2 | DemoVideoEngine.tar.gz | 视频流服务端tar包组件，负责获取Kbox容器音视频数据等 | [Quadra软固件及文档包下载页面（Android 15）](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
+| 2 | DemoVideoEngine.tar.gz | 视频流服务端tar包组件，负责获取Kbox容器音视频数据等 | [boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
 | 3 | DemoVideoEngine_sha256.txt | 视频流服务端tar包组件对应的sha256文件，负责完整性校验 | [获取链接](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
 | 4 | CloudPhoneApk.tar.gz | 视频流客户端tar包组件，负责解码播放音视频数据 | [获取链接](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
 | 5 | CloudPhoneApk_sha256.txt | 视频流客户端tar包组件对应的sha256文件，负责完整性校验 | [获取链接](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
@@ -1954,7 +1954,7 @@ cfct_config，hardware_bind.cfg配置文件配置项和配置方法如下所示�
     </cpu>
     ```
 
-    !虚拟机xml中cpu元素补充topology拓扑字段后的完整配置示例](figures/zh-cn_image_0000002518468302.png)
+    [!虚拟机xml中cpu元素补充topology拓扑字段后的完整配置示例](figures/zh-cn_image_0000002518468302.png)
 
 7. 按“Esc”键退出编辑模式，输入**:wq!**并按“Enter”键保存并退出文件。
 8. 启动虚拟机。
