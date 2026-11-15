@@ -53,7 +53,7 @@
 | 项目 | 内容 |
 | ---- | ---- |
 | 产品名称 | Kunpeng BoostKit |
-| 产品版本 | Kunpeng BoostKit 26.2.RC1 |
+| 产品版本 | 26.2.RC1 |
 
 **软件版本配套表**
 
@@ -206,7 +206,7 @@
 
 | 序号 | 文档名称 | 内容简介 | 获取方法 |
 | ---- | -------- | -------- | -------- |
-| 1 | Kunpeng BoostKit 26.2.RC1 视频流引擎（Android 15） 版本说明书 | 提供视频流云手机每个发布版本的基础信息和特性更新信息。 | 鲲鹏社区 |
+| 1 | Kunpeng BoostKit 26.2.RC1 视频流引擎（Android 15） 版本说明书 | 提供视频流云手机每个发布版本的基础信息和特性更新信息。 | [开源社区](https://gitcode.com/boostkit/vmi/blob/br_bk26_930_from_CloudPhone15/docs/zh/release_notes.md) |
 | 2 | Kunpeng BoostKit 26.2.RC1 视频流引擎（Android 15） 特性指南 | 提供视频流云手机支持的功能与特性介绍。 | 鲲鹏社区 |
 | 3 | Kunpeng BoostKit 26.2.RC1 视频流引擎（Android 15） 编译指南 | 提供视频流云手机编译构建流程与操作指导。 | 鲲鹏社区 |
 | 4 | Kunpeng BoostKit 26.2.RC1 视频流引擎（Android 15） 安装指南 | 提供视频流云手机裸机和虚拟机两种环境部署的详细指导。 | 鲲鹏社区 |

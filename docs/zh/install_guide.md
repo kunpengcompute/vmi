@@ -46,9 +46,9 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表 1** Kb
 |--|--|--|--|--|--|--|--|--|
 | 1 | BoostKit-boostcph-videoengine_*_15.zip | 视频流引擎二进制包 | [boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases) | √ | √ | √ | √ |√ |
 | 2 | DemoVideoEngine.tar.gz | 视频流服务端tar包组件，负责获取Kbox容器音视频数据等 | [boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
-| 3 | DemoVideoEngine_sha256.txt | 视频流服务端tar包组件对应的sha256文件，负责完整性校验 | [获取链接](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
-| 4 | CloudPhoneApk.tar.gz | 视频流客户端tar包组件，负责解码播放音视频数据 | [获取链接](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
-| 5 | CloudPhoneApk_sha256.txt | 视频流客户端tar包组件对应的sha256文件，负责完整性校验 | [获取链接](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
+| 3 | DemoVideoEngine_sha256.txt | 视频流服务端tar包组件对应的sha256文件，负责完整性校验 | [boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
+| 4 | CloudPhoneApk.tar.gz | 视频流客户端tar包组件，负责解码播放音视频数据 | [boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
+| 5 | CloudPhoneApk_sha256.txt | 视频流客户端tar包组件对应的sha256文件，负责完整性校验 | [boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。 | √ | √ | √ | √ |√ |
 | 6 | VideoClientEmulator.tar.gz | 视频流云手机压测工具 | 请提交ISSUE反馈 | √ | √ | √ | √ |√ |
 | 7 | NETINT-v*XXX*.tar.gz | 视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-Android15 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - | - |- |
 | 8 | Quadra_V*XXX*.zip | NETINT编码卡Quadra软固件及文档包 | [获取链接](https://www.netint.cn/quadra-firmware-downloads-android15)<br/>下载密码:test123 | √ | - | - | - | - |

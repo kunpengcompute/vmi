@@ -77,8 +77,8 @@
     ```
 
     >![](public_sys-resources/icon-note.gif) **说明：** 
-    > - `systemctl daemon-reload`：重新加载 systemd 管理器配置，使修改后的 Docker 服务单元配置生效。
-    > - `systemctl restart docker`：重启 Docker 服务。
+    > - `systemctl daemon-reload`：重新加载systemd管理器配置，使修改后的Docker服务单元配置生效。
+    > - `systemctl restart docker`：重启Docker服务。
 
 ### 检查视频流云手机状态
 
