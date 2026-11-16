@@ -1219,16 +1219,16 @@ struct VmiKeyInputData {
 
 ### 数据注入<a name="ZH-CN_TOPIC_0000002549705785"></a>
 
-输入与输出不同，所有的输入都需要使用InjectData接口进行数据注入。开发者通过InjectData将数据注入到服务端，并通过VmiCmdTouch枚举中的SEND_TOUCH_EVENT、SEND_KEY_EVENT命令字指定。示例如下：
+输入与输出不同，所有的输入都需要使用InjectData接口进行数据注入。开发者通过InjectData将数据注入到服务端，并通过VmiCmd枚举中的TOUCH_SEND_TOUCH_EVENT、TOUCH_SEND_KEY_EVENT命令字指定。示例如下：
 
 ```c++
 VmiDataType module = DATA_TOUCH;
-VmiCmd cmd = SEND_TOUCH_EVENT;
+VmiCmd cmd = TOUCH_SEND_TOUCH_EVENT;
 VmiTouchInputData touchData;
 uint8_t* data = &touchData;
 InjectData(module, cmd, data, sizeof(VmiTouchInputData));
 VmiDataType module = DATA_TOUCH;
-VmiCmd cmd = SEND_KEY_EVENT;
+VmiCmd cmd = TOUCH_SEND_KEY_EVENT;
 VmiKeyInputData keyData;
 uint8_t* data = &keyData;
 InjectData(module, cmd, data, sizeof(VmiKeyInputData));

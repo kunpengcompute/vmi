@@ -4,7 +4,7 @@
 
 ## 使用命令
 
-```text
+```bash
 ./scripts/auto_install_tools.sh ${安装目录}
 source ~/.bashrc
 ```
