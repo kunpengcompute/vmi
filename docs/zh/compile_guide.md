@@ -74,9 +74,16 @@ which ccache
 ```bash
 export NDK_CCACHE=ccache
 export CCACHE_DIR=~/.ccache
-export PATH=${ccache安装位置}:$PATH #例如export PATH=/usr/bin:$PATH
+export PATH=${ccache安装位置}:$PATH
 export USR_CCACHE=1
 ```
+
+其中：
+
+- NDK_CCACHE=ccache 指定编译使用的缓存程序。
+- CCACHE_DIR=~/.ccache 指定缓存目录，可按需改为其他可写路径。
+- PATH 中加入ccache安装位置以优先调用cache程序。
+- USR_CCACHE=1 开启编译缓存加速。
 
 更新后source使其生效。
 

@@ -67,22 +67,17 @@ The video stream engine consists of the server and client. The server provides f
 ## Directory Structure<a name="ZH-CN_TOPIC_0000002518595280"></a>
 
 ```text
-├── docs                                           # Project documentation
-│   └── zh                                         # Chinese documentation
-│       ├── figures                                # Figure resources
-│       ├── public_sys-resources                   # Public icons
-│       ├── compile_guide.md                       # Video stream cloud phone compilation guide
-│       ├── compile_scripts_introduction.md        # Introduction to video stream cloud phone compilation scripts
-│       ├── development_guide.md                   # Video stream cloud phone developer guide
-│       ├── feature_guide.md                       # Video stream cloud phone feature guide
-│       ├── install_guide.md                       # Video stream cloud phone installation guide
-│       ├── menu.md                                # Video stream cloud phone document menu
-│       ├── release_notes.md                       # Video stream cloud phone release notes
-│       ├── routine_maintenance.md                 # Video stream cloud phone routine maintenance guide
-│       ├── security_statement.md                  # Video stream cloud phone security statement
-│       ├── test_guide.md                          # Video stream cloud phone test guide
-│       ├── troubleshooting.md                     # Video stream cloud phone troubleshooting cases
-│       ├── user_guide.md                          # Video stream cloud phone user guide
+├── docs                                          # Project documentation
+│   └── en                                       # English document directory
+│       ├── figures                              # Directory of figures in documents
+│       ├── quick_start.md                       # Quick start
+│       ├── release_notes.md                     # Release notes
+│       ├── installation_guide.md                # Installation guide
+│       ├── user_guide.md                        # User guide
+│       ├── best_practices.md                    # Best practices
+│       ├── api_reference.md                     # API reference
+│       ├── design_guide.md                      # Design guide
+│       ├── faq.md                               # Frequently asked questions
 ├── CloudPhoneClient                              # Build directory for the video stream client APK
 │   ├── AudioPlay                                # Audio module
 │   ├── TouchCapture                             # Touch module
