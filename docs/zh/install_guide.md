@@ -45,15 +45,13 @@ Kbox云手机容器环境部署的硬件环境配置方案要求如[**表1** Kbo
 |序号|软件包|说明|获取地址|配置方案一|配置方案二|配置方案三|配置方案四|配置方案五
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 |1|BoostKit-boostcph-videoengine_*.zip|视频流引擎二进制包。|[boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)|√|√|√|√|√|
-|2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
-|3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的SHA256文件，负责完整性校验。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
-|4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
-|5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的SHA256文件，负责完整性校验。|[获取链接](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
+|2|DemoVideoEngine.tar.gz|视频流服务端tar包组件，负责获取Kbox容器音视频数据等。|[boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
+|3|DemoVideoEngine_sha256.txt|视频流服务端tar包组件对应的SHA256文件，负责完整性校验。|[boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
+|4|CloudPhoneApk.tar.gz|视频流客户端tar包组件，负责解码播放音视频数据。|[boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
+|5|CloudPhoneApk_sha256.txt|视频流客户端tar包组件对应的SHA256文件，负责完整性校验。|[boostcph发布版本列表](https://gitcode.com/boostkit/boostcph/releases)。|√|√|√|√|√|
 |6|VideoClientEmulator.tar.gz|视频流云手机压测工具。|请提交ISSUE反馈。|√|√|√|√|√|
-|7|NETINT-v*XXX*.tar.gz|视频流NETINT编码卡tar包组件，负责硬件编码，配套版本4.8.F-adapt。|[Quadra编码卡软固件及文档下载页面](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br>下载密码：test123|√|-|-|-|-|
-|8|Quadra_V*XXX*.zip|NETINT编码卡Quadra软固件及文档包。|[获取链接](https://www.netint.cn/kunpeng-quadra-firmware-downloads)<br/>下载密码：test123|√|-|-|-|-|
-|9|WebClient.zip|Web客户端。|请提交ISSUE反馈。|√|√|√|√|√|
-|10|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[topo-affinity-plugin代码仓库](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|√|
+|7|WebClient.zip|Web客户端。|请提交ISSUE反馈。|√|√|√|√|√|
+|9|topo-affinity-plugin-master.zip|K8s NUMA亲和插件。|[topo-affinity-plugin代码仓库](https://gitee.com/kunpeng_compute/topo-affinity-plugin)|√|√|√|√|√|
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
