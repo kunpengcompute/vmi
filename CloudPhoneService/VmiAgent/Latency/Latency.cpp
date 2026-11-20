@@ -1,5 +1,15 @@
 /*
- * 版权所有 (c) 华为技术有限公司 2024-2024
+ * Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
+/*
  * 功能说明: 时延信息打印模块
  * 会读取两个属性
  * 1.vmi.save.stream为1时，则会保存码流

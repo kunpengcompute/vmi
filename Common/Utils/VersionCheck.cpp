@@ -1,5 +1,15 @@
 /*
- * 版权所有 (c) 华为技术有限公司 2023-2023
+ * Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
+/*
  * 功能说明: 提供服务端和客户端的版本号校验接口，特别说明的点：
  * 1. 在TCP连接建立后，会使用特定消息格式进行版本号的校验，保证此功能和业务代码解耦，后续版本迭代将不影响此功能
  * 2. 服务端会发送版本号信息给客户端后会等待客户端的校验结果，客户端返回校验通过后服务端才会进行后续的逻辑，保证版本号检验不通过时，服务端不会传输任何数据给客户端
