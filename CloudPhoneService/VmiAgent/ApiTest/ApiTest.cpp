@@ -1,5 +1,15 @@
 /*
- * 版权所有 (c) 华为技术有限公司 2024-2024
+ * Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
+/*
  * 功能说明:对外接口的测试套，测试接口的安全性、可用性、性能指标
  */
 #define LOG_TAG "APITEST"
