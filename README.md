@@ -158,7 +158,7 @@
 
 ## License<a name="ZH-CN_TOPIC_0000002550235031"></a>
 
-本项目采用Apache License 2.0许可证。详见[LICENSE](LICENSE)文件
+本项目采用Mulan PSL v2许可证。详见[LICENSE](LICENSE)文件
 本项目的文档适用CC-BY 4.0许可证，具体参见文件[LICENSE](docs/LICENSE)文件
 
 ## 贡献声明<a name="ZH-CN_TOPIC_0000002518595284"></a>
