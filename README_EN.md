@@ -157,7 +157,7 @@ If you do not want your model or dataset to be mentioned in this project, or if 
 
 ## License<a name="ZH-CN_TOPIC_0000002518771872"></a>
 
-This project is licensed under Apache License 2.0. For details, see [LICENSE](LICENSE).
+This project is licensed under Mulan PSL v2. For details, see [LICENSE](LICENSE).
 The documents of this project are licensed under CC-BY 4.0. For details, see [LICENSE](docs/LICENSE).
 
 ## Contribution Statement<a name="ZH-CN_TOPIC_0000002550251729"></a>

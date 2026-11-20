@@ -1,3 +1,12 @@
+# Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
+# You can use this software according to the terms and conditions of the Mulan PSL v2.
+# You may obtain a copy of Mulan PSL v2 at:
+#          http://license.coscl.org.cn/MulanPSL2
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+# EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+# MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+# See the Mulan PSL v2 for more details.
+
 # 执行 ./storage_manager.sh $ACTION $STORAGE_NUM $STORAGE_SIZE_GB $IMG_BASE
 # ACTION参数值为create 或者 delete  ，创建或者删除
 # STORAGE_NUM: 数据卷数量,默认为200.需比pod数量大
