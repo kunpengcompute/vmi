@@ -1,5 +1,15 @@
 /**
- * 版权所有 (c) 华为技术有限公司 2023-2023
+ * Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
+/**
  * 服务端网络管理模块类，负责依据网络类型，启动相关监听服务或者连接对应的服务端
  * 1. 依据部署类型，传入对应的网络类型（视频流场景、指令流场景、弹性GPU场景），启动对应的监听服务或连接对应端口
  * 2. 管理网络连接，监听到网络连接断开时，回调离线消息，新收到链接时，回到上线消息
