@@ -1,4 +1,13 @@
 #!/bin/bash
+# Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
+# You can use this software according to the terms and conditions of the Mulan PSL v2.
+# You may obtain a copy of Mulan PSL v2 at:
+#          http://license.coscl.org.cn/MulanPSL2
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+# EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+# MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+# See the Mulan PSL v2 for more details.
+
 # 用于存放编译各个模块的函数
 # 使用方法：source ${VMIENGINE_ROOT_DIR}/scripts/cloud_ndk_build_func.sh ${root_dir}
 # 上述命令中${root_dir}是VMIEngine代码的根目录，否则此脚本可能获取不到正确的路径导致执行出错。
