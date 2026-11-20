@@ -1,10 +1,20 @@
 /**
- * 版权所有 (c) 华为技术有限公司 2023-2024
+ * Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
+/**
  * INetworkComm的实现类，及隐藏内部的NetComm
  * 1. 实现了INetworkComm接口
  * 2. 是Common中NetComm的适配类，自身只是一个接口转发，对内部的NetComm隐藏
  * 3. 子类NetworkCommmVideo/NetworkCommmElasticGpu/NetworkCommmInstruction通过重写
- *    IsConveyDataType接口去控制此网络连接需承载哪些数据消息
+ * IsConveyDataType接口去控制此网络连接需承载哪些数据消息
  * 注：NetworkComm中的m_netComm外部已保证此智能指针不为空，为了效率考虑，每个接口不判断是否为空
  */
 #include "NetworkComm.h"
