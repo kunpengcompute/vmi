@@ -1,16 +1,18 @@
 # 视频流介绍<a name="ZH-CN_TOPIC_0000002518224780"></a>
 
+本文档介绍视频流引擎的基本概念与视频流云手机方案，涵盖软件架构、规格、目录结构与Android11/Android15版本差异，适用于需要在鲲鹏服务器上部署和使用视频流云手机的开发与维护人员。
+
 简体中文 | [English](./README_EN.md)
 
 ## 最新消息
 
-\[2026.09.30\]: 新增支持共享数据卷。
+\[2026-09-30\]: 新增支持共享数据卷。
 
-\[2026.06.30\]: CPU/F2FS文件系统/System分区/init进程仿真增强。
+\[2026-06-30\]: CPU/F2FS文件系统/System分区/init进程仿真增强。
 
-\[2025.06.30\]：新增支持360P/480P分辨率；支持虚拟机和容器下部署视频流云手机。
+\[2025-06-30\]：新增支持360P/480P分辨率；支持虚拟机和容器下部署视频流云手机。
 
-\[2025.03.30\]：新增支持动态帧率调整。
+\[2025-03-30\]：新增支持动态帧率调整。
 
 ## 项目简介<a name="ZH-CN_TOPIC_0000002550235025"></a>
 
@@ -29,7 +31,7 @@
 本节介绍视频流云手机的上下文逻辑结构与所包含的模块含义及作用。
 
 **图 1** 视频流云手机架构图<a name="fig0420851397"></a><a id="视频流云手机架构图"></a>
-![](docs/zh/figures/CloudPhoneVideoStreamingArchitectureDiagram.png "视频流云手机架构图")
+![视频流云手机软件架构图：服务端含抓图、编码与GPU加速模块，客户端负责视频解码播放及触控注入](docs/zh/figures/CloudPhoneVideoStreamingArchitectureDiagram.png "视频流云手机架构图")
 
 视频流引擎包括服务端和客户端两个部分：服务端提供图像获取、图像数据编码等功能；客户端提供视频数据解码播放功能。在部分场景下还包含用户触控的获取和注入、音频数据的获取和播放等功能。
 
@@ -136,24 +138,24 @@
 
 ## 环境部署<a name="ZH-CN_TOPIC_0000002550275031"></a>
 
-视频流云手机支持的硬件环境和操作系统，以及环境部署所需的软件包请参见《部署指南》中的“环境要求”。
+视频流云手机支持的硬件环境和操作系统，以及环境部署所需的软件包请参见《安装指南》中的“环境要求”。
 
-视频流云手机支持裸机和虚拟机，详见的环境部署请参见《部署指南》。
+视频流云手机支持裸机和虚拟机，详见的环境部署请参见《安装指南》。
 
 ## 学习文档<a name="ZH-CN_TOPIC_0000002550235029"></a>
 
-|学习资源类别|学习资源名称|学习资源简介|
-|--|--|--|
-|文档| 《[版本说明书](./docs/zh/release_notes.md)》|提供视频流云手机每个发布版本的基础信息和特性更新信息。|
-|文档| 《[特性指南](./docs/zh/feature_guide.md)》|提供视频流云手机支持的功能与特性介绍。|
-|文档| 《[编译指南](./docs/zh/compile_guide.md)》|提供视频流云手机编译构建流程与操作指导。|
-|文档| 《[安装指南](./docs/zh/install_guide.md)》|提供视频流云手机裸机和虚拟机两种环境部署的详细指导。|
-|文档| 《[用户指南](./docs/zh/user_guide.md)》|提供视频流云手机启动和卸载云手机实例的操作指导。|
-|文档| 《[开发指南](./docs/zh/development_guide.md)》|提供视频流云手机开发相关的指导信息。|
-|文档| 《[例行维护](./docs/zh/routine_maintenance.md)》|提供视频流云手机容器例行维护相关内容。|
-|文档| 《[故障案例](./docs/zh/troubleshooting.md)》|提供视频流云手机的故障处理方法。|
-|文档| 《[验收测试指南](./docs/zh/test_guide.md)》|提供视频流云手机产品验收的指导信息。|
-|文档| 《[安全声明](./docs/zh/security_statement.md)》|提供视频流云手机使用时的安全说明。|
+|学习资源名称|学习资源简介|
+|--|--|
+| 《[版本说明书](./docs/zh/release_notes.md)》|提供视频流云手机每个发布版本的基础信息和特性更新信息。|
+| 《[特性指南](./docs/zh/feature_guide.md)》|提供视频流云手机支持的功能与特性介绍。|
+| 《[编译指南](./docs/zh/compile_guide.md)》|提供视频流云手机编译构建流程与操作指导。|
+| 《[安装指南](./docs/zh/install_guide.md)》|提供视频流云手机裸机和虚拟机两种环境部署的详细指导。|
+| 《[用户指南](./docs/zh/user_guide.md)》|提供视频流云手机启动和卸载云手机实例的操作指导。|
+| 《[开发指南](./docs/zh/development_guide.md)》|提供视频流云手机开发相关的指导信息。|
+| 《[例行维护](./docs/zh/routine_maintenance.md)》|提供视频流云手机容器例行维护相关内容。|
+| 《[故障案例](./docs/zh/troubleshooting.md)》|提供视频流云手机的故障处理方法。|
+| 《[验收测试指南](./docs/zh/test_guide.md)》|提供视频流云手机产品验收的指导信息。|
+| 《[安全声明](./docs/zh/security_statement.md)》|提供视频流云手机使用时的安全说明。|
 
 ## 免责声明<a name="ZH-CN_TOPIC_0000002550275033"></a>
 
@@ -180,8 +182,14 @@
 
 ## 贡献声明<a name="ZH-CN_TOPIC_0000002518595284"></a>
 
-欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
+欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/community/blob/master/docs/contributor/issue-submit.md)联系我们，具体贡献方法可参考[贡献指南](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
 
 ## 致谢<a name="ZH-CN_TOPIC_0000002550275035"></a>
 
 感谢来自社区的每一个PR，欢迎贡献Kbox！
+
+## 修订记录
+
+| 文档版本 | 发布日期 | 修改说明 |
+| :--- | :--- | :--- |
+| 01 | 2026-09-30 | 第一次正式发布。 |

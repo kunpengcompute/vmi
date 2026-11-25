@@ -14,12 +14,12 @@
 
 |序号|软件|说明|获取地址|
 | :---: | :---: | :---: | :---: |
-|1|AOSP源码|版本：android-11.0.0_r48|[获取链接](https://android.googlesource.com/platform/manifest)|
-|2|Android NDK|版本：r25b|[获取链接](https://dl.google.com/android/repository/android-ndk-r25b-linux.zip)|
-|3|SDK platform|版本：33_r02|[获取链接](https://dl.google.com/android/repository/platform-33_r02.zip)|
-|4|SDK platform tools|版本：r33.0.3|[获取链接](https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip)|
-|5|SDK build tools|版本：r33.0.1|[获取链接](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
-|6|BoostKit-boostcph-videoengine_*_11.zip|Android 11视频流引擎开发包|[获取链接](https://www.hikunpeng.com/boostkit/arm-native?application=%E8%A7%86%E9%A2%91%E6%B5%81%E5%BC%95%E6%93%8E#application-soft)|
+|1|AOSP源码|版本：android-11.0.0_r48|[AOSP源码manifest仓库](https://android.googlesource.com/platform/manifest)|
+|2|Android NDK|版本：r25b|[Android NDK r25b下载](https://dl.google.com/android/repository/android-ndk-r25b-linux.zip)|
+|3|SDK platform|版本：33_r02|[SDK platform 33_r02下载](https://dl.google.com/android/repository/platform-33_r02.zip)|
+|4|SDK platform tools|版本：r33.0.3|[SDK platform tools r33.0.3下载](https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip)|
+|5|SDK build tools|版本：r33.0.1|[SDK build tools r33.0.1下载](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)|
+|6|BoostKit-boostcph-videoengine_*_11.zip|Android 11视频流引擎开发包|[BoostKit视频流引擎开发包下载页](https://www.hikunpeng.com/boostkit/arm-native?application=%E8%A7%86%E9%A2%91%E6%B5%81%E5%BC%95%E6%93%8E#application-soft)|
 
 **软件包完整性校验<a name="section16873181764512"></a>**
 
@@ -669,7 +669,7 @@ RGB中RGBA8888暂不支持。
 
 |对应属性字段名称|字段描述|取值范围|默认值|
 | :---: | :---: | :---: | :---: |
-|videoFrameType|视频数据输出格式。|0：H2641：YUV（encoderType取值为0时才支持）2：RGB（暂不支持）3：H265（encodertype取值为0时不支持）|0：H264|
+|videoFrameType|视频数据输出格式。|0：H264<br>1：YUV（encoderType取值为0时才支持）<br>2：RGB（暂不支持）<br>3：H265（encoderType取值为0时不支持）|0：H264|
 
 #### resolution<a name="ZH-CN_TOPIC_0000002549825831"></a>
 
@@ -790,7 +790,7 @@ enum RCMode : uint32_t  {
 |maxCrfRate|CRF码率峰值。|500000~100000000|20000000|
 |vbvBufferSize|CRF码率缓冲区大小。|-1：自动模式0：禁用峰值比特率限制[min_vbv_size ~ 3000 ]：min_vbv_size = ceil(1000 / fps) +1且min_vbv_size >= 10|1000|
 |streamWidth|出流帧宽度。|[240,云手机渲染分辨率]，并且出流帧宽度需要为8的倍数。|720|
-|streamHeight|出流帧高度。|[240,云手机渲染分辨率]，并且出流帧高度需要为8的倍数。|1080|
+|streamHeight|出流帧高度。|[240,云手机渲染分辨率]，并且出流帧高度需要为8的倍数。|1280|
 
 > ![](public_sys-resources/icon-note.gif)说明
 >
@@ -900,14 +900,14 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |编码参数|推荐值|
 | :---: | :---: |
 |bitrate|8000000|
-|gopsize|60|
+|gopSize|60|
 |profile|main|
 
 **表2** CAPPED_CRF编码模式编码参数<a id="CAPPED_CRF编码模式编码参数"></a>
 
 |编码参数|推荐值|
 | :---: | :---: |
-|gopsize|60|
+|gopSize|60|
 |profile|main|
 |crf|21|
 |maxCrfRate|10000000|
@@ -924,7 +924,7 @@ SetParam(module, cmd, param, sizeof(EncodeParams));
 |编码参数|推荐值|
 | :---: | :---: |
 |bitrate|8000000|
-|gopsize|60|
+|gopSize|60|
 |profile|main|
 
 > ![](public_sys-resources/icon-note.gif)说明
@@ -1190,11 +1190,11 @@ struct VmiConfigTouch : public VmiConfig {} __attribute__((packed));
 ```c++
 // 触控事件
 struct VmiTouchEvent {
-    uint8_t pointerID;
-    uint8_t action;
-    uint16_t x;
-    uint16_t y;
-    uint16_t pressure;
+    uint8_t pointerID;                          // 触点编号，从0开始，同一次多指操作内唯一
+    uint8_t action;                             // 触控动作：0-DOWN，1-UP，2-MOVE（与服务端事件定义一致）
+    uint16_t x;                                 // 触点横坐标，取值范围[0, uiWidth]，单位像素
+    uint16_t y;                                 // 触点纵坐标，取值范围[0, uiHeight]，单位像素
+    uint16_t pressure;                          // 压力值，取值范围需结合客户端触控驱动确认
 } __attribute__((packed));
 // 触控输入数据
 struct VmiTouchInputData {
@@ -1219,16 +1219,16 @@ struct VmiKeyInputData {
 
 ### 数据注入<a name="ZH-CN_TOPIC_0000002549705785"></a>
 
-输入与输出不同，所有的输入都需要使用InjectData接口进行数据注入。开发者通过InjectData将数据注入到服务端，并通过VmiCmdTouch枚举中的SEND_TOUCH_EVENT、SEND_KEY_EVENT命令字指定。示例如下：
+输入与输出不同，所有的输入都需要使用InjectData接口进行数据注入。开发者通过InjectData将数据注入到服务端，并通过VmiCmd枚举中的TOUCH_SEND_TOUCH_EVENT、TOUCH_SEND_KEY_EVENT命令字指定。示例如下：
 
 ```c++
-VmiDataType module = TOUCH;
-VmiCmd cmd = SEND_TOUCH_EVENT;
+VmiDataType module = DATA_TOUCH;
+VmiCmd cmd = TOUCH_SEND_TOUCH_EVENT;
 VmiTouchInputData touchData;
 uint8_t* data = &touchData;
 InjectData(module, cmd, data, sizeof(VmiTouchInputData));
-VmiDataType module = TOUCH;
-VmiCmd cmd = SEND_KEY_EVENT;
+VmiDataType module = DATA_TOUCH;
+VmiCmd cmd = TOUCH_SEND_KEY_EVENT;
 VmiKeyInputData keyData;
 uint8_t* data = &keyData;
 InjectData(module, cmd, data, sizeof(VmiKeyInputData));
@@ -1312,13 +1312,13 @@ InjectData(module, cmd, data, sizeof(SensorData));
 所有的输出都需要使用SetParam接口。开发者通过SetParam将该数据输出到客户端，并通过VmiCmd枚举中的SENSOR_RETURN_REGISTER_CLIENT_SENSOR、SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR、SENSOR_RETURN_UPDATE_CLIENT_SENSOR_RATE命令字指定。示例如下：
 
 ```c++
-VmiDataType module = SENSOR;
+VmiDataType module = DATA_SENSOR;
 VmiCmd cmd = SENSOR_RETURN_REGISTER_CLIENT_SENSOR;
 VmiCmd cmd = SENSOR_RETURN_UNREGISTER_CLIENT_SENSOR;
 VmiCmd cmd = SENSOR_RETURN_UPDATE_CLIENT_SENSOR_RATE;
 SensorActivateData sensorActivateData;
 uint8_t* data = &sensorActivateData;
-SetParam(module, cmd, param, sizeof(SensorActivateData));
+SetParam(module, cmd, data, sizeof(SensorActivateData));
 ```
 
 ## GPS输入开发<a name="ZH-CN_TOPIC_0000002549705797"></a>
@@ -1691,7 +1691,7 @@ EncoderRetCode DestroyEncoder\(int32_t fd\)
 
 取值如下：
 
-- VIDEO_ENCODER_SUCCESS：停止编码器成功。
+- VIDEO_ENCODER_SUCCESS：销毁编码器成功。
 - VIDEO_ENCODER_DESTROY_FAIL：销毁编码器失败。
 
 #### ResetEncoder<a name="ZH-CN_TOPIC_0000002518345970" id="ResetEncoder"></a>
@@ -1842,7 +1842,7 @@ DecoderRetCode DestroyVideoDecoder\(VideoDecoder \*decoder\)
 
 **VideoDecoder接口类涉及接口<a name="section97621346152119"></a>**
 
-VideoDecoder接口类涉及接口详细描述请参见[11.2.4-CreateDecoder](#CreateDecoder)、[11.2.5-InitDecoder](#InitDecoder)、[11.2.6-SetDecodeParams](#SetDecodeParams)、[11.2.7-GetDecodeParams](#GetDecodeParams)、[11.2.8-SetCallbacks](#SetCallbacks)、[11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc)、[11.2.10-SendStreamData](#SendStreamData)、[11.2.12-Flush](#Flush)[11.2.13-StartDecoder](#StartDecoder)、[11.2.14-StopDecoder](#StopDecoder)、[11.2.15-DestroyDecoder](#DestroyDecoder)。
+VideoDecoder接口类涉及接口详细描述请参见[11.2.4-CreateDecoder](#CreateDecoder)、[11.2.5-InitDecoder](#InitDecoder)、[11.2.6-SetDecodeParams](#SetDecodeParams)、[11.2.7-GetDecodeParams](#GetDecodeParams)、[11.2.8-SetCallbacks](#SetCallbacks)、[11.2.9-SetCopyFrameFunc](#SetCopyFrameFunc)、[11.2.10-SendStreamData](#SendStreamData)、[11.2.11-RetrieveFrameData](#RetrieveFrameData)、[11.2.12-Flush](#Flush)、[11.2.13-StartDecoder](#StartDecoder)、[11.2.14-StopDecoder](#StopDecoder)、[11.2.15-DestroyDecoder](#DestroyDecoder)。
 
 #### CreateDecoder<a name="ZH-CN_TOPIC_0000002518345956" id="CreateDecoder"></a>
 
@@ -1950,7 +1950,7 @@ struct PortFormatParams {
 struct PicInfoParams {
     uint32_t width = 0;        // 图像宽度
     uint32_t height = 0;       // 图像高度
-    int32_t stride = 0;        // 图像横向对齐后高度
+    int32_t stride = 0;        // 图像横向对齐后的宽度跨度（像素）
     uint32_t scanLines = 0;    // 图像纵向对齐后高度
     uint32_t cropWidth = 0;    // 图像左侧的空余像素数量
     uint32_t cropHeight = 0;   // 图像上侧的空余像素数量
@@ -2403,7 +2403,7 @@ struct EncoderConfig {
 - OK：初始化GPU加速实例成功。
 - 其他：初始化GPU加速实例失败。
 
-#### Deinit<a name="ZH-CN_TOPIC_0000002549705809" id="Deinit"></a>
+#### DeInit<a name="ZH-CN_TOPIC_0000002549705809" id="Deinit"></a>
 
 **函数功能<a name="section20501062"></a>**
 
@@ -2423,6 +2423,8 @@ int32_t DeInit\(\) = 0
 - 其他：销毁GPU加速实例失败。
 
 #### Start<a name="ZH-CN_TOPIC_0000002549705843" id="Start"></a>
+
+**函数功能**
 
 启动GPU加速实例。
 
