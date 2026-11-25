@@ -80,9 +80,16 @@ which ccache
 ```bash
 export NDK_CCACHE=ccache
 export CCACHE_DIR=~/.ccache
-export PATH={ccache安装位置}:$PATH # 例如export PATH=/usr/bin:$PATH
+export PATH={ccache安装位置}:$PATH
 export USR_CCACHE=1
 ```
+
+其中：
+
+- NDK_CCACHE=ccache 指定编译使用的缓存程序。
+- CCACHE_DIR=~/.ccache 指定缓存目录，可按需改为其他可写路径。
+- PATH 中加入ccache安装位置以优先调用cache程序。
+- USR_CCACHE=1 开启编译缓存加速。
 
 更新后 source 使其生效。
 
@@ -90,7 +97,7 @@ export USR_CCACHE=1
 source ~/.bashrc
 ```
 
-软链接所有的 gcc 和 g++ 到 ccache 上。
+软链接所有的 gcc 和 g++ 到 ccache 上。将系统gcc、g++、cc、c++的软链接指向 ccache 会覆盖原有编译器链接，请在确认 ccache 已正确安装后执行；如需还原，删除上述软链接并重新安装 gcc 与 g++。
 
 ```bash
 cd /usr/bin # ccache安装位置
@@ -123,7 +130,7 @@ sudo apt install -y expect
 
 ### 编译源码
 
-进入安卓源码目录，执行如下编译指令。
+进入 AOSP 源码目录，执行如下编译指令。
 
 ```bash
 cd ~/ARMNative/aosp11
